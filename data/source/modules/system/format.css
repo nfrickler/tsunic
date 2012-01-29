@@ -1,0 +1,805 @@
+<!-- |  -->
+/** header *********************************************************************
+ * project:			TSunic 4.1.1 | system 1.1
+ * file:			format.css
+ * author:			Nicolas Frinker <authornicolas@tsunic.de>
+ * copyright:		Copyright 2011 Nicolas Frinker
+ * licence:			This program is free software: you can redistribute it and/or modify
+ * 					it under the terms of the GNU Affero General Public License as
+ * 					published by the Free Software Foundation, either version 3 of the
+ * 					License, or (at your option) any later version.
+ * 
+ * 					This program is distributed in the hope that it will be useful,
+ * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * 					GNU Affero General Public License for more details.
+ * 
+ * 					You should have received a copy of the GNU Affero General Public License
+ * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * ************************************************************************** */
+
+/* *************** general elements ******************* */
+html {
+	margin:0px;
+	padding:0px;
+	width:100%;
+	height:100%;
+}
+body {
+	position:absolute;
+	margin:0px;
+	padding:0px;
+	width:99%;
+	height:99%;
+	font-family:arial;
+	font-size:10pt;
+}
+div {
+	margin:0px;
+	padding:0px;
+}
+img {
+	border:0px;
+}
+h1 {
+	margin:1px;
+	padding:1px;
+	margin-top:2px;
+	margin-bottom:5px;
+	color:#000;
+	font-size:12pt;
+}
+h2 {
+	margin:1px;
+	padding:1px;
+	margin-top:10px;
+	margin-bottom:3px;
+	color:#000;
+	font-size:11pt;
+}
+h3 {
+	margin:1px;
+	padding:1px;
+	margin-top:10px;
+	margin-bottom:3px;
+	color:#000;
+	font-size:10pt;
+}
+h4 {
+	margin:1px;
+	padding:1px;
+	margin-top:10px;
+	margin-bottom:3px;
+	color:#000;
+	font-size:10pt;
+}
+p {
+	margin:1px;
+	padding:1px;
+	margin-top:5px;
+	margin-bottom:3px;
+}
+ul {
+	margin:1px;
+	padding:1px;
+	list-style-type:none;
+}
+li {
+	margin:1px;
+	padding:1px;
+}
+form {
+	margin-bottom:20px;
+}
+label {
+	padding: 3px;
+	margin: 1px;
+	font-weight: bold;
+	font-size: 10pt;
+}
+legend {
+	padding: 3px;
+	font-size: 9pt;
+	font-weight: normal;
+}
+input {
+	padding: 1px;
+	margin: 3px;
+}
+select {
+	padding: 1px;
+	margin: 3px;
+}
+textarea {
+	padding: 1px;
+	margin: 3px;
+	white-space:normal;
+}
+a {
+	padding: 1px;
+	margin: 3px;
+}
+a:link  {
+    padding:3px;
+    color:#00F;
+    text-decoration:none;
+    font-weight:bold;
+}
+a:visited  {
+    color:#00F;
+    text-decoration:none;
+    font-weight:bold;
+}
+a:hover  {
+    color:#00F;
+    text-decoration:underline;
+    font-weight:bold;
+}
+a:active  {
+    color:#00F;
+    text-decoration:underline;
+    font-weight:bold;
+}
+a:focus  {
+    color:#00F;
+    text-decoration:underline;
+    font-weight:bold;
+}
+table {
+	margin-left:10px;
+	font-size:10pt;
+	border-spacing:1px;
+	width:99%;
+}
+tr {
+	margin:5px;
+}
+th {
+	font-weight:bold;
+	background:#AA8;
+	text-align:left;
+	margin:2px;
+	padding:5px;
+}
+td {
+	font-weight:normal;
+	background:#DDC;
+	text-align:left;
+	margin:1px;
+	padding:5px;
+}
+/* *************** design elements ******************* */
+#div_tsunic {
+	position:relative;
+	text-align:left;
+	width:100%;
+	height:100%;
+	width:auto;
+	min-width:800px !important;
+	max-width:1200px !important;
+	margin:0px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#$$$div__center {
+	position:relative;
+	margin-bottom:5px;
+	text-align:left;
+	width:auto;
+	min-width:800px;
+	max-width:1200px;
+	margin-left:50px;
+	margin-right:50px;
+	height:auto;
+	min-height:100% !important;
+	background:#dadac1;
+}
+#$$$div__header {
+	position:relative;
+	width:99%;
+	height:90px;
+	padding:2px;
+	background:#CCA;
+}
+#$$$div__header__logodiv {
+	width:320px;
+	height:86px;
+	margin:0px;
+	margin-top:-3px;
+	background:#DDB;
+	padding-left:25px;
+}
+#$$$div__content {
+	position:relative;
+	min-height:300px;
+	margin-top:40px;
+	margin-left:120px;
+	padding:8px;
+	padding-bottom:30px;
+	background:#CCA;
+}
+#$$$div__footer {
+	text-align:center;
+	font-size:9pt;
+	color:#666;
+	padding-top:7px;
+	padding-bottom:20px;
+}
+#$$$div__footer_left {
+	float:left;
+	width:20%;
+	text-align:left;
+	margin-top:20px;
+}
+#$$$div__footer_middle {
+	float:left;
+	width:60%;
+	text-align:center;
+}
+#$$$div__footer_right {
+	float:left;
+	width:20%;
+	text-align:right;
+	margin-top:20px;
+}
+#$$$div__left {
+	position:absolute;
+	top:100px;
+	left:10px;
+	width:40px;
+	height:60%;
+	background:#FFA;
+}
+#$$$div__settings {
+	position:absolute;
+	top:2px;
+	right:2px;
+	width:30px;
+	padding:2px;
+	background:#DDD;
+	text-align:center;
+}
+/**************** div_system__navigation_header ************/
+#$$$div__navigation_header {
+	position:absolute;
+	top:100px;
+	width:auto;
+	left:0px;
+	right:0px;
+	padding-left:110px;
+	background:#FFA;
+}
+#$$$div__navigation_header ul {
+	list-style-type:none;
+}
+#$$$div__navigation_header ul li {
+	display:inline;
+	padding:5px;
+	padding-left:7px;
+	padding-right:7px;
+	height:16px;
+	margin:0px;
+	margin-left:2px;
+	margin-right:5px;
+	border:0px;
+	border-top:2px solid #000;
+	background:#AAB;
+	cursor:pointer;
+}
+#$$$div__navigation_header li a,
+    #$$$div__navigation_header li a:link,
+    #$$$div__navigation_header li a:visited,
+    #$$$div__navigation_header li a:active,
+    #$$$div__navigation_header li a:focus,
+    #$$$div__navigation_header li a:hover {
+	color:#000;
+	text-decoration:none;
+	font-weight:normal;
+}
+#$$$div__navigation_header ul li:hover {
+	border:0px;
+	border-top:5px solid #000;
+	background:#CCD;
+}
+#$$$div__navigation_header .$$$navigation_header_important {
+	background:#CCD;
+}
+/* **************************** forms *************************************** */
+.ts_form {
+	padding:0px;
+	margin:0px;
+	margin-bottom:20px;
+	width:100%;
+	min-width:450px;
+}
+.ts_form fieldset {
+	padding:5px;
+	margin:5px;
+	width:90%;
+}
+.ts_form fieldset legend {
+	font-weight:bold;
+}
+.ts_form fieldset label,
+	.ts_form label {
+	display:block;
+	float:left;
+	width:30%;
+	min-width:133px;
+	margin:2px;
+	padding:3px;
+	margin-right:0px;
+	padding-right:10px;
+	text-align:right;
+	background:#DDE;
+	height:18px;
+	border-top:1px solid black;
+	border-bottom:3px solid black;
+	border-right:0px;
+	border-left:1px solid black;
+}
+.ts_form input,
+.ts_form fieldset input,
+.ts_input,
+.ts_form select,
+.ts_form fieldset select,
+.ts_form fieldset textarea,
+.ts_form textarea
+{
+	display:inline;
+	float:left;
+	width:300px;
+	padding:3px;
+	margin:2px;
+	margin-left:0px;
+	background:#FFF;
+	height:18px;
+	border-top:1px solid black;
+	border-bottom:3px solid black;
+	border-right:3px solid black;
+	border-left:1px solid black;
+}
+.ts_form input:hover,
+.ts_form select:hover,
+.ts_form fieldset input:hover,
+.ts_form fieldset select:hover
+.ts_input:hover,
+.ts_form fieldset textarea:hover,
+.ts_form textarea:hover
+{
+	background:#FFD;
+}
+.ts_form input:focus,
+.ts_form input:active,
+.ts_form fieldset input:focus,
+.ts_form fieldset input:active,
+.ts_form fieldset select:focus,
+.ts_form fieldset select:active,
+.ts_input:focus,
+.ts_input:active,
+.ts_form select:focus,
+.ts_form select:active,
+.ts_form fieldset textarea:focus,
+.ts_form textarea:focus,
+.ts_form fieldset textarea:active,
+.ts_form textarea:active
+{
+	background:#FFD;
+	border-right:3px solid #FA0;
+	border-bottom:3px solid #FA0;
+}
+.ts_form textarea,
+.ts_form fieldset textarea,
+.ts_form select,
+.ts_form fieldset select
+{
+	height:auto;
+}
+.ts_form .ts_submit,
+.ts_form .ts_submit:visited,
+.ts_form .ts_submit:link,
+.ts_form .ts_submit:hover,
+.ts_form .ts_submit:active,
+.ts_form .ts_submit:focus,
+.ts_submit,
+.ts_submit:visited,
+.ts_submit:link,
+.ts_submit:hover,
+.ts_submit:active,
+.ts_submit:focus
+{
+	float:none;
+	padding:2px;
+	margin:1px;
+	margin-top:10px;
+	cursor:pointer;
+	width:auto;
+	min-width:120px;
+	height:auto;
+	border:1px solid #FFF;
+	border-bottom:2px solid #333;
+	border-right:2px solid #333;
+	background:#0F0;
+	color:#000;
+	font-weight:bold;
+}
+.ts_form .ts_submit:hover,
+.ts_submit:hover
+{
+	background:#0E0;
+	text-decoration:none;
+	border:1px solid #FFF;
+	border-top:2px solid #333;
+	border-left:2px solid #333;
+}
+.ts_form .ts_reset,
+.ts_form .ts_reset:link,
+.ts_form .ts_reset:visited,
+.ts_reset,
+.ts_reset:link,
+.ts_reset:visited,
+.ts_cancel,
+.ts_cancel:link,
+.ts_cancel:visited,
+.ts_form .ts_cancel,
+.ts_form .ts_cancel:link,
+.ts_form .ts_cancel:visited
+{
+	float:none;
+	padding:2px;
+	margin:1px;
+	margin-top:10px;
+	cursor:pointer;
+	width:auto;
+	min-width:100px;
+	height:auto;
+	border:1px solid #FFF;
+	border-bottom:2px solid #333;
+	border-right:2px solid #333;
+	background:#F66;
+	color:#000;
+	font-weight:bold;
+}
+.ts_form .ts_reset:hover,
+.ts_form .ts_reset:focus,
+.ts_form .ts_reset:active,
+.ts_form .ts_cancel:hover,
+.ts_form .ts_cancel:focus,
+.ts_form .ts_cancel:active,
+.ts_reset:hover,
+.ts_reset:focus,
+.ts_reset:active,
+.ts_cancel:hover,
+.ts_cancel:focus,
+.ts_cancel:active
+{
+	background:#F22;
+	text-decoration:none;
+	border:1px solid #FFF;
+	border-top:2px solid #333;
+	border-left:2px solid #333;
+}
+.ts_input_help
+{
+	position:absolute;
+	right:-10px;
+	display:block;
+	padding:3px;
+	margin:2px;
+	width:150px;
+	height:auto;
+	min-height:30px;
+	background:#FA0;
+}
+.ts_form_optional
+{
+	color:#005;
+}
+.ts_form .ts_required,
+.ts_required
+{
+	border-right:3px solid #EE0;
+	border-left:3px solid #EE0;
+}
+/* ************************* general TSunic-classes ************************* */
+.ts_subbox
+{
+	margin-top:20px;
+}
+.ts_suplinkbox
+{
+	margin:0px;
+	padding:0px;
+	margin-left:10px;
+	margin-bottom:15px;
+	border-bottom: 1px solid #999;
+}
+.ts_suplinkbox a,
+.ts_suplinkbox a:link,
+.ts_suplinkbox a:visited
+{
+	border-left:2px solid #999;
+	padding:1px;
+	margin:0px;
+	padding-left:6px;
+	padding-right:6px;
+}
+.ts_suplinkbox a:hover {
+	text-decoration:none;
+	border-bottom:2px solid #00F;
+	border-top:1px solid #00F;
+	background:#DDF;
+}
+.ts_infotext
+{
+	margin:0px;
+	padding:5px;
+	margin-left:10px;
+	margin-bottom:15px;
+	border-left: 2px solid #999;
+}
+.ts_sublinkbox
+{
+	text-align:right;
+	margin:0px;
+	margin-top:10px;
+	padding:0px;
+	margin-left:10px;
+	margin-bottom:15px;
+	border-bottom: 1px solid #999;
+}
+.ts_sublinkbox a,
+.ts_sublinkbox a:link,
+.ts_sublinkbox a:visited
+{
+	border-right:2px solid #999;
+	padding:0px;
+	margin:0px;
+	padding-left:6px;
+	padding-right:6px;
+}
+.ts_sublinkbox a:hover {
+	text-decoration:none;
+	border-bottom:2px solid #00F;
+	border-top:1px solid #00F;
+	background:#DDF;
+}
+
+/* other classes and objects */
+.div_error {
+	width:100%;
+	background:#F99;
+	padding:2px;
+	font-size:10pt;
+	font-weight:bold;
+	margin-bottom:20px;
+}
+.div_info {
+	width:100%;
+	background:#FF9;
+	padding:2px;
+	font-size:10pt;
+	font-weight:bold;
+	margin-bottom:20px;
+}
+
+/* popup */
+.ts_js_blackbg {
+	position:fixed;
+	top:0px;
+	left:0px;
+	height:100%;
+	width:100%;
+	background:url(../../files/project/$$$bg_shadow.png);
+}
+.ts_js_popup {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:0px;
+	padding:0px;
+	margin-top:-70px;
+	margin-left:-175px;
+	height:auto;
+	min-height:140px;
+	max-height:300px;
+	width:auto;
+	min-width:350px;
+	max-width:500px;
+	background:#FFF;
+	border:0px;
+	border-right:4px solid black;
+	border-bottom:4px solid black;
+}
+.ts_js_popup_button_in {
+	position:absolute;
+	right:10px;
+	bottom:10px;
+	margin:0px;
+	padding:5px;
+	height:20px;
+	text-align:right;
+}
+.ts_js_popup_error_header {
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin:0px;
+	padding:0px;
+	height:40px;
+	width:350px;
+	background:#A00;
+}
+.ts_js_popup_error_header_in {
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin:10px;
+	padding:0px;
+	height:20px;
+	width:330px;
+	color:#EEE;
+	font-size:13pt;
+	font-weight:bold;
+}
+.ts_js_popup_error_content {
+	position:absolute;
+	left:0px;
+	top:40px;
+	margin:0px;
+	padding:0px;
+	width:350px;
+	background:#FAA;
+	height:100px;
+}
+.ts_js_popup_error_content_in {
+	position:absolute;
+	left:10px;
+	top:10px;
+	margin:0px;
+	padding:0px;
+	width:330px;
+	height:80px;
+}
+.ts_js_popup_info_header {
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin:0px;
+	padding:0px;
+	height:40px;
+	width:350px;
+	background:#FC0;
+}
+.ts_js_popup_info_header_in {
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin:10px;
+	padding:0px;
+	height:20px;
+	width:330px;
+	color:#EEE;
+	font-size:13pt;
+	font-weight:bold;
+}
+.ts_js_popup_info_content {
+	position:absolute;
+	left:0px;
+	top:40px;
+	margin:0px;
+	padding:0px;
+	width:350px;
+	background:#FFA;
+	height:100px;
+}
+.ts_js_popup_info_content_in {
+	position:absolute;
+	left:10px;
+	top:10px;
+	margin:0px;
+	padding:0px;
+	width:330px;
+	height:80px;
+}
+.ts_popupbox_header {
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin:0px;
+	padding:0px;
+	height:40px;
+	width:350px;
+	background:#55F;
+}
+.ts_popupbox_header_in {
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin:10px;
+	padding:0px;
+	height:20px;
+	width:330px;
+	color:#EEE;
+	font-size:13pt;
+	font-weight:bold;
+}
+.ts_popupbox_content {
+	position:absolute;
+	left:0px;
+	top:40px;
+	margin:0px;
+	padding:0px;
+	width:350px;
+	background:#EEF;
+	min-height:100px;
+	height:auto;
+}
+.ts_popupbox_content_in {
+	position:absolute;
+	left:10px;
+	top:10px;
+	margin:0px;
+	padding:0px;
+	width:330px;
+	min-height:100px;
+	height:auto;
+}
+.ts_popupbox_buttondiv {
+	position:absolute;
+	right:10px;
+	bottom:12px;
+	margin:0px;
+	padding:5px;
+	height:20px;
+	text-align:right;
+}
+.ts_popupbox_button {
+	position:relative;
+	margin:0px;
+	margin-left:10px;
+	padding:5px;
+	text-align:center;
+}
+
+/* formstyle */
+.formstyle th,
+	.formstyle tr th {
+	font-weight:bold;
+	background:#AA8;
+	text-align:right;
+	margin:4px;
+	margin-right:0px;
+	padding:5px;
+	min-width:120px;
+}
+.formstyle td,
+	.formstyle tr td {
+	font-weight:normal;
+	background:#DDC;
+	text-align:left;
+	margin:4px;
+	margin-left:0px;
+	padding:5px;
+	min-width:200px;
+}
+
+/* delete and edit images */
+.system_deleteImage {
+	border:0px;
+	margin:0px;
+	padding:0px;
+}
+.system_editImage {
+	border:0px;
+	margin:0px;
+	padding:0px;
+}
+
+/* noTemplateFound error */
+#div_system__noTemplateFound {
+	width:80%;
+	padding:7px;
+	background:#F88;
+	border:2px solid black;
+}

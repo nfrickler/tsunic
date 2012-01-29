@@ -1,0 +1,18 @@
+<!-- |  -->
+<!--
+/** header ***********************************************************
+ * project:			TSunic 4.1 | sunrise 1.0
+ * file:			/version.xml
+ * author:			Nicolas Frinker <authornicolas@tsunic.de>
+ * copyright:		Copyright 2011 Nicolas Frinker
+ * **************************************************************** */
+-->
+<all>
+	<name>sunrise</name>
+	<version>1.0</version>
+	<nameid>tsunicnativestyle</nameid>
+	<core>true</core>
+	<description>Sunrise-Style</description>
+	<author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>
+	<copyright>Copyright 2011 Nicolas Frinker</copyright>
+</all>

@@ -1,0 +1,64 @@
+<!-- | -->
+/** header *********************************************************************
+ * project:			TSunic 4.1.1 | mail 1.1
+ * file:			format.css
+ * author:			Nicolas Frinker <authornicolas@tsunic.de>
+ * copyright:		Copyright 2011 Nicolas Frinker
+ * licence:			This program is free software: you can redistribute it and/or modify
+ * 					it under the terms of the GNU Affero General Public License as
+ * 					published by the Free Software Foundation, either version 3 of the
+ * 					License, or (at your option) any later version.
+ * 
+ * 					This program is distributed in the hope that it will be useful,
+ * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * 					GNU Affero General Public License for more details.
+ * 
+ * 					You should have received a copy of the GNU Affero General Public License
+ * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * ************************************************************************** */
+
+.$$$div__showMail__mail {
+	width:95%;
+	background:#DDC;
+	padding:0px;
+}
+.$$$div__showMail_mailheader {
+	background:#AA8;
+	width:99%;
+	padding:7px;
+}
+.$$$div__showMail__mailheader_subject {
+	float:left;
+	padding:1px;
+	margin:1px;
+	font-weight:bold;
+	font-size:11pt;
+}
+.$$$div__showMail__mailheader_right {
+	float:right;
+}
+.$$$div__showMail_mailcontent {
+	width:99%;
+	overflow:visible;
+	height:auto;
+	min-height:250px;
+}
+.$$$div__showMail__attachments {
+	background:#DDC;
+	padding:10px;
+}
+
+.$$$div__showMail__mailheader_table,
+	.$$$div__showMail__mailheader_table tr,
+	.$$$div__showMail__mailheader_table th,
+	.$$$div__showMail__mailheader_table td {
+	font-size:8pt;
+	background:none;
+	border:0px;
+	padding:2px;
+	margin:0px;
+}
+.$$$div__showMail__mailheader_table th {
+	width:100px;
+}

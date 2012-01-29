@@ -1,0 +1,335 @@
+<?php
+/** header *********************************************************************
+ * project:			TSunic 4.1 | TS_ADMIN
+ * file:			admin/classes/ts_Database.class.php
+ * author:			Nicolas Frinker <authornicolas@tsunic.de>
+ * copyright:		Copyright 2011 Nicolas Frinker
+ * description:		Class; handle database
+ * licence:			This program is free software: you can redistribute it and/or modify
+ * 					it under the terms of the GNU Affero General Public License as
+ * 					published by the Free Software Foundation, either version 3 of the
+ * 					License, or (at your option) any later version.
+ * 
+ * 					This program is distributed in the hope that it will be useful,
+ * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * 					GNU Affero General Public License for more details.
+ * 
+ * 					You should have received a copy of the GNU Affero General Public License
+ * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * ************************************************************************** */
+
+// deny direct access
+defined('TS_INIT') OR die('Access denied!');
+
+class ts_Database {
+
+	/* database object of chosen type
+	 * object
+	 */
+	private $Db_obj;
+
+	/* preffix of all TSunic-tables
+	 * string
+	 */
+	private $table_pref;
+
+	/* constructor
+	 *
+	 * @return OBJECT
+	 */
+	public function __construct () {
+		global $Config;
+
+		// get connection-data
+		$db_class = $Config->get('db_class');
+		$host = $Config->get('db_host');
+		$user = $Config->get('db_user');
+		$pass = $Config->get('db_pass');
+		$database = $Config->get('db_database');
+		$this->table_pref = $Config->get('preffix');
+
+		// validate input
+		if (empty($db_class) OR empty($host) OR empty($user) OR empty($database) OR $pass === NULL) {
+			// no valid input
+			return;
+		}
+
+		// get object for chosen type of database
+		$path = 'classes/ts_Database_'.$db_class.'.class.php';
+		if (!file_exists($path)) die('Selected database-class does not exist!');
+		include_once $path;
+		$to_eval = '$this->Db_obj = new ts_Database_'.$db_class.'("'.$host.'", "'.$user.'", "'.$pass.'", "'.$database.'");';
+		if ((eval($to_eval) === false) OR !$this->Db_obj) {
+			die('Invalid Database-class selected!');
+			return;
+		}
+
+		// error occurred?
+		if ($this->Db_obj->getError()) {
+			$_SESSION['admin_error'] = $this->Db_obj->getError();
+		}
+
+		return;
+	}
+
+	/* parse query
+	 * @param string $sql: sql-query
+	 *
+	 * @return sql-query
+	 * 		   (OR @return bool: false - error)
+ 	 */
+	protected function _parseQuery ($sql) {
+
+		// replace preffix
+		$sql = str_replace('#__', $this->table_pref, $sql);
+
+		return $sql;
+	}
+
+	/* return mysql-error (return false, if no error occurred)
+	 *
+	 * @return bool/string
+	 */
+	public function getError () {
+		return $this->Db_obj->getError();
+	}
+
+	/* get Data from database
+	 * @param string $sql: sql-query
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return array: result of query
+	 *               (or REDIRECT)
+ 	 */
+	public function doSelect ($sql, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		// send request to database
+		$return = $this->Db_obj->doSelect($this->_parseQuery($sql));
+
+		// return
+		return $this->getReturn($return, $error);
+	}
+
+	/* update database
+	 * @param string $sql: sql-query
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function doUpdate ($sql, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		// send request to database
+		$return = $this->Db_obj->doUpdate($this->_parseQuery($sql));
+
+		// return
+		return $this->getReturn($return, $error);
+	}
+
+	/* insert rows in database
+	 * @param string $sql: sql-query
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function doInsert ($sql, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		// send request to database
+		$return = $this->Db_obj->doInsert($this->_parseQuery($sql));
+
+		// return
+		return $this->getReturn($return, $error);
+	}
+
+	/* delete rows in database
+	 * @param string $sql: sql-query
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function doDelete ($sql, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		$return = $this->Db_obj->doDelete($this->_parseQuery($sql));
+
+		// return
+		return $this->getReturn($return, $error);
+	}
+
+	/* just query database
+	 * @param string $sql: sql-query
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function doQuery ($sql, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		// send request to database
+		$return = $this->Db_obj->doUpdate($this->_parseQuery($sql));
+
+		// return
+		return $this->getReturn($return, $error);
+	}
+
+	/* check, if table exists
+	 * @param string $table: name of table
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return array: result of query
+	 *               (or REDIRECT)
+ 	 */
+	public function isTable ($table, $error = false) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		return $this->getReturn($this->Db_obj->isTable($this->_parseQuery($table)), $error);
+	}
+
+	/* get all tables of database
+	 * +@param bool $tsunic_only: get only tables of tsunic
+	 * +@param bool $error (optional): throw exception?
+	 *
+	 * @return array or REDIRECT
+ 	 */
+	public function getTables ($tsunic_only = true, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		$tables = $this->getReturn($this->Db_obj->getTables(), $error);
+		if (!$tables) return false;
+
+		// tsunic only?
+		if ($tsunic_only) {
+			$tables_tsonly = array();
+			foreach ($tables as $index => $value) {
+				if (substr($value, 0, strlen($this->table_pref)) == $this->table_pref) {
+					// add
+					$tables_tsonly[] = $value;
+				}
+			}
+			$tables = $tables_tsonly;
+		}
+
+		return $tables;
+	}
+
+	/* get number of columns from database
+	 * @param string $table: table of which columns shall be returned
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return array: column-names
+	 *               (or REDIRECT)
+ 	 */
+	public function getColumns ($table, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		return $this->getReturn($this->Db_obj->getColumns($table), $error);
+	}
+
+	/* create a new table
+	 * @param string $sql: sql-query
+	 * @param bool $error (optional): throw exception?
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function createTable ($sql, $error = true) {
+
+		// is running database?
+		if (!$this->Db_obj) return false;
+
+		return $this->getReturn($this->Db_obj->createTable($sql), $error);
+	}
+
+	/* "execute" a sql-file
+	 * @param string $path: path to sql-file
+	 * @param bool/int $id__module: id__module, if preffix shall be replaced with module-preffix
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function runFile ($path, $id__module = false) {
+
+		// is database sub-object?
+		if (!$this->Db_obj) return false;
+
+		// is file?
+		if (!file_exists($path)) return false;
+
+		// load content of file
+		$content = file($path);
+		$content = implode(' ', $content);
+
+		// strip comments
+		$content = preg_replace('#(\<\!--.*--\>)#Usi', '', $content);
+
+		// replace preffix
+		if ($id__module AND is_numeric($id__module))
+			$content = str_replace('#__', $this->table_pref.'mod'.$id__module.'__', $content);
+
+		// split and run all queries in a row
+		$cache = explode(';', $content);
+		foreach ($cache as $index => $value) {
+			$value = trim($value);
+			if (empty($value)) continue;
+			$return = $this->doInsert($value);
+		}
+
+		// return
+		return $this->getReturn($return);
+	}
+
+	/* get return-value or redirect
+	 * @param mix $return: returned value of functions above (insert/delete etc.)
+	 * +@param bool $error: throw exception?	 
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	private function getReturn ($return, $error = false) {
+
+	    if ($error === true AND $return === false) {
+	    	// add error
+	    	die('Internal database-error!');
+		}
+
+		return $return;
+	}
+
+	/* export tables of database (or all tables)
+	 * @param array/bool $tables: tables to be exported (true will export all)	 
+	 *
+	 * @return bool: true - success
+	 *               (or REDIRECT)
+ 	 */
+	public function export ($tables) {
+		$output = '';
+
+
+
+		return $output;
+	}
+}
+?>

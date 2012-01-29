@@ -1,0 +1,10 @@
+# ############## TSunic 4 ##################### #
+
+TSunic 4 hat das Ziel, ein Websystem zu werden, das Nutzern mit nützlichen Funktionen und Anwendungen das Leben vereinfachen soll. 
+
+Die derzeitige Version ermöglicht die Verwaltung von E-Mails sämtlicher Mailaccounts über ein einziges System (über IMAP/POP3). Auch das Versenden von E-Mails über diese Accounts ist möglich (über SMTP). Damit unterstützt es bereits viele Funktionen üblicher E-Mailprogramme, wie z.B. Thunderbird oder Outlook. Der Vorteil von TSunic jedoch ist, dass diese Verwaltung online geschieht und somit nicht vom Computer abhängig ist, auf dem die Software läuft.
+
+TSunic ist für alle unter der GNU AGPL Lizenz frei verfügbar.
+
+Weitere Informationen findet man auch auf tsunic.de
+
