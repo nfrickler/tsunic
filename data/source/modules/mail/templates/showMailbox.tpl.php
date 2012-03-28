@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			templates/showMailbox.tpl.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 // add javascript
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
@@ -102,8 +84,8 @@ $mails = $Mailbox->getMails();
 		<a href="<?php $this->setUrl('$$$showSendMail'); ?>">
 			<?php $this->set('{SHOWMAILBOX__TOSHOWWRITEMAIL}'); ?></a>
 		<a href="<?php $this->setUrl('$$$updateMailbox',
-								 	 array('id_mail__box' => $Mailbox->getInfo('id_mail__box'),
-								 		   'force' => 'true')); ?>">
+				array('id_mail__box' => $Mailbox->getInfo('id_mail__box'),
+				'force' => 'true')); ?>">
 			<?php $this->set('{SHOWMAILBOX__TOUPDATEMAILBOX}'); ?></a>
 	</p>
 </div>
@@ -151,7 +133,7 @@ $mails = $Mailbox->getMails();
 	<?php } ?>
 	<?php } ?>
 
-	/* ****************************** update mailbox ************************ */
+	/* ****************************** update mailbox ******************** */
 
 	// global vars
 	var $$$showMailbox__updater_box;
@@ -258,9 +240,9 @@ $mails = $Mailbox->getMails();
 
 				// show optionbox
 				$$$showMailbox__optionbox = $system$showOptionbox('<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_HEADER}'); ?>',
-																	 '<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_CONTENT}'); ?>',
-																	 '<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_YES}'); ?>',
-																	 '<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_NO}'); ?>');
+				'<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_CONTENT}'); ?>',
+				'<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_YES}'); ?>',
+				'<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_NO}'); ?>');
 
 				// add events to optionbox-buttons
 				$$$showMailbox__optionbox['button1'].onclick = function(){

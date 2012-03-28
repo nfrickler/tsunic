@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			classes/SenderLocal.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 include_once '$$$Smtp.class.php';
 class $$$SenderLocal extends $$$Smtp {
@@ -43,7 +25,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 *
 	 * @return array
 	 * 		   (OR @return bool: false - error)
- 	 */
+	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
 
@@ -74,7 +56,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @param string $emailname: email-name	 	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function createSmtp ($host, $port, $user, $password, $email, $emailname) {
 		return false;
 	}
@@ -88,7 +70,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @param string $emailname: email-name	 	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function editSmtp ($host, $port, $user, $password, $email, $emailname) {
 		return false;
 	}
@@ -96,7 +78,7 @@ class $$$SenderLocal extends $$$Smtp {
 	/* delete smtp-server
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function deleteSmtp () {
 		return false;
 	}
@@ -114,7 +96,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @param string $port: port of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidPort ($port) {
 		return false;
 	}
@@ -123,7 +105,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @param string $user: user of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidUser ($user) {
 		return false;
 	}
@@ -132,7 +114,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @param string $password: password of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidPassword ($password) {
 		return false;
 	}
@@ -140,7 +122,7 @@ class $$$SenderLocal extends $$$Smtp {
 	/* check, if smtp-server exists
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValid () {
 
 		return true;
@@ -152,7 +134,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @param string $message: the message itself	 	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function sendMail ($addressees, $subject, $message) {
 		global $TSunic;
 
@@ -196,6 +178,5 @@ class $$$SenderLocal extends $$$Smtp {
 		if (empty($this->info['error_msg'])) return true;
 		return false;
 	}
-
 }
 ?>

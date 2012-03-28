@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			templates/showListAccounts.tpl.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 // activate javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
@@ -71,8 +53,8 @@ $mailaccounts = $this->getVar('mailaccounts');
 	<?php foreach ($mailaccounts as $index => $value) {
 	if ($value->getInfo('id_mail__account') == 0) continue;
 	echo '$$$showListAccounts__all["id_'.$value->getInfo('id_mail__account').'"] = new Array("$$$showListAccounts__delete_'.$value->getInfo('id_mail__account').'",
-																					   "'.$value->getInfo('name').'",
-																			   		   "'.$this->setUrl('$$$deleteAccount', array('id_mail__account' => $value->getInfo('id_mail__account')), false, false).'");';
+		"'.$value->getInfo('name').'",
+		"'.$this->setUrl('$$$deleteAccount', array('id_mail__account' => $value->getInfo('id_mail__account')), false, false).'");';
 	} ?>
 
 	// add events
@@ -89,9 +71,9 @@ $mailaccounts = $this->getVar('mailaccounts');
 
 				// create optionbox
 				var allobjects = $system$showOptionbox('<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_HEADER_JS}'); ?>',
-													   '<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_CONTENT}'); ?>',
-													   '<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_YES}'); ?>',
-													   '<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_NO}'); ?>');
+				'<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_CONTENT}'); ?>',
+				'<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_YES}'); ?>',
+				'<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_NO}'); ?>');
 
 				// add yes-button-event
 				allobjects['button1'].onclick = function(){

@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			classes/Inbox.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 include_once '$$$Box.class.php';
 class $$$Inbox extends $$$Box {
@@ -49,7 +31,7 @@ class $$$Inbox extends $$$Box {
 	/* get object of mails in box
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getMails () {
 		global $TSunic;
 
@@ -83,7 +65,7 @@ class $$$Inbox extends $$$Box {
 	 * +@param string $description: description of box
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function createBox ($name, $description = '') {
 
 		return false;
@@ -94,7 +76,7 @@ class $$$Inbox extends $$$Box {
 	 * @param string $description: description of box
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function editBox ($name, $description) {
 
 		return false;
@@ -104,7 +86,7 @@ class $$$Inbox extends $$$Box {
 	 * @param string $name: name of mailbox
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidName ($name) {
 
 		return false;
@@ -114,7 +96,7 @@ class $$$Inbox extends $$$Box {
 	 * @param string $description: description of mailbox
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidDescription ($description) {
 
 		return false;
@@ -123,7 +105,7 @@ class $$$Inbox extends $$$Box {
 	/* delete mailbox
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function deleteBox () {
 
 		return false;

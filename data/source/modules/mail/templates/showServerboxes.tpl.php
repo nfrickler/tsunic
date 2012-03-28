@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			templates/showServerboxes.tpl.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 $Imap = $this->getVar('Imap');
 $serverboxes = $this->getVar('serverboxes');
@@ -70,8 +52,8 @@ $serverboxes = $this->getVar('serverboxes');
 	var $$$showmailservers__all = new Array();
 	<?php foreach ($TSunic->Temp->getCache('mailservers') as $index => $value) {
 	echo '$$$showmailservers__all["id_'.$value->getInfo('id_$$$server').'"] = new Array("$$$showmailservers__delete_'.$value->getInfo('id_mail_server').'",
-																					   "'.$value->getInfo('name').'",
-																			   		   "'.$this->setUrl('mail', 'deleteMailserver', array('id_$$$server' => $value->getInfo('id_$$$server')), false, false).'");';
+		"'.$value->getInfo('name').'",
+		"'.$this->setUrl('mail', 'deleteMailserver', array('id_$$$server' => $value->getInfo('id_$$$server')), false, false).'");';
 	} ?>
 
 	// add events

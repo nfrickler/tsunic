@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			classes/Smtp.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 class $$$Smtp {
 
@@ -132,7 +114,7 @@ class $$$Smtp {
 	 * +@param bool $get_id: get id_mail__account instead of object
 	 *
 	 * @return OBJECT/bool
- 	 */
+	 */
 	public function getMailaccount ($get_id = false) {
 		global $TSunic;
 
@@ -157,7 +139,7 @@ class $$$Smtp {
 	 * @param object $Mailaccount: mailaccount-object
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function setMailaccount ($Mailaccount) {
 		global $TSunic;
 
@@ -192,7 +174,7 @@ class $$$Smtp {
 	/* update info-data
 	 *
 	 * @return true
- 	 */
+	 */
 	protected function updateInfo () {
 
 		// reset info
@@ -204,7 +186,7 @@ class $$$Smtp {
 	/* get all available connection-security-options
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getAllConnsecurities () {
 		return $this->connsecurities;
 	}
@@ -212,7 +194,7 @@ class $$$Smtp {
 	/* get all available password-authentication-options
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getAllAuths () {
 		return $this->auths;
 	}
@@ -222,7 +204,7 @@ class $$$Smtp {
 	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function getAuth ($auth = false, $getNumber = false) {
 
 		// get auth
@@ -237,7 +219,7 @@ class $$$Smtp {
 	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function getConnsecurity ($connsecurity = false, $getNumber = false) {
 
 		// get connsecurity
@@ -253,7 +235,7 @@ class $$$Smtp {
 	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function convertNumberName ($array, $input, $getNumber = false) {
 
 		if (is_numeric($input)) {
@@ -302,7 +284,7 @@ class $$$Smtp {
 	 * +@param string $emailname: email-name	 	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function createSmtp ($email, $password, $description = false, $emailname = false) {
 		global $TSunic;
 
@@ -347,7 +329,7 @@ class $$$Smtp {
 	 * @param int/string $auth: password-authentification	 	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function setConnection ($host, $port, $user, $connsecurity, $auth) {
 		global $TSunic;
 
@@ -389,7 +371,7 @@ class $$$Smtp {
 	 * +@param string $emailname: email-name	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function editSmtp ($email, $password, $description = true, $emailname = true) {
 		global $TSunic;
 
@@ -435,7 +417,7 @@ class $$$Smtp {
 	/* delete smtp-server
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function deleteSmtp () {
 		global $TSunic;
 
@@ -452,7 +434,7 @@ class $$$Smtp {
 	 * @param string $host: host of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidFkmailaccount ($fk_mail__account) {
 
 		// is_numeric?
@@ -478,7 +460,7 @@ class $$$Smtp {
 	 * @param string $description: description
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidDescription ($description) {
 
 		return true;
@@ -488,7 +470,7 @@ class $$$Smtp {
 	 * @param string $port: port of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidPort ($port) {
 
 		// check, if string is empty
@@ -501,7 +483,7 @@ class $$$Smtp {
 	 * @param int $auth: security
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidAuth ($auth) {
 
 		// check, if auth-value allowed
@@ -550,7 +532,7 @@ class $$$Smtp {
 	 * @param string $user: user of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidUser ($user) {
 
 		// check, if string is empty
@@ -563,7 +545,7 @@ class $$$Smtp {
 	 * @param string $password: password of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidPassword ($password) {
 
 		// load infos
@@ -585,7 +567,7 @@ class $$$Smtp {
 	 * @param string $boxname: boxname of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidEMail ($email) {
 
 		// check, if string is empty
@@ -598,7 +580,7 @@ class $$$Smtp {
 	 * @param string $emailname: emailname of server
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidEMailname ($emailname) {
 
 		return true;
@@ -608,7 +590,7 @@ class $$$Smtp {
 	 * @param string $emailname: subject of message
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidSubject ($subject) {
 
 		// check, if string is empty
@@ -621,7 +603,7 @@ class $$$Smtp {
 	 * @param string $message: message itself
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidMessage ($message) {
 
 		// check, if string is empty
@@ -634,7 +616,7 @@ class $$$Smtp {
 	 * @param string $addressee: addressee of mail
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidAddressee ($addressee) {
 
 		// validate e-mail-address
@@ -648,7 +630,7 @@ class $$$Smtp {
 	/* check, if valid smtp-object
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValid () {
 
 		// check, if id exists
@@ -666,7 +648,7 @@ class $$$Smtp {
 	 * @param string $error_msg: error-message
 	 *
 	 * @return string
- 	 */
+	 */
 	public function setError ($error_msg) {
 
 		// save in obj-var
@@ -676,7 +658,7 @@ class $$$Smtp {
 	}
 
 	/* *********************** server-interaction *****************************/
-	/* ************************************************************************/
+	/* ********************************************************************/
 
 	/* try to get connection-data automatically
 	 * @param string $host: host
@@ -762,7 +744,7 @@ class $$$Smtp {
 		return false;
 	}
 
-	/* ************************** send mail ***********************************/
+	/* ************************** send mail *******************************/
 
 	/* send-mail
 	 * @param string $addressees: addressees of mail
@@ -770,7 +752,7 @@ class $$$Smtp {
 	 * @param string $message: message to send	 	 
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function sendMail ($addressees, $subject, $message) {
 
 		// validate input
@@ -847,7 +829,7 @@ class $$$Smtp {
 		$message = str_replace("\r\n", "\n", $message);
 		$message = wordwrap($message, 70);
 
-    	// Windows-fix
+		// Windows-fix
 		if(substr(PHP_OS, 0, 3) == 'WIN') $message = str_replace("\n.", "\n..", $message);
 
 		// send message
@@ -864,12 +846,12 @@ class $$$Smtp {
 		return true;
 	}
 
-	/* *********************** connection-handling ****************************/
+	/* *********************** connection-handling ************************/
 
 	/* send-mail
 	 *
 	 * @return bool/stream
- 	 */
+	 */
 	public function getConnection () {
 
 		// check, if already connected
@@ -949,7 +931,7 @@ class $$$Smtp {
 	/* authenticate to server
 	 *
 	 * @return bool
- 	 */
+	 */
 	protected function authenticate () {
 
 		// start authentification
@@ -970,7 +952,7 @@ class $$$Smtp {
 	/* close connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function closeConnection () {
 
 		// check connection
@@ -985,12 +967,12 @@ class $$$Smtp {
 		return true;
 	}
 
-	/* *********************** general actions ********************************/
+	/* *********************** general actions ****************************/
 
 	/* send data to server
 	 *
 	 * @return bool
- 	 */
+	 */
 	protected function sendData ($data) {
 
 		// check, if connected
@@ -1007,7 +989,7 @@ class $$$Smtp {
 	/* recieve data from server
 	 *
 	 * @return bool
- 	 */
+	 */
 	protected function getData () {
 
 		// check, if connected
@@ -1030,7 +1012,7 @@ class $$$Smtp {
 	/* get status of answer
 	 *
 	 * @return bool/int
- 	 */
+	 */
 	protected function getStatus () {
 
 		// get first 3 characters of answer

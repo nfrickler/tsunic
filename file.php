@@ -1,22 +1,22 @@
 <?php
 /** header *********************************************************************
- * project:			TSunic 4.1 | special file
- * file:			file.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		File to handle/load private images
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * project:	TSunic 4.1 | special file
+ * file:	file.php
+ * author:	Nicolas Frinker <authornicolas@tsunic.de>
+ * copyright:	Copyright 2012 Nicolas Frinker
+ * description:	File to handle/load private images
+ * licence:	This program is free software: you can redistribute it and/or modify
+ * 		it under the terms of the GNU Affero General Public License as
+ * 		published by the Free Software Foundation, either version 3 of the
+ * 		License, or (at your option) any later version.
+ *
+ * 		This program is distributed in the hope that it will be useful,
+ * 		but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * 		GNU Affero General Public License for more details.
+ *
+ * 		You should have received a copy of the GNU Affero General Public License
+ * 		along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ************************************************************************** */
 
 // include TSunic.class
@@ -36,15 +36,12 @@ if (!$Userfile->isValid()) die('Access denied!');
 // is download?
 $download = (isset($_GET['download']) AND $_GET['download'] == 'true') ? true : false;
 
-// check, if download
+// send download-headers
 if ($download) {
-
-	// send download-headers
-     header("Cache-Control: public");
-     header("Content-Description: File Transfer");
-     header('Content-Disposition: attachment; filename='.$Userfile->getInfo('name'));
-     header("Content-Transfer-Encoding: binary");
-  //   header("Content-Length: ".filesize($path));
+	header("Cache-Control: public");
+	header("Content-Description: File Transfer");
+	header('Content-Disposition: attachment; filename='.$Userfile->getInfo('name'));
+	header("Content-Transfer-Encoding: binary");
 }
 
 // send mime-type in header

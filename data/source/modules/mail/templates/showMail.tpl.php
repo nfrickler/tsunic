@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | mail 1.1
- * file:			templates/showMail.tpl.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 // activate javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
@@ -90,13 +72,11 @@ $attachments = $Mail->getAttachments();
 
 		// create optionbox
 		var allobjects = $system$showOptionbox('<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_HEADER_JS}'); ?>}',
-											   '<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_CONTENT}'); ?>',
-											   '<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_YES}'); ?>',
-											   '<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_NO}'); ?>');
+			'<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_CONTENT}'); ?>',
+			'<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_YES}'); ?>',
+			'<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_NO}'); ?>');
 
 		allobjects['button1'].onclick = function() {
-
-			// redirect
 			location.href = "<?php $this->setUrl('$$$deleteMail', array('id_mail__mail' => $this->getVar('mail')->getInfo('id_mail__mail')), false); ?>";
 		};
 
