@@ -1,23 +1,5 @@
 <!-- | class to convert sql-queries in arrays and reverse -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | system 1.1
- * file:			classes/Sql2array.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 class $$$Sql2array {
 
@@ -25,36 +7,36 @@ class $$$Sql2array {
 	 * array
 	 */
 	private $primus = array('INSERT INTO',
-							'SELECT',
-							'DELETE FROM',
-							'UPDATE',
-							'FROM',
-							'WHERE',
-							'GROUP BY',
-							'ORDER BY',
-							'SET',
-							'ON DUPLICATE KEY UPDATE',
-							'VALUES');
+		'SELECT',
+		'DELETE FROM',
+		'UPDATE',
+		'FROM',
+		'WHERE',
+		'GROUP BY',
+		'ORDER BY',
+		'SET',
+		'ON DUPLICATE KEY UPDATE',
+		'VALUES');
 
 	/* secondary list
 	 * array
 	 */
 	private $secundus = array(',',
-							  '[\s]AND[\s]',
-							  '[\s]OR[\s]');
+		'[\s]AND[\s]',
+		'[\s]OR[\s]');
 
 	/* third list
 	 * array
 	 */
 	private $third = array('[\s]AS[\s]',
-						   '[\s]as[\s]',
-						   '[\s]As[\s]',
-						   '[\s]aS[\s]',
-						   '[\s]=[\s]',
-						   '[\s]>=[\s]',
-						   '[\s]<=[\s]',
-						   '[\s]>[\s]',
-						   '[\s]<[\s]');
+		'[\s]as[\s]',
+		'[\s]As[\s]',
+		'[\s]aS[\s]',
+		'[\s]=[\s]',
+		'[\s]>=[\s]',
+		'[\s]<=[\s]',
+		'[\s]>[\s]',
+		'[\s]<[\s]');
 
 	/* array with subqueries
 	 * array
@@ -84,7 +66,7 @@ class $$$Sql2array {
 		return;
 	}
 
-	/* *************** sql to array ***************************************** */
+	/* *************** sql to array ************************************* */
 
 	/* convert sql-query in array
 	 * @param string $sql: sql-query
@@ -164,12 +146,11 @@ class $$$Sql2array {
 		return $array;
 	}
 
-
 	/* convert sql-query in array (from callback-function)
 	 * @param array $sql: input from callback-function
 	 *
 	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * 	(OR @return bool: false - error)
  	 */
 	public function getSubquery ($sql) {
 
@@ -212,7 +193,7 @@ class $$$Sql2array {
 
 	/* convert sql-phrase in array
 	 * @param string $sql: sql-string
-	 * +@param array/bool $splitBy: array with phrases to split sql by	 
+	 * +@param array/bool $splitBy: array with phrases to split sql by
 	 *
 	 * @return array/bool
  	 */
@@ -293,7 +274,7 @@ class $$$Sql2array {
 	 * @param string/array: function to perform (array: [0] => $object; [1] => $function)
 	 *
 	 * @return $array
- 	 */
+	 */
 	protected function _performLoopAction ($array, $action) {
 
 		// validate action
@@ -372,7 +353,7 @@ class $$$Sql2array {
 	 * @param mix $data: input-data
 	 *
 	 * @return bool
- 	 */
+	 */
 	protected function _isData ($data) {
 
 		// is array
@@ -409,7 +390,7 @@ class $$$Sql2array {
 	 * @param mix $data: input-data
 	 *
 	 * @return mix
- 	 */
+	 */
 	protected function _trimData ($data) {
 
 		// trim input
@@ -432,8 +413,8 @@ class $$$Sql2array {
 	 * @param array $sql: input from callback-function
 	 *
 	 * @return array
-	 * 		   (OR @return bool: false - error)
- 	 */
+	 * 	(OR @return bool: false - error)
+	 */
 	protected function _extractData ($sql) {
 		$sql = trim($sql[0]);
 
@@ -467,8 +448,8 @@ class $$$Sql2array {
 	 * @param string $index: input from callback-function
 	 *
 	 * @return array
-	 * 		   (OR @return bool: false - error)
- 	 */
+	 * 	(OR @return bool: false - error)
+	 */
 	protected function _getExtractedData ($index) {
 		if (is_array($index)) $index = $index[0];
 		$index = trim($index);
@@ -490,15 +471,15 @@ class $$$Sql2array {
 		return $data;
 	}
 
-	/* *************** array to sql ***************************************** */
+	/* *************** array to sql ************************************* */
 
 	/* convert array in sql-query
 	 * @param array $array: array-input
 	 * @param bool $isSub: is subquery?	 
 	 *
 	 * @return mysql-query
-	 * 		   (OR @return bool: false - error)
- 	 */
+	 * 	(OR @return bool: false - error)
+	 */
 	public function toSql ($array, $isSub = false) {
 		$sql = '';
 
@@ -546,8 +527,8 @@ class $$$Sql2array {
 	 * @param array $array: array-input
 	 *
 	 * @return mysql-query
-	 * 		   (OR @return bool: false - error)
- 	 */
+	 * 	(OR @return bool: false - error)
+	 */
 	public function _joinList ($array) {
 
 		// join list
@@ -573,7 +554,7 @@ class $$$Sql2array {
 	 * @param string $string: string to trim
 	 *
 	 * @return string
- 	 */
+	 */
 	public function _trim ($string) {
 		// trim string
 		$string = trim($string, chr(9).chr(10).chr(13).chr(32));
