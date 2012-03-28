@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | usersystem 1.1
- * file:			classes/Account.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 class $$$Account {
 
@@ -61,11 +43,11 @@ class $$$Account {
 
 			// get account-data
 			$sql_0 = "SELECT email as email,
-							 dateOfRegistration as dateOfRegistration,
-							 dateOfChange as dateOfChange,
-							 dateOfDeletion as dateOfDeletion
-					  FROM #__accounts
-					  WHERE id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."';";
+					dateOfRegistration as dateOfRegistration,
+					dateOfChange as dateOfChange,
+					dateOfDeletion as dateOfDeletion
+				FROM #__accounts
+				WHERE id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 			$this->info = ($result_0) ? $result_0[0] : array();
 		}
@@ -94,9 +76,9 @@ class $$$Account {
 
 		// create new account in database
 		$sql_0 = "INSERT INTO #__accounts
-				  SET email = '".mysql_real_escape_string($email)."',
-				  	  password = '".md5($password)."',
-				  	  dateOfRegistration = NOW()
+				SET email = '".mysql_real_escape_string($email)."',
+					password = '".md5($password)."',
+					dateOfRegistration = NOW()
 				  ;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 

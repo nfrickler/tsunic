@@ -1,24 +1,4 @@
 <!-- | -->
-<?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | usersystem 1.1
- * file:			templates/formRegistration.tpl.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-?>
 <div id="$$$div__formRegistration">
 	<form action="<?php $this->setUrl('$$$doRegister'); ?>" method="post" name="$$$formRegistration__form" id="$$$formRegistration__form" class="ts_form">
 	    <fieldset>
@@ -43,17 +23,17 @@
 	// all input-fields in form
 	var $$$formRegistration__allInputs = new Array();
 	$$$formRegistration__allInputs[0] = new Array('$$$formRegistration__name',
-															 '<?php $this->setjs('{FORMREGISTRATION__NAME_PRESET}'); ?>',
-															 '<?php $this->setjs('{FORMREGISTRATION__NAME_HELP}'); ?>');
+		'<?php $this->setjs('{FORMREGISTRATION__NAME_PRESET}'); ?>',
+		'<?php $this->setjs('{FORMREGISTRATION__NAME_HELP}'); ?>');
 	$$$formRegistration__allInputs[1] = new Array('$$$formRegistration__email',
-															 '<?php $this->setjs('{FORMREGISTRATION__EMAIL_PRESET}'); ?>',
-															 '<?php $this->setjs('{FORMREGISTRATION__EMAIL_HELP}'); ?>');
+		'<?php $this->setjs('{FORMREGISTRATION__EMAIL_PRESET}'); ?>',
+		'<?php $this->setjs('{FORMREGISTRATION__EMAIL_HELP}'); ?>');
 	$$$formRegistration__allInputs[2] = new Array('$$$formRegistration__password',
-															 '*******',
-															 '<?php $this->setjs('{FORMREGISTRATION__PASSWORD_HELP}'); ?>');
+		'*******',
+		'<?php $this->setjs('{FORMREGISTRATION__PASSWORD_HELP}'); ?>');
 	$$$formRegistration__allInputs[3] = new Array('$$$formRegistration__passwordrepeat',
-															 '*******',
-															 '<?php $this->setjs('{FORMREGISTRATION__PASSWORDREPEAT_HELP}'); ?>');
+		'*******',
+		'<?php $this->setjs('{FORMREGISTRATION__PASSWORDREPEAT_HELP}'); ?>');
 	// add help to form
 	$system$showFormHelp(document.getElementById('$$$formRegistration__form'), $$$formRegistration__allInputs);
 </script>

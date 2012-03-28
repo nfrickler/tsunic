@@ -1,12 +1,4 @@
 <!-- | -->
-<!--
-/** header ***********************************************************
- * project:			TSunic 4.1 | system 1.0
- * file:			/setup/install.sql
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * **************************************************************** */
--->
 CREATE TABLE IF NOT EXISTS `#__accounts` (
   `id_system_users__account` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(300) NOT NULL,

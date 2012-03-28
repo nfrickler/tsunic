@@ -1,23 +1,5 @@
 <!-- | -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1.1 | usersystem 1.1
- * file:			classes/User.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 class $$$User {
 
@@ -86,11 +68,11 @@ class $$$User {
 
 				// get data from database
 				$sql_0 = "SELECT users.fk_system_users__account as id_system_users__account,
-								 (SELECT profiles.id_system_users__profile
-								 	FROM #__profiles as profiles
-									WHERE profiles.fk_system_users__account = users.fk_system_users__account) as id_system_users__profile
-						  FROM #__users as users
-						  WHERE users.id_system_users__user = '".mysql_real_escape_string($id_system_users__user)."';";
+						(SELECT profiles.id_system_users__profile
+						 	FROM #__profiles as profiles
+							WHERE profiles.fk_system_users__account = users.fk_system_users__account) as id_system_users__profile
+						FROM #__users as users
+						WHERE users.id_system_users__user = '".mysql_real_escape_string($id_system_users__user)."';";
 				$result_0 = $TSunic->Db->doSelect($sql_0);
 
 				// get id_system_users_account
@@ -153,11 +135,11 @@ class $$$User {
 
 			// get user-data
 			$sql_0 = "SELECT ip as ip,
-							 browser as browser,
-							 dateOfFirst as dateOfFirst,
-							 dateOfLast as dateOfLast
-					  FROM #__users
-					  WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."';";
+					browser as browser,
+					dateOfFirst as dateOfFirst,
+					dateOfLast as dateOfLast
+					FROM #__users
+					WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 			$this->info = ($result_0) ? $result_0 : array();
 
