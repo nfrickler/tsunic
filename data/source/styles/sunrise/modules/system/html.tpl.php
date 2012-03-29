@@ -1,11 +1,5 @@
 ﻿<!-- | TEMPLATE_sunrise - show page (main template) -->
 <?php
-/** header ***********************************************************
- * project:			TSunic 4.1 | sunrise 1.0
- * file:			modules/system/html.tpl.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * **************************************************************** */
 
 $lang = $TSunic->Config->getRuntime('lang');
 if (empty($lang)) $lang = $TSunic->Config->getConfig('default_language');
