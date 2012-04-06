@@ -1,23 +1,5 @@
+<!-- | Index file of backend -->
 <?php
-/** header *********************************************************************
- * project:	TSunic 4.1 | TS_ADMIN
- * file:	admin/index.php
- * author:	Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:	Copyright 2011 Nicolas Frinker
- * description:	File to run TS_ADMIN (index-file)
- * licence:	This program is free software: you can redistribute it and/or modify
- * 		it under the terms of the GNU Affero General Public License as
- * 		published by the Free Software Foundation, either version 3 of the
- * 		License, or (at your option) any later version.
- * 
- * 		This program is distributed in the hope that it will be useful,
- * 		but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 		GNU Affero General Public License for more details.
- * 
- * 		You should have received a copy of the GNU Affero General Public License
- * 		along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
 
 /* developer settings - show all errors */
 error_reporting(E_ALL);
@@ -40,16 +22,20 @@ include_once 'classes/ts_Template.class.php';
 include_once 'classes/ts_TemplateEngine.class.php';
 include_once 'classes/ts_Database.class.php';
 include_once 'classes/ts_ConfigurationHandler.class.php';
+include_once 'classes/ts_FileHandler.class.php';
+include_once 'classes/ts_Log.class.php';
 
 // set global values
 global $Config;
 global $TemplateEngine;
 global $Database;
+global $Log;
 
 // get important objects
 $Config = new ts_ConfigurationHandler();
 $TemplateEngine = new ts_TemplateEngine();
 $Database = new ts_Database();
+$Log = new ts_Log($Config->get('loglevel'));
 
 // get event
 if (!isset($_GET['event'])) $_GET['event'] = 'showIndex';

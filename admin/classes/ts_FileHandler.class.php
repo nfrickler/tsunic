@@ -142,7 +142,7 @@ class ts_FileHandler {
 	}
 
 	/* create folder, if not exists
-	 * @param string $path: absolute path of folder
+	 * @param string: absolute path of folder
 	 *
 	 * @return bool
 	 */
@@ -163,7 +163,6 @@ class ts_FileHandler {
 			if (is_dir($current)) break;
 
 			// cut current
-			$to_add[] = substr(strrchr($current, '/'),1);
 			$to_remove = substr(strrchr($current, '/'),1);
 			$to_add[] = $to_remove;
 			$current = substr($current, 0, (strlen($current) - strlen($to_remove) - 1));
@@ -173,8 +172,7 @@ class ts_FileHandler {
 		$to_add = array_reverse($to_add);
 		foreach ($to_add as $index => $value) {
 			$current.= '/'.$value;
-
-			if (!is_dir($current) AND !mkdir($current)) {
+			if (!is_dir($current) and !mkdir($current)) {
 				die('Could not create folder '.$current);
 				return false;
 			}
@@ -184,9 +182,9 @@ class ts_FileHandler {
 	}
 
 	/* convert path to relative path
-	 * @param string $path: path to file
-	 * @param string $content: content to write to file
-	 * +@param bool $overwrite: overwrite, if file exists 	 
+	 * @param string: path to file
+	 * @param string: content to write to file
+	 * +@param bool: overwrite, if file exists
 	 *
 	 * @return bool
 	 */
@@ -202,28 +200,31 @@ class ts_FileHandler {
 	}
 
 	/* write content to file
-	 * @param string $path: path to file
-	 * @param string $content: content to write to file
-	 * +@param bool $overwrite: overwrite, if file exists 	 
+	 * @param string: path of file
+	 * @param string: content to write to file
+	 * +@param int: new file without overwriting
+	 *              new file or overwriting
+	 *              append to file
 	 *
 	 * @return bool
 	 */
-	public function writeFile ($path, $content, $overwrite = false) {
+	public function writeFile ($path, $content, $mode = 0) {
 
 		// get relative path
 		$path = self::getRelative($path);
 
 		// overwrite?
-		if (file_exists($path) AND !$overwrite) return false;
+		if (file_exists($path) AND !$mode) return false;
 
-		// does folder exists?
+		// create folder
 		$path_folder = substr($path, 0, (strlen($path) - strlen(basename($path)) - 1));
 		self::createFolder($path_folder);
 
 		// open file
-		$file = fopen($path, "w");
+		$filemode = ($mode == 1 or !file_exists($path)) ? "w" : "a";
+		$file = fopen($path, $filemode);
 
-		// write content in file
+		// write content to file
 		if (!$file OR (fwrite($file, $content)) === false) return false;
 
 		// close file
@@ -233,7 +234,8 @@ class ts_FileHandler {
 	}
 
 	/* read content of file
-	 * @param string $path: path to file	 
+	 * @param string: path of file
+	 * +@param bool: return content as array of lines?
 	 *
 	 * @return bool
 	 */
@@ -242,7 +244,7 @@ class ts_FileHandler {
 		// overwrite?
 		if (!file_exists($path)) return ($as_array) ? array() : '';
 
-		// open file
+		// read file
 		$content = file($path);
 
 		// return

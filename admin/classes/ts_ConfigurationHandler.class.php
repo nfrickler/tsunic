@@ -89,6 +89,8 @@ class ts_ConfigurationHandler {
 				return substr($path, 0, (strlen($path) - 6));
 			case 'data_folder':
 				return 'data';
+			case 'loglevel':
+				return 3;
 			case 'debug_mode':
 				return true;
 			case 'email_enabled':

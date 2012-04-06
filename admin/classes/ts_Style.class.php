@@ -1,24 +1,5 @@
+<!-- | Style class -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_Style.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle one style
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 include_once 'classes/ts_Packet.class.php';
 class ts_Style extends ts_Packet {
 
@@ -58,11 +39,11 @@ class ts_Style extends ts_Packet {
 
 		// get data from database to compare
 		$sql_0 = "SELECT name as name,
-						 nameid as nameid,
-						 id__style as id__style
-					FROM #__styles
-					WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
-						AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
+				 nameid as nameid,
+				 id__style as id__style
+				FROM #__styles
+				WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
+					AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
 		$result_0 = $Database->doSelect($sql_0);
 		if ($result_0 === false OR count($result_0) > 1) return false;
 
@@ -72,12 +53,12 @@ class ts_Style extends ts_Packet {
 
 			// add style to database
 			$sql_0 = "INSERT INTO #__styles
-						SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
-							nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
-							dateOfPreParsing = NOW(),
-							version = '".mysql_real_escape_string($this->getInfofile('version'))."',
-							author = '".mysql_real_escape_string($this->getInfofile('author'))."',
-							description = '".mysql_real_escape_string($this->getInfofile('description'))."';";
+					SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
+						nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
+						dateOfPreParsing = NOW(),
+						version = '".mysql_real_escape_string($this->getInfofile('version'))."',
+						author = '".mysql_real_escape_string($this->getInfofile('author'))."',
+						description = '".mysql_real_escape_string($this->getInfofile('description'))."';";
 			$result_0 = $Database->doInsert($sql_0);
 			if (!$result_0) return false;
 
@@ -99,10 +80,10 @@ class ts_Style extends ts_Packet {
 
 			// update database
 			$sql_1 = "UPDATE #__styles
-						SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
-							author = '".mysql_real_escape_string($this->getInfofile('author'))."',
-							description = '".mysql_real_escape_string($this->getInfofile('description'))."'
-						WHERE id__style = '".$this->id__style."';";
+					SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
+						author = '".mysql_real_escape_string($this->getInfofile('author'))."',
+						description = '".mysql_real_escape_string($this->getInfofile('description'))."'
+					WHERE id__style = '".$this->id__style."';";
 			$result_1 = $Database->doUpdate($sql_1);
 
 			// backup old version
@@ -266,8 +247,8 @@ class ts_Style extends ts_Packet {
 			// update database
 			if ($this->getInfo('is_parsed')) {
 				$sql_0 = "UPDATE #__styles
-							SET is_parsed = 0
-							WHERE id__style = '".mysql_real_escape_string($this->id)."';";
+						SET is_parsed = 0
+						WHERE id__style = '".mysql_real_escape_string($this->id)."';";
 				if ($Database->doUpdate($sql_0) === false) return false;
 			}
 
@@ -284,8 +265,8 @@ class ts_Style extends ts_Packet {
 
 			// update database
 			$sql_0 = "UPDATE #__styles
-						SET is_parsed = 1
-						WHERE id__style = '".mysql_real_escape_string($this->id)."';";
+					SET is_parsed = 1
+					WHERE id__style = '".mysql_real_escape_string($this->id)."';";
 			if ($Database->doUpdate($sql_0) === false) return false;
 
 			return true;
@@ -460,14 +441,14 @@ class ts_Style extends ts_Packet {
 
 		// remove all other defaults
 		$sql_0 = "UPDATE #__styles
-					SET is_default = 0
-					WHERE NOT id__style = ".mysql_real_escape_string($this->id).";";
+				SET is_default = 0
+				WHERE NOT id__style = ".mysql_real_escape_string($this->id).";";
 		$result_0 = $Database->doUpdate($sql_0);
 
 		// set as default
 		$sql_1 = "UPDATE #__styles
-					SET is_default = 1
-					WHERE id__style = ".mysql_real_escape_string($this->id).";";
+				SET is_default = 1
+				WHERE id__style = ".mysql_real_escape_string($this->id).";";
 		$result_1 = $Database->doUpdate($sql_1);
 
 		// update config

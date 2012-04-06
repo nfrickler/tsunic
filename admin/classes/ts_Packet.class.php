@@ -48,7 +48,7 @@ class ts_Packet {
 
 	/* constructor
 	 * +@param int $id: id of packet
-	 * +@param string $name: name of packet	 
+	 * +@param string $name: name of packet
 	 *
 	 * @return OBJECT
 	 */
@@ -78,7 +78,7 @@ class ts_Packet {
 
 	/* get/update path to packet
 	 * @param string $name: name of packet
-	 * +@param bool $save: true - save path in obj-var; false - return path only	 
+	 * +@param bool $save: true - save path in obj-var; false - return path only
 	 *
 	 * @return string/bool
 	 */

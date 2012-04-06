@@ -41,12 +41,9 @@ class ts_PreParser {
 	 */
 	private $parse_ext = array('php', 'html', 'htm', 'css', 'xml', 'js');
 
-	/* constructor	 	 
-	 *
-	 * @return OBJECT
+	/* constructor
 	 */
 	public function __construct () {
-
 		return;
 	}
 
@@ -63,12 +60,12 @@ class ts_PreParser {
 	/* parse
 	 * @param string $path: source-path
 	 * @param string $path_new: destination_path
-	 * +@param string/bool $path_to_cut: common path of module/style (internal use)	 	 
+	 * +@param string/bool $path_to_cut: common path of module/style (internal use)
 	 *
 	 * @return string
 	 */
 	public function parse ($path, $path_new, $path_to_cut = false) {
-		global $Config;
+		global $Config, $Log;
 
 		// is module or style?
 		if (empty($this->Packet)) return false;
@@ -84,19 +81,25 @@ class ts_PreParser {
 
 			// read
 			$content = ts_FileHandler::readFile($path.'/'.$value);
+			if ($content === false) {
+				$Log->doLog(3, "PreParser: Unable to read file '$path/$value'");
+				return false;
+			}
 
 			// skip foreign files
 			$cache = explode('.', $value);
 			if (!in_array(end($cache), $this->parse_ext)) {
 
 				// move only
-				if (!ts_FileHandler::writeFile($path_new.'/'.$value, $content))
+				if (!ts_FileHandler::writeFile($path_new.'/'.$value, $content)) {
+					$Log->doLog(3, "PreParser: Unable to move file to '$path_new/$value'");
 					return false;
+				}
 
 				continue;
 			}
 
-			// is flag-comment at the beginning?
+			// add flag comment if missing
 			if (substr($content, 0, 4) != '<!--') $content = '<!-- | -->'.$content;
 
 			// read flags, get filetype and file-path
@@ -179,6 +182,7 @@ class ts_PreParser {
 
 			// write
 			if (!ts_FileHandler::writeFile($path_new.'/'.$value, $content)) {
+				$Log->doLog(3, "PreParser: Unable to write file ($path_new/$value)");
 				return false;
 			}
 		}
@@ -188,13 +192,14 @@ class ts_PreParser {
 
 		// parse all subfolders
 		foreach ($subfolders as $index => $value) {
-			// preparse
-			if (!$this->parse($path.'/'.$value, $path_new.'/'.$value, $path_to_cut)) return false;
+			if (!$this->parse($path.'/'.$value, $path_new.'/'.$value, $path_to_cut)) {
+				$Log->doLog(3, "PreParser: Failed to preparse subfolder ($path/$value)");
+				return false;
+			}
 		}
 
 		return true;
 	}
-
 
 	/* read flags from content of file
 	 * @param string $content: content of file
