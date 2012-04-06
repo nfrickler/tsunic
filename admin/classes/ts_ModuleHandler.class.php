@@ -1,34 +1,13 @@
+<!-- | class to handle modules -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_ModuleHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle modules
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 class ts_ModuleHandler {
 
 	/* module-objects of all existing modules
 	 * array
 	 */
-	private $modules;	 
+	private $modules;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 
@@ -39,7 +18,7 @@ class ts_ModuleHandler {
 	}
 
 	/* validate source-code
-	 * @param bool $force_update: force to get new list from database (not a cached one from obj-var)
+	 * @param bool: force to get new list from database (not a cached one from obj-var)
 	 *
 	 * @return array
 	 */
@@ -51,8 +30,8 @@ class ts_ModuleHandler {
 
 		// get module-ids from database
 		$sql_0 = "SELECT id__module as id__module
-					FROM #__modules
-					ORDER BY name ASC;";
+				FROM #__modules
+				ORDER BY name ASC;";
 		$result_0 = $Database->doSelect($sql_0);
 		if ($result_0 === false) return false;
 

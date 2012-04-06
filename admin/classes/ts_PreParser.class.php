@@ -1,24 +1,5 @@
-﻿<?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_PreParser.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; PreParser
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
+﻿<!-- | class for preparsing modules or styles -->
+<?php
 class ts_PreParser {
 
 	/* current module
@@ -48,7 +29,7 @@ class ts_PreParser {
 	}
 
 	/* set current module
-	 * @param object $Packet: packet-object which is going to be parsed next	 
+	 * @param object: packet-object which is going to be parsed next	 
 	 *
 	 * @return string
 	 */
@@ -58,16 +39,16 @@ class ts_PreParser {
 	}
 
 	/* parse
-	 * @param string $path: source-path
-	 * @param string $path_new: destination_path
-	 * +@param string/bool $path_to_cut: common path of module/style (internal use)
+	 * @param string: source-path
+	 * @param string: destination_path
+	 * +@param string/bool: common path of module/style (internal use)
 	 *
 	 * @return string
 	 */
 	public function parse ($path, $path_new, $path_to_cut = false) {
 		global $Config, $Log;
 
-		// is module or style?
+		// is packet set?
 		if (empty($this->Packet)) return false;
 
 		// $path_to_cut
@@ -78,6 +59,7 @@ class ts_PreParser {
 
 		// preparse all files
 		foreach ($files as $index => $value) {
+			if (substr($value, -4) == ".swp") continue;
 
 			// read
 			$content = ts_FileHandler::readFile($path.'/'.$value);
@@ -91,7 +73,10 @@ class ts_PreParser {
 			if (!in_array(end($cache), $this->parse_ext)) {
 
 				// move only
-				if (!ts_FileHandler::writeFile($path_new.'/'.$value, $content)) {
+				if (
+					$path_new != $path and
+					!ts_FileHandler::writeFile($path_new.'/'.$value, $content)
+				) {
 					$Log->doLog(3, "PreParser: Unable to move file to '$path_new/$value'");
 					return false;
 				}
@@ -104,6 +89,7 @@ class ts_PreParser {
 
 			// read flags, get filetype and file-path
 			$flags = $this->getFlags($content);
+			if (isset($flags['p'])) continue;
 			$filepath = substr($path_new, (strlen($path_to_cut)+1));
 			if (!empty($filepath)) $filepath.= '/';
 			$cache = explode('.', basename($value));
@@ -119,23 +105,31 @@ class ts_PreParser {
 
 				// generate new header
 				$header = '/** header *********************************************************************'.chr(10);
-				$header.= ' * project:			TSunic '.$Config->get('version').' | '.$this->Packet->getInfo('name').' '.$this->Packet->getInfo('version').chr(10);
-				$header.= ' * file:			'.$filepath.$value.chr(10);
-				if ($this->Packet->getInfo('author')) $header.= ' * author:			'.$this->Packet->getInfo('author').chr(10);
-				if ($this->Packet->getInfo('copyright')) $header.= ' * copyright:		'.$this->Packet->getInfo('copyright').chr(10);
+				$header.= ' * project:   TSunic '.$Config->get('version').' | '.
+					$this->Packet->getInfo('name').' '.
+					$this->Packet->getInfo('version').chr(10);
+				$header.= ' * file:      '.$filepath.$value.chr(10);
+				if ($this->Packet->getInfo('author'))
+					$header.= ' * author:    '.
+					$this->Packet->getInfo('author').chr(10);
+				if ($this->Packet->getInfo('copyright'))
+					$header.= ' * copyright: '.
+					$this->Packet->getInfo('copyright').chr(10);
 				if ($this->Packet->getInfo('licence')) {
 					// is only one line?
 					$cache = explode(chr(10), $this->Packet->getInfo('licence'));
 					if (count($cache) < 2) {
-						$header.= ' * licence:			'.$this->Packet->getInfo('licence').chr(10);
+						$header.= ' * licence:   '.
+							$this->Packet->getInfo('licence').chr(10);
 					} else {
-						$header.= ' * licence:			'.trim($cache[0]).chr(10);
+						$header.= ' * licence:   '.trim($cache[0]).chr(10);
 						for ($i = 1; $i < count($cache); $i++) {
 							$cache[$i] = trim($cache[$i]);
 							if (empty($cache[$i])) {
-								$header.= ' * '.chr(10);
+								$header.= ' *'.chr(10);
 							} else {
-								$header.= ' * 					'.$cache[$i].chr(10);
+								$header.= ' *            '.
+									$cache[$i].chr(10);
 							}
 						}
 					}
@@ -181,7 +175,7 @@ class ts_PreParser {
 			$content = str_replace('?>'.chr(10).'<?php', '', $content); ?><?php
 
 			// write
-			if (!ts_FileHandler::writeFile($path_new.'/'.$value, $content)) {
+			if (!ts_FileHandler::writeFile($path_new.'/'.$value, $content, 1)) {
 				$Log->doLog(3, "PreParser: Unable to write file ($path_new/$value)");
 				return false;
 			}
@@ -202,9 +196,14 @@ class ts_PreParser {
 	}
 
 	/* read flags from content of file
-	 * @param string $content: content of file
+	 * @param string: content of file
 	 *
-	 * @return array
+	 * @return array with flags
+	 * Available flags:
+	 * 	i - ignore file at parsing
+	 * 	p - ignore file at preparsing
+	 * 	h - do not add header
+	 *
 	 */
 	public function getFlags ($content) {
 		$this->flags = array();

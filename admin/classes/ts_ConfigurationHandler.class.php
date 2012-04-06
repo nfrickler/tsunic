@@ -1,27 +1,5 @@
-﻿<?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_ConfigurationHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle configuration
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
-// deny direct access
-defined('TS_INIT') OR die('Access denied!');
-
+﻿<!-- | Class to handle configuration -->
+<?php
 class ts_ConfigurationHandler {
 
 	/* content of config-file
@@ -40,8 +18,6 @@ class ts_ConfigurationHandler {
 	private $current_version = '4.2';
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 
@@ -52,7 +28,7 @@ class ts_ConfigurationHandler {
 	}
 
 	/* get configuration from file
-	 * +@param bool $refresh: force refresh of data
+	 * +@param bool: force refresh of data
 	 *
 	 * @return bool
 	 */
@@ -120,7 +96,7 @@ class ts_ConfigurationHandler {
 	}
 
 	/* get root-path
-	 * +@param bool $dataroot: get dataroot instead of "normal" root
+	 * +@param bool: get dataroot instead of "normal" root
 	 *
 	 * @return string
 	 */
@@ -142,7 +118,7 @@ class ts_ConfigurationHandler {
 	}
 
 	/* delete configuration
-	 * @param string $name: name of setting to delete
+	 * @param string: name of setting to delete
 	 *
 	 * @return bool
 	 */
@@ -158,8 +134,8 @@ class ts_ConfigurationHandler {
 	}
 
 	/* set configuration values
-	 * @param string $name: name of value
-	 * @param string $value: value to be set	 
+	 * @param string: name of value
+	 * @param string: value to be set
 	 *
 	 * @return bool
 	 */
@@ -178,9 +154,9 @@ class ts_ConfigurationHandler {
 	}
 
 	/* set single array-element
-	 * @param string $name: name of value
-	 * @param string $key: key of array-element	 
-	 * @param string $value: value to be set	 
+	 * @param string: name of value
+	 * @param string: key of array-element
+	 * @param string: value to be set
 	 *
 	 * @return bool
 	 */

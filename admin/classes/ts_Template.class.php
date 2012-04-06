@@ -1,27 +1,5 @@
+<!-- | Template class -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_Template.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle one template
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
-// deny direct access
-defined('TS_INIT') OR die('Access denied!');
-
 class ts_Template {
 
 	/* path to template-file
@@ -45,10 +23,8 @@ class ts_Template {
 	protected $cache;
 
 	/* constructor
-	 * +@param string $template: name of template
-	 * +@param string $design: name of design
-	 *
-	 * @return OBJECT
+	 * +@param string: name of template
+	 * +@param string: name of design
 	 */
 	public function __construct ($template = false, $design = 0) {
 		global $TemplateEngine;
@@ -68,8 +44,8 @@ class ts_Template {
 	}
 
 	/* display template
-	 * +@param string $path: path of template-file
-	 * +@param bool $return_error: return error? (OR return false)	 
+	 * +@param string: path of template-file
+	 * +@param bool: return error? (OR return false)
 	 *
 	 * @return bool
 	 */
@@ -90,8 +66,8 @@ class ts_Template {
 	}
 
 	/* display other template
-	 * @param string $template: name of template
-	 * +@param bool/array $data: data for template
+	 * @param string: name of template
+	 * +@param bool/array: data for template
 	 *
 	 * @return bool
 	 */
@@ -114,7 +90,7 @@ class ts_Template {
 	}
 
 	/* get value from $this->data
-	 * @param string $name: name of data | $name = true => all data
+	 * @param string: name of data | $name = true => all data
 	 *
 	 * @return bool
 	 */
@@ -126,7 +102,7 @@ class ts_Template {
 	}
 
 	/* get value from $this->data
-	 * @param string $name: name of data | $name = true => all data
+	 * @param string: name of data | $name = true => all data
 	 *
 	 * @return bool
 	 */
@@ -143,10 +119,10 @@ class ts_Template {
 	}
 
 	/* parse for output (language- and bbcode-replacements)
-	 * @param string $text: text to parse
-	 * @param 0/array $vars: variables to replace in lang-string
-	 * +@param bool $doEcho: true - display $text; false - do not display
-	 * +@param bool $doEscape: true - escape singe and double quotes	 
+	 * @param string: text to parse
+	 * @param 0/array: variables to replace in lang-string
+	 * +@param bool: true - display $text; false - do not display
+	 * +@param bool: true - escape singe and double quotes
 	 *
 	 * @return bool
 	 */
@@ -182,7 +158,7 @@ class ts_Template {
 	}
 
 	/* get lang-var (needed for $this->set())
-	 * @param array $in: [1] -> number (+1) of lang-var
+	 * @param array: [1] -> number (+1) of lang-var
 	 *
 	 * @return string: text-output of lang-var
  	 */

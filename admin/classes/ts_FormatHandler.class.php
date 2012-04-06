@@ -1,24 +1,5 @@
+<!-- | handle format/css files -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_FormatHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; parse formats
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 class ts_FormatHandler {
 
 	/* array containing all css-styles
@@ -37,16 +18,14 @@ class ts_FormatHandler {
 	private $cache;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 		return;
 	}
 
 	/* add css
-	 * @param string $input: css-code to add
-	 * +@param string $id__style: style-id; false - no style but a module	 
+	 * @param string: css-code to add
+	 * +@param string: style-id; false - no style but a module	 
 	 *
 	 * @return bool
 	 */
@@ -67,15 +46,17 @@ class ts_FormatHandler {
 		if (!$id__style) {
 			$this->format = array_merge($this->format, $input_arr);
 		} else {
-			if (!isset($this->format_styles[$id__style])) $this->format_styles[$id__style] = array();
-			$this->format_styles[$id__style] = array_merge($this->format_styles[$id__style], $input_arr);
+			if (!isset($this->format_styles[$id__style]))
+				$this->format_styles[$id__style] = array();
+			$this->format_styles[$id__style] =
+				array_merge($this->format_styles[$id__style], $input_arr);
 		}
 
 		return true;
 	}
 
 	/* handle css-code from callback-function
-	 * @param string $input: css-code to add
+	 * @param string: css-code to add
 	 *
 	 * @return bool
 	 */

@@ -8,8 +8,6 @@ class ts_StyleHandler {
 	private $styles; 
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 
@@ -48,7 +46,7 @@ class ts_StyleHandler {
 	}
 
 	/* get all styles
-	 * @param bool $force_update: force to get new list from database (not a cached one from obj-var)
+	 * @param bool: force to get new list from database (not a cached one from obj-var)
 	 *
 	 * @return array
 	 */
@@ -60,8 +58,8 @@ class ts_StyleHandler {
 
 		// get module-ids from database
 		$sql_0 = "SELECT id__style as id__style
-					FROM #__styles
-					ORDER BY name ASC;";
+				FROM #__styles
+				ORDER BY name ASC;";
 		$result_0 = $Database->doSelect($sql_0);
 		if ($result_0 === false) return false;
 

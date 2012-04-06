@@ -1,29 +1,10 @@
+<!-- | class to handle files and folders -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_FileHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle files
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 // static
 class ts_FileHandler {
 
 	/* get subfolders
-	 * @param string $path: path to basis-folder
+	 * @param string: path to basis-folder
 	 *
 	 * @return array
 	 */
@@ -45,7 +26,7 @@ class ts_FileHandler {
 	}
 
 	/* get files within folder
-	 * @param string $path: path to basis-folder
+	 * @param string: path to basis-folder
 	 *
 	 * @return array
 	 */
@@ -67,8 +48,8 @@ class ts_FileHandler {
 	}
 
 	/* move folder including all it subfolders and -files
-	 * @param string $source: path of source-folder
-	 * @param string $destination: path of destination-folder (will be created, if nonexistent)	 
+	 * @param string: path of source-folder
+	 * @param string: path of destination-folder (will be created, if nonexistent)	 
 	 *
 	 * @return bool
 	 */
@@ -98,7 +79,7 @@ class ts_FileHandler {
 	}
 
 	/* delete folder and all it's subfolders and -files
-	 * @param string $path: path of folder to delete
+	 * @param string: path of folder to delete
 	 *
 	 * @return bool
 	 */
@@ -117,7 +98,7 @@ class ts_FileHandler {
 	}
 
 	/* empty folder and delete all it's subfolders and -files
-	 * @param string $path: path of folder to empty
+	 * @param string: path of folder to empty
 	 *
 	 * @return bool
 	 */

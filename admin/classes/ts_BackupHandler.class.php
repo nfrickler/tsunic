@@ -1,30 +1,11 @@
+<!-- | Class to handle backup of modules and styles -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_BackupHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle backups
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 // static
 class ts_BackupHandler {
 
 	/* backup module
-	 * @param string $path: path to module to backup
-	 * +@param string $name: name to attach to the end of destination-folder	 
+	 * @param string: path to module to backup
+	 * +@param string: name to attach to the end of destination-folder
 	 *
 	 * @return array
 	 */
@@ -43,8 +24,8 @@ class ts_BackupHandler {
 
 
 	/* backup style
-	 * @param string $path: path to style to backup
-	 * +@param string $name: name to attach to the end of destination-folder	 
+	 * @param string: path to style to backup
+	 * +@param string: name to attach to the end of destination-folder
 	 *
 	 * @return array
 	 */
@@ -62,7 +43,7 @@ class ts_BackupHandler {
 	}
 
 	/* backup runtime-folder
-	 * @param bool $includeDatabase: also backup database
+	 * @param bool: also backup database
 	 *
 	 * @return array
 	 */
@@ -104,10 +85,10 @@ class ts_BackupHandler {
 		return true;
 	}
 
-	/* ######################### database backup ############################ */
+	/* ######################### database backup ######################## */
 
 	/* backup database
-	 * @param string $path: path to sql backup-file
+	 * @param string: path to sql backup-file
 	 *
 	 * @return bool
 	 */
@@ -121,9 +102,9 @@ class ts_BackupHandler {
 		// backup
 		$sql_tables = implode(',', $tables);
 		$sql_0 = "SELECT *
-					INTO OUTFILE '".$path."'
-					FIELDS TERMINATED BY ';'
-					FROM ".$sql_tables.";";
+				INTO OUTFILE '".$path."'
+				FIELDS TERMINATED BY ';'
+				FROM ".$sql_tables.";";
 		$result_0 = $Database->doQuery($sql_0);
 
 		return true;

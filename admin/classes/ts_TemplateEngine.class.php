@@ -1,27 +1,5 @@
+<!-- | Template engine class -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_TemplateEngine.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; Template engine for backend
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
-// deny direct access
-defined('TS_INIT') OR die('Access denied!');
-
 class ts_TemplateEngine {
 
 	/* path to template-file
@@ -41,8 +19,6 @@ class ts_TemplateEngine {
 
 	/* constructor
 	 * +@param string $design: name of design
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct ($design = 0) {
 		global $Config;
@@ -60,9 +36,9 @@ class ts_TemplateEngine {
 	}
 
 	/* activate template for output
-	 * @param string $template: name of template
-	 * @param string/bool $supTemplate: if supTemplate exists -> name ELSE 0 or false
-	 * @param bool/array $data: data for template
+	 * @param string: name of template
+	 * @param string/bool: if supTemplate exists -> name ELSE 0 or false
+	 * @param bool/array: data for template
 	 *
 	 * @return bool
 	 */
@@ -84,8 +60,8 @@ class ts_TemplateEngine {
 	}
 
 	/* save data
-	 * @param string/bool $template: template, data are for (false: reset all data; true: get all data from session)
-	 * +@param string $data: data to save
+	 * @param string/bool: template, data are for (false: reset all data; true: get all data from session)
+	 * +@param string: data to save
 	 *
 	 * @return string
 	 */
@@ -120,8 +96,8 @@ class ts_TemplateEngine {
 	}
 
 	/* save data
-	 * @param string $template: template to fetch data for
-	 * +@param string $name: name of data	 
+	 * @param string: template to fetch data for
+	 * +@param string: name of data
 	 *
 	 * @return string
 	 */
@@ -141,8 +117,8 @@ class ts_TemplateEngine {
 	}
 
 	/* parse output-text
-	 * @param string $text: text to be parsed
-	 * +@param bool $doEscape: true - escape singe and double quotes
+	 * @param string: text to be parsed
+	 * +@param bool: true - escape singe and double quotes
 	 *
 	 * @return string
 	 */
@@ -155,9 +131,9 @@ class ts_TemplateEngine {
 	}
 
 	/* skip language-placeholders
-	 * @param string $text: text to be parsed
-	 * +@param bool $doEscape: true - escape singe and double quotes
-	 * +@param int $nested: if this value is > 5, the function will not check recursively	 
+	 * @param string: text to be parsed
+	 * +@param bool: true - escape singe and double quotes
+	 * +@param int: if this value is > 5, the function will not check recursively
 	 *
 	 * @return string
 	 */
@@ -175,9 +151,11 @@ class ts_TemplateEngine {
 		}
 
 		// extract language
-		$text = preg_replace_callback($regex,
-					array($this, 'getLang'),
-					$text);
+		$text = preg_replace_callback(
+			$regex,
+			array($this, 'getLang'),
+			$text
+		);
 
 		// return text, if nested >= 5 (prevent infinite loop)
 		$nested++;
@@ -195,7 +173,7 @@ class ts_TemplateEngine {
 	}
 
 	/* get language-replacements
-	 * @param string $lang: language-placeholder
+	 * @param string: language-placeholder
 	 *
 	 * @return string
 	 */
@@ -224,9 +202,9 @@ class ts_TemplateEngine {
 	}
 
 	/* get language-replacements
-	 * @param string $input: language-placeholder or module
-	 * +@param bool/string $lang: set language to include
-	 * +@param bool $returnOnFail: return, if include fails	  
+	 * @param string: language-placeholder or module
+	 * +@param bool/string: set language to include
+	 * +@param bool: return, if include fails
 	 *
 	 * @return bool
 	 */
@@ -260,7 +238,7 @@ class ts_TemplateEngine {
 	}
 
 	/* display output
-	 * @param bool/string $template: name of first template
+	 * @param bool/string: name of first template
 	 *
 	 * @return bool
 	 */
@@ -295,7 +273,7 @@ class ts_TemplateEngine {
 	public function clearActivatedTemplates () {
 
 		// clear templates
-        $this->activatedTemplates = array();
+		$this->activatedTemplates = array();
 
 		return true;
 	}

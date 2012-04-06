@@ -1,27 +1,5 @@
+<!-- | Class to handle database -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_Database.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle database
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
-// deny direct access
-defined('TS_INIT') OR die('Access denied!');
-
 class ts_Database {
 
 	/* database object of chosen type
@@ -35,8 +13,6 @@ class ts_Database {
 	private $table_pref;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 		global $Config;
@@ -74,10 +50,10 @@ class ts_Database {
 	}
 
 	/* parse query
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return sql-query
-	 * 		   (OR @return bool: false - error)
+	 * 	(OR @return bool: false - error)
  	 */
 	protected function _parseQuery ($sql) {
 
@@ -96,11 +72,11 @@ class ts_Database {
 	}
 
 	/* get Data from database
-	 * @param string $sql: sql-query
-	 * @param bool $error (optional): throw exception?
+	 * @param string: sql-query
+	 * @param bool(optional): throw exception?
 	 *
 	 * @return array: result of query
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function doSelect ($sql, $error = true) {
 
@@ -115,11 +91,11 @@ class ts_Database {
 	}
 
 	/* update database
-	 * @param string $sql: sql-query
-	 * @param bool $error (optional): throw exception?
+	 * @param string: sql-query
+	 * +@param bool: throw exception?
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function doUpdate ($sql, $error = true) {
 
@@ -134,11 +110,11 @@ class ts_Database {
 	}
 
 	/* insert rows in database
-	 * @param string $sql: sql-query
-	 * @param bool $error (optional): throw exception?
+	 * @param string: sql-query
+	 * +@param bool: throw exception?
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function doInsert ($sql, $error = true) {
 
@@ -153,11 +129,11 @@ class ts_Database {
 	}
 
 	/* delete rows in database
-	 * @param string $sql: sql-query
-	 * @param bool $error (optional): throw exception?
+	 * @param string: sql-query
+	 * +@param bool: throw exception?
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function doDelete ($sql, $error = true) {
 
@@ -171,11 +147,11 @@ class ts_Database {
 	}
 
 	/* just query database
-	 * @param string $sql: sql-query
-	 * @param bool $error (optional): throw exception?
+	 * @param string: sql-query
+	 * +@param bool: throw exception?
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function doQuery ($sql, $error = true) {
 
@@ -190,11 +166,11 @@ class ts_Database {
 	}
 
 	/* check, if table exists
-	 * @param string $table: name of table
-	 * @param bool $error (optional): throw exception?
+	 * @param string: name of table
+	 * +@param bool: throw exception?
 	 *
 	 * @return array: result of query
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function isTable ($table, $error = false) {
 
@@ -205,8 +181,8 @@ class ts_Database {
 	}
 
 	/* get all tables of database
-	 * +@param bool $tsunic_only: get only tables of tsunic
-	 * +@param bool $error (optional): throw exception?
+	 * +@param bool: get only tables of tsunic
+	 * +@param bool: throw exception?
 	 *
 	 * @return array or REDIRECT
  	 */
@@ -234,11 +210,11 @@ class ts_Database {
 	}
 
 	/* get number of columns from database
-	 * @param string $table: table of which columns shall be returned
-	 * @param bool $error (optional): throw exception?
+	 * @param string: table of which columns shall be returned
+	 * +@param bool: throw exception?
 	 *
 	 * @return array: column-names
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function getColumns ($table, $error = true) {
 
@@ -249,11 +225,11 @@ class ts_Database {
 	}
 
 	/* create a new table
-	 * @param string $sql: sql-query
-	 * @param bool $error (optional): throw exception?
+	 * @param string: sql-query
+	 * +@param bool: throw exception?
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function createTable ($sql, $error = true) {
 
@@ -264,11 +240,11 @@ class ts_Database {
 	}
 
 	/* "execute" a sql-file
-	 * @param string $path: path to sql-file
-	 * @param bool/int $id__module: id__module, if preffix shall be replaced with module-preffix
+	 * @param string: path to sql-file
+	 * @param bool/int: id__module, if preffix shall be replaced with module-preffix
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function runFile ($path, $id__module = false) {
 
@@ -302,32 +278,32 @@ class ts_Database {
 	}
 
 	/* get return-value or redirect
-	 * @param mix $return: returned value of functions above (insert/delete etc.)
-	 * +@param bool $error: throw exception?	 
+	 * @param mix: returned value of functions above (insert/delete etc.)
+	 * +@param bool: throw exception?
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	private function getReturn ($return, $error = false) {
 
-	    if ($error === true AND $return === false) {
-	    	// add error
-	    	die('Internal database-error!');
+		if ($error === true AND $return === false) {
+			// add error
+			die('Internal database-error!');
 		}
 
 		return $return;
 	}
 
 	/* export tables of database (or all tables)
-	 * @param array/bool $tables: tables to be exported (true will export all)	 
+	 * @param array/bool: tables to be exported (true will export all)
 	 *
 	 * @return bool: true - success
-	 *               (or REDIRECT)
+	 * 	(or REDIRECT)
  	 */
 	public function export ($tables) {
 		$output = '';
 
-
+		// TODO
 
 		return $output;
 	}

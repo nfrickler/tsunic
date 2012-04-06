@@ -1,24 +1,5 @@
-﻿<?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_Parser.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; Parser
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
+﻿<!-- | Parser class -->
+<?php
 class ts_Parser {
 
 	/* preffix
@@ -52,11 +33,9 @@ class ts_Parser {
 	private $current_preffix;
 
 	/* constructor
-	 * @param string $preffix: preffix
-	 * @param array $modules: array with all module-objects
-	 * +@param bool $debug_mode: in debug_mode language will not be replaced	 	 
-	 *
-	 * @return OBJECT
+	 * @param string: preffix
+	 * @param array: array with all module-objects
+	 * +@param bool: in debug_mode language will not be replaced	 	 
 	 */
 	public function __construct ($preffix, $modules_all, $debug_mode = false) {
 
@@ -67,15 +46,17 @@ class ts_Parser {
 
 		// save modules
 		foreach ($modules_all as $index => $Value) {
-			$this->modules[$Value->getInfo('name')] = array('id__module' => $Value->getInfo('id__module'),
-															'nameid' => $Value->getInfo('nameid'));
+			$this->modules[$Value->getInfo('name')] = array(
+				'id__module' => $Value->getInfo('id__module'),
+				'nameid' => $Value->getInfo('nameid')
+			);
 		}
 
 		return;
 	}
 
 	/* set current module
-	 * @param int $id__module: id__module of current module, the content belongs to	 
+	 * @param int: id__module of current module, the content belongs to	 
 	 *
 	 * @return string
 	 */
@@ -92,7 +73,7 @@ class ts_Parser {
 	}
 
 	/* read flags from content of file
-	 * @param string $content: content of file
+	 * @param string: content of file
 	 *
 	 * @return array
 	 */
@@ -124,8 +105,8 @@ class ts_Parser {
 
 	/* parse file
 	 * @param string $content: content of file to parse
-	 * +@param bool $trim_flags: true - remove flags
-	 * +@param bool $is_javascript: true - content is javascript	 
+	 * +@param bool: true - remove flags
+	 * +@param bool: true - content is javascript
 	 *
 	 * @return string
 	 */
@@ -165,8 +146,8 @@ class ts_Parser {
 	}
 
 	/* set line markers
-	 * @param string/array $content: content of file to parse
-	 * +@param bool $get_string: true - force string as return	 
+	 * @param string/array: content of file to parse
+	 * +@param bool: true - force string as return
 	 *
 	 * @return string
 	 */
@@ -195,7 +176,7 @@ class ts_Parser {
 	}
 
 	/* strip line-markers
-	 * @param string/array $content: content of file to parse
+	 * @param string/array: content of file to parse
 	 *
 	 * @return string
 	 */
@@ -220,8 +201,8 @@ class ts_Parser {
 	}
 
 	/* replace language
-	 * @param string $content: content of file to parse
-	 * +@param bool $is_langfile: true - use different regex to match lang-replacements	 
+	 * @param string: content of file to parse
+	 * +@param bool: true - use different regex to match lang-replacements
 	 *
 	 * @return string
 	 */
@@ -238,7 +219,7 @@ class ts_Parser {
 	}
 
 	/* replace language-replacements (in callback function)
-	 * @param array $input: input from callback
+	 * @param array: input from callback
 	 *
 	 * @return string
 	 */
@@ -260,8 +241,8 @@ class ts_Parser {
 	}
 
 	/* replace language
-	 * @param string $content: content of file to parse
-	 * +@param int $id__module: id__module of current module, the content belongs to
+	 * @param string: content of file to parse
+	 * +@param int: id__module of current module, the content belongs to
 	 *
 	 * @return string
 	 */
@@ -281,7 +262,7 @@ class ts_Parser {
 	}
 
 	/* replace module (in callback function)
-	 * @param array $input: input from callback
+	 * @param array: input from callback
 	 *
 	 * @return string
 	 */
@@ -318,7 +299,7 @@ class ts_Parser {
 
 	/* replace preffix
 	 * @param string $content: content of file to parse
-	 * +@param int $id__module: id__module of current module, the content belongs to
+	 * +@param int: id__module of current module, the content belongs to
 	 *
 	 * @return string
 	 */
@@ -332,7 +313,7 @@ class ts_Parser {
 	}
 
 	/* remove BOM
-	 * @param string $input: input string
+	 * @param string: input string
 	 *
 	 * @return string
 	 */
@@ -349,8 +330,8 @@ class ts_Parser {
 
 	/* trim code
 	 * @param string $content: content of file to parse
-	 * +@param bool $is_sensitive: true - will skip problematic things	
-	 * +@param bool $force: force trimming	  
+	 * +@param bool: true - will skip problematic things
+	 * +@param bool: force trimming
 	 *
 	 * @return string
 	 */
@@ -376,7 +357,7 @@ class ts_Parser {
 	}
 
 	/* remove flags from output
-	 * @param string $content: content of file to parse	  
+	 * @param string: content of file to parse
 	 *
 	 * @return string
 	 */
@@ -395,8 +376,8 @@ class ts_Parser {
 
 	/* trim code
 	 * @param string $content: content of file to parse
-	 * +@param bool $is_sensitive: true - will skip problematic things
-	 * +@param bool $is_javascript: true - content is javascript	 
+	 * +@param bool: true - will skip problematic things
+	 * +@param bool: true - content is javascript
 	 *
 	 * @return string
 	 */
@@ -455,7 +436,7 @@ class ts_Parser {
 	}
 
 	/* skip all one-line comments in javascript (callback)
-	 * @param string $content: content to parse
+	 * @param string: content to parse
 	 *
 	 * @return string
 	 */
@@ -470,7 +451,7 @@ class ts_Parser {
 
 	/* skip all one-line comments
 	 * @param string $content: content to parse
-	 * +@param bool $is_php: content is php-code (otherwise: no search for php-tags) 
+	 * +@param bool: content is php-code (otherwise: no search for php-tags) 
 	 *
 	 * @return string
 	 */

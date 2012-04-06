@@ -1,27 +1,5 @@
+<!-- | Class handling MySQL-Database -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_Database_mysql.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle mysql-database
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
-// deny direct access
-defined('TS_INIT') OR die('Access denied!');
-
 class ts_Database_mysql {
 
 	/* mysql-login: host
@@ -55,14 +33,11 @@ class ts_Database_mysql {
 	private $con;
 
 	/* constructor
-	 * @param string $host: mysql-login: host
-	 * @param string $user: mysql-login: user
-	 * @param string $password: mysql-login: password
-	 * @param string $database: mysql-login: database
-	 * @param string $table_pref: preffix of all TSunic-tables
-	 *
-	 * @return bool: true - success
-	 * 				 false - error
+	 * @param string: mysql-login: host
+	 * @param string: mysql-login: user
+	 * @param string: mysql-login: password
+	 * @param string: mysql-login: database
+	 * @param string: preffix of all TSunic-tables
 	 */
 	public function __construct ($host, $user, $password, $database) {
 
@@ -94,7 +69,6 @@ class ts_Database_mysql {
 	/* check, if connection exists AND connect to database
 	 *
 	 * @return bool
-	 * 		   (OR @return bool: false - error)
 	 */
 	private function doConnect () {
 
@@ -117,10 +91,9 @@ class ts_Database_mysql {
 	}
 
 	/* send query to database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return mysql-result
-	 * 		   (OR @return bool: false - error)
+	 * @return mysql-result/false
 	 */
 	public function sendQuery ($sql) {
 		global $TSunic;
@@ -139,10 +112,9 @@ class ts_Database_mysql {
 	}
 
 	/* fetch data from database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return array: data of query
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false: data of query
 	 */
 	public function doSelect ($sql) {
 
@@ -159,10 +131,9 @@ class ts_Database_mysql {
 	}
 
 	/* update database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return bool: true - success
-	 * 				 false - error
+	 * @return bool
 	 */
 	public function doUpdate ($sql) {
 
@@ -171,10 +142,9 @@ class ts_Database_mysql {
 	}
 
 	/* insert a new row/several new rows
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return bool: true - success
-	 * 				 false - error
+	 * @return bool
 	 */
 	public function doInsert ($sql) {
 
@@ -186,22 +156,19 @@ class ts_Database_mysql {
 	}
 
 	/* delete rows in database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return bool: true - success
-	 * 				 false - error
+	 * @return bool
 	 */
 	public function doDelete ($sql) {
-
-	    // delete rows by sending query
+		// delete rows by sending query
 		return ($this->sendQuery($sql)) ? true : false;
 	}
 
 	/* get names of columns of a table
-	 * @param string $table: name of table
+	 * @param string: name of table
 	 *
-	 * @return array: names of columns
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false: names of columns
 	 */
 	public function getColumns ($table) {
 
@@ -219,10 +186,9 @@ class ts_Database_mysql {
 	}
 
 	/* create a new table
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return bool: true - success
-	 * 				 false - error
+	 * @return bool
 	 */
 	public function createTable ($sql) {
 
@@ -232,14 +198,13 @@ class ts_Database_mysql {
 	}
 
 	/* check, if table exists
-	 * @param string $table: name of table
+	 * @param string: name of table
 	 *
-	 * @return bool: true - table exists
-	 * 				 false - no table with the given name found
+	 * @return bool
 	 */
 	public function isTable ($table) {
 
-	    // get and send query
+		// get and send query
 		$sql = "SHOW TABLES LIKE '".mysql_real_escape_string($table)."';";
 		$result = $this->sendQuery($sql);
 
@@ -254,12 +219,11 @@ class ts_Database_mysql {
 
 	/* get all tables in database
 	 *
-	 * @return bool: true - table exists
-	 * 				 false - no table with the given name found
+	 * @return bool
 	 */
 	public function getTables () {
 
-	    // get and send query
+		// get and send query
 		$sql = "SHOW TABLES;";
 		$result = $this->sendQuery($sql);
 
@@ -267,17 +231,16 @@ class ts_Database_mysql {
 		$tables = array();
 		while (list($current) = mysql_fetch_row($result)) {
 			$tables[] = $current;
-    	}
+	}
 
 		return $tables;
 	}
 
 	/* run sql-file
-	 * @param string $path: path to sql-file
+	 * @param string: path to sql-file
 	 *
-	 * @return bool: true - success
-	 * 				 false - error
- 	 */
+	 * @return bool
+	 */
 	public function insertSQL ($path) {
 
 		// get content of file and skip comments

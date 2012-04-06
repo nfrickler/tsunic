@@ -1,24 +1,5 @@
+<!-- | Packet module -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_PacketHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; handle packets (modules or styles)
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 class ts_Packet {
 
 	/* id
@@ -47,16 +28,13 @@ class ts_Packet {
 	protected $infofile = array();
 
 	/* constructor
-	 * +@param int $id: id of packet
-	 * +@param string $name: name of packet
-	 *
-	 * @return OBJECT
+	 * +@param int: id of packet
+	 * +@param string: name of packet
 	 */
 	public function __construct ($id = false, $name = false) {
 		global $Config;
 
 		// make sure that classes are loaded
-		include_once 'classes/ts_FileHandler.class.php';
 		include_once 'classes/ts_BackupHandler.class.php';
 
 		// is id?
@@ -77,8 +55,8 @@ class ts_Packet {
 	}
 
 	/* get/update path to packet
-	 * @param string $name: name of packet
-	 * +@param bool $save: true - save path in obj-var; false - return path only
+	 * @param string: name of packet
+	 * +@param bool: true - save path in obj-var; false - return path only
 	 *
 	 * @return string/bool
 	 */
@@ -87,7 +65,7 @@ class ts_Packet {
 	}
 
 	/* convert name to id
-	 * @param string $name: name of packet
+	 * @param string: name of packet
 	 *
 	 * @return bool
 	 */
@@ -95,11 +73,11 @@ class ts_Packet {
 		return false;
 	}
 
-	/* ######################### handle packet ############################## */
+	/* ######################### handle packet ########################## */
 
 	/* get info about packet
-	 * @param string $name: name of information to gather
-	 * +@param bool $refresh: true - delete all current infos 
+	 * @param string: name of information to gather
+	 * +@param bool: true - delete all current infos 
 	 *
 	 * @return mix
 	 */
@@ -108,8 +86,8 @@ class ts_Packet {
 	}
 
 	/* get info from version.xml
-	 * @param string $name: name of information to gather
-	 * +@param bool $refresh: true - delete all current infos 
+	 * @param string: name of information to gather
+	 * +@param bool: true - delete all current infos 
 	 *
 	 * @return OBJECT
 	 */
@@ -127,7 +105,8 @@ class ts_Packet {
 		$this->infofile = ts_XmlHandler::readAll($this->path.'/version.xml');
 
 		// try again to return requested info
-		if (isset($this->infofile, $this->infofile[$name])) return $this->infofile[$name];
+		if (isset($this->infofile, $this->infofile[$name]))
+			return $this->infofile[$name];
 		return NULL;
 	}
 
@@ -140,7 +119,7 @@ class ts_Packet {
 		return false;
 	}
 
-	/* ############################# pre-parse ############################## */
+	/* ############################# pre-parse ########################## */
 
 	/* preparse and move all files and subfolders within path
 	 *

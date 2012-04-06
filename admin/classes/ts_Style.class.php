@@ -4,8 +4,8 @@ include_once 'classes/ts_Packet.class.php';
 class ts_Style extends ts_Packet {
 
 	/* get/update path to style
-	 * @param string $name: name of packet
-	 * +@param bool $save: true - save path in obj-var; false - return path only	 
+	 * @param string: name of packet
+	 * +@param bool: true - save path in obj-var; false - return path only
 	 *
 	 * @return string/bool
 	 */
@@ -14,7 +14,8 @@ class ts_Style extends ts_Packet {
 
 		// is name given?
 		if (!empty($this->id)) {
-			$path = $Config->getRoot(true).'/source/styles/_style'.$this->id.'__'.$this->getInfo('name');
+			$path = $Config->getRoot(true).'/source/styles/_style'.
+				$this->id.'__'.$this->getInfo('name');
 		} else {
 			if (empty($name)) return false;
 			$path = $Config->getRoot(true).'/source/styles/'.$name;
@@ -27,7 +28,7 @@ class ts_Style extends ts_Packet {
 	}
 
 	/* convert name to id
-	 * @param string $name: name of module
+	 * @param string: name of module
 	 *
 	 * @return OBJECT
 	 */
@@ -118,11 +119,11 @@ class ts_Style extends ts_Packet {
 		return true;
 	}
 
-	/* ######################### handle style ############################### */
+	/* ######################### handle style ########################### */
 
 	/* get info about module
-	 * @param string $name: name of information to gather
-	 * +@param bool $refresh: true - delete all current infos 
+	 * @param string: name of information to gather
+	 * +@param bool: true - delete all current infos
 	 *
 	 * @return OBJECT
 	 */
@@ -140,8 +141,8 @@ class ts_Style extends ts_Packet {
 
 		// load data from database
 		$sql_0 = "SELECT *
-					FROM #__styles
-					WHERE id__style = '".$this->id."';";
+				FROM #__styles
+				WHERE id__style = '".$this->id."';";
 		$result_0 = $Database->doSelect($sql_0);
 
 		// save data
@@ -155,7 +156,7 @@ class ts_Style extends ts_Packet {
 	}
 
 	/* get status of style
-	 * +@param bool $verbal: get string as output (else: int)
+	 * +@param bool: get string as output (else: int)
 	 *
 	 * @return int/string
 	 */
@@ -188,7 +189,7 @@ class ts_Style extends ts_Packet {
 	}
 
 	/* activate style for next parsing
-	 * +@param bool $is_activated: true - activate; false: deactivate
+	 * +@param bool: true - activate; false: deactivate
 	 *
 	 * @return bool
 	 */
@@ -205,9 +206,9 @@ class ts_Style extends ts_Packet {
 
 		// set new status in database
 		$sql_0 = "UPDATE #__styles
-					SET is_activated = ".$sql_is_activated."
-						".$sql_is_default."
-					WHERE id__style = ".mysql_real_escape_string($this->id).";";
+				SET is_activated = ".$sql_is_activated."
+					".$sql_is_default."
+				WHERE id__style = ".mysql_real_escape_string($this->id).";";
 		if (!$Database->doUpdate($sql_0)) return false;
 
 		// update info-data
@@ -215,7 +216,7 @@ class ts_Style extends ts_Packet {
 		return true;
 	}
 
-	/* ############################# pre-parse ############################## */
+	/* ############################# pre-parse ########################## */
 
 	/* preparse and move all files and subfolders within path
 	 *
@@ -232,7 +233,7 @@ class ts_Style extends ts_Packet {
 		return true;
 	}
 
-	/* ############################# parse ################################## */
+	/* ############################# parse ############################## */
 
 	/* parse source-code for frontend
 	 *
@@ -402,7 +403,7 @@ class ts_Style extends ts_Packet {
 		return false;
 	}
 
-	/* ###################### delete ######################################## */
+	/* ###################### delete #################################### */
 
 	/* delete style
 	 *
@@ -420,7 +421,7 @@ class ts_Style extends ts_Packet {
 
 		// delete entry in database
 		$sql_0 = "DELETE FROM #__styles
-					WHERE id__style = '".$this->id."';";
+				WHERE id__style = '".$this->id."';";
 		if (!$Database->doDelete($sql_0)) return false;
 
 		return true;

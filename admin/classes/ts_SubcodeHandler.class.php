@@ -1,24 +1,5 @@
+<!-- | Class to handle subcodes -->
 <?php
-/** header *********************************************************************
- * project:			TSunic 4.1 | TS_ADMIN
- * file:			admin/classes/ts_SubcodeHandler.class.php
- * author:			Nicolas Frinker <authornicolas@tsunic.de>
- * copyright:		Copyright 2011 Nicolas Frinker
- * description:		Class; parse subcodes
- * licence:			This program is free software: you can redistribute it and/or modify
- * 					it under the terms of the GNU Affero General Public License as
- * 					published by the Free Software Foundation, either version 3 of the
- * 					License, or (at your option) any later version.
- * 
- * 					This program is distributed in the hope that it will be useful,
- * 					but WITHOUT ANY WARRANTY; without even the implied warranty of
- * 					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * 					GNU Affero General Public License for more details.
- * 
- * 					You should have received a copy of the GNU Affero General Public License
- * 					along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * ************************************************************************** */
-
 class ts_SubcodeHandler {
 
 	/* array containing all subfunctions
@@ -32,8 +13,6 @@ class ts_SubcodeHandler {
 	private $cache;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 
@@ -44,7 +23,7 @@ class ts_SubcodeHandler {
 	}
 
 	/* add subcodes
-	 * @param string $input: subcodes to add (xml-content of subcode-file)
+	 * @param string: subcodes to add (xml-content of subcode-file)
 	 *
 	 * @return bool
 	 */
@@ -76,7 +55,7 @@ class ts_SubcodeHandler {
 	}
 
 	/* add subcodes (callback)
-	 * @param array $input: input from callback-function
+	 * @param array: input from callback-function
 	 *
 	 * @return bool
 	 */
@@ -93,15 +72,17 @@ class ts_SubcodeHandler {
 		$cache[1] = $Parser->replaceModule($cache[1]);
 
 		// save in cache
-		$this->cache[] = array('path' => $Config->getRoot().'/runtime/'.$cache[1],
-							   'line' => $cache[2]);
+		$this->cache[] = array('
+			path' => $Config->getRoot().'/runtime/'.$cache[1],
+				'line' => $cache[2]
+		);
 
 		return '[sub]';
 	}
 
 	/* inject all subcodes and complete file-rendering
-	 * +@param string/bool $path: path to folder in which all files (also in subfolders) will be parsed
-	 * 								false will parse all needed folders 
+	 * +@param string/bool: path to folder in which all files will be
+	 * parsed recursively; false will parse all needed folders 
 	 *
 	 * @return bool
 	 */
