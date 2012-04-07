@@ -5,10 +5,15 @@
 
 	<h2><?php $this->set('{SHOWMAIN__H_LINKS}'); ?></h2>
 	<dl>
-	    <dt><a href="http://tsunic.de" target="_blank"><?php $this->set('{SHOWMAIN__LINKS_TSUNIC}'); ?></a></dt>
-	    <dd><?php $this->set('{SHOWMAIN__LINKS_TSUNIC_INFO}'); ?></dd>
+		<dt><a href="http://tsunic.de" target="_blank">
+			<?php $this->set('{SHOWMAIN__LINKS_TSUNIC}'); ?></a>
+		</dt>
+		<dd><?php $this->set('{SHOWMAIN__LINKS_TSUNIC_INFO}'); ?></dd>
 
-	    <dt style="margin-top:20px;"><a href="http://dokumentation.tsunic.de" target="_blank"><?php $this->set('{SHOWMAIN__LINKS_DOCUMENTATION}'); ?></a></dt>
-	    <dd><?php $this->set('{SHOWMAIN__LINKS_DOCUMENTATION_INFO}'); ?></dd>
+		<dt style="margin-top:20px;">
+			<a href="http://dokumentation.tsunic.de" target="_blank">
+				<?php $this->set('{SHOWMAIN__LINKS_DOCUMENTATION}'); ?></a>
+		</dt>
+		<dd><?php $this->set('{SHOWMAIN__LINKS_DOCUMENTATION_INFO}'); ?></dd>
 	</dl>
 </div>

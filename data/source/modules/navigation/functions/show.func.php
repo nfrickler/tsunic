@@ -1,6 +1,5 @@
 <!-- | -->
 <?php
-
 function $$$show () {
 	global $TSunic;
 

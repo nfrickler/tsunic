@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | language file english -->
 <?php
-
 $lang = array(
 
 	'SHOWMAIN__H' => 'Help and information',
