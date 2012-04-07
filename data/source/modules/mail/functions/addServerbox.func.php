@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to add new serverbox -->
 <?php
-
 function $$$addServerbox () {
 	global $TSunic;
 

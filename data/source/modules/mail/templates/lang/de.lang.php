@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | language file german -->
 <?php
-
 $lang = array(
 
 	// classes

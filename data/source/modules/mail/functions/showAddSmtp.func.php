@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show form to add new SMTP -->
 <?php
-
 function $$$showAddSmtp () {
 	global $TSunic;
 
@@ -20,8 +19,10 @@ function $$$showAddSmtp () {
 	$SuperMail = $TSunic->get('$$$SuperMail');
 
 	// activate template
-	$data = array('Smtp' => $Smtp,
-				  'mailaccounts' => $SuperMail->getMailaccounts());
+	$data = array(
+		'Smtp' => $Smtp,
+		'mailaccounts' => $SuperMail->getMailaccounts()
+	);
 	$TSunic->Tmpl->activate('$$$showAddSmtp', '$system$content', $data);
 
 	return true;

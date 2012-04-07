@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | SMTP class -->
 <?php
-
 class $$$Smtp {
 
 	/* id of smtp_server
@@ -31,25 +30,25 @@ class $$$Smtp {
 	/* password-authentifications
 	 * array
 	 */
-	private $auths = array(1 => array('{CLASS__SMTP__AUTHS_NORMAL}', ''),
-						   2 => array('{CLASS__SMTP__AUTHS_ENCRYPTEDPWD}', 'secure'),
-						 //  3 => array('{CLASS__SMTP__AUTHS_NTLM}', ''), // not supported
-						 //  4 => array('{CLASS__SMTP__AUTHS_KERBEROS_GSSAPI}', ''), // not supported
-						   5 => array('{CLASS__SMTP__AUTHS_NOAUTH}', '')
-						   );
+	private $auths = array(1 => array(
+		'{CLASS__SMTP__AUTHS_NORMAL}', ''),
+		2 => array('{CLASS__SMTP__AUTHS_ENCRYPTEDPWD}', 'secure'),
+		//  3 => array('{CLASS__SMTP__AUTHS_NTLM}', ''), // not supported
+		//  4 => array('{CLASS__SMTP__AUTHS_KERBEROS_GSSAPI}', ''), // not supported
+		5 => array('{CLASS__SMTP__AUTHS_NOAUTH}', '')
+	);
 
 	/* connections-securities
 	 * array
 	 */
-	private $connsecurities = array(1 => array('{CLASS__SMTP__CONNSECURITIES_NONE}', ''),
-								    2 => array('{CLASS__SMTP__CONNSECURITIES_STARTTLS}', ''),
-								    3 => array('{CLASS__SMTP__CONNSECURITIES_SSLTLS}', 'tls')
-									);
+	private $connsecurities = array(
+		1 => array('{CLASS__SMTP__CONNSECURITIES_NONE}', ''),
+		2 => array('{CLASS__SMTP__CONNSECURITIES_STARTTLS}', ''),
+		3 => array('{CLASS__SMTP__CONNSECURITIES_SSLTLS}', 'tls')
+	);
 
 	/* constructor
-	 * +@params int $id_mail_server: id_mail_server
-	 *
-	 * @return OBJECT
+	 * +@params int: id_mail_server
 	 */
 	public function __construct ($id_mail__smtp = 0) {
 
@@ -60,10 +59,9 @@ class $$$Smtp {
 	}
 
 	/* get all data of smtp-server
-	 * +@param bool/string $name: name of data (true will return all data)
+	 * +@param bool/string: name of data (true will return all data)
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -73,19 +71,19 @@ class $$$Smtp {
 
 			// get data from database
 			$sql_0 = "SELECT _host_ as host,
-							 _user_ as user,
-							 _password_ as password,
-							 _email_ as email,
-							 _emailname_ as emailname,
-							 _port_ as port,
-							 _description_ as description,
-							 auth as auth,
-							 connsecurity as connsecurity,
-							 fk_mail__account as fk_mail__account,
-							 fk_system_users__account as fk_system_users__account,
-							 dateOfCreation as dateOfCreation
-					  FROM #__smtps
-					  WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."';";
+						_user_ as user,
+						_password_ as password,
+						_email_ as email,
+						_emailname_ as emailname,
+						_port_ as port,
+						_description_ as description,
+						auth as auth,
+						connsecurity as connsecurity,
+						fk_mail__account as fk_mail__account,
+						fk_system_users__account as fk_system_users__account,
+						dateOfCreation as dateOfCreation
+					FROM #__smtps
+					WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// return, if no server matched
@@ -111,7 +109,7 @@ class $$$Smtp {
 	}
 
 	/* get mailaccount-object connected to smtp-server
-	 * +@param bool $get_id: get id_mail__account instead of object
+	 * +@param bool: get id_mail__account instead of object
 	 *
 	 * @return OBJECT/bool
 	 */
@@ -136,7 +134,7 @@ class $$$Smtp {
 	}
 
 	/* set mailaccount
-	 * @param object $Mailaccount: mailaccount-object
+	 * @param object: mailaccount-object
 	 *
 	 * @return bool
 	 */
@@ -164,8 +162,8 @@ class $$$Smtp {
 
 		// update database
 		$sql_0 = "UPDATE #__smtps
-					SET fk_mail__account = ".$this->Mailaccount->getInfo('id_mail__account')."
-					WHERE id_mail__smtp = ".$this->id_mail__smtp.";";
+				SET fk_mail__account = ".$this->Mailaccount->getInfo('id_mail__account')."
+				WHERE id_mail__smtp = ".$this->id_mail__smtp.";";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		return true;
@@ -200,8 +198,8 @@ class $$$Smtp {
 	}
 
 	/* get number or name of password-authentification
-	 * +@param string/int/bool $authentification: authentification-number or -name (false will use auth of this object)
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * +@param string/int/bool: authentification-number or -name (false will use auth of this object)
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
 	 */
@@ -215,8 +213,8 @@ class $$$Smtp {
 	}
 
 	/* get number or name of connection-security
-	 * +@param string/int/bool $connsecurity: connsecurity-number or -name (false will use consecurity of this object)
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * +@param string/int/bool: connsecurity-number or -name (false will use consecurity of this object)
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
 	 */
@@ -230,9 +228,9 @@ class $$$Smtp {
 	}
 
 	/* convert from number to name or vice versa
-	 * @param array $array: converter-array
-	 * @param string/int $input: input-number or -name
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * @param array: converter-array
+	 * @param string/int: input-number or -name
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
 	 */
@@ -278,10 +276,10 @@ class $$$Smtp {
 	}
 
 	/* create new smtp-server
-	 * @param string $email: email-address
-	 * @param string $password: password	 
-	 * +@param string $description: description
-	 * +@param string $emailname: email-name	 	 
+	 * @param string: email-address
+	 * @param string: password
+	 * +@param string: description
+	 * +@param string: email-name
 	 *
 	 * @return bool
 	 */
@@ -303,13 +301,13 @@ class $$$Smtp {
 
 		// create new server in database
 		$sql_0 = "INSERT INTO #__smtps
-				  SET _email_ = '".mysql_real_escape_string($email)."',
-				  	  _password_ = '".mysql_real_escape_string($password)."',
-				  	  _description_ = '".mysql_real_escape_string($description)."',
-				  	  _emailname_ = '".mysql_real_escape_string($emailname)."',
-				  	  fk_system_users__account = '".mysql_real_escape_string($id_acc)."',
-				  	  dateOfCreation = NOW()
-				  ;";
+				SET _email_ = '".mysql_real_escape_string($email)."',
+					_password_ = '".mysql_real_escape_string($password)."',
+					_description_ = '".mysql_real_escape_string($description)."',
+					_emailname_ = '".mysql_real_escape_string($emailname)."',
+					fk_system_users__account = '".mysql_real_escape_string($id_acc)."',
+					dateOfCreation = NOW()
+		;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// update $this->info
@@ -322,11 +320,11 @@ class $$$Smtp {
 	}
 
 	/* set connection for smtp-server
-	 * @param string $host: host to connect to smtp-server
-	 * @param string $user: user to connect to smtp-server
-	 * @param int $port: port to connect to smtp-server
-	 * @param int/string $connsecurity: connection-security
-	 * @param int/string $auth: password-authentification	 	 
+	 * @param string: host to connect to smtp-server
+	 * @param string: user to connect to smtp-server
+	 * @param int: port to connect to smtp-server
+	 * @param int/string: connection-security
+	 * @param int/string: password-authentification
 	 *
 	 * @return bool
 	 */
@@ -348,13 +346,13 @@ class $$$Smtp {
 
 		// save in db
 		$sql_0 = "UPDATE #__smtps
-				  SET _host_ = '".mysql_real_escape_string($this->getInfo('host'))."',
-					  _user_ = '".mysql_real_escape_string($this->getInfo('user'))."',
-					  _port_ = '".mysql_real_escape_string($this->getInfo('port'))."',
-					  connsecurity = '".$this->getConnsecurity($this->getInfo('connsecurity'), true)."',
-					  auth = '".$this->getAuth($this->getInfo('auth'), true)."'
-				  WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."';
-				  ";
+				SET _host_ = '".mysql_real_escape_string($this->getInfo('host'))."',
+					_user_ = '".mysql_real_escape_string($this->getInfo('user'))."',
+					_port_ = '".mysql_real_escape_string($this->getInfo('port'))."',
+					connsecurity = '".$this->getConnsecurity($this->getInfo('connsecurity'), true)."',
+					auth = '".$this->getAuth($this->getInfo('auth'), true)."'
+				WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."';
+		";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
@@ -365,10 +363,10 @@ class $$$Smtp {
 	}
 
 	/* edit smtp-server
-	 * @param string $email: email-address
-	 * @param string $password: password	 
-	 * +@param string $description: description
-	 * +@param string $emailname: email-name	 
+	 * @param string: email-address
+	 * @param string: password
+	 * +@param string: description
+	 * +@param string: email-name
 	 *
 	 * @return bool
 	 */
@@ -402,9 +400,9 @@ class $$$Smtp {
 
 		// create new server in database
 		$sql_0 = "UPDATE #__smtps
-				  SET ".$sql_string."
-				  WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."'
-				  ;";
+				SET ".$sql_string."
+				WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."'
+		;";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
@@ -423,7 +421,7 @@ class $$$Smtp {
 
 		// delete smtp-server in database
 		$sql_0 = "DELETE FROM #__smtps
-				  WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."';";
+				WHERE id_mail__smtp = '".mysql_real_escape_string($this->id_mail__smtp)."';";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 
 		if (!$result_0) return false;
@@ -431,7 +429,7 @@ class $$$Smtp {
 	}
 
 	/* check, if fk_mail__account is valid
-	 * @param string $host: host of server-connection
+	 * @param string: host of server-connection
 	 *
 	 * @return bool
 	 */
@@ -444,7 +442,7 @@ class $$$Smtp {
 	}
 
 	/* check, if host is valid
-	 * @param string $host: host of server-connection
+	 * @param string: host of server-connection
 	 *
 	 * @return bool
  	 */
@@ -457,7 +455,7 @@ class $$$Smtp {
 	}
 
 	/* check, if description is valid
-	 * @param string $description: description
+	 * @param string: description
 	 *
 	 * @return bool
 	 */
@@ -467,7 +465,7 @@ class $$$Smtp {
 	}
 
 	/* check, if port is valid
-	 * @param string $port: port of server-connection
+	 * @param string: port of server-connection
 	 *
 	 * @return bool
 	 */
@@ -480,7 +478,7 @@ class $$$Smtp {
 	}
 
 	/* check, if auth is valid
-	 * @param int $auth: security
+	 * @param int: security
 	 *
 	 * @return bool
 	 */
@@ -495,7 +493,7 @@ class $$$Smtp {
 	}
 
 	/* check, if connsecurity is valid
-	 * @param int $connsecurity: connsecurity
+	 * @param int: connsecurity
 	 *
 	 * @return bool
  	 */
@@ -510,7 +508,7 @@ class $$$Smtp {
 	}
 
 	/* get possible auths ($auth = true) OR name of one auth ($auth = int) OR authname of this object ($auth = false)
-	 * +@param int/bool $auth: security
+	 * +@param int/bool: security
 	 *
 	 * @return int/array
  	 */
@@ -529,7 +527,7 @@ class $$$Smtp {
 	}
 
 	/* check, if user is valid
-	 * @param string $user: user of server-connection
+	 * @param string: user of server-connection
 	 *
 	 * @return bool
 	 */
@@ -542,7 +540,7 @@ class $$$Smtp {
 	}
 
 	/* check, if password is valid
-	 * @param string $password: password of server-connection
+	 * @param string: password of server-connection
 	 *
 	 * @return bool
 	 */
@@ -564,7 +562,7 @@ class $$$Smtp {
 	}
 
 	/* check, if e-mail is valid
-	 * @param string $boxname: boxname of server-connection
+	 * @param string: boxname of server-connection
 	 *
 	 * @return bool
 	 */
@@ -577,7 +575,7 @@ class $$$Smtp {
 	}
 
 	/* check, if emailname is valid
-	 * @param string $emailname: emailname of server
+	 * @param string: emailname of server
 	 *
 	 * @return bool
 	 */
@@ -587,7 +585,7 @@ class $$$Smtp {
 	}
 
 	/* check, if subject is valid
-	 * @param string $emailname: subject of message
+	 * @param string: subject of message
 	 *
 	 * @return bool
 	 */
@@ -600,7 +598,7 @@ class $$$Smtp {
 	}
 
 	/* check, if message is valid
-	 * @param string $message: message itself
+	 * @param string: message itself
 	 *
 	 * @return bool
 	 */
@@ -613,7 +611,7 @@ class $$$Smtp {
 	}
 
 	/* check, if addressee is valid
-	 * @param string $addressee: addressee of mail
+	 * @param string: addressee of mail
 	 *
 	 * @return bool
 	 */
@@ -645,7 +643,7 @@ class $$$Smtp {
 	}
 
 	/* save connection-errors
-	 * @param string $error_msg: error-message
+	 * @param string: error-message
 	 *
 	 * @return string
 	 */
@@ -657,15 +655,15 @@ class $$$Smtp {
 		return true;
 	}
 
-	/* *********************** server-interaction *****************************/
+	/* *********************** server-interaction *************************/
 	/* ********************************************************************/
 
 	/* try to get connection-data automatically
-	 * @param string $host: host
-	 * @param int $port: port
-	 * @param string $user: user
-	 * +@param int/bool $auth: password-authentification
-	 * +@param int/bool $connsecurity: connection-security	 	 	 	 
+	 * @param string: host
+	 * @param int: port
+	 * @param string: user
+	 * +@param int/bool: password-authentification
+	 * +@param int/bool: connection-security
 	 *
 	 * @return bool
  	 */
@@ -688,18 +686,18 @@ class $$$Smtp {
 		$sql_auth = ($auth === false) ? '' : "auth = '".$auth."' AND ";
 		$sql_connsecurity = ($connsecurity === false) ? '' : "connsecurity = '".$connsecurity."' AND ";
 		$sql_0 = "SELECT suffix as suffix,
-						 host as host,
-						 port as port,
-						 auth as auth,
-						 connsecurity as connsecurity,
-						 user as user
-				  FROM #__knownservers
-				  WHERE ".$sql_auth.$sql_connsecurity."
-				  		protocol = '-1'
-				  		AND (suffix = '".mysql_real_escape_string($suffix)."'
-						OR suffix = '')
-						".$host_lookup."
-				  ORDER BY suffix DESC;";
+					host as host,
+					port as port,
+					auth as auth,
+					connsecurity as connsecurity,
+					user as user
+				FROM #__knownservers
+				WHERE ".$sql_auth.$sql_connsecurity."
+					protocol = '-1'
+					AND (suffix = '".mysql_real_escape_string($suffix)."'
+					OR suffix = '')
+					".$host_lookup."
+				ORDER BY suffix DESC;";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// check all possibilities until found right one
@@ -747,9 +745,9 @@ class $$$Smtp {
 	/* ************************** send mail *******************************/
 
 	/* send-mail
-	 * @param string $addressees: addressees of mail
-	 * @param string $subject: subject of mail
-	 * @param string $message: message to send	 	 
+	 * @param string: addressees of mail
+	 * @param string: subject of mail
+	 * @param string: message to send
 	 *
 	 * @return bool
 	 */

@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to ask, if SMTP shall be deleted -->
 <?php
-
 function $$$showDeleteSmtp () {
 	global $TSunic;
 

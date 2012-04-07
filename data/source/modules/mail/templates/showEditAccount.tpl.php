@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to edit mail account -->
 <div id="$$$div__showEditAccount">
 	<h1><?php $this->set('{SHOWEDITACCOUNT__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWEDITACCOUNT__INFO}'); ?></p>

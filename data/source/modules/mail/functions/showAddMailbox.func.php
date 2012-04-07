@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show form to add new mailbox -->
 <?php
-
 function $$$showAddMailbox () {
 	global $TSunic;
 

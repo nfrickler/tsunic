@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to delete SMTP -->
 <?php
-
 function $$$deleteSmtp () {
 	global $TSunic;
 

@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show all mail servers -->
 <div id="$$$div__showMailservers">
 	<h1><?php $this->set('{SHOWMAILSERVERS__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWMAILSERVERS__INFOTEXT}'); ?></p>

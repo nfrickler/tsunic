@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | server mailbox class -->
 <?php
-
 class $$$Serverbox {
 
 	/* name of mailserver
@@ -24,9 +23,7 @@ class $$$Serverbox {
 	private $cache;
 
 	/* constructor
-	 * +@params int $id_mail_serverbox: id_mail__serverbox
-	 *
-	 * @return OBJECT
+	 * +@params int: id_mail__serverbox
 	 */
 	public function __construct ($id_mail__serverbox = 0, $Mailaccount = false) {
 
@@ -38,10 +35,9 @@ class $$$Serverbox {
 	}
 
 	/* get all data of mailserverbox
-	 * +@param bool/string $name: name of data (true will return all data)
+	 * +@param bool/string: name of data (true will return all data)
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -51,16 +47,16 @@ class $$$Serverbox {
 
 			// get data from database
 			$sql_0 = "SELECT _name_ as name,
-							 fk_mail__account as fk_mail__account,
-							 fk_mail__box as fk_mail__box,
-							 deleteOnUpdate as deleteOnUpdate,
-							 dateOfCreation as dateOfCreation,
-							 dateOfUpdate as dateOfUpdate,
-							 dateOfCheck as dateOfCheck,
-							 checkAllSeconds as checkAllSeconds,
-							 isActive as isActive
-					  FROM #__serverboxes
-					  WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
+						fk_mail__account as fk_mail__account,
+						fk_mail__box as fk_mail__box,
+						deleteOnUpdate as deleteOnUpdate,
+						dateOfCreation as dateOfCreation,
+						dateOfUpdate as dateOfUpdate,
+						dateOfCheck as dateOfCheck,
+						checkAllSeconds as checkAllSeconds,
+						isActive as isActive
+					FROM #__serverboxes
+					WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// return, if no server matched
@@ -90,7 +86,7 @@ class $$$Serverbox {
 	}
 
 	/* get mailaccount-object, the serverbox belongs to
-	 * +@param bool $get_id: get id_mail__account instead of object
+	 * +@param bool: get id_mail__account instead of object
 	 *
 	 * @return OBJECT/bool
  	 */
@@ -115,7 +111,7 @@ class $$$Serverbox {
 	}
 
 	/* set mailaccount
-	 * @param object $Mailaccount: mailaccount-object
+	 * @param object: mailaccount-object
 	 *
 	 * @return bool
  	 */
@@ -143,8 +139,8 @@ class $$$Serverbox {
 
 		// update database
 		$sql_0 = "UPDATE #__serverboxes
-					SET fk_mail__account = ".$this->Mailaccount->getInfo('id_mail__account')."
-					WHERE id_mail__serverbox = ".$this->id_mail__serverbox.";";
+				SET fk_mail__account = ".$this->Mailaccount->getInfo('id_mail__account')."
+				WHERE id_mail__serverbox = ".$this->id_mail__serverbox.";";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		return true;
@@ -163,10 +159,10 @@ class $$$Serverbox {
 	}
 
 	/* add new serverbox
-	 * @param int $fk_mail__account: fk_mail__account
-	 * @param string $name: name of box on server
-	 * +@param int $fk_mail__box: local mailbox, where new mails are placed in
-	 * +@param bool $deleteOnUpdate: delete mails on server after saving them locally	 	 	 	 	 	 	 
+	 * @param int: fk_mail__account
+	 * @param string: name of box on server
+	 * +@param int: local mailbox, where new mails are placed in
+	 * +@param bool: delete mails on server after saving them locally
 	 *
 	 * @return bool
  	 */
@@ -180,7 +176,7 @@ class $$$Serverbox {
 				OR !$this->isValidFkmailbox($fk_mail__box)
 		) {
 			// invalid input
-			return false;		
+			return false;
 		}
 
 		// get deleteOnUpdate
@@ -188,11 +184,11 @@ class $$$Serverbox {
 
 		// add new serverbox in database
 		$sql_0 = "INSERT INTO #__serverboxes
-				  SET fk_mail__account = '".mysql_real_escape_string($fk_mail__account)."',
-				  	  _name_ = '".mysql_real_escape_string($name)."',
-				  	  fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."',
-				  	  deleteOnUpdate = '".mysql_real_escape_string($deleteOnUpdate)."'
-				  ;";
+				SET fk_mail__account = '".mysql_real_escape_string($fk_mail__account)."',
+					_name_ = '".mysql_real_escape_string($name)."',
+					fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."',
+					deleteOnUpdate = '".mysql_real_escape_string($deleteOnUpdate)."'
+				;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// update $this->info
@@ -205,9 +201,9 @@ class $$$Serverbox {
 	}
 
 	/* edit serverbox
-	 * @param string $name: name of box on server
-	 * @param int $fk_mail__box: local mailbox, where new mails are placed in
-	 * @param bool $deleteOnUpdate: delete mails on server after saving them locally	 	 	 	 	 	 	 
+	 * @param string: name of box on server
+	 * @param int: local mailbox, where new mails are placed in
+	 * @param bool: delete mails on server after saving them locally
 	 *
 	 * @return bool
  	 */
@@ -217,7 +213,7 @@ class $$$Serverbox {
 		// validate input
 		$fk_mail__box = (int) $fk_mail__box;
 		if (!$this->isValidName($name)
-				OR !$this->isValidFkmailbox($fk_mail__box)
+			OR !$this->isValidFkmailbox($fk_mail__box)
 		) {
 			// invalid input
 			return false;	
@@ -228,11 +224,11 @@ class $$$Serverbox {
 
 		// add new serverbox in database
 		$sql_0 = "UPDATE #__serverboxes
-				  SET _name_ = '".mysql_real_escape_string($name)."',
-				  	  fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."',
-				  	  deleteOnUpdate = '".mysql_real_escape_string($deleteOnUpdate)."'
-				  WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
-				  ;";
+				SET _name_ = '".mysql_real_escape_string($name)."',
+					fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."',
+					deleteOnUpdate = '".mysql_real_escape_string($deleteOnUpdate)."'
+				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
+				;";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
@@ -244,7 +240,7 @@ class $$$Serverbox {
 	}
 
 	/* de-/activate serverbox
-	 * @param bool $isActive: true - activate; false - deactivate	 	 	 	 	 	 	 
+	 * @param bool: true - activate; false - deactivate
 	 *
 	 * @return bool
  	 */
@@ -256,10 +252,10 @@ class $$$Serverbox {
 
 		// de-/activate serverbox in database
 		$sql_0 = "UPDATE #__serverboxes
-				  SET isActive = '".$isActive."',
-				  	  dateOfUpdate = NOW()
-				  WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
-				  ;";
+				SET isActive = '".$isActive."',
+					dateOfUpdate = NOW()
+				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
+				;";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// return
@@ -276,7 +272,7 @@ class $$$Serverbox {
 
 		// delete mailserverbox in database
 		$sql_0 = "DELETE FROM #__serverboxes
-				  WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
+				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 
 		if (!$result_0) return false;
@@ -284,10 +280,10 @@ class $$$Serverbox {
 	}
 
 	/* check, if name is valid
-	 * @param string $name: name of serverbox
+	 * @param string: name of serverbox
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidName ($name) {
 
 		// check, if string is empty
@@ -297,10 +293,10 @@ class $$$Serverbox {
 	}
 
 	/* check, if fk_mail__account is valid
-	 * @param int $fk_mail__account: fk_mail__account
+	 * @param int: fk_mail__account
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidFkAccount ($fk_mail__account) {
 		global $TSunic;
 
@@ -313,10 +309,10 @@ class $$$Serverbox {
 	}
 
 	/* check, if fk_mail__box is valid
-	 * @param int $fk_mail__box: fk_mail__box
+	 * @param int: fk_mail__box
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidFkmailbox ($fk_mail__box) {
 		global $TSunic;
 
@@ -338,7 +334,7 @@ class $$$Serverbox {
 	/* check, if serverbox should be checked for new mails
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isTimeToCheck () {
 		return ($this->timeToCheck() <= 0) ? true : false;
 	}
@@ -346,7 +342,7 @@ class $$$Serverbox {
 	/* get seconds until checking for new mails
 	 *
 	 * @return int
- 	 */
+	 */
 	public function timeToCheck () {
 
 		// get difference to last time
@@ -361,10 +357,10 @@ class $$$Serverbox {
 	}
 
 	/* check for new emails in this serverbox and store them in db
-	 * +@param bool $force: force check?
+	 * +@param bool: force check?
 	 *
 	 * @return array with ids of new mails
- 	 */
+	 */
 	public function checkMails ($force = false) {
 		global $TSunic;
 
@@ -376,9 +372,9 @@ class $$$Serverbox {
 
 		// update dateOfCheck
 		$sql_0 = "UPDATE #__serverboxes
-					SET dateOfCheck = NOW()
-					WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
-					  ";
+				SET dateOfCheck = NOW()
+				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
+		";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// get connection to serverbox on server
@@ -395,8 +391,8 @@ class $$$Serverbox {
 
 		// get msg-numbers of all mails already stored locally
 		$sql_0 = "SELECT uid as uid
-				  FROM #__mails
-				  WHERE fk_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
+				FROM #__mails
+				WHERE fk_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
 		$return_0 = $TSunic->Db->doSelect($sql_0);
 		if ($return_0 === false) return false;
 
@@ -425,25 +421,26 @@ class $$$Serverbox {
 			$date = date('Y-m-d H:i:s', strtotime($mail->date));
 
 			// init bodyparts
-			$this->cache['bodyparts'] = array('plain' => '',
-											  'html' => '',
-											  'attachments' => array(),
-											  'charset' => '');
+			$this->cache['bodyparts'] = array(
+				'plain' => '',
+				'html' => '',
+				'attachments' => array(),
+				'charset' => ''
+			);
 
 			// get body-parts of mail
-		    $structure = imap_fetchstructure($stream, $msg_number);
+			$structure = imap_fetchstructure($stream, $msg_number);
 
-		    if (!isset($structure->parts))  {
+			if (!isset($structure->parts))  {
 				// no multipart
 				$this->getpart($stream, $msg_number, $structure, 0);  
 			} else {
 				// multipart: iterate through each part
-		        foreach ($structure->parts as $partnumber => $part) {
-
-		        	// get part
+				foreach ($structure->parts as $partnumber => $part) {
+					// get part
 					$this->getpart($stream, $msg_number, $part, ($partnumber+1));
 				}
-		    }
+			}
 
 			// validate plaincontent
 			$this->cache['bodyparts']['plain'] = str_replace('<', '&lt;', $this->cache['bodyparts']['plain']);
@@ -460,18 +457,18 @@ class $$$Serverbox {
 
 			// save locally
 			$sql_1 = "INSERT INTO #__mails
-					  SET fk_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."',
-					  	  fk_mail__box = '".mysql_real_escape_string($this->getInfo('fk_mail__box'))."',
-					  	  _subject_ = '".mysql_real_escape_string($subject)."',
-					  	  _plaincontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['plain'])."',
-					  	  _htmlcontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['html'])."',
-					  	  charset = '".mysql_real_escape_string($this->cache['bodyparts']['charset'])."',
-					  	  _sender_ = '".mysql_real_escape_string($from)."',
-					  	  _addressee_ = '".mysql_real_escape_string($to)."',
-					  	  dateOfMail = '".mysql_real_escape_string($date)."',
-					  	  status = '1',
-					  	  uid = '".mysql_real_escape_string($uid)."'
-					  ";
+					SET fk_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."',
+						fk_mail__box = '".mysql_real_escape_string($this->getInfo('fk_mail__box'))."',
+						_subject_ = '".mysql_real_escape_string($subject)."',
+						_plaincontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['plain'])."',
+						_htmlcontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['html'])."',
+						charset = '".mysql_real_escape_string($this->cache['bodyparts']['charset'])."',
+						_sender_ = '".mysql_real_escape_string($from)."',
+						_addressee_ = '".mysql_real_escape_string($to)."',
+						dateOfMail = '".mysql_real_escape_string($date)."',
+						status = '1',
+						uid = '".mysql_real_escape_string($uid)."'
+			";
 			$result_1 = $TSunic->Db->doInsert($sql_1);
 			$id_mail__mail = mysql_insert_id();
 
@@ -499,10 +496,10 @@ class $$$Serverbox {
 	}
 
 	/* get parts of mail (plainbody, htmlbody, attatchments etc)
-	 * @param stream $stream: stream to fetch mails from
-	 * @param int $mail_id: mail-id
-	 * @param object $part: part of mail
-	 * @param int $partnumber: part-number	 	 	 
+	 * @param stream: stream to fetch mails from
+	 * @param int: mail-id
+	 * @param object: part of mail
+	 * @param int: part-number
 	 *
 	 * @return bool
  	 */
@@ -547,8 +544,10 @@ class $$$Serverbox {
 			$filename = (isset($params['filename'])) ? $params['filename'] : $params['name'];
 
 			// add attachment
-			$this->cache['bodyparts']['attachments'][] = array('name' => $this->decodeValue($filename),
-															   'content' => $bodydata);
+			$this->cache['bodyparts']['attachments'][] = array(
+				'name' => $this->decodeValue($filename),
+				'content' => $bodydata
+			);
 		}
 
 		// get message
@@ -568,14 +567,14 @@ class $$$Serverbox {
 				$this->cache['bodyparts']['charset'] = $params['charset'];
 		}
 
-	    // EMBEDDED MESSAGE
-	    // Many bounce notifications embed the original message as type 2,
-	    // but AOL uses type 1 (multipart), which is not handled here.
-	    // There are no PHP functions to parse embedded messages,
-	    // so this just appends the raw source to the main message.
-	    elseif ($part->type==2 AND isset($bodydata)) {
-	        $this->cache['bodyparts']['plain'].= trim($bodydata) ."\n\n";
-	    }
+		// EMBEDDED MESSAGE
+		// Many bounce notifications embed the original message as type 2,
+		// but AOL uses type 1 (multipart), which is not handled here.
+		// There are no PHP functions to parse embedded messages,
+		// so this just appends the raw source to the main message.
+		elseif ($part->type==2 AND isset($bodydata)) {
+			$this->cache['bodyparts']['plain'].= trim($bodydata) ."\n\n";
+		}
 
 		// try to get aol-multipart messages
 		elseif ($part->type == 1 AND isset($bodydata)) {
@@ -617,11 +616,11 @@ class $$$Serverbox {
 			}
 		}
 
-	    // add subparts
-	    if (isset($parts->parts)) {
-	        foreach ($part->parts as $partno0 => $p2)
-	            $this->getpart($stream, $mail_id, $p2, $partno.'.'.($partno0+1));  // 1.2, 1.2.1, etc.
-	    }
+		// add subparts
+		if (isset($parts->parts)) {
+			foreach ($part->parts as $partno0 => $p2)
+				$this->getpart($stream, $mail_id, $p2, $partno.'.'.($partno0+1));  // 1.2, 1.2.1, etc.
+		}
 
 		return true;
 	}
@@ -629,7 +628,7 @@ class $$$Serverbox {
 	/* check, if serverbox exists
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValid () {
 
 		// check, if id exists
@@ -644,7 +643,7 @@ class $$$Serverbox {
 	}
 
 	/* decode value
-	 * @param string $subject: subject to decode
+	 * @param string: subject to decode
 	 *
 	 * @return string
  	 */
@@ -668,9 +667,9 @@ class $$$Serverbox {
 
 	/* decode a mail-header string to a specified charset
 	 * @source: http://php.net/imap_mime_header_decode (comments)
-	 * @param string $mimeStr: mime-string
-	 * +@param string $inputCharset: input-charset
-	 * +@param string $targetCharset: target-charset	 
+	 * @param string: mime-string
+	 * +@param string: input-charset
+	 * +@param string: target-charset
 	 *
 	 * @return string
  	 */
@@ -693,10 +692,11 @@ class $$$Serverbox {
 			) {
 				$decodedStr.=$mimeStr->text;
 			} else {
-				$decodedStr.= mb_convert_encoding($mimeStr->text,
-												  $targetCharset,
-												  (in_array($mimeStr->charset, $encodings) ? $mimeStr->charset : $fallbackCharset)
-												 );
+				$decodedStr.= mb_convert_encoding(
+					$mimeStr->text,
+					$targetCharset,
+					(in_array($mimeStr->charset, $encodings) ? $mimeStr->charset : $fallbackCharset)
+				);
 			}
 		}
 

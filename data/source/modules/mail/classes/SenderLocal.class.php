@@ -1,13 +1,10 @@
-<!-- | -->
+<!-- | Local e-mail sender class -->
 <?php
-
 include_once '$$$Smtp.class.php';
 class $$$SenderLocal extends $$$Smtp {
 
 	/* constructor
-	 * +@params int $id_mail_server: id_mail_server
-	 *
-	 * @return OBJECT
+	 * +@params int: id_mail_server
 	 */
 	public function __construct ($id_mail__smtp = 0) {
 
@@ -21,10 +18,9 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* get all data of smtp-server
-	 * +@param bool/string $name: name of data (true will return all data)
+	 * +@param bool/string: name of data (true will return all data)
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
 	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -48,12 +44,12 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* create new smtp-server
-	 * @param string $host: host
-	 * @param int $port: port
-	 * @param string $user: user
-	 * @param string $password: password
-	 * @param string $email: email-address
-	 * @param string $emailname: email-name	 	 
+	 * @param string: host
+	 * @param int: port
+	 * @param string: user
+	 * @param string: password
+	 * @param string: email-address
+	 * @param string: email-name
 	 *
 	 * @return bool
 	 */
@@ -62,12 +58,12 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* edit smtp-server
-	 * @param string $host: host
-	 * @param int $port: port
-	 * @param string $user: user
-	 * @param string $password: password
-	 * @param string $email: email-address
-	 * @param string $emailname: email-name	 	 
+	 * @param string: host
+	 * @param int: port
+	 * @param string: user
+	 * @param string: password
+	 * @param string: email-address
+	 * @param string: email-name
 	 *
 	 * @return bool
 	 */
@@ -84,16 +80,16 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* check, if host is valid
-	 * @param string $host: host of server-connection
+	 * @param string: host of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidHost ($host) {
 		return false;
 	}
 
 	/* check, if port is valid
-	 * @param string $port: port of server-connection
+	 * @param string: port of server-connection
 	 *
 	 * @return bool
 	 */
@@ -102,7 +98,7 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* check, if user is valid
-	 * @param string $user: user of server-connection
+	 * @param string: user of server-connection
 	 *
 	 * @return bool
 	 */
@@ -111,7 +107,7 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* check, if password is valid
-	 * @param string $password: password of server-connection
+	 * @param string: password of server-connection
 	 *
 	 * @return bool
 	 */
@@ -129,9 +125,9 @@ class $$$SenderLocal extends $$$Smtp {
 	}
 
 	/* send mail with php mail()-function
-	 * @param array $addressees: array with addressees
-	 * @param string $subject: subject of message
-	 * @param string $message: the message itself	 	 
+	 * @param array: array with addressees
+	 * @param string: subject of message
+	 * @param string: the message itself
 	 *
 	 * @return bool
 	 */

@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to add new SMTP -->
 <?php
-
 function $$$addSmtp () {
 	global $TSunic;
 

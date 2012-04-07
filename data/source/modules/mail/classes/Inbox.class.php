@@ -1,11 +1,10 @@
-<!-- | -->
+<!-- | Inbox class -->
 <?php
-
 include_once '$$$Box.class.php';
 class $$$Inbox extends $$$Box {
 
 	/* get information about mailbox
-	 * +@param string/bool $name: name of info (true will return $this->info)
+	 * +@param string/bool: name of info (true will return $this->info)
 	 *
 	 * @return string/int/array
  	 */
@@ -16,10 +15,12 @@ class $$$Inbox extends $$$Box {
 		if (empty($this->info)) {
 
 			// set
-			$this->info = array('name' => '{INBOX__NAME}',
-								'description' => '{INBOX__DESCRIPTION}',
-								'dateOfCreation' => 0,
-								'id_mail__box' => 0);
+			$this->info = array(
+				'name' => '{INBOX__NAME}',
+				'description' => '{INBOX__DESCRIPTION}',
+				'dateOfCreation' => 0,
+				'id_mail__box' => 0
+			);
 		}
 
 		// return requested info
@@ -40,14 +41,14 @@ class $$$Inbox extends $$$Box {
 
 		// get ids of mails
 		$sql_0 = "SELECT mails.id_mail__mail as id_mail__mail
-				  FROM #__mails as mails,
-				  	   #__serverboxes as serverboxes,
-				  	   #__accounts as accounts
-				  WHERE accounts.fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."'
-				  			AND serverboxes.fk_mail__account = accounts.id_mail__account
-				  			AND mails.fk_mail__serverbox = serverboxes.id_mail__serverbox
-							AND mails.fk_mail__box = '0'
-							AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
+				FROM #__mails as mails,
+					#__serverboxes as serverboxes,
+					#__accounts as accounts
+				WHERE accounts.fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."'
+					AND serverboxes.fk_mail__account = accounts.id_mail__account
+					AND mails.fk_mail__serverbox = serverboxes.id_mail__serverbox
+					AND mails.fk_mail__box = '0'
+					AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
 		$ids_mails = $TSunic->Db->doSelect($sql_0);
 
 		// create and store objects
@@ -61,44 +62,40 @@ class $$$Inbox extends $$$Box {
 	}
 
 	/* create a new mailbox
-	 * @param string $name: name of mailbox
-	 * +@param string $description: description of box
+	 * @param string: name of mailbox
+	 * +@param string: description of box
 	 *
 	 * @return bool
 	 */
 	public function createBox ($name, $description = '') {
-
 		return false;
 	}
 
 	/* edit data of box
-	 * @param string $name: name of mailbox
-	 * @param string $description: description of box
+	 * @param string: name of mailbox
+	 * @param string: description of box
 	 *
 	 * @return bool
 	 */
 	public function editBox ($name, $description) {
-
 		return false;
 	}
 
 	/* check, if name of box is valid
-	 * @param string $name: name of mailbox
+	 * @param string: name of mailbox
 	 *
 	 * @return bool
 	 */
 	public function isValidName ($name) {
-
 		return false;
 	}
 
 	/* check, if description of box is valid
-	 * @param string $description: description of mailbox
+	 * @param string: description of mailbox
 	 *
 	 * @return bool
 	 */
 	public function isValidDescription ($description) {
-
 		return false;
 	}
 
@@ -107,7 +104,6 @@ class $$$Inbox extends $$$Box {
 	 * @return bool
 	 */
 	public function deleteBox () {
-
 		return false;
 	}
 }

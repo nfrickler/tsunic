@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to delete mailbox -->
 <?php
-
 function $$$deleteMailbox () {
 	global $TSunic;
 

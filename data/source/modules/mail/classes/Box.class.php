@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | mailbox class -->
 <?php
-
 class $$$Box {
 
 	/* id of mailbox
@@ -19,9 +18,7 @@ class $$$Box {
 	private $mails;
 
 	/* constructor
-	 * +@param int $id_mail__box: id_mail__box
-	 *
-	 * @return OBJECT
+	 * +@param int: id_mail__box
 	 */
 	public function __construct ($id_mail__box = false) {
 
@@ -32,7 +29,7 @@ class $$$Box {
 	}
 
 	/* get information about mailbox
-	 * +@param string/bool $name: name of info (true will return $this->info)
+	 * +@param string/bool: name of info (true will return $this->info)
 	 *
 	 * @return string/int/array
  	 */
@@ -47,10 +44,10 @@ class $$$Box {
 
 			// get infos from database
 			$sql_0 = "SELECT _name_ as name,
-							 _description_ as description,
-							 dateOfCreation as dateOfCreation
-					  FROM #__boxes
-					  WHERE id_mail__box = '".mysql_real_escape_string($this->id_mail__box)."';";
+						_description_ as description,
+						dateOfCreation as dateOfCreation
+					FROM #__boxes
+					WHERE id_mail__box = '".mysql_real_escape_string($this->id_mail__box)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 			$this->info = (!empty($result_0)) ? $result_0[0] : array() ;
 			$this->info['id_mail__box'] = $this->id_mail__box;
@@ -92,9 +89,9 @@ class $$$Box {
 
 		// get ids of mails
 		$sql_0 = "SELECT mails.id_mail__mail as id_mail__mail
-				  FROM #__mails as mails
-				  WHERE mails.fk_mail__box = '".mysql_real_escape_string($this->id_mail__box)."'
-				  		AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
+				FROM #__mails as mails
+				WHERE mails.fk_mail__box = '".mysql_real_escape_string($this->id_mail__box)."'
+					AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
 		$ids_mails = $TSunic->Db->doSelect($sql_0);
 
 		// create and store objects
@@ -122,8 +119,8 @@ class $$$Box {
 	}
 
 	/* create a new mailbox
-	 * @param string $name: name of mailbox
-	 * +@param string $description: description of box
+	 * @param string: name of mailbox
+	 * +@param string: description of box
 	 *
 	 * @return bool
  	 */
@@ -135,10 +132,10 @@ class $$$Box {
 
 		// save in db
 		$sql_0 = "INSERT INTO #__boxes
-				  SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
-				  	  _name_ = '".mysql_real_escape_string($name)."',
-				  	  _description_ = '".mysql_real_escape_string($description)."'
-						";
+				SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
+					_name_ = '".mysql_real_escape_string($name)."',
+					_description_ = '".mysql_real_escape_string($description)."'
+			";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// update $this->info
@@ -149,8 +146,8 @@ class $$$Box {
 	}
 
 	/* edit data of box
-	 * @param string $name: name of mailbox
-	 * @param string $description: description of box
+	 * @param string: name of mailbox
+	 * @param string: description of box
 	 *
 	 * @return bool
  	 */
@@ -162,10 +159,10 @@ class $$$Box {
 
 		// save new data in db
 		$sql_0 = "UPDATE #__boxes
-				  SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
-				  	  _name_ = '".mysql_real_escape_string($name)."',
-				  	  _description_ = '".mysql_real_escape_string($description)."'
-				  WHERE id_mail__box = '".mysql_real_escape_string($this->id_mail__box)."';";
+				SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
+					_name_ = '".mysql_real_escape_string($name)."',
+					_description_ = '".mysql_real_escape_string($description)."'
+				WHERE id_mail__box = '".mysql_real_escape_string($this->id_mail__box)."';";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
@@ -175,7 +172,7 @@ class $$$Box {
 	}
 
 	/* check, if name of box is valid
-	 * @param string $name: name of mailbox
+	 * @param string: name of mailbox
 	 *
 	 * @return bool
  	 */
@@ -188,14 +185,11 @@ class $$$Box {
 	}
 
 	/* check, if description of box is valid
-	 * @param string $description: description of mailbox
+	 * @param string: description of mailbox
 	 *
 	 * @return bool
  	 */
 	public function isValidDescription ($description) {
-
-		// TODO
-
 		return true;
 	}
 
@@ -214,7 +208,7 @@ class $$$Box {
 
 		// delete mailbox in database
 		$sql_0 = "DELETE FROM #__boxes
-				  WHERE id_mail__box = '".mysql_real_escape_string($this->id_mail__box)."';";
+				WHERE id_mail__box = '".mysql_real_escape_string($this->id_mail__box)."';";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 
 		if (!$result_0) return false;
@@ -230,12 +224,12 @@ class $$$Box {
 
 		// get serverboxes from database
 		$sql_0 = "SELECT serverboxes.id_mail__serverbox as id_mail__serverbox
-				  FROM #__serverboxes as serverboxes,
-				  	   #__accounts as accounts
-				  WHERE serverboxes.fk_mail__box = '".mysql_real_escape_string($this->getInfo('id_mail__box'))."'
-				  		AND isActive = 1
-				  		AND serverboxes.fk_mail__account = accounts.id_mail__account
-				  		AND accounts.fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."';";
+				FROM #__serverboxes as serverboxes,
+					#__accounts as accounts
+				WHERE serverboxes.fk_mail__box = '".mysql_real_escape_string($this->getInfo('id_mail__box'))."'
+					AND isActive = 1
+					AND serverboxes.fk_mail__account = accounts.id_mail__account
+					AND accounts.fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		if (!$result_0) return array();

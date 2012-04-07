@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to delete mail -->
 <?php
 
 $mail = $this->getVar('mail');

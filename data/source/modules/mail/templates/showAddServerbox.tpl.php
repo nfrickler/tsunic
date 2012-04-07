@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to add new server -->
 <div id="$$$div__showAddMailserver">
 	<h1><?php $this->set('{SHOWADDSERVERBOX__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWADDSERVERBOX__INFO}'); ?></p>

@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | class handling general mail things -->
 <?php
-
 class $$$SuperMail {
 
 	/* mailbox-objects
@@ -19,18 +18,15 @@ class $$$SuperMail {
 	private $mailaccounts;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
-
 		return;
 	}
 
 	/* get all mailaccount-objects of user-account
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getMailaccounts () {
 		global $TSunic;
 
@@ -39,8 +35,8 @@ class $$$SuperMail {
 
 		// get server-info from databbase
 		$sql_0 = "SELECT id_mail__account as id_mail__account
-				  FROM #__accounts
-				  WHERE fk_system_users__account = '".$TSunic->CurrentUser->getInfo('id_system_users__account')."';";
+				FROM #__accounts
+				WHERE fk_system_users__account = '".$TSunic->CurrentUser->getInfo('id_system_users__account')."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 		if ($result_0 === false) return array();
 
@@ -59,7 +55,7 @@ class $$$SuperMail {
 	/* get all mailbox-objects of account
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getMailboxes () {
 		global $TSunic;
 
@@ -71,9 +67,9 @@ class $$$SuperMail {
 
 		// get server-info from databbase
 		$sql_0 = "SELECT id_mail__box as id_mail__box
-				  FROM #__boxes
-				  WHERE fk_system_users__account = '".$id_acc."'
-				  ORDER BY id_mail__box ASC;";
+				FROM #__boxes
+				WHERE fk_system_users__account = '".$id_acc."'
+				ORDER BY id_mail__box ASC;";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// get empty array
@@ -95,10 +91,10 @@ class $$$SuperMail {
 	}
 
 	/* get all smtp-objects of user-account
-	 * +@param bool $includeLocal: include local sender (if enabled)?
+	 * +@param bool: include local sender (if enabled)?
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getSmtps ($includeLocal = false) {
 		global $TSunic;
 
@@ -108,9 +104,9 @@ class $$$SuperMail {
 
 		// get all smtps from database
 		$sql_0 = "SELECT id_mail__smtp as id_mail__smtp
-				  FROM #__smtps
-				  WHERE fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."'
-				  ";
+				FROM #__smtps
+				WHERE fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."'
+		";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 		if ($result_0 === false) return array();
 

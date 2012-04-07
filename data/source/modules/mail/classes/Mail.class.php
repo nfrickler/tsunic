@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | mail class -->
 <?php
-
 class $$$Mail {
 
 	/* id of e-mail
@@ -14,9 +13,7 @@ class $$$Mail {
 	private $info;
 
 	/* constructor
-	 * @param int $id_ema: id_ema of e-mail
-	 *
-	 * @return OBJECT
+	 * @param int: id_ema of e-mail
 	 */
 	public function __construct ($id_mail__mail = false) {
 
@@ -27,10 +24,9 @@ class $$$Mail {
 	}
 
 	/* get all data of e-mail
-	 * +@param bool/string $name: name of data (true will return all data)
+	 * +@param bool/string: name of data (true will return all data)
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -44,20 +40,20 @@ class $$$Mail {
 
 			// get content from database
 			$sql_0 = "SELECT mails._subject_ as subject,
-							 mails._plaincontent_ as plaincontent,
-							 mails._htmlcontent_ as htmlcontent,
-							 mails._addressee_ as addressee,
-							 mails.fk_mail__box as fk_mail__box,
-							 mails.charset as charset,
-							 mails._sender_ as sender,
-							 mails.dateOfMail as dateOfMail,
-							 mails.dateOfDownload as dateOfDownload
-					  FROM #__serverboxes as serverboxes,
-					  	   #__mails as mails
-					  WHERE mails.id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
-					  		AND mails.fk_mail__serverbox = serverboxes.id_mail__serverbox
-					  		AND mails.dateOfDeletion = '0000-00-00 00:00:00'
-					  ORDER BY mails.id_mail__mail ASC;";
+						mails._plaincontent_ as plaincontent,
+						mails._htmlcontent_ as htmlcontent,
+						mails._addressee_ as addressee,
+						mails.fk_mail__box as fk_mail__box,
+						mails.charset as charset,
+						mails._sender_ as sender,
+						mails.dateOfMail as dateOfMail,
+						mails.dateOfDownload as dateOfDownload
+					FROM #__serverboxes as serverboxes,
+						#__mails as mails
+					WHERE mails.id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
+						AND mails.fk_mail__serverbox = serverboxes.id_mail__serverbox
+						AND mails.dateOfDeletion = '0000-00-00 00:00:00'
+					ORDER BY mails.id_mail__mail ASC;";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// save info in obj-vars
@@ -89,9 +85,9 @@ class $$$Mail {
 
 		// get attachments from database
 		$sql_1 = "SELECT id__attachment as id__attachment
-				  FROM #__attachments as attachments
-				  WHERE attachments.fk_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
-				  ORDER BY id__attachment ASC;";
+				FROM #__attachments as attachments
+				WHERE attachments.fk_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
+				ORDER BY id__attachment ASC;";
 		$result_1 = $TSunic->Db->doSelect($sql_1);
 
 		// load userfiles as attachment
@@ -137,7 +133,7 @@ class $$$Mail {
 	}
 
 	/* delete e-mail in database
-	 * +@param bool $completely: remove completely?
+	 * +@param bool: remove completely?
 	 *
 	 * @return bool
  	 */
@@ -153,21 +149,21 @@ class $$$Mail {
 		// delete in database
 		if ($completely) {
 			$sql_0 = "DELETE FROM #__mails
-						WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."';";
+					WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."';";
 			$result_0 = $TSunic->Db->doDelete($sql_0);
 		} else {
 			$sql_0 = "UPDATE #__mails
-						SET _subject_ = '',
-							_plaincontent_ = '',
-							_htmlcontent_ = '',
-							_addressee_ = '',
-							fk_mail__box = '',
-							charset = '',
-							_sender_ = '',
-							dateOfMail = '',
-							dateOfDownload = '',
-							dateOfDeletion = NOW()
-					  WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."';";
+					SET _subject_ = '',
+						_plaincontent_ = '',
+						_htmlcontent_ = '',
+						_addressee_ = '',
+						fk_mail__box = '',
+						charset = '',
+						_sender_ = '',
+						dateOfMail = '',
+						dateOfDownload = '',
+						dateOfDeletion = NOW()
+					WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."';";
 			$result_0 = $TSunic->Db->doUpdate($sql_0);
 		}
 
@@ -176,14 +172,14 @@ class $$$Mail {
 	}
 
 	/* send mails (local only)
-	 * @param int $addressee: accountID of addressee
-	 * @param int $sender: fk_mail__server (0 - local)
-	 * @param string $subject: subject of mail
-	 * @param string $content: content of mail
+	 * @param int: accountID of addressee
+	 * @param int: fk_mail__server (0 - local)
+	 * @param string: subject of mail
+	 * @param string: content of mail
 	 *
 	 * @return bool
- 	 */
- 	 /*
+	 */
+	 /*
 	public function createMail ($addressee, $sender, $subject, $content) {
 		global $TSunic;
 
@@ -213,7 +209,7 @@ class $$$Mail {
 	}
 */
 	/* move mail to mailbox
-	 * @param int $fk_mail__box: $fk_mail__box
+	 * @param int: $fk_mail__box
 	 *
 	 * @return bool
  	 */
@@ -229,8 +225,8 @@ class $$$Mail {
 
 		// update mail in database
 		$sql_0 = "UPDATE #__mails
-				  SET fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."'
-				  WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
+				SET fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."'
+				WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
 				  ;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
@@ -242,7 +238,7 @@ class $$$Mail {
 	}
 
 	/* check, if sender is valid
-	 * @param int $sender: sender of a mail
+	 * @param int: sender of a mail
 	 *
 	 * @return bool
  	 */
@@ -255,7 +251,7 @@ class $$$Mail {
 	}
 
 	/* check, if subject is valid
-	 * @param int $subject: subject of a mail
+	 * @param int: subject of a mail
 	 *
 	 * @return bool
  	 */
@@ -268,7 +264,7 @@ class $$$Mail {
 	}
 
 	/* check, if content is valid
-	 * @param int $content: content of a mail
+	 * @param int: content of a mail
 	 *
 	 * @return bool
  	 */
@@ -287,6 +283,7 @@ class $$$Mail {
 	public function download () {
 		global $TSunic;
 
+		// TODO
 
 		return $return;
 	}
@@ -298,6 +295,7 @@ class $$$Mail {
 	public function isUnseen () {
 		global $TSunic;
 
+		// TODO
 
 		return true;
 	}

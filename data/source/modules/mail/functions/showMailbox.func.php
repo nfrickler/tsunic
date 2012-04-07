@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show mailbox -->
 <?php
-
 function $$$showMailbox () {
 	global $TSunic;
 
@@ -25,8 +24,10 @@ function $$$showMailbox () {
 	if (!$TSunic->isJavascript()) $Mailbox->checkMails();
 
 	// activate template
-	$data = array('Mailbox' => $Mailbox,
-				  'mailboxes' => $mailboxes);
+	$data = array(
+		'Mailbox' => $Mailbox,
+		'mailboxes' => $mailboxes
+	);
 	$TSunic->Tmpl->activate('$$$showMailbox', '$system$content', $data);
 
 	return true;

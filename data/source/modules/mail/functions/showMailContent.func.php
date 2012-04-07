@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show content of mail -->
 <?php
-
 function $$$showMailContent () {
 	global $TSunic;
 

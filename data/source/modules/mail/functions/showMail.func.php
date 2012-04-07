@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show mail -->
 <?php
-
 function $$$showMail () {
 	global $TSunic;
 

@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to add new mail account -->
 <?php
-
 function $$$addAccount () {
 	global $TSunic;
 

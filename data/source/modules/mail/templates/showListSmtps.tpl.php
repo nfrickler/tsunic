@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show list of SMTPs -->
 <?php
 
 // activate javascript-functions

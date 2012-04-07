@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to check for new mails -->
 <?php
-
 function $$$checkMails () {
 	global $TSunic;
 

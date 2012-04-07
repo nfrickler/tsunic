@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to edit serverbox -->
 <div id="$$$div__showEditMailserver">
 	<h1><?php $this->set('{SHOWEDITSERVERBOX__H1}'); ?></h1>
 	<p class="ts_suplinkbox">

@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show mail account -->
 <?php
 
 // add javascript
@@ -18,25 +18,25 @@ $Mailaccount = $this->getVar('Mailaccount');
 	</p>
 	<table cellspacing="2" cellpadding="0" border="0">
 		<?php if ($name = $Mailaccount->getInfo('name') AND !empty($name)) { ?>
-	    <tr>
-	        <th style="min-width:200px;"><?php echo $this->set('{SHOWACCOUNT__NAME}'); ?></th>
-	        <td style="min-width:200px;" id="$$$showAccount__name"><?php $this->set($Mailaccount->getInfo('name')); ?></td>
-	    </tr>
-	    <?php } ?>
-	    <?php if ($description = $Mailaccount->getInfo('description') AND !empty($description)) { ?>
-	    <tr>
-	        <th><?php echo $this->set('{SHOWACCOUNT__DESCRIPTION}'); ?></th>
-	        <td id="$$$showAccount__description"><?php $this->set($Mailaccount->getInfo('description')); ?></td>
-	    </tr>
-	    <?php } ?>
-	    <tr>
-	        <th><?php echo $this->set('{SHOWACCOUNT__EMAIL}'); ?></th>
-	        <td id="$$$showAccount__email"><?php $this->set($Mailaccount->getInfo('email')); ?></td>
-	    </tr>
-	    <tr>
-	        <th><?php echo $this->set('{SHOWACCOUNT__DATEOFCREATION}'); ?></th>
-	        <td id="$$$showAccount__dateOfCreation"><?php $this->set($Mailaccount->getInfo('dateOfCreation')); ?></td>
-	    </tr>
+		<tr>
+			<th style="min-width:200px;"><?php echo $this->set('{SHOWACCOUNT__NAME}'); ?></th>
+			<td style="min-width:200px;" id="$$$showAccount__name"><?php $this->set($Mailaccount->getInfo('name')); ?></td>
+		</tr>
+		<?php } ?>
+		<?php if ($description = $Mailaccount->getInfo('description') AND !empty($description)) { ?>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__DESCRIPTION}'); ?></th>
+			<td id="$$$showAccount__description"><?php $this->set($Mailaccount->getInfo('description')); ?></td>
+		</tr>
+		<?php } ?>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__EMAIL}'); ?></th>
+			<td id="$$$showAccount__email"><?php $this->set($Mailaccount->getInfo('email')); ?></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__DATEOFCREATION}'); ?></th>
+			<td id="$$$showAccount__dateOfCreation"><?php $this->set($Mailaccount->getInfo('dateOfCreation')); ?></td>
+		</tr>
 	</table>
 
 	<h2 style="margin-top:15px;"><?php $this->set('{SHOWACCOUNT__SERVERBOXES_H1}'); ?></h2>

@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: header navigation -->
 <li id="$$$_navigation_header">
 	<a href="<?php $this->setUrl('$$$showMain'); ?>">
 		<?php $this->set('{_NAVIGATION_HEADER}'); ?>

@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to ask if mail account shall be deleted -->
 <?php
-
 function $$$showDeleteAccount () {
 	global $TSunic;
 

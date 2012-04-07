@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to add new mailbox -->
 <div id="$$$div__showAddMailbox">
 	<h1><?php $this->set('{SHOWADDMAILBOX__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWADDMAILBOX__INFO}'); ?></p>

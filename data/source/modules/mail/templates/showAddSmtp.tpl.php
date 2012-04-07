@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to add new SMTP -->
 <div id="$$$div__showAddSmtp">
 	<h1><?php $this->set('{SHOWADDSMTP__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWADDSMTP__INFO}'); ?></p>

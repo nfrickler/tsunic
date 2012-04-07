@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show form to add new account -->
 <?php
-
 function $$$showAddAccount () {
 	global $TSunic;
 

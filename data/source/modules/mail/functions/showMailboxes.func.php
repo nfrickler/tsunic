@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show mailboxes -->
 <?php
-
 function $$$showMailboxes () {
 	global $TSunic;
 

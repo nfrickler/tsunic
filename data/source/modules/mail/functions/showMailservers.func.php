@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show mailservers -->
 <?php
-
 function $$$showMailservers () {
 	global $TSunic;
 
@@ -8,8 +7,10 @@ function $$$showMailservers () {
 	$SuperMail = $TSunic->get('$$$SuperMail');
 
 	// activate template
-	$data = array('mailaccounts' => $SuperMail->getMailaccounts(),
-				  'smtps' => $SuperMail->getSmtps(false));
+	$data = array(
+		'mailaccounts' => $SuperMail->getMailaccounts(),
+		'smtps' => $SuperMail->getSmtps(false)
+	);
 	$TSunic->Tmpl->activate('$$$showMailservers', '$system$content', $data);
 	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWMAILSERVERS__TITLE}'));
 

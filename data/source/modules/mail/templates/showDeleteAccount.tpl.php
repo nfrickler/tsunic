@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | Template: show form to delete mail account -->
 <?php
-
 // get input
 $Account = $this->getVar('Account');
 ?>

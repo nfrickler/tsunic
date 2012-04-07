@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | mail account class -->
 <?php
-
 class $$$Account {
 
 	/* id of mail-account
@@ -36,27 +35,30 @@ class $$$Account {
 	/* password-authentifications
 	 * array
 	 */
-	private $auths = array(1 => array('{CLASS__ACCOUNT__AUTHS_NORMAL}', ''),
-						   2 => array('{CLASS__ACCOUNT__AUTHS_ENCRYPTEDPWD}', 'secure'),
-						//   3 => array('{CLASS__ACCOUNT__AUTHS_NTLM}', ''), // not supported
-						//   4 => array('{CLASS__ACCOUNT__AUTHS_KERBEROS_GSSAPI}', '') // not supported
-						   );
+	private $auths = array(
+		1 => array('{CLASS__ACCOUNT__AUTHS_NORMAL}', ''),
+		2 => array('{CLASS__ACCOUNT__AUTHS_ENCRYPTEDPWD}', 'secure'),
+		//   3 => array('{CLASS__ACCOUNT__AUTHS_NTLM}', ''), // not supported
+		//   4 => array('{CLASS__ACCOUNT__AUTHS_KERBEROS_GSSAPI}', '') // not supported
+	);
 
 	/* protocols
 	 * array
 	 */
-	private $protocols = array(1 => array('{CLASS__ACCOUNT__PROTOCOLS_IMAP}', 'imap'),
-							   2 => array('{CLASS__ACCOUNT__PROTOCOLS_POP3}', 'pop3')
-							   );
+	private $protocols = array(
+		1 => array('{CLASS__ACCOUNT__PROTOCOLS_IMAP}', 'imap'),
+		2 => array('{CLASS__ACCOUNT__PROTOCOLS_POP3}', 'pop3')
+	);
 
 	/* connections-securities
 	 * array
 	 */
-	private $connsecurities = array(1 => array('{CLASS__ACCOUNT__CONNSECURITIES_NONE}', 'novalidate-cert'),
-									2 => array('{CLASS__ACCOUNT__CONNSECURITIES_STARTTLS}', 'tls/novalidate-cert'),
-									3 => array('{CLASS__ACCOUNT__CONNSECURITIES_SSLTLS}', 'ssl'),
-									4 => array('{CLASS__ACCOUNT__CONNSECURITIES_SSLTLSNOVAL}', 'ssl/novalidate-cert')
-									);
+	private $connsecurities = array(
+		1 => array('{CLASS__ACCOUNT__CONNSECURITIES_NONE}', 'novalidate-cert'),
+		2 => array('{CLASS__ACCOUNT__CONNSECURITIES_STARTTLS}', 'tls/novalidate-cert'),
+		3 => array('{CLASS__ACCOUNT__CONNSECURITIES_SSLTLS}', 'ssl'),
+		4 => array('{CLASS__ACCOUNT__CONNSECURITIES_SSLTLSNOVAL}', 'ssl/novalidate-cert')
+	);
 
 	/* imap-timeout (in seconds)
 	 * int
@@ -64,9 +66,7 @@ class $$$Account {
 	private $timeout = 3;
 
 	/* constructor
-	 * +@params int $id_mail__account: id_mail__account
-	 *
-	 * @return OBJECT
+	 * +@params int: id_mail__account
 	 */
 	public function __construct ($id_mail__account = 0) {
 
@@ -80,10 +80,9 @@ class $$$Account {
 	}
 
 	/* get all data of mail-account
-	 * +@param bool/string $name: name of data (true will return all data)
+	 * +@param bool/string: name of data (true will return all data)
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -93,20 +92,20 @@ class $$$Account {
 
 			// get data from database
 			$sql_0 = "SELECT _name_ as name,
-							 _description_ as description,
-							 dateOfCreation as dateOfCreation,
-							 dateOfUpdate as dateOfUpdate,
-							 _email_ as email,
-							 _password_ as password,
-							 _host_ as host,
-							 _user_ as user,
-							 _port_ as port,
-							 protocol as protocol,
-							 connsecurity as connsecurity,
-							 auth as auth,
-							 lastServerboxUpdate as lastServerboxUpdate
-					  FROM #__accounts
-					  WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+					 _description_ as description,
+					 dateOfCreation as dateOfCreation,
+					 dateOfUpdate as dateOfUpdate,
+					 _email_ as email,
+					 _password_ as password,
+					 _host_ as host,
+					 _user_ as user,
+					 _port_ as port,
+					 protocol as protocol,
+					 connsecurity as connsecurity,
+					 auth as auth,
+					 lastServerboxUpdate as lastServerboxUpdate
+				FROM #__accounts
+				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// return, if no server matched
@@ -166,8 +165,8 @@ class $$$Account {
 
 		// get serverboxes from database
 		$sql_0 = "SELECT id_mail__serverbox as id_mail__serverbox
-				  FROM #__serverboxes
-				  WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+				FROM #__serverboxes
+				WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// get serverbox-objects
@@ -215,8 +214,8 @@ class $$$Account {
 
 			// get smtps from database
 			$sql_0 = "SELECT id_mail__smtp as id_mail__smtp
-					  FROM #__smtps
-					  WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+					FROM #__smtps
+					WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// get objects
@@ -231,12 +230,12 @@ class $$$Account {
 	}
 
 	/* set connection for mail-account
-	 * @param string $host: host to connect to mail-account
-	 * @param string $user: user to connect to mail-account
-	 * @param int $port: port to connect to mail-account
-	 * @param int/string $protocol: protocol
-	 * @param int/string $connsecurity: connection-security
-	 * @param int/string $auth: password-authentification	 	 
+	 * @param string: host to connect to mail-account
+	 * @param string: user to connect to mail-account
+	 * @param int: port to connect to mail-account
+	 * @param int/string: protocol
+	 * @param int/string: connection-security
+	 * @param int/string: password-authentification
 	 *
 	 * @return bool
  	 */
@@ -268,14 +267,14 @@ class $$$Account {
 
 		// save in db
 		$sql_0 = "UPDATE #__accounts
-				  SET _host_ = '".mysql_real_escape_string($host)."',
-					  _user_ = '".mysql_real_escape_string($user)."',
-					  _port_ = '".mysql_real_escape_string($port)."',
-					  protocol = '".$this->getProtocol($protocol, true)."',
-					  connsecurity = '".$this->getConnsecurity($connsecurity, true)."',
-					  auth = '".$this->getAuth($auth, true)."'
-				  WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';
-				  ";
+				SET _host_ = '".mysql_real_escape_string($host)."',
+					_user_ = '".mysql_real_escape_string($user)."',
+					_port_ = '".mysql_real_escape_string($port)."',
+					protocol = '".$this->getProtocol($protocol, true)."',
+					connsecurity = '".$this->getConnsecurity($connsecurity, true)."',
+					auth = '".$this->getAuth($auth, true)."'
+				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';
+				";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
@@ -286,10 +285,10 @@ class $$$Account {
 	}
 
 	/* create a new mail-account
-	 * @param string $email: email of mail-account
-	 * @param string $password: password of mail-account
-	 * +@param string $name: name of mail-account
-	 * +@param string $description: description of mail-account
+	 * @param string: email of mail-account
+	 * @param string: password of mail-account
+	 * +@param string: name of mail-account
+	 * +@param string: description of mail-account
 	 *
 	 * @return bool
  	 */
@@ -308,13 +307,13 @@ class $$$Account {
 
 		// save in db
 		$sql_0 = "INSERT INTO #__accounts
-				  SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
-				  	  _email_ = '".mysql_real_escape_string($email)."',
-				  	  _password_ = '".mysql_real_escape_string($password)."',
-					  _name_ = '".mysql_real_escape_string($name)."',
-				  	  _description_ = '".mysql_real_escape_string($description)."',
-				  	  dateOfCreation = NOW()
-				  ";
+				SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
+				_email_ = '".mysql_real_escape_string($email)."',
+				_password_ = '".mysql_real_escape_string($password)."',
+				_name_ = '".mysql_real_escape_string($name)."',
+				_description_ = '".mysql_real_escape_string($description)."',
+				dateOfCreation = NOW()
+				";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// update $this->info
@@ -325,10 +324,10 @@ class $$$Account {
 	}
 
 	/* edit a mail-account
-	 * @param string $email: email of mail-account
-	 * @param string $password: password of mail-account
-	 * +@param string $name: name of mail-account
-	 * +@param string $description: description of mail-account
+	 * @param string: email of mail-account
+	 * @param string: password of mail-account
+	 * +@param string: name of mail-account
+	 * +@param string: description of mail-account
 	 *
 	 * @return bool
  	 */
@@ -354,14 +353,14 @@ class $$$Account {
 
 		// save in db
 		$sql_0 = "UPDATE #__accounts
-				  SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
-				  	  _email_ = '".mysql_real_escape_string($email)."',
-				  	  ".$sql_password."
-					  _name_ = '".mysql_real_escape_string($name)."',
-				  	  _description_ = '".mysql_real_escape_string($description)."',
-				  	  dateOfCreation = NOW()
-				  WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';
-				  ";
+				SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
+					_email_ = '".mysql_real_escape_string($email)."',
+					".$sql_password."
+					_name_ = '".mysql_real_escape_string($name)."',
+					_description_ = '".mysql_real_escape_string($description)."',
+					dateOfCreation = NOW()
+				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';
+				";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
@@ -402,17 +401,16 @@ class $$$Account {
 	}
 
 	/* check, if name of mail-account is valid
-	 * @param string $name: description of mail-account
+	 * @param string: description of mail-account
 	 *
 	 * @return bool
  	 */
 	public function isValidDescription ($description) {
-
 		return true;
 	}
 
 	/* check, if name of mail-account is valid
-	 * @param string $name: name of mail-account
+	 * @param string: name of mail-account
 	 *
 	 * @return bool
  	 */
@@ -422,7 +420,7 @@ class $$$Account {
 	}
 
 	/* check, if email-address of mail-account is valid
-	 * @param string $email: email of mail-account
+	 * @param string: email of mail-account
 	 *
 	 * @return bool
  	 */
@@ -435,7 +433,7 @@ class $$$Account {
 	}
 
 	/* check, if password of mail-account is valid
-	 * @param string $password: password of mail-account
+	 * @param string: password of mail-account
 	 *
 	 * @return bool
  	 */
@@ -454,7 +452,7 @@ class $$$Account {
 	}
 
 	/* check, if host is valid
-	 * @param string $host: host of server-connection
+	 * @param string: host of server-connection
 	 *
 	 * @return bool
  	 */
@@ -467,7 +465,7 @@ class $$$Account {
 	}
 
 	/* check, if port is valid
-	 * @param string $port: port of server-connection
+	 * @param string: port of server-connection
 	 *
 	 * @return bool
  	 */
@@ -483,7 +481,7 @@ class $$$Account {
 	}
 
 	/* check, if user is valid
-	 * @param string $user: user of server-connection
+	 * @param string: user of server-connection
 	 *
 	 * @return bool
  	 */
@@ -496,8 +494,8 @@ class $$$Account {
 	}
 
 	/* get number or name of password-authentification
-	 * @param string/int/bool $authentification: authentification-number or -name (false will use auth of this account)
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * @param string/int/bool: authentification-number or -name (false will use auth of this account)
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
  	 */
@@ -511,8 +509,8 @@ class $$$Account {
 	}
 
 	/* get number or name of connection-security
-	 * @param string/int/bool $connsecurity: connsecurity-number or -name (false will use connsecurity of this account)
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * @param string/int/bool: connsecurity-number or -name (false will use connsecurity of this account)
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
  	 */
@@ -526,8 +524,8 @@ class $$$Account {
 	}
 
 	/* get number or name of protocol
-	 * @param string/int/bool $protocol: protocol-number or -name (false will use protocol of this account)
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * @param string/int/bool: protocol-number or -name (false will use protocol of this account)
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
  	 */
@@ -541,9 +539,9 @@ class $$$Account {
 	}
 
 	/* convert from number to name or vice versa
-	 * @param array $array: converter-array
-	 * @param string/int $input: input-number or -name
-	 * +@param bool/string $getNumber: force output to be number (true) or name (false) or phrase ('phrase')
+	 * @param array: converter-array
+	 * @param string/int: input-number or -name
+	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
  	 */
@@ -605,10 +603,10 @@ class $$$Account {
 		return true;
 	}
 
-	/* ********************** interaction with server *********************** */
+	/* ********************** interaction with server ******************* */
 
 	/* get mailbox-connection-string
-	 * +@param string/bool $boxname: name of box on server (false: no serverbox)
+	 * +@param string/bool: name of box on server (false: no serverbox)
 	 *
 	 * @return string/bool
  	 */
@@ -639,8 +637,8 @@ class $$$Account {
 	}
 
 	/* connect to server
-	 * +@param string/bool $boxname: name of box on server (false: no serverbox)
-	 * +@param bool $setError: set error?	 
+	 * +@param string/bool: name of box on server (false: no serverbox)
+	 * +@param bool: set error?
 	 *
 	 * @return imap-stream
  	 */
@@ -697,7 +695,7 @@ class $$$Account {
 	}
 
 	/* close connection to server
-	 * +@param string/bool $boxname: name of box on server (false: no serverbox)
+	 * +@param string/bool: name of box on server (false: no serverbox)
 	 *
 	 * @return bool
  	 */
@@ -716,8 +714,7 @@ class $$$Account {
 
 	/* update local serverbox-list in database
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function updateServerboxes ($newOnly = false) {
 		global $TSunic;
@@ -736,9 +733,9 @@ class $$$Account {
 
 		// get locally added serverboxes
 		$sql_0 = "SELECT _name_ as name,
-						 id_mail__serverbox as id_mail__serverbox
-				  FROM #__serverboxes
-				  WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+					id_mail__serverbox as id_mail__serverbox
+				FROM #__serverboxes
+				WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
 		$serverbox_list = $TSunic->Db->doSelect($sql_0);
 
 		// get output-array
@@ -777,28 +774,28 @@ class $$$Account {
 
 		if (strlen($sql_where) > 0) {
 			$sql_2 = "UPDATE #__serverboxes
-					  SET dateOfDeletion = NOW(),
-						  isActive = '0'
-					  WHERE ".$sql_where.";";
+					SET dateOfDeletion = NOW(),
+						isActive = '0'
+					WHERE ".$sql_where.";";
 			$result_2 = $TSunic->Db->doUpdate($sql_2);
 		}
 
 		// set lastServerboxUpdate
 		$sql_3 = "UPDATE #__accounts
-				  SET lastServerboxUpdate = NOW()
-				  WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+				SET lastServerboxUpdate = NOW()
+				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
 		$result_3 = $TSunic->Db->doUpdate($sql_3);
 
 		return true;
 	}
 
 	/* try to get or validate connection-data automatically
-	 * @param string $host: host
-	 * @param int $port: port
-	 * @param string $user: user
-	 * +@param int/bool $protocol: protocol
-	 * +@param int/bool $auth: password-authentification
-	 * +@param int/bool $connsecurity: connection-security	 	 	 	 
+	 * @param string: host
+	 * @param int: port
+	 * @param string: user
+	 * +@param int/bool: protocol
+	 * +@param int/bool: password-authentification
+	 * +@param int/bool: connection-security
 	 *
 	 * @return bool
  	 */
@@ -823,18 +820,18 @@ class $$$Account {
 		$sql_auth = ($auth === false) ? '' : "auth = '".$auth."' AND ";
 		$sql_connsecurity = ($connsecurity === false) ? '' : "connsecurity = '".$connsecurity."' AND ";
 		$sql_0 = "SELECT suffix as suffix,
-						 host as host,
-						 port as port,
-						 protocol as protocol,
-						 auth as auth,
-						 connsecurity as connsecurity,
-						 user as user
-				  FROM #__knownservers
-				  WHERE ".$sql_protocol.$sql_auth.$sql_connsecurity."
-				  		suffix = '".mysql_real_escape_string($suffix)."'
-						OR suffix = ''
-						".$host_lookup."
-				  ORDER BY suffix DESC, protocol ASC;";
+					host as host,
+					port as port,
+					protocol as protocol,
+					auth as auth,
+					connsecurity as connsecurity,
+					user as user
+				FROM #__knownservers
+				WHERE ".$sql_protocol.$sql_auth.$sql_connsecurity."
+					suffix = '".mysql_real_escape_string($suffix)."'
+					OR suffix = ''
+					".$host_lookup."
+				ORDER BY suffix DESC, protocol ASC;";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// check all possibilities until found right one

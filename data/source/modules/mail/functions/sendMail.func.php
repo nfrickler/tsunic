@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to send mail -->
 <?php
-
 function $$$sendMail () {
 	global $TSunic;
 

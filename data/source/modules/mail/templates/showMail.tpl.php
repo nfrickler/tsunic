@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show mail -->
 <?php
 
 // activate javascript-functions

@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to edit SMTP -->
 <?php
-
 function $$$editSmtp () {
 	global $TSunic;
 

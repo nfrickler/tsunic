@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show mailbox -->
 <?php
 
 // add javascript

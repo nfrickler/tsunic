@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to activate serverboxes -->
 <?php
-
 function $$$activateServerboxes () {
 	global $TSunic;
 

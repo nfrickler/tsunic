@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to edit mailbox -->
 <?php
-
 function $$$editMailbox () {
 	global $TSunic;
 

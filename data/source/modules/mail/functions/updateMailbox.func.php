@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to update current mailbox -->
 <?php
-
 function $$$updateMailbox () {
 	global $TSunic;
 
@@ -19,8 +18,10 @@ function $$$updateMailbox () {
 	// is ajax-call?
 	if ($TSunic->isAjax()) {
 		// activate template
-		$data = array('success' => 'true',
-					  'new_mails' => $all_new_mails);
+		$data = array(
+			'success' => 'true',
+			'new_mails' => $all_new_mails
+		);
 		$TSunic->Tmpl->activate('$$$updateMailbox', 'xmlResponse', $data);
 
 		return true;

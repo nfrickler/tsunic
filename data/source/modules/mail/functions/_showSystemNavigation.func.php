@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show system navigation -->
 <?php
-
 function $$$_showSystemNavigation () {
 	global $TSunic;
 

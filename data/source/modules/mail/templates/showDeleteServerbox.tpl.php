@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to delete serverbox -->
 <?php
 
 $Serverbox = $this->getVar('Serverbox');

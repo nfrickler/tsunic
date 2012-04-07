@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to perform chosen actions from form -->
 <?php
-
 function $$$performMailsAction () {
 	global $TSunic;
 

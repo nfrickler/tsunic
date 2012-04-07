@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show list of mail accounts -->
 <?php
 
 // activate javascript-functions

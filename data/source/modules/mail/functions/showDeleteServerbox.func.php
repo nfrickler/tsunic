@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to ask, if serverbox shall be deleted -->
 <?php
-
 function $$$showDeleteServerbox () {
 	global $TSunic;
 

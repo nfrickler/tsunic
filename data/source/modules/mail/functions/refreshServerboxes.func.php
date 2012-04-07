@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to refresh serverboxes -->
 <?php
-
 function $$$refreshServerboxes () {
 	global $TSunic;
 

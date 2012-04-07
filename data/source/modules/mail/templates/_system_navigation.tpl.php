@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show system navigation -->
 <?php
 
 // get input

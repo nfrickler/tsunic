@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | mail attachment class -->
 <?php
-
 class $$$Attachment {
 
 	/* id
@@ -14,24 +13,21 @@ class $$$Attachment {
 	protected $info;
 
 	/* constructor
-	 * +@param string $id__userfile: id
-	 *
-	 * @return OBJECT
+	 * +@param int: id
 	 */
 	public function __construct ($id__attachment = 0) {
 
-	    // save input
-	    $this->id__attachment = $id__attachment;
+		// save input
+		$this->id__attachment = $id__attachment;
 
 		return;
 	}
 
 	/* get all data of attachment
-	 * +@param bool/string $name: name of data (true will return all data)
-	 * +@param bool $rqst_usrfile: request userfile, if info not available for attachment itself	 
+	 * +@param bool/string: name of data (true will return all data)
+	 * +@param bool: request userfile, if info not available for attachment itself
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getInfo ($name = true, $rqst_usrfile = true) {
 		global $TSunic;
@@ -41,8 +37,8 @@ class $$$Attachment {
 
 			// get data from database
 			$sql_0 = "SELECT *
-					  FROM #__attachments
-					  WHERE id__attachment = '".mysql_real_escape_string($this->id__attachment)."';";
+					FROM #__attachments
+					WHERE id__attachment = '".mysql_real_escape_string($this->id__attachment)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// return, if no server matched
@@ -86,9 +82,9 @@ class $$$Attachment {
 	}
 
 	/* create attachment
-	 * @param int $fk__mail: fk__mail
-	 * @param string $name: name of file
-	 * @param string $content: content of file	 	 
+	 * @param int: fk__mail
+	 * @param string: name of file
+	 * @param string: content of file
 	 *
 	 * @return bool
 	 */
@@ -104,9 +100,9 @@ class $$$Attachment {
 
 		// create attachment in database
 		$sql_0 = "INSERT INTO #__attachments
-					SET fk_mail__mail = ".$fk__mail.",
-						fk__usersystem__userfile = ".mysql_real_escape_string($Userfile->getInfo('id__userfile'))."
-				  ";
+				SET fk_mail__mail = ".$fk__mail.",
+					fk__usersystem__userfile = ".mysql_real_escape_string($Userfile->getInfo('id__userfile'))."
+		";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 		if ($result_0 === false) {
 			// delete userfile
@@ -134,8 +130,8 @@ class $$$Attachment {
 
 		// delete attachment in database
 		$sql_0 = "DELETE FROM #__attachments
-				  WHERE id__attachment = '".mysql_real_escape_string($this->id__attachment)."'
-				  ";
+				WHERE id__attachment = '".mysql_real_escape_string($this->id__attachment)."'
+		";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 
 		return true;

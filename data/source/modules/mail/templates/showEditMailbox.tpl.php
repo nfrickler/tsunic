@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show form to edit mailbox -->
 <?php
 
 $mailbox = $this->getVar('mailbox');

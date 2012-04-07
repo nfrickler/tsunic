@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | function to show form to edit SMTP -->
 <?php
 
 function $$$showEditSmtp () {

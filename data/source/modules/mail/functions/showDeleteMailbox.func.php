@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to ask, if mailbox shall be deleted -->
 <?php
-
 function $$$showDeleteMailbox () {
 	global $TSunic;
 

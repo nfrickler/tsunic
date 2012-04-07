@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to edit serverbox -->
 <?php
-
 function $$$editServerbox () {
 	global $TSunic;
 

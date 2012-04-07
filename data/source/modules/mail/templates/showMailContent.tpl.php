@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Template: show content of mail -->
 <?php
 
 // get input
