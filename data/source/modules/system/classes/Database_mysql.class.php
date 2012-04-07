@@ -1,6 +1,5 @@
 <!-- | mysql-class -->
 <?php
-
 class $$$Database_mysql {
 
 	/* mysql-login: host
@@ -29,12 +28,10 @@ class $$$Database_mysql {
 	private $con;
 
 	/* constructor
-	 * @param string $host: mysql-login: host
-	 * @param string $user: mysql-login: user
-	 * @param string $password: mysql-login: password
-	 * @param string $database: mysql-login: database
-	 *
-	 * @return OBJECT
+	 * @param string: mysql-login: host
+	 * @param string: mysql-login: user
+	 * @param string: mysql-login: password
+	 * @param string: mysql-login: database
 	 */
 	public function __construct ($host, $user, $password, $database) {
 
@@ -74,7 +71,7 @@ class $$$Database_mysql {
 	}
 
 	/* send query to database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return mysql-result
 	 */
@@ -90,7 +87,7 @@ class $$$Database_mysql {
 	}
 
 	/* fetch data from database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return array/bool
 	 */
@@ -108,7 +105,7 @@ class $$$Database_mysql {
 	}
 
 	/* update database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return bool
 	 */
@@ -117,7 +114,7 @@ class $$$Database_mysql {
 	}
 
 	/* insert a new row/several new rows
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return bool
 	 */
@@ -126,7 +123,7 @@ class $$$Database_mysql {
 	}
 
 	/* delete rows in database
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return bool
 	 */
@@ -135,7 +132,7 @@ class $$$Database_mysql {
 	}
 
 	/* just send query as is and return result
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return bool
 	 */
@@ -144,7 +141,7 @@ class $$$Database_mysql {
 	}
 
 	/* get names of columns of a table
-	 * @param string $table: name of table to get columns from
+	 * @param string: name of table to get columns from
 	 *
 	 * @return array/bool
 	 */
@@ -163,7 +160,7 @@ class $$$Database_mysql {
 	}
 
 	/* create a new table
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
 	 * @return bool
 	 */
@@ -172,7 +169,7 @@ class $$$Database_mysql {
 	}
 
 	/* check, if table exists
-	 * @param string $table: name of table
+	 * @param string: name of table
 	 *
 	 * @return bool
 	 */

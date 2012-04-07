@@ -1,6 +1,5 @@
 <!-- | class for session-management -->
 <?php
-
 class $$$Session {
 
 	/* life time of session (milliseconds)
@@ -8,25 +7,26 @@ class $$$Session {
 	 */
 	private $life_time;
 
-	/* minimal life time of session (milliseconds)
+	/* minimal life time of session (seconds)
 	 * int
 	 */
-	private $min_life_time = 1800; // 30 minutes
+	private $min_life_time = 30 * 60;
 
 	/* readonly session
 	 * bool
 	 */
 	private $readonly;
 
-	/* database-object (TRICKY!)
+	/* database-object (has to be referenced here, because
+	 * session will be closed after global $TSunic object
+	 * has beeen destroyed!)
 	 * object
 	 */
 	private $Db;
 
 	/* constructor
-	 * @param object $Db: database-object
-	 *
-	 * @return OBJECT
+	 * @param object: database-object
+	 * +@param bool: is session readonly?
 	 */
 	public function __construct (&$Db, $readonly = false) {
 
@@ -55,7 +55,7 @@ class $$$Session {
 	}
 
 	/* constructor
-	 * @param object $Db: database-object
+	 * @param object: database-object
 	 *
 	 * @return OBJECT
 	 */
@@ -67,7 +67,7 @@ class $$$Session {
 	}
 
 	/* read
-	 * @param int $id: SESSION_ID
+	 * @param int: SESSION_ID
 	 *
 	 * @return OBJECT
 	 */
@@ -76,23 +76,23 @@ class $$$Session {
 		// fetch data from database
 		$time = time();
 		$sql_0 = "SELECT sessions.data as data
-					FROM #__sessions as sessions
-					WHERE id__sid = '".mysql_real_escape_string($id)."'
-							AND expires > ".$time.";";
+				FROM #__sessions as sessions
+				WHERE id__sid = '".mysql_real_escape_string($id)."'
+					AND expires > ".$time.";";
 		$data_0 = $this->Db->doSelect($sql_0);
 
 		if (count($data_0) > 0) {
 			// return session-data
 			return $data_0[0]['data'];
 		} else {
-		    // empty session
+			// empty session
 			return '';
 		}
 	}
 
 	/* write
-	 * @param int $id: SESSION_ID
-	 * @param array $data: session-data
+	 * @param int: SESSION_ID
+	 * @param array: session-data
 	 *
 	 * @return bool: true - success
 	 */
@@ -106,20 +106,20 @@ class $$$Session {
 
 		// get query
 		$sql_0 = "INSERT INTO #__sessions (id__sid, data, expires)
-						VALUES ('".mysql_real_escape_string($id)."',
-								'".mysql_real_escape_string($data)."',
-								'".$expires."')
-						ON DUPLICATE KEY UPDATE data = '".mysql_real_escape_string($data)."',
-												expires = '".$expires."';";
+				VALUES ('".mysql_real_escape_string($id)."',
+						'".mysql_real_escape_string($data)."',
+						'".$expires."')
+				ON DUPLICATE KEY UPDATE data = '".mysql_real_escape_string($data)."',
+					expires = '".$expires."';";
 		$return_0 = $this->Db->doUpdate($sql_0);
 
 		return true;
 	}
 
 	/* destroy
-	 * @param int $id: SESSION_ID
+	 * @param int: SESSION_ID
 	 *
-	 * @return bool: true - success
+	 * @return bool
 	 */
 	function destroy ($id) {
 
@@ -137,7 +137,7 @@ class $$$Session {
 
 	/* garbage collection
 	 *
-	 * @return bool: true - success
+	 * @return bool
 	 */
 	function gc() {
 
@@ -146,7 +146,7 @@ class $$$Session {
 
 		// delete all sessions, which have expired
 		$sql_0 = "DELETE FROM #__sessions
-					WHERE expires < ".time().";";
+				WHERE expires < ".time().";";
 		$result_0 = $this->Db->doDelete($sql_0);
 
 		return true;

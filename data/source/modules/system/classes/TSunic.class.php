@@ -1,6 +1,5 @@
 <!-- | -->
 <?php
-
 class TSunic {
 
 	/* reference to factory-object
@@ -49,8 +48,6 @@ class TSunic {
 	public $Log;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 
@@ -97,8 +94,8 @@ class TSunic {
 	}
 
 	/* run TSunic-Function
-	 * +@param string $event: event (internal-run only!)
-	 * +@param array/string $parameters: parameters for event-function (internal-run only!)
+	 * +@param string: event (internal-run only!)
+	 * +@param array/string: parameters for event-function (internal-run only!)
 	 *
 	 * @return bool/mix
 	 */
@@ -168,7 +165,10 @@ class TSunic {
 				@eval($to_eval);
 			} catch (Exception $e) {
 				// invalid function
-				$this->throwError('Fatale error: Requested function is invalid! ('.$this->Temp->getEvent().')');
+				$this->throwError(
+					'Fatale error: Requested function is invalid! ('.
+					$this->Temp->getEvent().')'
+				);
 			}
 		}
 
@@ -177,9 +177,9 @@ class TSunic {
 	}
 
 	/* get instance of class
-	 * @param string $class: name of class
-	 * +@param array $values: values of object in constructor
-	 * +@param bool $forceNew: force object to be a new one
+	 * @param string: name of class
+	 * +@param array: values of object in constructor
+	 * +@param bool: force object to be a new one
 	 *
 	 * @return OBJECT
 	 */
@@ -188,7 +188,7 @@ class TSunic {
 	}
 
 	/* get userfile-object (for: file.php!)
-	 * @param int $id__usersystem__userfile: id of userfile	 
+	 * @param int: id of userfile
 	 *
 	 * @return OBJECT
 	 */
@@ -197,7 +197,7 @@ class TSunic {
 	}
 
 	/* display output
-	 * +@param string $template: main-template to display
+	 * +@param string: main-template to display
 	 *
 	 * @return bool
 	 */
@@ -262,7 +262,7 @@ class TSunic {
 		return true;
 	}
 	/* check, if JavaScript is enabled
-	 * @param bool $getDistinguishable: true - only true, if set by user; false - also true, if auto-set
+	 * @param bool: true - only true, if set by user; false - also true, if auto-set
 	 *
 	 * @return bool
 	 */
@@ -340,7 +340,7 @@ class TSunic {
 	}
 
 	/* return fatale error-message and end script
-	 * @param string $message: error-message
+	 * @param string: error-message
 	 *
 	 * @return - EXIT SCRIPT
 	 */
@@ -374,10 +374,10 @@ class TSunic {
 	}
 
 	/* redirect user
-	 * @param string $event: name of event to redirect to
-	 * 		OR back, this, default
-	 * +@param bool/array/int $gets: GET-parameters
-	 * 		OR int: time-hops to go back	 
+	 * @param string: name of event to redirect to
+	 * 	OR back, this, default
+	 * +@param bool/array/int: GET-parameters
+	 * 	OR int: time-hops to go back
 	 *
 	 * @return EXIT
 	 */

@@ -1,6 +1,5 @@
 <!-- | function to set language -->
 <?php
-
 function $$$setLanguage () {
 	global $TSunic;
 

@@ -1,14 +1,11 @@
 <!-- | class to handle xml-templates -->
 <?php
-
 include_once '$$$Template.class.php';
 class $$$Template_Xml extends $$$Template {
 
 	/* constructor
-	 * @param string $template: name of template
-	 * +@param string $design: name of design (not used in this content)
-	 *
-	 * @return OBJECT
+	 * @param string: name of template
+	 * +@param string: name of design (not used in this content)
 	 */
 	public function __construct ($template, $design = 0) {
 		global $TSunic;
@@ -44,10 +41,12 @@ class $$$Template_Xml extends $$$Template {
 		global $TSunic;
 
 		// get paths (priority-orderr)
-		$paths = array('#runtime#xmlResponses/style'.$this->style.'__'.$this->template.'.xml.php',
-					   '#runtime#xmlResponses/'.$this->template.'.xml.php',
-					   '#runtime#xmlResponses/style'.$this->style.'__$$$noTemplateFound.xml.php',
-					   '#runtime#xmlResponses/$$$noTemplateFound.xml.php');
+		$paths = array(
+			'#runtime#xmlResponses/style'.$this->style.'__'.$this->template.'.xml.php',
+			'#runtime#xmlResponses/'.$this->template.'.xml.php',
+			'#runtime#xmlResponses/style'.$this->style.'__$$$noTemplateFound.xml.php',
+			'#runtime#xmlResponses/$$$noTemplateFound.xml.php'
+		);
 
 		// try to include template
 		foreach ($paths as $index => $value) {
@@ -70,8 +69,8 @@ class $$$Template_Xml extends $$$Template {
 	}
 
 	/* include and display sub-templates
-	 * @param string $type: type of sub-templates to be included
-	 * +@param string $design: name of design
+	 * @param string: type of sub-templates to be included
+	 * +@param string: name of design
 	 *
 	 * @return bool
 	 */

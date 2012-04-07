@@ -1,6 +1,5 @@
 <!-- | -->
 <?php
-
 class $$$Database {
 
 	/* database object of chosen type
@@ -14,8 +13,6 @@ class $$$Database {
 	private $Sql2array;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 		global $TSunic;
@@ -44,14 +41,14 @@ class $$$Database {
 		return;
 	}
 
-	/* ######################### queries #################################### */
+	/* ######################### queries ################################ */
 
 	/* functions to send queries to database
-	 * @param string $query: query
-	 * +@param bool $is_enc: false will skip encryption	 
+	 * @param string: query
+	 * +@param bool: false will skip encryption
 	 *
 	 * @return mix
- 	 */
+	 */
 	public function doSelect ($query, $is_enc = true) {
 
 		// encrypt data
@@ -94,10 +91,10 @@ class $$$Database {
 	}
 
 	/* "execute" a sql-file
-	 * @param string $path: path to sql-file
+	 * @param string: path to sql-file
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function runFile ($path, $id__module = false) {
 		global $TSunic;
 
@@ -124,11 +121,10 @@ class $$$Database {
 	}
 
 	/* parse sql-query for database
-	 * @param string $sql: sql-query (exeptions see above)
+	 * @param string: sql-query (exeptions see above)
 	 *
-	 * @return bool: true - success
-	 *               (or REDIRECT)
- 	 */
+	 * @return bool or REDIRECT
+	 */
 	private function _callDatabase ($type, $query) {
 		global $TSunic;
 
@@ -182,14 +178,13 @@ class $$$Database {
 		return $return;
 	}
 
-	/* ######################### encryption ################################# */
+	/* ######################### encryption ############################# */
 
 	/* parse query with encryption
-	 * @param array $array: array with sql-query-data
+	 * @param array: array with sql-query-data
 	 *
-	 * @return array: result of query
-	 *               (or REDIRECT)
- 	 */
+	 * @return array or REDIRECT
+	 */
 	public function encrypt ($sql) {
 		global $TSunic;
 
@@ -213,12 +208,13 @@ class $$$Database {
 
 		return $sql;
 	}
+
 	/* encrypt data, if values of name $name have to be encrypted
-	 * @param string $name: name
-	 * @param string $value: value	 
+	 * @param string: name
+	 * @param string: value
 	 *
 	 * @return string
- 	 */
+	 */
 	protected function _encryptNameValue ($name, $value) {
 
 		// check, if value has to be encrypted
@@ -226,18 +222,16 @@ class $$$Database {
 				AND substr($name, -1) == '_') {
 			// encrypt value
 			$value = $this->doEncrypt($value);
-
 		}
 
 		return $value;
 	}
 
 	/* encrypt data in array
-	 * @param array $array: array with sql-query-data
+	 * @param array: array with sql-query-data
 	 *
-	 * @return array: result of query
-	 *               (or REDIRECT)
- 	 */
+	 * @return array or REDIRECT
+	 */
 	protected function encryptArray ($array) {
 
 		// check, if is array
@@ -318,7 +312,7 @@ class $$$Database {
 	}
 
 	/* encrypts a string
-	 * @param array/string $data: string to encrypt
+	 * @param array/string: string to encrypt
 	 *
 	 * @return string
  	 */
@@ -335,7 +329,7 @@ class $$$Database {
 	}
 
 	/* decrypts a string
-	 * @param array $data: array with data to decrypt
+	 * @param array: array with data to decrypt
 	 *
 	 * @return string
  	 */

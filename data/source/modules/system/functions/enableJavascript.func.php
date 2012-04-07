@@ -1,6 +1,5 @@
 <!-- | function to enable javascript -->
 <?php
-
 function $$$enableJavascript () {
 	global $TSunic;
 

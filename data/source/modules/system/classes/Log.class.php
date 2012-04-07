@@ -1,6 +1,5 @@
 <!-- | class for logging, error- and info-messages -->
 <?php
-
 class $$$Log {
 
 	/* array with all error-messages
@@ -34,9 +33,7 @@ class $$$Log {
 	private $session_key = '$$$Log';
 
 	/* constructor
-	 * @param
-	 *
-	 * @return OBJECT
+	 * @param int: set level for logging
 	 */
 	public function __construct ($level = false) {
 
@@ -65,10 +62,10 @@ class $$$Log {
 	}
 
 	/* add new log
-	 * @param string $type: type of message (error, info, warning)
-	 * @param string $message: message
-	 * +@param $level: level of message (0-10: 0 - no matter; 9 - very important; 10 - log-worthy)	 
-	 * +@param bool/string $redirect: false - no redirect; event to redirect to
+	 * @param string: type of message (error, info, warning)
+	 * @param string: message
+	 * +@param int: level of message (0-10: 0 - no matter; 9 - very important; 10 - log-worthy)
+	 * +@param bool/string: false - no redirect; event to redirect to
 	 *
 	 * @return bool/REDIRECT
 	 */
@@ -111,8 +108,8 @@ class $$$Log {
 	}
 
 	/* add new message to obj-var
-	 * @param string $type: type of message (error, info, warning)
-	 * @param string $message: message
+	 * @param string: type of message (error, info, warning)
+	 * @param string: message
 	 *
 	 * @return bool/REDIRECT
 	 */
@@ -130,8 +127,8 @@ class $$$Log {
 	}
 
 	/* get log-messages
-	 * @param string $type: type of messages to return
-	 * +@param bool $delete: delete messages?
+	 * @param string: type of messages to return
+	 * +@param bool: delete messages?
 	 * 
 	 * @return array
 	 */
@@ -159,7 +156,7 @@ class $$$Log {
 	}
 
 	/* delete messages
-	 * @param string $type: type of messages; 'all' empties $this->messages
+	 * @param string: type of messages; 'all' empties $this->messages
 	 *
 	 * @return bool
 	 */
@@ -192,9 +189,11 @@ class $$$Log {
 		global $TSunic;
 
 		// save messages in SESSION
-		$_SESSION[$this->session_key] = array('error_msg' => $this->error_msg,
-											  'info_msg' => $this->info_msg,
-											  'warning_msg' => $this->warning_msg);
+		$_SESSION[$this->session_key] = array(
+			'error_msg' => $this->error_msg,
+			'info_msg' => $this->info_msg,
+			'warning_msg' => $this->warning_msg
+		);
 
 		// save logs in log-file
 		if (!empty($this->log_msg)) {

@@ -1,19 +1,15 @@
 <!-- s | class to handle datatypes -->
 <?php
-
 class $$$Parser {
 
 	/* constructor
-	 * +@param bool/string: path of file
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 		return;
 	}
 
 	/* parse string to save in db
-	 * @param string $string: string to parse
+	 * @param string: string to parse
 	 *
 	 * @return string
 	 */
@@ -35,7 +31,7 @@ class $$$Parser {
 	}
 
 	/* parse string to show as normal text
-	 * @param string $string: string to parse
+	 * @param string: string to parse
 	 *
 	 * @return string
 	 */
@@ -52,7 +48,7 @@ class $$$Parser {
 	}
 
 	/* parse string to show as html-text
-	 * @param string $string: string to parse
+	 * @param string: string to parse
 	 *
 	 * @return string
 	 */

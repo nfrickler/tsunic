@@ -1,6 +1,5 @@
 <!-- | function to reset all cookies -->
 <?php
-
 function $$$resetAllCookies () {
 	global $TSunic;
 

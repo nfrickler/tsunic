@@ -1,6 +1,5 @@
 <!-- | class to handle temporare data -->
 <?php
-
 class $$$Temp {
 
 	/* history of user
@@ -29,8 +28,6 @@ class $$$Temp {
 	private $session_key = '$$$temp__history';
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 		global $TSunic;
@@ -48,7 +45,7 @@ class $$$Temp {
 	}
 
 	/* optimizes, updates, stores history
-	 * +@param array/bool $history: history to clean (false will refresh $this->history)
+	 * +@param array/bool: history to clean (false will refresh $this->history)
 	 *
 	 * @return OBJECT
 	 */
@@ -174,14 +171,18 @@ class $$$Temp {
 		if ($TSunic->isAjax()) {
 			// add ajax-data
 			// update history
-			$new_array = array('get' => $_GET,
-							   'post' => $_POST);
+			$new_array = array(
+				'get' => $_GET,
+				'post' => $_POST
+			);
 			$this->history[] = array('ajax' => $new_array);
 		} else {
 			// add data
 			// update history
-			$this->history[] = array('get' => $this->_getSaferArray($_GET),
-									 'post' => $_POST);
+			$this->history[] = array(
+				'get' => $this->_getSaferArray($_GET),
+				'post' => $_POST
+			);
 		}
 
 		// store data
@@ -191,7 +192,7 @@ class $$$Temp {
 	}
 
 	/* try to prevent code-injections
-	 * @param array $array: array to parse
+	 * @param array: array to parse
 	 *
 	 * @return string/bool
 	 */
@@ -219,8 +220,8 @@ class $$$Temp {
 	}
 
 	/* store data in cache
-	 * @param string $name: unique name of information
-	 * @param string $value: value
+	 * @param string: unique name of information
+	 * @param string: value
 	 *
 	 * @return bool
 	 */
@@ -231,7 +232,7 @@ class $$$Temp {
 	}
 
 	/* get data from cache
-	 * @param string $name: unique name of information
+	 * @param string: unique name of information
 	 *
 	 * @return bool
 	 */
@@ -242,7 +243,7 @@ class $$$Temp {
 	}
 
 	/* skip command parameters
-	 * @param array $get: get-parameters
+	 * @param array: get-parameters
 	 *
 	 * @return bool
 	 */
@@ -260,10 +261,10 @@ class $$$Temp {
 		return $get;
 	}
 
-	# ########################## get ######################################### #
+	# ########################## get ##################################### #
 
 	/* get current module
-	 * +@param int $time: module in history (0 = current; 1 = last; ...)
+	 * +@param int: module in history (0 = current; 1 = last; ...)
 	 *
 	 * @return string/bool
 	 */
@@ -279,7 +280,7 @@ class $$$Temp {
 	}
 
 	/* get current event
-	 * +@param int $time: event in history (0 = current; 1 = last; ...)
+	 * +@param int: event in history (0 = current; 1 = last; ...)
 	 *
 	 * @return string/bool
 	 */
@@ -292,10 +293,10 @@ class $$$Temp {
 	}
 
 	/* get post-data
-	 * @param string/bool $name: name of parameter (true will return all)
-	 * +@param int $time: module in history (0 = current; 1 = last; ...)
+	 * @param string/bool: name of parameter (true will return all)
+	 * +@param int: module in history (0 = current; 1 = last; ...)
 	 *
-	 * @return string/array/bool
+	 * @return mix
 	 */
 	public function getPost ($name, $time = 0) {
 		global $TSunic;
@@ -337,10 +338,10 @@ class $$$Temp {
 	}
 
 	/* get GET-parameters
-	 * @param string/bool $name: name of parameter (true will return all, false will return all without event and module)
-	 * +@param int $time: module in history (0 = current; 1 = last; ...)
+	 * @param string/bool: name of parameter (true will return all, false will return all without event and module)
+	 * +@param int: module in history (0 = current; 1 = last; ...)
 	 *
-	 * @return string/array/bool
+	 * @return mix
 	 */
 	public function getGet ($name, $time = 0) {
 		global $TSunic;
@@ -390,8 +391,8 @@ class $$$Temp {
 	}
 
 	/* get POST OR GET-parameters
-	 * @param string/bool $name: name of parameter (true will return all)
-	 * +@param int $time: module in history (0 = current; 1 = last; ...)
+	 * @param string/bool: name of parameter (true will return all)
+	 * +@param int: module in history (0 = current; 1 = last; ...)
 	 *
 	 * @return string/array/bool
 	 */
@@ -410,8 +411,8 @@ class $$$Temp {
 	}
 
 	/* get post-parameters with a certain preffix
-	 * @param string $preffix: preffix of post-name
-	 * +@param int $time: module in history (0 = current; 1 = last; ...)
+	 * @param string: preffix of post-name
+	 * +@param int: module in history (0 = current; 1 = last; ...)
 	 *
 	 * @return bool
 	 */
@@ -434,7 +435,7 @@ class $$$Temp {
 	}
 
 	/* get cookie-data
-	 * @param string $name: name of cookie
+	 * @param string: name of cookie
 	 *
 	 * @return string/bool/int
 	 */
@@ -444,10 +445,10 @@ class $$$Temp {
 		return $output;
 	}
 
-	# ############################### handle history ######################### #
+	# ############################ handle history ######################### #
 
 	/* get key of history-entry
-	 * +@param int $time: back-time
+	 * +@param int: back-time
 	 *
 	 * @return int
 	 */
@@ -492,9 +493,9 @@ class $$$Temp {
 	}
 
 	/* add data to history
-	 * @param string $name: unique name of information
-	 * @param mix $value: value
-	 * +@param int $time: back-time	 
+	 * @param string: unique name of information
+	 * @param mix: value
+	 * +@param int: back-time
 	 *
 	 * @return bool
 	 */
@@ -511,8 +512,8 @@ class $$$Temp {
 	}
 
 	/* get data from history
-	 * @param string $name: unique name of information
-	 * +@param int $time: back-time	 
+	 * @param string: unique name of information
+	 * +@param int: back-time
 	 *
 	 * @return mix
 	 */
@@ -529,7 +530,7 @@ class $$$Temp {
 	}
 
 	/* is history
-	 * +@param int $time: back-time	 
+	 * +@param int: back-time
 	 *
 	 * @return bool
 	 */

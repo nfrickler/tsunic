@@ -1,18 +1,18 @@
 <!-- | class for javascript-templates -->
 <?php
-
 include_once 'ts_System__Template.class.php';
 class ts_System__Template_Javascript extends ts_System__Template {
+
 	/* constructor
-	 * +@param string $template: name of template
-	 * +@param string $design: name of design
-	 *
-	 * @return OBJECT
+	 * +@param string: name of template
+	 * +@param string: name of design
 	 */
 	public function __construct ($template = false, $design = 0) {
 		global $TSunic;
+
 		// get input
 		$this->template = $template;
+
 		// get design
 		if ($design == 0) {
 			// get default-design
@@ -21,35 +21,42 @@ class ts_System__Template_Javascript extends ts_System__Template {
 			// chosen design
 			$this->design = $design;
 		}
+
 		// get data for template
 		if (isset($TSunic->Tmpl->data[$template])) {
 			$this->data = $TSunic->Tmpl->data[$template];
 		} else {
 			$this->data = array();
 		}
+
 		return;
 	}
+
 	/* parse for output (language- and bbcode-replacements)
-	 * @param string $text: text to parse
-	 * @param 0/array $vars: variables to replace in lang-string
-	 * +@param bool $doEcho: true - display $text; false - do not display
-	 * +@param bool $doEscape: true - escape singe and double quotes	 
+	 * @param string: text to parse
+	 * @param 0/array: variables to replace in lang-string
+	 * +@param bool: true - display $text; false - do not display
+	 * +@param bool: true - escape singe and double quotes
 	 *
 	 * @return bool
 	 */
 	public function set ($text, $vars = 0, $doEcho = true, $doEscape = true) {
 		return parent::set($text, $vars, $doEcho, $doEscape);
 	}
+
 	/* display template
 	 *
 	 * @return bool
 	 */
 	public function includeTemplate () {
 		global $TSunic;
+
 		// set path
 		$this->path = '#runtime#javascript/#style#__'.$this->template.'.js';
+
 		// get file-object
 		$File = $TSunic->get('ts_System__File', $this->path);
+
 		// try to include file
 		if ($File->isValid()) {
 			// include file
@@ -58,14 +65,16 @@ class ts_System__Template_Javascript extends ts_System__Template {
 			// template does not exist
 			return false;
 		}
+
 		return true;
 	}
+
 	/* parse Link for output
-	 * @param string $module: name of module
-	 * @param string $event: name of event
-	 * @param bool/array $data: false - no GET-parameter; array - GET-parameters	 
-	 * +@param bool $is_html: is link placed in html-code (set false for javascript etc.)
-	 * +@param bool $doEcho: print link (false returns link)	 	 
+	 * @param string: name of module
+	 * @param string: name of event
+	 * @param bool/array: false - no GET-parameter; array - GET-parameters	 
+	 * +@param bool: is link placed in html-code (set false for javascript etc.)
+	 * +@param bool: print link (false returns link)
 	 *
 	 * @return bool
 	 */

@@ -35,7 +35,7 @@ class $$$Template {
 	/* get data of this template
 	 *
 	 * @return mix
- 	 */
+	 */
 	public function getVar ($name) { return $this->getData($name); }
 	public function getData ($name) {
 
@@ -56,7 +56,7 @@ class $$$Template {
 	 * +@param mix: value for data with name $name
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function setData ($name, $value = NULL) {
 
 		// validate data

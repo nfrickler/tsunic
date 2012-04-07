@@ -1,16 +1,13 @@
 <!-- | class to handle statistics -->
 <?php
-
 class $$$Stats {
 
 	/* array with statistical data
 	 * array
-	 */	 
+	 */
 	protected $stats = array();
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 
@@ -21,8 +18,8 @@ class $$$Stats {
 	}
 
 	/* start timer
-	 * @param string $timer: name of timer
-	 * @param bool $doReset: reset timer first?	 
+	 * @param string: name of timer
+	 * @param bool: reset timer first?
 	 *
 	 * @return bool
 	 */
@@ -30,8 +27,7 @@ class $$$Stats {
 
 		// timer already exists?
 		if ($doReset == true OR !isset($this->stats[$timer])) {
-			$this->stats[$timer] = array('start' => 0,
-										 'sum' => 0);
+			$this->stats[$timer] = array('start' => 0, 'sum' => 0);
 		}
 
 		// save start-time
@@ -41,7 +37,7 @@ class $$$Stats {
 	}
 
 	/* stop timer
-	 * @param string $timer: name of timer
+	 * @param string: name of timer
 	 *
 	 * @return bool
 	 */
@@ -49,8 +45,7 @@ class $$$Stats {
 
 		// timer already exists?
 		if (!isset($this->stats[$timer])) {
-			$this->stats[$timer] = array('start' => 0,
-										 'sum' => 0);
+			$this->stats[$timer] = array('start' => 0, 'sum' => 0);
 		}
 
 		// is started?
@@ -66,7 +61,7 @@ class $$$Stats {
 	}
 
 	/* get sum of timer
-	 * @param string $timer: name of timer
+	 * @param string: name of timer
 	 *
 	 * @return bool
 	 */
@@ -74,8 +69,7 @@ class $$$Stats {
 
 		// timer already exists?
 		if (!isset($this->stats[$timer])) {
-			$this->stats[$timer] = array('start' => 0,
-										 'sum' => 0);
+			$this->stats[$timer] = array('start' => 0, 'sum' => 0);
 		}
 
 		return $this->stats[$timer]['sum'];

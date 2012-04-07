@@ -1,6 +1,5 @@
 <!-- | class to convert sql-queries in arrays and reverse -->
 <?php
-
 class $$$Sql2array {
 
 	/* primary list
@@ -69,10 +68,9 @@ class $$$Sql2array {
 	/* *************** sql to array ************************************* */
 
 	/* convert sql-query in array
-	 * @param string $sql: sql-query
+	 * @param string: sql-query
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function toArray ($sql) {
 		$array = array();
@@ -84,12 +82,20 @@ class $$$Sql2array {
 
 		// escape #
 		if (preg_match("!#(data|subquery)_\d+#!Us", $sql) != 0) {
-			$sql = preg_replace("!#(data|subquery)_(\d+)#!Us", "#$1".$this->escape_seq."$2#", $sql);
+			$sql = preg_replace(
+				"!#(data|subquery)_(\d+)#!Us",
+				"#$1".$this->escape_seq."$2#",
+				$sql
+			);
 			$is_escaped = true;
 		}
 
 		// extract all data
-		$sql = preg_replace_callback('!("([^"]*)"|\'([^\']*)\'|[\s\b,=]+([0-9]+)([\s]|,|$))!Usi', array($this, '_extractData'), $sql);
+		$sql = preg_replace_callback(
+			'!("([^"]*)"|\'([^\']*)\'|[\s\b,=]+([0-9]+)([\s]|,|$))!Usi',
+			array($this, '_extractData'),
+			$sql
+		);
 
 		// extract subqueries
 		$sql = preg_replace_callback('!\((.*)\)!Usi', array($this, 'getSubquery'), $sql);
@@ -125,10 +131,10 @@ class $$$Sql2array {
 	}
 
 	/* unescape all array elements
-	 * @param array $array: input-array
+	 * @param array: input-array
 	 *
 	 * @return array
- 	 */
+	 */
 	private function _unescape ($array) {
 
 		foreach ($array as $index => $value) {
@@ -140,17 +146,20 @@ class $$$Sql2array {
 			}
 
 			# unescape
-			$array[$index] = preg_replace("!#(data|subquery)".$this->escape_seq."(\d+)#!Us", "#$1"."_"."$2#", $value);
+			$array[$index] = preg_replace(
+				"!#(data|subquery)".$this->escape_seq."(\d+)#!Us",
+				"#$1"."_"."$2#",
+				$value
+			);
 		}
 
 		return $array;
 	}
 
 	/* convert sql-query in array (from callback-function)
-	 * @param array $sql: input from callback-function
+	 * @param array: input from callback-function
 	 *
-	 * @return array
-	 * 	(OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getSubquery ($sql) {
 
@@ -192,8 +201,8 @@ class $$$Sql2array {
 	}
 
 	/* convert sql-phrase in array
-	 * @param string $sql: sql-string
-	 * +@param array/bool $splitBy: array with phrases to split sql by
+	 * @param string: sql-string
+	 * +@param array/bool: array with phrases to split sql by
 	 *
 	 * @return array/bool
  	 */
@@ -270,7 +279,7 @@ class $$$Sql2array {
 	}
 
 	/* perform action on all array-elements
-	 * @param array $array: array to look for elements
+	 * @param array: array to look for elements
 	 * @param string/array: function to perform (array: [0] => $object; [1] => $function)
 	 *
 	 * @return $array
@@ -306,10 +315,10 @@ class $$$Sql2array {
 	}
 
 	/* replace subquery-replacements by their array
-	 * @param string $sql: $sql-query
+	 * @param string: $sql-query
 	 *
 	 * @return bool
- 	 */
+	 */
 	protected function _replacementToSubquery ($sql) {
 
 		// check, if subquery/list embedded
@@ -350,7 +359,7 @@ class $$$Sql2array {
 	}
 
 	/* check, if value is data
-	 * @param mix $data: input-data
+	 * @param mix: input-data
 	 *
 	 * @return bool
 	 */
@@ -387,7 +396,7 @@ class $$$Sql2array {
 	}
 
 	/* trim data (e.g. by removing single quotes)
-	 * @param mix $data: input-data
+	 * @param mix: input-data
 	 *
 	 * @return mix
 	 */
@@ -410,10 +419,9 @@ class $$$Sql2array {
 	}
 
 	/* replace data by placeholder
-	 * @param array $sql: input from callback-function
+	 * @param array: input from callback-function
 	 *
-	 * @return array
-	 * 	(OR @return bool: false - error)
+	 * @return array/false
 	 */
 	protected function _extractData ($sql) {
 		$sql = trim($sql[0]);
@@ -445,10 +453,9 @@ class $$$Sql2array {
 	}
 
 	/* replace placeholder with extracted data
-	 * @param string $index: input from callback-function
+	 * @param string: input from callback-function
 	 *
-	 * @return array
-	 * 	(OR @return bool: false - error)
+	 * @return array/false
 	 */
 	protected function _getExtractedData ($index) {
 		if (is_array($index)) $index = $index[0];
@@ -474,11 +481,10 @@ class $$$Sql2array {
 	/* *************** array to sql ************************************* */
 
 	/* convert array in sql-query
-	 * @param array $array: array-input
-	 * @param bool $isSub: is subquery?	 
+	 * @param array: array-input
+	 * @param bool: is subquery?
 	 *
-	 * @return mysql-query
-	 * 	(OR @return bool: false - error)
+	 * @return mysql-query/false
 	 */
 	public function toSql ($array, $isSub = false) {
 		$sql = '';
@@ -524,10 +530,9 @@ class $$$Sql2array {
 	}
 
 	/* join in sql-list
-	 * @param array $array: array-input
+	 * @param array: array-input
 	 *
-	 * @return mysql-query
-	 * 	(OR @return bool: false - error)
+	 * @return mysql-query/false
 	 */
 	public function _joinList ($array) {
 
@@ -551,7 +556,7 @@ class $$$Sql2array {
 	}
 
 	/* trim string
-	 * @param string $string: string to trim
+	 * @param string: string to trim
 	 *
 	 * @return string
 	 */

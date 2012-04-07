@@ -1,6 +1,5 @@
 <!-- | factory class to handle all objects -->
 <?php
-
 class $$$Factory {
 
 	/* array with all existing objects
@@ -9,15 +8,13 @@ class $$$Factory {
 	private $objects;
 
 	/* constructor
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct () {
 		return;
 	}
 
 	/* include class
-	 * @param string $class: name of class
+	 * @param string: name of class
 	 *
 	 * @return bool
 	 */
@@ -36,9 +33,9 @@ class $$$Factory {
 	}
 
 	/* get instance of class
-	 * @param string $class: name of class
-	 * +@param array $values: values of object in constructor
-	 * +@param bool $forceNew: force object to be a new one	 
+	 * @param string: name of class
+	 * +@param array: values of object in constructor
+	 * +@param bool: force object to be a new one	 
 	 *
 	 * @return OBJECT
 	 */

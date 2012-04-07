@@ -24,8 +24,6 @@ class $$$File {
 
 	/* constructor
 	 * +@param bool/string: path of file
-	 *
-	 * @return OBJECT
 	 */
 	public function __construct ($path = false, $silent_mode = false) {
 
@@ -37,7 +35,7 @@ class $$$File {
 	}
 
 	/* set path
-	 * @param string $path: path of file
+	 * @param string: path of file
 	 *
 	 * @return bool
 	 */
@@ -63,7 +61,7 @@ class $$$File {
 		return true;
 	}
 
-	/* ######################### get info about file ################### */
+	/* ######################### get info about file #################### */
 
 	/* check, if valid file
 	 *
@@ -142,7 +140,7 @@ class $$$File {
 	}
 
 	/* get path
-	 * +@param bool $folder_only: get folder-path only
+	 * +@param bool: get folder-path only
 	 *
 	 * @return string/bool
 	 */
@@ -180,7 +178,7 @@ class $$$File {
 	/* ##################### delete/move/rename ######################### */
 
 	/* upload file
-	 * @param string $new_path: path, where file is going to be moved to
+	 * @param string: path, where file is going to be moved to
 	 *
 	 * @return bool
 	 */
@@ -199,7 +197,7 @@ class $$$File {
 	}
 
 	/* rename file
-	 * @param string $new_name: new name of file
+	 * @param string: new name of file
 	 *
 	 * @return bool
 	 */
@@ -207,13 +205,12 @@ class $$$File {
 
 		// check $new_name
 		if (preg_match('°[^'.$this->allowed_letters.']°', $new_name) != 0) {
-		    // invalid filename
+			// invalid filename
 			return false;
 		}
 
 		// get new path
 		$new_path = strrev(strrchr(strrev($this->getPath()), '/'));
-		// dirname();
 		$new_path.= $new_name;
 
 		// rename file
@@ -225,7 +222,7 @@ class $$$File {
 		return false;
 	}
 	/* move file
-	 * @param string $new_path: path, where file is going to be moved to
+	 * @param string: path, where file is going to be moved to
 	 *
 	 * @return bool
 	 */
@@ -247,7 +244,7 @@ class $$$File {
 	}
 
 	/* include file
-	 * @param bool $once: include once only
+	 * @param bool: include once only
 	 *
 	 * @return bool
 	 */
@@ -268,10 +265,10 @@ class $$$File {
 		return true;
 	}
 
-	/* ######################### read from file ############################# */
+	/* ######################### read from file ######################### */
 
 	/* get content of file as string
-	 * +@param bool $as_string: true - return as string; false - return as array
+	 * +@param bool: true - return as string; false - return as array
 	 *
 	 * @return string
 	 */
@@ -291,10 +288,10 @@ class $$$File {
 		return ($as_string AND is_array($content)) ? implode(chr(10), $content) : $content;
 	}
 
-	/* ######################### write to file ############################## */
+	/* ######################### write to file ########################## */
 
 	/* write content in file
-	 * @param string $content: content to write in file
+	 * @param string: content to write in file
 	 *
 	 * @return bool
 	 */
@@ -323,7 +320,7 @@ class $$$File {
 	}
 
 	/* append $to_add to end of file
-	 * @param sting $to_add: content to add to file
+	 * @param sting: content to add to file
 	 *
 	 * @return bool
 	 */
@@ -340,10 +337,10 @@ class $$$File {
 		return true;
 	}
 
-	/* ######################### folder operations ########################## */
+	/* ######################### folder operations ###################### */
 
 	/* create folder, if not exists
-	 * @param string $path: path to folder
+	 * @param string: path to folder
 	 *
 	 * @return bool
 	 */
@@ -391,7 +388,7 @@ class $$$File {
 	}
 
 	/* get files within folder
-	 * @param string $path: path to basis-folder
+	 * @param string: path to basis-folder
 	 *
 	 * @return array
 	 */

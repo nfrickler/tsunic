@@ -1,6 +1,5 @@
 <!-- | function to show main page -->
 <?php
-
 function $$$showMain () {
 	global $TSunic;
 

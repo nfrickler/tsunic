@@ -1,10 +1,9 @@
 <!-- | class to validate strings -->
 <?php
-
 class $$$StringValidator {
 
 	/* check, if string is email-address
-	 * @param string $email: email-address to be validated
+	 * @param string: email-address to be validated
 	 *
 	 * @return bool
 	 */
@@ -20,7 +19,7 @@ class $$$StringValidator {
 	}
 
 	/* check, if string is possible password
-	 * @param string $password: password
+	 * @param string: password
 	 *
 	 * @return bool
 	 */

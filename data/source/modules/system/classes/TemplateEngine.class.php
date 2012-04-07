@@ -1,6 +1,5 @@
 <!-- | -->
 <?php
-
 class $$$TemplateEngine {
 
 	/* path to template-file
@@ -34,9 +33,7 @@ class $$$TemplateEngine {
 	public $activatedJavascript = array();
 
 	/* constructor
-	 * +@param string $design: name of design
-	 *
-	 * @return OBJECT
+	 * +@param string: name of design
 	 */
 	public function __construct ($style = 0) {
 		global $TSunic;
@@ -66,7 +63,7 @@ class $$$TemplateEngine {
 	}
 
 	/* get data from this object
-	 * @param string $name: name of data to get
+	 * @param string: name of data to get
 	 *
 	 * @return mix
 	 */
@@ -81,10 +78,10 @@ class $$$TemplateEngine {
 	}
 
 	/* activate template for output
-	 * @param string $template: name of template
-	 * @param string/bool $supTemplate: if supTemplate exists -> name ELSE 0 or false
-	 * @param bool/array $data: data for template
-	 * @param bool/string $position: position to include template within sup-template 
+	 * @param string: name of template
+	 * @param string/bool: if supTemplate exists -> name ELSE 0 or false
+	 * @param bool/array: data for template
+	 * @param bool/string: position to include template within sup-template 
 	 *
 	 * @return bool
 	 */
@@ -125,12 +122,12 @@ class $$$TemplateEngine {
 	}
 
 	/* save data for template
-	 * @param string/bool $template:	template, data are for
-	 * 									false - reset all data
-	 * 									true - get all data from session
-	 * +@param string/array $name:		string - name of value
-	 * 									array - data-array
-	 * +@param mix $value:				value for data with name $name
+	 * @param string/bool: template, data are for
+	 * 	false - reset all data
+	 * 	true - get all data from session
+	 * +@param string/array: string - name of value
+	 * 	array - data-array
+	 * +@param mix: value for data with name $name
 	 *
 	 * @return bool
 	 */
@@ -138,7 +135,9 @@ class $$$TemplateEngine {
 
 		// load data from session?
 		if ($template === true) {
-			$this->data = (isset($_SESSION[$this->session_key])) ? $_SESSION[$this->session_key]: array();
+			$this->data = (isset($_SESSION[$this->session_key]))
+				? $_SESSION[$this->session_key]
+				: array();
 			return true;
 
 		// reset data?
@@ -169,9 +168,9 @@ class $$$TemplateEngine {
 	}
 
 	/* save data
-	 * @param string $template: template to fetch data for
-	 * +@param string/bool $name: name of data (true - return all data of template)
-	 * +@param bool $unset: unset data afterwards	 
+	 * @param string: template to fetch data for
+	 * +@param string/bool: name of data (true - return all data of template)
+	 * +@param bool: unset data afterwards
 	 *
 	 * @return mix
 	 */
@@ -215,9 +214,9 @@ class $$$TemplateEngine {
 	}
 
 	/* skip language-placeholders
-	 * @param string $text: text to be parsed
-	 * +@param bool $doEscape: true - escape singe and double quotes
-	 * +@param int $nested: if this value is > 5, the function will not check recursively	 
+	 * @param string: text to be parsed
+	 * +@param bool: true - escape singe and double quotes
+	 * +@param int: if this value is > 5, the function will not check recursively
 	 *
 	 * @return string
 	 */
@@ -238,16 +237,23 @@ class $$$TemplateEngine {
 		}
 
 		// extract language
-		$text = preg_replace_callback($regex,
-					array($this, 'getLang'),
-					$text);
+		$text = preg_replace_callback(
+			$regex,
+			array($this, 'getLang'),
+			$text
+		);
 
 		// return text, if nested >= 5 (prevent infinite loop)
 		$nested++;
 		if ($nested >= 5) return $text;
 
 		// check, if all replacements done
-		$matches_post_count = preg_match_all($regex, $text, $matches_post, PREG_SET_ORDER);
+		$matches_post_count = preg_match_all(
+			$regex,
+			$text,
+			$matches_post,
+			PREG_SET_ORDER
+		);
 		if (empty($matches_post_count)) {
 			// no matches
 			return $text;
@@ -258,7 +264,7 @@ class $$$TemplateEngine {
 	}
 
 	/* get language-replacements
-	 * @param string $lang: language-placeholder
+	 * @param string: language-placeholder
 	 *
 	 * @return string
 	 */
@@ -294,9 +300,9 @@ class $$$TemplateEngine {
 	}
 
 	/* get language-replacements
-	 * @param string $input: language-placeholder or module
-	 * +@param bool/string $lang: set language to include
-	 * +@param bool $returnOnFail: return, if include fails	  
+	 * @param string: language-placeholder or module
+	 * +@param bool/string: set language to include
+	 * +@param bool: return, if include fails
 	 *
 	 * @return bool
 	 */
@@ -313,10 +319,12 @@ class $$$TemplateEngine {
 		$module = strtolower($cache[0]);
 
 		// get paths in priority-order
-		$paths = array('style'.$this->style.'__'.$module.'__'.$chosen_lang.'.lang.php',
-					   'style'.$this->style.'__'.$module.'__'.$default_lang.'.lang.php',
-					   $module.'__'.$chosen_lang.'.lang.php',
-					   $module.'__'.$default_lang.'.lang.php');
+		$paths = array(
+			'style'.$this->style.'__'.$module.'__'.$chosen_lang.'.lang.php',
+			'style'.$this->style.'__'.$module.'__'.$default_lang.'.lang.php',
+			$module.'__'.$chosen_lang.'.lang.php',
+			$module.'__'.$default_lang.'.lang.php'
+		);
 
 		// include lang-file
 		foreach ($paths as $index => $value) {
@@ -357,7 +365,7 @@ class $$$TemplateEngine {
 	}
 
 	/* display output
-	 * @param bool/string $template: name of first template
+	 * @param bool/string: name of first template
 	 *
 	 * @return bool
 	 */
@@ -405,7 +413,7 @@ class $$$TemplateEngine {
 	}
 
 	/* add javascript-class or -function for output
-	 * @param string $name: name
+	 * @param string: name
 	 *
 	 * @return bool
 	 */
@@ -419,7 +427,6 @@ class $$$TemplateEngine {
 
 		return true;
 	}
-
 
 	/* returns all javascript-code from all templates
 	 *
@@ -440,7 +447,7 @@ class $$$TemplateEngine {
 	}
 
 	/* returns all javascript-code from all templates
-	 * +@param bool $delete: delete code afterwards
+	 * +@param bool: delete code afterwards
 	 *
 	 * @return bool
 	 */
@@ -486,12 +493,12 @@ class $$$TemplateEngine {
 	public function clearActivatedTemplates () {
 
 		// clear templates
-        $_SESSION['activatedTemplates'] = array();
-        $this->activatedTemplates = array();
+		$_SESSION['activatedTemplates'] = array();
+		$this->activatedTemplates = array();
 
 		// clear javascript
-        $_SESSION['activatedJavascript'] = array();
-        $this->activatedJavascript = array();
+		$_SESSION['activatedJavascript'] = array();
+		$this->activatedJavascript = array();
 
 		return true;
 	}

@@ -1,6 +1,5 @@
 <!-- | function to show index-page (default startup-page) -->
 <?php
-
 function $$$showIndex () {
 	global $TSunic;
 
