@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | TEMPLATE show header navigation -->
 <li id="$$$_navigation_header__showLogin">
 	<a href="<?php $this->setUrl('$$$showLogin'); ?>">
 		<?php $this->set('{_HEADER_NAVIGATION__SHOWLOGIN}'); ?>

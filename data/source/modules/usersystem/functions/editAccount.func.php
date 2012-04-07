@@ -1,6 +1,5 @@
 <!-- | FUNCTION edit account-data -->
 <?php
-
 function $$$editAccount () {
 	global $TSunic;
 

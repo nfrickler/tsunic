@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | TEMPLATE show index page -->
 <div id="$$$div__showIndex">
 	<h1><?php echo $this->set('{SHOWINDEX__H1}'); ?></h1>
 	<p class="ts_infotext"><?php echo $this->set('{SHOWINDEX__INFOTEXT}'); ?></p>

@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | TEMPLATE show userheader -->
 <div id="$$$div__userheader">
 	<?php if ($TSunic->CurrentUser->isGuest()) { ?>
 	<p id="$$$div__userheader__topright">

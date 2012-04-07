@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | Useraccount class -->
 <?php
-
 class $$$Account {
 
 	/* id_system_users_account
@@ -14,9 +13,7 @@ class $$$Account {
 	protected $info;
 
 	/* constructor
-	 * +@param int $id_system_users__account: account-id
-	 *
-	 * @return OBJECT
+	 * +@param int: account-id
 	 */
 	public function __construct ($id_system_users__account = 0) {
 		global $TSunic;
@@ -28,9 +25,9 @@ class $$$Account {
 	}
 
 	/* get account-data
-	 * +@param string/bool $name: name of info (true will return $this->info)
+	 * +@param string/bool: name of info (true will return $this->info)
 	 *
-	 * @return string/int/array
+	 * @return mix
 	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -63,8 +60,8 @@ class $$$Account {
 	}
 
 	/* create new account
-	 * @param string $email: email-address
-	 * @param string $password: password for account	 
+	 * @param string: email-address
+	 * @param string: password for account
 	 *
 	 * @return bool
 	 */
@@ -79,7 +76,7 @@ class $$$Account {
 				SET email = '".mysql_real_escape_string($email)."',
 					password = '".md5($password)."',
 					dateOfRegistration = NOW()
-				  ;";
+		;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// return, if not successful
@@ -92,8 +89,8 @@ class $$$Account {
 	}
 
 	/* edit account-data
-	 * +@param string $email: new email-address
-	 * +@param string $password: new password for account	 
+	 * +@param string: new email-address
+	 * +@param string: new password for account
 	 *
 	 * @return bool
 	 */
@@ -115,8 +112,8 @@ class $$$Account {
 		// edit account in database
 		if (!empty($sql_email) AND !empty($sql_password)) $sql_email.= ',';
 		$sql_0 = "UPDATE #__accounts
-				  SET ".$sql_email.$sql_password."
-				  WHERE id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
+				SET ".$sql_email.$sql_password."
+				WHERE id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
 				  ;";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
@@ -138,7 +135,7 @@ class $$$Account {
 		// delete account in database
 		if (!empty($sql_email) AND !empty($sql_password)) $sql_email.= ',';
 		$sql_0 = "DELETE FROM #__accounts
-				  WHERE id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
+				WHERE id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
 				  ;";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 
@@ -147,7 +144,7 @@ class $$$Account {
 	}
 
 	/* check is email is valid
-	 * @param string $email: email-address 
+	 * @param string: email-address 
 	 *
 	 * @return bool
 	 */
@@ -161,8 +158,8 @@ class $$$Account {
 
 		// check, if unique
 		$sql_0 = "SELECT id_system_users__account
-				  FROM #__accounts
-				  WHERE email = '".mysql_real_escape_string($email)."';";
+				FROM #__accounts
+				WHERE email = '".mysql_real_escape_string($email)."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 		if ($result_0 AND is_array($result_0) AND count($result_0) > 0) {
 			// check if e-mailaddress belongs to account
@@ -175,7 +172,7 @@ class $$$Account {
 	}
 
 	/* check, if password is valid
-	 * @param string $password: password
+	 * @param string: password
 	 *
 	 * @return bool
 	 */

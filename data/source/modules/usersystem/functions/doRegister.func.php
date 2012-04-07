@@ -1,6 +1,5 @@
 <!-- | register new user -->
 <?php
-
 function $$$doRegister () {
 	global $TSunic;
 

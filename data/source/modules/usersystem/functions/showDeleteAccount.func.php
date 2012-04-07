@@ -1,6 +1,5 @@
 <!-- | FUNCTION show page to confirm account-deletion -->
 <?php
-
 function $$$showDeleteAccount () {
 	global $TSunic;
 

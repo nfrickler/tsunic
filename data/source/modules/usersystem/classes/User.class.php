@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | User class -->
 <?php
-
 class $$$User {
 
 	/* id_homehost
@@ -44,11 +43,9 @@ class $$$User {
 	protected $allowed_data = array('id_acc');
 
 	/* constructor
-	 * +@param int $id_system_users_user: user-id
-	 * +@param int $id_system_users_account: account-id
-	 * +@param int $id_homehost: homehost-id
-	 *
-	 * @return OBJECT
+	 * +@param int: user-id
+	 * +@param int: account-id
+	 * +@param int: homehost-id
 	 */
 	public function __construct ($id_system_users__user = false, $id_system_users__account = false, $id_homehost = false) {
 		global $TSunic;
@@ -96,11 +93,11 @@ class $$$User {
 
 			// get ids from database
 			$sql_1 = "SELECT users.id_system_users__user as id_system_users__user,
-							 profiles.id_system_users__profile as id_system_usrers__profile
-					  FROM #__users as users,
-					  	   #__profiles as profiles
-					  WHERE users.fk_system_users__account = '".mysql_real_escape_string($id_system_users__account)."'
-					  		AND profiles.fk_system_users__account = users.fk_system_users__account;";
+						profiles.id_system_users__profile as id_system_usrers__profile
+					FROM #__users as users,
+						#__profiles as profiles
+					WHERE users.fk_system_users__account = '".mysql_real_escape_string($id_system_users__account)."'
+						AND profiles.fk_system_users__account = users.fk_system_users__account;";
 			$result_1 = $TSunic->Db->doSelect($sql_1);
 
 			// check, if user and account exist
@@ -120,9 +117,9 @@ class $$$User {
 	}
 
 	/* get user-data
-	 * +@param string/bool $name: name of info (true will return $this->info)
+	 * +@param string/bool: name of info (true will return $this->info)
 	 *
-	 * @return string/int/array
+	 * @return mix
 	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -135,9 +132,9 @@ class $$$User {
 
 			// get user-data
 			$sql_0 = "SELECT ip as ip,
-					browser as browser,
-					dateOfFirst as dateOfFirst,
-					dateOfLast as dateOfLast
+						browser as browser,
+						dateOfFirst as dateOfFirst,
+						dateOfLast as dateOfLast
 					FROM #__users
 					WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);

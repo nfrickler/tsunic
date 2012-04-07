@@ -1,22 +1,22 @@
-<!-- | -->
+<!-- | TEMPLATE show form for registration -->
 <div id="$$$div__formRegistration">
 	<form action="<?php $this->setUrl('$$$doRegister'); ?>" method="post" name="$$$formRegistration__form" id="$$$formRegistration__form" class="ts_form">
-	    <fieldset>
-	        <legend><?php echo $this->set('{FORMREGISTRATION__LEGEND}'); ?></legend>
-	        <label for="$$$formRegistration__name"><?php echo $this->set('{FORMREGISTRATION__NAME}'); ?></label>
-	        <input type="text" class="ts_required" name="$$$formRegistration__name" id="$$$formRegistration__name" value="<?php $this->setPreset('$$$formRegistration__name'); ?>" />
-	        <div style="clear:both;"></div>
-	        <label for="$$$formRegistration__email"><?php echo $this->set('{FORMREGISTRATION__EMAIL}'); ?></label>
-	        <input type="text" class="ts_required" name="$$$formRegistration__email" id="$$$formRegistration__email" value="<?php $this->setPreset('$$$formRegistration__email'); ?>" />
-	        <div style="clear:both;"></div>
-	        <label for="$$$formRegistration__password"><?php echo $this->set('{FORMREGISTRATION__PASSWORD}'); ?></label>
-	        <input type="password" class="ts_required" name="$$$formRegistration__password" id="$$$formRegistration__password" />
-	        <div style="clear:both;"></div>
-	        <label for="$$$formRegistration__passwordrepeat"><?php echo $this->set('{FORMREGISTRATION__PASSWORDREPEAT}'); ?></label>
-	        <input type="password" class="ts_required" name="$$$formRegistration__passwordrepeat" id="$$$formRegistration__passwordrepeat" />
-	        <div style="clear:both;"></div>
-	    </fieldset>
-	    <input type="submit" class="ts_submit" value="<?php $this->set('{FORMREGISTRATION__SUBMIT}'); ?>" />
+		<fieldset>
+			<legend><?php echo $this->set('{FORMREGISTRATION__LEGEND}'); ?></legend>
+			<label for="$$$formRegistration__name"><?php echo $this->set('{FORMREGISTRATION__NAME}'); ?></label>
+			<input type="text" class="ts_required" name="$$$formRegistration__name" id="$$$formRegistration__name" value="<?php $this->setPreset('$$$formRegistration__name'); ?>" />
+			<div style="clear:both;"></div>
+			<label for="$$$formRegistration__email"><?php echo $this->set('{FORMREGISTRATION__EMAIL}'); ?></label>
+			<input type="text" class="ts_required" name="$$$formRegistration__email" id="$$$formRegistration__email" value="<?php $this->setPreset('$$$formRegistration__email'); ?>" />
+			<div style="clear:both;"></div>
+			<label for="$$$formRegistration__password"><?php echo $this->set('{FORMREGISTRATION__PASSWORD}'); ?></label>
+			<input type="password" class="ts_required" name="$$$formRegistration__password" id="$$$formRegistration__password" />
+			<div style="clear:both;"></div>
+			<label for="$$$formRegistration__passwordrepeat"><?php echo $this->set('{FORMREGISTRATION__PASSWORDREPEAT}'); ?></label>
+			<input type="password" class="ts_required" name="$$$formRegistration__passwordrepeat" id="$$$formRegistration__passwordrepeat" />
+			<div style="clear:both;"></div>
+		</fieldset>
+		<input type="submit" class="ts_submit" value="<?php $this->set('{FORMREGISTRATION__SUBMIT}'); ?>" />
 	</form>
 </div>
 <script type="text/javascript">

@@ -1,6 +1,5 @@
 <!-- | login user -->
 <?php
-
 function $$$doLogin () {
 	global $TSunic;
 

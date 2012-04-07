@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | Userfile class -->
 <?php
-
 class $$$Userfile {
 
 	/* id
@@ -24,15 +23,13 @@ class $$$Userfile {
 	protected $content;
 
 	/* constructor
-	 * +@param string $id__userfile: id
-	 *
-	 * @return OBJECT
+	 * +@param string: id
 	 */
 	public function __construct ($id__userfile = 0) {
 		global $TSunic;
 
-	    // save input
-	    $this->id__userfile = $id__userfile;
+		// save input
+		$this->id__userfile = $id__userfile;
 
 		// check authorization
 		$fk__usersystem__account = $this->getInfo('fk_system_users__account');
@@ -47,10 +44,9 @@ class $$$Userfile {
 	}
 
 	/* get all data of userfile
-	 * +@param bool/string $name: name of data (true will return all data)
+	 * +@param bool/string: name of data (true will return all data)
 	 *
-	 * @return array
-	 * 		   (OR @return bool: false - error)
+	 * @return array/false
  	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -60,13 +56,13 @@ class $$$Userfile {
 
 			// get data from database
 			$sql_0 = "SELECT _name_ as name,
-							 fk_system_users__account as fk_system_users__account,
-							 dateOfCreation as dateOfCreation,
-							 dateOfUpdate as dateOfUpdate,
-							 dateOfDeletion as dateOfDeletion,
-							 mimetype as mimetype
-					  FROM #__userfiles
-					  WHERE id__userfile = '".mysql_real_escape_string($this->id__userfile)."';";
+						fk_system_users__account as fk_system_users__account,
+						dateOfCreation as dateOfCreation,
+						dateOfUpdate as dateOfUpdate,
+						dateOfDeletion as dateOfDeletion,
+						mimetype as mimetype
+					FROM #__userfiles
+					WHERE id__userfile = '".mysql_real_escape_string($this->id__userfile)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// return, if no server matched
@@ -84,7 +80,7 @@ class $$$Userfile {
 	}
 
 	/* save file
-	 * @param string $content: content of file
+	 * @param string: content of file
 	 *
 	 * @return string/bool
 	 */
@@ -159,10 +155,10 @@ class $$$Userfile {
 
 		// insert in database
 		$sql_0 = "INSERT INTO #__userfiles
-				  SET fk_system_users__account = '".mysql_real_escape_string($fk__useraccount)."',
-					  _name_ = '".mysql_real_escape_string($name)."',
-					  dateOfCreation = NOW()
-				  ";
+				SET fk_system_users__account = '".mysql_real_escape_string($fk__useraccount)."',
+					_name_ = '".mysql_real_escape_string($name)."',
+					dateOfCreation = NOW()
+		;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// get id__userfile
@@ -198,8 +194,8 @@ class $$$Userfile {
 
 		// delete file in database
 		$sql_0 = "DELETE FROM #__userfiles
-				  WHERE id__userfile = '".mysql_real_escape_string($this->id__userfile)."'
-				  ";
+				WHERE id__userfile = '".mysql_real_escape_string($this->id__userfile)."'
+		;";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 		if ($result_0 === false) return false;
 
@@ -232,7 +228,7 @@ class $$$Userfile {
 	/* check, if valid smtp-object
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValid () {
 
 		// check, if id exists

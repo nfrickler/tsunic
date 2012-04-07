@@ -1,6 +1,5 @@
 <!-- | TEMPLATE show profile -->
 <?php
-
 // get data
 $User = $this->getVar('User');
 ?>
@@ -16,9 +15,9 @@ $User = $this->getVar('User');
 		<?php $this->set('{SHOWPROFILE__INFOTEXT}'); ?>
 	</p>
 	<table cellspacing="2" cellpadding="0" border="0">
-	    <tr>
-	        <th style="min-width:200px;"><?php echo $this->set('{SHOWPROFILE__NAME}'); ?></th>
-	        <td style="min-width:200px;" id="$$$showProfile__name"><?php $this->set($User->getInfo('name')); ?></td>
-	    </tr>
+		<tr>
+			<th style="min-width:200px;"><?php echo $this->set('{SHOWPROFILE__NAME}'); ?></th>
+			<td style="min-width:200px;" id="$$$showProfile__name"><?php $this->set($User->getInfo('name')); ?></td>
+		</tr>
 	</table>
 </div>

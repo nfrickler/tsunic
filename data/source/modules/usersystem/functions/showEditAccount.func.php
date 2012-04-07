@@ -1,6 +1,5 @@
 <!-- | FUNCTION show page to edit account -->
 <?php
-
 function $$$showEditAccount () {
 	global $TSunic;
 

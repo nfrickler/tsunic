@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | language file english -->
 <?php
-
 $lang = array(
 
 	// userheader

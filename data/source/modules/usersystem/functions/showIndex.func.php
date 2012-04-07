@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show main page -->
 <?php
-
 function $$$showIndex () {
 	global $TSunic;
 

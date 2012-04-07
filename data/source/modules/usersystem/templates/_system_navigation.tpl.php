@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | TEMPLATE show system navigation -->
 <div id="$$$div___navigation">
 	<ul>
 	<?php if (!$TSunic->CurrentUser->isGuest()) { ?>

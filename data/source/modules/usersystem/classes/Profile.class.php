@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | profile class -->
 <?php
-
 class $$$Profile {
 
 	/* id_system_users_profile
@@ -14,12 +13,9 @@ class $$$Profile {
 	protected $info;
 
 	/* constructor
-	 * +@param int $id_system_users__profile: profile-id
-	 *
-	 * @return OBJECT
+	 * +@param int: profile-id
 	 */
 	public function __construct ($id_system_users__profile = 0) {
-		global $TSunic;
 
 		// save input
 		$this->id_system_users__profile = $id_system_users__profile;
@@ -28,9 +24,9 @@ class $$$Profile {
 	}
 
 	/* get profile-data
-	 * +@param string/bool $name: name of info (true will return $this->info)
+	 * +@param string/bool: name of info (true will return $this->info)
 	 *
-	 * @return string/int/array
+	 * @return mix
 	 */
 	public function getInfo ($name = true) {
 		global $TSunic;
@@ -42,12 +38,12 @@ class $$$Profile {
 		if (empty($this->info)) {
 			// get profile-data
 			$sql_0 = "SELECT name as name,
-							 dateOfCreation as dateOfCreation,
-							 dateOfChange as dateOfChange,
-							 dateOfDeletion as dateOfDeletion,
-							 fk_system_users__account as fk_system_users__account
-					  FROM #__profiles
-					  WHERE id_system_users__profile = '".mysql_real_escape_string($this->id_system_users__profile)."';";
+						dateOfCreation as dateOfCreation,
+						dateOfChange as dateOfChange,
+						dateOfDeletion as dateOfDeletion,
+						fk_system_users__account as fk_system_users__account
+					FROM #__profiles
+					WHERE id_system_users__profile = '".mysql_real_escape_string($this->id_system_users__profile)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 			$this->info = ($result_0) ? $result_0[0] : array();
 		}
@@ -62,8 +58,8 @@ class $$$Profile {
 	}
 
 	/* create new profile
-	 * @param int $fk_system_users__account: account-id
-	 * @param string $name: name of profile	 
+	 * @param int: account-id
+	 * @param string: name of profile
 	 *
 	 * @return bool
 	 */
@@ -75,10 +71,10 @@ class $$$Profile {
 
 		// create new account in database
 		$sql_0 = "INSERT INTO #__profiles
-				  SET name = '".mysql_real_escape_string($name)."',
-				  	  fk_system_users__account = '".mysql_real_escape_string($fk_system_users__account)."',
-				  	  dateOfCreation = NOW()
-				  ;";
+				SET name = '".mysql_real_escape_string($name)."',
+					fk_system_users__account = '".mysql_real_escape_string($fk_system_users__account)."',
+					dateOfCreation = NOW()
+		;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
 		// return, if not successful
@@ -91,7 +87,7 @@ class $$$Profile {
 	}
 
 	/* edit profile-data
-	 * +@param string $name: new name	 
+	 * +@param string: new name
 	 *
 	 * @return bool
 	 */
@@ -103,8 +99,8 @@ class $$$Profile {
 
 		// edit profile in database
 		$sql_0 = "UPDATE #__profiles
-				  SET name = '".mysql_real_escape_string($name)."'
-				  WHERE id_system_users__profile = '".mysql_real_escape_string($this->id_system_users__profile)."'
+				SET name = '".mysql_real_escape_string($name)."'
+				WHERE id_system_users__profile = '".mysql_real_escape_string($this->id_system_users__profile)."'
 				  ;";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
@@ -123,8 +119,8 @@ class $$$Profile {
 
 		// delete account in database
 		$sql_0 = "DELETE FROM #__profiles
-				  WHERE id_system_users__profile = '".mysql_real_escape_string($this->id_system_users__profile)."'
-				  ;";
+				WHERE id_system_users__profile = '".mysql_real_escape_string($this->id_system_users__profile)."'
+		;";
 		$result_0 = $TSunic->Db->doDelete($sql_0);
 
 		if (!$result_0) return false;
@@ -132,7 +128,7 @@ class $$$Profile {
 	}
 
 	/* check is name is valid
-	 * @param string $name: name of profile
+	 * @param string: name of profile
 	 *
 	 * @return bool
 	 */
@@ -146,8 +142,8 @@ class $$$Profile {
 
 		// check, if unique
 		$sql_0 = "SELECT id_system_users__profile
-				  FROM #__profiles
-				  WHERE name = '".mysql_real_escape_string($name)."';";
+				FROM #__profiles
+				WHERE name = '".mysql_real_escape_string($name)."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 		if ($result_0 AND is_array($result_0) AND count($result_0) > 0) {
 
@@ -161,7 +157,7 @@ class $$$Profile {
 	}
 
 	/* check, if account-id is valid
-	 * @param string $fk_system_users__account: fk_system_users__account
+	 * @param string: fk_system_users__account
 	 *
 	 * @return bool
 	 */

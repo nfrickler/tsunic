@@ -1,21 +1,20 @@
-<!-- | -->
+<!-- | current user class -->
 <?php
-
 include_once '$$$User.class.php';
 class $$$CurrentUser extends $$$User {
 
 	/* account-data allowed to be accessed
 	 * array
 	 */
-	protected $allowed_data = array('id_acc',
-								  'email');
+	protected $allowed_data = array(
+		'id_acc',
+		'email'
+	);
 
 	/* constructor
-	 * -@param int $id_system_users_user: user-id (will be ignored!)
-	 * -@param int $id_system_users_account: account-id (will be ignored!)
-	 * -@param int $id_homehost: homehost-id (will be ignored!)
-	 *
-	 * @return OBJECT
+	 * -@param int: user-id (will be ignored!)
+	 * -@param int: account-id (will be ignored!)
+	 * -@param int: homehost-id (will be ignored!)
 	 */
 	public function __construct ($id_system_users__user = false, $id_system_users__account = false, $id_homehost = false) {
 		global $TSunic;
@@ -30,10 +29,10 @@ class $$$CurrentUser extends $$$User {
 
 			// get user-data from database
 			$sql_0 = "SELECT ip as ip,
-							 browser as browser
-					  FROM #__users
-					  WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
-					  		AND fk_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."';";
+						browser as browser
+						FROM #__users
+					WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
+						AND fk_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// check userdata
@@ -55,7 +54,7 @@ class $$$CurrentUser extends $$$User {
 	}
 
 	/* get user-data
-	 * +@param string/bool $name: name of info (true will return $this->info)
+	 * +@param string/bool: name of info (true will return $this->info)
 	 *
 	 * @return string/int/array
 	 */
@@ -64,8 +63,8 @@ class $$$CurrentUser extends $$$User {
 	}
 
 	/* login
-	 * @param string $email: email of account
-	 * @param string $password: password of account
+	 * @param string: email of account
+	 * @param string: password of account
 	 *
 	 * @return bool
 	 */
@@ -85,15 +84,15 @@ class $$$CurrentUser extends $$$User {
 
 		// check login
 		$sql_0 = "SELECT accounts.id_system_users__account as id_system_users__account,
-						 profiles.id_system_users__profile as id_system_users__profile,
-						 (SELECT users.id_system_users__user
-						 	FROM #__users as users
-							WHERE users.fk_system_users__account = accounts.id_system_users__account) as id_system_users__user
-				  FROM #__accounts as accounts,
-				  	   #__profiles as profiles
-				  WHERE profiles.fk_system_users__account = accounts.id_system_users__account
-				  		AND ".$sql_email_name."
-				  		AND accounts.password = '".$sql_password."';";
+					 profiles.id_system_users__profile as id_system_users__profile,
+					 (SELECT users.id_system_users__user
+					 	FROM #__users as users
+						WHERE users.fk_system_users__account = accounts.id_system_users__account) as id_system_users__user
+				FROM #__accounts as accounts,
+					#__profiles as profiles
+				WHERE profiles.fk_system_users__account = accounts.id_system_users__account
+					AND ".$sql_email_name."
+					AND accounts.password = '".$sql_password."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// validate login
@@ -105,7 +104,7 @@ class $$$CurrentUser extends $$$User {
 			$_SESSION['id_system_users__account'] = $result_0[0]['id_system_users__account'];
 			$_SESSION['id_system_users__profile'] = $result_0[0]['id_system_users__profile'];
 			$TSunic->Encryption->setPassword($password);
-       		return true;
+			return true;
 		}
 
 		// login incorrect
@@ -144,9 +143,9 @@ class $$$CurrentUser extends $$$User {
 	}
 
 	/* register a new account
-	 * @param string $email: email-address
-	 * @param string $password: password of account
-	 * @param string $name: name of profile	 	 
+	 * @param string: email-address
+	 * @param string: password of account
+	 * @param string: name of profile
 	 *
 	 * @return bool
 	 */
@@ -191,7 +190,7 @@ class $$$CurrentUser extends $$$User {
 
 		// delete user in database
 		$sql_0 = "DELETE FROM #__users
-				  WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
+				WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
 				  ;";
 		$return_0 = $TSunic->Db->doDelete($sql_0);
 		return true;
@@ -239,8 +238,8 @@ class $$$CurrentUser extends $$$User {
 
 			// get linked account from database
 			$sql_0 = "SELECT fk_system_users__account as id_system_users__account
-					  FROM #__users
-					  WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
+					FROM #__users
+					WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
 					 ;";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 			if (!$result_0 OR count($result_0) == 0) {
@@ -266,19 +265,19 @@ class $$$CurrentUser extends $$$User {
 
 						// check, if account already linked to an other user
 						$sql_1 = "SELECT id_system_users__user as id_system_users__user
-								  FROM #__users
-								  WHERE fk_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."';";
+								FROM #__users
+								WHERE fk_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."';";
 						$result_1 = $TSunic->Db->doSelect($sql_1);
 						if (!$result_1 OR count($result_1) == 0) {
 							// account not linked to user yet
 
 							// update user; add account id
 							$sql_2 = "UPDATE #__users
-									  SET ip = '".mysql_real_escape_string($ip)."',
-									  	  browser = '".mysql_real_escape_string($browser)."',
-									  	  fk_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
-									  WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
-									  ;";
+									SET ip = '".mysql_real_escape_string($ip)."',
+										browser = '".mysql_real_escape_string($browser)."',
+										fk_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
+									WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
+							;";
 							$return_2 = $TSunic->Db->doDelete($sql_2);
 						} else {
 							// account already linked
@@ -295,10 +294,10 @@ class $$$CurrentUser extends $$$User {
 
 				// just update user-data
 				$sql_2 = "UPDATE #__users
-						  SET ip = '".mysql_real_escape_string($ip)."',
-						  	  browser = '".mysql_real_escape_string($browser)."'
-						  WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
-						  ;";
+						SET ip = '".mysql_real_escape_string($ip)."',
+							browser = '".mysql_real_escape_string($browser)."'
+						WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."'
+				;";
 				$return_2 = $TSunic->Db->doDelete($sql_2);
 			}
 		} else {
@@ -306,20 +305,21 @@ class $$$CurrentUser extends $$$User {
 
 			// check, if suiting user exists
 			$sql_3 = "SELECT id_system_users__user
-					  FROM #__users
-					  WHERE ip = '".mysql_real_escape_string($ip)."'
-					  		AND browser = '".mysql_real_escape_string($browser)."'
-							AND fk_system_users__account = 0;";
+					FROM #__users
+					WHERE ip = '".mysql_real_escape_string($ip)."'
+						AND browser = '".mysql_real_escape_string($browser)."'
+						AND fk_system_users__account = 0
+			;";
 			$result_3 = $TSunic->Db->doSelect($sql_3);
 			if (!$result_3 OR count($result_3) == 0) {
 				// no fitting user exists
 
 				// create new user in database
 				$sql_4 = "INSERT INTO #__users
-						  SET ip = '".mysql_real_escape_string($ip)."',
-						  	  browser = '".mysql_real_escape_string($browser)."',
-						  	  dateOfFirst = NOW()
-						  ;";
+						SET ip = '".mysql_real_escape_string($ip)."',
+							browser = '".mysql_real_escape_string($browser)."',
+							dateOfFirst = NOW()
+				;";
 				$return_4 = $TSunic->Db->doInsert($sql_4);
 				$this->id_system_users__user = mysql_insert_id();
 			} else {
@@ -334,7 +334,7 @@ class $$$CurrentUser extends $$$User {
 	}
 
 	/* check, if password is correct
-	 * @param string $password: password of account
+	 * @param string: password of account
 	 *
 	 * @return bool
 	 */
@@ -343,9 +343,9 @@ class $$$CurrentUser extends $$$User {
 
 		// check login
 		$sql_0 = "SELECT accounts.id_system_users__account as id_system_users__account
-				  FROM #__accounts as accounts
-				  WHERE accounts.id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
-				  		AND accounts.password = '".md5($password)."';";
+				FROM #__accounts as accounts
+				WHERE accounts.id_system_users__account = '".mysql_real_escape_string($this->id_system_users__account)."'
+					AND accounts.password = '".md5($password)."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// validate password

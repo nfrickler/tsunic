@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | function to show account -->
 <?php
-
 function $$$showAccount () {
 	global $TSunic;
 

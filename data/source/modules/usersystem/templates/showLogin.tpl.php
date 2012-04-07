@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | TEMPLATE show login -->
 <div id="$$$div__showLogin">
 	<h1><?php echo $this->set('{SHOWLOGIN__H1}'); ?></h1>
 	<p class="ts_infotext">

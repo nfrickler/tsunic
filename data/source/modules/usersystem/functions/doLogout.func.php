@@ -1,6 +1,5 @@
 <!-- | FUNCTION logout user -->
 <?php
-
 function $$$doLogout () {
 	global $TSunic;
 

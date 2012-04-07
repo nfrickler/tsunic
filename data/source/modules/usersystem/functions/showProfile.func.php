@@ -1,6 +1,5 @@
 <!-- | FUNCTION show profile -->
 <?php
-
 function $$$showProfile () {
 	global $TSunic;
 

@@ -1,6 +1,5 @@
 <!-- | FUNCTION show registration-form -->
 <?php
-
 function $$$showRegistration () {
 	global $TSunic;
 

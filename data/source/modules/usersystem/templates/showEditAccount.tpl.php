@@ -1,6 +1,5 @@
 <!-- | TEMPLATE show form to edit account -->
 <?php
-
 // get data
 $User = $this->getVar('User');
 ?>

@@ -16,22 +16,22 @@ $User = $this->getVar('User');
 		<?php $this->set('{SHOWACCOUNT__INFOTEXT}'); ?>
 	</p>
 	<table cellspacing="2" cellpadding="0" border="0">
-	    <tr>
-	        <th style="min-width:200px;"><?php echo $this->set('{SHOWACCOUNT__EMAIL}'); ?></th>
-	        <td style="min-width:200px;" id="$$$showAccount__email"><?php $this->set($User->getInfo('email')); ?></td>
-	    </tr>
-	    <tr>
-	        <th><?php echo $this->set('{SHOWACCOUNT__PASSWORD}'); ?></th>
-	        <td id="$$$showAccount__password">*******</td>
-	    </tr>
-	    <tr>
-	        <th><?php echo $this->set('{SHOWACCOUNT__DATEOFREGISTRATION}'); ?></th>
-	        <td id="$$$showAccount__dateOfRegistration"><?php $this->set($User->getInfo('dateOfRegistration')); ?></td>
-	    </tr>
-	    <tr>
-	        <th><?php echo $this->set('{SHOWACCOUNT__DATEOFCHANGE}'); ?></th>
-	        <td id="$$$showAccount__dateOfChange"><?php $this->set($User->getInfo('dateOfChange')); ?></td>
-	    </tr>
+		<tr>
+			<th style="min-width:200px;"><?php echo $this->set('{SHOWACCOUNT__EMAIL}'); ?></th>
+			<td style="min-width:200px;" id="$$$showAccount__email"><?php $this->set($User->getInfo('email')); ?></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__PASSWORD}'); ?></th>
+			<td id="$$$showAccount__password">*******</td>
+		</tr>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__DATEOFREGISTRATION}'); ?></th>
+			<td id="$$$showAccount__dateOfRegistration"><?php $this->set($User->getInfo('dateOfRegistration')); ?></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__DATEOFCHANGE}'); ?></th>
+			<td id="$$$showAccount__dateOfChange"><?php $this->set($User->getInfo('dateOfChange')); ?></td>
+		</tr>
 	</table>
 </div>
 <script type="text/javascript">
@@ -46,15 +46,15 @@ $User = $this->getVar('User');
 	var content = document.createTextNode('SYSTEM_USERS_SHOWACCOUNT_EDITPROFILEINFO');
 	paragraph.appendChild(content);
 	document.getElementById('div_system_user_showAccount').appendChild(paragraph);
-    paragraph.style.marginTop = '20px';
+	paragraph.style.marginTop = '20px';
 	// add events
 	div_showAccount_email.onclick = function(){
 		if (!document.getElementById('div_showAccount_email_form')) {
 			var content;
 			// remove other forms
 			if (current_elements['form']) {
-			    system_removeElement(current_elements['form']);
-                current_elements = new Array();
+				system_removeElement(current_elements['form']);
+				current_elements = new Array();
 				div_showAccount_password.firstChild.nodeValue = '*******';
 			}
 			// empty
@@ -67,8 +67,8 @@ $User = $this->getVar('User');
 			current_elements['form'].method='post';
 			current_elements['form'].action='?module=system_users&event=doSetEMail';
 			current_elements['form'].id = 'div_showAccount_email_form';
-            div_showAccount_email.onblur = function() {
-            	div_showAccount_email.innerHTML = 'whats on';
+			div_showAccount_email.onblur = function() {
+				div_showAccount_email.innerHTML = 'whats on';
 				system_removeElement(current_elements['form']);
 			};
 			// create input
@@ -92,7 +92,7 @@ $User = $this->getVar('User');
 			current_elements['submit'].setAttribute("class", "ts_submit"); //For Most Browsers
 			current_elements['submit'].setAttribute("className", "ts_submit"); //For IE; harmless to other browsers.
 			current_elements['submit'].onclick = function(){current_elements['form'].submit();};
-            current_elements['input'].focus();
+			current_elements['input'].focus();
 		}
 	};
 	div_showAccount_password.onclick = function(){
@@ -140,7 +140,7 @@ $User = $this->getVar('User');
 			current_elements['submit'].setAttribute("class", "ts_submit"); //For Most Browsers
 			current_elements['submit'].setAttribute("className", "ts_submit"); //For IE; harmless to other browsers.
 			current_elements['submit'].onclick = function(){current_elements['form'].submit();};
-            current_elements['input'].focus();
+			current_elements['input'].focus();
 		}
 	};
 */

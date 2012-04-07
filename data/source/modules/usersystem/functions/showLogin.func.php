@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | FUNCTION show login -->
 <?php
-
 function $$$showLogin () {
 	global $TSunic;
 
