@@ -1,4 +1,4 @@
-﻿<!-- | Class to handle configuration -->
+<!-- | Class to handle configuration -->
 <?php
 class ts_ConfigurationHandler {
 

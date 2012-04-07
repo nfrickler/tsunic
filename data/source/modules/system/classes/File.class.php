@@ -1,6 +1,5 @@
-<!-- p | class to handle files -->
+<!-- | class to handle files -->
 <?php
-
 class $$$File {
 
 	/* path of file
@@ -64,7 +63,7 @@ class $$$File {
 		return true;
 	}
 
-	/* ######################### get info about file ######################## */
+	/* ######################### get info about file ################### */
 
 	/* check, if valid file
 	 *
@@ -90,43 +89,47 @@ class $$$File {
 		if (!empty($this->mime_type)) return $this->mime_type;
 
 		// try to get mime-type
-	    if (function_exists('finfo_file')) {
+		if (function_exists('finfo_file')) {
 
-	    	// PHP >= 5.3.0, PECL fileinfo >= 0.1.0
-	        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+			// PHP >= 5.3.0, PECL fileinfo >= 0.1.0
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 
 			// get absolute path
 			$path = $this->getPath();
 
 			// get info
-	        $type = finfo_file($finfo, $path);
-	        finfo_close($finfo);
-	    } else {
-	    	// PHP < 5.3.0
-	       // require_once 'upgradephp/ext/mime.php';
-	        $type = mime_content_type($this->getPath());
-	    }
+			$type = finfo_file($finfo, $path);
+			finfo_close($finfo);
+		} else {
+			// PHP < 5.3.0
+			// require_once 'upgradephp/ext/mime.php';
+			$type = mime_content_type($this->getPath());
+		}
 
 		// try OS file-command
-	    if (!$type OR $type == 'application/octet-stream') {
-	        $secondOpinion = exec('file -b --mime-type ' . escapeshellarg($this->getPath()), $foo, $returnCode);
-	        if ($returnCode == '0' && $secondOpinion) {
-	            $type = $secondOpinion;
-	        }
-	    }
+		if (!$type OR $type == 'application/octet-stream') {
+			$secondOpinion = exec(
+				'file -b --mime-type '.escapeshellarg($this->getPath()),
+				$foo,
+				$returnCode
+			);
+			if ($returnCode == '0' && $secondOpinion) {
+				$type = $secondOpinion;
+			}
+		}
 
 		// try exif_imagetype
-	    if (!$type OR $type == 'application/octet-stream') {
-	     //   require_once 'upgradephp/ext/mime.php';
-	        $exifImageType = exif_imagetype($this->getPath());
-	        if ($exifImageType !== false) {
-	            $type = image_type_to_mime_type($exifImageType);
-	        }
-	    }
+		if (!$type OR $type == 'application/octet-stream') {
+			// require_once 'upgradephp/ext/mime.php';
+			$exifImageType = exif_imagetype($this->getPath());
+			if ($exifImageType !== false) {
+				$type = image_type_to_mime_type($exifImageType);
+			}
+		}
 
 		// save type in obj-vars
 		$this->mime_type = $type;
-	    return $type;
+		return $type;
 	}
 
 	/* check, if file exist
@@ -139,7 +142,7 @@ class $$$File {
 	}
 
 	/* get path
-	 * +@param bool $folder_only: get folder-path only	 
+	 * +@param bool $folder_only: get folder-path only
 	 *
 	 * @return string/bool
 	 */
@@ -174,7 +177,7 @@ class $$$File {
 		return basename($this->path);
 	}
 
-	/* ######################### delete/move/rename ######################### */
+	/* ##################### delete/move/rename ######################### */
 
 	/* upload file
 	 * @param string $new_path: path, where file is going to be moved to

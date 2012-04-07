@@ -1,6 +1,5 @@
-<!-- p | class for template-files -->
+<!-- | Template class -->
 <?php
-
 class $$$Template {
 
 	/* name of template
@@ -14,9 +13,7 @@ class $$$Template {
 	protected $data;
 
 	/* constructor
-	 * +@param string $template: name of template
-	 *
-	 * @return OBJECT
+	 * +@param string: name of template
 	 */
 	public function __construct ($template = false) {
 
@@ -29,7 +26,7 @@ class $$$Template {
 	/* get current style
 	 *
 	 * @return string
- 	 */
+	 */
 	public function getStyle () {
 		global $TSunic;
 		return $TSunic->Tmpl->getInfo('style');
@@ -54,9 +51,9 @@ class $$$Template {
 	}
 
 	/* set data for this template
-	 * @param string/array $name:	string - name of value
-	 * 								array - data-array
-	 * +@param mix $value:			value for data with name $name
+	 * @param string/array: string - name of value
+	 * 	array - data-array
+	 * +@param mix: value for data with name $name
 	 *
 	 * @return bool
  	 */
@@ -79,13 +76,13 @@ class $$$Template {
 		return true;
 	}
 
-	# ######################## display & include ############################# #
+	# ######################## display & include ######################### #
 
 	/* display template
-	 * +@param bool/string $template:	false - display this template
-	 * 									string - display template $template
-	 * +@param bool/array $data:		false - no data
-	 * 									array - data for new template	 	 
+	 * +@param bool/string: false - display this template
+	 * 	string - display template $template
+	 * +@param bool/array: false - no data
+	 * 	array - data for new template
 	 *
 	 * @return true OR exit
 	 */
@@ -107,10 +104,12 @@ class $$$Template {
 		}
 
 		// get paths (priority-orderr)
-		$paths = array('#runtime#templates/style'.$this->getStyle().'__'.$this->template.'.tpl.php',
-					   '#runtime#templates/'.$this->template.'.tpl.php',
-					   '#runtime#templates/style'.$this->getStyle().'__$$$noTemplateFound.tpl.php',
-					   '#runtime#templates/$$$noTemplateFound.tpl.php');
+		$paths = array(
+			'#runtime#templates/style'.$this->getStyle().'__'.$this->template.'.tpl.php',
+			'#runtime#templates/'.$this->template.'.tpl.php',
+			'#runtime#templates/style'.$this->getStyle().'__$$$noTemplateFound.tpl.php',
+			'#runtime#templates/$$$noTemplateFound.tpl.php'
+		);
 
 		// try to include template
 		foreach ($paths as $index => $value) {
@@ -134,7 +133,7 @@ class $$$Template {
 	}
 
 	/* display other template
-	 * @param object $File: file-object
+	 * @param object: file-object
 	 *
 	 * @return bool
 	 */
@@ -161,7 +160,7 @@ class $$$Template {
 	}
 
 	/* save javascript in session
-	 * @param array $code: jsvascript-code from callback-function
+	 * @param array: jsvascript-code from callback-function
 	 *
 	 * @return ''
 	 */
@@ -181,7 +180,7 @@ class $$$Template {
 	}
 
 	/* include and display sub-templates
-	 * @param string $position: position in template
+	 * @param string: position in template
 	 *
 	 * @return bool
 	 */
@@ -206,13 +205,12 @@ class $$$Template {
 		return true;
 	}
 
-	# ############################ set ####################################### #
+	# ############################ set ################################### #
 
 	/* parse for output
-	 * @param string $text: text to parse
-	 * @param array $data: variables to replace in lang-string
-	 * +@param bool $doEcho: true - echo $text
-	 * 						 false - do not echo
+	 * @param string: text to parse
+	 * @param array: variables to replace in lang-string
+	 * +@param bool: echo?
 	 *
 	 * @return string
 	 */
@@ -253,7 +251,7 @@ class $$$Template {
 	}
 
 	/* replace vars (callback)
-	 * @param string $input: variable replacement
+	 * @param string: variable replacement
 	 *
 	 * @return string
 	 */
@@ -267,11 +265,11 @@ class $$$Template {
 	}
 
 	/* parse Link for output
-	 * @param string $event: name of event
-	 * +@param bool/array $data: false - no GET-parameter; array - GET-parameters	 
-	 * +@param bool $is_html: is link placed in html-code (set false for javascript etc.)
-	 * +@param bool $doEcho: print link (false returns link)
-	 * +@param bool $add_qstmrk: add questionmark in the beginning?	 
+	 * @param string: name of event
+	 * +@param bool/array: false - no GET-parameter; array - GET-parameters	 
+	 * +@param bool: is link placed in html-code (set false for javascript etc.)
+	 * +@param bool: print link (false returns link)
+	 * +@param bool: add questionmark in the beginning?	 
 	 *
 	 * @return bool
 	 */
@@ -322,8 +320,8 @@ class $$$Template {
 	}
 
 	/* get/set old post-variable
-	 * @param string $name: name of post
-	 * +@param bool $doEcho: true will print return
+	 * @param string: name of post
+	 * +@param bool: print it? (or return it)
 	 *
 	 * @return bool
 	 */
@@ -348,10 +346,10 @@ class $$$Template {
 	}
 
 	/* get link to image
-	 * @param string $type: type of file
-	 * @param string $image_name: name of image 
-	 * +@param bool $doEcho: print link (false returns link)
-	 * +@param bool $isDownload: is download-link?	 	 	 
+	 * @param string: type of file
+	 * @param string: name of image 
+	 * +@param bool: print link (false returns link)
+	 * +@param bool: is download-link?
 	 *
 	 * @return bool/string
 	 */
@@ -366,20 +364,13 @@ class $$$Template {
 		// get by type
 		switch ($type) {
 			case 'project':
-
 				$link = 'files/project/style'.$this->getStyle().'__'.$image_name;
 				if (!file_exists($link)) $link = 'files/project/'.$image_name;
-
 				break;
 			case 'public':
-
 				break;
 			case 'private':
-
 				$link = 'file.php?id='.$image_name;
-
-
-
 				break;
 			default:
 				// invalid type
@@ -404,7 +395,7 @@ class $$$Template {
 	}
 
 	/* get value from $this->data
-	 * @param string $name: name of data | $name = true => all data
+	 * @param string: name of data | $name = true => all data
 	 *
 	 * @return bool
 	 */
@@ -414,13 +405,13 @@ class $$$Template {
 		return;
 	}
 
-	# ############################ set (js) ################################## #
+	# ############################ set (js) ############################## #
 
 	/* parse for javascript-output (language- and bbcode-replacements)
-	 * @param string $text: text to parse
-	 * @param 0/array $vars: variables to replace in lang-string
-	 * +@param bool $doEcho: true - display $text; false - do not display
-	 * +@param bool $doEscape: true - escape singe and double quotes	 
+	 * @param string: text to parse
+	 * @param 0/array: variables to replace in lang-string
+	 * +@param bool: true - display $text; false - do not display
+	 * +@param bool: true - escape singe and double quotes
 	 *
 	 * @return bool
 	 */

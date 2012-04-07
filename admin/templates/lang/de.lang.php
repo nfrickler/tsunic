@@ -30,6 +30,7 @@ $lang = array(
 	'STYLE__CLASS__STATUS_DEFAULT' => 'Standard',
 
 	// showLogin
+	'SHOWLOGIN__TITLE' => 'Login',
 	'SHOWLOGIN__H1' => 'TS_Admin | Login',
 	'SHOWLOGIN__INFOTEXT' => 'Bitte gebe das Administrations-Passwort ein, um das System zu verwalten.',
 	'SHOWLOGIN__LEGEND' => 'Bitte Passwort eingeben...',
@@ -37,6 +38,7 @@ $lang = array(
 	'SHOWLOGIN__SUBMIT' => 'Einloggen',
 
 	// setLogin
+	'SHOWSETLOGIN__TITLE' => 'Passwort festlegen',
 	'SHOWSETLOGIN__H1' => 'TS_Admin | Passwort festlegen',
 	'SHOWSETLOGIN__INFOTEXT' => 'Lege hier das Passwort für den Administrationsbereich fest. Der Administrationsbereich wird nur noch über dieses Passwort zugänglich sein. Du kannst das Passwort jederzeit wieder ändern.',
 	'SHOWSETLOGIN__LEGEND' => 'Bitte ein gewünschtes Passwort eingeben...',
@@ -44,6 +46,7 @@ $lang = array(
 	'SHOWSETLOGIN__SUBMIT' => 'Passwort speichern',
 
 	// showIndex
+	'SHOWINDEX__TITLE' => 'Übersicht',
 	'SHOWINDEX__H1' => 'TS_Admin | Übersicht',
 	'SHOWINDEX__INFOTEXT' => 'Du bist im Administrations-Backend von TSunic. Hier kannst du grundlegende Einstellungen der Software ändern und deren Module verwalten.',
 	'SHOWINDEX__H2_INDEX' => 'Deine Möglichkeiten im Überlick',
@@ -59,6 +62,7 @@ $lang = array(
 	'SHOWINDEX__DD_SYSTEMCHECK' => 'Überprüfe die Einstellungen deines Servers und den Status des Systems.',
 
 	// showModules
+	'SHOWMODULES__TITLE' => 'Modules',
 	'SHOWMODULES__H1' => 'TS_Admin | Module verwalten',
 	'SHOWMODULES__INFOTEXT' => 'Hier kannst du Module installieren/updaten/deinstallieren und verwalten.',
 	'SHOWMODULES__MODNAME' => 'Modulname',
@@ -100,6 +104,7 @@ $lang = array(
 	'ERROR__RENDER' => 'Beim Rendern ist ein Fehler aufgetreten!',
 
 	// showStyles
+	'SHOWSTYLES__TITLE' => 'Styles',
 	'SHOWSTYLES__H1' => 'TS_Admin | Styles verwalten',
 	'SHOWSTYLES__INFOTEXT' => 'Hier siehst du alle Styles auf einen Blick und kannst sie aktivieren/deaktieren oder ganz löschen.',
 	'SHOWSTYLES__MODNAME' => 'Stylename',
@@ -126,6 +131,7 @@ $lang = array(
 	'INFO__DELETESTYLE' => 'Style gelöscht.',
 
 	// showTools
+	'SHOWTOOLS__TITLE' => 'Optimieren',
 	'SHOWTOOLS__H1' => 'TS_Admin | Optimieren',
 	'SHOWTOOLS__INFOTEXT' => 'Hier kannst du mithilfe verschiedener Werkzeuge TSunic optimieren.',
 	'SHOWTOOLS__DT_INITDATABASE' => 'Datenbank initialisieren',
@@ -134,6 +140,7 @@ $lang = array(
 	'SHOWTOOLS__DD_RESETALL' => 'Hier kann TSunic auf die "Werkseinstellungen" zurückgesetzt werden. Alle Daten gehen dabei verloren!',
 
 	// showInitDatabase
+	'SHOWINITDATABASE__TITLE' => 'Datenbank einrichten',
 	'SHOWINITDATABASE__H1' => 'TS_Admin | Datenbank einrichten',
 	'SHOWINITDATABASE__INFOTEXT' => 'TSunic benötigt bestimmte Tabellen, um Module zu verwalten. Diese Tabellen sollten spätestens jetzt zur Verfügung stehen.',
 	'SHOWINITDATABASE__DONE' => 'Die benötigten Tabellen sind funktionstüchtig.',
@@ -141,7 +148,8 @@ $lang = array(
 	'SHOWINITDATABASE__ERROR_LINK' => 'Initialisierung erneut versuchen',
 
 	// showResetAll
-	'SHOWRESETALL__H1' => 'Alles zurücksetzen',
+	'SHOWRESETALL__TITLE' => 'Alles zurücksetzen',
+	'SHOWRESETALL__H1' => 'TS_Admin | Alles zurücksetzen',
 	'SHOWRESETALL__INFOTEXT' => 'Mit diesem Tool kann man TSunic komplett zurücksetzen und alle Daten löschen (außer eventuelle Backups im Backup-Ordner). Diese Funktion sollte mit großer Vorsicht verwendet werden und niemals bei einem laufenden System, es sei denn, man möchte es zerstören.',
 	'SHOWRESETALL__WARNING' => 'Mit einem Klick auf "SHOWRESETALL__RESETALL", werden alle Daten zerstört!!!',
 	'SHOWRESETALL__RESETALL' => 'TSunic jetzt zurücksetzen',
@@ -150,6 +158,7 @@ $lang = array(
 	'INFO__ALLRESET_SUCCESS' => 'TSunic wurde erfolgreich zurückgesetzt.',
 
 	// showConfig
+	'SHOWCONFIG__TITLE' => 'Einstellungen bearbeiten',
 	'SHOWCONFIG__H1' => 'TS_Admin | Einstellungen bearbeiten',
 	'SHOWCONFIG__INFOTEXT' => 'Verwalte hier die grundlegenden Einstellungen von TSunic.',
 	'SHOWCONFIG__LEGEND_DATABASE' => 'Datenbank',
@@ -199,6 +208,7 @@ $lang = array(
 	'SHOWCONFIG__ALLOW_REGISTRATION_INFO' => 'Deaktiviere diese Einstellung, um die Registrierung neuer Mitglieder zu unterbinden. Mitglieder, die bereits registriert sind, können sich ganz normal weiter einloggen.',
 
 	// showSystemCheck
+	'SHOWSYSTEMCHECK__TITLE' => 'System überprüfen',
 	'SHOWSYSTEMCHECK__H1' => 'TS_Admin | System überprüfen',
 	'SHOWSYSTEMCHECK__INFOTEXT' => 'Kann TSunic auf diesem Server problemlos laufen? Könnte man etwas verbessern? Hier findest du Antworten.',
 	'SHOWSYSTEMCHECK__FOLDER_RUNTIME' => 'Verzeichnis "runtime" beschreibbar?',
@@ -213,6 +223,7 @@ $lang = array(
 	'SHOWSYSTEMCHECK__FOLDER_DATA_INFO' => 'Dieses Verzeichnis beinhaltet sämtliche Daten, auf die TSunic zwar zugreifen können muss, die aber nicht im öffentlichen Web liegen müssen/sollten. TSunic benötigt Schreibrechte für dieses Verzeichnis inklusive der Unterverzeichnisse. Bitte setze über einen FTP-Browser deiner Wahl die Verzeichnisrechte auf 755!',
 
 	// pagenotfound
+	'PAGENOTFOUND__TITLE' => 'Seite nicht gefunden',
 	'PAGENOTFOUND__H1' => 'Seite nicht gefunden!',
 	'PAGENOTFOUND__INFOTEXT' => 'Die angeforderte Seite konnte nicht gefunden werden!',
 

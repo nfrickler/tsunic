@@ -192,7 +192,7 @@ class ts_FileHandler {
 	public function writeFile ($path, $content, $mode = 0) {
 
 		// get relative path
-		$path = self::getRelative($path);
+		//$path = self::getRelative($path);
 
 		// overwrite?
 		if (file_exists($path) AND !$mode) return false;

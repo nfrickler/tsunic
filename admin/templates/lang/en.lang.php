@@ -30,6 +30,7 @@ $lang = array(
 	'STYLE__CLASS__STATUS_DEFAULT' => 'Default',
 
 	// showLogin
+	'SHOWLOGIN__TITLE' => 'Login',
 	'SHOWLOGIN__H1' => 'TS_Admin | Login',
 	'SHOWLOGIN__INFOTEXT' => 'Please enter the backend-password to enter the administration backend!',
 	'SHOWLOGIN__LEGEND' => 'Please enter password...',
@@ -37,13 +38,15 @@ $lang = array(
 	'SHOWLOGIN__SUBMIT' => 'Log in',
 
 	// setLogin
-	'SHOWSETLOGIN__H1' => 'TS_Admin | Choose password',
-	'SHOWSETLOGIN__INFOTEXT' => 'Please choose a new password for the administration backend. This password can be changed within the backend as often as you like.',
+	'SHOWSETLOGIN__TITLE' => 'Set password',
+	'SHOWSETLOGIN__H1' => 'TS_Admin | Set password',
+	'SHOWSETLOGIN__INFOTEXT' => 'Please set a new password for the administration backend. This password can be changed within the backend as often as you like.',
 	'SHOWSETLOGIN__LEGEND' => 'Please enter a new password',
 	'SHOWSETLOGIN__PASSWORD' => 'Backend password',
 	'SHOWSETLOGIN__SUBMIT' => 'Save password',
 
 	// showIndex
+	'SHOWINDEX__TITLE' => 'Index',
 	'SHOWINDEX__H1' => 'TS_Admin | Index',
 	'SHOWINDEX__INFOTEXT' => 'You are in the administration-backend of TSunic. This backend enables you to administrate TSunic easily.',
 	'SHOWINDEX__H2_INDEX' => 'This backend enables you to...',
@@ -59,6 +62,7 @@ $lang = array(
 	'SHOWINDEX__DD_SYSTEMCHECK' => 'Check environment of the system.',
 
 	// showModules
+	'SHOWMODULES__TITLE' => 'Modules',
 	'SHOWMODULES__H1' => 'TS_Admin | Administrate modules',
 	'SHOWMODULES__INFOTEXT' => 'Here you can install/update/uninstall/remove modules. Moreover you can parse the runtime-environment of TSunic.',
 	'SHOWMODULES__MODNAME' => 'Name of module',
@@ -100,6 +104,7 @@ $lang = array(
 	'ERROR__RENDER' => 'An error occurred while parsing the software!',
 
 	// showStyles
+	'SHOWSTYLES__TITLE' => 'Styles',
 	'SHOWSTYLES__H1' => 'TS_Admin | Administrate styles',
 	'SHOWSTYLES__INFOTEXT' => 'All styles on one page. Here you can administrate all styles in your style-directory.',
 	'SHOWSTYLES__MODNAME' => 'Name of style',
@@ -126,6 +131,7 @@ $lang = array(
 	'INFO__DELETESTYLE' => 'Style removed.',
 
 	// showTools
+	'SHOWTOOLS__TITLE' => 'Optimize',
 	'SHOWTOOLS__H1' => 'TS_Admin | Optimize',
 	'SHOWTOOLS__INFOTEXT' => 'This tools can help you to optimize your TSunic installation.',
 	'SHOWTOOLS__DT_INITDATABASE' => 'Initialize database',
@@ -134,6 +140,7 @@ $lang = array(
 	'SHOWTOOLS__DD_RESETALL' => 'This tool enables you to reset TSunic completely. All data of your current installation will be lost afterwards!',
 
 	// showInitDatabase
+	'SHOWINITDATABASE__TITLE' => 'Initialize database',
 	'SHOWINITDATABASE__H1' => 'TS_Admin | Initialize database',
 	'SHOWINITDATABASE__INFOTEXT' => 'To manage the modules and styles TSunic needs some tables in your database. Accessing this page, TSunic will try to create them.',
 	'SHOWINITDATABASE__DONE' => 'The required tables are available.',
@@ -141,7 +148,8 @@ $lang = array(
 	'SHOWINITDATABASE__ERROR_LINK' => 'Retry initialization',
 
 	// showResetAll
-	'SHOWRESETALL__H1' => 'Reset all',
+	'SHOWRESETALL__TITLE' => 'Reset all',
+	'SHOWRESETALL__H1' => 'TS_Admin | Reset all',
 	'SHOWRESETALL__INFOTEXT' => 'This tool enables you to reset TSunic conpletely. All data of your current installation will be lost and can not be recovered!',
 	'SHOWRESETALL__WARNING' => 'With clicking on "SHOWRESETALL__RESETALL" all data will be destroyed!!!',
 	'SHOWRESETALL__RESETALL' => 'Reset TSunic now',
@@ -150,6 +158,7 @@ $lang = array(
 	'INFO__ALLRESET_SUCCESS' => 'TSunic has been resetted successfully.',
 
 	// showConfig
+	'SHOWCONFIG__TITLE' => 'Edit configuration',
 	'SHOWCONFIG__H1' => 'TS_Admin | Edit configuration',
 	'SHOWCONFIG__INFOTEXT' => 'Change the configuration of TSunic easily via this formular.',
 	'SHOWCONFIG__LEGEND_DATABASE' => 'Database',
@@ -199,6 +208,7 @@ $lang = array(
 	'SHOWCONFIG__ALLOW_REGISTRATION_INFO' => 'Deactivate this option to disallow new users to register. Already registered users can still login normally.',
 
 	// showSystemCheck
+	'SHOWSYSTEMCHECK__TITLE' => 'Check system',
 	'SHOWSYSTEMCHECK__H1' => 'TS_Admin | Check system',
 	'SHOWSYSTEMCHECK__INFOTEXT' => 'Is TSunic likely to run on this system properly? Check it now!',
 	'SHOWSYSTEMCHECK__FOLDER_RUNTIME' => 'Write access for folder "runtime"?',
@@ -213,6 +223,7 @@ $lang = array(
 	'SHOWSYSTEMCHECK__FOLDER_DATA_INFO' => 'This folder contains all data, which do not require web-access. TSunic needs write access to this folder so please set file options in your ftp-browser to 755!',
 
 	// pagenotfound
+	'PAGENOTFOUND__TITLE' => 'Page not found',
 	'PAGENOTFOUND__H1' => 'Page not found!',
 	'PAGENOTFOUND__INFOTEXT' => 'The requested page has not been found!',
 

@@ -89,7 +89,7 @@ class ts_Template {
 		return true;
 	}
 
-	/* get value from $this->data
+	/* print value from $this->data
 	 * @param string: name of data | $name = true => all data
 	 *
 	 * @return bool

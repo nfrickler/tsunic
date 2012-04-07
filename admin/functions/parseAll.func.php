@@ -1,4 +1,4 @@
-﻿<!-- | function to parse TSunic -->
+<!-- | function to parse TSunic -->
 <?php
 function parseAll () {
 	global $Database, $Config, $ModuleHandler;

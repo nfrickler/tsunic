@@ -58,6 +58,7 @@ switch ($_GET['event']) {
 			exit;
 		}
 
+		$TemplateEngine->setData('html', array('title' => 'SHOWLOGIN__TITLE'));
 		$TemplateEngine->activate('showLogin');
 		break;
 	case 'doLogin':
@@ -70,7 +71,6 @@ switch ($_GET['event']) {
 
 		// redirect to showMain
 		header('Location:?');
-
 		exit;
 	case 'doLogout':
 		unset($_SESSION['admin_auth']);
@@ -84,6 +84,7 @@ switch ($_GET['event']) {
 			exit;
 		}
 
+		$TemplateEngine->setData('html', array('title' => 'SHOWSETLOGIN__TITLE'));
 		$TemplateEngine->activate('showSetLogin');
 		break;
 	case 'setLogin':
@@ -92,9 +93,11 @@ switch ($_GET['event']) {
 		setLogin();
 		break;
 	case 'showIndex':
+		$TemplateEngine->setData('html', array('title' => 'SHOWINDEX__TITLE'));
 		$TemplateEngine->activate('showIndex');
 		break;
 	case 'showSystemcheck':
+		$TemplateEngine->setData('html', array('title' => 'SHOWSYSTEMCHECK__TITLE'));
 		$TemplateEngine->activate('showSystemcheck');
 
 		// update installation-progress
@@ -103,6 +106,7 @@ switch ($_GET['event']) {
 		}
 		break;
 	case 'showConfig':
+		$TemplateEngine->setData('html', array('title' => 'SHOWCONFIG__TITLE'));
 		$TemplateEngine->activate('showConfig');
 		break;
 	case 'setConfig':
@@ -111,14 +115,17 @@ switch ($_GET['event']) {
 		header('Location:?event=showConfig');
 		exit;
 	case 'showTools':
+		$TemplateEngine->setData('html', array('title' => 'SHOWTOOLS__TITLE'));
 		$TemplateEngine->activate('showTools');
 		break;
 	case 'showInitDatabase':
 		include_once 'functions/initDatabase.func.php';
 		initDatabase();
+		$TemplateEngine->setData('html', array('title' => 'SHOWINITDATABASE__TITLE'));
 		$TemplateEngine->activate('showInitDatabase');
 		break;
 	case 'showResetAll':
+		$TemplateEngine->setData('html', array('title' => 'SHOWRESETALL__TITLE'));
 		$TemplateEngine->activate('showResetAll');
 		break;
 	case 'resetAll':
@@ -138,6 +145,7 @@ switch ($_GET['event']) {
 		$ModuleHandler = new ts_ModuleHandler();
 		$Modules = $ModuleHandler->getModules();
 
+		$TemplateEngine->setData('html', array('title' => 'SHOWMODULES__TITLE'));
 		$TemplateEngine->activate('showModules');
 		break;
 	case 'setModules':
@@ -198,6 +206,7 @@ switch ($_GET['event']) {
 		$StyleHandler = new ts_StyleHandler();
 		$Styles = $StyleHandler->getStyles();
 
+		$TemplateEngine->setData('html', array('title' => 'SHOWSTYLES__TITLE'));
 		$TemplateEngine->activate('showStyles');
 		break;
 	case 'setStyles':
@@ -222,6 +231,7 @@ switch ($_GET['event']) {
 		header('Location:?event=showStyles');
 		exit;
 	default:
+		$TemplateEngine->setData('html', array('title' => 'PAGENOTFOUND__TITLE'));
 		$TemplateEngine->activate('pageNotFound');
 		break;
 }

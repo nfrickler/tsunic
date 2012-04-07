@@ -10,7 +10,7 @@ global $Config;
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta http-equiv="cache-control" content="no-cache" />
-	<title><?php $this->setVar('title'); ?> | TSunic <?php echo $Config->get('version'); ?></title>
+	<title><?php $this->setVar('title'); ?> | TSunic_Admin <?php echo $Config->get('version'); ?></title>
 	<link rel="stylesheet" type="text/css" href="format.css" />
 </head>
 <body>
@@ -86,7 +86,7 @@ global $Config;
 		</div>
 	</div>
 	<div class="div_tsunic_topright">
-		<a href="../" target="_blank">
+		<a href="../index.php" target="_blank">
 			<img src="templates/images/tsunic4_logo_4.1.png" alt="TSunic Logo" style="width:80px; height:80px;" /></a>
 	</div>
 </body>
