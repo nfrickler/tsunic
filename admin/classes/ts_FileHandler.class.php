@@ -17,7 +17,7 @@ class ts_FileHandler {
 		// get subfolders
 		$openfolder = opendir($path);
 		while ($thefile = readdir($openfolder)) {
-			if ($thefile == '.' OR $thefile == '..' OR !is_dir($path.'/'.$thefile)) continue;
+			if ($thefile == '.' OR $thefile == '..' OR !is_dir("$path/$thefile")) continue;
 			$subfolders[] = $thefile;
 		}
 		closedir($openfolder);

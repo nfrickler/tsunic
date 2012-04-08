@@ -1,6 +1,5 @@
-<!-- | -->
+<!-- | Configuration class -->
 <?php
-
 class $$$Config {
 
 	/* setting-cache

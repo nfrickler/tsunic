@@ -97,7 +97,10 @@ class ts_Packet {
 		if ($refresh) $this->infofile = array();
 
 		// check, if requested info is already in $this->info
-		if (isset($this->infofile, $this->infofile[$name]) AND !empty($this->infofile[$name])) return $this->infofile[$name];
+		if (
+			isset($this->infofile, $this->infofile[$name]) AND
+			!empty($this->infofile[$name])
+		) return $this->infofile[$name];
 
 		// load from version-file
 		if (!$this->path OR !file_exists($this->path.'/version.xml')) return NULL;
@@ -144,8 +147,7 @@ class ts_Packet {
 
 		// load PreParser-object
 		include_once 'classes/ts_PreParser.class.php';
-		$PreParser = new ts_PreParser();
-		$PreParser->setPacket($this);
+		$PreParser = new ts_PreParser($this);
 
 		// parse
 		if ($PreParser->parse($this->path, $path_new)) {

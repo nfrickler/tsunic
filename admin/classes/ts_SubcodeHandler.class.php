@@ -46,8 +46,10 @@ class ts_SubcodeHandler {
 			$cache[$i] = $Parser->replaceModule($cache[$i]);
 
 			// save content
-			if (!isset($this->subcodes[$this->cache[($i-1)]['path']])) $this->subcodes[$this->cache[($i-1)]['path']] = array();
-			if (!isset($this->subcodes[$this->cache[($i-1)]['path']][$this->cache[($i-1)]['line']])) $this->subcodes[$this->cache[($i-1)]['path']][$this->cache[($i-1)]['line']] = array();
+			if (!isset($this->subcodes[$this->cache[($i-1)]['path']]))
+				$this->subcodes[$this->cache[($i-1)]['path']] = array();
+			if (!isset($this->subcodes[$this->cache[($i-1)]['path']][$this->cache[($i-1)]['line']]))
+				$this->subcodes[$this->cache[($i-1)]['path']][$this->cache[($i-1)]['line']] = array();
 			$this->subcodes[$this->cache[($i-1)]['path']][$this->cache[($i-1)]['line']][] = $cache[$i];
 		}
 
@@ -72,9 +74,9 @@ class ts_SubcodeHandler {
 		$cache[1] = $Parser->replaceModule($cache[1]);
 
 		// save in cache
-		$this->cache[] = array('
-			path' => $Config->getRoot().'/runtime/'.$cache[1],
-				'line' => $cache[2]
+		$this->cache[] = array(
+			'path' => $Config->getRoot().'/runtime/'.$cache[1],
+			'line' => $cache[2]
 		);
 
 		return '[sub]';
@@ -82,26 +84,29 @@ class ts_SubcodeHandler {
 
 	/* inject all subcodes and complete file-rendering
 	 * +@param string/bool: path to folder in which all files will be
-	 * parsed recursively; false will parse all needed folders 
+	 * parsed recursively; false will parse all needed folders
 	 *
 	 * @return bool
 	 */
 	public function parseAll ($path = false) {
-		global $Config, $Parser;
+		global $Config, $Parser, $Log;
 
 		// run all?
 		if ($path == false) {
 			if ($this->parseAll($Config->getRoot().'/runtime/functions')
 				AND $this->parseAll($Config->getRoot().'/runtime/classes')
 				AND $this->parseAll($Config->getRoot().'/runtime/templates')
-				) {
+			) {
 				return true;
 			}
 			return false;
 		}
 
 		// validate path
-		if (!is_dir($path)) return false;
+		if (!is_dir($path)) {
+			$Log->doLog(3, "SubcodeHandler: Failed to parse path '$path'");
+			return false;
+		}
 
 		// parse all files
 		$subfiles = ts_FileHandler::getSubfiles($path);
@@ -112,6 +117,10 @@ class ts_SubcodeHandler {
 
 			// read file
 			$content = ts_FileHandler::readFile($filepath);
+			if ($content === false) {
+				$Log->doLog(3, "SubcodeHandler: Failed to read file '$filepath'");
+				return false;
+			}
 
 			// check, if anything to replace in this file
 			if (isset($this->subcodes[$filepath])) {
@@ -138,6 +147,7 @@ class ts_SubcodeHandler {
 
 			// write file
 			if (!ts_FileHandler::writeFile($filepath, $content, true)) {
+				$Log->doLog(3, "SubcodeHandler: Failed to write file '$filepath'");
 				return false;
 			}
 		}
@@ -151,3 +161,4 @@ class ts_SubcodeHandler {
 		return true;
 	}
 }
+?>

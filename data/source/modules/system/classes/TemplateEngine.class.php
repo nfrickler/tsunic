@@ -384,6 +384,8 @@ class $$$TemplateEngine {
 		if (!file_exists($path)) $path = 'runtime/css/format.css';
 		$this->activate('$$$html', false, array('path_format' => $path));
 
+		// SUBCODE adding templates
+
 		// get template
 		if ($template === false) $template = '$$$html';
 

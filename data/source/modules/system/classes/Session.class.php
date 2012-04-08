@@ -10,7 +10,7 @@ class $$$Session {
 	/* minimal life time of session (seconds)
 	 * int
 	 */
-	private $min_life_time = 30 * 60;
+	private $min_life_time = 1800;
 
 	/* readonly session
 	 * bool

@@ -1,4 +1,4 @@
-<!-- | module class -->
+<!-- | Module class -->
 <?php
 include_once 'classes/ts_Packet.class.php';
 class ts_Module extends ts_Packet {
@@ -26,30 +26,27 @@ class ts_Module extends ts_Packet {
 		return $path;
 	}
 
-	/* convert name to id__module
-	 * @param string: name of module
+	/* find id of module and preparse it
 	 *
-	 * @return OBJECT
+	 * @return bool
 	 */
-	protected function _findId ($name) {
-		global $Database, $Config;
-
-		// empty name?
-		if (empty($name)) return false;
+	protected function _findId () {
+		global $Database, $Config, $Log;
 
 		// get data from database to compare
 		$sql_0 = "SELECT name as name,
-					 nameid as nameid,
-					 id__module as id__module
+					nameid as nameid,
+					id__module as id__module
 				FROM #__modules
 				WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
 					AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
 		$result_0 = $Database->doSelect($sql_0);
 		if ($result_0 === false OR count($result_0) > 1) return false;
 
-		// is new module?
+		// new module?
 		if (count($result_0) == 0) {
-			// add module
+			$Log->doLog(3, "Module: Found new module '".
+				$this->getInfofile('name')."'");
 
 			// add module to database
 			$sql_0 = "INSERT INTO #__modules
@@ -59,7 +56,8 @@ class ts_Module extends ts_Packet {
 						version = '".mysql_real_escape_string($this->getInfofile('version'))."',
 						author = '".mysql_real_escape_string($this->getInfofile('author'))."',
 						link = '".mysql_real_escape_string($this->getInfofile('link'))."',
-						description = '".mysql_real_escape_string($this->getInfofile('description'))."';";
+						description = '".mysql_real_escape_string($this->getInfofile('description'))."'
+			;";
 			$result_0 = $Database->doInsert($sql_0);
 			if (!$result_0) return false;
 
@@ -72,21 +70,23 @@ class ts_Module extends ts_Packet {
 			return true;
 		}
 
-		// set id
+		// save id
 		$this->id = $result_0[0]['id__module'];
 
-		// check version
+		// update found! -> replace old version
 		if ($this->getInfofile('version') > $this->getInfo('version')) {
-			// update found! -> replace old version
+			$Log->doLog(3, "Module: Update of module '".
+				$this->getInfofile('name')."' found.");
 
 			// update database
 			$sql_1 = "UPDATE #__modules
 					SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
 						author = '".mysql_real_escape_string($this->getInfofile('author'))."',
 						link = '".mysql_real_escape_string($this->getInfofile('link'))."',
-						description = '".mysql_real_escape_string($this->getInfofile('description'))."'
+						description = '".mysql_real_escape_string($this->getInfofile('description'))."',
 						nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."'
-					WHERE id__module = '".$this->id."';";
+					WHERE id__module = '".$this->id."'
+			;";
 			$result_1 = $Database->doUpdate($sql_1);
 
 			// backup old version
@@ -99,22 +99,24 @@ class ts_Module extends ts_Packet {
 			// preparse (and replace old version by that)
 			$this->_preparse();
 
+		// version is same as saved in database
 		} elseif ($this->getInfofile('version') == $this->getInfo('version')) {
-			// version is same as saved in database
+			$Log->doLog(3, "Module: Move module '".
+				$this->getInfofile('name')."' to correct path.");
 
 			// get correct path
 			$path_correct = $this->_getPath(false, false);
 
 			// check, if in correct folder
-			if ($this->path != $path_correct) {
-				$this->_preparse();
-			}
+			if ($this->path != $path_correct) $this->_preparse();
 
+		// old version found! -> delete this one
 		} else {
-			// old version found! -> delete this one
-			ts_BackupHandler::backupModule($this->path);
+			$Log->doLog(3, "Module: Remove old version of module '".
+				$this->getInfofile('name')."'.");
 
-			// delete folder
+			// backup and delete folder
+			ts_BackupHandler::backupModule($this->path);
 			ts_FileHandler::deleteFolder($this->path);
 
 			// delete id
@@ -131,7 +133,7 @@ class ts_Module extends ts_Packet {
 	 * @param string: name of information to gather
 	 * +@param bool: true - delete all current infos 
 	 *
-	 * @return OBJECT
+	 * @return mix
 	 */
 	public function getInfo ($name, $refresh = false) {
 		global $Database;
@@ -155,7 +157,10 @@ class ts_Module extends ts_Packet {
 		if (!empty($result_0)) $this->info = $result_0[0];
 
 		// try again to return data
-		if (isset($this->info, $this->info[$name]) AND !empty($this->info[$name])) return $this->info[$name];
+		if (
+			isset($this->info, $this->info[$name]) AND
+			!empty($this->info[$name])
+		) return $this->info[$name];
 
 		// get info from infofile
 		return $this->getInfofile($name, $refresh);
@@ -237,7 +242,9 @@ class ts_Module extends ts_Packet {
 
 		// preparse
 		if (!parent::_preparse()) {
-			$_SESSION['admin_error'] = 'ERROR__CLASSMODULE__PREPARSE (module: '.$this->getInfo('name').')';
+			$_SESSION['admin_error'] =
+				'ERROR__CLASSMODULE__PREPARSE (module: '.
+				$this->getInfo('name').')';
 			return false;
 		}
 
@@ -251,7 +258,7 @@ class ts_Module extends ts_Packet {
 	 * @return bool
 	 */
 	public function parse () {
-		global $Database, $Parser;
+		global $Database, $Parser, $Log;
 
 		// is activated?
 		if (!$this->getInfo('is_activated')) {
@@ -282,16 +289,17 @@ class ts_Module extends ts_Packet {
 
 		// parse all parts
 		if ($this->parseImages()
-				AND $this->parseJavascript()
-				AND $this->parseXmlResponses()
-				AND $this->parseFunctions()
-				AND $this->parseClasses()
-				AND $this->parseTemplates()
-				AND $this->parseFormat()
-				AND $this->parseSubcodes()
-				AND $this->_parseLanguages()
-				) {
+			AND $this->parseJavascript()
+			AND $this->parseXmlResponses()
+			AND $this->parseFunctions()
+			AND $this->parseClasses()
+			AND $this->parseTemplates()
+			AND $this->parseFormat()
+			AND $this->parseSubcodes()
+			AND $this->_parseLanguages()
+		) {
 			// success
+			$Log->doLog(4, "Module: Parsed module '".$this->getInfo('name')."'");
 
 			// update database
 			$sql_0 = "UPDATE #__modules
@@ -305,6 +313,7 @@ class ts_Module extends ts_Packet {
 		}
 
 		// error during parseing
+		$Log->doLog(3, "Module: Failed to parse module '".$this->getInfo('name')."'");
 		return false;
 	}
 
@@ -318,7 +327,14 @@ class ts_Module extends ts_Packet {
 		// get preffix
 		$preffix = 'mod'.$this->id.'__';
 
-		if (ts_FileHandler::copyFolder($this->path.'/templates/images', $Config->getRoot().'/files/project', true, $preffix)) return true;
+		// copy all images
+		if (ts_FileHandler::copyFolder(
+			$this->path.'/templates/images',
+			$Config->getRoot().'/files/project',
+			true,
+			$preffix)
+		) return true;
+
 		return false;
 	}
 
@@ -347,7 +363,11 @@ class ts_Module extends ts_Packet {
 			$content = $Parser->parse($content, true, true);
 
 			// write
-			if (!$content OR !ts_FileHandler::writeFile($path_destination.'/'.$preffix.$value, $content, true)) return false;
+			if (!$content OR !ts_FileHandler::writeFile(
+				$path_destination.'/'.$preffix.$value,
+				$content,
+				true
+			)) return false;
 		}
 
 		return true;
@@ -371,14 +391,16 @@ class ts_Module extends ts_Packet {
 		// parse all files
 		foreach ($files as $index => $value) {
 
-			// read
+			// read and parse
 			$content = ts_FileHandler::readFile($path_source.'/'.$value);
-
-			// parse
 			$content = $Parser->parse($content);
 
 			// write
-			if (!$content OR !ts_FileHandler::writeFile($path_destination.'/'.$preffix.$value, $content, true)) return false;
+			if (!$content OR !ts_FileHandler::writeFile(
+				$path_destination.'/'.$preffix.$value,
+				$content,
+				true
+			)) return false;
 		}
 
 		return true;
@@ -412,7 +434,11 @@ class ts_Module extends ts_Packet {
 			$content = $Parser->parse($content, false);
 
 			// write
-			if (!$content OR !ts_FileHandler::writeFile($path_destination.'/'.$preffix.$value, $content, true)) return false;
+			if (!$content OR !ts_FileHandler::writeFile(
+				$path_destination.'/'.$preffix.$value,
+				$content,
+				true
+			)) return false;
 		}
 
 		return true;
@@ -447,12 +473,20 @@ class ts_Module extends ts_Packet {
 
 			// check, if special "TSunic"-class
 			if ($value == 'TSunic.class.php' AND $this->getInfo('name') == 'system') {
-				if (!$content OR !ts_FileHandler::writeFile($path_destination.'/'.$value, $content, true)) return false;
+				if (!$content OR !ts_FileHandler::writeFile(
+					$path_destination.'/'.$value,
+					$content,
+					true
+				)) return false;
 				continue;
 			}
 
 			// write
-			if (!$content OR !ts_FileHandler::writeFile($path_destination.'/'.$preffix.$value, $content, true)) return false;
+			if (!$content OR !ts_FileHandler::writeFile(
+				$path_destination.'/'.$preffix.$value,
+				$content,
+				true
+			)) return false;
 		}
 
 		return true;
@@ -486,7 +520,11 @@ class ts_Module extends ts_Packet {
 			$content = $Parser->parse($content, false);
 
 			// write
-			if (!$content OR !ts_FileHandler::writeFile($path_destination.'/'.$preffix.$value, $content, true)) return false;
+			if (!$content OR !ts_FileHandler::writeFile(
+				$path_destination.'/'.$preffix.$value,
+				$content,
+				true
+			)) return false;
 		}
 
 		return true;
@@ -510,7 +548,12 @@ class ts_Module extends ts_Packet {
 			$cache = explode('.', $value);
 
 			// read lang-file
-			if (!$LanguageHandler->add('module', $this->id, $cache[0], $path_source.'/'.$value)) return false;
+			if (!$LanguageHandler->add(
+				'module',
+				$this->id,
+				$cache[0],
+				"$path_source/$value"
+			)) return false;
 		}
 
 		return true;
@@ -544,13 +587,18 @@ class ts_Module extends ts_Packet {
 	 * @return bool
 	 */
 	protected function parseSubcodes () {
-		global $SubcodeHandler, $Parser;
+		global $SubcodeHandler, $Parser, $Log;
 
 		// get path
 		$path_source = $this->path.'/subcodes.php';
 
 		// get subcodes
 		$subcodes = ts_FileHandler::readFile($path_source);
+		if ($subcodes === false) {
+			$Log->doLog(3, "Module: Failed to read subcode file ".
+				"('$path_source') of module '".$this->getInfo('module')."'");
+			return false;
+		}
 		if (empty($subcodes)) return true;
 
 		// add subfunctions

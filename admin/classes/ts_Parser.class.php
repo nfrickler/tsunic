@@ -1,4 +1,4 @@
-﻿<!-- | Parser class -->
+<!-- | Parser class -->
 <?php
 class ts_Parser {
 
@@ -56,7 +56,7 @@ class ts_Parser {
 	}
 
 	/* set current module
-	 * @param int: id__module of current module, the content belongs to	 
+	 * @param int: id__module of current module, the content belongs to
 	 *
 	 * @return string
 	 */
@@ -583,3 +583,4 @@ class ts_Parser {
 		return $content;
 	}
 }
+?>

@@ -1,21 +1,11 @@
-<!-- | class for preparsing modules or styles -->
+<!-- | PreParser class -->
 <?php
 class ts_PreParser {
-
-	/* current module
-	 * object
-	 */
-	private $current_module;
 
 	/* current packet
 	 * object
 	 */
 	private $Packet;
-
-	/* flags of current file
-	 * array
-	 */
-	private $flags;
 
 	/* all file-extensions that shall be parsed
 	 * array
@@ -23,8 +13,10 @@ class ts_PreParser {
 	private $parse_ext = array('php', 'html', 'htm', 'css', 'xml', 'js');
 
 	/* constructor
+	 * +@param object: packet-object which is going to be parsed next
 	 */
-	public function __construct () {
+	public function __construct ($Packet = NULL) {
+		$this->Packet = $Packet;
 		return;
 	}
 
@@ -100,11 +92,12 @@ class ts_PreParser {
 			return false;
 		}
 
-		// move only?
+		// get filetype
 		$cache = explode('.', basename($source));
 		$filetype = end($cache);
-		if (!in_array($filetype, $this->parse_ext)) {
 
+		// filetype to move only?
+		if (!in_array($filetype, $this->parse_ext)) {
 			if (
 				$source != $destination and
 				!ts_FileHandler::writeFile($destination, $content)
@@ -116,100 +109,88 @@ class ts_PreParser {
 			return true;
 		}
 
-		// add flag comment if missing
-		if (substr($content, 0, 4) != '<!--') $content = '<!-- | -->'.$content;
+		// split flag comment from rest of content
+		if (substr($content, 0, 4) != '<!--') $content = '<!-- | -->'.chr(10).$content;
+		$content_lines = explode(chr(10), $content);
+		$flag_comment = trim($content_lines[0]);
+		unset($content_lines[0]);
+		$content = implode(chr(10),$content_lines);
 
-		// read flags, get file-path
-		$flags = $this->getFlags($content);
+		// read flags and get path to display
+		$flags = $this->getFlags($flag_comment);
 		if (isset($flags['p'])) return true;
-		$filepath = substr($destination, (strlen($path_to_cut)+1));
+		$displaypath = substr($destination, (strlen($path_to_cut)+1));
 
 		// add header
 		if (!isset($flags['h'])) {
 
-			// clear file
+			// remove existing headers
 			$content = preg_replace('#(\/\*\* header .* \*\/)#Usi', '', $content);
 			$content = preg_replace('#(\<\?php[\s]*\?\>)#Usi', '', $content);
 			$content = preg_replace('#(\<!--[\s]*--\>)#Usi', '', $content);
 
 			// generate new header
-			$header = '/** header ***********************************************************'.chr(10);
+			$header = '/** header *********************************************************'.chr(10);
 			$header.= ' * project:   TSunic '.$Config->get('version').' | '.
 				$this->Packet->getInfo('name').' '.
 				$this->Packet->getInfo('version').chr(10);
-			$header.= ' * file:      '.$filepath.chr(10);
+			$header.= ' * file:      '.$displaypath.chr(10);
 			if ($this->Packet->getInfo('author'))
 				$header.= ' * author:    '.
-				$this->Packet->getInfo('author').chr(10);
+					$this->Packet->getInfo('author').chr(10);
 			if ($this->Packet->getInfo('copyright'))
 				$header.= ' * copyright: '.
-				$this->Packet->getInfo('copyright').chr(10);
+					$this->Packet->getInfo('copyright').chr(10);
 			if ($this->Packet->getInfo('licence')) {
-				// is only one line?
 				$cache = explode(chr(10), $this->Packet->getInfo('licence'));
-				if (count($cache) < 2) {
-					$header.= ' * licence:   '.
-						$this->Packet->getInfo('licence').chr(10);
-				} else {
-					$header.= ' * licence:   '.trim($cache[0]).chr(10);
+				$header.= ' * licence:   '.trim($cache[0]).chr(10);
+				if (count($cache) > 1) {
 					for ($i = 1; $i < count($cache); $i++) {
 						$cache[$i] = trim($cache[$i]);
-						if (empty($cache[$i])) {
-							$header.= ' *'.chr(10);
-						} else {
-							$header.= ' *            '.
-								$cache[$i].chr(10);
-						}
+						$header.= (empty($cache[$i]))
+							? ' *'.chr(10)
+							: ' *            '.$cache[$i].chr(10);
 					}
 				}
 			}
-			$header.= ' * **************************************************************** */'.chr(10);
+			$header.= ' * ************************************************************** */'.chr(10);
 
-			// add header to content
-			$cache = explode('-->', $content);
-			$content = $cache[0].'-->'.chr(10);
-			unset($cache[0]);
+			// embed header in required tags
 			switch ($filetype) {
 				case 'php':
-					$content.= '<?php'.chr(10).$header.'?>'.chr(10); ?><?php
+					$header = '<?php'.chr(10).$header.'?>';
 					break;
 				case 'js':
 				case 'css':
-					$content.= $header.chr(10);
 					break;
 				default:
-					$content.= '<!--'.chr(10).$header.'-->'.chr(10);
+					$header = '<!--'.chr(10).$header.'-->';
 					break;
 			}
 
+			// add header to content
+			$content = $header.chr(10).$content;
+
 			// skip empty lines at the beginning
-			$cache_1 = explode(chr(10), $cache[1]);
-			foreach ($cache_1 as $in => $val) {
-				$val = trim($val);
-				if (empty($val)) {
-					unset($cache_1[$in]);
+			$cache = explode(chr(10), $content);
+			foreach ($cache as $index => $value) {
+				$value = trim($value);
+				if (empty($value)) {
+					unset($cache[$index]);
 					continue;
-				} elseif ($val == '<?php') {
+				} elseif ($value == '<?php') {
 					continue;
 				}
 				break;
 			}
-			$cache[1] = implode(chr(10), $cache_1);
-
-			// combine again
-			$content.= implode('-->', $cache);
+			$content = implode(chr(10), $cache);
 		}
 
-		// remove flags?
-		if ($rm_flags) {
-			$lines = explode(chr(10), $content);
-			$lines[0] = "";
-			unset($lines[0]);
-			$content = implode(chr(10), $lines);
-		}
+		// add flag comment again
+		if (!$rm_flags) $content = $flag_comment.chr(10).$content;
 
 		// trim
-		$content = str_replace('?>'.chr(10).'<?php', '', $content); ?><?php
+		$content = str_replace('?>'.chr(10).'<?php', '', $content);
 
 		// write
 		$Log->doLog(5, "PreParser: Write file '$source'");
@@ -226,33 +207,34 @@ class ts_PreParser {
 	 *
 	 * @return array with flags
 	 * Available flags:
-	 * 	i - ignore file at parsing
-	 * 	p - ignore file at preparsing
-	 * 	h - do not add header
+	 *   i - ignore file at parsing
+	 *   p - ignore file at preparsing
+	 *   h - do not add header
 	 *
 	 */
 	public function getFlags ($content) {
-		$this->flags = array();
+		$flags = array();
 
 		// extract header
-		$cache = explode('<?php', $content);
-		$cache = explode('-->', $cache[0]);
+		//$cache = explode('<?php', $content);
+		$cache = explode('-->', $content);
 		$cache = explode('<!--', $cache[0]);
 
-		// is header?
-		if (count($cache) < 1) array();
+		// is flag comment?
+		if (count($cache) < 1) return array();
 
 		// split header
 		$cache = explode('|', $cache[1]);
 
 		// get flags
-		$flags = str_replace(' ', '', trim($cache[0]));
-		$flags = (array) $flags;
-		foreach ($flags as $index => $value) {
+		$tmpflags = str_replace(' ', '', trim($cache[0]));
+		$tmpflags = (array) $tmpflags;
+		foreach ($tmpflags as $index => $value) {
 			if (empty($value)) continue;
-			$this->flags[$value] = $value;
+			$flags[$value] = $value;
 		}
 
-		return $this->flags;
+		return $flags;
 	}
 }
+?>
