@@ -150,7 +150,7 @@ class ts_Packet {
 		$PreParser = new ts_PreParser($this);
 
 		// parse
-		if ($PreParser->parse($this->path, $path_new)) {
+		if ($PreParser->parse($this->path, $path_new, $Config->getRoot(false))) {
 			// success
 
 			// delete old source

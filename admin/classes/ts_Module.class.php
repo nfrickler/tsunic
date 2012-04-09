@@ -101,14 +101,16 @@ class ts_Module extends ts_Packet {
 
 		// version is same as saved in database
 		} elseif ($this->getInfofile('version') == $this->getInfo('version')) {
-			$Log->doLog(3, "Module: Move module '".
-				$this->getInfofile('name')."' to correct path.");
 
 			// get correct path
 			$path_correct = $this->_getPath(false, false);
 
 			// check, if in correct folder
-			if ($this->path != $path_correct) $this->_preparse();
+			if ($this->path != $path_correct) {
+				$Log->doLog(3, "Module: Move module '".
+					$this->getInfofile('name')."' to correct path.");
+				$this->_preparse();
+			}
 
 		// old version found! -> delete this one
 		} else {
@@ -131,7 +133,7 @@ class ts_Module extends ts_Packet {
 
 	/* get info about module
 	 * @param string: name of information to gather
-	 * +@param bool: true - delete all current infos 
+	 * +@param bool: true - delete all current infos
 	 *
 	 * @return mix
 	 */

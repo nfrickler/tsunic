@@ -61,6 +61,24 @@ class $$$Log {
 		return;
 	}
 
+	/* log sth.
+	 * @param int: log level
+	 * @param string: log message
+	 */
+	public function doLog ($level, $msg) {
+		global $TSunic;
+
+		// check log level
+		if ($level > $this->level) return;
+
+		// create log message
+		if (!isset($this->log_msg['Log'])) $this->log_msg['Log'] = array();
+		$this->log_msg['Log'][] = date("Y-m-d H:i:s")."|$level|$msg\n";
+
+		// save
+		$this->_store();
+	}
+
 	/* add new log
 	 * @param string: type of message (error, info, warning)
 	 * @param string: message
@@ -199,7 +217,7 @@ class $$$Log {
 		if (!empty($this->log_msg)) {
 
 			// get file-object
-			$File = $TSunic->get('$$$File', array('#cache#$$$log.txt', true));
+			$File = $TSunic->get('$$$File', array('#cache#frontend.log', true));
 
 			// add logs
 			foreach ($this->log_msg as $index => $value) {

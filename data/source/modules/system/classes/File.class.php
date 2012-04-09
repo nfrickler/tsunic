@@ -327,7 +327,7 @@ class $$$File {
 	public function writeAdd ($to_add) {
 
 		// get content
-		$content = $this->readFile();
+		$content = $this->readFile(true);
 
 		// append to the end
 		$content.= "\n".$to_add;

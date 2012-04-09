@@ -20,16 +20,6 @@ class ts_PreParser {
 		return;
 	}
 
-	/* set current module
-	 * @param object: packet-object which is going to be parsed next
-	 *
-	 * @return string
-	 */
-	public function setPacket ($Packet) {
-		$this->Packet = $Packet;
-		return true;
-	}
-
 	/* preparse
 	 * @param string: source-path
 	 * @param string: destination_path
@@ -130,11 +120,14 @@ class ts_PreParser {
 			$content = preg_replace('#(\<!--[\s]*--\>)#Usi', '', $content);
 
 			// generate new header
-			$header = '/** header *********************************************************'.chr(10);
-			$header.= ' * project:   TSunic '.$Config->get('version').' | '.
+			// First two lines have to be separated or the publish
+			// script will remove the following header definition!
+			$header = '/*'.
+				'* header *********************************************************'.chr(10).
+				' * project:   TSunic '.$Config->get('version').' | '.
 				$this->Packet->getInfo('name').' '.
-				$this->Packet->getInfo('version').chr(10);
-			$header.= ' * file:      '.$displaypath.chr(10);
+				$this->Packet->getInfo('version').chr(10).
+				' * file:      '.$displaypath.chr(10);
 			if ($this->Packet->getInfo('author'))
 				$header.= ' * author:    '.
 					$this->Packet->getInfo('author').chr(10);

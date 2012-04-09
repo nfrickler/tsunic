@@ -49,7 +49,7 @@ class ts_FileHandler {
 
 	/* move folder including all it subfolders and -files
 	 * @param string: path of source-folder
-	 * @param string: path of destination-folder (will be created, if nonexistent)	 
+	 * @param string: path of destination-folder (will be created, if nonexistent)
 	 *
 	 * @return bool
 	 */
@@ -162,24 +162,6 @@ class ts_FileHandler {
 		return true;
 	}
 
-	/* convert path to relative path
-	 * @param string: path to file
-	 * @param string: content to write to file
-	 * +@param bool: overwrite, if file exists
-	 *
-	 * @return bool
-	 */
-	public function getRelative ($path) {
-		global $Config;
-
-		$path_root = $Config->get('root_folder');
-		if (substr($path, 0, strlen($path_root)) == $path_root) {
-			$path = '..'.substr($path, strlen($path_root));
-		}
-
-		return $path;
-	}
-
 	/* write content to file
 	 * @param string: path of file
 	 * @param string: content to write to file
@@ -190,9 +172,6 @@ class ts_FileHandler {
 	 * @return bool
 	 */
 	public function writeFile ($path, $content, $mode = 0) {
-
-		// get relative path
-		//$path = self::getRelative($path);
 
 		// overwrite?
 		if (file_exists($path) AND !$mode) return false;
