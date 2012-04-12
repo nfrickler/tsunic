@@ -35,8 +35,8 @@ $lang = array(
 	'FOOTER__TOSYSTEMINFO' => 'Systeminfo',
 
 	// showSysteminfo
-	'SYSTEMINFO__TITLE' => 'System-Information',
-	'SYSTEMINFO__H1' => 'System-Information',
+	'SYSTEMINFO__TITLE' => 'System information',
+	'SYSTEMINFO__H1' => 'System information',
 	'SYSTEMINFO__INFOTEXT' => 'This page shows more information about this system.',
 	'SYSTEMINFO__SHOWMODULES_H1' => 'Installed modules',
 	'SYSTEMINFO__SHOWMODULES_INFOTEXT' => 'This is a list of the installed modules on this system.',

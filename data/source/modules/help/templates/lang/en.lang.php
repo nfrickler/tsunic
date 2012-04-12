@@ -10,6 +10,10 @@ $lang = array(
 	'SHOWMAIN__LINKS_DOCUMENTATION' => 'TSunic-Documentation (german only)',
 	'SHOWMAIN__LINKS_DOCUMENTATION_INFO' => '',
 
+	// showHelp
+	'SHOWHELP__H' => 'Help',
+	'SHOWHELP__INTRO' => 'Help for current page.',
+
 	// system_navigation
 	'_SYSTEM_NAVIGATION__SHOWMAIN' => 'Help-Index',
 	'_NAVIGATION_HEADER' => 'Help'

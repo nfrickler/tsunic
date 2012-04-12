@@ -5,7 +5,7 @@ $lang = array(
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'Du bist eingeloggt als #name#.',
 	'USERHEADER__LOGOUT' => 'Logout',
-	'USERHEADER__NOTLOGGEDIN' => 'Bitte logge dich ein!',
+	'USERHEADER__NOTLOGGEDIN' => 'Bitte logge dich ein, um weitere Funktionen von TSunic nutzen zu können!',
 
 	// showIndex
 	'SHOWINDEX__TITLE' => 'Startseite',

@@ -252,6 +252,7 @@ class TSunic {
 			'$$$showSysteminfo',
 			'',
 			'$$$setLanguage',
+			'$help$showHelp',
 			'$help$showMain');
 
 		// get user

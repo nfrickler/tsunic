@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | FUNCTION show main page -->
 <?php
 function $$$showMain () {
 	global $TSunic;

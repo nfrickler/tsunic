@@ -298,6 +298,7 @@ class ts_Module extends ts_Packet {
 			AND $this->parseTemplates()
 			AND $this->parseFormat()
 			AND $this->parseSubcodes()
+			AND $this->parseHelp()
 			AND $this->_parseLanguages()
 		) {
 			// success
@@ -520,6 +521,39 @@ class ts_Module extends ts_Packet {
 
 			// parse
 			$content = $Parser->parse($content, false);
+
+			// write
+			if (!$content OR !ts_FileHandler::writeFile(
+				$path_destination.'/'.$preffix.$value,
+				$content,
+				true
+			)) return false;
+		}
+
+		return true;
+	}
+
+	/* parse help pages of this module
+	 *
+	 * @return bool
+	 */
+	protected function parseHelp () {
+		global $Parser, $Config;
+
+		// get preffix and paths
+		$preffix = 'mod'.$this->id.'__';
+		$path_source = $this->path.'/templates/help';
+		$path_destination = $Config->getRoot().'/runtime/help';
+
+		// get all files
+		$files = ts_FileHandler::getSubfiles($path_source);
+
+		// parse all files
+		foreach ($files as $index => $value) {
+
+			// read and parse
+			$content = ts_FileHandler::readFile($path_source.'/'.$value);
+			$content = $Parser->parse($content);
 
 			// write
 			if (!$content OR !ts_FileHandler::writeFile(
