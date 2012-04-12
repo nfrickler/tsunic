@@ -48,20 +48,8 @@ $lang = array(
 	'SHOWREGISTRATION__TITLE' => 'Registration',
 	'SHOWREGISTRATION__H1' => 'Registration (a new account)',
 	'SHOWREGISTRATION__INFOTEXT' => 'Please fill in this form, to create your own, new account. Only one account per user!',
-
-	// formRegistration
-	'FORMREGISTRATION__LEGEND' => 'Create a new account',
-	'FORMREGISTRATION__NAME' => 'Name',
-	'FORMREGISTRATION__NAME_PRESET' => 'Choose a username...',
-	'FORMREGISTRATION__NAME_HELP' => 'Your name on this platform.',
-	'FORMREGISTRATION__EMAIL' => 'E-Mail',
-	'FORMREGISTRATION__EMAIL_PRESET' => 'Type in your e-mail-address...',
-	'FORMREGISTRATION__EMAIL_HELP' => 'Your e-mail-address. This e-mail-address will be unvisible for all other members by default.',
-	'FORMREGISTRATION__PASSWORD' => 'Password',
-	'FORMREGISTRATION__PASSWORD_HELP' => 'Type in a password for your account (at least 7 characters).',
-	'FORMREGISTRATION__PASSWORDREPEAT' => 'Repeat password',
-	'FORMREGISTRATION__PASSWORDREPEAT_HELP' => 'Repeat the password. This reduces the risk that you mistype the password.',
-	'FORMREGISTRATION__SUBMIT' => 'Create new account',
+	'SHOWREGISTRATION__SUBMIT' => 'Create new account',
+	'SHOWREGISTRATION__RESET' => 'Reset',
 
 	// do register
 	'DOREGISTER__INVALIDREPEAT' => 'Password has been repeated incorrectly - please try again!',
@@ -87,6 +75,7 @@ $lang = array(
 	'SHOWACCOUNT__H1' => 'Your Account',
 	'SHOWACCOUNT__TOEDITACCOUNT' => 'Edit account',
 	'SHOWACCOUNT__TODELETEACCOUNT' => 'Delete account',
+	'SHOWACCOUNT__NAME' => 'Name',
 	'SHOWACCOUNT__EMAIL' => 'E-mail',
 	'SHOWACCOUNT__PASSWORD' => 'Password',
 	'SHOWACCOUNT__DATEOFREGISTRATION' => 'Date of registration',
@@ -98,16 +87,22 @@ $lang = array(
 	'SHOWEDITACCOUNT__H1' => 'Edit account',
 	'SHOWEDITACCOUNT__INFOTEXT' => 'By changing values in this form you can edit your account-data.',
 	'SHOWEDITACCOUNT__TOSHOWACCOUNT' => 'Back to account',
+	'SHOWEDITACCOUNT__SUBMIT' => 'Save changes',
+	'SHOWEDITACCOUNT__RESET' => 'Reset',
 
 	// editAccount
 	'EDITACCOUNT__INVALIDREPEAT' => 'Password has been repeated incorrectly! Please try again!',
 	'EDITACCOUNT__SUCCESS' => 'Changes have successfully been saved.',
 	'EDITACCOUNT__ERROR' => 'An error occured. Changes couldn\'t be saved.',
+	'EDITACCOUNT__INVALIDNAME' => 'Invalid name!',
 	'EDITACCOUNT__INVALIDEMAIL' => 'Invalid e-mail!',
 	'EDITACCOUNT__INVALIDPASSWORD' => 'Invalid password (at least 7 characters)!',
 
 	// formAccount
 	'FORMACCOUNT__LEGEND' => 'Your Account',
+	'FORMACCOUNT__NAME' => 'Username',
+	'FORMACCOUNT__NAME_PRESET' => 'Your username',
+	'FORMACCOUNT__NAME_HELP' => 'Enter the username you would like to have.',
 	'FORMACCOUNT__EMAIL' => 'E-mail',
 	'FORMACCOUNT__EMAIL_PRESET' => 'Your e-mail-address...',
 	'FORMACCOUNT__EMAIL_HELP' => 'The e-mail-address for this account.',
@@ -115,8 +110,6 @@ $lang = array(
 	'FORMACCOUNT__PASSWORD_HELP' => 'Type in a new password for your account (at least 7 characters). Hold clear to keep your old password.',
 	'FORMACCOUNT__PASSWORDREPEAT' => 'Repeat new password',
 	'FORMACCOUNT__PASSWORDREPEAT_HELP' => 'Repeat the new password (only if you\'ve chosen a new one!). This reduces the risk that you mistype the password.',
-	'FORMACCOUNT__SUBMIT' => 'Save changes',
-	'FORMACCOUNT__RESET' => 'Reset',
 
 	// showDeleteAccount
 	'SHOWDELETEACCOUNT__TITLE' => 'Delete account',

@@ -6,7 +6,13 @@
 	<?php $this->display('$$$formLogin'); ?>
 	<h2><?php echo $this->set('{SHOWINDEX__REGISTER_H1}'); ?></h2>
 	<p class="ts_infotext"><?php echo $this->set('{SHOWINDEX__REGISTER_INFOTEXT}'); ?></p>
-	<?php $this->display('$$$formRegistration'); ?>
+	<?php $this->display('$$$formAccount', array(
+		'User' => $this->getVar('User'),
+		'submit_link' => '$$$doRegister',
+		'submit_text' => '{SHOWREGISTRATION__SUBMIT}',
+		'reset_text' => '{SHOWREGISTRATION__RESET}',
+		'password_required' => true
+	)); ?>
 	<h2><?php echo $this->set('{SHOWINDEX__RESET_H1}'); ?></h2>
 	<p class="ts_infotext"><?php echo $this->set('{SHOWINDEX__RESET_INFOTEXT}'); ?></p>
 	<p class="ts_sublinkbox">

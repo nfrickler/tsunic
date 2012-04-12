@@ -1,4 +1,4 @@
-<!-- | function to delete account -->
+<!-- | FUNCTION delete account -->
 <?php
 function $$$deleteAccount () {
 	global $TSunic;
@@ -7,14 +7,17 @@ function $$$deleteAccount () {
 	$password = $TSunic->Temp->getParameter('$$$showDeleteAccount__password');
 
 	// validate password
-	if (!$TSunic->CurrentUser->isPassword($password)) {
+	if (!$TSunic->Usr->isCorrectPassword($password)) {
 		// wrong password
 		$TSunic->Log->add('error', '{DELETEACCOUNT__WRONGPASSWORD}');
 		$TSunic->redirect('back');
 	}
 
-	// delete account and profile
-	$return = $TSunic->CurrentUser->Account->delete();
+	// delete cookies
+	//$TSunic->run('$system$resetAllCookies', false, true);
+
+	// delete user
+	$return = $TSunic->Usr->delete();
 
 	// check, if error occured
 	if (!$return) {
@@ -22,17 +25,8 @@ function $$$deleteAccount () {
 		$TSunic->redirect('back');
 	}
 
-	// log out
-	$TSunic->CurrentUser->doLogout();
-
-	// delete cookies
-	$TSunic->run('$system$resetAllCookies', false, true);
-
 	// success
 	$TSunic->Log->add('info', '{DELETEACCOUNT__SUCCESS}');
-
-	// delete user
-	$TSunic->CurrentUser->deleteUser();
 
 	// redirect to showIndex
 	$TSunic->redirect('default');

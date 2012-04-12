@@ -1,17 +1,13 @@
-<!-- | register new user -->
+<!-- | FUNCTION Register new user -->
 <?php
 function $$$doRegister () {
 	global $TSunic;
 
 	// get input
-	$name = $TSunic->Temp->getPost('$$$formRegistration__name');
-	$email = $TSunic->Temp->getPost('$$$formRegistration__email');
-	$password = $TSunic->Temp->getPost('$$$formRegistration__password');
-	$passwordrepeat = $TSunic->Temp->getPost('$$$formRegistration__passwordrepeat');
-
-	// create default account- and profile-object
-	$Account = $TSunic->get('$$$Account');
-	$Profile = $TSunic->get('$$$Profile');
+	$name = $TSunic->Temp->getPost('$$$formAccount__name');
+	$email = $TSunic->Temp->getPost('$$$formAccount__email');
+	$password = $TSunic->Temp->getPost('$$$formAccount__password');
+	$passwordrepeat = $TSunic->Temp->getPost('$$$formAccount__passwordrepeat');
 
 	// validate input
 	if ($password != $passwordrepeat) {
@@ -22,7 +18,7 @@ function $$$doRegister () {
 		// redirect back to form
 		$TSunic->redirect('back');
 	}
-	if (!$Account->isValidEMail($email)) {
+	if (!$TSunic->Usr->isValidEMail($email)) {
 
 		// password wrong repeated!
 		$TSunic->Log->add('error', '{DOREGISTER__INVALIDEMAIL}', 3);
@@ -30,7 +26,7 @@ function $$$doRegister () {
 		// redirect back to form
 		$TSunic->redirect('back');
 	}
-	if (!$Account->isValidPassword($password)) {
+	if (!$TSunic->Usr->isValidPassword($password)) {
 
 		// password wrong repeated!
 		$TSunic->Log->add('error', '{DOREGISTER__INVALIDPASSWORD}');
@@ -38,7 +34,7 @@ function $$$doRegister () {
 		// redirect back to form
 		$TSunic->redirect('back');
 	}
-	if (!$Profile->isValidName($name)) {
+	if (!$TSunic->Usr->isValidName($name)) {
 
 		// password wrong repeated!
 		$TSunic->Log->add('error', '{DOREGISTER__INVALIDNAME}', 3);
@@ -48,7 +44,7 @@ function $$$doRegister () {
 	}
 
 	// register user
-	$return = $TSunic->CurrentUser->doRegister($email, $password, $name);
+	$return = $TSunic->Usr->create($email, $name, $password);
 
 	// return
 	if ($return) {

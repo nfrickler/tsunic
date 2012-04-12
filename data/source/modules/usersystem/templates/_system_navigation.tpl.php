@@ -1,7 +1,7 @@
 <!-- | TEMPLATE show system navigation -->
 <div id="$$$div___navigation">
 	<ul>
-	<?php if (!$TSunic->CurrentUser->isGuest()) { ?>
+	<?php if ($TSunic->Usr->isLoggedIn()) { ?>
 		<li id="$$$_navigation__account">
 			<a href="<?php $this->setUrl('$$$showAccount'); ?>">
 				<?php $this->set('{_SYSTEM_NAVIGATION__TOSHOWACCOUNT}'); ?>
@@ -29,7 +29,7 @@
 <script type="text/javascript">
 
 	// add events
-	<?php if ($TSunic->CurrentUser->isGuest() == false) { ?>
+	<?php if ($TSunic->Usr->isLoggedIn()) { ?>
 	document.getElementById('$$$_navigation__account').onclick = function(){location.href='<?php $this->setUrl('$$$showAccount', false, false); ?>';};
 	document.getElementById('$$$_navigation__profile').onclick = function(){location.href='<?php $this->setUrl('$$$showProfile', false, false); ?>';};
 	document.getElementById('$$$_navigation__logout').onclick = function(){location.href='<?php $this->setUrl('$$$doLogout', false, false); ?>';};

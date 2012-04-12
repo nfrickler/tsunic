@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | TSunic class -->
 <?php
 class TSunic {
 
@@ -32,6 +32,11 @@ class TSunic {
 	 */
 	public $CurrentUser;
 
+	/* reference to User object
+	 * object
+	 */
+	public $Usr;
+
 	/* reference to SecurityHandler-object
 	 * object
 	 */
@@ -46,6 +51,11 @@ class TSunic {
 	 * object
 	 */
 	public $Log;
+
+	/* is currently running internal
+	 * bool
+	 */
+	protected $internal_run;
 
 	/* constructor
 	 */
@@ -87,7 +97,7 @@ class TSunic {
 		// start template-engine
 		$this->Tmpl = $this->get('$$$TemplateEngine');
 
-		// get or create user-object
+		// create user object
 		$this->verifyUser();
 
 		return;
@@ -100,12 +110,12 @@ class TSunic {
 	 * @return bool/mix
 	 */
 	public function run ($event = NULL, $parameters = NULL) {
-		$is_internal = false;
+		$this->internal_run = false;
 
 		// is internal run?
 		if (!empty($event)) {
 			// internal
-			$is_internal = true;
+			$this->internal_run = true;
 
 			// get parameter-string
 			$parameter_string = '';
@@ -146,7 +156,7 @@ class TSunic {
 		// does file exists?
 		if (!$File->isFile()) {
 			// function doesn't exist
-			if ($is_internal OR $this->isAjax()) return false;
+			if ($this->internal_run OR $this->isAjax()) return false;
 
 			// page not found!
 			$this->Log->add('error', '{CLASS__TSUNIC__PAGE_NOT_FOUND}', 3);
@@ -157,7 +167,7 @@ class TSunic {
 		$File->includeFile();
 
 		// run function
-		if (!$is_internal OR empty($parameter_string)) {
+		if (!$this->internal_run OR empty($parameter_string)) {
 			$return = $event();
 		} else {
 			$to_eval = '$return = '.$event.'('.$parameter_string.');';
@@ -172,7 +182,7 @@ class TSunic {
 			}
 		}
 
-		if (!$is_internal OR $return === NULL) return true;
+		if (!$this->internal_run OR $return === NULL) return true;
 		return $return;
 	}
 
@@ -244,19 +254,17 @@ class TSunic {
 			'$$$setLanguage',
 			'$help$showMain');
 
-		// get currentUser-object
-		$this->CurrentUser = $this->get('$usersystem$CurrentUser');
+		// get user
+		$this->Usr = $this->get('$usersystem$User');
 
-		// check, if user is guest
-		if ($this->CurrentUser->isGuest()) {
-			// is guest
-			// check, if index-request
-			if (!$this->isIndex()) return true;
-			if (!in_array($this->Temp->getEvent(), $allowed_pages)) {
-				// prompt login-form
-				$this->Log->add('error', '{CLASS__TSUNIC__LOGINFIRST}', 3, '$usersystem$showLogin');
-				exit;
-			}
+		// is allowed to access current page?
+		if (
+			$this->isIndex() and
+			!$this->Usr->isLoggedIn() and
+			!in_array($this->Temp->getEvent(), $allowed_pages)
+		) {
+			$this->Log->add('error', '{CLASS__TSUNIC__LOGINFIRST}', 3, '$usersystem$showLogin');
+			exit;
 		}
 
 		return true;
@@ -382,6 +390,8 @@ class TSunic {
 	 * @return EXIT
 	 */
 	public function redirect ($event, $gets = false) {
+
+		// TODO: Prevent internal runs from redirecting
 
 		// get loop
 		$loop = $this->Temp->getGet('loop');

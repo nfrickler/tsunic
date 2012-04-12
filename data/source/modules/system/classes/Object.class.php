@@ -18,7 +18,7 @@ class $$$Object {
 	public function __construct ($id = 0) {
 
 		// save input
-		$this->id = $id;
+		$this->id = ($this->_validate($id, 'int')) ? $id : 0;
 
 		return;
 	}
@@ -36,7 +36,7 @@ class $$$Object {
 		if (!$this->id) return false;
 
 		// onload data
-		if ($update or empty($this->info)) loadInfo();
+		if ($update or empty($this->info)) $this->loadInfo();
 
 		// return requested info
 		if ($name === true) return $this->info;
@@ -52,7 +52,7 @@ class $$$Object {
 
 		// get data from database
 		$result = $TSunic->Db->doSelect($this->loadInfoSql());
-		$this->info = ($result_0) ? $result_0[0] : array();
+		$this->info = ($result) ? $result[0] : array();
 
 		// add object ID to array
 		$this->info['id'] = $this->id;
@@ -95,6 +95,9 @@ class $$$Object {
 
 		// edit object in database
 		$result = $TSunic->Db->doUpdate($sql);
+
+		// update infos
+		$this->loadInfo();
 
 		return ($result) ? true : false;
 	}
@@ -144,15 +147,15 @@ class $$$Object {
 		// validate type
 		switch ($type) {
 			case 'string':
-				return $$$Valiator::isString($value);
+				return $$$Validator::isString($value);
 			case 'int':
-				return $$$Valiator::isInt($value);
+				return $$$Validator::isInt($value);
 			case 'uri':
-				return $$$Valiator::isUri($value);
+				return $$$Validator::isUri($value);
 			case 'email':
-				return $$$Valiator::isEMail($value);
+				return $$$Validator::isEMail($value);
 			case 'password':
-				return $$$Valiator::isPassword($value);
+				return $$$Validator::isPassword($value);
 		}
 
 		return false;

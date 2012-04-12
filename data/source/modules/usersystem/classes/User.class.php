@@ -1,182 +1,441 @@
 <!-- | User class -->
 <?php
-class $$$User {
+include_once '$system$Object.class.php';
+class $$$User extends $system$Object {
 
-	/* id_homehost
-	 * string
+	/* Homehost
+	 * OBJECT
 	 */
-	protected $id_homehost;
+	protected $Homehost;
 
-	/* id_system_users__user
-	 * int
+	/* Connection
+	 * OBJECT
 	 */
-	protected $id_system_users__user;
+	protected $Connection;
 
-	/* id_system_users__account
-	 * int
+	/* Access
+	 * OBJECT
 	 */
-	protected $id_system_users__account;
+	protected $Access;
 
-	/* id_system_users__profile
-	 * int
+	/* Filesystem
+	 * OBJECT
 	 */
-	protected $id_system_users__profile;
+	protected $Filesystem;
 
-	/* account-object
-	 * object
+	/* Userconfig
+	 * OBJECT
 	 */
-	public $Account;
+	protected $Userconfig;
 
-	/* profile-object
-	 * object
+	/* Profile
+	 * OBJECT
 	 */
-	public $Profile;
+	protected $Profile;
 
-	/* information about user
-	 * array
+	/* Contacts
+	 * OBJECT
 	 */
-	protected $info;
+	protected $Contacts;
 
-	/* account-data allowed to be accessed
-	 * array
+	/* Usermodules
+	 * OBJECT
 	 */
-	protected $allowed_data = array('id_acc');
+	protected $Usermodules;
+
+	/* Encryption
+	 * OBJECT
+	 */
+	protected $Encryption = NULL;
 
 	/* constructor
-	 * +@param int: user-id
-	 * +@param int: account-id
-	 * +@param int: homehost-id
+	 * @param int: account ID
 	 */
-	public function __construct ($id_system_users__user = false, $id_system_users__account = false, $id_homehost = false) {
-		global $TSunic;
+	public function __construct ($id = 0) {
 
-		// set initial-values
-		$this->id_homehost = 0;
-		$this->id_system_users__user = 0;
-		$this->id_system_users__account = 0;
-		$this->id_system_users__profile = 0;
-
-		// get input
-		if (!empty($id_system_users__user)) {
-
-			// try to get user via id_system_users_user
-			if (is_numeric($id_system_users__user)) {
-				// identify by id_system_users_user
-
-				// get data from database
-				$sql_0 = "SELECT users.fk_system_users__account as id_system_users__account,
-						(SELECT profiles.id_system_users__profile
-						 	FROM #__profiles as profiles
-							WHERE profiles.fk_system_users__account = users.fk_system_users__account) as id_system_users__profile
-						FROM #__users as users
-						WHERE users.id_system_users__user = '".mysql_real_escape_string($id_system_users__user)."';";
-				$result_0 = $TSunic->Db->doSelect($sql_0);
-
-				// get id_system_users_account
-				if (!empty($result_0)) {
-					// user exists
-					$this->id_system_users__user = $id_system_users__user;
-
-					// check, if user is registered
-					if (isset($result_0[0]['id_system_users__account'], $result_0[0]['id_system_users__profile'])
-							AND !empty($result_0[0]['id_system_users__account'])
-							AND !empty($result_0[0]['id_system_users__profile'])) {
-						// account and profile exist
-						$this->id_system_users__account = $result_0[0]['id_system_users__account'];
-						$this->id_system_users__profile = $result_0[0]['id_system_users_profile'];
-					}
-				}
-			}
-		} elseif (!empty($id_system_users__account)
-					AND is_numeric($id_system_users__account)) {
-			// try to get user via id_system_users__account
-
-			// get ids from database
-			$sql_1 = "SELECT users.id_system_users__user as id_system_users__user,
-						profiles.id_system_users__profile as id_system_usrers__profile
-					FROM #__users as users,
-						#__profiles as profiles
-					WHERE users.fk_system_users__account = '".mysql_real_escape_string($id_system_users__account)."'
-						AND profiles.fk_system_users__account = users.fk_system_users__account;";
-			$result_1 = $TSunic->Db->doSelect($sql_1);
-
-			// check, if user and account exist
-			if (!empty($result_1) AND count($result_1) > 0) {
-				// user and account exist
-				$this->id_system_users__user = $result_1[0]['id_system_users__user'];
-				$this->id_system_users__profile = $result_1[0]['id_system_users__profile'];
-				$this->id_system_users__account = $id_system_users__account;
-			}
+		// is logged in?
+		if (
+			empty($id) and
+			isset($_SESSION['$$$id__account'],
+				$_SESSION['$$$passphrase']) and
+			!empty($_SESSION['$$$id__account']) and
+			!empty($_SESSION['$$$passphrase'])
+		) {
+			$id = $_SESSION['$$$id__account'];
+			$this->_loadEncryption($_SESSION['$$$passphrase']);
+			$this->getInfo(true, true);
 		}
 
-		// create account- and profile-object
-		$this->Account = $TSunic->get('$$$Account', $this->id_system_users__account);
-		$this->Profile = $TSunic->get('$$$Profile', $this->id_system_users__profile);
+		// use guest as default
+		if (empty($id) or !$this->_validate($id, 'int')) $id = 3;
 
-		return;
+		return parent::__construct($id);
 	}
 
-	/* get user-data
-	 * +@param string/bool: name of info (true will return $this->info)
+	/* get SQL query to get object information from database
 	 *
-	 * @return mix
+	 * @return sql-query
 	 */
-	public function getInfo ($name = true) {
-		global $TSunic;
-
-		// check, if mailbox exists
-		if (!$this->id_system_users__user) return false;
-
-		// get data
-		if (empty($this->info)) {
-
-			// get user-data
-			$sql_0 = "SELECT ip as ip,
-						browser as browser,
-						dateOfFirst as dateOfFirst,
-						dateOfLast as dateOfLast
-					FROM #__users
-					WHERE id_system_users__user = '".mysql_real_escape_string($this->id_system_users__user)."';";
-			$result_0 = $TSunic->Db->doSelect($sql_0);
-			$this->info = ($result_0) ? $result_0 : array();
-
-			// get profile-data (if possible)
-			if ($this->Profile->isValid()) {
-				$profile_data = $this->Profile->getInfo();
-				if (is_array($profile_data)) {
-					$this->info = array_merge($this->info, $profile_data);
-				}
-			}
-
-			// get account-data (if possible)
-			if ($this->Account->isValid()) {
-				$account_data = $this->Account->getInfo();
-				if (is_array($account_data)) {
-					$this->info = array_merge($this->info, $account_data);
-				}
-			}
-		}
-
-		// add ids to info-array
-		$this->info['id_system_users__user'] = $this->id_system_users__user;
-		$this->info['id_system_users__account'] = $this->id_system_users__account;
-		$this->info['id_system_users__profile'] = $this->id_system_users__profile;
-
-		// return requested info
-		if ($name === true) return $this->info;
-		if (isset($this->info[$name])) return $this->info[$name];
-
-		return false;
+	protected function loadInfoSql () {
+		return "SELECT ".
+			((0 or !$this->isLoggedIn()) ? "" : "
+				email as email,
+				dateOfRegistration as dateOfRegistration,
+				dateOfChange as dateOfChange,
+				dateOfDeletion as dateOfDeletion,
+				userkey as userkey,
+			")."
+				fk__homehost as fk__homehost,
+				name as name
+			FROM #__accounts
+			WHERE id = '$this->id'
+		;";
 	}
 
-	/* check, if user is guest
+	/* register user
+	 * @param string: email
+	 * @param string: name
+	 * @param string: password
+	 *
+	 * @return bool
+	 */
+	public function create ($email, $name, $password) {
+
+		// validate input
+		if (!$this->isValidEMail($email) or
+			!$this->isValidName($name) or
+			!$this->isValidPassword($password)
+		) {
+			return false;
+		}
+
+		// create new account
+		$sql = "INSERT INTO #__accounts
+			SET email = '$email',
+				name = '$name',
+				password = '".$this->_password2hash($password, $email)."',
+				dateOfRegistration = NOW(),
+				fk__homehost = 0
+		;";
+		if (!$this->_create($sql)) false;
+
+		return true;
+	}
+
+	/* edit account
+	 * @param string: new e-mail
+	 * @param string: new name
+	 * @param string: new password
+	 *
+	 * @return bool
+	 */
+	public function edit ($email, $name, $password) {
+
+		// validate input
+		if (!$this->isValidEMail($email) or
+			!$this->isValidName($name)
+		) {
+			return false;
+		}
+
+		// has sth changed?
+		$sql = "";
+		$sql_set = array();
+		if ($email != $this->getInfo('email')) {
+			$sql_set[] = "email = '$email'";
+		}
+		if ($name != $this->getInfo('name')) {
+			$sql_set[] = "name = '$name'";
+		}
+		if (!empty($password)) {
+			if (!$this->isValidPassword($password)) return false;
+			$sql_set[] = "password = '".$this->_password2hash($password)."'";
+			if (!$this->_setEncPassword($this->_getPassphrase($password))) return false;
+		}
+		if (empty($sql_set)) return true;
+
+		// update database
+		$sql = "UPDATE #__accounts SET ".
+			implode(", ", $sql_set).
+			" WHERE id = '$this->id';";
+		return $this->_edit($sql);
+	}
+
+	/* delete account
+	 *
+	 * @return bool
+	 */
+	public function delete () {
+		$sql = "DELETE FROM #__accounts
+			WHERE id = '$this->id';";
+		if (!$this->_delete($sql)) return false;
+
+		// logout
+		$this->logout();
+
+		return true;
+	}
+
+	/* get email to name
+	 * @param string: name
+	 *
+	 * @return string
+	 */
+	public function name2email ($name) {
+		global $TSunic;
+		if ($this->_validate($name, 'email')) return $name;
+		if (!$this->_validate($name, 'string')) return false;
+
+		// ask database
+		$sql = "SELECT email as email
+			FROM #__accounts
+			WHERE name = '$name';";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!$result) return false;
+
+		return $result[0]['email'];
+	}
+
+	/* log user in
+	 * @param string: name or email of user
+	 * @param string: password of user
+	 *
+	 * @return bool
+	 */
+	public function login ($email, $password) {
+		global $TSunic;
+
+		// try to get user with matching identity
+		$email = $this->name2email($email);
+		$sql = "SELECT id as id
+			FROM #__accounts
+			WHERE email = '$email'
+				AND password = '".$this->_password2hash($password, $email)."'
+		;";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!$result) return false;
+
+		// save id
+		$this->id = $result[0]['id'];
+
+		// TODO: block user after several attempts
+
+		// load encryption
+		$passphrase = $this->_getPassphrase($password, $email);
+		$this->_loadEncryption($passphrase);
+
+		// get session
+		$_SESSION['$$$id__account'] = $this->id;
+		$_SESSION['$$$passphrase'] = $passphrase;
+
+		// update account data
+		$this->getInfo(true, true);
+
+		return true;
+	}
+
+	/* is correct password?
+	 *
+	 * @return bool
+	 */
+	public function isCorrectPassword ($password) {
+		global $TSunic;
+
+		// try to get user with matching identity
+		$sql = "SELECT id as id
+			FROM #__accounts
+			WHERE id = '$this->id'
+				AND password = '".$this->_password2hash($password)."'
+		;";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!$result) return false;
+
+		return ($result[0]['id'] == $this->id) ? true : false;
+	}
+
+	/* log user out
+	 *
+	 * @return bool
+	 */
+	public function logout () {
+		$_SESSION['$$$id__account'] = 0;
+		$_SESSION['$$$passphrase'] = 0;
+		$this->Encryption = NULL;
+		return true;
+	}
+
+	/* convert password to hash
+	 * @param string: password of user
+	 * +@param string: email of user
+	 *
+	 * @return bool
+	 */
+	protected function _password2hash ($password, $email = false) {
+		if (!$email) $email = $this->getInfo('email');
+		return sha1(sha1(trim($email).trim($password)));
+	}
+
+	/* get passphrase of user
+	 * @param string: password of user
+	 * +@param string: email of user
+	 *
+	 * @return string
+	 */
+	protected function _getPassphrase ($password, $email = false) {
+		if (!$email) $email = $this->getInfo('email');
+		return sha1($email.$password);
+	}
+
+	/* is user logged in?
+	 *
+	 * @return bool
+	 */
+	public function isLoggedIn () {
+		return (empty($this->Encryption)) ? false : true;
+	}
+
+	/* is registered user?
+	 *
+	 * @return bool
+	 */
+	public function isRegistered () {
+		return (!$this->isRoot() and
+			!$this->isDefault() and
+			!$this->isGuest())
+			? true : false;
+	}
+
+	/* is user root?
+	 *
+	 * @return bool
+	 */
+	public function isRoot () {
+		return ($this->id == 1) ? true : false;
+	}
+
+	/* is user default?
+	 *
+	 * @return bool
+	 */
+	public function isDefault () {
+		return ($this->id == 2) ? true : false;
+	}
+
+	/* is user guest?
 	 *
 	 * @return bool
 	 */
 	public function isGuest () {
-		// check, if account-id exist
-		if (empty($this->id_system_users__account)) return true;
-		return false;
+		return ($this->id == 3) ? true : false;
+	}
+
+	/* is valid e-mail?
+	 * @param string: e-mail address
+	 *
+	 * @return bool
+	 */
+	public function isValidEMail ($email) {
+		global $TSunic;
+		if (!$this->_validate($email, 'email')) return false;
+
+		// check if e-mail is unique
+		$sql = "SELECT id as id
+			FROM #__accounts
+			WHERE email = '$email';";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!empty($result) and $result[0]['id'] != $this->id) return false;
+		return true;
+	}
+
+	/* is valid name?
+	 * @param string: name
+	 *
+	 * @return bool
+	 */
+	public function isValidName ($name) {
+		global $TSunic;
+		if (strlen($name) < 3 or strlen($name) > 30) return false;
+		if (!$this->_validate($name, 'string')) return false;
+
+		// check if name is unique
+		$sql = "SELECT id as id
+			FROM #__accounts
+			WHERE name = '$name';";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!empty($result) and $result[0]['id'] != $this->id) return false;
+		return true;
+	}
+
+	/* is valid password?
+	 * @param string: password
+	 *
+	 * @return bool
+	 */
+	public function isValidPassword ($password) {
+		return $this->_validate($password, 'password');
+	}
+
+	/* Load encryption object
+	 *
+	 * @return bool
+	 */
+	protected function _loadEncryption ($passphrase) {
+		global $TSunic;
+		$this->Encryption = $TSunic->get('$$$Encryption', $passphrase);
+		return true;
+	}
+
+	/* Set encryption passphrase
+	 * @param string: new passphrase
+	 *
+	 * @return bool
+	 */
+	protected function _setEncPassword ($new_passphrase) {
+		global $TSunic;
+
+		// get userkey
+		$userkey = $this->decrypt($this->getInfo('userkey'));
+
+		// create new userkey
+		if (empty($userkey)) {
+			$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+			for ($i = 0; $i < 50; $i++) {
+				$userkey.= $characters[mt_rand(0, (strlen($characters)-1))];
+			}
+		}
+
+		// create new encryption object and encrypt userkey
+		$this->Encryption = $TSunic->get('$$$Encryption', $new_passphrase);
+		$userkey = $this->encrypt($userkey);
+
+		// update database
+		$sql = "UPDATE #__accounts
+			SET userkey = '$userkey'
+			WHERE id = '$this->id';";
+		$result = $TSunic->Db->doUpdate($sql);
+		if (!$result) return false;
+
+		return true;
+	}
+
+	/* encrypt input
+	 * @param string: input
+	 *
+	 * @return string
+	 */
+	public function encrypt ($input) {
+		if (!$this->Encryption) return $input;
+		return $this->Encryption->encrypt($input);
+	}
+
+	/* decrypt input
+	 * @param string: input
+	 *
+	 * @return string
+	 */
+	public function decrypt ($input) {
+		if (!$this->Encryption) return $input;
+		return $this->Encryption->decrypt($input);
 	}
 }
 ?>

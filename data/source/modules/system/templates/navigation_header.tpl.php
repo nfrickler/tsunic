@@ -1,7 +1,7 @@
 <!-- | TEMPLATE - header-navigation -->
 <div id="$$$div__navigation_header">
 	<ul style="float:left;">
-		<?php if (!$TSunic->CurrentUser->isGuest()) { ?>
+		<?php if ($TSunic->Usr->isLoggedIn()) { ?>
 			<?php $this->displaySub('left_on'); ?>
 		<?php } else { ?>
 			<?php $this->displaySub('left_off'); ?>
@@ -9,7 +9,7 @@
 		<?php $this->displaySub('left'); ?>
 	</ul>
 	<ul style="float:right;">
-		<?php if (!$TSunic->CurrentUser->isGuest()) { ?>
+		<?php if ($TSunic->Usr->isLoggedIn()) { ?>
 			<?php $this->displaySub('right_on'); ?>
 
 		<li id="$$$navigation_header__system" class="$$$navigation_header_important">
@@ -32,7 +32,7 @@
 <script type="text/javascript">
 
 	// add events
-	<?php if (!$TSunic->CurrentUser->isGuest()) { ?>
+	<?php if ($TSunic->Usr->isLoggedIn()) { ?>
 	document.getElementById('$$$navigation_header__system').onclick = function(){location.href='<?php $this->setUrl('$$$showMain', false, false); ?>';};
 	<?php } else { ?>
 	document.getElementById('$$$navigation_header__showIndex').onclick = function(){location.href='<?php $this->setUrl('$usersystem$showIndex', false, false); ?>';};

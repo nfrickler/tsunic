@@ -4,7 +4,8 @@ function $$$showIndex () {
 	global $TSunic;
 
 	// activate template
-	$TSunic->Tmpl->activate('$$$showIndex', '$system$content');
+	$data = array('User' => $TSunic->Usr);
+	$TSunic->Tmpl->activate('$$$showIndex', '$system$content', $data);
 	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWINDEX__TITLE}'));
 
 	return true;

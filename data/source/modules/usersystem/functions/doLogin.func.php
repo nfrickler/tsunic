@@ -1,4 +1,4 @@
-<!-- | login user -->
+<!-- | FUNCTION login user -->
 <?php
 function $$$doLogin () {
 	global $TSunic;
@@ -8,8 +8,10 @@ function $$$doLogin () {
 	setCookie('$$$formLogin__emailname', $TSunic->Temp->getPost('$$$formLogin__emailname'), $expire);
 
 	// do login
-	$return = $TSunic->CurrentUser->doLogin($TSunic->Temp->getPost('$$$formLogin__emailname'),
-		$TSunic->Temp->getPost('$$$formLogin__password'));
+	$return = $TSunic->Usr->login(
+		$TSunic->Temp->getPost('$$$formLogin__emailname'),
+		$TSunic->Temp->getPost('$$$formLogin__password')
+	);
 
 	// check, if login was successfull
 	if ($return === true) {

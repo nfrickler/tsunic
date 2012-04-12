@@ -1,6 +1,5 @@
 <!-- | TEMPLATE show account -->
 <?php
-
 // get data
 $User = $this->getVar('User');
 ?>
@@ -17,8 +16,12 @@ $User = $this->getVar('User');
 	</p>
 	<table cellspacing="2" cellpadding="0" border="0">
 		<tr>
-			<th style="min-width:200px;"><?php echo $this->set('{SHOWACCOUNT__EMAIL}'); ?></th>
-			<td style="min-width:200px;" id="$$$showAccount__email"><?php $this->set($User->getInfo('email')); ?></td>
+			<th style="min-width:200px;"><?php echo $this->set('{SHOWACCOUNT__NAME}'); ?></th>
+			<td style="min-width:200px;" id="$$$showAccount__name"><?php $this->set($User->getInfo('name')); ?></td>
+		</tr>
+		<tr>
+			<th><?php echo $this->set('{SHOWACCOUNT__EMAIL}'); ?></th>
+			<td id="$$$showAccount__email"><?php $this->set($User->getInfo('email')); ?></td>
 		</tr>
 		<tr>
 			<th><?php echo $this->set('{SHOWACCOUNT__PASSWORD}'); ?></th>

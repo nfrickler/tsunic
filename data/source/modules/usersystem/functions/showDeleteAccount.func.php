@@ -4,7 +4,7 @@ function $$$showDeleteAccount () {
 	global $TSunic;
 
 	// activate template
-	$data = array('User' => $TSunic->CurrentUser);
+	$data = array('User' => $TSunic->Usr);
 	$TSunic->Tmpl->activate('$$$showDeleteAccount', '$system$content', $data);
 	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETEACCOUNT__TITLE}'));
 

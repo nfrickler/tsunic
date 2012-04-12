@@ -4,7 +4,7 @@ function $$$doLogout () {
 	global $TSunic;
 
 	// do logout
-	$return = $TSunic->CurrentUser->doLogout();
+	$return = $TSunic->Usr->logout();
 
 	// add info-message
 	$TSunic->Log->add('info', '{DOLOGOUT__SUCCESS}', 3);
