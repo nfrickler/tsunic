@@ -26,7 +26,7 @@ class $$$User extends $system$Object {
 	/* Userconfig
 	 * OBJECT
 	 */
-	protected $Userconfig;
+	protected $Config;
 
 	/* Profile
 	 * OBJECT
@@ -49,12 +49,11 @@ class $$$User extends $system$Object {
 	protected $Encryption = NULL;
 
 	/* constructor
-	 * @param int/string: account ID (or "default", "guest", "root")
+	 * @param int/string: account ID (or "guest", "root")
 	 */
-	public function __construct ($id = 0) {
-		if ($id == "root") $id = 1;
-		if ($id == "default") $id = 2;
-		if ($id == "guest") $id = 3;
+	public function __construct ($id = false) {
+		if ($id == 'root') { $id = 1;}
+		if ($id == "guest") $id = 2;
 
 		// is logged in?
 		if (
@@ -70,7 +69,7 @@ class $$$User extends $system$Object {
 		}
 
 		// use guest as default
-		if (empty($id) or !$this->_validate($id, 'int')) $id = 3;
+		if (empty($id) or !$this->_validate($id, 'int')) $id = 2;
 
 		return parent::__construct($id);
 	}
@@ -120,9 +119,7 @@ class $$$User extends $system$Object {
 				dateOfRegistration = NOW(),
 				fk__homehost = 0
 		;";
-		if (!$this->_create($sql)) false;
-
-		return true;
+		return $this->_create($sql);
 	}
 
 	/* edit account
@@ -207,6 +204,9 @@ class $$$User extends $system$Object {
 	 */
 	public function login ($email, $password) {
 		global $TSunic;
+
+		// deny, if empty password
+		if (empty($password)) return false;
 
 		// try to get user with matching identity
 		$email = $this->name2email($email);
@@ -316,20 +316,12 @@ class $$$User extends $system$Object {
 		return ($this->id == 1) ? true : false;
 	}
 
-	/* is user default?
-	 *
-	 * @return bool
-	 */
-	public function isDefault () {
-		return ($this->id == 2) ? true : false;
-	}
-
 	/* is user guest?
 	 *
 	 * @return bool
 	 */
 	public function isGuest () {
-		return ($this->id == 3) ? true : false;
+		return ($this->id == 2) ? true : false;
 	}
 
 	/* is valid e-mail?
@@ -447,6 +439,7 @@ class $$$User extends $system$Object {
 	 * @return bool
 	 */
 	public function access ($name) {
+		if ($this->isRoot()) return true;
 		return $this->getAccess()->check($name);
 	}
 
@@ -460,6 +453,27 @@ class $$$User extends $system$Object {
 			$this->Access = $TSunic->get('$$$Access', $this->id);
 		}
 		return $this->Access;
+	}
+
+	/* get config value of user
+	 * @param string: name of config
+	 *
+	 * @return mix
+	 */
+	public function config ($name) {
+		return $this->getConfig()->get($name);
+	}
+
+	/* get userconfig object
+	 *
+	 * @return OBJECT
+	 */
+	public function getConfig () {
+		if (!$this->Config) {
+			global $TSunic;
+			$this->Config = $TSunic->get('$$$UserConfig', $this->id);
+		}
+		return $this->Config;
 	}
 }
 ?>

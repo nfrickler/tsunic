@@ -30,11 +30,14 @@ class ts_ConfigParser {
 
 		// save in object var
 		foreach ($Xml->children() as $Value) {
-			$myval = (string) $Value->attributes()->default;
-			if (!$myval) $myval = 0;
+			$default = (string) $Value->attributes()->default;
+			$formtype = (string) $Value->attributes()->formtype;
+			$options = (string) $Value->attributes()->options;
 			$this->data[] = array(
 				'name' => $preffix.utf8_decode("$Value"),
-				'default' => $myval
+				'default' => $default,
+				'formtype' => $formtype,
+				'options' => $options
 			);
 		}
 
@@ -51,9 +54,17 @@ class ts_ConfigParser {
 
 		// udpate database
 		foreach ($this->data as $index => $values) {
-			$sql = "INSERT INTO $table (name, systemdefault)
-				VALUES ('".$values['name']."', '".$values['default']."')
-				ON DUPLICATE KEY UPDATE systemdefault = '".$values['default']."';";
+			$sql = "INSERT INTO $table (name, systemdefault, formtype, options)
+				VALUES ('".$values['name']."',
+					'".$values['default']."',
+					'".$values['formtype']."',
+					'".$values['options']."'
+				)
+				ON DUPLICATE KEY UPDATE
+					systemdefault = '".$values['default']."',
+					formtype = '".$values['formtype']."',
+					options = '".$values['options']."'
+			;";
 			if ($Database->doInsert($sql) === false) {
 				$Log->doLog(3, "AccessParser: Failed to write config in database!");
 				return false;

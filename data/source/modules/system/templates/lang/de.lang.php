@@ -3,6 +3,12 @@
 
 $lang = array(
 
+	// config
+	'CONFIG__LANGUAGE' => 'Sprache',
+	'CONFIG__LANGUAGE__DESCRIPTION' => 'Die Sprache, in der TSunic dir die Seiten anzeigt.',
+	'CONFIG__STYLE' => 'Style',
+	'CONFIG__STYLE__DESCRIPTION' => 'Wähle, wie TSunic für dich aussehen soll.',
+
 	'CLASS__TSUNIC__LOGINFIRST' => 'Bitte logge dich ein, um diese Seite zu sehen.',
 	'CLASS__TSUNIC__PAGE_NOT_FOUND' => 'Seite nicht gefunden!',
 	'CLASS__DATABASE__INVALID_CLASS' => 'Datenbank-Klasse wurde nicht gefunden!',

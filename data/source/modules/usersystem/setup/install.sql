@@ -14,6 +14,9 @@ CREATE TABLE IF NOT EXISTS `#__accounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+INSERT INTO `#__accounts` (name)
+VALUES ('root'), ('guest');
+
 CREATE TABLE IF NOT EXISTS `#__folders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_usersystem__account` int(11) NOT NULL,
@@ -72,17 +75,19 @@ CREATE TABLE IF NOT EXISTS `#__accessgroupmembers` (
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__userconfig` (
-  `fk__config` varchar(200) NOT NULL,
+  `fk_config` varchar(200) NOT NULL,
   `value` varchar(500) NOT NULL,
-  `fk_usersystem__account` int(11) NOT NULL,
+  `fk_account` int(11) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`fk__config`, `fk_usersystem__account`)
+  PRIMARY KEY (`fk_config`, `fk_account`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__config` (
   `name` varchar(200) NOT NULL,
   `systemdefault` varchar(500) NOT NULL,
+  `formtype` varchar(50) NOT NULL,
+  `options` varchar(200) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`name`)

@@ -49,7 +49,7 @@ class $$$Session {
 		);
 
 		// start session
-		@session_start();
+		session_start();
 
 		return;
 	}

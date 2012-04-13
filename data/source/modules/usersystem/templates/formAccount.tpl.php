@@ -8,7 +8,7 @@ $User = $this->getVar('User');
 		<fieldset>
 			<legend><?php echo $this->set('{FORMACCOUNT__LEGEND}'); ?></legend>
 			<label for="$$$formAccount__name"><?php echo $this->set('{FORMACCOUNT__NAME}'); ?></label>
-			<input type="text" class="ts_required" name="$$$formAccount__name" id="$$$formAccount__name" value="<?php $this->setPreset('$$$formAccount__name', $User->getInfo('name')); ?>" />
+			<input type="text" class="ts_required" name="$$$formAccount__name" id="$$$formAccount__name" value="<?php $this->setPreset('$$$formAccount__name', ($User->isGuest() ? "" : $User->getInfo('name'))); ?>" />
 			<div style="clear:both;"></div>
 			<label for="$$$formAccount__email"><?php echo $this->set('{FORMACCOUNT__EMAIL}'); ?></label>
 			<input type="text" class="ts_required" name="$$$formAccount__email" id="$$$formAccount__email" value="<?php $this->setPreset('$$$formAccount__email', $User->getInfo('email')); ?>" />

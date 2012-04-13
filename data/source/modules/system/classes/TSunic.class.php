@@ -27,20 +27,10 @@ class TSunic {
 	 */
 	public $Stats;
 
-	/* reference to CurrentUser-object
-	 * object
-	 */
-	public $CurrentUser;
-
 	/* reference to User object
 	 * object
 	 */
 	public $Usr;
-
-	/* reference to SecurityHandler-object
-	 * object
-	 */
-	public $Encryption;
 
 	/* reference to config-object
 	 * object
@@ -77,9 +67,6 @@ class TSunic {
 
 		// create setting-object
 		$this->Config = $this->get('$$$Config');
-
-		// create Encryption-object
-		$this->Encryption = $this->get('$$$Encryption');
 
 		// create database-object
 		$this->Db = $this->get('$$$Database');
@@ -203,7 +190,8 @@ class TSunic {
 	 * @return OBJECT
 	 */
 	public function getUserfile ($id__usersystem__userfile) {
-		return $this->get('$usersystem$Userfile', $id__usersystem__userfile);
+		return false;
+	//	return $this->get('$usersystem$Userfile', $id__usersystem__userfile);
 	}
 
 	/* display output

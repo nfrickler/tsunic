@@ -59,14 +59,17 @@ $lang = array(
 	'DOREGISTER__INVALIDPASSWORD' => 'Ungültiges Passwort! Dein Passwort muss mindestens 7 Zeichen haben.',
 	'DOREGISTER__INVALIDNAME' => 'Ungültiger Benutzername! Vielleicht ist dieser Benutzername schon besetzt...',
 
-	/* ***************** profile ******************************* */
+	/* ***************** config ******************************* */
 
-	// showProfile
-	'SHOWPROFILE__TITLE' => 'Profil',
-	'SHOWPROFILE__H1' => 'Dein Profil',
-	'SHOWACCOUNT__TOEDITPROFILE' => 'Profil bearbeiten',
-	'SHOWPROFILE__INFOTEXT' => 'Dies ist ein Profil. Alle Informationen deines Profils sind für andere Mitglieder sichtbar.',
-	'SHOWPROFILE__NAME' => 'Benutzername',
+	// showConfig
+	'SHOWCONFIG__TITLE' => 'Einstellungen',
+	'SHOWCONFIG__H1' => 'Einstellungen',
+	'SHOWCONFIG__INFOTEXT' => 'Hier kannst du die Einstellungen für deinen Account festlegen.',
+	'SHOWCONFIG__NAME' => 'Name',
+	'SHOWCONFIG__VALUE' => 'Wert',
+	'SHOWCONFIG__DEFAULT' => 'Default',
+	'SHOWCONFIG__DESCRIPTION' => 'Beschreibung',
+	'SHOWCONFIG__USEDEFAULT' => 'Standard verwenden',
 
 	/* ***************** account ******************************* */
 
@@ -128,7 +131,7 @@ $lang = array(
 	/* ***************** _system_navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Dein Account',
-	'_SYSTEM_NAVIGATION__TOSHOWPROFILE' => 'Dein Profil',
+	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Einstellungen',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',
 	'_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
 	'_HEADER_NAVIGATION__SHOWLOGIN' => 'Login',

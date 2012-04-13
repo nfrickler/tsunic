@@ -320,12 +320,13 @@ class $$$Database {
  	 */
 	private function doEncrypt ($data) {
 		global $TSunic;
+		if (!$TSunic->Usr) return $data;
 
 		// get first value if array
 		if (is_array($data)) $data = $data[0];
 
 		// encrypt data
-		$data = mysql_real_escape_string($TSunic->Encryption->encrypt($data));
+		$data = mysql_real_escape_string($TSunic->Usr->encrypt($data));
 
 		return $data;
 	}
@@ -337,6 +338,7 @@ class $$$Database {
  	 */
 	private function decrypt ($data) {
 		global $TSunic;
+		if (!$TSunic->Usr) return $data;
 
 		// validate type
 		if (!is_array($data)) return $data;
@@ -349,7 +351,7 @@ class $$$Database {
 				if (empty($val)) continue;
 
 				// decrypt value
-				$return = $TSunic->Encryption->decrypt($val);
+				$return = $TSunic->Usr->decrypt($val);
 				if ($return) $data[$index][$in] = $return;
 			}
 		}

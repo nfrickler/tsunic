@@ -3,6 +3,12 @@
 
 $lang = array(
 
+	// config
+	'CONFIG__LANGUAGE' => 'Language',
+	'CONFIG__LANGUAGE__DESCRIPTION' => 'The language, you want TSunc to talk to you.',
+	'CONFIG__STYLE' => 'Style',
+	'CONFIG__STYLE__DESCRIPTION' => 'The look you want to have for your TSunic.',
+
 	'CLASS__TSUNIC__LOGINFIRST' => 'Please log in to access this page!',
 	'CLASS__TSUNIC__PAGE_NOT_FOUND' => 'Page not found!',
 	'CLASS__DATABASE__INVALID_CLASS' => 'Invalid database-class!',
