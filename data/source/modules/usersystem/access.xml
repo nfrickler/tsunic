@@ -1,0 +1,6 @@
+<!-- | access -->
+<all>
+	<access default="1">listAllUsers</access>
+	<access default="2">seeAllData</access>
+	<access default="3">editAllUsers</access>
+</all>

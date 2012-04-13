@@ -49,9 +49,12 @@ class $$$User extends $system$Object {
 	protected $Encryption = NULL;
 
 	/* constructor
-	 * @param int: account ID
+	 * @param int/string: account ID (or "default", "guest", "root")
 	 */
 	public function __construct ($id = 0) {
+		if ($id == "root") $id = 1;
+		if ($id == "default") $id = 2;
+		if ($id == "guest") $id = 3;
 
 		// is logged in?
 		if (
@@ -436,6 +439,27 @@ class $$$User extends $system$Object {
 	public function decrypt ($input) {
 		if (!$this->Encryption) return $input;
 		return $this->Encryption->decrypt($input);
+	}
+
+	/* has user access?
+	 * @param string: name of access
+	 *
+	 * @return bool
+	 */
+	public function access ($name) {
+		return $this->getAccess()->check($name);
+	}
+
+	/* get access object of user
+	 *
+	 * @return bool
+	 */
+	public function getAccess () {
+		if (!$this->Access) {
+			global $TSunic;
+			$this->Access = $TSunic->get('$$$Access', $this->id);
+		}
+		return $this->Access;
 	}
 }
 ?>

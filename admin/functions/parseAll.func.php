@@ -7,17 +7,25 @@ function parseAll () {
 	if (!isset($_SESSION['admin_auth']) OR empty($_SESSION['admin_auth']))
 		return false;
 
+	// reset session var, if accessing page normally
+	if (!isset($_GET['call'])) {
+		unset($_SESSION['parseAll__call']);
+	}
+
 	// load classes
 	include_once 'classes/ts_FileHandler.class.php';
 	include_once 'classes/ts_FormatHandler.class.php';
 	include_once 'classes/ts_SubcodeHandler.class.php';
+	include_once 'classes/ts_AccessParser.class.php';
+	include_once 'classes/ts_ConfigParser.class.php';
 	include_once 'classes/ts_Parser.class.php';
 	include_once 'classes/ts_LanguageHandler.class.php';
 	include_once 'classes/ts_BackupHandler.class.php';
 	include_once 'classes/ts_Module.class.php';
 
 	// set global Objects
-	global $FormatHandler, $SubcodeHandler, $Parser, $LanguageHandler;
+	global $FormatHandler, $SubcodeHandler, $Parser, $LanguageHandler,
+		$AccessParser, $ConfigParser, $USERSYSTEM;
 
 	// is first call or a consecutive one?
 	if (isset($_SESSION['parseAll__call']) AND !empty($_SESSION['parseAll__call'])) {
@@ -26,6 +34,9 @@ function parseAll () {
 		$LanguageHandler = $_SESSION['parseAll__call']['LanguageHandler'];
 		$FormatHandler = $_SESSION['parseAll__call']['FormatHandler'];
 		$SubcodeHandler = $_SESSION['parseAll__call']['SubcodeHandler'];
+		$AccessParser = $_SESSION['parseAll__call']['AccessParser'];
+		$ConfigParser = $_SESSION['parseAll__call']['ConfigParser'];
+		$USERSYSTEM = $_SESSION['parseAll__call']['USERSYSTEM'];
 		$Parser = $_SESSION['parseAll__call']['Parser'];
 		$modules_all = $_SESSION['parseAll__call']['modules_all'];
 		$pre_system_online = $_SESSION['parseAll__call']['pre_system_online'];
@@ -34,8 +45,11 @@ function parseAll () {
 		$call_num = 0;
 		$FormatHandler = new ts_FormatHandler();
 		$SubcodeHandler = new ts_SubcodeHandler();
+		$AccessParser = new ts_AccessParser();
+		$ConfigParser = new ts_ConfigParser();
 		$modules_all = $ModuleHandler->getModules(true);
 		$Parser = new ts_Parser($Config->get('preffix'), $modules_all, $Config->get('debug_mode'));
+		$USERSYSTEM = 0;
 		$LanguageHandler = new ts_LanguageHandler();
 		$pre_system_online = false;
 	}
@@ -102,6 +116,12 @@ function parseAll () {
 
 	} else {
 
+		// USERSYSTEM set?
+		if (!$USERSYSTEM) {
+			$_SESSION['admin_error'] = 'ERROR__RENDER (usersystem is missing!)';
+			return false;
+		}
+
 		// render subcodes
 		if (!$SubcodeHandler->parseAll()) {
 			$_SESSION['admin_error'] = 'ERROR__RENDER (subfunction-parsing)';
@@ -133,7 +153,19 @@ function parseAll () {
 			$_SESSION['admin_error'] = 'ERROR__RENDER (language-files)';
 			return false;
 		}
-	
+
+		// parse Access
+		if (!$AccessParser->parseAll($Config->get("preffix")."mod${USERSYSTEM}__accessnames")) {
+			$_SESSION['admin_error'] = 'ERROR__RENDER (access-files)';
+			return false;
+		}
+
+		// parse Config
+		if (!$ConfigParser->parseAll($Config->get('preffix')."mod${USERSYSTEM}__config")) {
+			$_SESSION['admin_error'] = 'ERROR__RENDER (config-files)';
+			return false;
+		}
+
 		// reset system_online
 		$Config->set('system_online', $pre_system_online);
 	
@@ -157,6 +189,9 @@ function parseAll () {
 		$_SESSION['parseAll__call']['LanguageHandler'] = $LanguageHandler;
 		$_SESSION['parseAll__call']['FormatHandler'] = $FormatHandler;
 		$_SESSION['parseAll__call']['SubcodeHandler'] = $SubcodeHandler;
+		$_SESSION['parseAll__call']['AccessParser'] = $AccessParser;
+		$_SESSION['parseAll__call']['ConfigParser'] = $ConfigParser;
+		$_SESSION['parseAll__call']['USERSYSTEM'] = $USERSYSTEM;
 		$_SESSION['parseAll__call']['Parser'] = $Parser;
 		$_SESSION['parseAll__call']['modules_all'] = $modules_all;
 		$_SESSION['parseAll__call']['pre_system_online'] = $pre_system_online;

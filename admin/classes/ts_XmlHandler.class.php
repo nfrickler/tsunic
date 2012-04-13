@@ -3,7 +3,7 @@
 // static
 class ts_XmlHandler {
 
-	/* get content of xml-file as array
+	/* get content of xml-file as array (1D)
 	 * @param string: path to xml-file
 	 *
 	 * @return array

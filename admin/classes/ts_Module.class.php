@@ -298,11 +298,19 @@ class ts_Module extends ts_Packet {
 			AND $this->parseTemplates()
 			AND $this->parseFormat()
 			AND $this->parseSubcodes()
+			AND $this->parseAccess()
+			AND $this->parseConfig()
 			AND $this->parseHelp()
 			AND $this->_parseLanguages()
 		) {
 			// success
 			$Log->doLog(4, "Module: Parsed module '".$this->getInfo('name')."'");
+
+			// get id of usersystem
+			if ($this->getInfo('name') == "usersystem") {
+				global $USERSYSTEM;
+				$USERSYSTEM = $this->id;
+			}
 
 			// update database
 			$sql_0 = "UPDATE #__modules
@@ -640,6 +648,44 @@ class ts_Module extends ts_Packet {
 		// add subfunctions
 		if ($SubcodeHandler->add($subcodes)) return true;
 		return false;
+	}
+
+	/* parse access-file of this module
+	 *
+	 * @return bool
+	 */
+	protected function parseAccess () {
+		global $AccessParser, $Log;
+
+		// parse file
+		$path = $this->path.'/access.xml';
+		$preffix = 'mod'.$this->id.'__';
+		if (!$AccessParser->add($path, $preffix)) {
+			$Log->doLog(3, "Module: Failed to parse access-File of module".
+				"'".$this->getInfo('module')."'");
+			return false;
+		}
+
+		return true;
+	}
+
+	/* parse config-file of this module
+	 *
+	 * @return bool
+	 */
+	protected function parseConfig () {
+		global $ConfigParser, $Log;
+
+		// add file
+		$path = $this->path.'/config.xml';
+		$preffix = 'mod'.$this->id.'__';
+		if (!$ConfigParser->add($path, $preffix)) {
+			$Log->doLog(3, "Module: Failed to parse config-File of module".
+				"'".$this->getInfo('module')."'");
+			return false;
+		}
+
+		return true;
 	}
 
 	/* ###################### install/update/uninstall ################## */

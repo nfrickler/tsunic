@@ -1,0 +1,5 @@
+<!-- | config file -->
+<all>
+	<config default="de">language</config>
+	<config default="sunrise">style</config>
+</all>

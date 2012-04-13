@@ -160,5 +160,33 @@ class $$$Object {
 
 		return false;
 	}
+
+	/* is unique value? (either not in table or belongs to this object)
+	 * @param string: name of table
+	 * @param string: column in table
+	 * @param string: value
+	 *
+	 * @return bool
+	 */
+	protected function _isUnique ($table, $column, $value) {
+		$sql = "SELECT id
+			FROM $table
+			WHERE $column = '$value'
+				AND NOT id = '$this->id'
+		;";
+		$result = $TSunic->Db->doSelect($sql);
+		if ($result === false) return false;
+		return ($result) ? false : true;
+	}
+
+	/* does other object with ID exist?
+	 * @param string: name of table
+	 * @param int: ID of object
+	 *
+	 * @return bool
+	 */
+	protected function _isObject ($table, $id) {
+		return !$this->_isUnique($table, 'id', $id);
+	}
 }
 ?>
