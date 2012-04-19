@@ -70,6 +70,12 @@ $lang = array(
 	'SHOWCONFIG__DEFAULT' => 'Default',
 	'SHOWCONFIG__DESCRIPTION' => 'Description',
 	'SHOWCONFIG__USEDEFAULT' => 'Use default',
+	'SHOWCONFIG__SUBMIT' => 'Save',
+	'SHOWCONFIG__RESET' => 'Reset',
+
+	// setConfig
+	'SETCONFIG__ERROR' => 'An error occurred while saving one option.',
+	'SETCONFIG__SUCCESS' => 'Config saved.',
 
 	/* ***************** account ******************************* */
 

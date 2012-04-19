@@ -67,9 +67,15 @@ $lang = array(
 	'SHOWCONFIG__INFOTEXT' => 'Hier kannst du die Einstellungen für deinen Account festlegen.',
 	'SHOWCONFIG__NAME' => 'Name',
 	'SHOWCONFIG__VALUE' => 'Wert',
-	'SHOWCONFIG__DEFAULT' => 'Default',
+	'SHOWCONFIG__DEFAULT' => 'Standard',
 	'SHOWCONFIG__DESCRIPTION' => 'Beschreibung',
 	'SHOWCONFIG__USEDEFAULT' => 'Standard verwenden',
+	'SHOWCONFIG__SUBMIT' => 'Speichern',
+	'SHOWCONFIG__RESET' => 'Reset',
+
+	// setConfig
+	'SETCONFIG__ERROR' => 'Beim Speichern einer Einstellung ist ein Fehler aufgetreten.',
+	'SETCONFIG__SUCCESS' => 'Einstellungen gespeichert.',
 
 	/* ***************** account ******************************* */
 

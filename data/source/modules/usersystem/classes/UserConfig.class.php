@@ -35,7 +35,7 @@ class $$$UserConfig {
 		}
 
 		// return default value
-		return $this->getDefault($name);
+		return ($returnDefault) ? $this->getDefault($name) : NULL;
 	}
 
 	/* get default config
@@ -81,7 +81,7 @@ class $$$UserConfig {
 		if (!$this->exists($name)) return false;
 
 		// default value?
-		if ($value === NULL) {
+		if ($value === NULL or $value === "") {
 			return ($this->get($name, false) != NULL)
 				? $this->delete($name) : true;
 		}
@@ -102,8 +102,9 @@ class $$$UserConfig {
 	 * @return bool
 	 */
 	public function delete ($name) {
+		global $TSunic;
 		$sql = "DELETE FROM #__userconfig
-			WHERE fk_account = '$this->account'
+			WHERE fk_account = '$this->fk_account'
 				AND fk_config = '$name';";
 		return $TSunic->Db->doDelete($sql);
 	}

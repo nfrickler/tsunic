@@ -457,11 +457,12 @@ class $$$User extends $system$Object {
 
 	/* get config value of user
 	 * @param string: name of config
+	 * +@param bool: return default, if no userconfig?
 	 *
 	 * @return mix
 	 */
-	public function config ($name) {
-		return $this->getConfig()->get($name);
+	public function config ($name, $returnDefault = true) {
+		return $this->getConfig()->get($name, $returnDefault);
 	}
 
 	/* get userconfig object
