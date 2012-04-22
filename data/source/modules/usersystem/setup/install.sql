@@ -78,7 +78,6 @@ CREATE TABLE IF NOT EXISTS `#__userconfig` (
   `fk_config` varchar(200) NOT NULL,
   `value` varchar(500) NOT NULL,
   `fk_account` int(11) NOT NULL,
-  `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`fk_config`, `fk_account`)
 ) ENGINE=MyISAM;
@@ -88,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `#__config` (
   `systemdefault` varchar(500) NOT NULL,
   `formtype` varchar(50) NOT NULL,
   `options` varchar(200) NOT NULL,
+  `isSystem` int(1) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`name`)

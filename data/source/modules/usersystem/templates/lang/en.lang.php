@@ -2,6 +2,9 @@
 <?php
 $lang = array(
 
+	// special
+	'ISROOTPASSWORD__FAILED' => 'Please set a password for the administrator account "root" before creating new user!',
+
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'You are logged in as #name#.',
 	'USERHEADER__LOGOUT' => 'Logout',

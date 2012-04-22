@@ -58,11 +58,12 @@ class $$$Encryption {
 
 	/* encrypt string
 	 * @param string: input
-	 * +@param string: encryption key
+	 * +@param string/bool: encryption key
+	 * +@param bool: add encryption preffix?
 	 *
 	 * @return string
 	 */
-	public function encrypt ($input, $key = false) {
+	public function encrypt ($input, $key = false, $add_preffix = true) {
 		global $TSunic;
 
 		// skip empty input
@@ -75,7 +76,7 @@ class $$$Encryption {
 		}
 
 		// encrypt
-		return $this->enc_preffix.$this->MyEnc->encrypt($input, $key);
+		return ($add_preffix ? $this->enc_preffix : '').base64_encode($this->MyEnc->encrypt($input, $key));
 	}
 
 	/* decrypt string
@@ -103,7 +104,7 @@ class $$$Encryption {
 		}
 
 		// decrypt
-		return $this->MyEnc->decrypt($input, $key);
+		return $this->MyEnc->decrypt(base64_decode($input), $key);
 	}
 }
 ?>

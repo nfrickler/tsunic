@@ -1,4 +1,4 @@
-<!-- | function to set language -->
+<!-- | FUNCTION set language -->
 <?php
 function $$$setLanguage () {
 	global $TSunic;
@@ -6,12 +6,11 @@ function $$$setLanguage () {
 	// get language
 	$lang = $TSunic->Temp->getParameter('lang');
 
-	// set runtime-variable
-	$TSunic->Config->setRuntime('language', $lang);
+	// set language in config
+	$TSunic->Usr->setConfig('$$$language', $lang);
 
 	// redirect back
 	$TSunic->redirect('back');
-
 	return true;
 }
 ?>

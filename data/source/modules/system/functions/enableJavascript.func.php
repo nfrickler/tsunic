@@ -4,7 +4,7 @@ function $$$enableJavascript () {
 	global $TSunic;
 
 	// set runtime-variable
-	$TSunic->Config->setRuntime('javascript', 'on');
+	$TSunic->Usr->setConfig('$$$javascript', 'on');
 
 	// redirect back
 	$TSunic->redirect('back');

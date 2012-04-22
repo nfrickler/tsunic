@@ -111,6 +111,13 @@ class $$$User extends $system$Object {
 			return false;
 		}
 
+		// is root password set?
+		if (!$this->getConfig()->getDefault('$$$isRootPassword')) {
+			global $TSunic;
+			$TSunic->Log->add('error', '{ISROOTPASSWORD__FAILED}', 3);
+			return false;
+		}
+
 		// create new account
 		$sql = "INSERT INTO #__accounts
 			SET email = '$email',
@@ -139,7 +146,6 @@ class $$$User extends $system$Object {
 		}
 
 		// has sth changed?
-		$sql = "";
 		$sql_set = array();
 		if ($email != $this->getInfo('email')) {
 			$sql_set[] = "email = '$email'";
@@ -149,8 +155,11 @@ class $$$User extends $system$Object {
 		}
 		if (!empty($password)) {
 			if (!$this->isValidPassword($password)) return false;
-			$sql_set[] = "password = '".$this->_password2hash($password)."'";
-			if (!$this->_setEncPassword($this->_getPassphrase($password))) return false;
+			$sql_set[] = "password = '".$this->_password2hash($password, $email)."'";
+			if (!$this->_setEncPassword($this->_getPassphrase($password, $email))) return false;
+
+			# if root password is set, note in config
+			if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);
 		}
 		if (empty($sql_set)) return true;
 
@@ -204,9 +213,6 @@ class $$$User extends $system$Object {
 	 */
 	public function login ($email, $password) {
 		global $TSunic;
-
-		// deny, if empty password
-		if (empty($password)) return false;
 
 		// try to get user with matching identity
 		$email = $this->name2email($email);
@@ -274,6 +280,7 @@ class $$$User extends $system$Object {
 	 * @return bool
 	 */
 	protected function _password2hash ($password, $email = false) {
+		if (empty($password)) return "";
 		if (!$email) $email = $this->getInfo('email');
 		return sha1(sha1(trim($email).trim($password)));
 	}
@@ -401,7 +408,7 @@ class $$$User extends $system$Object {
 
 		// create new encryption object and encrypt userkey
 		$this->Encryption = $TSunic->get('$$$Encryption', $new_passphrase);
-		$userkey = $this->encrypt($userkey);
+		$userkey = $this->encrypt($userkey, false);
 
 		// update database
 		$sql = "UPDATE #__accounts
@@ -463,6 +470,16 @@ class $$$User extends $system$Object {
 	 */
 	public function config ($name, $returnDefault = true) {
 		return $this->getConfig()->get($name, $returnDefault);
+	}
+
+	/* set config value of user
+	 * @param string: name of config
+	 * @param mix: value
+	 *
+	 * @return bool
+	 */
+	public function setConfig ($name, $value) {
+		return $this->getConfig()->set($name, $value);
 	}
 
 	/* get userconfig object

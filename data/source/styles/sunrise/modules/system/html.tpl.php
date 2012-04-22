@@ -1,7 +1,6 @@
-﻿<!-- | TEMPLATE_sunrise - show page (main template) -->
+<!-- | TEMPLATE_sunrise - show page (main template) -->
 <?php
-
-$lang = $TSunic->Config->getRuntime('lang');
+$lang = $TSunic->Usr->config('$system$language');
 if (empty($lang)) $lang = $TSunic->Config->getConfig('default_language');
 ?>
 <!DOCTYPE html>

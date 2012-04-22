@@ -266,7 +266,7 @@ class TSunic {
 	public function isJavascript ($getDistinguishable = false) {
 
 		// get javascript-setting
-		$value = $this->Config->getRuntime('javascript');
+		$value = $this->Usr->config('$$$javascript');
 
 		// get return
 		if ($getDistinguishable) {

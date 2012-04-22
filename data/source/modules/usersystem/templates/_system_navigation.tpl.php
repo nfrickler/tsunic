@@ -12,6 +12,11 @@
 				<?php $this->set('{_SYSTEM_NAVIGATION__TOSHOWCONFIG}'); ?>
 			</a>
 		</li>
+		<li id="$$$_navigation__access">
+			<a href="<?php $this->setUrl('$$$showAccess'); ?>">
+				<?php $this->set('{_SYSTEM_NAVIGATION__TOSHOWACCESS}'); ?>
+			</a>
+		</li>
 		<li id="$$$_navigation__logout">
 			<a href="<?php $this->setUrl('$$$doLogout'); ?>">
 				<?php $this->set('{_SYSTEM_NAVIGATION__TODOLOGOUT}'); ?>

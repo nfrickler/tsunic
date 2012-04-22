@@ -101,7 +101,7 @@ class $$$Sql2array {
 		$sql = preg_replace_callback('!\((.*)\)!Usi', array($this, 'getSubquery'), $sql);
 
 		// split by primary list
-		$sql_primus = implode(' |', $this->primus).' ';
+		$sql_primus = implode('[\s\n\r]*|', $this->primus).' ';
 		$split_primus = preg_split('!('.$sql_primus.')!', $sql);
 
 		// get primary order
@@ -186,7 +186,7 @@ class $$$Sql2array {
 			// is subquery
 			// get sql
 			$array = $this->toArray($sql);
-			$array_info['type'] = 'subquery';	
+			$array_info['type'] = 'subquery';
 		}
 
 		// get unique id

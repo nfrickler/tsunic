@@ -7,11 +7,22 @@ class $$$UserConfig {
 	 */
 	protected $fk_account;
 
+	/* runtime config
+	 * array
+	 */
+	protected $runtime;
+
 	/* constructor
 	 * @param int: fk account
 	 */
 	public function __construct ($fk_account) {
 		$this->fk_account = $fk_account;
+
+		# load runtime config
+		$this->runtime = array();
+		if (isset($_SESSION['$$$UserConfig__runtime'])) {
+			$this->runtime = $_SESSION['$$$UserConfig__runtime'];
+		}
 	}
 
 	/* get config of user
@@ -30,12 +41,36 @@ class $$$UserConfig {
 				AND fk_config = '$name';";
 		$result = $TSunic->Db->doSelect($sql);
 		if ($result === false) return NULL;
-		if (!empty($result)) {
-			return $result[0]['value'];
-		}
+		if (!empty($result)) return $result[0]['value'];
+
+		// is a config value really OR is guest?
+		if (!$this->exists($name) or $this->fk_account == 2)
+			return $this->getRuntime($name);
 
 		// return default value
 		return ($returnDefault) ? $this->getDefault($name) : NULL;
+	}
+
+	/* get runtime config
+	 * @param string: name of config
+	 *
+	 * @return mix
+	 */
+	public function getRuntime ($name) {
+		return (isset($this->runtime[$name]))
+			? $this->runtime[$name] : NULL;
+	}
+
+	/* set runtime config
+	 * @param string: name of config
+	 * @param mix: value of config
+	 *
+	 * @return bool
+	 */
+	public function setRuntime ($name, $value) {
+		$this->runtime[$name] = $value;
+		$_SESSION['$$$UserConfig__runtime'] = $this->runtime;
+		return true;
 	}
 
 	/* get default config
@@ -60,6 +95,31 @@ class $$$UserConfig {
 		return NULL;
 	}
 
+	/* set default config
+	 * @param string: name of config
+	 * @param string: value of config
+	 * +@param bool: is system config?
+	 *
+	 * @return bool
+	 */
+	public function setDefault ($name, $value, $isSystem = true) {
+		global $TSunic;
+
+		// update database
+		$sql = "INSERT INTO #__config
+			SET name = '$name',
+				systemdefault = '$value',
+				isSystem = '".($isSystem ? '1' : '0')."',
+				dateOfCreation = NOW()
+			ON DUPLICATE KEY UPDATE
+				systemdefault = '$value' AND
+				isSystem = '".($isSystem ? '1' : '0')."'
+		;";
+		$return = $TSunic->Db->doInsert($sql);
+
+		return true;
+	}
+
 	/* does config name exist?
 	 * @param string: name of config
 	 *
@@ -67,6 +127,20 @@ class $$$UserConfig {
 	 */
 	public function exists ($name) {
 		return ($this->getDefault($name) != NULL) ? true : false;
+	}
+
+	/* is system config?
+	 * @param string: name of config
+	 *
+	 * @return bool
+	 */
+	public function isSystem ($name) {
+		global $TSunic;
+		$sql = "SELECT name
+			FROM #__config
+			WHERE name = '$name'
+				AND isSystem = '1';";
+		return ($TSunic->Db->doSelect($sql)) ? true : false;
 	}
 
 	/* set value
@@ -77,8 +151,12 @@ class $$$UserConfig {
 	 */
 	public function set ($name, $value) {
 
-		// config name exists?
-		if (!$this->exists($name)) return false;
+		// is system config?
+		if ($this->isSystem($name)) return false;
+
+		// is config really OR is guest?
+		if (!$this->exists($name) or $this->fk_account == 2)
+			return $this->setRuntime($name, $value);
 
 		// default value?
 		if ($value === NULL or $value === "") {
@@ -109,7 +187,7 @@ class $$$UserConfig {
 		return $TSunic->Db->doDelete($sql);
 	}
 
-	/* get all config names and values
+	/* get all real config names and values (no system config)
 	 *
 	 * @return array
 	 */
@@ -121,7 +199,8 @@ class $$$UserConfig {
 				systemdefault,
 				formtype,
 				options
-			FROM #__config;";
+			FROM #__config
+			WHERE isSystem = '0';";
 		$result = $TSunic->Db->doSelect($sql);
 		if ($result === false) return array();
 

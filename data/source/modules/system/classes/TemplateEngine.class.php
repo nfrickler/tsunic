@@ -310,7 +310,7 @@ class $$$TemplateEngine {
 		global $TSunic;
 
 		// get languages
-		$chosen_lang = $TSunic->Config->getRuntime('language');
+		$chosen_lang = $TSunic->Usr->config('$$$language');
 		$default_lang = $TSunic->Config->getConfig('default_language');
 
 		// get module of input

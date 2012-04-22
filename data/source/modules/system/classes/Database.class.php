@@ -167,12 +167,12 @@ class $$$Database {
 		// handle errors
 		if ($this->Db_obj->getError()) {
 			// add error in log
-			$TSunic->Log->doLog(2, "system->Database: Database error: '".$this->Db_obj->getError()."' (query: '$sql')");
+			$TSunic->Log->doLog(2, "system->Database: Database error: '".$this->Db_obj->getError()."' (query: '$query')");
 			$TSunic->Log->add('warning', 'Database-Error: '.$this->Db_obj->getError().'!', 1);
 		}
 		if ($return === false) {
 			// critical database-error
-			$TSunic->Log->doLog(2, "system->Database: Critical database error: '".$this->Db_obj->getError()."' (query: '$sql')");
+			$TSunic->Log->doLog(2, "system->Database: Critical database error: '".$this->Db_obj->getError()."' (query: '$query')");
 			$TSunic->throwError('Database-Error!');
 			exit;
 		}
