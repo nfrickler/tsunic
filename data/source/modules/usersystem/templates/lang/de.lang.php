@@ -5,6 +5,21 @@ $lang = array(
 	// special
 	'ISROOTPASSWORD__FAILED' => 'Bitte setze ein Passwort für den Administrator-Account "root", bevor du weitere Nutzer anlegst!',
 
+	// access
+	'ACCESS__DELETEALLUSERS' => 'Alle Nutzer löschen',
+	'ACCESS__DELETEALLUSERS_DESCRIPTION' => 'Mit dieser Berechtigung kann man jeden beliebigen Nutzer vom System löschen.',
+	'ACCESS__EDITALLACCESS' => 'Berechtigungen bearbeiten',
+	'ACCESS__EDITALLACCESS_DESCRIPTION' => 'Diese Berechtigung erlaubt das Vergeben von sämtlichen Nutzerrechten.',
+	'ACCESS__EDITALLUSERS' => 'Alle Nutzer bearbeiten',
+	'ACCESS__EDITALLUSERS_DESCRIPTION' => 'Mit diesem Recht kann man die Account Daten aller Nutzer auf dem System bearbeiten.',
+	'ACCESS__LISTALLUSERS' => 'Alle Nutzer auflisten',
+	'ACCESS__LISTALLUSERS_DESCRIPTION' => 'Hiermit darf man eine Liste aller Nutzer dieses Systems einsehen.',
+	'ACCESS__SEEALLACCESS' => 'Berechtigungen aller Nutzer einsehen',
+	'ACCESS__SEEALLACCESS_DESCRIPTION' => 'Mit diesem Recht kann man die Berechtigungen aller Nutzer auf dem System einsehen.',
+	'ACCESS__SEEALLDATA' => 'Administratorblick auf Nutzerdaten',
+	'ACCESS__SEEALLDATA_DESCRIPTION' => 'Diese Berechtigung erlaubt die Anzeige aller persönlichen Nutzerdaten.',
+
+
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'Du bist eingeloggt als #name#.',
 	'USERHEADER__LOGOUT' => 'Logout',
@@ -80,6 +95,23 @@ $lang = array(
 	'SETCONFIG__ERROR' => 'Beim Speichern einer Einstellung ist ein Fehler aufgetreten.',
 	'SETCONFIG__SUCCESS' => 'Einstellungen gespeichert.',
 
+	/* ***************** access ******************************* */
+
+	// showAccess
+	'SHOWACCESS__TITLE' => 'Berechtigungen',
+	'SHOWACCESS__H1' => 'Berechtigungen',
+	'SHOWACCESS__INFOTEXT' => 'Hier kannst du die Berechtigungen von Nutzern ändern',
+	'SHOWACCESS__H_ACCESSOF' => 'Berechtigungen von #name#',
+	'SHOWACCESS__NAME' => 'Name',
+	'SHOWACCESS__VALUE' => 'Zugriff?',
+	'SHOWACCESS__BYGROUPS' => 'Standard durch Gruppen',
+	'SHOWACCESS__DESCRIPTION' => 'Beschreibung',
+	'SHOWACCESS__USEDEFAULT' => 'Standard verwenden',
+	'SHOWACCESS__YES' => 'Ja',
+	'SHOWACCESS__NO' => 'Nein',
+	'SHOWACCESS__SUBMIT' => 'Speichern',
+	'SHOWACCESS__RESET' => 'Reset',
+
 	/* ***************** account ******************************* */
 
 	// showAccount
@@ -137,10 +169,11 @@ $lang = array(
 	'DELETEACCOUNT__SUCCESS' => 'Dein Account wurde gelöscht.',
 	'DELETEACCOUNT__WRONGPASSWORD' => 'Falsches Passwort!',
 
-	/* ***************** _system_navigation ******************** */
+	/* ***************** navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Dein Account',
 	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Einstellungen',
+	'_SYSTEM_NAVIGATION__TOSHOWACCESS' => 'Berechtigungen',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',
 	'_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
 	'_HEADER_NAVIGATION__SHOWLOGIN' => 'Login',

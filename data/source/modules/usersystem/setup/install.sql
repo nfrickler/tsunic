@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS `#__accounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `#__accounts` (name)
-VALUES ('root'), ('guest');
+INSERT INTO `#__accounts` (name, dateOfRegistration)
+VALUES ('root', NOW()), ('guest', NOW());
 
 CREATE TABLE IF NOT EXISTS `#__folders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -48,14 +48,10 @@ CREATE TABLE IF NOT EXISTS `#__connections` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__accessgroups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `fk_parent` int(11) NOT NULL,
-  `dateOfCreation` datetime NOT NULL,
-  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dateOfDeletion` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `#__accessnames` (
+  `name` varchar(200) NOT NULL,
+  `dateOfCreation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__access` (
@@ -67,19 +63,24 @@ CREATE TABLE IF NOT EXISTS `#__access` (
   PRIMARY KEY (`fk__accessname`, `fk__owner`, `isUser`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__accessgroupmembers` (
-  `fk_usersystem__accessgroup` int(11) NOT NULL,
-  `fk_usersystem__account` int(11) NOT NULL,
-  `dateOfJoin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`fk_usersystem__accessgroup`, `fk_usersystem__account`)
+CREATE TABLE IF NOT EXISTS `#__accessgroups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `fk_parent` int(11) NOT NULL,
+  `dateOfCreation` datetime NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dateOfDeletion` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__userconfig` (
-  `fk_config` varchar(200) NOT NULL,
-  `value` varchar(500) NOT NULL,
+INSERT INTO `#__accessgroups` (name, dateOfCreation)
+VALUES ('all', NOW());
+
+CREATE TABLE IF NOT EXISTS `#__accessgroupmembers` (
+  `fk_accessgroup` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,
-  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`fk_config`, `fk_account`)
+  `dateOfJoin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fk_accessgroup`, `fk_account`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__config` (
@@ -93,10 +94,10 @@ CREATE TABLE IF NOT EXISTS `#__config` (
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__accessnames` (
-  `name` varchar(200) NOT NULL,
-  `systemdefault` int(1) NOT NULL,
-  `dateOfCreation` datetime NOT NULL,
+CREATE TABLE IF NOT EXISTS `#__userconfig` (
+  `fk_config` varchar(200) NOT NULL,
+  `value` varchar(500) NOT NULL,
+  `fk_account` int(11) NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`name`)
+  PRIMARY KEY (`fk_config`, `fk_account`)
 ) ENGINE=MyISAM;

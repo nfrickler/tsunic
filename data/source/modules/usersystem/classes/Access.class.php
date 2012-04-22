@@ -39,10 +39,15 @@ class $$$Access {
 			return ($result[0]['access']) ? true : false;
 		}
 
-		// is default user?
-		if ($this->fk_account == 2) return false;
+		return $this->checkGroups($name);
+	}
 
-		// check groups for access
+	/* has user access by group?
+	 * @param string: name of access
+	 *
+	 * @return bool
+	 */
+	public function checkGroups ($name) {
 		$isAccess = false;
 		foreach ($this->getGroups() as $index => $Group) {
 			if ($Group->check($name)) $isAccess = true;
@@ -58,15 +63,15 @@ class $$$Access {
 		if ($this->groups) return $this->groups;
 		global $TSunic;
 
-		$sql = "SELECT fk_usersystem__accessgroups as id
+		$sql = "SELECT fk_accessgroup as id
 			FROM #__accessgroupmembers
-			WHERE isUser = '1'
-				AND fk__owner = '$this->fk_account';";
+			WHERE fk_account = '$this->fk_account';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return $result;
 
 		// create objects
 		$this->groups = array();
+		$this->groups[] = $TSunic->get('$$$Accessgroup', 1);
 		foreach ($result as $index => $values) {
 			$this->groups[] = $TSunic->get('$$$Accessgroup', $values['id']);
 		}
@@ -82,6 +87,9 @@ class $$$Access {
 	 */
 	public function set ($name, $value) {
 		global $TSunic;
+
+		// access?
+		if (!$TSunic->Usr->access('$$$editAllAccess')) return false;
 
 		// set to default?
 		if ($value === NULL) {
@@ -107,9 +115,9 @@ class $$$Access {
 	 *
 	 * @return bool
 	 */
-	public function addGroup ($id) {
+	public function joinGroup ($fk_accessgroup) {
 		global $TSunic;
-		$Group = $TSunic->get('$$$Accessgroup', $id);
+		$Group = $TSunic->get('$$$Accessgroup', $fk_accessgroup);
 		return $Group->addMember($this->id);
 	}
 
@@ -118,21 +126,30 @@ class $$$Access {
 	 *
 	 * @return bool
 	 */
-	public function rmGroup ($id) {
+	public function leaveGroup ($fk_accessgroup) {
 		global $TSunic;
-		$Group = $TSunic->get('$$$Accessgroup', $id);
+		$Group = $TSunic->get('$$$Accessgroup', $fk_accessgroup);
 		return $Group->rmMember($this->id);
 	}
 
 	/* get all available accessnames
 	 *
-	 * @return array
+	 * @return array/false
 	 */
 	public function getAccessnames () {
 		global $TSunic;
-		$Accessfile = $TSunic->get('File', '#runtime#accessnames.inc.php');
-		if (!$Accessfile->includeFile()) return false;
-		return $TSunic->cache['$$$accessnames'];
+		$sql = "SELECT name
+			FROM #__accessnames
+			ORDER BY name ASC;";
+		$result = $TSunic->Db->doSelect($sql);
+
+		// create output array
+		$output = array();
+		foreach ($result as $index => $values) {
+			$output[$values['name']] = 1;
+		}
+
+		return $output;
 	}
 }
 ?>

@@ -1,7 +1,7 @@
 <!-- | Accessgroup class -->
 <?php
 include_once '$system$Object.class.php';
-class Accessgroup extends $system$Object {
+class $$$Accessgroup extends $system$Object {
 
 	/* parent
 	 * OBJECT
@@ -97,9 +97,9 @@ class Accessgroup extends $system$Object {
 	 */
 	public function getMembers () {
 		global $TSunic;
-		$sql = "SELECT fk_usersystem__account as fk_account,
+		$sql = "SELECT fk_account as fk_account,
 			FROM #__accessgroupmembers
-			WHERE fk_usersystem__accessgroup = '$this->id';";
+			WHERE fk_accessgroup = '$this->id';";
 		return $TSunic->Db->doSelect($sql);
 	}
 
@@ -112,8 +112,8 @@ class Accessgroup extends $system$Object {
 		global $TSunic;
 		$sql = "SELECT dateOfJoin
 			FROM #__accessgroupmembers
-			WHERE fk_usersystem__accessgroup = '$this->id'
-				AND fk_usersystem__account = '$fk_account';";
+			WHERE fk_accessgroup = '$this->id'
+				AND fk_account = '$fk_account';";
 		return ($TSunic->Db->doSelect($sql)) ? true : false;
 	}
 
@@ -125,8 +125,8 @@ class Accessgroup extends $system$Object {
 	public function addMember ($fk_account) {
 		global $TSunic;
 		$sql = "INSERT INTO #__accessgroupmembers
-			SET fk_usersystem__accessgroup = '$this->id',
-				fk_usersystem__account= '$fk_account';";
+			SET fk_accessgroup = '$this->id',
+				fk_account= '$fk_account';";
 		return $TSunic->Db->doInsert($sql);
 	}
 
@@ -138,8 +138,8 @@ class Accessgroup extends $system$Object {
 	public function rmMember ($fk_account) {
 		global $TSunic;
 		$sql = "DELETE FROM #__accessgroupmembers
-			WHERE fk_usersystem__accessgroup = '$this->id'
-				AND fk_usersystem__account = '$fk_account';";
+			WHERE fk_accessgroup = '$this->id'
+				AND fk_account = '$fk_account';";
 		return $TSunic->Db->doDelete($sql);
 	}
 

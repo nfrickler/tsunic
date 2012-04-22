@@ -5,6 +5,20 @@ $lang = array(
 	// special
 	'ISROOTPASSWORD__FAILED' => 'Please set a password for the administrator account "root" before creating new user!',
 
+	// access
+	'ACCESS__DELETEALLUSERS' => 'Delete all users',
+	'ACCESS__DELETEALLUSERS_DESCRIPTION' => 'This allows to delete every user on this system.',
+	'ACCESS__EDITALLACCESS' => 'Edit all access',
+	'ACCESS__EDITALLACCESS_DESCRIPTION' => 'Allows to edit all access for all users.',
+	'ACCESS__EDITALLUSERS' => 'Edit all users',
+	'ACCESS__EDITALLUSERS_DESCRIPTION' => 'This allows to edit all usrs.',
+	'ACCESS__LISTALLUSERS' => 'List all users',
+	'ACCESS__LISTALLUSERS_DESCRIPTION' => 'Allows to show full list of users on this system.',
+	'ACCESS__SEEALLACCESS' => 'See all access',
+	'ACCESS__SEEALLACCESS_DESCRIPTION' => 'Enables to see all access of all users on this system.',
+	'ACCESS__SEEALLDATA' => 'Adminview on data',
+	'ACCESS__SEEALLDATA_DESCRIPTION' => 'Enables to see all personal data of users.',
+
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'You are logged in as #name#.',
 	'USERHEADER__LOGOUT' => 'Logout',
@@ -80,6 +94,23 @@ $lang = array(
 	'SETCONFIG__ERROR' => 'An error occurred while saving one option.',
 	'SETCONFIG__SUCCESS' => 'Config saved.',
 
+	/* ***************** access ******************************* */
+
+	// showAccess
+	'SHOWACCESS__TITLE' => 'Access',
+	'SHOWACCESS__H1' => 'Access',
+	'SHOWACCESS__INFOTEXT' => 'Here you can administrate the access of accounts.',
+	'SHOWACCESS__H_ACCESSOF' => 'Show access of #name#',
+	'SHOWACCESS__NAME' => 'Name',
+	'SHOWACCESS__VALUE' => 'Access?',
+	'SHOWACCESS__BYGROUPS' => 'Default by groups',
+	'SHOWACCESS__DESCRIPTION' => 'Description',
+	'SHOWACCESS__USEDEFAULT' => 'Use default',
+	'SHOWACCESS__YES' => 'Yes',
+	'SHOWACCESS__NO' => 'No',
+	'SHOWACCESS__SUBMIT' => 'Save',
+	'SHOWACCESS__RESET' => 'Reset',
+
 	/* ***************** account ******************************* */
 
 	// showAccount
@@ -137,10 +168,11 @@ $lang = array(
 	'DELETEACCOUNT__SUCCESS' => 'Your account has been successfully deleted.',
 	'DELETEACCOUNT__WRONGPASSWORD' => 'Wrong password! Try again?',
 
-	/* ***************** _system_navigation ******************** */
+	/* ***************** navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Your account',
-	'_SYSTEM_NAVIGATION__TOSHOWCONFIGURATION' => 'Configuration',
+	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Configuration',
+	'_SYSTEM_NAVIGATION__TOSHOWACCESS' => 'Access',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',
 	'_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
 	'_HEADER_NAVIGATION__SHOWLOGIN' => 'Login',

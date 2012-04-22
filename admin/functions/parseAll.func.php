@@ -155,7 +155,7 @@ function parseAll () {
 		}
 
 		// parse Access
-		if (!$AccessParser->parseAll($Config->get("preffix")."mod${USERSYSTEM}__accessnames")) {
+		if (!$AccessParser->parseAll($Config->get("preffix")."mod${USERSYSTEM}__")) {
 			$_SESSION['admin_error'] = 'ERROR__RENDER (access-files)';
 			return false;
 		}

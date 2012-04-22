@@ -137,6 +137,12 @@ class $$$User extends $system$Object {
 	 * @return bool
 	 */
 	public function edit ($email, $name, $password) {
+		global $TSunic;
+
+		// access?
+		if ($this->id != $TSunic->Usr->getInfo('id')
+			AND !$TSunic->Usr->access('$$$editAllUsers')
+		) return false;
 
 		// validate input
 		if (!$this->isValidEMail($email) or
@@ -175,6 +181,17 @@ class $$$User extends $system$Object {
 	 * @return bool
 	 */
 	public function delete () {
+		global $TSunic;
+
+		// root or guest?
+		if ($this->isRoot() or $this->isGuest()) return false;
+
+		// access?
+		if ($this->id != $TSunic->Usr->getInfo('id')
+			AND !$TSunic->Usr->access('$$$deleteAllUsers')
+		) return false;
+
+		// remove in database
 		$sql = "DELETE FROM #__accounts
 			WHERE id = '$this->id';";
 		if (!$this->_delete($sql)) return false;
