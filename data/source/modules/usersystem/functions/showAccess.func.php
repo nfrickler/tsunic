@@ -2,22 +2,47 @@
 <?php
 function $$$showAccess () {
 	global $TSunic;
+	$isuser = true;
+	$allow_edit = $TSunic->Usr->access('editAllAccess');
+	$id = $TSunic->Usr->getInfo('id');
+
+	// access?
+	if (!$TSunic->Usr->access('$$$seeOwnAccess')) {
+		$TSunic->Log->add('{SHOWACCESS__PERMISSION_DENIED}', 3);
+		$TSunic->redirect('back');
+		return false;
+	}
 
 	# get account-id
-	$fk_account = $TSunic->Temp->getParameter('fk_account');
+	$user = $TSunic->Temp->getParameter('$$$user');
+	$group = $TSunic->Temp->getParameter('$$$group');
 
 	// get user object
-	if (empty($fk_account) or $fk_account == $TSunic->Usr->getInfo('id')) {
-		$User = $TSunic->Usr;
+	if ($user == $TSunic->Usr->getInfo('id') or (empty($user) and empty($group))) {
+		$Object = $TSunic->Usr->getAccess();
+		$name = $TSunic->Usr->getInfo('name');
+		if ($TSunic->Usr->isRoot()) $allow_edit = false;
 	} else {
 
 		// check rights
 		if (!$TSunic->Usr->access('$$$seeAllAccess')) {
 			$TSunic->Log->add('{SHOWACCESS__PERMISSION_DENIED}', 3);
-			$TSunic->redirect('back');
+			$TSunic->redirect('$$$showAccess');
 		}
 
-		$User = $TSunic->get('$$$User', $fk_account);
+		// get object
+		if ($user) {
+			$Object = $TSunic->get('$$$User', $user);
+			$name = $Object->getInfo('name');
+			$id = $Object->getInfo('id');
+			if ($Object->isRoot()) $allow_edit = false;
+			$Object = $Object->getAccess();
+		} else {
+			$isuser = false;
+			$Object = $TSunic->get('$$$Accessgroup', $group);
+			$id = $Object->getInfo('id');
+			$name = $Object->getInfo('name');
+		}
 	}
 
 	// get all accessnames
@@ -31,18 +56,22 @@ function $$$showAccess () {
 			$accessnames_by_module[$cache[0]] = array();
 		$accessnames_by_module[$cache[0]][$index] = array(
 			'name' => '{'.strtoupper("${module}__ACCESS__${purename}").'}',
-			'value' => $User->access($index),
+			'value' => $Object->check($index, false),
 			'description' => '{'.strtoupper("${module}__ACCESS__${purename}_DESCRIPTION").'}',
-			'groups' => $User->getAccess()->checkGroups($index)
-				? 'SHOWACCESS__YES}' : '{SHOWACCESS__NO}',
+			'default' => ($isuser ? $Object->checkGroups($index) : $Object->checkParent($index))
+				? '{SHOWACCESS__YES}' : '{SHOWACCESS__NO}',
 		);
 	}
 
 	// activate template
 	$data = array(
-		'User' => $User,
+		'id' => $id,
+		'name' => $name,
 		'accessnames' => $accessnames_by_module,
-		'allowEdit' => $TSunic->Usr->access('$$$editAllAccess'),
+		'allowEdit' => $allow_edit,
+		'groups' => $TSunic->Usr->getAccess()->allGroups(),
+		'users' => $TSunic->Usr->allUsers(),
+		'isuser' => $isuser,
 	);
 	$TSunic->Tmpl->activate('$$$showAccess', '$system$content', $data);
 	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWACCESS__TITLE}'));

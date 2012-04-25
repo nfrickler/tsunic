@@ -17,7 +17,7 @@ class $$$Accessgroup extends $system$Object {
 	 *
 	 * @return sql query
 	 */
-	protected function _loadInfoSql () {
+	protected function loadInfoSql () {
 		return "SELECT name,
 				dateOfCreation,
 				dateOfUpdate,
@@ -145,31 +145,40 @@ class $$$Accessgroup extends $system$Object {
 
 	/* does group has access?
 	 * @param string: name of access
+	 * +@param bool: if nothing set, check parent?
 	 *
 	 * @return bool
 	 */
-	public function check ($name) {
+	public function check ($name, $goOn = true) {
 		global $TSunic;
 
 		// check own access
-		$sql = "SELECT access
+		$sql = "SELECT access as access
 			FROM #__access
 			WHERE fk__accessname = '$name'
 				AND fk__owner = '$this->id'
 				AND isUser = '0';";
 		$result = $TSunic->Db->doSelect($sql);
 		if ($result === false) return false;
+
 		if (count($result) > 0) {
 			return ($result[0]['access']) ? true : false;
 		}
+		if (!$goOn) return NULL;
 
 		// check parent object for access
-		if ($this->getParent()) {
-			return $this->getParent()->check($name);
-		}
+		return $this->checkParent($name);
+	}
 
-		// check default access
-		return $TSunic->get('$$$User', 'default')->access($name);
+	/* check access of parent group
+	 * @param string: name of access
+	 *
+	 * @return bool
+	 */
+	public function checkParent ($name) {
+		return ($this->getParent())
+			? $this->getParent()->check($name)
+			: false;
 	}
 
 	/* set access
@@ -190,13 +199,13 @@ class $$$Accessgroup extends $system$Object {
 			return $TSunic->Db->doDelete($sql);
 		}
 
-		// TODO: update if already exists
+		// update database
 		$sql = "INSERT INTO #__access
 			SET fk__owner = '$this->id',
 				isUser = '0',
 				fk__accessname = '$name',
-				value = '".($value ? "1" : "0")."'
-			ON DUPLICATE KEY UPDATE value = '".($value ? "1" : "0")."';";
+				access = '".($value ? "1" : "0")."'
+			ON DUPLICATE KEY UPDATE access = '".($value ? "1" : "0")."';";
 		return $TSunic->Db->doInsert($sql);
 	}
 
@@ -228,6 +237,7 @@ class $$$Accessgroup extends $system$Object {
 	 */
 	public function getParent () {
 		if (!empty($this->Parent)) return $this->Parent;
+		if ($this->getInfo('id') == 1) return false;
 		global $TSunic;
 		$this->Parent = $TSunic->get('$$$Accessgroup', $this->getInfo('fk_parent'));
 		return $this->Parent;
@@ -245,6 +255,7 @@ class $$$Accessgroup extends $system$Object {
 		$sql = "SELECT id
 			FROM #__accessgroups
 			WHERE fk_parent = '$this->id';";
+var_dump('hello');
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return $result;
 

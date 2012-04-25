@@ -332,10 +332,10 @@ class $$$Template {
 		$output = $TSunic->Temp->getPost($name, 1);
 
 		// check, if is output or default should be set
-		if (empty($output) AND !empty($default)) $output = $default;
+		if (empty($output)) $output = $default;
 
 		// trim finally
-		$output = trim($output);
+		if ($output) $output = trim($output);
 
 		// return output
 		if (!$doEcho) return $output;

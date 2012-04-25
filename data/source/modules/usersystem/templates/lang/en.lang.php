@@ -104,12 +104,17 @@ $lang = array(
 	'SHOWACCESS__NAME' => 'Name',
 	'SHOWACCESS__VALUE' => 'Access?',
 	'SHOWACCESS__BYGROUPS' => 'Default by groups',
+	'SHOWACCESS__BYPARENT' => 'Default by parent groups',
 	'SHOWACCESS__DESCRIPTION' => 'Description',
 	'SHOWACCESS__USEDEFAULT' => 'Use default',
 	'SHOWACCESS__YES' => 'Yes',
 	'SHOWACCESS__NO' => 'No',
 	'SHOWACCESS__SUBMIT' => 'Save',
 	'SHOWACCESS__RESET' => 'Reset',
+
+	'SETACCESS__SUCCESS' => 'Value have been saved.',
+	'SETACCESS__ERROR' => 'An error occurred while saving value!',
+
 
 	/* ***************** account ******************************* */
 
@@ -168,11 +173,37 @@ $lang = array(
 	'DELETEACCOUNT__SUCCESS' => 'Your account has been successfully deleted.',
 	'DELETEACCOUNT__WRONGPASSWORD' => 'Wrong password! Try again?',
 
+	/* ***************** showUserlist ****************** */
+
+	'SHOWUSERLIST__TITLE' => 'Userlist',
+	'SHOWUSERLIST__H1' => 'Userlist',
+	'SHOWUSERLIST__INFOTEXT' => 'This is a list of all users on this system.',
+	'SHOWUSERLIST__ID' => 'ID',
+	'SHOWUSERLIST__NAME' => 'Name',
+	'SHOWUSERLIST__EMAIL' => 'E-mail',
+	'SHOWUSERLIST__DATEOFREGISTRATION' => 'Registration',
+	'SHOWUSERLIST__DATEOFLASTLOGIN' => 'Last login',
+	'SHOWUSERLIST__ACTION' => 'Action',
+	'SHOWUSERLIST__DELETEUSER' => 'Delete',
+
+	/* **************** showDeleteUser ***************** */
+	'SHOWDELETEUSER__TITLE' => 'Delete user',
+	'SHOWDELETEUSER__H1' => 'Delete user #name# (#email#)',
+	'SHOWDELETEUSER__INFOTEXT' => 'Are you sure, you want to delete this user? This will DESTROY the user and all its data!',
+	'SHOWDELETEUSER__OK' => 'Yes, delete user',
+	'SHOWDELETEUSER__CANCEL' => 'No, cancel',
+
+	/* ***************** deleteUser ******************** */
+
+	'DELETEUSER__ERROR' => 'User could not be deleted!',
+	'DELETEUSER__SUCCESS' => 'User deleted.',
+
 	/* ***************** navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Your account',
 	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Configuration',
 	'_SYSTEM_NAVIGATION__TOSHOWACCESS' => 'Access',
+	'_SYSTEM_NAVIGATION__TOSHOWUSERLIST' => 'User list',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',
 	'_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
 	'_HEADER_NAVIGATION__SHOWLOGIN' => 'Login',

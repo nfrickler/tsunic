@@ -163,9 +163,9 @@ class $$$Temp {
 		}
 
 		// check, if new module
-		$new_get = $this->skipCommandParameters($_GET);
-		$old_get = $this->skipCommandParameters($this->getGet(true, 0));
-		if ($new_get == $old_get) return true;
+//		$new_get = $this->skipCommandParameters($_GET);
+//		$old_get = $this->skipCommandParameters($this->getGet(true, 0));
+//		if ($new_get == $old_get) return true;
 
 		// add data
 		if ($TSunic->isAjax()) {
@@ -187,7 +187,6 @@ class $$$Temp {
 
 		// store data
 		$this->refreshHistory();
-
 		return true;
 	}
 

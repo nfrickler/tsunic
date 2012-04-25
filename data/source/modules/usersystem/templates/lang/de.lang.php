@@ -18,7 +18,8 @@ $lang = array(
 	'ACCESS__SEEALLACCESS_DESCRIPTION' => 'Mit diesem Recht kann man die Berechtigungen aller Nutzer auf dem System einsehen.',
 	'ACCESS__SEEALLDATA' => 'Administratorblick auf Nutzerdaten',
 	'ACCESS__SEEALLDATA_DESCRIPTION' => 'Diese Berechtigung erlaubt die Anzeige aller persönlichen Nutzerdaten.',
-
+	'ACCESS__SEEOWNACCESS' => 'Eigene Berechtigungen sehen',
+	'ACCESS__SEEOWNACCESS_DESCRIPTION' => 'Dies erlaubt einem Nutzer seine eigenen Berechtigungen einzusehen.',
 
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'Du bist eingeloggt als #name#.',
@@ -105,12 +106,23 @@ $lang = array(
 	'SHOWACCESS__NAME' => 'Name',
 	'SHOWACCESS__VALUE' => 'Zugriff?',
 	'SHOWACCESS__BYGROUPS' => 'Standard durch Gruppen',
+	'SHOWACCESS__BYPARENT' => 'Standard durch übergeordnete Gruppen',
 	'SHOWACCESS__DESCRIPTION' => 'Beschreibung',
 	'SHOWACCESS__USEDEFAULT' => 'Standard verwenden',
 	'SHOWACCESS__YES' => 'Ja',
 	'SHOWACCESS__NO' => 'Nein',
 	'SHOWACCESS__SUBMIT' => 'Speichern',
 	'SHOWACCESS__RESET' => 'Reset',
+	'SHOWACCESS__H_CHOOSE',
+	'SHOWACCESS__CHOOSE_USER_LABEL' => 'Benutzer anzeigen',
+	'SHOWACCESS__CHOOSE_GROUP_LABEL' => 'Gruppe anzeigen',
+	'SHOWACCESS__CHOOSE_USER' => '---Benutzer wählen---',
+	'SHOWACCESS__CHOOSE_GROUP' => '---Gruppe wählen---',
+	'SHOWACCESS__CHOOSE_USER_SUBMIT' => '---Benutzer wählen---',
+	'SHOWACCESS__CHOOSE_SUBMIT' => 'Anzeigen',
+
+	'SETACCESS__SUCCESS' => 'Die Berechtigungen wurden gespeichert.',
+	'SETACCESS__ERROR' => 'Beim Speichern ist ein Fehler aufgetreten!',
 
 	/* ***************** account ******************************* */
 
@@ -169,11 +181,37 @@ $lang = array(
 	'DELETEACCOUNT__SUCCESS' => 'Dein Account wurde gelöscht.',
 	'DELETEACCOUNT__WRONGPASSWORD' => 'Falsches Passwort!',
 
+	/* ***************** showUserlist ****************** */
+
+	'SHOWUSERLIST__TITLE' => 'Benutzerliste',
+	'SHOWUSERLIST__H1' => 'Benutzerliste',
+	'SHOWUSERLIST__INFOTEXT' => 'Dies ist eine Liste aller Nutzer auf diesem System.',
+	'SHOWUSERLIST__ID' => 'ID',
+	'SHOWUSERLIST__NAME' => 'Name',
+	'SHOWUSERLIST__EMAIL' => 'E-Mail',
+	'SHOWUSERLIST__DATEOFREGISTRATION' => 'Registration',
+	'SHOWUSERLIST__DATEOFLASTLOGIN' => 'Letzer Login',
+	'SHOWUSERLIST__ACTION' => 'Aktion',
+	'SHOWUSERLIST__DELETEUSER' => 'Löschen',
+
+	/* **************** showDeleteUser ***************** */
+	'SHOWDELETEUSER__TITLE' => 'Benutzer löschen',
+	'SHOWDELETEUSER__H1' => 'Benutzer #name# (#email#) löschen',
+	'SHOWDELETEUSER__INFOTEXT' => 'Bist du dir sicher, dass du diesen Benutzer löschen willst? Der Nutzer und alle seine Daten werden ZERSTÖRT!',
+	'SHOWDELETEUSER__OK' => 'Ja, Benutzer löschen',
+	'SHOWDELETEUSER__CANCEL' => 'Nein, abbrechen',
+
+	/* ***************** deleteUser ******************** */
+
+	'DELETEUSER__ERROR' => 'Benutzer konnte nicht gelöscht werden!',
+	'DELETEUSER__SUCCESS' => 'Benutzer gelöscht.',
+
 	/* ***************** navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Dein Account',
 	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Einstellungen',
 	'_SYSTEM_NAVIGATION__TOSHOWACCESS' => 'Berechtigungen',
+	'_SYSTEM_NAVIGATION__TOSHOWUSERLIST' => 'Benutzerliste',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',
 	'_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
 	'_HEADER_NAVIGATION__SHOWLOGIN' => 'Login',

@@ -79,14 +79,15 @@ class $$$User extends $system$Object {
 	 * @return sql-query
 	 */
 	protected function loadInfoSql () {
+		global $TSunic;
 		return "SELECT ".
-			((0 or !$this->isLoggedIn()) ? "" : "
-				email as email,
+			(($this->isLoggedIn() or $TSunic->Usr->access('$$$seeAllData')) ?
+				"email as email,
 				dateOfRegistration as dateOfRegistration,
 				dateOfChange as dateOfChange,
 				dateOfDeletion as dateOfDeletion,
 				userkey as userkey,
-			")."
+			" : "")."
 				fk__homehost as fk__homehost,
 				name as name
 			FROM #__accounts
@@ -195,9 +196,6 @@ class $$$User extends $system$Object {
 		$sql = "DELETE FROM #__accounts
 			WHERE id = '$this->id';";
 		if (!$this->_delete($sql)) return false;
-
-		// logout
-		$this->logout();
 
 		return true;
 	}
@@ -463,7 +461,6 @@ class $$$User extends $system$Object {
 	 * @return bool
 	 */
 	public function access ($name) {
-		if ($this->isRoot()) return true;
 		return $this->getAccess()->check($name);
 	}
 
@@ -509,6 +506,31 @@ class $$$User extends $system$Object {
 			$this->Config = $TSunic->get('$$$UserConfig', $this->id);
 		}
 		return $this->Config;
+	}
+
+	/* get all users
+	 *
+	 * @return array
+	 */
+	public function allUsers () {
+		global $TSunic;
+
+		// access?
+		if (!$TSunic->Usr->access('$$$listAllUsers')) return array();
+
+		// get all users from database
+		$sql = "SELECT id, name
+			FROM #__accounts;";
+		$results = $TSunic->Db->doSelect($sql);
+		if (!$results) return array();
+
+		// create output array
+		$output = array();
+		foreach ($results as $index => $values) {
+			$output[$values['id']] = $values['name'];
+		}
+
+		return $output;
 	}
 }
 ?>

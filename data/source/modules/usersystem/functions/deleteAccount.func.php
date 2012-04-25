@@ -18,6 +18,7 @@ function $$$deleteAccount () {
 
 	// delete user
 	$return = $TSunic->Usr->delete();
+	$TSunic->Usr->logout();
 
 	// check, if error occured
 	if (!$return) {

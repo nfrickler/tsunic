@@ -21,15 +21,17 @@ class $$$Access {
 
 	/* has user access?
 	 * @param string: name of access
+	 * +@param bool: if nothing set, check groups?
 	 *
 	 * @return bool
 	 */
-	public function check ($name) {
+	public function check ($name, $goOn = true) {
 		global $TSunic;
+		if ($this->fk_account == 1) return true;
 
 		// check own access
-		$sql = "SELECT access
-			FROM #__Access
+		$sql = "SELECT access as access
+			FROM #__access
 			WHERE isUser = '1'
 				AND fk__owner = '$this->fk_account'
 				AND fk__accessname = '$name';";
@@ -38,6 +40,7 @@ class $$$Access {
 		if (count($result) > 0) {
 			return ($result[0]['access']) ? true : false;
 		}
+		if (!$goOn) return NULL;
 
 		return $this->checkGroups($name);
 	}
@@ -48,11 +51,10 @@ class $$$Access {
 	 * @return bool
 	 */
 	public function checkGroups ($name) {
-		$isAccess = false;
 		foreach ($this->getGroups() as $index => $Group) {
-			if ($Group->check($name)) $isAccess = true;
+			if ($Group->check($name)) return true;
 		}
-		return $isAccess;
+		return false;
 	}
 
 	/* get accessgroups the user is in
@@ -67,7 +69,7 @@ class $$$Access {
 			FROM #__accessgroupmembers
 			WHERE fk_account = '$this->fk_account';";
 		$result = $TSunic->Db->doSelect($sql);
-		if (!$result) return $result;
+		if ($result === false) return $result;
 
 		// create objects
 		$this->groups = array();
@@ -77,6 +79,28 @@ class $$$Access {
 		}
 
 		return $this->groups;
+	}
+
+	/* get all accessgroups
+	 *
+	 * @return array
+	 */
+	public function allGroups () {
+		global $TSunic;
+
+		// get all groups from database
+		$sql = "SELECT id, name
+			FROM #__accessgroups;";
+		$results = $TSunic->Db->doSelect($sql);
+		if (!$results) return array();
+
+		// create output array
+		$output = array();
+		foreach ($results as $index => $values) {
+			$output[$values['id']] = $values['name'];
+		}
+
+		return $output;
 	}
 
 	/* set access
@@ -105,8 +129,8 @@ class $$$Access {
 			SET fk__owner = '$this->fk_account',
 				isUser = '1',
 				fk__accessname = '$name',
-				value = '".($value ? "1" : "0")."'
-			ON DUPLICATE KEY UPDATE value = '".($value ? "1" : "0")."';";
+				access = '".($value ? "1" : "0")."'
+			ON DUPLICATE KEY UPDATE access = '".($value ? "1" : "0")."';";
 		return $TSunic->Db->doInsert($sql);
 	}
 
