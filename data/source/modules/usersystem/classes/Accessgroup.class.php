@@ -247,7 +247,7 @@ class $$$Accessgroup extends $system$Object {
 	 *
 	 * @return array
 	 */
-	public function getChilds () {
+	public function getChildren () {
 		if (!empty($this->childs)) return $this->childs;
 		global $TSunic;
 
@@ -255,7 +255,6 @@ class $$$Accessgroup extends $system$Object {
 		$sql = "SELECT id
 			FROM #__accessgroups
 			WHERE fk_parent = '$this->id';";
-var_dump('hello');
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return $result;
 

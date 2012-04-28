@@ -1,6 +1,10 @@
 <!-- | TEMPLATE show access of user or accessgroup -->
 <div id="$$$div__showAccess">
 	<h1><?php $this->set('{SHOWACCESS__H1}'); ?></h1>
+	<p class="ts_suplinkbox">
+		<a href="<?php $this->setUrl('$$$showAccessgroups'); ?>">
+			<?php $this->set('{SHOWACCESS__TOACCESSGROUPS}'); ?></a>
+	</p>
 	<p class="ts_infotext">
 		<?php $this->set('{SHOWACCESS__INFOTEXT}'); ?>
 	</p>

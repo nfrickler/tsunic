@@ -286,7 +286,17 @@ td {
 #$$$div__navigation_header .$$$navigation_header_important {
 	background:#CCD;
 }
+
+/* *********************** special lists ******************** */
+
+.$$$childlist {
+	background: #FFF;
+	padding:5px;
+	padding-left:20px;
+}
+
 /* **************************** forms *************************************** */
+
 .ts_form {
 	padding:0px;
 	margin:0px;

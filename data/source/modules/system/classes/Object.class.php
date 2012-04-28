@@ -169,6 +169,7 @@ class $$$Object {
 	 * @return bool
 	 */
 	protected function _isUnique ($table, $column, $value) {
+		global $TSunic;
 		$sql = "SELECT id
 			FROM $table
 			WHERE $column = '$value'

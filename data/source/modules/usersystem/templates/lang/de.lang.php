@@ -101,6 +101,7 @@ $lang = array(
 	// showAccess
 	'SHOWACCESS__TITLE' => 'Berechtigungen',
 	'SHOWACCESS__H1' => 'Berechtigungen',
+	'SHOWACCESS__TOACCESSGROUPS' => 'Accessgruppen bearbeiten',
 	'SHOWACCESS__INFOTEXT' => 'Hier kannst du die Berechtigungen von Nutzern ändern',
 	'SHOWACCESS__H_ACCESSOF' => 'Berechtigungen von #name#',
 	'SHOWACCESS__NAME' => 'Name',
@@ -123,6 +124,60 @@ $lang = array(
 
 	'SETACCESS__SUCCESS' => 'Die Berechtigungen wurden gespeichert.',
 	'SETACCESS__ERROR' => 'Beim Speichern ist ein Fehler aufgetreten!',
+
+	/* ***************** accessgroups *************************** */
+
+	// showAccessgroups
+	'SHOWACCESSGROUPS__TITLE' => 'Accessgruppen',
+	'SHOWACCESSGROUPS__H1' => 'Accessgruppen',
+	'SHOWACCESSGROUPS__INFOTEXT' => 'Hier sind alle Accessgruppen aufgelistet. Du kannst neue hinzufügen oder existierende bearbeiten und entfernen.',
+
+	// showAccessgroup
+	'SHOWACCESSGROUP__TITLE' => 'Accessgroup',
+	'SHOWACCESSGROUP__H1' => 'Accessgroup #name#',
+	'SHOWACCESSGROUP__TODELETEACCESSGROUP' => 'Delete accessgroup',
+	'SHOWACCESSGROUP__TOSHOWACCESSGROUPMEMBERS' => 'Administrate members',
+	'SHOWACCESSGROUP__INFOTEXT' => 'Here you can edit this accessgroup.',
+	'SHOWACCESSGROUP__SUBMIT' => 'Save changes',
+	'SHOWACCESSGROUP__CANCEL' => 'Cancel',
+
+	// showCreateAccessgroup
+	'SHOWCREATEACCESSGROUP__TITLE' => 'New accessgroup',
+	'SHOWCREATEACCESSGROUP__H1' => 'New accessgroup',
+	'SHOWCREATEACCESSGROUP__INFOTEXT' => 'Fill in the following form to create a new accessgroup.',
+	'SHOWACCESSGROUP__SUBMIT' => 'Create accessgroup',
+	'SHOWACCESSGROUP__CANCEL' => 'Cancel',
+
+	// editAccessgroup
+	'EDITACCESSGROUP__INVALIDNAME' => 'Invalid name!',
+	'EDITACCESSGROUP__INVALIDPARENT' => 'Invalid parent group!',
+	'EDITACCESSGROUP__SUCCESS' => 'Changes have been saved!',
+	'EDITACCESSGROUP__ERROR' => 'An error occurred!',
+
+	// createAccessgroup
+	'CREATEACCESSGROUP__INVALIDNAME' => 'Invalid name!',
+	'CREATEACCESSGROUP__INVALIDPARENT' => 'Invalid parent!',
+	'CREATEACCESSGROUP__SUCCESS' => 'New accessgroup has been created',
+	'CREATEACCESSGROUP__ERROR' => 'An error occurred!',
+
+	// formAccessgroup
+	'FORMACCESSGROUP__NAME' => 'Name',
+	'FORMACCESSGROUP__NAME_PRESET' => 'Name of accessgroup',
+	'FORMACCESSGROUP__LEGEND' => 'Accessgroup',
+	'FORMACCESSGROUP__NAME_HELP' => 'Enter a name for this accessgroup.',
+	'FORMACCESSGROUP__PARENT' => 'Parent group',
+	'FORMACCESSGROUP__PARENT_HELP' => 'Choose a parent group. This group will get their default access from this parent.',
+
+	/* showDeleteAccessgroup */
+	'SHOWDELETEACCESSGROUP__TITLE' => 'Delete accessgroup',
+	'SHOWDELETEACCESSGROUP__H1' => 'Delete accessgroup #name#?',
+	'SHOWDELETEACCESSGROUP__INFOTEXT' => 'Do you really want to delete this accessgroup?',
+	'SHOWDELETEACCESSGROUP__SUBMIT' => 'Yes, delete.',
+	'SHOWDELETEACCESSGROUP__CANCEL' => 'No, cancel.',
+
+	// deleteAccessgroup
+	'DELETEACCESSGROUP__SUCCESS' => 'Accessgroup has been deleted.',
+	'DELETEACCESSGROUP__ERROR' => 'Accessgroup could not be deleted.',
 
 	/* ***************** account ******************************* */
 
