@@ -13,6 +13,19 @@ class $$$Accessgroup extends $system$Object {
 	 */
 	protected $childs;
 
+	/* get information about object
+	 * +@param string/bool: name of info (true will return $this->info)
+	 * +@param bool: force update of object infos?
+	 *
+	 * @return mix
+	 */
+	public function getInfo ($name = true, $update = false) {
+		$return = parent::getInfo($name, $update);
+
+		if (!$return and $name == 'fk_parent') return 1;
+		return $return;
+	}
+
 	/* load infos from database
 	 *
 	 * @return sql query
@@ -85,6 +98,9 @@ class $$$Accessgroup extends $system$Object {
 	 */
 	public function delete () {
 
+		// don't delete "all" group
+		if ($this->id == 1) return false;
+
 		// update database
 		$sql = "DELETE FROM #__accessgroups
 			WHERE id = '$this->id';";
@@ -97,10 +113,21 @@ class $$$Accessgroup extends $system$Object {
 	 */
 	public function getMembers () {
 		global $TSunic;
-		$sql = "SELECT fk_account as fk_account,
-			FROM #__accessgroupmembers
-			WHERE fk_accessgroup = '$this->id';";
-		return $TSunic->Db->doSelect($sql);
+		$sql = "SELECT accounts.id as id,
+				accounts.name as name
+			FROM #__accessgroupmembers as members,
+				#__accounts as accounts
+			WHERE members.fk_accessgroup = '$this->id'
+				AND members.fk_account = accounts.id
+		;";
+		$result = $TSunic->Db->doSelect($sql);
+
+		// order for output
+		$output = array();
+		foreach ($result as $index => $values) {
+			$output[$values['id']] = $values['name'];
+		}
+		return $output;
 	}
 
 	/* is user/group member of this group?
@@ -126,7 +153,9 @@ class $$$Accessgroup extends $system$Object {
 		global $TSunic;
 		$sql = "INSERT INTO #__accessgroupmembers
 			SET fk_accessgroup = '$this->id',
-				fk_account= '$fk_account';";
+				fk_account = '$fk_account'
+			ON DUPLICATE KEY UPDATE fk_account = '$fk_account'
+			;";
 		return $TSunic->Db->doInsert($sql);
 	}
 
@@ -228,7 +257,29 @@ class $$$Accessgroup extends $system$Object {
 	public function isValidParent ($fk_parent) {
 		return ($this->_validate($fk_parent, 'int')
 			and $this->_isObject('#__accessgroups', $fk_parent)
+			and !$this->isInChildren($fk_parent)
 		) ? true : false;
+	}
+
+	/* is accessgroup within childrens of this group?
+	 * @param int: ID of an accessgroup
+	 *
+	 * @return bool
+	 */
+	public function isInChildren ($id) {
+
+		// own child?
+		$children = $this->getChildren();
+		foreach ($children as $index => $Child) {
+			if ($Child->getInfo('id') == $id) return true;
+		}
+
+		// check for each child
+		foreach ($children as $index => $Child) {
+			if ($Child->isInChildren($id)) return true;
+		}
+
+		return false;
 	}
 
 	/* get parent object
@@ -248,6 +299,7 @@ class $$$Accessgroup extends $system$Object {
 	 * @return array
 	 */
 	public function getChildren () {
+		if ($this->id == 0) return array();
 		if (!empty($this->childs)) return $this->childs;
 		global $TSunic;
 

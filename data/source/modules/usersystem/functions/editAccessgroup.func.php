@@ -10,6 +10,10 @@ function $$$editAccessgroup () {
 
 	// create accessgroup object
 	$Accessgroup = $TSunic->get('$$$Accessgroup', $id);
+	if (!$Accessgroup->isValid()) {
+		$TSunic->Log->add('error', '{EDITACCESSGROUP__INVALIDGROUP}');
+		$TSunic->redirect('back');
+	}
 
 	// validate input
 	if (!$Accessgroup->isValidName($name)) {
@@ -30,7 +34,7 @@ function $$$editAccessgroup () {
 	if ($return) {
 		// success
 		$TSunic->Log->add('info', '{EDITACCESSGROUP__SUCCESS}', 3);
-		$TSunic->redirect('$$$showAccount');
+		$TSunic->redirect('$$$showAccessgroup', array('$$$id' => $id));
 		return true;
 	}
 

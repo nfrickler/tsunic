@@ -29,7 +29,7 @@ function $$$createAccessgroup () {
 	if ($return) {
 		// success
 		$TSunic->Log->add('info', '{CREATEACCESSGROUP__SUCCESS}', 3);
-		$TSunic->redirect('$$$showAccessgroup');
+		$TSunic->redirect('$$$showAccessgroup', array('$$$id' => $Accessgroup->getInfo('id')));
 		return true;
 	}
 

@@ -1,6 +1,10 @@
 <!-- | TEMPLATE show list of accessgroups -->
 <div id="$$$div__showAccessgroups">
 	<h1><?php $this->set('{SHOWACCESSGROUPS__H1}'); ?></h1>
+	<p class="ts_suplinkbox">
+		<a href="<?php $this->setUrl('$$$showCreateAccessgroup'); ?>">
+			<?php $this->set('{SHOWACCESSGROUPS__TOCREATEACCESSGROUP}'); ?></a>
+	</p>
 	<p class="ts_infotext">
 		<?php $this->set('{SHOWACCESSGROUPS__INFOTEXT}'); ?>
 	</p>
@@ -21,7 +25,7 @@
 			false
 			).'">'.$Group->getInfo('name').'</a></li>';
 		foreach ($Group->getChildren() as $index => $Child) {
-			echo '    <li>'.$$$showAccessgroups__listAccessgroup($Child->getInfo('id')).'</li>';
+			echo '    <li>'.$$$showAccessgroups__listAccessgroups($Template, $Child->getInfo('id')).'</li>';
 		}
 		echo '</ul>';
 	}

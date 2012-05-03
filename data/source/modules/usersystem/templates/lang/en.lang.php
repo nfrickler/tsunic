@@ -120,56 +120,99 @@ $lang = array(
 
 	/* ***************** accessgroups *************************** */
 
+	// showAccessgroups
 	'SHOWACCESSGROUPS__TITLE' => 'Accessgroups',
 	'SHOWACCESSGROUPS__H1' => 'Accessgroups',
 	'SHOWACCESSGROUPS__INFOTEXT' => 'This page lists all available accessgroups. You can add a new one or edit/delete existing ones.',
+	'SHOWACCESSGROUPS__TOCREATEACCESSGROUP' => 'Neue Gruppe anlegen',
 
 	// showAccessgroup
-	'SHOWACCESSGROUP__TITLE' => 'Berechtigungsgruppe',
-	'SHOWACCESSGROUP__H1' => 'Berechtigungsgruppe #name#',
-	'SHOWACCESSGROUP__TODELETEACCESSGROUP' => 'Berechtigungsgruppe löschen',
-	'SHOWACCESSGROUP__TOSHOWACCESSGROUPMEMBERS' => 'Mitglieder verwalten',
-	'SHOWACCESSGROUP__INFOTEXT' => 'Hier kannst du die Berechtigungsgruppe bearbeiten.',
-	'SHOWACCESSGROUP__SUBMIT' => 'Änderungen speichern',
-	'SHOWACCESSGROUP__CANCEL' => 'Abbrechen',
+	'SHOWACCESSGROUP__TITLE' => 'Accessgroup',
+	'SHOWACCESSGROUP__H1' => 'Accessgroup #name#',
+	'SHOWACCESSGROUP__TODELETEACCESSGROUP' => 'Delete accessgroup',
+	'SHOWACCESSGROUP__TOSHOWACCESSGROUPMEMBERS' => 'Administrate members',
+	'SHOWACCESSGROUP__TOSHOWACCESSGROUPS' => 'List of accessgroups',
+	'SHOWACCESSGROUP__INFOTEXT' => 'Here you can edit this accessgroup.',
+	'SHOWACCESSGROUP__SUBMIT' => 'Save changes',
+	'SHOWACCESSGROUP__CANCEL' => 'Cancel',
 
 	// showCreateAccessgroup
-	'SHOWCREATEACCESSGROUP__TITLE' => 'Neue Berechtigungsgruppe',
-	'SHOWCREATEACCESSGROUP__H1' => 'Neue Berechtigungsgruppe',
-	'SHOWCREATEACCESSGROUP__INFOTEXT' => 'Fülle das Formular aus, um eine neue Berechtigungsgruppe zu erstellen.',
-	'SHOWACCESSGROUP__SUBMIT' => 'Gruppe erstellen',
-	'SHOWACCESSGROUP__CANCEL' => 'Abbrechen',
+	'SHOWCREATEACCESSGROUP__TITLE' => 'New accessgroup',
+	'SHOWCREATEACCESSGROUP__H1' => 'New accessgroup',
+	'SHOWCREATEACCESSGROUP__TOACCESSGROUPS' => 'Back to accessgroups',
+	'SHOWCREATEACCESSGROUP__INFOTEXT' => 'Fill in the following form to create a new accessgroup.',
+	'SHOWCREATEACCESSGROUP__SUBMIT' => 'Create accessgroup',
+	'SHOWCREATEACCESSGROUP__CANCEL' => 'Cancel',
 
 	// editAccessgroup
-	'EDITACCESSGROUP__INVALIDNAME' => 'Ungültiger Name!',
-	'EDITACCESSGROUP__INVALIDPARENT' => 'Ungültige übergeordnete Gruppe!',
-	'EDITACCESSGROUP__SUCCESS' => 'Änderungen wurden gespeichert!',
-	'EDITACCESSGROUP__ERROR' => 'Es ist ein Fehler ist aufgetreten!',
+	'EDITACCESSGROUP__INVALIDNAME' => 'Invalid name!',
+	'EDITACCESSGROUP__INVALIDPARENT' => 'Invalid parent group!',
+	'EDITACCESSGROUP__SUCCESS' => 'Changes have been saved!',
+	'EDITACCESSGROUP__ERROR' => 'An error occurred!',
+	'EDITACCESSGROUP__INVALIDGROUP' => 'Accessgroup does not exist!',
 
 	// createAccessgroup
-	'CREATEACCESSGROUP__INVALIDNAME' => 'Ungültiger Name!',
-	'CREATEACCESSGROUP__INVALIDPARENT' => 'Ungültige übergeordnete Gruppe!',
-	'CREATEACCESSGROUP__SUCCESS' => 'Die Berechtigungsgruppe wurde erstellt.',
-	'CREATEACCESSGROUP__ERROR' => 'Es ist ein Fehler ist aufgetreten!',
+	'CREATEACCESSGROUP__INVALIDNAME' => 'Invalid name!',
+	'CREATEACCESSGROUP__INVALIDPARENT' => 'Invalid parent!',
+	'CREATEACCESSGROUP__SUCCESS' => 'New accessgroup has been created',
+	'CREATEACCESSGROUP__ERROR' => 'An error occurred!',
 
 	// formAccessgroup
 	'FORMACCESSGROUP__NAME' => 'Name',
-	'FORMACCESSGROUP__NAME_PRESET' => 'Name der Berechtigungsgruppe',
-	'FORMACCESSGROUP__LEGEND' => 'Berechtigungsgruppe',
-	'FORMACCESSGROUP__NAME_HELP' => 'Lege einen Namen für die Berechtigungsgruppe fest.',
-	'FORMACCESSGROUP__PARENT' => 'Übergeordnete Gruppe',
-	'FORMACCESSGROUP__PARENT_HELP' => 'Wähle eine übergeordnete Gruppe. Von dieser übergeordneten Gruppe wird diese Gruppe die Berechtigungen erben.',
+	'FORMACCESSGROUP__NAME_PRESET' => 'Name of accessgroup',
+	'FORMACCESSGROUP__LEGEND' => 'Accessgroup',
+	'FORMACCESSGROUP__NAME_HELP' => 'Enter a name for this accessgroup.',
+	'FORMACCESSGROUP__PARENT' => 'Parent group',
+	'FORMACCESSGROUP__PARENT_HELP' => 'Choose a parent group. This group will get their default access from this parent.',
+	'FORMACCESSGROUP__OPTION_ALLGROUP' => 'No parent',
 
-	/* showDeleteAccessgroup */
-	'SHOWDELETEACCESSGROUP__TITLE' => 'Berechtigungsgruppe löschen',
-	'SHOWDELETEACCESSGROUP__H1' => 'Berechtigungsgruppe #name# löschen?',
-	'SHOWDELETEACCESSGROUP__INFOTEXT' => 'Willst du diese Berechtigungsgruppe wirklich löschen?',
-	'SHOWDELETEACCESSGROUP__SUBMIT' => 'Ja, löschen.',
-	'SHOWDELETEACCESSGROUP__CANCEL' => 'Nein, abbrechen.',
+	// showDeleteAccessgroup
+	'SHOWDELETEACCESSGROUP__TITLE' => 'Delete accessgroup',
+	'SHOWDELETEACCESSGROUP__H1' => 'Delete accessgroup #name#?',
+	'SHOWDELETEACCESSGROUP__INFOTEXT' => 'Do you really want to delete this accessgroup?',
+	'SHOWDELETEACCESSGROUP__SUBMIT' => 'Yes, delete.',
+	'SHOWDELETEACCESSGROUP__CANCEL' => 'No, cancel.',
 
 	// deleteAccessgroup
-	'DELETEACCESSGROUP__SUCCESS' => 'Berechtigungsgruppe wurde gelöscht.',
-	'DELETEACCESSGROUP__ERROR' => 'Gruppe konnte nicht gelöscht werden.',
+	'DELETEACCESSGROUP__SUCCESS' => 'Accessgroup has been deleted.',
+	'DELETEACCESSGROUP__ERROR' => 'Accessgroup could not be deleted.',
+
+	// showAccessgroupmembers
+	'SHOWACCESSGROUPMEMBERS__TITLE' => 'Members of accessgroup',
+	'SHOWACCESSGROUPMEMBERS__H1' => 'Members of accessgroup "#name#"',
+	'SHOWACCESSGROUPMEMBERS__INFOTEXT' => 'Via this page you can administrate the members of this accessgroup.',
+	'SHOWACCESSGROUPMEMBERS__TOSHOWADDACCESSGROUPMEMBER' => 'Add member',
+	'SHOWACCESSGROUPMEMBERS__TOSHOWACCESSGROUP' => 'Back to accessgroup',
+	'SHOWACCESSGROUPMEMBERS__ID' => 'ID',
+	'SHOWACCESSGROUPMEMBERS__NAME' => 'Name',
+	'SHOWACCESSGROUPMEMBERS__ACTION' => 'Action',
+	'SHOWACCESSGROUPMEMBERS__DELETEMEMBER' => 'Delete',
+
+	// showAddAccessgroupmembers
+	'SHOWADDACCESSGROUPMEMBER__TITLE' => 'Add member to accessgroup',
+	'SHOWADDACCESSGROUPMEMBER__H1' => 'Add member to accessgroup "#name#"',
+	'SHOWADDACCESSGROUPMEMBER__INFOTEXT' => 'Choose a user to add to this accessgroup.',
+	'SHOWADDACCESSGROUPMEMBER__LEGEND' => 'Choose user',
+	'SHOWADDACCESSGROUPMEMBER__USER' => 'User',
+	'SHOWADDACCESSGROUPMEMBER__USER_HELP' => 'Choose a user to add to this accessgroup.',
+	'SHOWADDACCESSGROUPMEMBER__SUBMIT' => 'Add user',
+	'SHOWADDACCESSGROUPMEMBER__CANCEL' => 'Cancel',
+
+	// addAccessgroupmember
+	'ADDACCESSGROUPMEMBER__SUCCESS' => 'User successfully added.',
+	'ADDACCESSGROUPMEMBER__ERROR' => 'User could not be added to group.',
+
+	// showDeleteAccessgroupmembers
+	'SHOWDELETEACCESSGROUPMEMBER__TITLE' => 'Delete member of accessgroup?',
+	'SHOWDELETEACCESSGROUPMEMBER__H1' => 'Delete member "#username#" of accessgroup "#name#"?',
+	'SHOWDELETEACCESSGROUPMEMBER__INFOTEXT' => 'Do you really want to delete this member from this accessgroup?',
+	'SHOWDELETEACCESSGROUPMEMBER__SUBMIT' => 'Yes, remove.',
+	'SHOWDELETEACCESSGROUPMEMBER__CANCEL' => 'No, cancel.',
+
+	// deleteAccessgroupmember
+	'DELETEACCESSGROUPMEMBER__SUCCESS' => 'User removed from accessgroup',
+	'DELETEACCESSGROUPMEMBER__ERROR' => 'User couldn\'t be deleted from group',
+
 
 	/* ***************** account ******************************* */
 
