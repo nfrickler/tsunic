@@ -88,7 +88,7 @@ class $$$Accessgroup extends $system$Object {
 		// update database
 		$sql = "UPDATE #__accessgroups SET ".
 			implode(",", $sql_set).
-			"WHERE id = '$this->id';";
+			" WHERE id = '$this->id';";
 		return $this->_edit($sql);
 	}
 

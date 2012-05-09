@@ -10,11 +10,7 @@ $User = $this->getVar('User');
 		'User' => $User,
 		'submit_link' => '$$$editAccount',
 		'submit_text' => '{SHOWEDITACCOUNT__SUBMIT}',
-		'reset_text' => '{SHOWEDITACCOUNT__RESET}',
+		'reset_text' => '{SHOWEDITACCOUNT__CANCEL}',
 		'password_required' => false
 	)); ?>
-	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showAccount'); ?>">
-			<?php $this->set('{SHOWEDITACCOUNT__TOSHOWACCOUNT}'); ?></a>
-	</p>
 </div>

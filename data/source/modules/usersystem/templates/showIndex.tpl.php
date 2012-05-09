@@ -10,7 +10,6 @@
 		'User' => $this->getVar('User'),
 		'submit_link' => '$$$doRegister',
 		'submit_text' => '{SHOWREGISTRATION__SUBMIT}',
-		'reset_text' => '{SHOWREGISTRATION__RESET}',
 		'password_required' => true
 	)); ?>
 	<h2><?php echo $this->set('{SHOWINDEX__RESET_H1}'); ?></h2>

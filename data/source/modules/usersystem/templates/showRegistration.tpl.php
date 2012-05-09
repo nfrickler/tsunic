@@ -6,7 +6,6 @@
 		'User' => $this->getVar('User'),
 		'submit_link' => '$$$doRegister',
 		'submit_text' => '{SHOWREGISTRATION__SUBMIT}',
-		'reset_text' => '{SHOWREGISTRATION__RESET}',
 		'password_required' => true
 	)); ?>
 </div>

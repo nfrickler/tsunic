@@ -38,6 +38,5 @@
 		</table>
 		<?php } ?>
 		<input type="submit" class="ts_submit" value="<?php $this->set('{SHOWCONFIG__SUBMIT}'); ?>" />
-		<input type="reset" class="ts_reset" value="<?php $this->set('{SHOWCONFIG__RESET}'); ?>" />
 	</form>
 </div>

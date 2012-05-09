@@ -4,6 +4,7 @@ $lang = array(
 
 	// special
 	'ISROOTPASSWORD__FAILED' => 'Bitte setze ein Passwort für den Administrator-Account "root", bevor du weitere Nutzer anlegst!',
+	'CLASS__FSDIRECTORY__ROOTDIR' => 'Root Verzeichnis',
 
 	// access
 	'ACCESS__DELETEALLUSERS' => 'Alle Nutzer löschen',
@@ -68,7 +69,6 @@ $lang = array(
 	'SHOWREGISTRATION__H1' => 'Registrierung',
 	'SHOWREGISTRATION__INFOTEXT' => 'Fülle dieses Formular aus, um einen Account zu erstellen. Nur ein Account pro Benutzer!',
 	'SHOWREGISTRATION__SUBMIT' => 'Neuen Account erstellen',
-	'SHOWREGISTRATION__RESET' => 'Reset',
 
 	// do register
 	'DOREGISTER__INVALIDREPEAT' => 'Das Passwort wurde falsch wiederholt!',
@@ -90,7 +90,6 @@ $lang = array(
 	'SHOWCONFIG__DESCRIPTION' => 'Beschreibung',
 	'SHOWCONFIG__USEDEFAULT' => 'Standard verwenden',
 	'SHOWCONFIG__SUBMIT' => 'Speichern',
-	'SHOWCONFIG__RESET' => 'Reset',
 
 	// setConfig
 	'SETCONFIG__ERROR' => 'Beim Speichern einer Einstellung ist ein Fehler aufgetreten.',
@@ -114,12 +113,10 @@ $lang = array(
 	'SHOWACCESS__NO' => 'Nein',
 	'SHOWACCESS__SUBMIT' => 'Speichern',
 	'SHOWACCESS__RESET' => 'Reset',
-	'SHOWACCESS__H_CHOOSE',
 	'SHOWACCESS__CHOOSE_USER_LABEL' => 'Benutzer anzeigen',
 	'SHOWACCESS__CHOOSE_GROUP_LABEL' => 'Gruppe anzeigen',
 	'SHOWACCESS__CHOOSE_USER' => '---Benutzer wählen---',
 	'SHOWACCESS__CHOOSE_GROUP' => '---Gruppe wählen---',
-	'SHOWACCESS__CHOOSE_USER_SUBMIT' => '---Benutzer wählen---',
 	'SHOWACCESS__CHOOSE_SUBMIT' => 'Anzeigen',
 
 	'SETACCESS__SUCCESS' => 'Die Berechtigungen wurden gespeichert.',
@@ -238,9 +235,8 @@ $lang = array(
 	'SHOWEDITACCOUNT__TITLE' => 'Account bearbeiten',
 	'SHOWEDITACCOUNT__H1' => 'Account bearbeiten',
 	'SHOWEDITACCOUNT__INFOTEXT' => 'Um deinen Account zu bearbeiten, ändere die Daten im folgenden Formular.',
-	'SHOWEDITACCOUNT__TOSHOWACCOUNT' => 'Zurück zum Account',
 	'SHOWEDITACCOUNT__SUBMIT' => 'Änderungen speichern',
-	'SHOWEDITACCOUNT__RESET' => 'Reset',
+	'SHOWEDITACCOUNT__CANCEL' => 'Abbrechen',
 
 	// editAccount
 	'EDITACCOUNT__INVALIDREPEAT' => 'Passwort wurde falsch wiederholt. Bitte versuche es erneut.',
@@ -290,22 +286,88 @@ $lang = array(
 	'SHOWUSERLIST__ACTION' => 'Aktion',
 	'SHOWUSERLIST__DELETEUSER' => 'Löschen',
 
-	/* **************** showDeleteUser ***************** */
+	// showDeleteUser
+
 	'SHOWDELETEUSER__TITLE' => 'Benutzer löschen',
 	'SHOWDELETEUSER__H1' => 'Benutzer #name# (#email#) löschen',
 	'SHOWDELETEUSER__INFOTEXT' => 'Bist du dir sicher, dass du diesen Benutzer löschen willst? Der Nutzer und alle seine Daten werden ZERSTÖRT!',
 	'SHOWDELETEUSER__OK' => 'Ja, Benutzer löschen',
 	'SHOWDELETEUSER__CANCEL' => 'Nein, abbrechen',
 
-	/* ***************** deleteUser ******************** */
+	// deleteUser
 
 	'DELETEUSER__ERROR' => 'Benutzer konnte nicht gelöscht werden!',
 	'DELETEUSER__SUCCESS' => 'Benutzer gelöscht.',
+
+	/* ***************** filesystem ******************** */
+
+	'SHOWFSDIRECTORY__TITLE' => 'Verzeichnis anzeigen',
+	'SHOWFSDIRECTORY__H1' => 'Verzeichnis "#name#"',
+	'SHOWFSDIRECTORY__INFOTEXT' => 'Diese Seite zeigt dir den Inhalt des Verzeichnisses.',
+	'SHOWFSDIRECTORY__TOSHOWCREATEFSDIRECTORY' => 'Neues Verzeichnis erstellen',
+	'SHOWFSDIRECTORY__TOSHOWCREATEFSFILE' => 'Neue Datei hochladen',
+	'SHOWFSDIRECTORY__TOSHOWEDITFSDIRECTORY' => 'Verzeichnis bearbeiten',
+	'SHOWFSDIRECTORY__NAME' => 'Name',
+	'SHOWFSDIRECTORY__PERMISSIONS' => 'Rechte',
+	'SHOWFSDIRECTORY__DATEOFCREATION' => 'Erstellungsdatum',
+	'SHOWFSDIRECTORY__DATEOFUPDATE' => 'Letzte Änderung',
+	'SHOWFSDIRECTORY__ACTION' => 'Aktion',
+	'SHOWFSDIRECTORY__DELETE' => 'Löschen',
+	'SHOWFSDIRECTORY__RENAME' => 'Umbenennen',
+
+	// formFsDirectory
+	'FORMFSDIRECTORY__NAME' => 'Name',
+	'FORMFSDIRECTORY__NAME_PRESET' => 'Verzeichnisname',
+	'FORMFSDIRECTORY__LEGEND' => 'Verzeichnis',
+	'FORMFSDIRECTORY__NAME_HELP' => 'Lege einen Namen für das Verzeichnis fest.',
+	'FORMFSDIRECTORY__PARENT' => 'Übergeordnetes Verzeichnis',
+	'FORMFSDIRECTORY__PARENT_HELP' => 'Wähle ein übergeordnetes Verzeichnis.',
+	'FORMFSDIRECTORY__OPTION_ROOTDIR' => 'Root Verzeichnis',
+
+	// showCreateFsDirectory
+	'SHOWCREATEFSDIRECTORY__TITLE' => 'Neues Verzeichnis anlegen',
+	'SHOWCREATEFSDIRECTORY__H1' => 'Neues Verzeichnis anlegen',
+	'SHOWCREATEFSDIRECTORY__TOPARENT' => 'Zurück zum Verzeichnis',
+	'SHOWCREATEFSDIRECTORY__INFOTEXT' => 'Fülle das folgende Formular aus, um ein neues Verzeichnis anzulegen.',
+	'SHOWCREATEFSDIRECTORY__SUBMIT' => 'Verzeichnis anlegen',
+	'SHOWCREATEFSDIRECTORY__CANCEL' => 'Abbrechen',
+
+	// createFsDirectory
+	'CREATEFSDIRECTORY__SUCCESS' => 'Verzeichnis wurde angelegt.',
+	'CREATEFSDIRECTORY__ERROR' => 'Verzeichnis konnte nicht angelegt werden!',
+	'CREATEFSDIRECTORY__INVALIDNAME' => 'Der Name ist ungültig!',
+	'CREATEFSDIRECTORY__INVALIDPARENT' => 'Das übergeordnete Verzeichnis ist ungültig!',
+
+	// showEditFsDirectory
+	'SHOWEDITFSDIRECTORY__TITLE' => 'Verzeichnis bearbeiten',
+	'SHOWEDITFSDIRECTORY__H1' => 'Verzeichnis "#name#" bearbeiten',
+	'SHOWEDITFSDIRECTORY__TOPARENT' => 'Zurück zum Verzeichnis',
+	'SHOWEDITFSDIRECTORY__INFOTEXT' => 'Über das folgende Formular kannst du das Verzeichnis bearbeiten',
+	'SHOWEDITFSDIRECTORY__SUBMIT' => 'Änderungen speichern',
+	'SHOWEDITFSDIRECTORY__CANCEL' => 'Abbrechen',
+
+	// editFsDirectory
+	'EDITFSDIRECTORY__SUCCESS' => 'Änderungen wurden gespeichert.',
+	'EDITFSDIRECTORY__ERROR' => 'Änderungen konnten nicht gespeichert werden!',
+	'EDITFSDIRECTORY__INVALIDNAME' => 'Der Name ist ungültig!',
+	'EDITFSDIRECTORY__INVALIDPARENT' => 'Das übergeordnete Verzeichnis ist ungültig!',
+
+	// showDeleteFsDirectory
+	'SHOWDELETEFSDIRECTORY__TITLE' => 'Verzeichnis löschen',
+	'SHOWDELETEFSDIRECTORY__H1' => 'Verzeichnis #name# löschen?',
+	'SHOWDELETEFSDIRECTORY__INFOTEXT' => 'Willst du dieses Verzeichnis wirklich löschen?',
+	'SHOWDELETEFSDIRECTORY__SUBMIT' => 'Ja, löschen.',
+	'SHOWDELETEFSDIRECTORY__CANCEL' => 'Nein, abbrechen.',
+
+	// deleteFsDirectory
+	'DELETEFSDIRECTORY__SUCCESS' => 'Verzeichnis wurde gelöscht',
+	'DELETEFSDIRECTORY__ERROR' => 'Verzeichnis konnte nicht gelöscht werden!',
 
 	/* ***************** navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Dein Account',
 	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Einstellungen',
+	'_SYSTEM_NAVIGATION__TOSHOWFILESYSTEM' => 'Dateisystem',
 	'_SYSTEM_NAVIGATION__TOSHOWACCESS' => 'Berechtigungen',
 	'_SYSTEM_NAVIGATION__TOSHOWUSERLIST' => 'Benutzerliste',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',

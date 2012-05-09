@@ -341,8 +341,7 @@ class $$$Template {
 		if (!$doEcho) return $output;
 
 		// print and return
-		echo $output;
-		return true;
+		return $this->set($output);
 	}
 
 	/* get link to image

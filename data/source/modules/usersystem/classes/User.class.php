@@ -243,6 +243,7 @@ class $$$User extends $system$Object {
 		$this->id = $result[0]['id'];
 
 		// TODO: block user after several attempts
+		// TODO: Update dateOfLastLogin
 
 		// load encryption
 		$passphrase = $this->_getPassphrase($password, $email);

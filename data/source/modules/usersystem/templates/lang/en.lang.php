@@ -4,6 +4,7 @@ $lang = array(
 
 	// special
 	'ISROOTPASSWORD__FAILED' => 'Please set a password for the administrator account "root" before creating new user!',
+	'CLASS__FSDIRECTORY__ROOTDIR' => 'Root directory',
 
 	// access
 	'ACCESS__DELETEALLUSERS' => 'Delete all users',
@@ -68,7 +69,6 @@ $lang = array(
 	'SHOWREGISTRATION__H1' => 'Registration (a new account)',
 	'SHOWREGISTRATION__INFOTEXT' => 'Please fill in this form, to create your own, new account. Only one account per user!',
 	'SHOWREGISTRATION__SUBMIT' => 'Create new account',
-	'SHOWREGISTRATION__RESET' => 'Reset',
 
 	// do register
 	'DOREGISTER__INVALIDREPEAT' => 'Password has been repeated incorrectly - please try again!',
@@ -90,7 +90,6 @@ $lang = array(
 	'SHOWCONFIG__DESCRIPTION' => 'Description',
 	'SHOWCONFIG__USEDEFAULT' => 'Use default',
 	'SHOWCONFIG__SUBMIT' => 'Save',
-	'SHOWCONFIG__RESET' => 'Reset',
 
 	// setConfig
 	'SETCONFIG__ERROR' => 'An error occurred while saving one option.',
@@ -114,6 +113,11 @@ $lang = array(
 	'SHOWACCESS__NO' => 'No',
 	'SHOWACCESS__SUBMIT' => 'Save',
 	'SHOWACCESS__RESET' => 'Reset',
+	'SHOWACCESS__CHOOSE_USER_LABEL' => 'Show user',
+	'SHOWACCESS__CHOOSE_GROUP_LABEL' => 'Show group',
+	'SHOWACCESS__CHOOSE_USER' => '---Choose user---',
+	'SHOWACCESS__CHOOSE_GROUP' => '---Choose groups---',
+	'SHOWACCESS__CHOOSE_SUBMIT' => 'Show',
 
 	'SETACCESS__SUCCESS' => 'Value have been saved.',
 	'SETACCESS__ERROR' => 'An error occurred while saving value!',
@@ -213,7 +217,6 @@ $lang = array(
 	'DELETEACCESSGROUPMEMBER__SUCCESS' => 'User removed from accessgroup',
 	'DELETEACCESSGROUPMEMBER__ERROR' => 'User couldn\'t be deleted from group',
 
-
 	/* ***************** account ******************************* */
 
 	// showAccount
@@ -232,9 +235,8 @@ $lang = array(
 	'SHOWEDITACCOUNT__TITLE' => 'Edit account',
 	'SHOWEDITACCOUNT__H1' => 'Edit account',
 	'SHOWEDITACCOUNT__INFOTEXT' => 'By changing values in this form you can edit your account-data.',
-	'SHOWEDITACCOUNT__TOSHOWACCOUNT' => 'Back to account',
 	'SHOWEDITACCOUNT__SUBMIT' => 'Save changes',
-	'SHOWEDITACCOUNT__RESET' => 'Reset',
+	'SHOWEDITACCOUNT__CANCEL' => 'Cancel',
 
 	// editAccount
 	'EDITACCOUNT__INVALIDREPEAT' => 'Password has been repeated incorrectly! Please try again!',
@@ -284,22 +286,88 @@ $lang = array(
 	'SHOWUSERLIST__ACTION' => 'Action',
 	'SHOWUSERLIST__DELETEUSER' => 'Delete',
 
-	/* **************** showDeleteUser ***************** */
+	// showDeleteUser
+
 	'SHOWDELETEUSER__TITLE' => 'Delete user',
 	'SHOWDELETEUSER__H1' => 'Delete user #name# (#email#)',
 	'SHOWDELETEUSER__INFOTEXT' => 'Are you sure, you want to delete this user? This will DESTROY the user and all its data!',
 	'SHOWDELETEUSER__OK' => 'Yes, delete user',
 	'SHOWDELETEUSER__CANCEL' => 'No, cancel',
 
-	/* ***************** deleteUser ******************** */
+	// deleteUser
 
 	'DELETEUSER__ERROR' => 'User could not be deleted!',
 	'DELETEUSER__SUCCESS' => 'User deleted.',
+
+	/* ***************** filesystem ******************** */
+
+	'SHOWFSDIRECTORY__TITLE' => 'Show directory',
+	'SHOWFSDIRECTORY__H1' => 'Directory "#name#"',
+	'SHOWFSDIRECTORY__INFOTEXT' => 'This page shows you the content of your filesystem directory.',
+	'SHOWFSDIRECTORY__TOSHOWCREATEFSDIRECTORY' => 'Create new directory',
+	'SHOWFSDIRECTORY__TOSHOWCREATEFSFILE' => 'Upload new file',
+	'SHOWFSDIRECTORY__TOSHOWEDITFSDIRECTORY' => 'Edit directory',
+	'SHOWFSDIRECTORY__NAME' => 'Name',
+	'SHOWFSDIRECTORY__PERMISSIONS' => 'Permissions',
+	'SHOWFSDIRECTORY__DATEOFCREATION' => 'Date of creation',
+	'SHOWFSDIRECTORY__DATEOFUPDATE' => 'Date of update',
+	'SHOWFSDIRECTORY__ACTION' => 'Action',
+	'SHOWFSDIRECTORY__DELETE' => 'Delete',
+	'SHOWFSDIRECTORY__RENAME' => 'Rename',
+
+	// formFsDirectory
+	'FORMFSDIRECTORY__NAME' => 'Name',
+	'FORMFSDIRECTORY__NAME_PRESET' => 'Name of directory',
+	'FORMFSDIRECTORY__LEGEND' => 'Directory',
+	'FORMFSDIRECTORY__NAME_HELP' => 'Fill in a name for this directory.',
+	'FORMFSDIRECTORY__PARENT' => 'Parent directory',
+	'FORMFSDIRECTORY__PARENT_HELP' => 'Please choose a parent directory.',
+	'FORMFSDIRECTORY__OPTION_ROOTDIR' => 'Root Directory',
+
+	// showCreateFsDirectory
+	'SHOWCREATEFSDIRECTORY__TITLE' => 'Create new directory',
+	'SHOWCREATEFSDIRECTORY__H1' => 'Create new directory',
+	'SHOWCREATEFSDIRECTORY__TOPARENT' => 'Back to directory',
+	'SHOWCREATEFSDIRECTORY__INFOTEXT' => 'Fill in the following form to create a new filesystem directory.',
+	'SHOWCREATEFSDIRECTORY__SUBMIT' => 'Create directory',
+	'SHOWCREATEFSDIRECTORY__CANCEL' => 'Cancel',
+
+	// createFsDirectory
+	'CREATEFSDIRECTORY__SUCCESS' => 'Directory created.',
+	'CREATEFSDIRECTORY__ERROR' => 'Directory could not be created!',
+	'CREATEFSDIRECTORY__INVALIDNAME' => 'The name is invalid!',
+	'CREATEFSDIRECTORY__INVALIDPARENT' => 'The parent directory is invalid!',
+
+	// showEditFsDirectory
+	'SHOWEDITFSDIRECTORY__TITLE' => 'Edit directory',
+	'SHOWEDITFSDIRECTORY__H1' => 'Edit directory "#name#"',
+	'SHOWEDITFSDIRECTORY__TOPARENT' => 'Back to directory',
+	'SHOWEDITFSDIRECTORY__INFOTEXT' => 'Via the following formular you can edit the directory.',
+	'SHOWEDITFSDIRECTORY__SUBMIT' => 'Save changes',
+	'SHOWEDITFSDIRECTORY__CANCEL' => 'Cancel',
+
+	// editFsDirectory
+	'EDITFSDIRECTORY__SUCCESS' => 'Changes has been saved.',
+	'EDITFSDIRECTORY__ERROR' => 'Changes could not be saved!',
+	'EDITFSDIRECTORY__INVALIDNAME' => 'The name is invalid!',
+	'EDITFSDIRECTORY__INVALIDPARENT' => 'The parent directory is invalid!',
+
+	// showDeleteFsDirectory
+	'SHOWDELETEFSDIRECTORY__TITLE' => 'Delete directory',
+	'SHOWDELETEFSDIRECTORY__H1' => 'Delete directory #name#?',
+	'SHOWDELETEFSDIRECTORY__INFOTEXT' => 'Do you really want to delete this directory?',
+	'SHOWDELETEFSDIRECTORY__SUBMIT' => 'Yes, delete.',
+	'SHOWDELETEFSDIRECTORY__CANCEL' => 'No, cancel.',
+
+	// deleteFsDirectory
+	'DELETEFSDIRECTORY__SUCCESS' => 'Directory deleted.',
+	'DELETEFSDIRECTORY__ERROR' => 'Directory could not be deleted!',
 
 	/* ***************** navigation ******************** */
 
 	'_SYSTEM_NAVIGATION__TOSHOWACCOUNT' => 'Your account',
 	'_SYSTEM_NAVIGATION__TOSHOWCONFIG' => 'Configuration',
+	'_SYSTEM_NAVIGATION__TOSHOWFILESYSTEM' => 'Filesystem',
 	'_SYSTEM_NAVIGATION__TOSHOWACCESS' => 'Access',
 	'_SYSTEM_NAVIGATION__TOSHOWUSERLIST' => 'User list',
 	'_SYSTEM_NAVIGATION__TODOLOGOUT' => 'Logout',

@@ -2,8 +2,7 @@
 <?php
 function $$$showHelp () {
 	global $TSunic;
-	$lang = $TSunic->Config->getRuntime('language');
-	if (empty($lang)) $lang = $TSunic->Config->getConfig('default_language');
+	$lang = $TSunic->Usr->config('language');
 
 	// get page to show
 	$page_arr = explode('__', $TSunic->Temp->getGet('$$$page'));
