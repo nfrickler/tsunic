@@ -16,6 +16,15 @@ class $$$Validator {
 		return (self::_isMatch("[^-_a-zA-Z0-9äöüÄÖÜ]", $input)) ? false : true;
 	}
 
+	/* is filename
+	 * @param string: input value
+	 *
+	 * @return bool
+	 */
+	public function isFilename ($input) {
+		return (self::_isMatch("[^-_a-zA-Z0-9äöüÄÖÜ\.]", $input)) ? false : true;
+	}
+
 	/* is int
 	 * @param string: input value
 	 *

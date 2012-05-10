@@ -7,6 +7,13 @@ function $$$showDeleteFsDirectory () {
 	$id = $TSunic->Temp->getParameter('$$$id');
 	$Directory = $TSunic->get('$$$FsDirectory', $id);
 
+	// is empty directory?
+	if ($Directory->getSubfiles() or $Directory->getSubdirectories()) {
+		$TSunic->Log->add('error', '{SHOWDELETEFSDIRECTORY__NOTEMPTY}', 3);
+		$TSunic->redirect('back');
+		return false;
+	}
+
 	// activate template
 	$data = array('Directory' => $Directory);
 	$TSunic->Tmpl->activate('$$$showDeleteFsDirectory', '$system$content', $data);

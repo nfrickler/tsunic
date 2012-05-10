@@ -150,6 +150,7 @@ td {
 	margin:1px;
 	padding:5px;
 }
+
 /* *************** design elements ******************* */
 #div_tsunic {
 	position:relative;
@@ -241,6 +242,7 @@ td {
 	background:#DDD;
 	text-align:center;
 }
+
 /**************** div_system__navigation_header ************/
 #$$$div__navigation_header {
 	position:absolute;
@@ -345,7 +347,7 @@ td {
 	margin:2px;
 	margin-left:0px;
 	background:#FFF;
-	height:18px;
+/*	height:18px; */
 	border-top:1px solid black;
 	border-bottom:3px solid black;
 	border-right:3px solid black;

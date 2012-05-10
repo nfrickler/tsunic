@@ -313,7 +313,7 @@ $lang = array(
 	'SHOWFSDIRECTORY__DATEOFUPDATE' => 'Letzte Änderung',
 	'SHOWFSDIRECTORY__ACTION' => 'Aktion',
 	'SHOWFSDIRECTORY__DELETE' => 'Löschen',
-	'SHOWFSDIRECTORY__RENAME' => 'Umbenennen',
+	'SHOWFSDIRECTORY__EDIT' => 'Umbennenen/Verschieben',
 
 	// formFsDirectory
 	'FORMFSDIRECTORY__NAME' => 'Name',
@@ -358,10 +358,69 @@ $lang = array(
 	'SHOWDELETEFSDIRECTORY__INFOTEXT' => 'Willst du dieses Verzeichnis wirklich löschen?',
 	'SHOWDELETEFSDIRECTORY__SUBMIT' => 'Ja, löschen.',
 	'SHOWDELETEFSDIRECTORY__CANCEL' => 'Nein, abbrechen.',
+	'SHOWDELETEFSDIRECTORY__NOTEMPTY' => 'Das Verzeichnis muss leer sein, bevor es gelöscht werden kann!',
 
 	// deleteFsDirectory
 	'DELETEFSDIRECTORY__SUCCESS' => 'Verzeichnis wurde gelöscht',
 	'DELETEFSDIRECTORY__ERROR' => 'Verzeichnis konnte nicht gelöscht werden!',
+
+	// formFsFile
+	'FORMFSFILE__NAME' => 'Name',
+	'FORMFSFILE__NAME_PRESET' => 'Name der Datei',
+	'FORMFSFILE__NAME_HELP' => 'Ein frei wählbarer Name für diese Datei.',
+	'FORMFSFILE__FILE' => 'Datei',
+	'FORMFSFILE__FILE_HELP' => 'Wähle eine Datei aus, die du hochladen willst.',
+	'FORMFSFILE__LEGEND' => 'Datei',
+	'FORMFSFILE__DIRECTORY' => 'Verzeichnis der Datei',
+	'FORMFSFILE__DIRECTORY_HELP' => 'Verzeichnis, in dem die Datei gespeichert ist.',
+	'FORMFSFILE__OPTION_ROOTDIR' => 'Root Verzeichnis',
+
+	// showCreateFsFile
+	'SHOWCREATEFSFILE__TITLE' => 'Neue Datei hochladen',
+	'SHOWCREATEFSFILE__H1' => 'Neue Datei hochladen',
+	'SHOWCREATEFSFILE__TOPARENT' => 'Zurück zum Verzeichnis',
+	'SHOWCREATEFSFILE__INFOTEXT' => 'Fülle das folgende Formular aus, um ein Datei hochzuladen.',
+	'SHOWCREATEFSFILE__SUBMIT' => 'Datei hochladen',
+	'SHOWCREATEFSFILE__CANCEL' => 'Abbrechen',
+
+	// createFsFile
+	'CREATEFSFILE__SUCCESS' => 'Datei wurde hochgeladen.',
+	'CREATEFSFILE__ERROR' => 'Datei konnte nicht hochgeladen werden!',
+	'CREATEFSFILE__INVALIDFILE' => 'Die Datei ist ungültig!',
+	'CREATEFSFILE__INVALIDDIRECTORY' => 'Das Verzeichnis ist ungültig!',
+
+	// showEditFsFile
+	'SHOWEDITFSFILE__TITLE' => 'Datei bearbeiten',
+	'SHOWEDITFSFILE__H1' => 'Datei "#name#" bearbeiten',
+	'SHOWEDITFSFILE__TOPARENT' => 'Zurück zum Verzeichnis',
+	'SHOWEDITFSFILE__INFOTEXT' => 'Über das folgende Formular kannst du die Datei umbennenen oder verschieben',
+	'SHOWEDITFSFILE__SUBMIT' => 'Änderungen speichern',
+	'SHOWEDITFSFILE__CANCEL' => 'Abbrechen',
+
+	// editFsFile
+	'EDITFSFILE__SUCCESS' => 'Änderungen wurden gespeichert.',
+	'EDITFSFILE__ERROR' => 'Änderungen konnten nicht gespeichert werden!',
+	'EDITFSFILE__INVALIDNAME' => 'Der Name ist ungültig!',
+	'EDITFSFILE__INVALIDPARENT' => 'Das Verzeichnis ist ungültig!',
+
+	// showDeleteFsFile
+	'SHOWDELETEFSFILE__TITLE' => 'Datei löschen',
+	'SHOWDELETEFSFILE__H1' => 'Datei #name# löschen?',
+	'SHOWDELETEFSFILE__INFOTEXT' => 'Willst du dieses Datei wirklich löschen?',
+	'SHOWDELETEFSFILE__SUBMIT' => 'Ja, löschen.',
+	'SHOWDELETEFSFILE__CANCEL' => 'Nein, abbrechen.',
+
+	// deleteFsFile
+	'DELETEFSFILE__SUCCESS' => 'Datei wurde gelöscht',
+	'DELETEFSFILE__ERROR' => 'Datei konnte nicht gelöscht werden!',
+
+
+
+
+
+
+
+
 
 	/* ***************** navigation ******************** */
 

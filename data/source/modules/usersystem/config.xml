@@ -1,0 +1,4 @@
+<!-- | config file -->
+<all>
+	<config default="10485760" formtype="text">maxfilesize</config>
+</all>

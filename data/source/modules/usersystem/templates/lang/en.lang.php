@@ -313,7 +313,7 @@ $lang = array(
 	'SHOWFSDIRECTORY__DATEOFUPDATE' => 'Date of update',
 	'SHOWFSDIRECTORY__ACTION' => 'Action',
 	'SHOWFSDIRECTORY__DELETE' => 'Delete',
-	'SHOWFSDIRECTORY__RENAME' => 'Rename',
+	'SHOWFSDIRECTORY__EDIT' => 'Rename/Move',
 
 	// formFsDirectory
 	'FORMFSDIRECTORY__NAME' => 'Name',
@@ -358,10 +358,64 @@ $lang = array(
 	'SHOWDELETEFSDIRECTORY__INFOTEXT' => 'Do you really want to delete this directory?',
 	'SHOWDELETEFSDIRECTORY__SUBMIT' => 'Yes, delete.',
 	'SHOWDELETEFSDIRECTORY__CANCEL' => 'No, cancel.',
+	'SHOWDELETEFSDIRECTORY__NOTEMPTY' => 'The directory has to be empty before you can delete it!',
 
 	// deleteFsDirectory
 	'DELETEFSDIRECTORY__SUCCESS' => 'Directory deleted.',
 	'DELETEFSDIRECTORY__ERROR' => 'Directory could not be deleted!',
+
+	// formFsFile
+	'FORMFSFILE__NAME' => 'Name',
+	'FORMFSFILE__NAME_PRESET' => 'Name of file',
+	'FORMFSFILE__NAME_HELP' => 'A name for this file.',
+	'FORMFSFILE__FILE' => 'File',
+	'FORMFSFILE__FILE_HELP' => 'Choose a file to upload to TSunic.',
+	'FORMFSFILE__LEGEND' => 'File',
+	'FORMFSFILE__DIRECTORY' => 'Directory of file',
+	'FORMFSFILE__DIRECTORY_HELP' => 'Please choose a directory, this file is saved in.',
+	'FORMFSFILE__OPTION_ROOTDIR' => 'Root Directory',
+
+	// showCreateFsFile
+	'SHOWCREATEFSFILE__TITLE' => 'Upload file',
+	'SHOWCREATEFSFILE__H1' => 'Upload file',
+	'SHOWCREATEFSFILE__TOPARENT' => 'Back to directory',
+	'SHOWCREATEFSFILE__INFOTEXT' => 'Fill in the following form to upload a file to TSunic.',
+	'SHOWCREATEFSFILE__SUBMIT' => 'Upload file',
+	'SHOWCREATEFSFILE__CANCEL' => 'Cancel',
+
+	// createFsFile
+	'CREATEFSFILE__SUCCESS' => 'File uploaded.',
+	'CREATEFSFILE__ERROR' => 'File could not be uploaded!',
+	'CREATEFSFILE__INVALIDFILE' => 'The file is invalid!',
+	'CREATEFSFILE__INVALIDDIRECTORY' => 'The directory is invalid!',
+
+	// showEditFsFile
+	'SHOWEDITFSFILE__TITLE' => 'Edit file',
+	'SHOWEDITFSFILE__H1' => 'Edit file "#name#"',
+	'SHOWEDITFSFILE__TOPARENT' => 'Back to directory',
+	'SHOWEDITFSFILE__INFOTEXT' => 'Via the following formular you can rename or move the file.',
+	'SHOWEDITFSFILE__SUBMIT' => 'Save changes',
+	'SHOWEDITFSFILE__CANCEL' => 'Cancel',
+
+	// editFsFile
+	'EDITFSFILE__SUCCESS' => 'Changes has been saved.',
+	'EDITFSFILE__ERROR' => 'Changes could not be saved!',
+	'EDITFSFILE__INVALIDNAME' => 'The name is invalid!',
+	'EDITFSFILE__INVALIDPARENT' => 'The directory is invalid!',
+
+	// showDeleteFsFile
+	'SHOWDELETEFSFILE__TITLE' => 'Delete file',
+	'SHOWDELETEFSFILE__H1' => 'Delete file #name#?',
+	'SHOWDELETEFSFILE__INFOTEXT' => 'Do you really want to delete this file?',
+	'SHOWDELETEFSFILE__SUBMIT' => 'Yes, delete.',
+	'SHOWDELETEFSFILE__CANCEL' => 'No, cancel.',
+
+	// deleteFsFile
+	'DELETEFSFILE__SUCCESS' => 'File deleted.',
+	'DELETEFSFILE__ERROR' => 'File could not be deleted!',
+
+
+
 
 	/* ***************** navigation ******************** */
 

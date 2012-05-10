@@ -148,6 +148,8 @@ class $$$Object {
 		switch ($type) {
 			case 'string':
 				return $$$Validator::isString($value);
+			case 'filename':
+				return $$$Validator::isFilename($value);
 			case 'int':
 				return $$$Validator::isInt($value);
 			case 'uri':

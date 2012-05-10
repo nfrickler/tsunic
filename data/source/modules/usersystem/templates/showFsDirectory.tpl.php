@@ -50,7 +50,7 @@ $Dir = $this->getVar('Directory');
 		<?php } ?>
 		<?php foreach ($Dir->getSubfiles() as $index => $Subfile) { ?>
 		<tr>
-			<td><a href="<?php $this->setUrl(''); ?>">
+			<td><a href="<?php $this->setImg('private', $Subfile->getInfo('id'), true ,true); ?>">
 				<?php $this->set($Subfile->getInfo('name')); ?></a></td>
 			<!--<td><?php $this->set($Subfile->getInfo('fk_permission')); ?></td>-->
 			<td><?php $this->set($Subfile->getInfo('dateOfCreation')); ?></td>
@@ -58,8 +58,8 @@ $Dir = $this->getVar('Directory');
 			<td>
 				<a href="<?php $this->setUrl('$$$showDeleteFsFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
 					<?php $this->set('{SHOWFSDIRECTORY__DELETE}'); ?></a>
-				<a href="<?php $this->setUrl('$$$showRenameFsFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
-					<?php $this->set('{SHOWFSDIRECTORY__RENAME}'); ?></a>
+				<a href="<?php $this->setUrl('$$$showEditFsFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
+					<?php $this->set('{SHOWFSDIRECTORY__EDIT}'); ?></a>
 			</td>
 		</tr>
 		<?php } ?>

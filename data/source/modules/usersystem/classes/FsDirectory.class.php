@@ -107,6 +107,13 @@ class $$$FsDirectory extends $system$Object {
 	 * @return bool
 	 */
 	public function delete () {
+
+		// is empty?
+		if ($this->getSubdirectories() or
+			$this->getSubfiles()) {
+			return false;
+		}
+
 		$sql = "DELETE FROM #__fsdirectories
 			WHERE id = '$this->id';";
 		return $this->_delete($sql);
@@ -212,7 +219,7 @@ class $$$FsDirectory extends $system$Object {
 		// create objects
 		$this->subfiles = array();
 		foreach ($result as $index => $values) {
-			$this->subfiles[] = $TSunic->get('$$$FsFiles', $values['id']);
+			$this->subfiles[] = $TSunic->get('$$$FsFile', $values['id']);
 		}
 		return $this->subfiles;
 	}
