@@ -17,27 +17,6 @@ CREATE TABLE IF NOT EXISTS `#__accounts` (
 INSERT INTO `#__accounts` (name, dateOfRegistration)
 VALUES ('root', NOW()), ('guest', NOW());
 
-CREATE TABLE IF NOT EXISTS `#__folders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_usersystem__account` int(11) NOT NULL,
-  `_name_` varchar(500) NOT NULL,
-  `dateOfCreation` datetime NOT NULL,
-  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dateOfDeletion` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
-
-CREATE TABLE IF NOT EXISTS `#__files` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_usersystem__account` int(11) NOT NULL,
-  `_name_` varchar(500) NOT NULL,
-  `dateOfCreation` datetime NOT NULL,
-  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dateOfDeletion` datetime NOT NULL,
-  `mimetype` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
-
 CREATE TABLE IF NOT EXISTS `#__connections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_usersystem__account` int(11) NOT NULL,
@@ -86,9 +65,9 @@ CREATE TABLE IF NOT EXISTS `#__accessgroupmembers` (
 CREATE TABLE IF NOT EXISTS `#__config` (
   `name` varchar(200) NOT NULL,
   `systemdefault` varchar(500) NOT NULL,
+  `configtype` varchar(50) NOT NULL,
   `formtype` varchar(50) NOT NULL,
   `options` varchar(200) NOT NULL,
-  `isSystem` int(1) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`name`)
@@ -116,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `#__fsfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `_name_` varchar(200) NOT NULL,
   `fk_directory` int(11) NOT NULL,
+  `fk_account` int(11) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

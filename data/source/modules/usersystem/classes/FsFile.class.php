@@ -15,6 +15,7 @@ class $$$FsFile extends $system$Object {
 	protected function loadInfoSql () {
 		return "SELECT _name_ as name,
 				fk_directory,
+				fk_account,
 				dateOfCreation,
 				dateOfUpdate
 			FROM #__fsfiles
@@ -44,9 +45,11 @@ class $$$FsFile extends $system$Object {
 		}
 
 		// update database
+		global $TSunic;
 		$sql = "INSERT INTO #__fsfiles
 			SET _name_ = '$name',
 				dateOfCreation = NOW(),
+				fk_account = '".$TSunic->Usr->getInfo('id')."',
 				fk_directory = '$fk_directory';";
 		if (!$this->_create($sql)) return false;
 
@@ -84,9 +87,11 @@ class $$$FsFile extends $system$Object {
 		if (empty($sql_set)) return true;
 
 		// update database
+		global $TSunic;
 		$sql = "UPDATE #__fsfiles SET ".
 			implode(",", $sql_set).
-			" WHERE id = '$this->id';";
+			" WHERE id = '$this->id'
+				AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
 		return $this->_edit($sql);
 	}
 
@@ -116,7 +121,8 @@ class $$$FsFile extends $system$Object {
 		}
 
 		$sql = "DELETE FROM #__fsfiles
-			WHERE id = '$this->id';";
+			WHERE id = '$this->id'
+				AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
 		return $this->_delete($sql);
 	}
 

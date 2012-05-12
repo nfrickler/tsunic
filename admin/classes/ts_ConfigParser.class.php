@@ -32,10 +32,12 @@ class ts_ConfigParser {
 		foreach ($Xml->children() as $Value) {
 			$default = (string) $Value->attributes()->default;
 			$formtype = (string) $Value->attributes()->formtype;
+			$configtype = (string) $Value->attributes()->configtype;
 			$options = (string) $Value->attributes()->options;
 			$this->data[] = array(
 				'name' => $preffix.utf8_decode("$Value"),
 				'default' => $default,
+				'configtype' => $configtype,
 				'formtype' => $formtype,
 				'options' => $options
 			);
@@ -54,14 +56,16 @@ class ts_ConfigParser {
 
 		// udpate database
 		foreach ($this->data as $index => $values) {
-			$sql = "INSERT INTO $table (name, systemdefault, formtype, options)
+			$sql = "INSERT INTO $table (name, systemdefault, configtype, formtype, options)
 				VALUES ('".$values['name']."',
 					'".$values['default']."',
+					'".$values['configtype']."',
 					'".$values['formtype']."',
 					'".$values['options']."'
 				)
 				ON DUPLICATE KEY UPDATE
 					systemdefault = '".$values['default']."',
+					configtype = '".$values['configtype']."',
 					formtype = '".$values['formtype']."',
 					options = '".$values['options']."'
 			;";

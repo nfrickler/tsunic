@@ -3,8 +3,12 @@
 function $$$showConfig () {
 	global $TSunic;
 
+	// get fk_account
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$User = ($id) ? $TSunic->get('$$$User', $id) : $TSunic->Usr;
+
 	// get config
-	$config_raw = $TSunic->Usr->getConfig()->getAll();
+	$config_raw = $User->getConfig()->getAll();
 	$config = array();
 	foreach ($config_raw as $index => $values) {
 
@@ -18,7 +22,9 @@ function $$$showConfig () {
 			'value' => $values['value'],
 			'default' => $values['default'],
 			'description' => '{'.strtoupper($cache[0]."__CONFIG__".$cache[1]."__DESCRIPTION").'}',
+			'configtype' => $values['configtype'],
 			'formtype' => $values['formtype'],
+			'editable' => ($values['configtype'] == "normal" or $TSunic->Usr->access('$$$editAllConfig')),
 		);
 
 		// load options for select field
@@ -26,11 +32,15 @@ function $$$showConfig () {
 			include_once $cache[0].'___system_config.func.php';
 			eval('$config[$cache[0]][$index]["options"] = '.
 				$cache[0].'__'.$values['options'].'();');
+		$config[$cache[0]][$index]["options"]['{SHOWCONFIG__USEDEFAULT}'] = '{SHOWCONFIG__USEDEFAULT}';
 		}
 	}
 
 	// activate template
-	$data = array('config' => $config);
+	$data = array(
+		'config' => $config,
+		'User' => $User
+	);
 	$TSunic->Tmpl->activate('$$$showConfig', '$system$content', $data);
 	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWCONFIG__TITLE}'));
 

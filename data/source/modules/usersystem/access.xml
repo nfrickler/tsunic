@@ -7,4 +7,6 @@
 	<access default="0">editAllAccess</access>
 	<access default="0">editAllUsers</access>
 	<access default="0">deleteAllUsers</access>
+	<access default="0">seeAllConfig</access>
+	<access default="0">editAllConfig</access>
 </all>

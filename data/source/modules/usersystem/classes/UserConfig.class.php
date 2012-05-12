@@ -16,6 +16,13 @@ class $$$UserConfig {
 	 * @param int: fk account
 	 */
 	public function __construct ($fk_account) {
+		global $TSunic;
+
+		// access?
+		if ($fk_account != $TSunic->Usr->getInfo('id')
+			and !$TSunic->Usr->access('$$$seeAllConfig')) {
+			return false;
+		}
 		$this->fk_account = $fk_account;
 
 		# load runtime config
@@ -105,15 +112,18 @@ class $$$UserConfig {
 	public function setDefault ($name, $value, $isSystem = true) {
 		global $TSunic;
 
+		// access?
+		if (!$TSunic->Usr->access('$$$editAllConfig')) return false;
+
 		// update database
 		$sql = "INSERT INTO #__config
 			SET name = '$name',
 				systemdefault = '$value',
-				isSystem = '".($isSystem ? '1' : '0')."',
+				configtype = '".($isSystem ? 'system' : '0')."',
 				dateOfCreation = NOW()
 			ON DUPLICATE KEY UPDATE
 				systemdefault = '$value' AND
-				isSystem = '".($isSystem ? '1' : '0')."'
+				configtype = '".($isSystem ? 'system' : '0')."'
 		;";
 		$return = $TSunic->Db->doInsert($sql);
 
@@ -129,20 +139,6 @@ class $$$UserConfig {
 		return ($this->getDefault($name) != NULL) ? true : false;
 	}
 
-	/* is system config?
-	 * @param string: name of config
-	 *
-	 * @return bool
-	 */
-	public function isSystem ($name) {
-		global $TSunic;
-		$sql = "SELECT name
-			FROM #__config
-			WHERE name = '$name'
-				AND isSystem = '1';";
-		return ($TSunic->Db->doSelect($sql)) ? true : false;
-	}
-
 	/* set value
 	 * @param string: name of config
 	 * @param mix: value to set (NULL means default value)
@@ -150,9 +146,17 @@ class $$$UserConfig {
 	 * @return bool
 	 */
 	public function set ($name, $value) {
+		global $TSunic;
 
-		// is system config?
-		if ($this->isSystem($name)) return false;
+		// access?
+		if (($this->fk_account != $TSunic->Usr->getInfo('id') or
+			$this->getType($name) != 'normal')
+			and !$TSunic->Usr->access('editAllAccess')) {
+			return false;
+		}
+
+		// system config?
+		if ($this->getType($name) == 'system') return false;
 
 		// is config really OR is guest?
 		if (!$this->exists($name) or $this->fk_account == 2)
@@ -181,6 +185,15 @@ class $$$UserConfig {
 	 */
 	public function delete ($name) {
 		global $TSunic;
+
+		// access?
+		if (($this->fk_account != $TSunic->Usr->getInfo('id') or
+			$this->getType($name) != 'normal')
+			and !$TSunic->Usr->access('editAllAccess')) {
+			return false;
+		}
+
+		// update database
 		$sql = "DELETE FROM #__userconfig
 			WHERE fk_account = '$this->fk_account'
 				AND fk_config = '$name';";
@@ -197,18 +210,23 @@ class $$$UserConfig {
 		// get all config names from database
 		$sql = "SELECT name,
 				systemdefault,
+				configtype,
 				formtype,
 				options
 			FROM #__config
-			WHERE isSystem = '0';";
+			WHERE NOT configtype = 'system' " .
+			($TSunic->Usr->access('editAllConfig')
+				? "" : "AND NOT configtype = 'hidden';");
 		$result = $TSunic->Db->doSelect($sql);
 		if ($result === false) return array();
 
 		// create output
 		$output = array();
 		foreach ($result as $index => $values) {
+			if (!$values['configtype']) $values['configtype'] = 'normal';
 			$output[$values['name']] = array(
 				'default' => $values['systemdefault'],
+				'configtype' => $values['configtype'],
 				'formtype' => $values['formtype'],
 				'options' => $values['options'],
 				'value' => $this->get($values['name'], false)
@@ -216,6 +234,26 @@ class $$$UserConfig {
 		}
 
 		return $output;
+	}
+
+	/* get configtype
+	 * @param string: name of config
+	 *
+	 * @return mix
+	 */
+	public function getType ($name) {
+		global $TSunic;
+
+		// try to get default config
+		$sql = "SELECT configtype
+			FROM #__config
+			WHERE name = '$name';";
+		$result = $TSunic->Db->doSelect($sql);
+		if ($result === false) return NULL;
+
+		return ($result and $result[0]['configtype'])
+			? $result[0]['configtype']
+			: 'normal';
 	}
 }
 ?>

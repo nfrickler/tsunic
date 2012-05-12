@@ -27,6 +27,8 @@ class $$$FsDirectory extends $system$Object {
 			switch ($name) {
 				case 'name':
 					return '{CLASS__FSDIRECTORY__ROOTDIR}';
+				case 'fk_account':
+					return $TSunic->Usr->getInfo('id');
 			}
 			return NULL;
 		}
@@ -66,6 +68,7 @@ class $$$FsDirectory extends $system$Object {
 		$sql = "INSERT INTO #__fsdirectories
 			SET _name_ = '$name',
 				dateOfCreation = NOW(),
+				fk_account = '".$this->getInfo('fk_account')."',
 				fk_parent = '$fk_parent';";
 		return $this->_create($sql);
 	}
@@ -115,7 +118,8 @@ class $$$FsDirectory extends $system$Object {
 		}
 
 		$sql = "DELETE FROM #__fsdirectories
-			WHERE id = '$this->id';";
+			WHERE id = '$this->id'
+				AND fk_account = '".$this->getInfo('fk_account')."';";
 		return $this->_delete($sql);
 	}
 
@@ -189,7 +193,8 @@ class $$$FsDirectory extends $system$Object {
 		// get subdirectories from database
 		$sql = "SELECT id
 			FROM #__fsdirectories
-			WHERE fk_parent = '$this->id';";
+			WHERE fk_parent = '$this->id'
+				AND fk_account = '".$this->getInfo('fk_account')."';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return $result;
 
@@ -212,7 +217,8 @@ class $$$FsDirectory extends $system$Object {
 		// get subdirectories from database
 		$sql = "SELECT id
 			FROM #__fsfiles
-			WHERE fk_directory = '$this->id';";
+			WHERE fk_directory = '$this->id'
+				AND fk_account = '".$this->getInfo('fk_account')."';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return $result;
 
@@ -233,6 +239,7 @@ class $$$FsDirectory extends $system$Object {
 		$sql = "SELECT id,
 				_name_ as name
 			FROM #__fsdirectories
+			WHERE fk_account = '".$this->getInfo('fk_account')."'
 			ORDER BY name ASC;";
 		$result = $TSunic->Db->doSelect($sql);
 

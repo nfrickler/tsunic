@@ -6,6 +6,12 @@ $lang = array(
 	'ISROOTPASSWORD__FAILED' => 'Bitte setze ein Passwort für den Administrator-Account "root", bevor du weitere Nutzer anlegst!',
 	'CLASS__FSDIRECTORY__ROOTDIR' => 'Root Verzeichnis',
 
+	// config
+	'CONFIG__MAXFILESIZE' => 'Maximale Dateigröße (Bytes)',
+	'CONFIG__MAXFILESIZE__DESCRIPTION' => 'Dies legt die maximal erlaubte Dateigröße für Dateien zum Hochladen fest.',
+	'CONFIG__FILESYSTEM_QUOTA' => 'Speicherplatz (Bytes)',
+	'CONFIG__FILESYSTEM_QUOTA__DESCRIPTION' => 'Dieser Wert in Bytes begrenzt das jedem Nutzer zur Verfügung stehende Speichervolumen.',
+
 	// access
 	'ACCESS__DELETEALLUSERS' => 'Alle Nutzer löschen',
 	'ACCESS__DELETEALLUSERS_DESCRIPTION' => 'Mit dieser Berechtigung kann man jeden beliebigen Nutzer vom System löschen.',
@@ -21,6 +27,10 @@ $lang = array(
 	'ACCESS__SEEALLDATA_DESCRIPTION' => 'Diese Berechtigung erlaubt die Anzeige aller persönlichen Nutzerdaten.',
 	'ACCESS__SEEOWNACCESS' => 'Eigene Berechtigungen sehen',
 	'ACCESS__SEEOWNACCESS_DESCRIPTION' => 'Dies erlaubt einem Nutzer seine eigenen Berechtigungen einzusehen.',
+	'ACCESS__SEEALLCONFIG' => 'Einstellungen aller Nutzer einsehen',
+	'ACCESS__SEEALLCONFIG_DESCRIPTION' => 'Mit diesem Recht kann man die Einstellungen aller Nutzer auf dem System einsehen.',
+	'ACCESS__EDITALLCONFIG' => 'Einstellungen aller Nutzer bearbeiten',
+	'ACCESS__EDITALLCONFIG_DESCRIPTION' => 'Mit diesem Recht kann man die Einstellungen aller Nutzer auf dem System bearbeiten.',
 
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'Du bist eingeloggt als #name#.',
@@ -90,6 +100,10 @@ $lang = array(
 	'SHOWCONFIG__DESCRIPTION' => 'Beschreibung',
 	'SHOWCONFIG__USEDEFAULT' => 'Standard verwenden',
 	'SHOWCONFIG__SUBMIT' => 'Speichern',
+	'SHOWCONFIG__CHOOSE_USER_LABEL' => 'Benutzer anzeigen',
+	'SHOWCONFIG__CHOOSE_USER' => '---Benutzer wählen---',
+	'SHOWCONFIG__CHOOSE_SUBMIT' => 'Anzeigen',
+	'SHOWCONFIG__SHOWCONFIGFROM' => 'Einstellungen von "#name#"',
 
 	// setConfig
 	'SETCONFIG__ERROR' => 'Beim Speichern einer Einstellung ist ein Fehler aufgetreten.',
@@ -273,21 +287,7 @@ $lang = array(
 	'DELETEACCOUNT__SUCCESS' => 'Dein Account wurde gelöscht.',
 	'DELETEACCOUNT__WRONGPASSWORD' => 'Falsches Passwort!',
 
-	/* ***************** showUserlist ****************** */
-
-	'SHOWUSERLIST__TITLE' => 'Benutzerliste',
-	'SHOWUSERLIST__H1' => 'Benutzerliste',
-	'SHOWUSERLIST__INFOTEXT' => 'Dies ist eine Liste aller Nutzer auf diesem System.',
-	'SHOWUSERLIST__ID' => 'ID',
-	'SHOWUSERLIST__NAME' => 'Name',
-	'SHOWUSERLIST__EMAIL' => 'E-Mail',
-	'SHOWUSERLIST__DATEOFREGISTRATION' => 'Registration',
-	'SHOWUSERLIST__DATEOFLASTLOGIN' => 'Letzer Login',
-	'SHOWUSERLIST__ACTION' => 'Aktion',
-	'SHOWUSERLIST__DELETEUSER' => 'Löschen',
-
 	// showDeleteUser
-
 	'SHOWDELETEUSER__TITLE' => 'Benutzer löschen',
 	'SHOWDELETEUSER__H1' => 'Benutzer #name# (#email#) löschen',
 	'SHOWDELETEUSER__INFOTEXT' => 'Bist du dir sicher, dass du diesen Benutzer löschen willst? Der Nutzer und alle seine Daten werden ZERSTÖRT!',
@@ -295,12 +295,23 @@ $lang = array(
 	'SHOWDELETEUSER__CANCEL' => 'Nein, abbrechen',
 
 	// deleteUser
-
 	'DELETEUSER__ERROR' => 'Benutzer konnte nicht gelöscht werden!',
 	'DELETEUSER__SUCCESS' => 'Benutzer gelöscht.',
 
+	// showUserlist
+	'SHOWUSERLIST__TITLE' => 'Benutzerliste',
+	'SHOWUSERLIST__H1' => 'Benutzerliste',
+	'SHOWUSERLIST__INFOTEXT' => 'Dies ist eine Liste aller Nutzer auf diesem System.',
+	'SHOWUSERLIST__NAME' => 'Name',
+	'SHOWUSERLIST__EMAIL' => 'E-Mail',
+	'SHOWUSERLIST__DATEOFREGISTRATION' => 'Registration',
+	'SHOWUSERLIST__DATEOFLASTLOGIN' => 'Letzer Login',
+	'SHOWUSERLIST__ACTION' => 'Aktion',
+	'SHOWUSERLIST__DELETEUSER' => 'Löschen',
+
 	/* ***************** filesystem ******************** */
 
+	// showFsDirectory
 	'SHOWFSDIRECTORY__TITLE' => 'Verzeichnis anzeigen',
 	'SHOWFSDIRECTORY__H1' => 'Verzeichnis "#name#"',
 	'SHOWFSDIRECTORY__INFOTEXT' => 'Diese Seite zeigt dir den Inhalt des Verzeichnisses.',
@@ -413,14 +424,6 @@ $lang = array(
 	// deleteFsFile
 	'DELETEFSFILE__SUCCESS' => 'Datei wurde gelöscht',
 	'DELETEFSFILE__ERROR' => 'Datei konnte nicht gelöscht werden!',
-
-
-
-
-
-
-
-
 
 	/* ***************** navigation ******************** */
 

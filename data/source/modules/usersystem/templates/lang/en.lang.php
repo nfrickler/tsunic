@@ -6,6 +6,12 @@ $lang = array(
 	'ISROOTPASSWORD__FAILED' => 'Please set a password for the administrator account "root" before creating new user!',
 	'CLASS__FSDIRECTORY__ROOTDIR' => 'Root directory',
 
+	// config
+	'CONFIG__MAXFILESIZE' => 'Max file size (Bytes)',
+	'CONFIG__MAXFILESIZE__DESCRIPTION' => 'This defines the maximal filesize for files being uploaded.',
+	'CONFIG__FILESYSTEM_QUOTA' => 'Filesystem quota (Bytes)',
+	'CONFIG__FILESYSTEM_QUOTA__DESCRIPTION' => 'This quota limits the space for the filesystem of each user.',
+
 	// access
 	'ACCESS__DELETEALLUSERS' => 'Delete all users',
 	'ACCESS__DELETEALLUSERS_DESCRIPTION' => 'This allows to delete every user on this system.',
@@ -21,6 +27,10 @@ $lang = array(
 	'ACCESS__SEEALLDATA_DESCRIPTION' => 'Enables to see all personal data of users.',
 	'ACCESS__SEEOWNACCESS' => 'See own access',
 	'ACCESS__SEEOWNACCESS_DESCRIPTION' => 'Allows user to see its own access values.',
+	'ACCESS__SEEALLCONFIG' => 'See all config',
+	'ACCESS__SEEALLCONFIG_DESCRIPTION' => 'Allows user to see configuration off all users.',
+	'ACCESS__EDITALLCONFIG' => 'Edit all config',
+	'ACCESS__EDITALLCONFIG_DESCRIPTION' => 'Allows user to edit configuration off all users.',
 
 	// userheader
 	'USERHEADER__LOGGEDINAS' => 'You are logged in as #name#.',
@@ -90,6 +100,10 @@ $lang = array(
 	'SHOWCONFIG__DESCRIPTION' => 'Description',
 	'SHOWCONFIG__USEDEFAULT' => 'Use default',
 	'SHOWCONFIG__SUBMIT' => 'Save',
+	'SHOWCONFIG__CHOOSE_USER_LABEL' => 'Show user',
+	'SHOWCONFIG__CHOOSE_USER' => '---Choose user---',
+	'SHOWCONFIG__CHOOSE_SUBMIT' => 'Show',
+	'SHOWCONFIG__SHOWCONFIGFROM' => 'Configuration from "#name#"',
 
 	// setConfig
 	'SETCONFIG__ERROR' => 'An error occurred while saving one option.',
@@ -273,21 +287,7 @@ $lang = array(
 	'DELETEACCOUNT__SUCCESS' => 'Your account has been successfully deleted.',
 	'DELETEACCOUNT__WRONGPASSWORD' => 'Wrong password! Try again?',
 
-	/* ***************** showUserlist ****************** */
-
-	'SHOWUSERLIST__TITLE' => 'Userlist',
-	'SHOWUSERLIST__H1' => 'Userlist',
-	'SHOWUSERLIST__INFOTEXT' => 'This is a list of all users on this system.',
-	'SHOWUSERLIST__ID' => 'ID',
-	'SHOWUSERLIST__NAME' => 'Name',
-	'SHOWUSERLIST__EMAIL' => 'E-mail',
-	'SHOWUSERLIST__DATEOFREGISTRATION' => 'Registration',
-	'SHOWUSERLIST__DATEOFLASTLOGIN' => 'Last login',
-	'SHOWUSERLIST__ACTION' => 'Action',
-	'SHOWUSERLIST__DELETEUSER' => 'Delete',
-
 	// showDeleteUser
-
 	'SHOWDELETEUSER__TITLE' => 'Delete user',
 	'SHOWDELETEUSER__H1' => 'Delete user #name# (#email#)',
 	'SHOWDELETEUSER__INFOTEXT' => 'Are you sure, you want to delete this user? This will DESTROY the user and all its data!',
@@ -295,12 +295,23 @@ $lang = array(
 	'SHOWDELETEUSER__CANCEL' => 'No, cancel',
 
 	// deleteUser
-
 	'DELETEUSER__ERROR' => 'User could not be deleted!',
 	'DELETEUSER__SUCCESS' => 'User deleted.',
 
+	// showUserlist
+	'SHOWUSERLIST__TITLE' => 'Userlist',
+	'SHOWUSERLIST__H1' => 'Userlist',
+	'SHOWUSERLIST__INFOTEXT' => 'This is a list of all users on this system.',
+	'SHOWUSERLIST__NAME' => 'Name',
+	'SHOWUSERLIST__EMAIL' => 'E-mail',
+	'SHOWUSERLIST__DATEOFREGISTRATION' => 'Registration',
+	'SHOWUSERLIST__DATEOFLASTLOGIN' => 'Last login',
+	'SHOWUSERLIST__ACTION' => 'Action',
+	'SHOWUSERLIST__DELETEUSER' => 'Delete',
+
 	/* ***************** filesystem ******************** */
 
+	// showFsDirectory
 	'SHOWFSDIRECTORY__TITLE' => 'Show directory',
 	'SHOWFSDIRECTORY__H1' => 'Directory "#name#"',
 	'SHOWFSDIRECTORY__INFOTEXT' => 'This page shows you the content of your filesystem directory.',
@@ -413,9 +424,6 @@ $lang = array(
 	// deleteFsFile
 	'DELETEFSFILE__SUCCESS' => 'File deleted.',
 	'DELETEFSFILE__ERROR' => 'File could not be deleted!',
-
-
-
 
 	/* ***************** navigation ******************** */
 

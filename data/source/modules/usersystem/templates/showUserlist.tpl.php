@@ -6,7 +6,6 @@
 	</p>
 	<table cellspacing="2" cellpadding="0" border="0">
 		<tr>
-			<th><?php echo $this->set('{SHOWUSERLIST__ID}'); ?></th>
 			<th><?php echo $this->set('{SHOWUSERLIST__NAME}'); ?></th>
 			<?php if ($TSunic->Usr->access('$$$seeAllData')) { ?>
 			<th><?php echo $this->set('{SHOWUSERLIST__EMAIL}'); ?></th>
@@ -19,7 +18,6 @@
 		</tr>
 		<?php foreach ($this->getVar('users') as $index => $User) { ?>
 		<tr>
-			<td><?php $this->set($User->getInfo('id')); ?></td>
 			<td><?php $this->set($User->getInfo('name')); ?></td>
 			<?php if ($TSunic->Usr->access('$$$seeAllData')) { ?>
 			<td><?php $this->set($User->getInfo('email')); ?></td>

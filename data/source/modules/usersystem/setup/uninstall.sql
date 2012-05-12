@@ -7,6 +7,6 @@ DROP TABLE IF EXISTS `#__accessnames`;
 DROP TABLE IF EXISTS `#__accounts`;
 DROP TABLE IF EXISTS `#__config`;
 DROP TABLE IF EXISTS `#__connections`;
-DROP TABLE IF EXISTS `#__files`;
-DROP TABLE IF EXISTS `#__folders`;
+DROP TABLE IF EXISTS `#__fsfiles`;
+DROP TABLE IF EXISTS `#__fsdirectories`;
 DROP TABLE IF EXISTS `#__userconfig`;

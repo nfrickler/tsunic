@@ -4,7 +4,9 @@ function $$$setConfig () {
 	global $TSunic;
 
 	// get UserConfig
-	$UserConfig = $TSunic->Usr->getConfig();
+	$id = $TSunic->Temp->getParameter('$$$showConfig__id');
+	$User = ($id) ? $TSunic->get('$$$User', $id) : $TSunic->Usr;
+	$UserConfig = $User->getConfig();
 
 	// get input
 	$all_posts = $TSunic->Temp->getPost(true);
@@ -14,9 +16,10 @@ function $$$setConfig () {
 
 		// is config?
 		if (substr($index,0,12) != 'showConfig__') continue;
+		$config = substr($index, 12);
+		if ($config == "id") continue;
 
 		// set config value
-		$config = substr($index, 12);
 		if (!$UserConfig->set($config, $value)) {
 			$error = 1;
 			$TSunic->Log->add('error', '{SETCONFIG__ERROR}', 3);
@@ -26,7 +29,7 @@ function $$$setConfig () {
 	// success
 	if (!$error) {
 		$TSunic->Log->add('info', '{SETCONFIG__SUCCESS}', 3);
-		$TSunic->redirect('$$$showConfig');
+		$TSunic->redirect('$$$showConfig', array('$$$id' => $User->getInfo('id')));
 		return true;
 	}
 
