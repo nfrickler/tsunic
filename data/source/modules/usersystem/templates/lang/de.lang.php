@@ -201,7 +201,6 @@ $lang = array(
 	'SHOWACCESSGROUPMEMBERS__INFOTEXT' => 'Hier kannst du die Mitglieder eine Berechtigungsgruppe verwalten.',
 	'SHOWACCESSGROUPMEMBERS__TOSHOWADDACCESSGROUPMEMBER' => 'Weiteres Mitglied hinzufügen',
 	'SHOWACCESSGROUPMEMBERS__TOSHOWACCESSGROUP' => 'Zurück zur Berechtungsgruppe',
-	'SHOWACCESSGROUPMEMBERS__ID' => 'ID',
 	'SHOWACCESSGROUPMEMBERS__NAME' => 'Name',
 	'SHOWACCESSGROUPMEMBERS__ACTION' => 'Aktion',
 	'SHOWACCESSGROUPMEMBERS__DELETEMEMBER' => 'Aus Gruppe löschen',

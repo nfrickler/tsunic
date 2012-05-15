@@ -15,7 +15,6 @@ $Accessgroup = $this->getVar('Accessgroup');
 	</p>
 	<table cellspacing="2" cellpadding="0" border="0">
 		<tr>
-			<th><?php echo $this->set('{SHOWACCESSGROUPMEMBERS__ID}'); ?></th>
 			<th><?php echo $this->set('{SHOWACCESSGROUPMEMBERS__NAME}'); ?></th>
 			<?php if ($TSunic->Usr->access('editAllAccess')) { ?>
 			<th><?php echo $this->set('{SHOWACCESSGROUPMEMBERS__ACTION}'); ?></th>
@@ -23,7 +22,6 @@ $Accessgroup = $this->getVar('Accessgroup');
 		</tr>
 		<?php foreach ($this->getVar('members') as $userid => $username) { ?>
 		<tr>
-			<td><?php $this->set($userid); ?></td>
 			<td><?php $this->set($username); ?></td>
 			<?php if ($TSunic->Usr->access('editAllAccess')) { ?>
 			<td>
