@@ -68,9 +68,7 @@ class $$$File {
 	 * @return bool
 	 */
 	public function isValid () {
-		// check, if file exists
-		if ($this->isFile()) return true;
-		return false;
+		return ($this->isFile()) ? true : false;
 	}
 
 	/* get mime-type of file
@@ -135,8 +133,7 @@ class $$$File {
 	 * @return bool
 	 */
 	public function isFile () {
-		if (file_exists($this->getPath())) return true;
-		return false;
+		return (file_exists($this->getPath())) ? true : false;
 	}
 
 	/* get path
@@ -171,8 +168,7 @@ class $$$File {
 	 * @return string
 	 */
 	public function getFilename () {
-		if (empty($this->path)) return false;
-		return basename($this->path);
+		return (empty($this->path)) ? false : basename($this->path);
 	}
 
 	/* ##################### delete/move/rename ######################### */
@@ -192,8 +188,8 @@ class $$$File {
 	 * @return bool
 	 */
 	public function deleteFile () {
-		if (!file_exists($this->getPath()) OR unlink($this->getPath())) return true;
-		return false;
+		return (!file_exists($this->getPath())
+			OR unlink($this->getPath())) ? true : false;
 	}
 
 	/* rename file
@@ -221,6 +217,7 @@ class $$$File {
 
 		return false;
 	}
+
 	/* move file
 	 * @param string: path, where file is going to be moved to
 	 *
@@ -232,7 +229,7 @@ class $$$File {
 		// TODO
 
 		// create dir, if neccessary
-		// TODO
+		// TODOMimeType 
 
 		// move file
 		if (rename($this->getPath(), $new_path)) {
@@ -249,17 +246,16 @@ class $$$File {
 	 * @return bool
 	 */
 	public function includeFile ($once = false) {
-		global $TSunic;
 
 		if ($this->isFile()) {
-		    // file exists
-		    if ($once) {
+			// file exists
+			if ($once) {
 				include_once $this->getPath();
 			} else {
 				include $this->getPath();
 			}
 		} else {
-		    // file not found
+			// file not found
 			return false;
 		}
 		return true;
@@ -280,7 +276,7 @@ class $$$File {
 			OR !($content = file_get_contents($this->getPath()))
 			OR $content === false
 		) {
-			if (!$this->silent_mode) $TSunic->Log->add('warning', 'Couldn\'t read from "'.$this->path.'"!', 1);		
+			if (!$this->silent_mode) $TSunic->Log->add('warning', 'Couldn\'t read from "'.$this->path.'"!', 1);
 			return ($as_string) ? '' : array();
 		}
 
@@ -299,7 +295,7 @@ class $$$File {
 		global $TSunic;
 
 		// make sure, path exists
-		if (!$this->mkFolder($this->getPath(true))) die('make folder!!'); //return false;
+		if (!$this->mkFolder(dirname($this->getPath(true)))) return false;
 
 		// open file
 		$file = @fopen($this->getPath(), "w");
@@ -315,7 +311,7 @@ class $$$File {
 			if (is_numeric($return)) return true;
 		}
 
-		if (!$this->silent_mode) $TSunic->Log->add('error', 'Couldn\'t write to "'.$this->path.'"!', 1);		
+		if (!$this->silent_mode) $TSunic->Log->add('error', 'Couldn\'t write to "'.$this->path.'"!', 1);
 		return false;
 	}
 

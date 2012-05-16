@@ -53,8 +53,13 @@ class $$$FsFile extends $system$Object {
 				fk_directory = '$fk_directory';";
 		if (!$this->_create($sql)) return false;
 
-		if (move_uploaded_file($FH['tmp_name'], $this->getPath()))
+		if (move_uploaded_file($FH['tmp_name'], $this->getPath())) {
+
+			// encrypt content of file
+			$this->setContent($this->getContent());
+
 			return true;
+		}
 
 		// delete file in database
 		$this->delete();
@@ -95,15 +100,24 @@ class $$$FsFile extends $system$Object {
 		return $this->_edit($sql);
 	}
 
+	/* get corresponding file-object
+	 *
+	 * @return File object
+	 */
+	protected function getFileObject () {
+		if (!$this->getInfo('id')) return NULL;
+		global $TSunic;
+		$File = $TSunic->get('$system$File', '#private#file__'.$this->getInfo('id'));
+		return $File;
+	}
+
 	/* get path of this file
 	 *
 	 * @return string
 	 */
 	protected function getPath () {
-		if (!$this->getInfo('id')) return '';
-		global $TSunic;
-		$File = $TSunic->get('$system$File', '#private#file__'.$this->getInfo('id'));
-		return $File->getPath();
+		$File = $this->getFileObject();
+		return ($File) ? $File->getPath() : '';
 	}
 
 	/* delete file
@@ -172,6 +186,42 @@ class $$$FsFile extends $system$Object {
 		global $TSunic;
 		$this->Directory = $TSunic->get('$$$FsDirectory', $this->getInfo('fk_directory'));
 		return $this->Directory;
+	}
+
+	/* get mime-type of file
+	 *
+	 * @return string
+	 */
+	public function getMimeType () {
+		$File = $this->getFileObject();
+		return ($File) ? $File->getMimeType() : '';
+	}
+
+	/* get content of file
+	 *
+	 * @return string
+	 */
+	public function getContent () {
+		$File = $this->getFileObject();
+		if (!$File) return false;
+
+		global $TSunic;
+		$content = $File->readFile();
+		return $TSunic->Usr->decrypt($content);
+	}
+
+	/* set content of file
+	 * @param string: new content of file
+	 *
+	 * @return string
+	 */
+	public function setContent ($content) {
+		$File = $this->getFileObject();
+		if (!$File) return false;
+
+		global $TSunic;
+		$content = $TSunic->Usr->encrypt($content);
+		return ($File->writeFile($content)) ? true : false;
 	}
 }
 ?>
