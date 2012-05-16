@@ -396,7 +396,8 @@ $lang = array(
 	// createFsFile
 	'CREATEFSFILE__SUCCESS' => 'Datei wurde hochgeladen.',
 	'CREATEFSFILE__ERROR' => 'Datei konnte nicht hochgeladen werden!',
-	'CREATEFSFILE__INVALIDFILE' => 'Die Datei ist ungültig!',
+	'CREATEFSFILE__INVALIDFILESIZE' => 'Die Datei ist zu groß!',
+	'CREATEFSFILE__INVALIDQUOTA' => 'Der Upload dieser Datei würde das Speicherlimit überschreiten!',
 	'CREATEFSFILE__INVALIDDIRECTORY' => 'Das Verzeichnis ist ungültig!',
 
 	// showEditFsFile

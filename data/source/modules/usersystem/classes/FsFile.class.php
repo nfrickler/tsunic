@@ -16,6 +16,7 @@ class $$$FsFile extends $system$Object {
 		return "SELECT _name_ as name,
 				fk_directory,
 				fk_account,
+				bytes,
 				dateOfCreation,
 				dateOfUpdate
 			FROM #__fsfiles
@@ -48,6 +49,7 @@ class $$$FsFile extends $system$Object {
 		global $TSunic;
 		$sql = "INSERT INTO #__fsfiles
 			SET _name_ = '$name',
+				bytes = '".$FH['size']."',
 				dateOfCreation = NOW(),
 				fk_account = '".$TSunic->Usr->getInfo('id')."',
 				fk_directory = '$fk_directory';";
@@ -158,11 +160,30 @@ class $$$FsFile extends $system$Object {
 	 * @return bool
 	 */
 	public function isValidFile ($FH) {
-		global $TSunic;
+		return ($this->isValidFilesize($FH['size']) and
+			$this->isValidQuota($FH['size'])) ? true : false;
+	}
 
-		// validate size
-		return ($FH['size'] <= $TSunic->Usr->config('$$$maxfilesize'))
-			? true : false;
+	/* is within allowed filesize
+	 * @param int: bytes of new file
+	 *
+	 * @return bool
+	 */
+	public function isValidFilesize ($filesize) {
+		global $TSunic;
+		return ($filesize <= $TSunic->Usr->config('$$$maxfilesize')) ? true : false;
+	}
+
+	/* is within allowed filesystem size
+	 * @param int: bytes of new file
+	 *
+	 * @return bool
+	 */
+	public function isValidQuota ($filesize) {
+		global $TSunic;
+		$Dir = $TSunic->get('$$$FsDirectory');
+		return (($Dir->consumedBytes() + $filesize) <=
+			$TSunic->Usr->config('$$$filesystem_quota')) ? true : false;
 	}
 
 	/* is valid fk_directory for this file?

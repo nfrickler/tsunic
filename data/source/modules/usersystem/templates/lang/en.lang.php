@@ -396,7 +396,8 @@ $lang = array(
 	// createFsFile
 	'CREATEFSFILE__SUCCESS' => 'File uploaded.',
 	'CREATEFSFILE__ERROR' => 'File could not be uploaded!',
-	'CREATEFSFILE__INVALIDFILE' => 'The file is invalid!',
+	'CREATEFSFILE__INVALIDFILESIZE' => 'The file is to big!',
+	'CREATEFSFILE__INVALIDQUOTA' => 'Uploading this file would exceed the filesystem quota!',
 	'CREATEFSFILE__INVALIDDIRECTORY' => 'The directory is invalid!',
 
 	// showEditFsFile

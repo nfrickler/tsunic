@@ -251,5 +251,24 @@ class $$$FsDirectory extends $system$Object {
 
 		return $output;
 	}
+
+	/* get consumed webspace (bytes)
+	 *
+	 * @return int
+	 */
+	public function consumedBytes () {
+		global $TSunic;
+		// TODO: optimize query (SUM)
+		$sql = "SELECT bytes as bytes
+			FROM #__fsfiles
+			WHERE fk_account = '".$this->getInfo('fk_account')."'";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!$result) return 0;
+		$sum = 0;
+		foreach ($result as $index => $values) {
+			$sum+= $values['bytes'];
+		}
+		return $sum;
+	}
 }
 ?>

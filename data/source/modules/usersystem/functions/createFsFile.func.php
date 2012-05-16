@@ -10,14 +10,15 @@ function $$$createFsFile () {
 	$File = $TSunic->get('$$$FsFile', 0);
 
 	// validate input
-	if (!$File->isValidFile($_FILES['$$$formFsFile__file'])) {
-
-		// invalid file
-		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDFILE}', 3);
+	if (!$File->isValidFilesize($_FILES['$$$formFsFile__file']['size'])) {
+		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDFILESIZE}', 3);
+		$TSunic->redirect('back');
+	}
+	if (!$File->isValidQuota($_FILES['$$$formFsFile__file']['size'])) {
+		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDQUOTA}', 3);
 		$TSunic->redirect('back');
 	}
 	if (!$File->isValidDirectory($fk_directory)) {
-		// invalid fk_directory
 		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDDIRECTORY}', 3);
 		$TSunic->redirect('back');
 	}
