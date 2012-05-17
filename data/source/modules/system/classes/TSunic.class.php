@@ -313,8 +313,7 @@ class TSunic {
 	 * @return bool
 	 */
 	public function isAjax () {
-		if ($this->getRunningMode() == 'ajax') return true;
-		return false;
+		return ($this->getRunningMode() == 'ajax') ? true : false;
 	}
 
 	/* check, if TSunic is booted from index-file
@@ -322,8 +321,7 @@ class TSunic {
 	 * @return bool
 	 */
 	public function isIndex () {
-		if ($this->getRunningMode() == 'index') return true;
-		return false;
+		return ($this->getRunningMode() == 'index') ? true : false;
 	}
 
 	/* check, if TSunic is booted as template-file
@@ -331,8 +329,7 @@ class TSunic {
 	 * @return bool
 	 */
 	public function isTemplate () {
-		if ($this->getRunningMode() == 'template') return true;
-		return false;
+		return ($this->getRunningMode() == 'template') ? true : false;
 	}
 
 	/* return fatale error-message and end script

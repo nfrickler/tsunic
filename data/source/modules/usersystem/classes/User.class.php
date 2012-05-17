@@ -52,8 +52,8 @@ class $$$User extends $system$Object {
 	 * @param int/string: account ID (or "guest", "root")
 	 */
 	public function __construct ($id = false) {
-		if ($id == 'root') { $id = 1;}
-		if ($id == "guest") $id = 2;
+		if ($id == 'root') $id = 1;
+		if ($id == 'guest') $id = 2;
 
 		// is logged in?
 		if (
@@ -242,8 +242,17 @@ class $$$User extends $system$Object {
 		// save id
 		$this->id = $result[0]['id'];
 
-		// TODO: block user after several attempts
-		// TODO: Update dateOfLastLogin
+		// deny login for guest account!
+		if ($this->id == 2) return false;
+
+		// update database
+		$sql = "UPDATE #__accounts
+			SET dateOfLastLogin = NOW(),
+				dateOfLastLastLogin = '".$this->getInfo('dateOfLastLogin')."'
+			WHERE id = '".$this->id."';";
+		if ($TSunic->Db->doUpdate($sql) === false) {
+			$TSunic->Log->log('Login information could not be updated!', 3);
+		}
 
 		// load encryption
 		$passphrase = $this->_getPassphrase($password, $email);

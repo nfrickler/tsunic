@@ -422,6 +422,9 @@ class $$$Template {
 		// replace normal
 		$text = $this->set($text, $vars, false, true);
 
+		// escape certain characters
+		$text = str_replace("'", "\'", $text);
+
 		// echo or return
 		if ($doEcho == true) {
 			// echo and return

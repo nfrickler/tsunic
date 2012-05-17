@@ -247,7 +247,7 @@ $lang = array(
 	// showEditAccount
 	'SHOWEDITACCOUNT__TITLE' => 'Edit account',
 	'SHOWEDITACCOUNT__H1' => 'Edit account',
-	'SHOWEDITACCOUNT__INFOTEXT' => 'By changing values in this form you can edit your account-data.',
+	'SHOWEDITACCOUNT__INFOTEXT' => 'By changing values in this form you can edit your account data.',
 	'SHOWEDITACCOUNT__SUBMIT' => 'Save changes',
 	'SHOWEDITACCOUNT__CANCEL' => 'Cancel',
 
