@@ -1,16 +1,7 @@
 <!-- | server mailbox class -->
 <?php
-class $$$Serverbox {
-
-	/* name of mailserver
-	 * string
-	 */
-	private $id_mail__serverbox;
-
-	/* information about serverbox
-	 * array
-	 */
-	private $info;
+include_once '$system$Object.class.php';
+class $$$Serverbox extends $system$Object {
 
 	/* mail-account-object
 	 * object
@@ -21,18 +12,6 @@ class $$$Serverbox {
 	 * array
 	 */
 	private $cache;
-
-	/* constructor
-	 * +@params int: id_mail__serverbox
-	 */
-	public function __construct ($id_mail__serverbox = 0, $Mailaccount = false) {
-
-		// save input
-		$this->id_mail__serverbox = $id_mail__serverbox;
-		if (!empty($Mailaccount)) $this->Mailaccount = $Mailaccount;
-
-		return;
-	}
 
 	/* get all data of mailserverbox
 	 * +@param bool/string: name of data (true will return all data)
@@ -95,7 +74,7 @@ class $$$Serverbox {
 
 		// is already in obj-vars?
 		if (isset($this->Mailaccount) AND !empty($this->Mailaccount))
-			return ($get_id) ? $this->Mailaccount->getInfo('id_mail__account') : $this->Mailaccount;
+			return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
 
 		// try to get fk_mail__account
 		$fk_mail__account = $this->getInfo('fk_mail__account');
@@ -107,7 +86,7 @@ class $$$Serverbox {
 
 		// save in obj-var and return
 		$this->Mailaccount = $Mailaccount;
-		return ($get_id) ? $this->Mailaccount->getInfo('id_mail__account') : $this->Mailaccount;
+		return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
 	}
 
 	/* set mailaccount
@@ -122,7 +101,7 @@ class $$$Serverbox {
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// is new mailaccount?
-		if ($Mailaccount->getInfo('id_mail__account') == $this->getInfo('fk_mail__account'))
+		if ($Mailaccount->getInfo('id') == $this->getInfo('fk_mail__account'))
 			return true;
 
 		// save in obj-var
@@ -132,15 +111,15 @@ class $$$Serverbox {
 		if (!$this->isValid()) {
 
 			// presets
-			$this->info['fk_mail__account'] = $Mailaccount->getInfo('id_mail__account');
+			$this->info['fk_mail__account'] = $Mailaccount->getInfo('id');
 
 			return true;
 		}
 
 		// update database
 		$sql_0 = "UPDATE #__serverboxes
-				SET fk_mail__account = ".$this->Mailaccount->getInfo('id_mail__account')."
-				WHERE id_mail__serverbox = ".$this->id_mail__serverbox.";";
+				SET fk_mail__account = ".$this->Mailaccount->getInfo('id')."
+				WHERE id = ".$this->id.";";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		return true;
@@ -167,37 +146,25 @@ class $$$Serverbox {
 	 * @return bool
  	 */
 	public function createServerbox ($fk_mail__account, $name, $fk_mail__box = false, $deleteOnUpdate = false) {
-		global $TSunic;
 
 		// validate input
 		$fk_mail__box = (int) $fk_mail__box;
 		if (!$this->isValidFkAccount($fk_mail__account)
 				OR !$this->isValidName($name)
 				OR !$this->isValidFkmailbox($fk_mail__box)
-		) {
-			// invalid input
-			return false;
-		}
+		) return false;
 
 		// get deleteOnUpdate
 		$deleteOnUpdate = ($deleteOnUpdate) ? 1 : 0;
 
 		// add new serverbox in database
-		$sql_0 = "INSERT INTO #__serverboxes
-				SET fk_mail__account = '".mysql_real_escape_string($fk_mail__account)."',
-					_name_ = '".mysql_real_escape_string($name)."',
-					fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."',
-					deleteOnUpdate = '".mysql_real_escape_string($deleteOnUpdate)."'
-				;";
-		$result_0 = $TSunic->Db->doInsert($sql_0);
-
-		// update $this->info
-		$this->id_mail__serverbox = mysql_insert_id();
-		$this->updateInfo();
-
-		// return
-		if ($result_0) return true;
-		return false;
+		$sql = "INSERT INTO #__serverboxes
+			SET fk_mail__account = '".$fk_mail__account."',
+				_name_ = '".$name."',
+				fk_mail__box = '".$fk_mail__box."',
+				deleteOnUpdate = '".$deleteOnUpdate."'
+		;";
+		return $this->_create($sql);
 	}
 
 	/* edit serverbox
@@ -208,35 +175,24 @@ class $$$Serverbox {
 	 * @return bool
  	 */
 	public function editServerbox ($name, $fk_mail__box, $deleteOnUpdate) {
-		global $TSunic;
 
 		// validate input
 		$fk_mail__box = (int) $fk_mail__box;
 		if (!$this->isValidName($name)
 			OR !$this->isValidFkmailbox($fk_mail__box)
-		) {
-			// invalid input
-			return false;	
-		}
+		) return false;
 
 		// get deleteOnUpdate
 		$deleteOnUpdate = ($deleteOnUpdate) ? 1 : 0;
 
 		// add new serverbox in database
-		$sql_0 = "UPDATE #__serverboxes
-				SET _name_ = '".mysql_real_escape_string($name)."',
-					fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."',
-					deleteOnUpdate = '".mysql_real_escape_string($deleteOnUpdate)."'
-				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
-				;";
-		$result_0 = $TSunic->Db->doUpdate($sql_0);
-
-		// update $this->info
-		$this->updateInfo();
-
-		// return
-		if ($result_0) return true;
-		return false;
+		$sql = "UPDATE #__serverboxes
+			SET _name_ = '".$name."',
+				fk_mail__box = '".$fk_mail__box."',
+				deleteOnUpdate = '".$deleteOnUpdate."'
+			WHERE id = '".$this->id."'
+		;";
+		return $this->_edit($sql);
 	}
 
 	/* de-/activate serverbox
@@ -251,16 +207,12 @@ class $$$Serverbox {
 		$isActive = ($isActive) ? 1 : 0;
 
 		// de-/activate serverbox in database
-		$sql_0 = "UPDATE #__serverboxes
-				SET isActive = '".$isActive."',
-					dateOfUpdate = NOW()
-				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
-				;";
-		$result_0 = $TSunic->Db->doUpdate($sql_0);
-
-		// return
-		if ($result_0) return true;
-		return false;
+		$sql = "UPDATE #__serverboxes
+			SET isActive = '".$isActive."',
+				dateOfUpdate = NOW()
+			WHERE id = '".$this->id."'
+		;";
+		return $TSunic->Db->doUpdate($sql);
 	}
 
 	/* delete serverbox
@@ -268,15 +220,9 @@ class $$$Serverbox {
 	 * @return bool
  	 */
 	public function deleteServerbox () {
-		global $TSunic;
-
-		// delete mailserverbox in database
-		$sql_0 = "DELETE FROM #__serverboxes
-				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
-		$result_0 = $TSunic->Db->doDelete($sql_0);
-
-		if (!$result_0) return false;
-		return true;
+		$sql = "DELETE FROM #__serverboxes
+			WHERE id = '".$this->id."';";
+		return $this->_delete($sql);
 	}
 
 	/* check, if name is valid
@@ -285,11 +231,7 @@ class $$$Serverbox {
 	 * @return bool
 	 */
 	public function isValidName ($name) {
-
-		// check, if string is empty
-		if (empty($name)) return false;
-
-		return true;
+		return ($this->_validate($name, 'string')) ? true : false;
 	}
 
 	/* check, if fk_mail__account is valid
@@ -371,11 +313,10 @@ class $$$Serverbox {
 		if (!$force AND !$this->isTimeToCheck()) return true;
 
 		// update dateOfCheck
-		$sql_0 = "UPDATE #__serverboxes
-				SET dateOfCheck = NOW()
-				WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."'
-		";
-		$result_0 = $TSunic->Db->doUpdate($sql_0);
+		$sql = "UPDATE #__serverboxes
+			SET dateOfCheck = NOW()
+			WHERE id = '".$this->id."'";
+		$result = $TSunic->Db->doUpdate($sql);
 
 		// get connection to serverbox on server
 		$stream = $this->getMailaccount()->getStream($this->getInfo('name'));
@@ -390,15 +331,15 @@ class $$$Serverbox {
 		$overview = imap_fetch_overview($stream, "1:$number_of_mails", 0);
 
 		// get msg-numbers of all mails already stored locally
-		$sql_0 = "SELECT uid as uid
-				FROM #__mails
-				WHERE fk_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
-		$return_0 = $TSunic->Db->doSelect($sql_0);
-		if ($return_0 === false) return false;
+		$sql = "SELECT uid as uid
+			FROM #__mails
+			WHERE fk_mail__serverbox = '".$this->id."';";
+		$return = $TSunic->Db->doSelect($sql);
+		if ($return === false) return false;
 
 		// get uids
 		$storedUids = array();
-		foreach ($return_0 as $index => $value) {
+		foreach ($return as $index => $value) {
 			$storedUids[] = $value['uid'];
 		}
 
@@ -456,20 +397,20 @@ class $$$Serverbox {
 			$to = str_replace('>', '&gt;', $to);
 
 			// save locally
-			$sql_1 = "INSERT INTO #__mails
-					SET fk_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."',
-						fk_mail__box = '".mysql_real_escape_string($this->getInfo('fk_mail__box'))."',
-						_subject_ = '".mysql_real_escape_string($subject)."',
-						_plaincontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['plain'])."',
-						_htmlcontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['html'])."',
-						charset = '".mysql_real_escape_string($this->cache['bodyparts']['charset'])."',
-						_sender_ = '".mysql_real_escape_string($from)."',
-						_addressee_ = '".mysql_real_escape_string($to)."',
-						dateOfMail = '".mysql_real_escape_string($date)."',
-						status = '1',
-						uid = '".mysql_real_escape_string($uid)."'
+			$sql = "INSERT INTO #__mails
+				SET fk_mail__serverbox = '".$this->id."',
+					fk_mail__box = '".$this->getInfo('fk_mail__box')."',
+					_subject_ = '".mysql_real_escape_string($subject)."',
+					_plaincontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['plain'])."',
+					_htmlcontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['html'])."',
+					charset = '".mysql_real_escape_string($this->cache['bodyparts']['charset'])."',
+					_sender_ = '".mysql_real_escape_string($from)."',
+					_addressee_ = '".mysql_real_escape_string($to)."',
+					dateOfMail = '".mysql_real_escape_string($date)."',
+					status = '1',
+					uid = '".mysql_real_escape_string($uid)."'
 			";
-			$result_1 = $TSunic->Db->doInsert($sql_1);
+			$result = $TSunic->Db->doInsert($sql);
 			$id_mail__mail = mysql_insert_id();
 
 			// save attachments
@@ -502,11 +443,11 @@ class $$$Serverbox {
 	 * @param int: part-number
 	 *
 	 * @return bool
- 	 */
+	 */
 	function getpart ($stream, $mail_id, $part, $partnumber) {
 
-	    // get body
-	    if ($partnumber == 0) {
+		// get body
+		if ($partnumber == 0) {
 			// no multipart
 			$bodydata = imap_body($stream, $mail_id);
 		} else {
@@ -621,23 +562,6 @@ class $$$Serverbox {
 			foreach ($part->parts as $partno0 => $p2)
 				$this->getpart($stream, $mail_id, $p2, $partno.'.'.($partno0+1));  // 1.2, 1.2.1, etc.
 		}
-
-		return true;
-	}
-
-	/* check, if serverbox exists
-	 *
-	 * @return bool
-	 */
-	public function isValid () {
-
-		// check, if id exists
-		if (!isset($this->id_mail__serverbox) OR empty($this->id_mail__serverbox))
-			return false;
-
-		// check, if serverbox in database
-		$dateOfCreation = $this->getInfo('dateOfCreation');
-		if (empty($dateOfCreation)) return false;
 
 		return true;
 	}

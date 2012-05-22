@@ -1,16 +1,7 @@
 <!-- | mail account class -->
 <?php
-class $$$Account {
-
-	/* id of mail-account
-	 * string
-	 */
-	private $id_mail__account;
-
-	/* information about mail-account
-	 * array
-	 */
-	private $info;
+include_once '$system$Object.class.php';
+class $$$Account extends $system$Object {
 
 	/* smtp-objects
 	 * array
@@ -66,68 +57,45 @@ class $$$Account {
 	private $timeout = 3;
 
 	/* constructor
-	 * +@params int: id_mail__account
+	 * +@params int: ID
 	 */
-	public function __construct ($id_mail__account = 0) {
-
-		// save id
-		$this->id_mail__account = $id_mail__account;
+	public function __construct ($id = 0) {
 
 		// set $frequenceServerboxUpdate
 		$this->frequenceServerboxUpdate = 60 * 60 * 24 * 7;
 
-		return;
+		return parent::__construct($id);
 	}
 
-	/* get all data of mail-account
-	 * +@param bool/string: name of data (true will return all data)
+	/* load infos from database
 	 *
-	 * @return array/false
- 	 */
-	public function getInfo ($name = true) {
-		global $TSunic;
+	 * @return sql query
+	 */
+	protected function loadInfoSql () {
+		return "SELECT _name_ as name,
+				_description_ as description,
+				dateOfCreation,
+				dateOfUpdate,
+				_email_ as email,
+				_password_ as password,
+				_host_ as host,
+				_user_ as user,
+	protocol,
+				connsecurity,
+				auth,
+				lastServerboxUpdate
+			FROM #__accounts
+			WHERE id = '$this->id';";
+	}
 
-		// check, if info already in cache
-		if (!empty($this->id_mail__account) AND empty($this->info)) {
+	/* load information about object
+	 */
+	protected function loadInfo () {
+		parent::loadInfo();
 
-			// get data from database
-			$sql_0 = "SELECT _name_ as name,
-					 _description_ as description,
-					 dateOfCreation as dateOfCreation,
-					 dateOfUpdate as dateOfUpdate,
-					 _email_ as email,
-					 _password_ as password,
-					 _host_ as host,
-					 _user_ as user,
-					 _port_ as port,
-					 protocol as protocol,
-					 connsecurity as connsecurity,
-					 auth as auth,
-					 lastServerboxUpdate as lastServerboxUpdate
-				FROM #__accounts
-				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
-			$result_0 = $TSunic->Db->doSelect($sql_0);
-
-			// return, if no server matched
-			if (empty($result_0)) return false;
-
-			// move password to obj-var
-			$this->password = $result_0[0]['password'];
-			unset($result_0[0]['password']);
-
-			// store data
-			$this->info = $result_0[0];
-			$this->info['id_mail__account'] = $this->id_mail__account;
-			if (!empty($this->password)) $this->info['password'] = '********';
-
-			// set e-mail as name, if name is not set
-			if (empty($this->info['name'])) $this->info['name'] = $this->info['email'];
-		}
-
-		// return requested data
-		if ($name === true) return $this->info;
-		if (isset($this->info[$name])) return $this->info[$name];
-		return false;
+		// handle password
+		$this->password = $this->info['password'];
+		unset($this->info['password']);
 	}
 
 	/* update info-data
@@ -148,7 +116,6 @@ class $$$Account {
 	 * @return array
  	 */
 	public function getServerboxes () {
-		global $TSunic;
 
 		// already computed OR invalid account?
 		if (!$this->isValid() OR !empty($this->serverboxes)) return $this->serverboxes;
@@ -164,9 +131,10 @@ class $$$Account {
 		if ($timesince >= $this->frequenceServerboxUpdate) $this->updateServerboxes();
 
 		// get serverboxes from database
-		$sql_0 = "SELECT id_mail__serverbox as id_mail__serverbox
+		global $TSunic;
+		$sql_0 = "SELECT id
 				FROM #__serverboxes
-				WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+				WHERE fk_mail__account = '".$this->id."';";
 		$result_0 = $TSunic->Db->doSelect($sql_0);
 
 		// get serverbox-objects
@@ -208,22 +176,20 @@ class $$$Account {
 	 * @return array
  	 */
 	public function getSmtps () {
+		if (!empty($this->smtps)) return $this->smtps;
 		global $TSunic;
 
-		if (empty($this->smtps)) {
+		// get smtps from database
+		global $TSunic;
+		$sql_0 = "SELECT id
+				FROM #__smtps
+				WHERE fk_mail__account = '".$this->id."';";
+		$result_0 = $TSunic->Db->doSelect($sql_0);
 
-			// get smtps from database
-			$sql_0 = "SELECT id_mail__smtp as id_mail__smtp
-					FROM #__smtps
-					WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
-			$result_0 = $TSunic->Db->doSelect($sql_0);
-
-			// get objects
-			$this->smtps = array();
-			foreach ($result_0 as $index => $values) {
-				// get object
-				$this->smtps[] = $TSunic->get('$$$Smtp', $values['id_mail__smtp']);
-			}
+		// get objects
+		$this->smtps = array();
+		foreach ($result_0 as $index => $values) {
+			$this->smtps[] = $TSunic->get('$$$Smtp', $values['id']);
 		}
 
 		return $this->smtps;
@@ -242,11 +208,9 @@ class $$$Account {
 	public function setConnection ($host, $port, $user, $protocol, $connsecurity, $auth) {
 		global $TSunic;
 
-		// is valid connection?
-		if (!$this->validateConnection($host, $port, $user, $protocol, $connsecurity, $auth)) {
-			// invalid connection data
+		// invalid connection?
+		if (!$this->validateConnection($host, $port, $user, $protocol, $connsecurity, $auth))
 			return false;
-		}
 
 		// update connection-data
 		$host = $this->info['host'];
@@ -273,15 +237,14 @@ class $$$Account {
 					protocol = '".$this->getProtocol($protocol, true)."',
 					connsecurity = '".$this->getConnsecurity($connsecurity, true)."',
 					auth = '".$this->getAuth($auth, true)."'
-				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';
+				WHERE id = '".$this->id_mail__account."';
 				";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
 		// update $this->info
 		$this->updateInfo();
 
-		if ($result_0) return true;
-		return false;
+		return ($result_0) ? true : false;
 	}
 
 	/* create a new mail-account
@@ -293,34 +256,25 @@ class $$$Account {
 	 * @return bool
  	 */
 	public function createAccount ($email, $password, $name = '', $description = '') {
-		global $TSunic;
 
 		// validate input
 		if (!$this->isValidName($name)
 				OR !$this->isValidDescription($description)
 				OR !$this->isValidEmail($email)
 				OR !$this->isValidPassword($password)
-			) {
-			// invalid input-data
-			return false;
-		}
+		) return false;
 
 		// save in db
-		$sql_0 = "INSERT INTO #__accounts
-				SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
-				_email_ = '".mysql_real_escape_string($email)."',
-				_password_ = '".mysql_real_escape_string($password)."',
-				_name_ = '".mysql_real_escape_string($name)."',
-				_description_ = '".mysql_real_escape_string($description)."',
+		global $TSunic;
+		$sql = "INSERT INTO #__accounts
+			SET fk_system_users__account = '".$TSunic->Usr->getInfo('id')."',
+				_email_ = '".$email."',
+				_password_ = '".$password."',
+				_name_ = '".$name."',
+				_description_ = '".$description."',
 				dateOfCreation = NOW()
 				";
-		$result_0 = $TSunic->Db->doInsert($sql_0);
-
-		// update $this->info
-		$this->id_mail__account = mysql_insert_id();
-		$this->updateInfo();
-
-		return $result_0;
+		return $this->_create($sql);
 	}
 
 	/* edit a mail-account
@@ -332,7 +286,6 @@ class $$$Account {
 	 * @return bool
  	 */
 	public function editAccount ($email, $password, $name = '', $description = '') {
-		global $TSunic;
 
 		// validate input
 		if (!$this->isValidName($name)
@@ -340,42 +293,33 @@ class $$$Account {
 				OR !$this->isValidEmail($email)
 				OR !$this->isValidPassword($password)
 			) {
-			// invalid input-data
 			return false;
 		}
 
 		// validate password
-		$sql_password = '';
-		if ($password != '********' AND !empty($password)) {
-			// create sql-string for password
-			$sql_password = "_password_ = '".mysql_real_escape_string($password)."',";
-		}
+		$sql_set = array();
+		if ($email != $this->getInfo('email'))
+			$sql_set[] = "_email_ = '$email'";
+		if (!empty($password) and $password != '*******')
+			$sql_set[] = "_password_ = '$password'";
+		if ($name != $this->getInfo('name'))
+			$sql_set[] = "_name_ = '$name'";
+		if ($description != $this->getInfo('description'))
+			$sql_set[] = "_description_ = '$description'";
+		if (empty($sql_set)) return true;
 
-		// save in db
-		$sql_0 = "UPDATE #__accounts
-				SET fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."',
-					_email_ = '".mysql_real_escape_string($email)."',
-					".$sql_password."
-					_name_ = '".mysql_real_escape_string($name)."',
-					_description_ = '".mysql_real_escape_string($description)."',
-					dateOfCreation = NOW()
-				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';
-				";
-		$result_0 = $TSunic->Db->doUpdate($sql_0);
-
-		// update $this->info
-		$this->updateInfo();
-
-		if ($result_0) return true;
-		return false;
+		// update database
+		$sql = "UPDATE #__accounts SET ".
+			implode(",", $sql_set).
+			" WHERE id = '$this->id';";
+		return $this->_edit($sql);
 	}
 
-	/* delete this mail-account
+	/* delete mail account
 	 *
 	 * @return bool
- 	 */
-	public function deleteAccount () {
-		global $TSunic;
+	 */
+	public function delete () {
 
 		// delete serverboxes
 		$serverboxes = $this->getServerboxes();
@@ -391,45 +335,40 @@ class $$$Account {
 			$value->editSmtp(0, true, true, true, true);
 		}
 
-		// delete account in database
-		$sql_0 = "DELETE FROM #__accounts
-				  WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."'
-				  ;";
-		$result_0 = $TSunic->Db->doDelete($sql_0);
-
-		return true;
+		// delete in database
+		$sql = "DELETE FROM #__accounts
+			WHERE id = '$this->id';";
+		return $this->_delete($sql);
 	}
 
-	/* check, if name of mail-account is valid
+	/* check, if description of mail account is valid
 	 * @param string: description of mail-account
 	 *
 	 * @return bool
  	 */
 	public function isValidDescription ($description) {
-		return true;
+		return ($this->_validate($description, 'string')
+		) ? true : false;
 	}
 
-	/* check, if name of mail-account is valid
+	/* check, if name of mail account is valid
 	 * @param string: name of mail-account
 	 *
 	 * @return bool
  	 */
 	public function isValidName ($name) {
-
-		return true;
+		return ($this->_validate($name, 'string')
+		) ? true : false;
 	}
 
-	/* check, if email-address of mail-account is valid
+	/* check, if email address of mail account is valid
 	 * @param string: email of mail-account
 	 *
 	 * @return bool
  	 */
 	public function isValidEmail ($email) {
-
-		// check, if empty password
-		if (empty($email)) return false;
-
-		return true;
+		return ($this->_validate($name, 'email')
+		) ? true : false;
 	}
 
 	/* check, if password of mail-account is valid
@@ -457,40 +396,28 @@ class $$$Account {
 	 * @return bool
  	 */
 	public function isValidHost ($host) {
-
-		// check, if string is empty
-		if (empty($host)) return false;
-
-		return true;
+		return ($this->_validate($host, 'email')
+		) ? true : false;
 	}
 
 	/* check, if port is valid
 	 * @param string: port of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidPort ($port) {
-
-		// verify int
-		$port = (int) $port;
-
-		// check, if string is empty
-		if (empty($port) OR !is_numeric($port)) return false;
-
-		return true;
+		return ($this->_validate($port, 'int')
+		) ? true : false;
 	}
 
 	/* check, if user is valid
 	 * @param string: user of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidUser ($user) {
-
-		// check, if string is empty
-		if (empty($user)) return false;
-
-		return true;
+		return ($this->_validate($user, 'string')
+		) ? true : false;
 	}
 
 	/* get number or name of password-authentification
@@ -584,23 +511,6 @@ class $$$Account {
 			// return empty
 			return '';
 		}
-	}
-
-	/* check, if mailaccount exists
-	 *
-	 * @return bool
- 	 */
-	public function isValid () {
-
-		// check, if id exists
-		if (!isset($this->id_mail__account) OR empty($this->id_mail__account))
-			return false;
-
-		// check, if mailaccount in database
-		$dateOfCreation = $this->getInfo('dateOfCreation');
-		if (empty($dateOfCreation)) return false;
-
-		return true;
 	}
 
 	/* ********************** interaction with server ******************* */
@@ -733,7 +643,7 @@ class $$$Account {
 
 		// get locally added serverboxes
 		$sql_0 = "SELECT _name_ as name,
-					id_mail__serverbox as id_mail__serverbox
+					id as id_mail__serverbox
 				FROM #__serverboxes
 				WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
 		$serverbox_list = $TSunic->Db->doSelect($sql_0);
@@ -768,7 +678,7 @@ class $$$Account {
 		// set deleted serverboxes as deleted in database
 		$sql_where = '';
 		foreach ($serverbox_list as $index => $values) {
-			$sql_where.= " OR id_mail__serverbox = '".mysql_real_escape_string($values['id_mail__serverbox'])."'";
+			$sql_where.= " OR id = '".mysql_real_escape_string($values['id_mail__serverbox'])."'";
 		}
 		$sql_where = substr($sql_where, 3);
 
@@ -783,7 +693,7 @@ class $$$Account {
 		// set lastServerboxUpdate
 		$sql_3 = "UPDATE #__accounts
 				SET lastServerboxUpdate = NOW()
-				WHERE id_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+				WHERE id = '".$this->id."';";
 		$result_3 = $TSunic->Db->doUpdate($sql_3);
 
 		return true;

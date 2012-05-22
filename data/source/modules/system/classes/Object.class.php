@@ -189,7 +189,8 @@ class $$$Object {
 	 * @return bool
 	 */
 	protected function _isObject ($table, $id) {
-		return !$this->_isUnique($table, 'id', $id);
+		return ($this->_validate($id, 'int'))
+			? !$this->_isUnique($table, 'id', $id) : false;
 	}
 }
 ?>

@@ -1,27 +1,12 @@
 <!-- | mail class -->
 <?php
-class $$$Mail {
+include_once '$system$Object.class.php';
+class $$$Mail extends $system$Object {
 
-	/* id of e-mail
-	 * int
+	/* attached files
+	 * array of fsfile objects
 	 */
-	private $id_mail__mail;
-
-	/* information about email
-	 * array
-	 */
-	private $info;
-
-	/* constructor
-	 * @param int: id_ema of e-mail
-	 */
-	public function __construct ($id_mail__mail = false) {
-
-		// save id in obj-vars
-		$this->id_mail__mail = $id_mail__mail;
-
-		return;
-	}
+	protected $attachments;
 
 	/* get all data of e-mail
 	 * +@param bool/string: name of data (true will return all data)
@@ -39,25 +24,25 @@ class $$$Mail {
 			$this->info = array();
 
 			// get content from database
-			$sql_0 = "SELECT mails._subject_ as subject,
-						mails._plaincontent_ as plaincontent,
-						mails._htmlcontent_ as htmlcontent,
-						mails._addressee_ as addressee,
-						mails.fk_mail__box as fk_mail__box,
-						mails.charset as charset,
-						mails._sender_ as sender,
-						mails.dateOfMail as dateOfMail,
-						mails.dateOfDownload as dateOfDownload
-					FROM #__serverboxes as serverboxes,
-						#__mails as mails
-					WHERE mails.id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
-						AND mails.fk_mail__serverbox = serverboxes.id_mail__serverbox
-						AND mails.dateOfDeletion = '0000-00-00 00:00:00'
-					ORDER BY mails.id_mail__mail ASC;";
-			$result_0 = $TSunic->Db->doSelect($sql_0);
+			$sql = "SELECT mails._subject_ as subject,
+					mails._plaincontent_ as plaincontent,
+					mails._htmlcontent_ as htmlcontent,
+					mails._addressee_ as addressee,
+					mails.fk_mail__box as fk_mail__box,
+					mails.charset as charset,
+					mails._sender_ as sender,
+					mails.dateOfMail as dateOfMail,
+					mails.dateOfDownload as dateOfDownload
+				FROM #__serverboxes as serverboxes,
+					#__mails as mails
+				WHERE mails.id = '".$this->id."'
+					AND mails.fk_mail__serverbox = serverboxes.id
+					AND mails.dateOfDeletion = '0000-00-00 00:00:00'
+				ORDER BY mails.id ASC;";
+			$result = $TSunic->Db->doSelect($sql);
 
 			// save info in obj-vars
-			$this->info = (isset($result_0, $result_0[0])) ? $result_0[0] : array();
+			$this->info = (isset($result, $result[0])) ? $result[0] : array();
 
 			// parse content of mail
 			$this->info['plaincontent'] = $TSunic->Parser->toText($this->info['plaincontent']);
@@ -65,7 +50,7 @@ class $$$Mail {
 		}
 
 		// add id to info
-		$this->info['id_mail__mail'] = $this->id_mail__mail;
+		$this->info['id'] = $this->id;
 
 		// return requested data
 		if ($name === true) return $this->info;
@@ -76,28 +61,84 @@ class $$$Mail {
 	/* get attachments of mail (as objects)
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getAttachments () {
-		global $TSunic;
 
 		// already fetched?
 		if (isset($this->attachments) AND !empty($this->attachments)) return $this->attachments;
 
 		// get attachments from database
-		$sql_1 = "SELECT id__attachment as id__attachment
-				FROM #__attachments as attachments
-				WHERE attachments.fk_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
-				ORDER BY id__attachment ASC;";
-		$result_1 = $TSunic->Db->doSelect($sql_1);
+		global $TSunic;
+		$sql = "SELECT fk_fsfile
+			FROM #__attachments as attachments
+			WHERE attachments.fk_mail = '".$this->id."'
+			ORDER BY fk_fsfile ASC;";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!$result) return array();
 
-		// load userfiles as attachment
+		// get fsfile objects
 		$this->attachments = array();
-		foreach ($result_1 as $index => $values) {
-			// get userfile-object
-			$this->attachments[] = $TSunic->get('$$$Attachment', $values['id__attachment']);
+		foreach ($result as $index => $values) {
+			$this->attachments[] = $TSunic->get('$usersystem$FsFile', $values['fk_fsfile']);
 		}
 
 		return $this->attachments;
+	}
+
+	/* add attachment to mail
+	 * @param int: fk of fsfile
+	 *
+	 * @return bool
+	 */
+	public function addAttachment ($fk_fsfile) {
+		global $TSunic;
+
+		// validate fsfile
+		if (!$this->_isObject('$system$FsFile', $fk_fsfile)) return false;
+
+		// delete cached attachments
+		$this->attachments = array();
+
+		// update database
+		$sql = "INSERT INTO #__attachments
+			SET fk_fsfile = '".$fk_fsfile."',
+				fk_mail = '".$this->id."'
+			ON DUPLICATE KEY UPDATE dateOfUpdate = NOW();";
+		return $TSunic->Db->doInsert($sql);
+	}
+
+	/* remove attachment from mail
+	 * @param int: fk of fsfile
+	 *
+	 * @return bool
+	 */
+	public function rmAttachment ($fk_fsfile) {
+		// TODO: remove files as well?
+
+		// delete cached attachments
+		$this->attachments = array();
+
+		// update database
+		$sql = "DELETE FROM #__attachments
+			WHERE fk_fsfile = '".$fk_fsfile."',
+				fk_mail = '".$this->id."';";
+		return $TSunic->Db->doDelete($sql);
+	}
+
+	/* remove all attachments from mail
+	 *
+	 * @return bool
+	 */
+	public function rmAllAttachments () {
+		// TODO: remove files as well?
+
+		// delete cached attachments
+		$this->attachments = array();
+
+		// update database
+		$sql = "DELETE FROM #__attachments
+			WHERE fk_mail = '".$this->id."';";
+		return $TSunic->Db->doDelete($sql);
 	}
 
 	/* get content of mail
@@ -141,15 +182,12 @@ class $$$Mail {
 		global $TSunic;
 
 		// delete attachment
-		foreach ($this->getAttachments() as $index => $Value) {
-			// delete attachment
-			$Value->deleteAttachment();
-		}
+		$this->rmAllAttachments();
 
 		// delete in database
 		if ($completely) {
 			$sql_0 = "DELETE FROM #__mails
-					WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."';";
+					WHERE id = '".$this->id."';";
 			$result_0 = $TSunic->Db->doDelete($sql_0);
 		} else {
 			$sql_0 = "UPDATE #__mails
@@ -163,7 +201,7 @@ class $$$Mail {
 						dateOfMail = '',
 						dateOfDownload = '',
 						dateOfDeletion = NOW()
-					WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."';";
+					WHERE id = '".$this->id."';";
 			$result_0 = $TSunic->Db->doUpdate($sql_0);
 		}
 
@@ -208,6 +246,7 @@ class $$$Mail {
 		return true;
 	}
 */
+
 	/* move mail to mailbox
 	 * @param int: $fk_mail__box
 	 *
@@ -225,8 +264,8 @@ class $$$Mail {
 
 		// update mail in database
 		$sql_0 = "UPDATE #__mails
-				SET fk_mail__box = '".mysql_real_escape_string($fk_mail__box)."'
-				WHERE id_mail__mail = '".mysql_real_escape_string($this->id_mail__mail)."'
+				SET fk_mail__box = '".$fk_mail__box."'
+				WHERE id = '".$this->id."'
 				  ;";
 		$result_0 = $TSunic->Db->doInsert($sql_0);
 
@@ -299,6 +338,5 @@ class $$$Mail {
 
 		return true;
 	}
-
 }
 ?>

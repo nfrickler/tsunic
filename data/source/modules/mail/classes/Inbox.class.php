@@ -40,22 +40,22 @@ class $$$Inbox extends $$$Box {
 		if (!empty($this->mails)) return $this->mails;
 
 		// get ids of mails
-		$sql_0 = "SELECT mails.id_mail__mail as id_mail__mail
-				FROM #__mails as mails,
-					#__serverboxes as serverboxes,
-					#__accounts as accounts
-				WHERE accounts.fk_system_users__account = '".mysql_real_escape_string($TSunic->CurrentUser->getInfo('id_system_users__account'))."'
-					AND serverboxes.fk_mail__account = accounts.id_mail__account
-					AND mails.fk_mail__serverbox = serverboxes.id_mail__serverbox
-					AND mails.fk_mail__box = '0'
-					AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
-		$ids_mails = $TSunic->Db->doSelect($sql_0);
+		$sql = "SELECT mails.id as id
+			FROM #__mails as mails,
+				#__serverboxes as serverboxes,
+				#__accounts as accounts
+			WHERE accounts.fk_system_users__account = '".$TSunic->Usr->getInfo('id')."'
+				AND serverboxes.fk_mail__account = accounts.id
+				AND mails.fk_mail__serverbox = serverboxes.id
+				AND mails.fk_mail__box = '0'
+				AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
+		$result = $TSunic->Db->doSelect($sql);
+		if (!$result) return array();
 
 		// create and store objects
 		$this->mails = array();
-		foreach ($ids_mails as $index => $value) {
-			// get mail-object
-			$this->mails[] = $TSunic->get('$$$Mail', array($value['id_mail__mail']));
+		foreach ($result as $index => $value) {
+			$this->mails[] = $TSunic->get('$$$Mail', array($value['id']));
 		}
 
 		return $this->mails;
