@@ -22,15 +22,13 @@ function $$$addServerbox () {
 
 		// validate input
 		if (!$Mailbox->isValidName($newMailbox)) {
-			// invalid input
-			$TSunic->Log->add('error', '{ADDSERVERBOX__INVALIDINPUT}', 3);
+			$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
 			$TSunic->redirect('back');
 		}
 
 		// create new mailbox
 		if (!$Mailbox->createBox($newMailbox)) {
-			// error occurred
-			$TSunic->Log->add('error', '{ADDSERVERBOX__ERROROCCURRED}', 3);
+			$TSunic->Log->alert('error', '{ADDSERVERBOX__ERROROCCURRED}');
 			$TSunic->redirect('back');
 		}
 
@@ -41,13 +39,13 @@ function $$$addServerbox () {
 		// check, if exist
 		if (!$Mailbox->isValid()) {
 			// invalid mailbox
-			$TSunic->Log->add('error', '{ADDSERVERBOX__ERROROCCURRED}', 3);
+			$TSunic->Log->alert('error', '{ADDSERVERBOX__ERROROCCURRED}');
 			$TSunic->redirect('back');
 		}
 
 	} else {
 		// invalid mailbox
-		$TSunic->Log->add('error', '{ADDSERVERBOX__INVALIDINPUT}', 3);
+		$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
@@ -59,21 +57,18 @@ function $$$addServerbox () {
 		OR !$Serverbox->isValidFkAccount($fk_mail__account)) {
 		// invalid input
 
-		$TSunic->Log->add('error', '{ADDSERVERBOX__INVALIDINPUT}', 3);
+		$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// add serverbox
-	$return = $Serverbox->createServerbox($fk_mail__account, $name, $Mailbox->getInfo('id_mail__box'), 0);
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{ADDSERVERBOX__INVALIDINPUT}', 3);
+	if (!$Serverbox->createServerbox($fk_mail__account, $name, $Mailbox->getInfo('id'), 0)) {
+		$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{ADDSERVERBOX__SUCCESS}');
+	$TSunic->Log->alert('info', '{ADDSERVERBOX__SUCCESS}');
 	$TSunic->redirect('$$$showMailservers');
 
 	return true;

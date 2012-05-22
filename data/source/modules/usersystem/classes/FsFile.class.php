@@ -132,7 +132,7 @@ class $$$FsFile extends $system$Object {
 		// delete file
 		$FH = $TSunic->get('$system$File', $this->getPath());
 		if (!$FH->deleteFile()) {
-			$TSunic->Log->doLog(3, 'usersystem::FsFile::delete: Could not delete file!');
+			$TSunic->Log->log(3, 'usersystem::FsFile::delete: Could not delete file!');
 			return false;
 		}
 

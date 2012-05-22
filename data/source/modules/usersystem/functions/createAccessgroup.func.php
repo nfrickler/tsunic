@@ -13,12 +13,12 @@ function $$$createAccessgroup () {
 	// validate input
 	if (!$Accessgroup->isValidName($name)) {
 		// invalid name
-		$TSunic->Log->add('error', '{CREATEACCESSGROUP__INVALIDNAME}', 3);
+		$TSunic->Log->alert('error', '{CREATEACCESSGROUP__INVALIDNAME}');
 		$TSunic->redirect('back');
 	}
 	if (!$Accessgroup->isValidParent($fk_parent)) {
 		// invalid fk_parent
-		$TSunic->Log->add('error', '{CREATEACCESSGROUP__INVALIDPARENT}', 3);
+		$TSunic->Log->alert('error', '{CREATEACCESSGROUP__INVALIDPARENT}');
 		$TSunic->redirect('back');
 	}
 
@@ -28,13 +28,13 @@ function $$$createAccessgroup () {
 	// check, if create successful
 	if ($return) {
 		// success
-		$TSunic->Log->add('info', '{CREATEACCESSGROUP__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{CREATEACCESSGROUP__SUCCESS}');
 		$TSunic->redirect('$$$showAccessgroup', array('$$$id' => $Accessgroup->getInfo('id')));
 		return true;
 	}
 
 	// add error-message and redirect back
-	$TSunic->Log->add('error', '{CREATEACCESSGROUP__ERROR}', 3);
+	$TSunic->Log->alert('error', '{CREATEACCESSGROUP__ERROR}');
 	$TSunic->redirect('back');
 	return true;
 }

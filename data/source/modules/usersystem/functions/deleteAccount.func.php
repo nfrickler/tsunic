@@ -9,7 +9,7 @@ function $$$deleteAccount () {
 	// validate password
 	if (!$TSunic->Usr->isCorrectPassword($password)) {
 		// wrong password
-		$TSunic->Log->add('error', '{DELETEACCOUNT__WRONGPASSWORD}');
+		$TSunic->Log->alert('error', '{DELETEACCOUNT__WRONGPASSWORD}');
 		$TSunic->redirect('back');
 	}
 
@@ -22,12 +22,12 @@ function $$$deleteAccount () {
 
 	// check, if error occured
 	if (!$return) {
-		$TSunic->Log->add('error', '{DELETEACCOUNT__ERROR}');
+		$TSunic->Log->alert('error', '{DELETEACCOUNT__ERROR}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEACCOUNT__SUCCESS}');
+	$TSunic->Log->alert('info', '{DELETEACCOUNT__SUCCESS}');
 
 	// redirect to showIndex
 	$TSunic->redirect('default');

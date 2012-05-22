@@ -22,13 +22,13 @@ function $$$setConfig () {
 		// set config value
 		if (!$UserConfig->set($config, $value)) {
 			$error = 1;
-			$TSunic->Log->add('error', '{SETCONFIG__ERROR}', 3);
+			$TSunic->Log->alert('error', '{SETCONFIG__ERROR}');
 		}
 	}
 
 	// success
 	if (!$error) {
-		$TSunic->Log->add('info', '{SETCONFIG__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{SETCONFIG__SUCCESS}');
 		$TSunic->redirect('$$$showConfig', array('$$$id' => $User->getInfo('id')));
 		return true;
 	}

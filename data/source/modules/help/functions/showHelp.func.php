@@ -10,7 +10,7 @@ function $$$showHelp () {
 	if (!$Helpfile->isValid()) {
 		$Helpfile->setPath("#runtime#help/$$$".$lang."__index.help.php");
 		if (!$Helpfile->isValid()) {
-			$TSunic->Log->doLog(3, "Could not find index help page '".$Helpfile->getPath()."'!");
+			$TSunic->Log->log(3, "Could not find index help page '".$Helpfile->getPath()."'!");
 			$TSunic->redirect('$$$showMain');
 			exit;
 		}

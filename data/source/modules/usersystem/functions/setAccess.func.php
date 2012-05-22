@@ -7,7 +7,7 @@ function $$$setAccess () {
 	$id = $TSunic->Temp->getParameter('$$$id');
 	$isuser = $TSunic->Temp->getParameter('$$$isuser');
 	if (!$id) {
-		$TSunic->Log->add('error', '{SETACCESS__ERROR}', 3);
+		$TSunic->Log->alert('error', '{SETACCESS__ERROR}');
 		$TSunic->redirect('back');
 		return false;
 	}
@@ -30,13 +30,13 @@ function $$$setAccess () {
 		$access = substr($index, 12);
 		if (!$Object->set($access, $value)) {
 			$error = 1;
-			$TSunic->Log->add('error', '{SETACCESS__ERROR}', 3);
+			$TSunic->Log->alert('error', '{SETACCESS__ERROR}');
 		}
 	}
 
 	// success
 	if (!$error) {
-		$TSunic->Log->add('info', '{SETACCESS__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{SETACCESS__SUCCESS}');
 		$TSunic->redirect('back');
 		return true;
 	}

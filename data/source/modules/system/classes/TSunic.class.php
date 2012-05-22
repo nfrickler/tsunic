@@ -37,7 +37,7 @@ class TSunic {
 	 */
 	public $Config;
 
-	/* reference to Log-object
+	/* reference to Log object
 	 * object
 	 */
 	public $Log;
@@ -78,7 +78,7 @@ class TSunic {
 		// create Temp-object
 		$this->Temp = $this->get('$$$Temp');
 
-		// create Log-object
+		// create Log object
 		$this->Log = $this->get('$$$Log');
 
 		// start template-engine
@@ -146,7 +146,7 @@ class TSunic {
 			if ($this->internal_run OR $this->isAjax()) return false;
 
 			// page not found!
-			$this->Log->add('error', '{CLASS__TSUNIC__PAGE_NOT_FOUND}', 3);
+			$this->Log->alert('error', '{CLASS__TSUNIC__PAGE_NOT_FOUND}');
 			$this->redirect('back');
 		}
 
@@ -251,7 +251,8 @@ class TSunic {
 			!$this->Usr->isLoggedIn() and
 			!in_array($this->Temp->getEvent(), $allowed_pages)
 		) {
-			$this->Log->add('error', '{CLASS__TSUNIC__LOGINFIRST}', 3, '$usersystem$showLogin');
+			$this->Log->alert('error', '{CLASS__TSUNIC__LOGINFIRST}');
+			$this->redirect('$usersystem$showLogin');
 			exit;
 		}
 
@@ -426,7 +427,7 @@ class TSunic {
 		} else {
 
 			// event doesn't exist
-			$this->Log->add('error', '{CLASS__TSUNIC__PAGE_NOT_FOUND}');
+			$this->Log->alert('error', '{CLASS__TSUNIC__PAGE_NOT_FOUND}');
 			$link = '?back=1';
 		}
 

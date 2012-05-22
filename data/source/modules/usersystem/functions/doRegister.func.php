@@ -13,7 +13,7 @@ function $$$doRegister () {
 	if ($password != $passwordrepeat) {
 
 		// password wrong repeated!
-		$TSunic->Log->add('error', '{DOREGISTER__INVALIDREPEAT}', 3);
+		$TSunic->Log->alert('error', '{DOREGISTER__INVALIDREPEAT}');
 
 		// redirect back to form
 		$TSunic->redirect('back');
@@ -21,7 +21,7 @@ function $$$doRegister () {
 	if (!$TSunic->Usr->isValidEMail($email)) {
 
 		// password wrong repeated!
-		$TSunic->Log->add('error', '{DOREGISTER__INVALIDEMAIL}', 3);
+		$TSunic->Log->alert('error', '{DOREGISTER__INVALIDEMAIL}');
 
 		// redirect back to form
 		$TSunic->redirect('back');
@@ -29,7 +29,7 @@ function $$$doRegister () {
 	if (!$TSunic->Usr->isValidPassword($password)) {
 
 		// password wrong repeated!
-		$TSunic->Log->add('error', '{DOREGISTER__INVALIDPASSWORD}');
+		$TSunic->Log->alert('error', '{DOREGISTER__INVALIDPASSWORD}');
 
 		// redirect back to form
 		$TSunic->redirect('back');
@@ -37,7 +37,7 @@ function $$$doRegister () {
 	if (!$TSunic->Usr->isValidName($name)) {
 
 		// password wrong repeated!
-		$TSunic->Log->add('error', '{DOREGISTER__INVALIDNAME}', 3);
+		$TSunic->Log->alert('error', '{DOREGISTER__INVALIDNAME}');
 
 		// redirect back to form
 		$TSunic->redirect('back');
@@ -57,7 +57,7 @@ function $$$doRegister () {
 		setCookie('$$$formLogin__emailname', $name, $expire);
 
 		// success
-		$TSunic->Log->add('info', '{DOREGISTER__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{DOREGISTER__SUCCESS}');
 
 		// show login
 		$TSunic->redirect('$$$showLogin');
@@ -65,7 +65,7 @@ function $$$doRegister () {
 	}
 
 	// failed
-	$TSunic->Log->add('error', '{DOREGISTER__ERROR}', 3);
+	$TSunic->Log->alert('error', '{DOREGISTER__ERROR}');
 	$TSunic->redirect('back');
 	exit;
 }

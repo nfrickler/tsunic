@@ -3,16 +3,13 @@
 function $$$showAddServerbox () {
 	global $TSunic;
 
-	// get id_mail__account
-	$id_mail__account = $TSunic->Temp->getParameter('id_mail__account');
+	// get mailaccount object
+	$id = $TSunic->Temp->getParameter('id');
+	$Mailaccount = $TSunic->get('$$$Account', $id);
 
-	// get mailaccount-object
-	$Mailaccount = $TSunic->get('$$$Account', $id_mail__account);
-
-	// check mailserver
+	// valid mailaccount?
 	if (!$Mailaccount->isValid()) {
-		// invalid mailaccount
-		$TSunic->Log->add('error', '{SHOWADDSERVERBOX__INVALIDINPUT}');
+		$TSunic->Log->alert('error', '{SHOWADDSERVERBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
@@ -23,8 +20,10 @@ function $$$showAddServerbox () {
 	$SuperMail = $TSunic->get('$$$SuperMail');
 
 	// activate template
-	$data = array('Serverbox' => $Serverbox,
-				  'mailboxes' => $SuperMail->getMailboxes());
+	$data = array(
+		'Serverbox' => $Serverbox,
+		'mailboxes' => $SuperMail->getMailboxes()
+	);
 	$TSunic->Tmpl->activate('$$$showAddServerbox', '$system$content', $data);
 
 	return true;

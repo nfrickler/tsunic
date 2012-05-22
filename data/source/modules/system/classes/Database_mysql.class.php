@@ -63,7 +63,7 @@ class $$$Database_mysql {
 
 		// handle errors
 		if (!$this->con OR !$db) {
-			$TSunic->Log->add('error', 'Couldn\'t connect to Mysql-Database! Error:"'.mysql_error().'"!', 1);
+			$TSunic->Log->log(1, 'Couldn\'t connect to Mysql-Database! Error:"'.mysql_error().'"!');
 			return false;
 		}
 

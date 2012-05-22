@@ -1,6 +1,5 @@
 <!-- | Template: show form to delete mailbox -->
 <?php
-
 $mailbox = $this->getVar('mailbox');
 ?>
 <div id="div_mail__showDeleteMailbox">
@@ -8,6 +7,6 @@ $mailbox = $this->getVar('mailbox');
 		'contenttext' => '{SHOWDELETEMAILBOX__POPUP_DELETE_CONTENT}',
 		'submittext' => '{SHOWDELETEMAILBOX__POPUP_DELETE_YES}',
 		'canceltext' => '{SHOWDELETEMAILBOX__POPUP_DELETE_NO}',
-		'submit_href' => $this->setUrl('$$$deleteMailbox', array('id_mail__box' => $mailbox->getInfo('id_mail__box')), true, false),
+		'submit_href' => $this->setUrl('$$$deleteMailbox', array('$$$id' => $mailbox->getInfo('id')), true, false),
 		'cancel_href' => $this->setUrl('back', true, true, false))); ?>
 </div>

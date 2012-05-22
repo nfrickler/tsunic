@@ -1,6 +1,5 @@
 <!-- | Template: show list of serverboxes -->
 <?php
-
 // activate javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 
@@ -23,7 +22,7 @@ $selectable = $this->getVar('selectable');
 		<tr style="margin:1px; padding:5px;">
 			<?php if (!empty($selectable)) { ?>
 			<td>
-				<input type="checkbox" id="<?php echo $selectable.$value->getInfo('id_mail__serverbox'); ?>" name="<?php echo $selectable.'_'.$value->getInfo('id_mail__serverbox'); ?>" <?php if ($value->getInfo('isActive') == 1) echo 'checked="checked"'; ?> />
+				<input type="checkbox" id="<?php echo $selectable.$value->getInfo('id'); ?>" name="<?php echo $selectable.'_'.$value->getInfo('id'); ?>" <?php if ($value->getInfo('isActive') == 1) echo 'checked="checked"'; ?> />
 			</td>
 			<?php } ?>
 			<td>
@@ -33,10 +32,10 @@ $selectable = $this->getVar('selectable');
 				<?php $this->set($value->getInfo('Mailbox')->getInfo('name')); ?>
 			</td>
 			<td>
-				<a href="<?php $this->setUrl('$$$showEditServerbox', array('id_mail__serverbox' => $value->getInfo('id_mail__serverbox')));?>">
+				<a href="<?php $this->setUrl('$$$showEditServerbox', array('$$$id' => $value->getInfo('id')));?>">
 					<img class="$system$editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWLISTSERVERBOXES__EDIT}'); ?>" />
 				</a>
-				<a href="<?php $this->setUrl('$$$showDeleteServerbox', array('id_mail__serverbox' => $value->getInfo('id_mail__serverbox')));?>"  id="$$$showListServerbox__delete_<?php $this->set($value->getInfo('id_mail__serverbox')); ?>">
+				<a href="<?php $this->setUrl('$$$showDeleteServerbox', array('$$$id' => $value->getInfo('id')));?>"  id="$$$showListServerbox__delete_<?php $this->set($value->getInfo('id')); ?>">
 					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWLISTSERVERBOXES__DELETE}'); ?>" />
 				</a>
 			</td>
@@ -55,9 +54,9 @@ $selectable = $this->getVar('selectable');
 	// get imaps
 	var $$$showListServerboxes__all = new Array();
 	<?php foreach ($serverboxes as $index => $Value) {
-	echo '$$$showListServerboxes__all["id_'.$Value->getInfo('id_mail__serverbox').'"] = new Array("$$$showListServerbox__delete_'.$Value->getInfo('id_mail__serverbox').'",
+	echo '$$$showListServerboxes__all["id_'.$Value->getInfo('id').'"] = new Array("$$$showListServerbox__delete_'.$Value->getInfo('id').'",
 			"'.$Value->getInfo('name').'",
-			"'.$this->setUrl('$$$deleteServerbox', array('id_mail__serverbox' => $Value->getInfo('id_mail__serverbox')), false, false).'");';
+			"'.$this->setUrl('$$$deleteServerbox', array('$$$id' => $Value->getInfo('id')), false, false).'");';
 	} ?>
 
 	// add events

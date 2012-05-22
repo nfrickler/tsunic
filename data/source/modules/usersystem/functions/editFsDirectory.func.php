@@ -14,12 +14,12 @@ function $$$editFsDirectory () {
 	// validate input
 	if (!$Dir->isValidName($name)) {
 		// invalid name
-		$TSunic->Log->add('error', '{EDITFSDIRECTORY__INVALIDNAME}', 3);
+		$TSunic->Log->alert('error', '{EDITFSDIRECTORY__INVALIDNAME}');
 		$TSunic->redirect('back');
 	}
 	if (!$Dir->isValidParent($fk_parent)) {
 		// invalid fk_parent
-		$TSunic->Log->add('error', '{EDITFSDIRECTORY__INVALIDPARENT}', 3);
+		$TSunic->Log->alert('error', '{EDITFSDIRECTORY__INVALIDPARENT}');
 		$TSunic->redirect('back');
 	}
 
@@ -29,13 +29,13 @@ function $$$editFsDirectory () {
 	// check, if edit successful
 	if ($return) {
 		// success
-		$TSunic->Log->add('info', '{EDITFSDIRECTORY__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{EDITFSDIRECTORY__SUCCESS}');
 		$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $Dir->getInfo('id')));
 		return true;
 	}
 
 	// add error-message and redirect back
-	$TSunic->Log->add('error', '{EDITFSDIRECTORY__ERROR}', 3);
+	$TSunic->Log->alert('error', '{EDITFSDIRECTORY__ERROR}');
 	$TSunic->redirect('back');
 	return true;
 }

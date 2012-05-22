@@ -1,6 +1,5 @@
 <!-- | Template: show list of SMTPs -->
 <?php
-
 // activate javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 
@@ -29,10 +28,10 @@ $smtps = $this->getVar('smtps');
 			</td>
 			<td>
 				<?php if ($value->getInfo('id_mail__smtp') != 0) { ?>
-				<a href="<?php $this->setUrl('$$$showEditSmtp', array('id_mail__smtp' => $value->getInfo('id_mail__smtp')));?>">
+				<a href="<?php $this->setUrl('$$$showEditSmtp', array('$$$id' => $value->getInfo('id')));?>">
 					<img class="$system$editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWLISTSMTPS__EDIT}'); ?>" />
 				</a>
-				<a href="<?php $this->setUrl('$$$showDeleteSmtp', array('id_mail__smtp' => $value->getInfo('id_mail__smtp')));?>"  id="$$$showListSmtps__delete_<?php $this->set($value->getInfo('id_mail__smtp')); ?>">
+				<a href="<?php $this->setUrl('$$$showDeleteSmtp', array('id_mail__smtp' => $value->getInfo('id')));?>"  id="$$$showListSmtps__delete_<?php $this->set($value->getInfo('id')); ?>">
 					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWLISTSMTPS__DELETE}'); ?>" />
 				</a>
 				<?php } ?>
@@ -53,9 +52,9 @@ $smtps = $this->getVar('smtps');
 	var $$$showListSmtps_all = new Array();
 	<?php foreach ($smtps as $index => $value) {
 	if ($value->getInfo('id_mail__smtp') == 0) continue;
-	echo '$$$showListSmtps_all["id_'.$value->getInfo('id_mail__smtp').'"] = new Array("$$$showListSmtps__delete_'.$value->getInfo('id_mail__smtp').'",
+	echo '$$$showListSmtps_all["id_'.$value->getInfo('id').'"] = new Array("$$$showListSmtps__delete_'.$value->getInfo('id').'",
 			"'.$value->getInfo('name').'",
-			"'.$this->setUrl('$$$deleteSmtp', array('id_mail__smtp' => $value->getInfo('id_mail__smtp')), false, false).'");';
+			"'.$this->setUrl('$$$deleteSmtp', array('$$$id' => $value->getInfo('id')), false, false).'");';
 	} ?>
 
 	// add events

@@ -11,15 +11,17 @@ function $$$showSendMail () {
 	$smtps = $SuperMail->getSmtps(true);
 
 	// is any smtp?
+	// smtp servers available?
 	if (empty($smtps)) {
-		// no smtp-server available!
-		$TSunic->Log->add('error', '{SHOWSENDMAIL__ADDSMTPFIRST}');
+		$TSunic->Log->alert('error', '{SHOWSENDMAIL__ADDSMTPFIRST}');
 		$TSunic->redirect('$$$showAddSmtp');
 	}
 
 	// activate template
-	$data = array('Mail' => $Mail,
-				  'smtps' => $smtps);
+	$data = array(
+		'Mail' => $Mail,
+		'smtps' => $smtps
+	);
 	$TSunic->Tmpl->activate('$$$showSendMail', '$system$content', $data);
 
 	return true;

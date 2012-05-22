@@ -4,24 +4,21 @@ function $$$editMailbox () {
 	global $TSunic;
 
 	// get input
-	$id_mail__box = $TSunic->Temp->getPost('$$$formMailbox__id_mail__box');
+	$id = $TSunic->Temp->getPost('$$$formMailbox__id_mail__box');
 	$name = $TSunic->Temp->getPost('$$$formMailbox__name');
 	$description = $TSunic->Temp->getPost('$$$formMailbox__description');
 
 	// get mailbox-object
-	$Mailbox = $TSunic->get('$$$Box', $id_mail__box);
+	$Mailbox = $TSunic->get('$$$Box', $id);
 
 	// edit mailbox
-	$return = $Mailbox->editBox($name, $description);
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{EDITMAILBOX__INVALIDINPUT}', 3);
+	if (!$Mailbox->editBox($name, $description)) {
+		$TSunic->Log->alert('error', '{EDITMAILBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{EDITMAILBOX__SUCCESS}', 3);
+	$TSunic->Log->alert('info', '{EDITMAILBOX__SUCCESS}');
 	$TSunic->redirect('$$$showMailboxes');
 
 	return true;

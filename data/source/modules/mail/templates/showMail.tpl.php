@@ -11,7 +11,7 @@ $attachments = $Mail->getAttachments();
 <div id="$$$div__showMail">
 	<h1><?php $this->set('{SHOWMAIL__H1}'); ?></h1>
 	<p class="ts_suplinkbox">
-		<a href="<?php $this->setUrl('$$$showMailbox', array('id_mail__box' => $Mail->getInfo('fk_mail__box'))); ?>">
+		<a href="<?php $this->setUrl('$$$showMailbox', array('$$$id' => $Mail->getInfo('fk_mail__box'))); ?>">
 			<?php $this->set('{SHOWMAIL__TOSHOWMAILBOX}'); ?></a>
 	</p>
 
@@ -21,7 +21,7 @@ $attachments = $Mail->getAttachments();
 				<?php $this->set($Mail->getInfo('subject')); ?>
 			</div>
 			<div class="$$$div__showMail__mailheader_right">
-				<a href="<?php $this->setUrl('$$$showDeleteMail', array('id_mail__mail' => $Mail->getInfo('id_mail__mail'))); ?>" id="$$$showMail__delete">
+				<a href="<?php $this->setUrl('$$$showDeleteMail', array('$$$id' => $Mail->getInfo('id'))); ?>" id="$$$showMail__delete">
 					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWMAIL__DELETE}'); ?>" /></a>
 			</div>
 			<div style="clear:both;"></div>
@@ -42,7 +42,7 @@ $attachments = $Mail->getAttachments();
 		</div>
 		<iframe id="$$$div__showMail_mailcontent" class="$$$div__showMail_mailcontent" src="<?php $this->setUrl('$$$showMailContent', array('id_mail__mail' => $Mail->getInfo('id_mail__mail'), 'tmpl' => '$$$showMailContent')); ?>">
 			<?php $this->set('{SHOWMAIL__NOIFRAMESUPPORT}'); ?>
-			<a href="<?php $this->setUrl('$$$showMailContent', array('id_mail__mail' => $Mail->getInfo('id_mail__mail'), 'tmpl' => '$$$showMailContent')); ?>" target="_blank">
+			<a href="<?php $this->setUrl('$$$showMailContent', array('$$$id' => $Mail->getInfo('id'), 'tmpl' => '$$$showMailContent')); ?>" target="_blank">
 				<?php $this->set('{SHOWMAIL__NOIFRAMESUPPORT_OPENMAIL}'); ?></a>
 		</iframe>
 		<?php if (!empty($attachments)) { ?>
@@ -56,7 +56,7 @@ $attachments = $Mail->getAttachments();
 	</div>
 
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showSendMail', array('id_mail__mail' => $Mail->getInfo('id_mail__mail'))); ?>">
+		<a href="<?php $this->setUrl('$$$showSendMail', array('$$$id' => $Mail->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWMAIL__ANSWERMAIL}'); ?></a>
 	</p>
 </div>
@@ -64,7 +64,7 @@ $attachments = $Mail->getAttachments();
 <script type="text/javascript">
 
 	// get id_mail_mail
-	var $$$showmail__id_mail__mail = <?php echo $this->getVar('mail')->getInfo('id_mail__mail'); ?>;
+	var $$$showmail__id_mail__mail = <?php echo $this->getVar('mail')->getInfo('id'); ?>;
 
 	// add delete-event
 	var deleteLink = document.getElementById('$$$showMail__delete');
@@ -77,7 +77,7 @@ $attachments = $Mail->getAttachments();
 			'<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_NO}'); ?>');
 
 		allobjects['button1'].onclick = function() {
-			location.href = "<?php $this->setUrl('$$$deleteMail', array('id_mail__mail' => $this->getVar('mail')->getInfo('id_mail__mail')), false); ?>";
+			location.href = "<?php $this->setUrl('$$$deleteMail', array('$$$id' => $this->getVar('mail')->getInfo('id')), false); ?>";
 		};
 
 		// reset onclick-event

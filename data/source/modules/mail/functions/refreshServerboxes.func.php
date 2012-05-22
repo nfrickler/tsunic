@@ -4,18 +4,18 @@ function $$$refreshServerboxes () {
 	global $TSunic;
 
 	// get id_mail__account
-	$id_mail__account = $TSunic->Temp->getParameter('id_mail__account');
+	$id = $TSunic->Temp->getParameter('$$$id');
 
-	if (!empty($id_mail__account) AND is_numeric($id_mail__account)) {
+	if (!empty($id) AND is_numeric($id)) {
 
 		// get mailaccount-object
-		$Mailaccount = $TSunic->get('$$$Account', $id_mail__account);
+		$Mailaccount = $TSunic->get('$$$Account', $id);
 
 		// update serverboxes
 		$Mailaccount->updateServerboxes();
 
 		// add info-message
-		$TSunic->Log->add('infos', '{REFRESHSERVERBOXES__SUCCESS}');
+		$TSunic->Log->alert('infos', '{REFRESHSERVERBOXES__SUCCESS}');
 	}
 
 	// redirect back

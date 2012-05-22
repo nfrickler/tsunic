@@ -11,16 +11,13 @@ function $$$addMailbox () {
 	$Mailbox = $TSunic->get('$$$Box');
 
 	// create new mailbox
-	$return = $Mailbox->createBox($name, $description);
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{ADDMAILBOX__INVALIDINPUT}', 3);
+	if (!$Mailbox->createBox($name, $description)) {
+		$TSunic->Log->alert('error', '{ADDMAILBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{ADDMAILBOX__SUCCESS}', 3);
+	$TSunic->Log->alert('info', '{ADDMAILBOX__SUCCESS}');
 	$TSunic->redirect('$$$showMailboxes');
 
 	return true;

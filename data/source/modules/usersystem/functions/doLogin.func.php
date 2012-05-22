@@ -17,14 +17,14 @@ function $$$doLogin () {
 	if ($return === true) {
 
 		// success
-		$TSunic->Log->add('info', '{DOLOGIN__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{DOLOGIN__SUCCESS}');
 
 		// redirect to showMain
 		$TSunic->redirect('$system$showMain');
 	} else {
 
 		// login failed
-		$TSunic->Log->add('error', '{DOLOGIN__FAILED}', 3);
+		$TSunic->Log->alert('error', '{DOLOGIN__FAILED}');
 
 		// return to login-page
 		$TSunic->redirect('$$$showIndex');

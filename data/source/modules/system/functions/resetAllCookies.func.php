@@ -10,7 +10,7 @@ function $$$resetAllCookies () {
 	}
 
 	// add info-message
-	$TSunic->Log->add('info', '{RESETALLCOOKIES_INFO}', 3);
+	$TSunic->Log->alert('info', '{RESETALLCOOKIES_INFO}');
 
 	// redirect back
 	$TSunic->redirect('back');

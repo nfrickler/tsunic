@@ -141,7 +141,7 @@ class $$$Account extends $system$Object {
 		$this->serverboxes = array();
 		foreach ($result_0 as $index => $values) {
 			// get serverobject
-			$this->serverboxes[] = $TSunic->get('$$$Serverbox', $values['id_mail__serverbox']);
+			$this->serverboxes[] = $TSunic->get('$$$Serverbox', $values['id']);
 		}
 
 		return $this->serverboxes;
@@ -237,7 +237,7 @@ class $$$Account extends $system$Object {
 					protocol = '".$this->getProtocol($protocol, true)."',
 					connsecurity = '".$this->getConnsecurity($connsecurity, true)."',
 					auth = '".$this->getAuth($auth, true)."'
-				WHERE id = '".$this->id_mail__account."';
+				WHERE id = '".$this->id."';
 				";
 		$result_0 = $TSunic->Db->doUpdate($sql_0);
 
@@ -284,7 +284,7 @@ class $$$Account extends $system$Object {
 	 * +@param string: description of mail-account
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function editAccount ($email, $password, $name = '', $description = '') {
 
 		// validate input
@@ -345,9 +345,9 @@ class $$$Account extends $system$Object {
 	 * @param string: description of mail-account
 	 *
 	 * @return bool
- 	 */
-	public function isValidDescription ($description) {
-		return ($this->_validate($description, 'string')
+	 */
+	public function isValidDescription ($desc) {
+		return (empty($desc) or $this->_validate($desc, 'string')
 		) ? true : false;
 	}
 
@@ -355,9 +355,9 @@ class $$$Account extends $system$Object {
 	 * @param string: name of mail-account
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidName ($name) {
-		return ($this->_validate($name, 'string')
+		return (empty($name) or $this->_validate($name, 'string')
 		) ? true : false;
 	}
 
@@ -365,9 +365,9 @@ class $$$Account extends $system$Object {
 	 * @param string: email of mail-account
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidEmail ($email) {
-		return ($this->_validate($name, 'email')
+		return ($this->_validate($email, 'email')
 		) ? true : false;
 	}
 
@@ -375,7 +375,7 @@ class $$$Account extends $system$Object {
 	 * @param string: password of mail-account
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidPassword ($password) {
 
 		// verify $this->info has been initialized
@@ -394,7 +394,7 @@ class $$$Account extends $system$Object {
 	 * @param string: host of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidHost ($host) {
 		return ($this->_validate($host, 'email')
 		) ? true : false;
@@ -425,7 +425,7 @@ class $$$Account extends $system$Object {
 	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function getAuth ($auth, $getNumber = false) {
 
 		// get auth
@@ -440,7 +440,7 @@ class $$$Account extends $system$Object {
 	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function getConnsecurity ($connsecurity, $getNumber = false) {
 
 		// get auth
@@ -455,7 +455,7 @@ class $$$Account extends $system$Object {
 	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function getProtocol ($protocol, $getNumber = false) {
 
 		// get auth
@@ -471,7 +471,7 @@ class $$$Account extends $system$Object {
 	 * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
 	 *
 	 * @return int/string
- 	 */
+	 */
 	public function convertNumberName ($array, $input, $getNumber = false) {
 
 		if (is_numeric($input)) {
@@ -519,7 +519,7 @@ class $$$Account extends $system$Object {
 	 * +@param string/bool: name of box on server (false: no serverbox)
 	 *
 	 * @return string/bool
- 	 */
+	 */
 	protected function getMboxstr ($boxname = false) {
 
 		// load data
@@ -551,7 +551,7 @@ class $$$Account extends $system$Object {
 	 * +@param bool: set error?
 	 *
 	 * @return imap-stream
- 	 */
+	 */
 	public function getStream ($boxname = false, $setError = true) {
 		global $TSunic;
 
@@ -570,15 +570,15 @@ class $$$Account extends $system$Object {
 		if (!isset($this->conn[$stream_index])) {
 
 			// set timeout for opening and reading a connection
-			@imap_timeout(IMAP_OPENTIMEOUT, $this->timeout);
-			@imap_timeout(IMAP_READTIMEOUT, $this->timeout);
+			imap_timeout(IMAP_OPENTIMEOUT, $this->timeout);
+			imap_timeout(IMAP_READTIMEOUT, $this->timeout);
 
 			// get mbox-string
 			$mboxstr = $this->getMboxstr($boxname);
 			if (!$mboxstr) return false;
 
 			// try to connect
-			$stream = @imap_open($mboxstr, $this->info['user'], $this->password);
+			$stream = imap_open($mboxstr, $this->info['user'], $this->password);
 
 			// check, if imap-stream exist
 			if ($setError AND !$stream) {
@@ -589,7 +589,8 @@ class $$$Account extends $system$Object {
 				$error.= ')';
 
 				// add error
-				$TSunic->Log->add('error', $error);
+				$TSunic->Log->alert('error', $error);
+				$TSunic->Log->log(3, $error);
 				return false;
 			}
 		}
@@ -608,7 +609,7 @@ class $$$Account extends $system$Object {
 	 * +@param string/bool: name of box on server (false: no serverbox)
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function closeConnection ($boxname = false) {
 
 		// get stream-index
@@ -625,7 +626,7 @@ class $$$Account extends $system$Object {
 	/* update local serverbox-list in database
 	 *
 	 * @return array/false
- 	 */
+	 */
 	public function updateServerboxes ($newOnly = false) {
 		global $TSunic;
 
@@ -643,9 +644,9 @@ class $$$Account extends $system$Object {
 
 		// get locally added serverboxes
 		$sql_0 = "SELECT _name_ as name,
-					id as id_mail__serverbox
+					id as id
 				FROM #__serverboxes
-				WHERE fk_mail__account = '".mysql_real_escape_string($this->id_mail__account)."';";
+				WHERE fk_mail__account = '".mysql_real_escape_string($this->id)."';";
 		$serverbox_list = $TSunic->Db->doSelect($sql_0);
 
 		// get output-array
@@ -671,14 +672,14 @@ class $$$Account extends $system$Object {
 			if (!$isListed) {
 				// add serverbox in db
 				$Serverbox = $TSunic->get('$$$Serverbox');
-				$Serverbox->createServerbox($this->id_mail__account, $name);
+				$Serverbox->createServerbox($this->id, $name);
 			}
 		}
 
 		// set deleted serverboxes as deleted in database
 		$sql_where = '';
 		foreach ($serverbox_list as $index => $values) {
-			$sql_where.= " OR id = '".mysql_real_escape_string($values['id_mail__serverbox'])."'";
+			$sql_where.= " OR id = '".mysql_real_escape_string($values['id'])."'";
 		}
 		$sql_where = substr($sql_where, 3);
 
@@ -700,15 +701,15 @@ class $$$Account extends $system$Object {
 	}
 
 	/* try to get or validate connection-data automatically
-	 * @param string: host
-	 * @param int: port
-	 * @param string: user
+	 * +@param string: host
+	 * +@param int: port
+	 * +@param string: user
 	 * +@param int/bool: protocol
 	 * +@param int/bool: password-authentification
 	 * +@param int/bool: connection-security
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function validateConnection ($host = false, $port = false, $user = false, $protocol = false, $auth = false, $connsecurity = false) {
 		global $TSunic;
 
@@ -729,25 +730,25 @@ class $$$Account extends $system$Object {
 		$sql_protocol = ($protocol === false) ? '' : "protocol = '".$protocol."' AND ";
 		$sql_auth = ($auth === false) ? '' : "auth = '".$auth."' AND ";
 		$sql_connsecurity = ($connsecurity === false) ? '' : "connsecurity = '".$connsecurity."' AND ";
-		$sql_0 = "SELECT suffix as suffix,
-					host as host,
-					port as port,
-					protocol as protocol,
-					auth as auth,
-					connsecurity as connsecurity,
-					user as user
-				FROM #__knownservers
-				WHERE ".$sql_protocol.$sql_auth.$sql_connsecurity."
-					suffix = '".mysql_real_escape_string($suffix)."'
-					OR suffix = ''
-					".$host_lookup."
-				ORDER BY suffix DESC, protocol ASC;";
-		$result_0 = $TSunic->Db->doSelect($sql_0);
+		$sql = "SELECT suffix as suffix,
+				host as host,
+				port as port,
+				protocol as protocol,
+				auth as auth,
+				connsecurity as connsecurity,
+				user as user
+			FROM #__knownservers
+			WHERE ".$sql_protocol.$sql_auth.$sql_connsecurity."
+				suffix = '".mysql_real_escape_string($suffix)."'
+				OR suffix = ''
+				".$host_lookup."
+			ORDER BY suffix DESC, protocol ASC;";
+		$result = $TSunic->Db->doSelect($sql);
 
 		// check all possibilities until found right one
 		$time_start = time();
 		$checked_versions = array();
-		foreach ($result_0 as $index => $values) {
+		foreach ($result as $index => $values) {
 
 			// check for try-timeout (assumed php-timeout of 60s)
 			$time_try = time() - $time_start;
@@ -764,9 +765,7 @@ class $$$Account extends $system$Object {
 
 			// already checked these settings?
 			foreach ($checked_versions as $in => $val) {
-				if ($val == $this->info) {
-					continue 2;
-				}
+				if ($val == $this->info) continue 2;
 			}
 
 			// try to connect...

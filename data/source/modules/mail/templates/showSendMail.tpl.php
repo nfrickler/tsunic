@@ -1,7 +1,5 @@
 <!-- | Template: show form to send mail -->
 <?php
-
-// get input
 $Mail = $this->getVar('Mail');
 $smtps = $this->getVar('smtps');
 ?>
@@ -9,13 +7,13 @@ $smtps = $this->getVar('smtps');
 	<h1><?php $this->set('{SHOWSENDMAIL__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWSENDMAIL__INFO}'); ?></p>
 	<form action="<?php $this->setUrl('$$$sendMail'); ?>" method="post" id="$$$showSendMail__form" class="ts_form">
-		<input type="hidden" name="$$$showSendMail__id_mail_mail" id="$$$showSendMail__id_mail_mail" value="<?php $this->set($Mail->getInfo('id_mail__mail')); ?>" />
+		<input type="hidden" name="$$$showSendMail__id_mail_mail" id="$$$showSendMail__id_mail_mail" value="<?php $this->set($Mail->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{SHOWSENDMAIL__LEGEND_HEADER}'); ?></legend>
 			<label for="$$$showSendMail__id_mail__smtp"><?php echo $this->set('{SHOWSENDMAIL__SENDER}'); ?></label>
 			<select class="ts_required" name="$$$showSendMail__id_mail__smtp" id="$$$showSendMail__id_mail__smtp">
 				<?php foreach ($smtps as $index => $value) { ?>
-				<option value="<?php $this->set($value->getInfo('id_mail__smtp')); ?>" <?php if($this->setPreset('$$$showSendMail__id_mail__smtp', false, false) == $value->getInfo('id_mail__smtp')) echo 'selected="selected"'; ?>>
+				<option value="<?php $this->set($value->getInfo('id')); ?>" <?php if($this->setPreset('$$$showSendMail__id_mail__smtp', false, false) == $value->getInfo('id')) echo 'selected="selected"'; ?>>
 					<?php $this->set($value->getInfo('emailname')); ?> &lt;<?php $this->set($value->getInfo('email')); ?>&gt;
 				</option>
 				<?php } ?>

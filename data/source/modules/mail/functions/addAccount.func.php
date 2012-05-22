@@ -20,35 +20,29 @@ function $$$addAccount () {
 
 	// validate input
 	if (!$Mailaccount->isValidEmail($email)
-			OR !$Mailaccount->isValidPassword($password)
-			OR !$Mailaccount->isValidName($name)
-			OR !$Mailaccount->isValidDescription($description)) {
-		// invalid input
-		$TSunic->Log->add('error', '{ADDACCOUNT__INVALIDINPUT}', 3);
+		OR !$Mailaccount->isValidPassword($password)
+		OR !$Mailaccount->isValidName($name)
+		OR !$Mailaccount->isValidDescription($description)
+	) {
+		$TSunic->Log->alert('error', '{ADDACCOUNT__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// create account
-	$return = $Mailaccount->createAccount($email, $password, $name, $description);
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{ADDACCOUNT__ERROR}', 3);
+	if (!$Mailaccount->createAccount($email, $password, $name, $description)) {
+		$TSunic->Log->alert('error', '{ADDACCOUNT__ERROR}');
 		$TSunic->redirect('back');
 	}
 
 	// try to set connection
-	$return = $Mailaccount->setConnection($host, $port, $user, $protocol, $auth, $connsecurity);
-
-	// check for connection-errors
-	if (!$return) {
-		$TSunic->Log->add('error', '{ADDACCOUNT__CONNERROR}');
-		$TSunic->redirect('$$$showEditAccount', array('id_mail__account' => $Mailaccount->getInfo('id_mail__account')));
+	if (!$Mailaccount->setConnection($host, $port, $user, $protocol, $auth, $connsecurity)) {
+		$TSunic->Log->alert('error', '{ADDACCOUNT__CONNERROR}');
+		$TSunic->redirect('$$$showEditAccount', array('$$$id' => $Mailaccount->getInfo('id')));
 	}
 
 	// success
-	$TSunic->Log->add('info', '{ADDACCOUNT__SUCCESS}');
-	$TSunic->redirect('$$$showAccount', array('id_mail__account' => $Mailaccount->getInfo('id_mail__account')));
+	$TSunic->Log->alert('info', '{ADDACCOUNT__SUCCESS}');
+	$TSunic->redirect('$$$showAccount', array('$$$id' => $Mailaccount->getInfo('id')));
 
 	return true;
 }

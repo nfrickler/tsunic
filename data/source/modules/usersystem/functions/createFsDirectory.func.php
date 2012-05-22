@@ -13,12 +13,12 @@ function $$$createFsDirectory () {
 	// validate input
 	if (!$Dir->isValidName($name)) {
 		// invalid name
-		$TSunic->Log->add('error', '{CREATEFSDIRECTORY__INVALIDNAME}', 3);
+		$TSunic->Log->alert('error', '{CREATEFSDIRECTORY__INVALIDNAME}');
 		$TSunic->redirect('back');
 	}
 	if (!$Dir->isValidParent($fk_parent)) {
 		// invalid fk_parent
-		$TSunic->Log->add('error', '{CREATEFSDIRECTORY__INVALIDPARENT}', 3);
+		$TSunic->Log->alert('error', '{CREATEFSDIRECTORY__INVALIDPARENT}');
 		$TSunic->redirect('back');
 	}
 
@@ -28,13 +28,13 @@ function $$$createFsDirectory () {
 	// check, if create successful
 	if ($return) {
 		// success
-		$TSunic->Log->add('info', '{CREATEFSDIRECTORY__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{CREATEFSDIRECTORY__SUCCESS}');
 		$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $Dir->getInfo('id')));
 		return true;
 	}
 
 	// add error-message and redirect back
-	$TSunic->Log->add('error', '{CREATEFSDIRECTORY__ERROR}', 3);
+	$TSunic->Log->alert('error', '{CREATEFSDIRECTORY__ERROR}');
 	$TSunic->redirect('back');
 	return true;
 }

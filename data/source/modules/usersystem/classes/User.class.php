@@ -115,7 +115,7 @@ class $$$User extends $system$Object {
 		// is root password set?
 		if (!$this->getConfig()->getDefault('$$$isRootPassword')) {
 			global $TSunic;
-			$TSunic->Log->add('error', '{ISROOTPASSWORD__FAILED}', 3);
+			$TSunic->Log->alert('error', '{ISROOTPASSWORD__FAILED}');
 			return false;
 		}
 

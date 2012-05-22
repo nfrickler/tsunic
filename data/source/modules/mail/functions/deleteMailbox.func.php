@@ -3,23 +3,18 @@
 function $$$deleteMailbox () {
 	global $TSunic;
 
-	// get input
-	$id_mail__box = $TSunic->Temp->getParameter('id_mail__box');
-
-	// get mailbox-object
-	$Mailbox = $TSunic->get('$$$Box', $id_mail__box);
+	// get mailbox object
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$Mailbox = $TSunic->get('$$$Box', $id);
 
 	// edit mailbox
-	$return = $Mailbox->deleteBox();
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{DELETEMAILBOX__ERROR}', 3);
+	if (!$Mailbox->deleteBox()) {
+		$TSunic->Log->alert('error', '{DELETEMAILBOX__ERROR}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEMAILBOX__SUCCESS}', 3);
+	$TSunic->Log->alert('info', '{DELETEMAILBOX__SUCCESS}');
 	$TSunic->redirect('$$$showMailboxes');
 
 	return true;

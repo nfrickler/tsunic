@@ -1,6 +1,5 @@
 <!-- | Template: show form to delete SMTP -->
 <?php
-
 $Smtp = $this->getVar('Smtp');
 ?>
 <div id="$$$div__showDeleteSmtp">
@@ -8,6 +7,6 @@ $Smtp = $this->getVar('Smtp');
 		'contenttext' => '{SHOWDELETESMTP__POPUP_DELETE_CONTENT}',
 		'submittext' => '{SHOWDELETESMTP__POPUP_DELETE_YES}',
 		'canceltext' => '{SHOWDELETESMTP__POPUP_DELETE_NO}',
-		'submit_href' => $this->setUrl('$$$deleteSmtp', array('id_mail__smtp' => $Smtp->getInfo('id_mail__smtp')), true, false),
+		'submit_href' => $this->setUrl('$$$deleteSmtp', array('$$$id' => $Smtp->getInfo('id')), true, false),
 		'cancel_href' => $this->setUrl('back', true, true, false))); ?>
 </div>

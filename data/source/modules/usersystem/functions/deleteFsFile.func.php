@@ -10,13 +10,13 @@ function $$$deleteFsFile () {
 
 	// delete file
 	if (!$File->delete()) {
-		$TSunic->Log->add('error', '{DELETEFSFILE__ERROR}');
+		$TSunic->Log->alert('error', '{DELETEFSFILE__ERROR}');
 		$TSunic->redirect('back', 2);
 		return false;
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEFSFILE__SUCCESS}');
+	$TSunic->Log->alert('info', '{DELETEFSFILE__SUCCESS}');
 	$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $fk_directory));
 	return true;
 }

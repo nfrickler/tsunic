@@ -9,8 +9,7 @@ function $$$performMailsAction () {
 
 	// is any mail selected?
 	if (empty($selectedMails)) {
-		// no mails selected
-		$TSunic->Log->add('info', '{PERFORMMAILSACTION__SUCCESS}');
+		$TSunic->Log->alert('info', '{PERFORMMAILSACTION__SUCCESS}');
 		$TSunic->redirect('back');
 	}
 
@@ -20,10 +19,7 @@ function $$$performMailsAction () {
 
 		// get mail-objects and delete mails
 		foreach ($selectedMails as $index => $value) {
-			// get object
 			$Mail = $TSunic->get('$$$Mail', $value);
-
-			// delete mail
 			$Mail->deleteMail();
 		}
 
@@ -36,18 +32,15 @@ function $$$performMailsAction () {
 				or $TSunic->Temp->getPost('$$$showMailbox__submittype')) {
 		// move mails
 
-		// get mail-objects and delete mails
+		// get mail-objects and move mails
 		foreach ($selectedMails as $index => $value) {
-			// get object
 			$Mail = $TSunic->get('$$$Mail', $value);
-
-			// move mail
 			$Mail->move($fk_mail__box);
 		}
 	}
 
 	// success
-	$TSunic->Log->add('info', '{PERFORMMAILSACTION__SUCCESS}');
+	$TSunic->Log->alert('info', '{PERFORMMAILSACTION__SUCCESS}');
 	$TSunic->redirect('back');
 
 	return true;

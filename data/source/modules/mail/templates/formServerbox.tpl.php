@@ -1,13 +1,11 @@
 <!-- | Template: form for serverbox -->
 <?php
-
-// get input
 $Serverbox = $this->getVar('Serverbox');
 $mailboxes = $this->getVar('mailboxes');
 ?>
 <div id="$$$div__formServerbox">
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" id="$$$formServerbox__form" class="ts_form">
-		<input type="hidden" name="id_mail__serverbox" value="<?php $this->set($Serverbox->getInfo('id_mail__serverbox')); ?>" />
+		<input type="hidden" name="id_mail__serverbox" value="<?php $this->set($Serverbox->getInfo('id')); ?>" />
 		<input type="hidden" name="id_mail__account" value="<?php $this->set($Serverbox->getInfo('fk_mail__account')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMSERVERBOX__LEGEND}'); ?></legend>

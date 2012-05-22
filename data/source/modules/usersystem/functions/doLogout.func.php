@@ -7,7 +7,7 @@ function $$$doLogout () {
 	$return = $TSunic->Usr->logout();
 
 	// add info-message
-	$TSunic->Log->add('info', '{DOLOGOUT__SUCCESS}', 3);
+	$TSunic->Log->alert('info', '{DOLOGOUT__SUCCESS}');
 
 	// redirect to login-page
 	$TSunic->redirect('$$$showIndex');

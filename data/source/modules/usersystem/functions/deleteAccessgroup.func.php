@@ -9,13 +9,13 @@ function $$$deleteAccessgroup () {
 
 	// delete accessgroup
 	if (!$Accessgroup->delete()) {
-		$TSunic->Log->add('error', '{DELETEACCESSGROUP__ERROR}');
+		$TSunic->Log->alert('error', '{DELETEACCESSGROUP__ERROR}');
 		$TSunic->redirect('back', 2);
 		return false;
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEACCESSGROUP__SUCCESS}');
+	$TSunic->Log->alert('info', '{DELETEACCESSGROUP__SUCCESS}');
 	$TSunic->redirect('$$$showAccessgroups');
 	return true;
 }

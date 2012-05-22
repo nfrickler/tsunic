@@ -1,6 +1,5 @@
 <!-- | Template: show form to edit mailbox -->
 <?php
-
 $mailbox = $this->getVar('mailbox');
 ?>
 <div id="$$$div__showAddMailserver">

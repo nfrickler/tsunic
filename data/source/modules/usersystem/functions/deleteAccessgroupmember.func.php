@@ -10,13 +10,13 @@ function $$$deleteAccessgroupmember () {
 
 	// delete accessgroup
 	if (!$Accessgroup->rmMember($userid)) {
-		$TSunic->Log->add('error', '{DELETEACCESSGROUPMEMBER__ERROR}');
+		$TSunic->Log->alert('error', '{DELETEACCESSGROUPMEMBER__ERROR}');
 		$TSunic->redirect('back', 2);
 		return false;
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEACCESSGROUPMEMBER__SUCCESS}');
+	$TSunic->Log->alert('info', '{DELETEACCESSGROUPMEMBER__SUCCESS}');
 	$TSunic->redirect('$$$showAccessgroupmembers', array('$$$id' => $id));
 	return true;
 }

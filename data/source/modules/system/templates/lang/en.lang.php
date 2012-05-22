@@ -3,6 +3,10 @@
 
 $lang = array(
 
+	// class
+	'CLASS__DATABASE__ERROR' => 'A database error occurred! More errors may follow.',
+	'CLASS__DATABASE__CRITICAL_ERROR' => 'A critical database error occurred! The execution of the script has been abborted.',
+
 	// config
 	'CONFIG__LANGUAGE' => 'Language',
 	'CONFIG__LANGUAGE__DESCRIPTION' => 'The language, you want TSunc to talk to you.',

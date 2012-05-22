@@ -53,7 +53,7 @@ class $$$Template_Xml extends $$$Template {
 
 			if ($index > 1) {
 				// create error
-				$TSunic->Log->add('error', 'XML-Template "'.$this->template.'" not found!', 1);
+				$TSunic->Log->alert('error', 'XML-Template "'.$this->template.'" not found!');
 			}
 
 			$File = $TSunic->get('$$$File', $value);

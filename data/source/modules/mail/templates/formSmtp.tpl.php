@@ -1,12 +1,10 @@
 <!-- | Template: form for SMTP -->
 <?php
-
-// get input
 $Smtp = $this->getVar('Smtp');
 ?>
 <div id="$$$div__formSmtp">
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formSmtp__form" id="$$$formSmtp__form" class="ts_form">
-		<input type="hidden" name="$$$formSmtp__id_mail__smtp" id="$$$formSmtp__id_mail__smtp" value="<?php $this->set($Smtp->getInfo('id_mail__smtp')); ?>" />
+		<input type="hidden" name="$$$formSmtp__id_mail__smtp" id="$$$formSmtp__id_mail__smtp" value="<?php $this->set($Smtp->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMSMTP__LEGEND_SMTPACCOUNT}'); ?></legend>
 			<label for="$$$formSmtp__mailaccount"><?php echo $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>

@@ -22,7 +22,7 @@ class $$$Serverbox extends $system$Object {
 		global $TSunic;
 
 		// check, if info already in cache
-		if (!empty($this->id_mail__serverbox) AND empty($this->info)) {
+		if (!empty($this->id) AND empty($this->info)) {
 
 			// get data from database
 			$sql_0 = "SELECT _name_ as name,
@@ -35,7 +35,7 @@ class $$$Serverbox extends $system$Object {
 						checkAllSeconds as checkAllSeconds,
 						isActive as isActive
 					FROM #__serverboxes
-					WHERE id_mail__serverbox = '".mysql_real_escape_string($this->id_mail__serverbox)."';";
+					WHERE id= '".$this->id."';";
 			$result_0 = $TSunic->Db->doSelect($sql_0);
 
 			// return, if no server matched
@@ -43,7 +43,7 @@ class $$$Serverbox extends $system$Object {
 
 			// store data
 			$this->info = $result_0[0];
-			$this->info['id_mail__serverbox'] = $this->id_mail__serverbox;
+			$this->info['id'] = $this->id;
 
 			// add mailbox-object
 			if ($this->info['fk_mail__box'] == 0) {
@@ -65,7 +65,7 @@ class $$$Serverbox extends $system$Object {
 	}
 
 	/* get mailaccount-object, the serverbox belongs to
-	 * +@param bool: get id_mail__account instead of object
+	 * +@param bool: get id instead of object
 	 *
 	 * @return OBJECT/bool
  	 */
@@ -411,7 +411,7 @@ class $$$Serverbox extends $system$Object {
 					uid = '".mysql_real_escape_string($uid)."'
 			";
 			$result = $TSunic->Db->doInsert($sql);
-			$id_mail__mail = mysql_insert_id();
+			$id = mysql_insert_id();
 
 			// save attachments
 			foreach ($this->cache['bodyparts']['attachments'] as $index => $values) {
@@ -420,9 +420,9 @@ class $$$Serverbox extends $system$Object {
 				$Attachment = $TSunic->get('$$$Attachment', array(), true);
 
 				// create new
-				if (!$Attachment->createAttachment($id_mail__mail, $values['name'], $values['content'])) {
+				if (!$Attachment->createAttachment($id, $values['name'], $values['content'])) {
 					// an error occurred!
-					$TSunic->Log->add('error', '{CLASS__SERVERBOX__ADDATTACHMENTERROR}');
+					$TSunic->Log->alert('error', '{CLASS__SERVERBOX__ADDATTACHMENTERROR}');
 				}
 			}
 
@@ -430,7 +430,7 @@ class $$$Serverbox extends $system$Object {
 			$this->cache['bodyparts'] = array();
 
 			// get new inserted id
-			$new_mails[] = $id_mail__mail;
+			$new_mails[] = $id;
 		}
 
 		return $new_mails;

@@ -276,7 +276,7 @@ class $$$File {
 			OR !($content = file_get_contents($this->getPath()))
 			OR $content === false
 		) {
-			if (!$this->silent_mode) $TSunic->Log->add('warning', 'Couldn\'t read from "'.$this->path.'"!', 1);
+			$TSunic->Log->log(3, 'Couldn\'t read from "'.$this->path.'"!');
 			return ($as_string) ? '' : array();
 		}
 
@@ -311,7 +311,7 @@ class $$$File {
 			if (is_numeric($return)) return true;
 		}
 
-		if (!$this->silent_mode) $TSunic->Log->add('error', 'Couldn\'t write to "'.$this->path.'"!', 1);
+		$TSunic->Log->log(3, 'Couldn\'t write to "'.$this->path.'"!');
 		return false;
 	}
 
@@ -354,7 +354,7 @@ class $$$File {
 			$current.= (empty($current)) ? $value : '/'.$value;
 
 			if (!is_dir($current) AND !mkdir($current)) {
-				if (!$this->silent_mode) $TSunic->Log->add('warning', 'Couldn\'t create folder "'.$current.'"!', 1);
+				$TSunic->Log->log(3, 'Couldn\'t create folder "'.$current.'"!');
 				return false;
 			}
 		}

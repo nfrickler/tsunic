@@ -16,13 +16,13 @@ function $$$addAccessgroupmember () {
 	// check, if create successful
 	if ($return) {
 		// success
-		$TSunic->Log->add('info', '{ADDACCESSGROUPMEMBER__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{ADDACCESSGROUPMEMBER__SUCCESS}');
 		$TSunic->redirect('$$$showAccessgroupmembers', array('$$$id' => $Accessgroup->getInfo('id')));
 		return true;
 	}
 
 	// add error-message and redirect back
-	$TSunic->Log->add('error', '{ADDACCESSGROUPMEMBER__ERROR}', 3);
+	$TSunic->Log->alert('error', '{ADDACCESSGROUPMEMBER__ERROR}');
 	$TSunic->redirect('back');
 	return true;
 }

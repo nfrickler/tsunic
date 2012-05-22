@@ -9,7 +9,7 @@ function $$$showDeleteFsDirectory () {
 
 	// is empty directory?
 	if ($Directory->getSubfiles() or $Directory->getSubdirectories()) {
-		$TSunic->Log->add('error', '{SHOWDELETEFSDIRECTORY__NOTEMPTY}', 3);
+		$TSunic->Log->alert('error', '{SHOWDELETEFSDIRECTORY__NOTEMPTY}');
 		$TSunic->redirect('back');
 		return false;
 	}

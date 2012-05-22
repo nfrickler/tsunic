@@ -11,15 +11,15 @@ function $$$createFsFile () {
 
 	// validate input
 	if (!$File->isValidFilesize($_FILES['$$$formFsFile__file']['size'])) {
-		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDFILESIZE}', 3);
+		$TSunic->Log->alert('error', '{CREATEFSFILE__INVALIDFILESIZE}');
 		$TSunic->redirect('back');
 	}
 	if (!$File->isValidQuota($_FILES['$$$formFsFile__file']['size'])) {
-		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDQUOTA}', 3);
+		$TSunic->Log->alert('error', '{CREATEFSFILE__INVALIDQUOTA}');
 		$TSunic->redirect('back');
 	}
 	if (!$File->isValidDirectory($fk_directory)) {
-		$TSunic->Log->add('error', '{CREATEFSFILE__INVALIDDIRECTORY}', 3);
+		$TSunic->Log->alert('error', '{CREATEFSFILE__INVALIDDIRECTORY}');
 		$TSunic->redirect('back');
 	}
 
@@ -28,13 +28,13 @@ function $$$createFsFile () {
 
 	// check, if create successful
 	if ($return) {
-		$TSunic->Log->add('info', '{CREATEFSFILE__SUCCESS}', 3);
+		$TSunic->Log->alert('info', '{CREATEFSFILE__SUCCESS}');
 		$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $File->getInfo('fk_directory')));
 		return true;
 	}
 
 	// add error-message and redirect back
-	$TSunic->Log->add('error', '{CREATEFSFILE__ERROR}', 3);
+	$TSunic->Log->alert('error', '{CREATEFSFILE__ERROR}');
 	$TSunic->redirect('back');
 	return true;
 }

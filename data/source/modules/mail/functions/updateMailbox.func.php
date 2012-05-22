@@ -4,13 +4,13 @@ function $$$updateMailbox () {
 	global $TSunic;
 
 	// get id_mail_box
-	$id_mail__box = $TSunic->Temp->getParameter('id_mail__box');
+	$id = $TSunic->Temp->getParameter('$$$id');
 	$force = ($TSunic->Temp->getParameter('force')) ? true : false;
 
 	// get mailbox-object
-	$Mailbox = (empty($id_mail__box))
+	$Mailbox = (empty($id))
 		? $TSunic->get('$$$Inbox')
-		: $TSunic->get('$$$Box', $id_mail__box);
+		: $TSunic->get('$$$Box', $id);
 
 	// check for new mails
 	$all_new_mails = $Mailbox->checkMails($force);
@@ -26,8 +26,8 @@ function $$$updateMailbox () {
 
 		return true;
 	} else {
-		$TSunic->Log->add('info', '{UPDATEMAILBOX__SUCCESS}');
-		$TSunic->redirect('$$$showMailbox', array('id_mail__box' => $Mailbox->getInfo('id_mail__box')));
+		$TSunic->Log->alert('info', '{UPDATEMAILBOX__SUCCESS}');
+		$TSunic->redirect('$$$showMailbox', array('$$$id' => $Mailbox->getInfo('id')));
 		exit;
 	}
 }

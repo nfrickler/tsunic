@@ -1,6 +1,5 @@
-<!-- | Template: show form to delete serverbox -->
+<!-- | show form to delete serverbox -->
 <?php
-
 $Serverbox = $this->getVar('Serverbox');
 ?>
 <div id="$$$div__showDeleteServerbox">
@@ -8,6 +7,6 @@ $Serverbox = $this->getVar('Serverbox');
 		'contenttext' => '{SHOWDELETESERVERBOX__POPUP_DELETE_CONTENT}',
 		'submittext' => '{SHOWDELETESERVERBOX__POPUP_DELETE_YES}',
 		'canceltext' => '{SHOWDELETESERVERBOX__POPUP_DELETE_NO}',
-		'submit_href' => $this->setUrl('$$$deleteServerbox', array('id_mail__serverbox' => $Serverbox->getInfo('id_mail__serverbox')), true, false),
+		'submit_href' => $this->setUrl('$$$deleteServerbox', array('$$$id' => $Serverbox->getInfo('id')), true, false),
 		'cancel_href' => $this->setUrl('back', true, true, false))); ?>
 </div>

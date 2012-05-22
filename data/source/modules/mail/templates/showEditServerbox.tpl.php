@@ -1,8 +1,8 @@
-<!-- | Template: show form to edit serverbox -->
+<!-- | show form to edit serverbox -->
 <div id="$$$div__showEditMailserver">
 	<h1><?php $this->set('{SHOWEDITSERVERBOX__H1}'); ?></h1>
 	<p class="ts_suplinkbox">
-		<a href="<?php $this->setUrl('$$$showDeleteServerbox', array('id_mail__serverbox' => $this->getVar('Serverbox')->getInfo('id_mail__serverbox'))); ?>">
+		<a href="<?php $this->setUrl('$$$showDeleteServerbox', array('$$$id' => $this->getVar('Serverbox')->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWEDITSERVERBOX__TODELETESERVERBOX}'); ?></a>
 	</p>
 	<p class="ts_infotext"><?php $this->set('{SHOWEDITSERVERBOX__INFO}'); ?></p>

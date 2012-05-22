@@ -24,17 +24,13 @@ function $$$addSmtp () {
 			OR !$Smtp->isValidDescription($description)
 			OR !$Smtp->isValidEMailname($emailname)
 	) {
-		// invalid input
-		$TSunic->Log->add('error', '{ADDSMTP__INVALIDINPUT}');
+		$TSunic->Log->alert('error', '{ADDSMTP__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// create new smtp
-	$return = $Smtp->createSmtp($email, $password, $description, $emailname);
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{ADDSMTP__ERROR}');
+	if (!$Smtp->createSmtp($email, $password, $description, $emailname)) {
+		$TSunic->Log->alert('error', '{ADDSMTP__ERROR}');
 		$TSunic->redirect('back');
 	}
 
@@ -42,22 +38,19 @@ function $$$addSmtp () {
 	if (!empty($fk_mail__account)) {
 		$Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
 		if (!$Mailaccount OR !$Smtp->setMailaccount($Mailaccount)) {
-			$TSunic->Log->add('error', '{ADDSMTP__ERROR}');
+			$TSunic->Log->alert('error', '{ADDSMTP__ERROR}');
 			$TSunic->redirect('back');
 		}
 	}
 
 	// try to set connection
-	$return = $Smtp->setConnection($host, $port, $user, $auth, $connsecurity);
-
-	// check for connection-errors
-	if (!$return) {
-		$TSunic->Log->add('error', '{ADDSMTP__CONNERROR}', 3);
-		$TSunic->redirect('$$$showEditSmtp', array('id_mail__smtp' => $Smtp->getInfo('id_mail__smtp')));
+	if (!$Smtp->setConnection($host, $port, $user, $auth, $connsecurity)) {
+		$TSunic->Log->alert('error', '{ADDSMTP__CONNERROR}');
+		$TSunic->redirect('$$$showEditSmtp', array('$$$id' => $Smtp->getInfo('id')));
 	}
 
 	// success
-	$TSunic->Log->add('info', '{ADDSMTP__SUCCESS}', 3);
+	$TSunic->Log->alert('info', '{ADDSMTP__SUCCESS}');
 	$TSunic->redirect('$$$showMailservers');
 
 	return true;

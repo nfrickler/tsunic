@@ -1,6 +1,5 @@
 <!-- | Template: show form to delete mail account -->
 <?php
-// get input
 $Account = $this->getVar('Account');
 ?>
 <div id="$$$div__showDeleteAccount">
@@ -8,6 +7,6 @@ $Account = $this->getVar('Account');
 		'contenttext' => '{SHOWDELETEACCOUNT__POPUP_DELETE_CONTENT}',
 		'submittext' => '{SHOWDELETEACCOUNT__POPUP_DELETE_YES}',
 		'canceltext' => '{SHOWDELETEACCOUNT__POPUP_DELETE_NO}',
-		'submit_href' => $this->setUrl('$$$deleteAccount', array('id_mail__account' => $Account->getInfo('id_mail__account')), true, false),
+		'submit_href' => $this->setUrl('$$$deleteAccount', array('$$$id' => $Account->getInfo('id')), true, false),
 		'cancel_href' => $this->setUrl('back', true, true, false))); ?>
 </div>

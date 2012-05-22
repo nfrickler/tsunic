@@ -71,7 +71,7 @@ class $$$Encryption {
 
 		// is ready for encryption?
 		if (!$this->ready) {
-			$TSunic->Log->add('error', 'Encryption called, but not ready yet!', 1);
+			$TSunic->Log->log(1, 'Encryption called, but not ready yet!');
 			$TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
 		}
 
@@ -99,7 +99,7 @@ class $$$Encryption {
 
 		// is ready for decryption?
 		if (!$this->ready) {
-			$TSunic->Log->add('error', 'Encryption called, but not ready yet!', 1);
+			$TSunic->Log->alert(1, 'Encryption called, but not ready yet!');
 			$TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
 		}
 

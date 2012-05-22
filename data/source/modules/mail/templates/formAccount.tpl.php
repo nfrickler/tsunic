@@ -1,12 +1,10 @@
 <!-- | Template: form for mailaccount -->
 <?php
-
-// get input
 $Mailaccount = $this->getVar('Mailaccount');
 ?>
 <div id="div_$$$formAccount">
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formAccount__form" id="$$$formAccount__form" class="ts_form">
-		<input type="hidden" name="$$$formAccount__id_mail__account" class="ts_input" value="<?php $this->setPreset('0', $Mailaccount->getInfo('id_mail__account')); ?>" />
+		<input type="hidden" name="$$$formAccount__id_mail__account" class="ts_input" value="<?php $this->setPreset('0', $Mailaccount->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMACCOUNT__LEGEND_EMAILACCOUNT}'); ?></legend>
 			<label for="$$$formAccount__name"><?php echo $this->set('{FORMACCOUNT__NAME}'); ?></label>

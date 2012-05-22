@@ -1,6 +1,5 @@
 <!-- | Template: show all mailboxes -->
 <?php
-
 // add javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 
@@ -20,7 +19,7 @@ $mailboxes = $this->getVar('mailboxes');
 		<?php foreach ($mailboxes as $index => $value) { ?>
 		<tr style="margin:1px; padding:5px;">
 			<td>
-				<a href="<?php $this->setUrl('$$$showMailbox', array('id_mail__box' => $value->getInfo('id_mail__box'))); ?>">
+				<a href="<?php $this->setUrl('$$$showMailbox', array('$$$id' => $value->getInfo('id'))); ?>">
 					<?php $this->set($value->getInfo('name')); ?>
 				</a>
 			</td>
@@ -32,10 +31,10 @@ $mailboxes = $this->getVar('mailboxes');
 			</td>
 			<td>
 				<?php if ($value->getInfo('id_mail__box') != 0) { ?>
-				<a href="<?php $this->setUrl('$$$showEditMailbox', array('id_mail__box' => $value->getInfo('id_mail__box'))); ?>">
+				<a href="<?php $this->setUrl('$$$showEditMailbox', array('$$$id' => $value->getInfo('idail__box'))); ?>">
 					<img class="$system$editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWMAILBOXES__EDIT}'); ?>" />
 				</a>
-				<a href="<?php $this->setUrl('$$$showDeleteMailbox', array('id_mail__box' => $value->getInfo('id_mail__box'))); ?>"  id="$$$showmailboxes__delete_<?php $this->set($value->getInfo('id_mail__box')); ?>">
+				<a href="<?php $this->setUrl('$$$showDeleteMailbox', array('$$$id' => $value->getInfo('id'))); ?>"  id="$$$showmailboxes__delete_<?php $this->set($value->getInfo('id')); ?>">
 					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWMAILBOXES__DELETE}'); ?>" />
 				</a>
 				<?php } ?>
@@ -56,9 +55,9 @@ $mailboxes = $this->getVar('mailboxes');
 	var $$$showmailboxes__all = new Array();
 	<?php foreach ($this->getVar('mailboxes') as $index => $value) {
 		if ($value->getInfo('id_mail__box') == 0) continue;
-		echo '$$$showmailboxes__all["id_'.$value->getInfo('id_mail__box').'"] = new Array("$$$showmailboxes__delete_'.$value->getInfo('id_mail__box').'",
+		echo '$$$showmailboxes__all["id_'.$value->getInfo('id').'"] = new Array("$$$showmailboxes__delete_'.$value->getInfo('id').'",
 			"'.$value->getInfo('name').'",
-			"'.$this->setUrl('$$$deleteMailbox', array('id_mail__box' => $value->getInfo('id_mail__box')), false, false).'");';
+			"'.$this->setUrl('$$$deleteMailbox', array('$$$id' => $value->getInfo('id')), false, false).'");';
 	} ?>
 
 	// add events

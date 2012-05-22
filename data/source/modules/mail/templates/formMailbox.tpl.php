@@ -1,12 +1,10 @@
 <!-- | TEMPLATE show form for local mailbox -->
 <?php
-
-// get input
 $mailbox = $this->getVar('mailbox');
 ?>
 <div id="$$$div__formMailbox">
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formMailbox__form" id="$$$formMailbox__form" class="ts_form">
-		<input type="hidden" name="$$$formMailbox__id_mail__box" id="$$$formMailbox__id_mail__box" value="<?php $this->set($mailbox->getInfo('id_mail__box')); ?>" />
+		<input type="hidden" name="$$$formMailbox__id_mail__box" id="$$$formMailbox__id_mail__box" value="<?php $this->set($mailbox->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMMAILBOX__LEGEND}'); ?></legend>
 			<label for="$$$formMailbox__name"><?php echo $this->set('{FORMMAILBOX__NAME}'); ?></label>

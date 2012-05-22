@@ -3,23 +3,18 @@
 function $$$deleteAccount () {
 	global $TSunic;
 
-	// get input
-	$id_mail__account = $TSunic->Temp->getParameter('id_mail__account');
-
-	// get account-object
-	$Account = $TSunic->get('$$$Account', $id_mail__account);
+	// get mailaccount object
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$Account = $TSunic->get('$$$Account', $id);
 
 	// delete account
-	$return = $Account->deleteAccount();
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{DELETEACCOUNT__ERROR}');
+	if (!$Account->deleteAccount()) {
+		$TSunic->Log->alert('error', '{DELETEACCOUNT__ERROR}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEACCOUNT__SUCCESS}');
+	$TSunic->Log->alert('info', '{DELETEACCOUNT__SUCCESS}');
 	$TSunic->redirect('$$$showMailservers');
 
 	return true;

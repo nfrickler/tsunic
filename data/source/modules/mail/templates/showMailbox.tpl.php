@@ -1,6 +1,5 @@
 <!-- | Template: show mailbox -->
 <?php
-
 // add javascript
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 
@@ -31,7 +30,7 @@ $mails = $Mailbox->getMails();
 			<?php $bg_color = ($mail->isUnseen()) ? '#EEE' : '#DDD';  ?>
 			<tr style="background:<?php echo $bg_color; ?>; margin:1px; padding:5px;">
 				<td>
-					<input type="checkbox" name="$$$showMailbox__selectedMails[]" value="<?php $this->set($mail->getInfo('id_mail__mail')); ?>" />
+					<input type="checkbox" name="$$$showMailbox__selectedMails[]" value="<?php $this->set($mail->getInfo('id')); ?>" />
 				</td>
 				<td>
 					<?php $attachments = $mail->getAttachments(); ?>
@@ -41,7 +40,7 @@ $mails = $Mailbox->getMails();
 					&nbsp;
 				</td>
 				<td>
-					<a href="<?php $this->setUrl('$$$showMail', array('id_mail__mail' => $mail->getInfo('id_mail__mail'))); ?>">
+					<a href="<?php $this->setUrl('$$$showMail', array('$$$id' => $mail->getInfo('id'))); ?>">
 						<?php $this->set($mail->getInfo('subject')); ?>
 					</a>
 				</td>
@@ -67,7 +66,7 @@ $mails = $Mailbox->getMails();
 			<select name="$$$showMailbox__moveto" id="$$$showMailbox__moveto">
 				<option value="0"><?php $this->set('{SHOWMAILBOX__PERFORMACTION_MOVE}'); ?></option>
 				<?php foreach ($mailboxes as $index => $value) { ?>
-				<option value="<?php $this->set($value->getInfo('id_mail__box')); ?>"><?php $this->set($value->getInfo('name')); ?></option>
+				<option value="<?php $this->set($value->getInfo('id')); ?>"><?php $this->set($value->getInfo('name')); ?></option>
 				<?php } ?>
 			</select>
 			<input type="submit" class="ts_submit" id="$$$showMailbox__submit_move" name="$$$showMailbox__submit_move" value="<?php $this->set('{SHOWMAILBOX__PERFORMACTION_MOVE_SUBMIT}'); ?>" />
@@ -84,7 +83,7 @@ $mails = $Mailbox->getMails();
 		<a href="<?php $this->setUrl('$$$showSendMail'); ?>">
 			<?php $this->set('{SHOWMAILBOX__TOSHOWWRITEMAIL}'); ?></a>
 		<a href="<?php $this->setUrl('$$$updateMailbox',
-				array('id_mail__box' => $Mailbox->getInfo('id_mail__box'),
+				array('$$$id' => $Mailbox->getInfo('id'),
 				'force' => 'true')); ?>">
 			<?php $this->set('{SHOWMAILBOX__TOUPDATEMAILBOX}'); ?></a>
 	</p>
@@ -197,10 +196,10 @@ $mails = $Mailbox->getMails();
 			type: "GET",
 			url: "ajax.php",
 			async:true,
-			data: "<?php $this->setUrl('$$$updateMailbox', array('id_mail__box' => $this->getVar('Mailbox')->getInfo('id_mail__box')), false, true, false); ?>",
+			data: "<?php $this->setUrl('$$$updateMailbox', array('$$$id' => $this->getVar('Mailbox')->getInfo('id')), false, true, false); ?>",
 			success: function(t){
-     			$$$handleAjaxSuccess(t);
-     		}
+			$$$handleAjaxSuccess(t);
+		}
 		});
 
 		return true;
@@ -247,7 +246,7 @@ $mails = $Mailbox->getMails();
 				// add events to optionbox-buttons
 				$$$showMailbox__optionbox['button1'].onclick = function(){
 
-					location.href='<?php $this->setUrl('$$$showMailbox', array('id_mail__box' => $Mailbox->getInfo('id_mail__box')), false); ?>';
+					location.href='<?php $this->setUrl('$$$showMailbox', array('$$$id' => $Mailbox->getInfo('id')), false); ?>';
 				};
 
 				$$$showMailbox__resetUpdater();

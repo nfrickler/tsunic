@@ -9,13 +9,13 @@ function $$$deleteUser () {
 
 	// delete user
 	if (!$User->delete()) {
-		$TSunic->Log->add('error', '{DELETEUSER__ERROR}');
+		$TSunic->Log->alert('error', '{DELETEUSER__ERROR}');
 		$TSunic->redirect('back', 2);
 		return false;
 	}
 
 	// success
-	$TSunic->Log->add('info', '{DELETEUSER__SUCCESS}');
+	$TSunic->Log->alert('info', '{DELETEUSER__SUCCESS}');
 	$TSunic->redirect('$$$showUserlist');
 	return true;
 }

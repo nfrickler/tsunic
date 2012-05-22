@@ -4,7 +4,7 @@ function $$$editSmtp () {
 	global $TSunic;
 
 	// get input
-	$id_mail__smtp = $TSunic->Temp->getParameter('$$$formSmtp__id_mail__smtp');
+	$id = $TSunic->Temp->getParameter('$$$formSmtp__id_mail__smtp');
 	$fk_mail__account = $TSunic->Temp->getParameter('$$$formSmtp__mailaccount');
 	$email = $TSunic->Temp->getParameter('$$$formSmtp__email');
 	$password = $TSunic->Temp->getParameter('$$$formSmtp__password');
@@ -17,7 +17,7 @@ function $$$editSmtp () {
 	$user = $TSunic->Temp->getParameter('$$$formSmtp__user');
 
 	// get smtp-object
-	$Smtp = $TSunic->get('$$$Smtp', $id_mail__smtp);
+	$Smtp = $TSunic->get('$$$Smtp', $id);
 
 	// validate input
 	if (!$Smtp->isValidEMail($email)
@@ -30,16 +30,13 @@ function $$$editSmtp () {
 			OR !$Smtp->isValidConnsecurity($connsecurity)
 	) {
 		// invalid input
-		$TSunic->Log->add('error', '{EDITSMTP__INVALIDINPUT}');
-		$TSunic->redirect('back');	
+		$TSunic->Log->alert('error', '{EDITSMTP__INVALIDINPUT}');
+		$TSunic->redirect('back');
 	}
 
 	// edit smtp
-	$return = $Smtp->editSmtp($email, $password, $description, $emailname);
-
-	// check, if error occured
-	if (!$return) {
-		$TSunic->Log->add('error', '{EDITSMTP__ERROR}');
+	if (!$Smtp->editSmtp($email, $password, $description, $emailname)) {
+		$TSunic->Log->alert('error', '{EDITSMTP__ERROR}');
 		$TSunic->redirect('back');
 	}
 
@@ -47,22 +44,19 @@ function $$$editSmtp () {
 	if (!empty($fk_mail__account)) {
 		$Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
 		if (!$Mailaccount OR !$Smtp->setMailaccount($Mailaccount)) {
-			$TSunic->Log->add('error', '{ADDSMTP__ERROR}');
+			$TSunic->Log->alert('error', '{ADDSMTP__ERROR}');
 			$TSunic->redirect('back');
 		}
 	}
 
 	// try to set connection
-	$return = $Smtp->setConnection($host, $port, $user, $auth, $connsecurity);
-
-	// check for connection-errors
-	if (!$return) {
-		$TSunic->Log->add('error', '{EDITSMTP__CONNERROR}');
+	if (!$Smtp->setConnection($host, $port, $user, $auth, $connsecurity)) {
+		$TSunic->Log->alert('error', '{EDITSMTP__CONNERROR}');
 		$TSunic->redirect('back');
 	}
 
 	// success
-	$TSunic->Log->add('info', '{EDITSMTP__SUCCESS}');
+	$TSunic->Log->alert('info', '{EDITSMTP__SUCCESS}');
 	$TSunic->redirect('back', 2);
 
 	return true;

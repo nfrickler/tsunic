@@ -1,6 +1,5 @@
 <!-- | Template: show mail account -->
 <?php
-
 // add javascript
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 
@@ -10,8 +9,8 @@ $Mailaccount = $this->getVar('Mailaccount');
 <div id="$$$div__showAccount">
 	<h1><?php $this->set('{SHOWACCOUNT__H1}', array('name' => $Mailaccount->getInfo('name'))); ?></h1>
 	<p class="ts_suplinkbox">
-		<a href="<?php $this->setUrl('$$$showEditAccount', array('id_mail__account' => $Mailaccount->getInfo('id_mail__account'))); ?>"><?php $this->set('{SHOWACCOUNT__TOEDITACCOUNT}'); ?></a>
-		<a href="<?php $this->setUrl('$$$showDeleteAccount', array('id_mail__account' => $Mailaccount->getInfo('id_mail__account'))); ?>"><?php $this->set('{SHOWACCOUNT__TODELETEACCOUNT}'); ?></a>
+		<a href="<?php $this->setUrl('$$$showEditAccount', array('$$$id' => $Mailaccount->getInfo('id'))); ?>"><?php $this->set('{SHOWACCOUNT__TOEDITACCOUNT}'); ?></a>
+		<a href="<?php $this->setUrl('$$$showDeleteAccount', array('$$$id' => $Mailaccount->getInfo('id'))); ?>"><?php $this->set('{SHOWACCOUNT__TODELETEACCOUNT}'); ?></a>
 	</p>
 	<p class="ts_infotext">
 		<?php $this->set('{SHOWACCOUNT__INFOTEXT}'); ?>
@@ -44,13 +43,13 @@ $Mailaccount = $this->getVar('Mailaccount');
 	<form action="<?php $this->setUrl('$$$activateServerboxes'); ?>" name="$$$showAccount__serverboxes_form" method="post">
 		<input type="hidden" name="$$$showAccount__id_mail__account" value="<?php $this->set($Mailaccount->getInfo('id_mail__account')); ?>" />
 		<?php $this->display('$$$showListServerboxes', array('serverboxes' => $Mailaccount->getServerboxes(),
-																'selectable' => '$$$showAccount__serverboxes_')); ?>
+			'selectable' => '$$$showAccount__serverboxes_')); ?>
 		<input type="submit" class="ts_submit" value="<?php $this->set('{SHOWACCOUNT__SERVERBOXES_SUBMIT}'); ?>" />
 	</form>
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showAddServerbox', array('id_mail__account' => $Mailaccount->getInfo('id_mail__account'))); ?>">
+		<a href="<?php $this->setUrl('$$$showAddServerbox', array('$$$id' => $Mailaccount->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWACCOUNT__SERVERBOXES_ADD}'); ?></a>
-		<a href="<?php $this->setUrl('$$$refreshServerboxes', array('id_mail__account' => $Mailaccount->getInfo('id_mail__account'))); ?>">
+		<a href="<?php $this->setUrl('$$$refreshServerboxes', array('$$$id' => $Mailaccount->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWACCOUNT__SERVERBOXES_REFRESH}'); ?></a>
 	</p>
 
@@ -58,7 +57,7 @@ $Mailaccount = $this->getVar('Mailaccount');
 	<p class="ts_infotext"><?php $this->set('{SHOWACCOUNT__SMTPS_INFO}'); ?></p>
 	<?php $this->display('$$$showListSmtps', array('smtps' => $Mailaccount->getSmtps())); ?>
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showAddSmtp', array('fk_mail__account' => $Mailaccount->getInfo('id_mail__account'))); ?>">
+		<a href="<?php $this->setUrl('$$$showAddSmtp', array('fk_mail__account' => $Mailaccount->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWACCOUNT__SMTPS_ADD}'); ?></a>
 	</p>
 </div>

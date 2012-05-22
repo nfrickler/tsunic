@@ -1,6 +1,5 @@
 <!-- | Template: show all serverboxes -->
 <?php
-
 $Imap = $this->getVar('Imap');
 $serverboxes = $this->getVar('serverboxes');
 ?>
@@ -24,10 +23,10 @@ $serverboxes = $this->getVar('serverboxes');
 				<?php $this->set($value->getInfo('fk_mail__box_obj')->getInfo('name')); ?>
 			</td>
 			<td>
-				<a href="<?php $this->setUrl('mail', 'showEditServerbox', array('id_mail__serverbox' => $value->getInfo('id_mail__serverbox')));?>">
+				<a href="<?php $this->setUrl('mail', 'showEditServerbox', array('$$$id' => $value->getInfo('id')));?>">
 					<img class="system_editImage" src="<?php $this->setImg('system', 'edit', 'png'); ?>" alt="<?php $this->set('{SHOWSERVERBOXES__EDIT}'); ?>" />
 				</a>
-				<a href="<?php $this->setUrl('mail', 'showDeleteServerbox', array('id_mail__serverbox' => $value->getInfo('id_mail__serverbox')));?>"  id="mail__showServerboxes__delete_<?php $this->set($value->getInfo('id_mail_serverbox')); ?>">
+				<a href="<?php $this->setUrl('mail', 'showDeleteServerbox', array('$$$id' => $value->getInfo('id')));?>"  id="mail__showServerboxes__delete_<?php $this->set($value->getInfo('id')); ?>">
 					<img class="system_deleteImage" src="<?php $this->setImg('system', 'delete', 'png'); ?>" alt="<?php $this->set('{SHOWSERVERBOXES__DELETE}'); ?>" />
 				</a>
 			</td>
@@ -41,7 +40,7 @@ $serverboxes = $this->getVar('serverboxes');
 	<?php } ?>
 
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showAddServerbox', array('id_mail__server' => $Imap->getInfo('id_mail__imap'))); ?>">
+		<a href="<?php $this->setUrl('$$$showAddServerbox', array('$$$id' => $Imap->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWSERVERBOXES__ADDSERVERBOX}'); ?></a>
 	</p>
 </div>
@@ -51,7 +50,7 @@ $serverboxes = $this->getVar('serverboxes');
 	// get mailservers
 	var $$$showmailservers__all = new Array();
 	<?php foreach ($TSunic->Temp->getCache('mailservers') as $index => $value) {
-	echo '$$$showmailservers__all["id_'.$value->getInfo('id_$$$server').'"] = new Array("$$$showmailservers__delete_'.$value->getInfo('id_mail_server').'",
+	echo '$$$showmailservers__all["id_'.$value->getInfo('id_$$$server').'"] = new Array("$$$showmailservers__delete_'.$value->getInfo('id').'",
 		"'.$value->getInfo('name').'",
 		"'.$this->setUrl('mail', 'deleteMailserver', array('id_$$$server' => $value->getInfo('id_$$$server')), false, false).'");';
 	} ?>

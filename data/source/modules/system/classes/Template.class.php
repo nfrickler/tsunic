@@ -116,8 +116,8 @@ class $$$Template {
 
 			if ($index > 1) {
 				// create error
-				$TSunic->Log->add('error', 'Template "'.$this->template.'" not found!', 1);
-				$TSunic->Log->add('error', '{CLASS__TEMPLATE__NOTEMPLATEFOUND}', 3);
+				$TSunic->Log->log(2, 'Template "'.$this->template.'" not found!');
+				$TSunic->Log->alert('error', '{CLASS__TEMPLATE__NOTEMPLATEFOUND}');
 			}
 
 			$File = $TSunic->get('$$$File', $value);

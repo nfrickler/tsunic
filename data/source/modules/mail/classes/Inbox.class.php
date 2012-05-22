@@ -19,7 +19,7 @@ class $$$Inbox extends $$$Box {
 				'name' => '{INBOX__NAME}',
 				'description' => '{INBOX__DESCRIPTION}',
 				'dateOfCreation' => 0,
-				'id_mail__box' => 0
+				'id' => 0
 			);
 		}
 
