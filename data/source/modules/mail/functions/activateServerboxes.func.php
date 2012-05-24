@@ -4,11 +4,11 @@ function $$$activateServerboxes () {
 	global $TSunic;
 
 	// get input
-	$id = $TSunic->Temp->getParameter('$$$showAccount__id_mail__account');
-	$activated_serverboxes = $TSunic->Temp->getByPreffix('$$$showAccount__serverboxes_');
+	$id = $TSunic->Temp->getParameter('$$$showMailaccount__id_mail__account');
+	$activated_serverboxes = $TSunic->Temp->getByPreffix('$$$showMailaccount__serverboxes_');
 
 	// get mailaccount-object
-	$Mailaccount = $TSunic->get('$$$Account', $id);
+	$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
 	// get all serverboxes
 	$all_serverboxes = $Mailaccount->getServerboxes();

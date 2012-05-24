@@ -3,11 +3,11 @@
 function $$$updateMailbox () {
 	global $TSunic;
 
-	// get id_mail_box
+	// get parameters
 	$id = $TSunic->Temp->getParameter('$$$id');
 	$force = ($TSunic->Temp->getParameter('force')) ? true : false;
 
-	// get mailbox-object
+	// get Mailbox object
 	$Mailbox = (empty($id))
 		? $TSunic->get('$$$Inbox')
 		: $TSunic->get('$$$Box', $id);

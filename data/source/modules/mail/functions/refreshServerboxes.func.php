@@ -3,13 +3,13 @@
 function $$$refreshServerboxes () {
 	global $TSunic;
 
-	// get id_mail__account
+	// get id
 	$id = $TSunic->Temp->getParameter('$$$id');
 
 	if (!empty($id) AND is_numeric($id)) {
 
-		// get mailaccount-object
-		$Mailaccount = $TSunic->get('$$$Account', $id);
+		// get Mailaccount object
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
 		// update serverboxes
 		$Mailaccount->updateServerboxes();

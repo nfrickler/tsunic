@@ -3,15 +3,15 @@
 include_once '$system$Object.class.php';
 class $$$Serverbox extends $system$Object {
 
-	/* mail-account-object
+	/* Mailaccount object
 	 * object
 	 */
-	private $Mailaccount;
+	protected $Mailaccount;
 
 	/* temporary cache
 	 * array
 	 */
-	private $cache;
+	protected $cache;
 
 	/* get all data of mailserverbox
 	 * +@param bool/string: name of data (true will return all data)
@@ -25,18 +25,18 @@ class $$$Serverbox extends $system$Object {
 		if (!empty($this->id) AND empty($this->info)) {
 
 			// get data from database
-			$sql_0 = "SELECT _name_ as name,
-						fk_mail__account as fk_mail__account,
-						fk_mail__box as fk_mail__box,
-						deleteOnUpdate as deleteOnUpdate,
-						dateOfCreation as dateOfCreation,
-						dateOfUpdate as dateOfUpdate,
-						dateOfCheck as dateOfCheck,
-						checkAllSeconds as checkAllSeconds,
-						isActive as isActive
-					FROM #__serverboxes
-					WHERE id= '".$this->id."';";
-			$result_0 = $TSunic->Db->doSelect($sql_0);
+			$sql = "SELECT _name_ as name,
+					fk_mail__account as fk_mail__account,
+					fk_mail__box as fk_mail__box,
+					deleteOnUpdate as deleteOnUpdate,
+					dateOfCreation as dateOfCreation,
+					dateOfUpdate as dateOfUpdate,
+					dateOfCheck as dateOfCheck,
+					checkAllSeconds as checkAllSeconds,
+					isActive as isActive
+				FROM #__serverboxes
+				WHERE id= '".$this->id."';";
+			$result = $TSunic->Db->doSelect($sql);
 
 			// return, if no server matched
 			if (empty($result_0)) return false;
@@ -54,7 +54,7 @@ class $$$Serverbox extends $system$Object {
 
 			// get and save Mailaccount-object
 			if (empty($this->Mailaccount))
-				$this->Mailaccount = $TSunic->get('$$$Account', $this->info['fk_mail__account']);
+				$this->Mailaccount = $TSunic->get('$$$Mailaccount', $this->info['fk_mail__account']);
 			$this->info['Mailaccount'] = $this->Mailaccount;
 		}
 
@@ -64,7 +64,7 @@ class $$$Serverbox extends $system$Object {
 		return false;
 	}
 
-	/* get mailaccount-object, the serverbox belongs to
+	/* get Mailaccount object, the serverbox belongs to
 	 * +@param bool: get id instead of object
 	 *
 	 * @return OBJECT/bool
@@ -81,7 +81,7 @@ class $$$Serverbox extends $system$Object {
 		if (empty($fk_mail__account)) return false;
 
 		// try to get object
-		$Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// save in obj-var and return
@@ -97,7 +97,7 @@ class $$$Serverbox extends $system$Object {
 	public function setMailaccount ($Mailaccount) {
 		global $TSunic;
 
-		// is valid account?
+		// is valid mailaccount?
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// is new mailaccount?
@@ -117,12 +117,10 @@ class $$$Serverbox extends $system$Object {
 		}
 
 		// update database
-		$sql_0 = "UPDATE #__serverboxes
-				SET fk_mail__account = ".$this->Mailaccount->getInfo('id')."
-				WHERE id = ".$this->id.";";
-		$result_0 = $TSunic->Db->doUpdate($sql_0);
-
-		return true;
+		$sql = "UPDATE #__serverboxes
+			SET fk_mail__account = ".$this->Mailaccount->getInfo('id')."
+			WHERE id = ".$this->id.";";
+		return $TSunic->Db->doUpdate($sql);
 	}
 
 	/* update info-data
@@ -242,8 +240,8 @@ class $$$Serverbox extends $system$Object {
 	public function isValidFkAccount ($fk_mail__account) {
 		global $TSunic;
 
-		// try to get imap-object
-		$this->Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
+		// try to get Mailaccount object
+		$this->Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
 
 		// check, if mailaccount exist
 		if ($this->Mailaccount->isValid()) return true;

@@ -6,16 +6,16 @@ function $$$showAddSmtp () {
 	// get input
 	$fk_mail__account = $TSunic->Temp->getParameter('fk_mail__account');
 
-	// create new smtp-object
+	// get empty Smtp object
 	$Smtp = $TSunic->get('$$$Smtp');
 
 	// set mailaccount?
 	if (!empty($fk_mail__account)) {
-		$Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
 		$Smtp->setMailaccount($Mailaccount);
 	}
 
-	// get SuperMail-object
+	// get SuperMail object
 	$SuperMail = $TSunic->get('$$$SuperMail');
 
 	// activate template

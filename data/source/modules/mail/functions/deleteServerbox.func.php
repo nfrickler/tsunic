@@ -3,11 +3,11 @@
 function $$$deleteServerbox () {
 	global $TSunic;
 
-	// get serverbox object
+	// get Serverbox object
 	$id = $TSunic->Temp->getParameter('$$$id');
 	$Serverbox = $TSunic->get('$$$Serverbox', $id);
 
-	// get id_mail__account
+	// get id of mail account
 	$fk_mail__account = $Serverbox->getMailaccount(true);
 
 	// delete serverbox
@@ -18,7 +18,7 @@ function $$$deleteServerbox () {
 
 	// success
 	$TSunic->Log->alert('info', '{DELETESERVERBOX__SUCCESS}');
-	$TSunic->redirect('$$$showAccount', array('id_mail__account' => $fk_mail__account));
+	$TSunic->redirect('$$$showMailaccount', array('$$$id' => $fk_mail__account));
 
 	return true;
 }

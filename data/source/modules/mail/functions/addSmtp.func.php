@@ -1,4 +1,4 @@
-<!-- | function to add new SMTP -->
+<!-- | function to add new Smtp -->
 <?php
 function $$$addSmtp () {
 	global $TSunic;
@@ -36,7 +36,7 @@ function $$$addSmtp () {
 
 	// add mailaccount
 	if (!empty($fk_mail__account)) {
-		$Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
 		if (!$Mailaccount OR !$Smtp->setMailaccount($Mailaccount)) {
 			$TSunic->Log->alert('error', '{ADDSMTP__ERROR}');
 			$TSunic->redirect('back');

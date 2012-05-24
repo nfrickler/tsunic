@@ -1,14 +1,14 @@
 <!-- | function to delete mail account -->
 <?php
-function $$$deleteAccount () {
+function $$$deleteMailaccount () {
 	global $TSunic;
 
 	// get mailaccount object
 	$id = $TSunic->Temp->getParameter('$$$id');
-	$Account = $TSunic->get('$$$Account', $id);
+	$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
-	// delete account
-	if (!$Account->deleteAccount()) {
+	// delete mailaccount
+	if (!$Mailaccount->delete()) {
 		$TSunic->Log->alert('error', '{DELETEACCOUNT__ERROR}');
 		$TSunic->redirect('back');
 	}

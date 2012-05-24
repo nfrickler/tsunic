@@ -3,13 +3,13 @@
 function $$$checkMails () {
 	global $TSunic;
 
-	// get id_mail__box
-	$id_mail__box = $TSunic->Temp->getParameter('id_mail__box');
+	// get id
+	$id = $TSunic->Temp->getParameter('$$$id');
 
-	if (!empty($id_mail__box)) {
+	if (!empty($id)) {
 		// check only this mailserver for new mails
 		// get mailbox-object
-		$Mailbox = $TSunic->get('$$$Box', $id_mail__box);
+		$Mailbox = $TSunic->get('$$$Box', $id);
 
 		// check for new mails
 		$Mailbox->checkMails();

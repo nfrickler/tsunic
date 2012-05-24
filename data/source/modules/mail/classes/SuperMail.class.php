@@ -39,7 +39,7 @@ class $$$SuperMail {
 		foreach ($result as $index => $values) {
 
 			// get new object
-			$the_account = $TSunic->get('$$$Account', $values['id']);
+			$the_account = $TSunic->get('$$$Mailaccount', $values['id']);
 			if ($the_account) $this->mailaccounts[] = $the_account;
 		}
 

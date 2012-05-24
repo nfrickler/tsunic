@@ -141,9 +141,9 @@ $lang = array(
 	// showMailservers
 	'SHOWMAILSERVERS__TITLE' => 'Deine Mailserver',
 	'SHOWMAILSERVERS__H1' => 'Deine Mailserver',
-	'SHOWMAILSERVERS__INFOTEXT' => 'Dies ist eine Liste deiner Mailaccounts und SMTP-Server, die du zu deinem Account auf diesem System hinzugefügt hast.',
+	'SHOWMAILSERVERS__INFOTEXT' => 'Dies ist eine Liste deiner Mailaccounts und SMTP-Server, die du zu deinem Mailaccount auf diesem System hinzugefügt hast.',
 	'SHOWMAILSERVERS__ACCOUNTS_H1' => 'Deine Mailaccounts',
-	'SHOWMAILSERVERS__ACCOUNTS_INFO' => 'Hier sind alle Mailaccounts aufgelistet, die du mit diesem System verbunden hast. Du kannst einen weiteren hinzufügen, ihre Einstellungen ändern oder welche von diesem System wieder entfernen. Mithilfe von Mailaccounts kannst du über IMAP/POP3 E-Mails von deinen E-Mail-Accounts empfangen, über SMTP-Server kannst du E-Mails versenden.',
+	'SHOWMAILSERVERS__ACCOUNTS_INFO' => 'Hier sind alle Mailaccounts aufgelistet, die du mit diesem System verbunden hast. Du kannst einen weiteren hinzufügen, ihre Einstellungen ändern oder welche von diesem System wieder entfernen. Mithilfe von Mailaccounts kannst du über IMAP/POP3 E-Mails von deinen E-Mail-Mailaccounts empfangen, über SMTP-Server kannst du E-Mails versenden.',
 	'SHOWMAILSERVERS__ACCOUNTS_ADD' => 'Mailaccount hinzufügen',
 	'SHOWMAILSERVERS__SMTPS_H1' => 'Deine SMTP-Server',
 	'SHOWMAILSERVERS__SMTPS_INFO' => 'Dies ist eine Liste aller SMTP-Server, die du mit diesem System verbunden hast. Von diesen SMTP-Servern aus kannst du E-Mails versenden.',
@@ -151,28 +151,28 @@ $lang = array(
 
 	/* ************************* mailaccount ******************************** */
 
-	// showAccount
+	// showMailaccount
 	'SHOWACCOUNT__H1' => 'Mailaccount "#name#"',
 	'SHOWACCOUNT__TOEDITACCOUNT' => 'Bearbeiten',
 	'SHOWACCOUNT__TODELETEACCOUNT' => 'Löschen',
-	'SHOWACCOUNT__INFOTEXT' => 'Mailaccounts ermöglichen dir, E-Mails über IMAP/POP3 von deinen E-Mail-Accounts zu empfangen.',
+	'SHOWACCOUNT__INFOTEXT' => 'Mailaccounts ermöglichen dir, E-Mails über IMAP/POP3 von deinen E-Mail-Mailaccounts zu empfangen.',
 	'SHOWACCOUNT__NAME' => 'Name',
 	'SHOWACCOUNT__DESCRIPTION' => 'Beschreibung',
 	'SHOWACCOUNT__EMAIL' => 'E-Mail',
 	'SHOWACCOUNT__DATEOFCREATION' => 'Erstellungsdatum',
-	'SHOWACCOUNT__SERVERBOXES_H1' => 'Serverboxen des Accounts',
+	'SHOWACCOUNT__SERVERBOXES_H1' => 'Serverboxen des Mailaccounts',
 	'SHOWACCOUNT__SERVERBOXES_INFO' => 'Serverboxen sind die Mailboxen deines externen E-Mailaccounts. Aktiviere eine Serverbox, um E-Mails aus dieser Box in eine lokale Mailbox zu laden.',
 	'SHOWACCOUNT__SERVERBOXES_ADD' => 'Manuell eine weitere Serverbox hinzufügen',
 	'SHOWACCOUNT__SERVERBOXES_SUBMIT' => 'Serverboxen de-/aktivieren',
 	'SHOWACCOUNT__SERVERBOXES_REFRESH' => 'Serverbox-Liste aktualisieren',
-	'SHOWACCOUNT__SMTPS_H1' => 'SMTP-Server des Accounts',
-	'SHOWACCOUNT__SMTPS_INFO' => 'Diese Liste zeigt dir alle SMTP-Server, die zu diesem Account hinzugefügt sind.',
+	'SHOWACCOUNT__SMTPS_H1' => 'SMTP-Server des Mailaccounts',
+	'SHOWACCOUNT__SMTPS_INFO' => 'Diese Liste zeigt dir alle SMTP-Server, die zu diesem Mailaccount hinzugefügt sind.',
 	'SHOWACCOUNT__SMTPS_ADD' => 'Add SMTP-server',
 
 	// refresh serverboxes
 	'REFRESHSERVERBOXES__SUCCESS' => 'Die Serverbox-Liste wurde aktualisiert.',
 
-	// showListAccounts
+	// showListMailaccounts
 	'SHOWLISTACCOUNTS__NAME' => 'Name',
 	'SHOWLISTACCOUNTS__DESCRIPTION' => 'Beschreibung',
 	'SHOWLISTACCOUNTS__EMAIL' => 'E-Mail',
@@ -210,13 +210,13 @@ $lang = array(
 	'FORMACCOUNT__LEGEND_EMAILACCOUNT' => 'Daten des Mailaccounts',
 	'FORMACCOUNT__NAME' => 'Name',
 	'FORMACCOUNT__PRESET_NAME' => 'Optionaler Name',
-	'FORMACCOUNT__HELP_NAME' => 'Gebe dem Account einen optionalen Namen.',
+	'FORMACCOUNT__HELP_NAME' => 'Gebe dem Mailaccount einen optionalen Namen.',
 	'FORMACCOUNT__DESCRIPTION' => 'Beschreibung',
 	'FORMACCOUNT__PRESET_DESCRIPTION' => 'Kurze Beschreibung',
 	'FORMACCOUNT__HELP_DESCRIPTION' => 'Hier kannst du eine kurze Beschreibung des Mailaccount einfügen.',
 	'FORMACCOUNT__EMAIL' => 'E-Mail-Adresse',
-	'FORMACCOUNT__PRESET_EMAIL' => 'E-Mailadresse des Accounts',
-	'FORMACCOUNT__HELP_EMAIL' => 'Gebe hier die E-Mailadresse des Accounts an.',
+	'FORMACCOUNT__PRESET_EMAIL' => 'E-Mailadresse des Mailaccounts',
+	'FORMACCOUNT__HELP_EMAIL' => 'Gebe hier die E-Mailadresse des Mailaccounts an.',
 	'FORMACCOUNT__PASSWORD' => 'Passwort',
 	'FORMACCOUNT__HELP_PASSWORD' => 'Passwort des Mailaccounts.',
 	'FORMACCOUNT__LEGEND_LOGINDATA' => 'Deine Login-Daten des Mailaccounts',
@@ -242,7 +242,7 @@ $lang = array(
 	'FORMACCOUNT__HELP_CONNSECURITY' => 'Wähle ein Level für die Verbindungssicherheit.',
 	'FORMACCOUNT__SUBINFO' => 'Das Laden der nächsten Seite kann etwas dauern, da versucht wird, eine Verbindung zum Mailserver herzustellen.',
 
-	// showDeleteAccount
+	// showDeleteMailaccount
 	'SHOWDELETEACCOUNT__TITLE' => 'Mailaccount löschen',
 	'SHOWDELETEACCOUNT__POPUP_DELETE_HEADER_JS' => 'Mailaccount löschen?',
 	'SHOWDELETEACCOUNT__POPUP_DELETE_HEADER' => 'Mailaccount "#name#" löschen?',
@@ -250,7 +250,7 @@ $lang = array(
 	'SHOWDELETEACCOUNT__POPUP_DELETE_YES' => 'Ja, löschen.',
 	'SHOWDELETEACCOUNT__POPUP_DELETE_NO' => 'Nein, abbrechen.',
 
-	// deleteAccount
+	// deleteMailaccount
 	'DELETEACCOUNT__ERROR' => '{$$$COMMON__ERROR}',
 	'DELETEACCOUNT__SUCCESS' => 'Der Mailaccount wurde erfolgreich von System entfernt.',
 
@@ -364,7 +364,7 @@ $lang = array(
 	// formSmtp
 	'FORMSMTP__LEGEND_SMTPACCOUNT' => 'SMTP-Daten',
 	'FORMSMTP__MAILACCOUNT' => 'Mailaccount',
-	'FORMSMTP__MAILACCOUNT_NOACCOUNT' => 'Mit keinem Account verbunden',
+	'FORMSMTP__MAILACCOUNT_NOACCOUNT' => 'Mit keinem Mailaccount verbunden',
 	'FORMSMTP__HELP_MAILACCOUNT' => 'Wähle einen Mailaccount, mit dem dieser SMTP-Server verbunden sein soll. Du kannst diesen SMTP-Server auch ohne eine solche Verbindung verwenden.',
 	'FORMSMTP__EMAIL' => 'E-Mail',
 	'FORMSMTP__PRESET_EMAIL' => 'E-Mail-Adresse',

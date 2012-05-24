@@ -13,7 +13,16 @@ class $$$Validator {
 	 * @return bool
 	 */
 	public function isString ($input) {
-		return (self::_isMatch("[^-_a-zA-Z0-9äöüÄÖÜ]", $input)) ? false : true;
+		return (self::_isMatch("%[^-_a-z0-9äöü]%i", $input)) ? false : true;
+	}
+
+	/* is string (extended, but harmless chars only)
+	 * @param string: input value
+	 *
+	 * @return bool
+	 */
+	public function isExtString ($input) {
+		return (self::_isMatch("%[^-_a-z0-9äöü@\.!\?;,]%i", $input)) ? false : true;
 	}
 
 	/* is filename
@@ -22,7 +31,7 @@ class $$$Validator {
 	 * @return bool
 	 */
 	public function isFilename ($input) {
-		return (self::_isMatch("[^-_a-zA-Z0-9äöüÄÖÜ\.]", $input)) ? false : true;
+		return (self::_isMatch("%[^-_a-zA-Z0-9äöüÄÖÜ\.]%", $input)) ? false : true;
 	}
 
 	/* is int
@@ -41,7 +50,16 @@ class $$$Validator {
 	 */
 	public function isUri ($input) {
 		// TODO: improve!
-		return (self::_isMatch("^([a-zA-Z0-9]+://)?([a-zA-Z0-9äöüÄÖÜ-]+\.)+[a-zA-Z0-9äöüÄÖÜ-]+", $input)) ? false : true;
+		return (self::_isMatch("%^([a-z0-9]+://)?(?:[-a-z0-9äöü]+\.)+[a-z]{2,4}%i", $input)) ? true : false;
+	}
+
+	/* is url
+	 * @param string: input value
+	 *
+	 * @return bool
+	 */
+	public function isUrl ($input) {
+		return (self::_isMatch("%^([a-z]+://)?(?:[-a-z0-9äöü]+\.)+[a-z]{2,4}/?$%i", $input)) ? true : false;
 	}
 
 	/* is e-mail address?
@@ -54,7 +72,7 @@ class $$$Validator {
 		// Might be a better regex-phrase from James Watts and Francisco Jose Martin Moreno:
 		// /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
 
-		return (self::_isMatch('^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$', $input))
+		return (self::_isMatch('%^[^\W][a-z0-9_]+(\.[a-z0-9_]+)*\@[-a-z0-9_]+(\.[-a-z0-9_]+)*\.[a-z]{2,4}$%i', $input))
 			? true : false;
 	}
 
@@ -74,8 +92,7 @@ class $$$Validator {
 	 * @return bool
 	 */
 	protected function _isMatch ($regex, $string) {
-		return (preg_match("%".$regex."%", $string) != 0)
-			? true : false;
+		return (preg_match($regex, $string) != 0) ? true : false;
 	}
 }
 ?>

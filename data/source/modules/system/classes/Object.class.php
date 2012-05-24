@@ -148,12 +148,16 @@ class $$$Object {
 		switch ($type) {
 			case 'string':
 				return $$$Validator::isString($value);
+			case 'extString':
+				return $$$Validator::isExtString($value);
 			case 'filename':
 				return $$$Validator::isFilename($value);
 			case 'int':
 				return $$$Validator::isInt($value);
 			case 'uri':
 				return $$$Validator::isUri($value);
+			case 'url':
+				return $$$Validator::isUrl($value);
 			case 'email':
 				return $$$Validator::isEMail($value);
 			case 'password':

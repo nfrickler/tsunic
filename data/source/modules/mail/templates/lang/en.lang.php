@@ -151,7 +151,7 @@ $lang = array(
 
 	/* ************************* mailaccount ******************************** */
 
-	// showAccount
+	// showMailaccount
 	'SHOWACCOUNT__H1' => 'Mailaccount "#name#"',
 	'SHOWACCOUNT__TOEDITACCOUNT' => 'Edit',
 	'SHOWACCOUNT__TODELETEACCOUNT' => 'Delete',
@@ -160,19 +160,19 @@ $lang = array(
 	'SHOWACCOUNT__DESCRIPTION' => 'Description',
 	'SHOWACCOUNT__EMAIL' => 'E-mail',
 	'SHOWACCOUNT__DATEOFCREATION' => 'Date of creation',
-	'SHOWACCOUNT__SERVERBOXES_H1' => 'Account\'s Serverboxes',
+	'SHOWACCOUNT__SERVERBOXES_H1' => 'Mailaccount\'s Serverboxes',
 	'SHOWACCOUNT__SERVERBOXES_INFO' => 'This is a list of serverboxes of this mailaccount. Activate those, from whom you want to recieve e-mails on this system. New mails will be transfered in the given local mailbox.',
 	'SHOWACCOUNT__SERVERBOXES_ADD' => 'Add another serverbox manually',
 	'SHOWACCOUNT__SERVERBOXES_SUBMIT' => 'De-/Activate serverboxes',
 	'SHOWACCOUNT__SERVERBOXES_REFRESH' => 'Refresh serverbox-list',
-	'SHOWACCOUNT__SMTPS_H1' => 'Account\'s SMTP-servers',
+	'SHOWACCOUNT__SMTPS_H1' => 'Mailaccount\'s SMTP-servers',
 	'SHOWACCOUNT__SMTPS_INFO' => 'This is a list of SMTP-servers of this mailaccount.',
 	'SHOWACCOUNT__SMTPS_ADD' => 'Add SMTP-server',
 
 	// refresh serverboxes
 	'REFRESHSERVERBOXES__SUCCESS' => 'The list of serverboxes has been updated.',
 
-	// showListAccounts
+	// showListMailaccounts
 	'SHOWLISTACCOUNTS__NAME' => 'Name',
 	'SHOWLISTACCOUNTS__DESCRIPTION' => 'Description',
 	'SHOWLISTACCOUNTS__EMAIL' => 'E-Mail',
@@ -242,7 +242,7 @@ $lang = array(
 	'FORMACCOUNT__HELP_CONNSECURITY' => 'Choose a connection security-level.',
 	'FORMACCOUNT__SUBINFO' => 'The loading may take some time after submitting the form, because the system is trying to connect to the server.',
 
-	// showDeleteAccount
+	// showDeleteMailaccount
 	'SHOWDELETEACCOUNT__TITLE' => 'Delete mailaccount',
 	'SHOWDELETEACCOUNT__POPUP_DELETE_HEADER_JS' => 'Delete mailaccount?',
 	'SHOWDELETEACCOUNT__POPUP_DELETE_HEADER' => 'Delete mailaccount "#name#"?',
@@ -250,7 +250,7 @@ $lang = array(
 	'SHOWDELETEACCOUNT__POPUP_DELETE_YES' => 'Yes, remove.',
 	'SHOWDELETEACCOUNT__POPUP_DELETE_NO' => 'No, cancel.',
 
-	// deleteAccount
+	// deleteMailaccount
 	'DELETEACCOUNT__ERROR' => '{$$$COMMON__ERROR}',
 	'DELETEACCOUNT__SUCCESS' => 'Mailaccount has been successfully removed from this system.',
 

@@ -3,9 +3,9 @@
 function $$$showAddServerbox () {
 	global $TSunic;
 
-	// get mailaccount object
+	// get Mailaccount object
 	$id = $TSunic->Temp->getParameter('id');
-	$Mailaccount = $TSunic->get('$$$Account', $id);
+	$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
 	// valid mailaccount?
 	if (!$Mailaccount->isValid()) {
@@ -13,10 +13,10 @@ function $$$showAddServerbox () {
 		$TSunic->redirect('back');
 	}
 
-	// create empty serverbox-object
+	// get empty Serverbox object
 	$Serverbox = $TSunic->get('$$$Serverbox', array(0, $Mailaccount));
 
-	// create SuperMail-object
+	// create SuperMail object
 	$SuperMail = $TSunic->get('$$$SuperMail');
 
 	// activate template

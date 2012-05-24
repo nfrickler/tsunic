@@ -1,4 +1,4 @@
-<!-- | SMTP class -->
+<!-- | Smtp class -->
 <?php
 include_once '$system$Object.class.php';
 class $$$Smtp extends $system$Object {
@@ -8,20 +8,20 @@ class $$$Smtp extends $system$Object {
 	 */
 	private $password;
 
-	/* mailaccount-object
+	/* Mailaccount object
 	 * object
 	 */
-	private $Mailaccount;
+	protected $Mailaccount;
 
 	/* timeout for smtp-connection in seconds
 	 * int
 	 */
-	private $timeout = 5;
+	protected $timeout = 5;
 
 	/* password-authentifications
 	 * array
 	 */
-	private $auths = array(1 => array(
+	protected $auths = array(1 => array(
 		'{CLASS__SMTP__AUTHS_NORMAL}', ''),
 		2 => array('{CLASS__SMTP__AUTHS_ENCRYPTEDPWD}', 'secure'),
 		//  3 => array('{CLASS__SMTP__AUTHS_NTLM}', ''), // not supported
@@ -32,7 +32,7 @@ class $$$Smtp extends $system$Object {
 	/* connections-securities
 	 * array
 	 */
-	private $connsecurities = array(
+	protected $connsecurities = array(
 		1 => array('{CLASS__SMTP__CONNSECURITIES_NONE}', ''),
 		2 => array('{CLASS__SMTP__CONNSECURITIES_STARTTLS}', ''),
 		3 => array('{CLASS__SMTP__CONNSECURITIES_SSLTLS}', 'tls')
@@ -63,15 +63,19 @@ class $$$Smtp extends $system$Object {
 	/* load information about object
 	 */
 	protected function loadInfo () {
-		parent::loadInfo();
+		$return = parent::loadInfo();
 
 		// handle password
-		$this->password = $this->info['password'];
-		unset($this->info['password']);
+		if ($this->info['password']) {
+			$this->password = $this->info['password'];
+			unset($this->info['password']);
+		}
+
+		return $return;
 	}
 
-	/* get mailaccount-object connected to smtp-server
-	 * +@param bool: get id_mail__account instead of object
+	/* get Mailaccount object connected to smtp-server
+	 * +@param bool: get id instead of object
 	 *
 	 * @return OBJECT/bool
 	 */
@@ -87,7 +91,7 @@ class $$$Smtp extends $system$Object {
 
 		// try to get object
 		global $TSunic;
-		$Mailaccount = $TSunic->get('$$$Account', $fk_mail__account);
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// save in obj-var and return

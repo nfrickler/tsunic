@@ -75,12 +75,19 @@ class $$$Log {
 
 		// valid input?
 		if (empty($msg) or !is_numeric($level)) return false;
+		if ($level > $this->level) return true;
 
 		// add message to log
+		// only use $$$File to get path
+		// DO NOT USE IT FOR WRITING THE LOG (RECURSION!)
+		global $TSunic;
 		$File = $TSunic->get('$$$File', array('#cache#frontend.log', true));
+		$path = $File->getPath();
 
-		// add message
-		$File->writeAdd(date('Y-m-d H:i:s').'['.$level.']: '.$msg);
+		// manually write to log file
+		$fh = fopen($path, 'a') or die("Could not open log file!");
+		fwrite($fh, date('Y-m-d H:i:s').'['.$level.']: '.$msg);
+		fclose($fh);
 
 		return true;
 	}

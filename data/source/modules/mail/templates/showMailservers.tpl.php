@@ -5,9 +5,9 @@
 
 	<h2 style="margin-top:15px;"><?php $this->set('{SHOWMAILSERVERS__ACCOUNTS_H1}'); ?></h2>
 	<p class="ts_infotext"><?php $this->set('{SHOWMAILSERVERS__ACCOUNTS_INFO}'); ?></p>
-	<?php $this->display('$$$showListAccounts', array('mailaccounts' => $this->getVar('mailaccounts'))); ?>
+	<?php $this->display('$$$showListMailaccounts', array('mailaccounts' => $this->getVar('mailaccounts'))); ?>
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showAddAccount'); ?>">
+		<a href="<?php $this->setUrl('$$$showAddMailaccount'); ?>">
 			<?php $this->set('{SHOWMAILSERVERS__ACCOUNTS_ADD}'); ?></a>
 	</p>
 

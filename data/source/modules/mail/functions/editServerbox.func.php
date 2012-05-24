@@ -65,7 +65,7 @@ function $$$editServerbox () {
 
 	// success
 	$TSunic->Log->alert('info', '{EDITSERVERBOX__SUCCESS}');
-	$TSunic->redirect('$$$showAccount', array('$$$id' => $Serverbox->getInfo('fk_mail__account')));
+	$TSunic->redirect('$$$showMailaccount', array('$$$id' => $Serverbox->getInfo('fk_mail__account')));
 
 	return true;
 }
