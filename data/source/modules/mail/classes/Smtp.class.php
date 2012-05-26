@@ -54,7 +54,7 @@ class $$$Smtp extends $system$Object {
 				_user_ as user,
 				connsecurity,
 				auth,
-				fk_mail__account,
+				fk_mailaccount,
 				fk_system_users__account
 			FROM #__smtps
 			WHERE id = '$this->id';";
@@ -85,13 +85,13 @@ class $$$Smtp extends $system$Object {
 		if (isset($this->Mailaccount) AND !empty($this->Mailaccount))
 			return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
 
-		// try to get fk_mail__account
-		$fk_mail__account = $this->getInfo('fk_mail__account');
-		if (empty($fk_mail__account)) return false;
+		// try to get fk_mailaccount
+		$fk_mailaccount = $this->getInfo('fk_mailaccount');
+		if (empty($fk_mailaccount)) return false;
 
 		// try to get object
 		global $TSunic;
-		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mailaccount);
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// save in obj-var and return
@@ -100,7 +100,7 @@ class $$$Smtp extends $system$Object {
 	}
 
 	/* set mailaccount
-	 * @param object: mailaccount-object
+	 * @param object: mailaccount object
 	 *
 	 * @return bool
 	 */
@@ -111,13 +111,13 @@ class $$$Smtp extends $system$Object {
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// is new mailaccount?
-		if ($Mailaccount->getInfo('id') == $this->getInfo('fk_mail__account'))
+		if ($Mailaccount->getInfo('id') == $this->getInfo('fk_mailaccount'))
 			return true;
 
 		// save in obj-var
 		$this->Mailaccount = $Mailaccount;
 
-		// is smtp-object
+		// is Smtp object
 		if (!$this->isValid()) {
 
 			// presets
@@ -128,7 +128,7 @@ class $$$Smtp extends $system$Object {
 
 		// update database
 		$sql = "UPDATE #__smtps
-			SET fk_mail__account = ".$this->Mailaccount->getInfo('id')."
+			SET fk_mailaccount = ".$this->Mailaccount->getInfo('id')."
 			WHERE id = ".$this->id.";";
 		$result = $TSunic->Db->doUpdate($sql);
 
@@ -237,7 +237,7 @@ class $$$Smtp extends $system$Object {
 	 *
 	 * @return bool
 	 */
-	public function createSmtp ($email, $password, $description = false, $emailname = false) {
+	public function create ($email, $password, $description = false, $emailname = false) {
 
 		// validate input
 		if (!$this->isValidEMail($email)
@@ -253,16 +253,16 @@ class $$$Smtp extends $system$Object {
 				_password_ = '".$password."',
 				_description_ = '".$description."',
 				_emailname_ = '".$emailname."',
-				fk_system_users__account = '".$TSunic->Usr->getInfo('id')."',
+				fk_account = '".$TSunic->Usr->getInfo('id')."',
 				dateOfCreation = NOW()
 		;";
 		return $this->_create($sql);
 	}
 
 	/* set connection for smtp-server
-	 * @param string: host to connect to smtp-server
-	 * @param string: user to connect to smtp-server
-	 * @param int: port to connect to smtp-server
+	 * @param string: host to connect to smtp server
+	 * @param string: user to connect to smtp server
+	 * @param int: port to connect to smtp server
 	 * @param int/string: connection-security
 	 * @param int/string: password-authentification
 	 *
@@ -333,7 +333,7 @@ class $$$Smtp extends $system$Object {
 		// update database
 		$sql = "UPDATE #__smtps
 			SET ".implode(',', $sql_set)."
-			WHERE id= '".$this->id."' ;";
+			WHERE id = '".$this->id."' ;";
 		return $this->_edit($sql);
 	}
 
@@ -347,13 +347,13 @@ class $$$Smtp extends $system$Object {
 		return $this->_delete($sql);
 	}
 
-	/* check, if fk_mail__account is valid
+	/* check, if fk_mailaccount is valid
 	 * @param int: fk of mail account
 	 *
 	 * @return bool
 	 */
 	public function isValidFkmailaccount ($fk) {
-		return $this->_isObject('#__accounts', $fk);
+		return $this->_isObject('#__mailaccounts', $fk);
 	}
 
 	/* check, if host is valid
@@ -362,7 +362,7 @@ class $$$Smtp extends $system$Object {
 	 * @return bool
  	 */
 	public function isValidHost ($host) {
-		return $this->_validate($host, 'string');
+		return $this->_validate($host, 'url');
 	}
 
 	/* check, if description is valid
@@ -426,7 +426,7 @@ class $$$Smtp extends $system$Object {
 	 * @return bool
 	 */
 	public function isValidUser ($user) {
-		return $this->_validate($user, 'string');
+		return $this->_validate($user, 'extString');
 	}
 
 	/* check, if password is valid

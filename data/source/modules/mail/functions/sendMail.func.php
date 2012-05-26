@@ -4,17 +4,17 @@ function $$$sendMail () {
 	global $TSunic;
 
 	// get input
-	$id_mail__smtp = $TSunic->Temp->getPost('$$$showSendMail__id_mail__smtp');
+	$id = $TSunic->Temp->getPost('$$$showSendMail__id');
 	$addressees = $TSunic->Temp->getPost('$$$showSendMail__addressee');
 	$subject = $TSunic->Temp->getPost('$$$showSendMail__subject');
 	$content = $TSunic->Temp->getPost('$$$showSendMail__content');
 	$addressees = explode(';', $addressees);
 
 	// get smtp-server-object
-	if ($id_mail__smtp == 0) {
+	if ($id == 0) {
 		$Smtp = $TSunic->get('$$$SenderLocal');
 	} else {
-		$Smtp = $TSunic->get('$$$Smtp', $id_mail__smtp);
+		$Smtp = $TSunic->get('$$$Smtp', $id);
 	}
 
 	// validate input

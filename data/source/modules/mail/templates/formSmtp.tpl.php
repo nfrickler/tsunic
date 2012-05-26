@@ -4,15 +4,15 @@ $Smtp = $this->getVar('Smtp');
 ?>
 <div id="$$$div__formSmtp">
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formSmtp__form" id="$$$formSmtp__form" class="ts_form">
-		<input type="hidden" name="$$$formSmtp__id_mail__smtp" id="$$$formSmtp__id_mail__smtp" value="<?php $this->set($Smtp->getInfo('id')); ?>" />
+		<input type="hidden" name="$$$formSmtp__id" id="$$$formSmtp__id" value="<?php $this->set($Smtp->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMSMTP__LEGEND_SMTPACCOUNT}'); ?></legend>
-			<label for="$$$formSmtp__mailaccount"><?php echo $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>
-			<select name="$$$formSmtp__mailaccount" id="$$$formSmtp__mailaccount">
-				<?php $current = $this->setPreset('$$$formSmtp__mailaccount', $Smtp->getMailaccount(true), false); ?>
+			<label for="$$$formSmtp__fk_mailaccount"><?php echo $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>
+			<select name="$$$formSmtp__fk_mailaccount" id="$$$formSmtp__fk_mailaccount">
+				<?php $current = $this->setPreset('$$$formSmtp__fk_mailaccount', $Smtp->getMailaccount(true), false); ?>
 				<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__MAILACCOUNT_NOACCOUNT}'); ?></option>
 				<?php foreach ($this->getVar('mailaccounts') as $index => $value) { ?>
-				<option value="<?php echo $value->getInfo('id_mail__account'); ?>" <?php if ($current == $value->getInfo('id_mail__account')) echo 'selected="selected"'; ?>><?php $this->set($value->getInfo('name')); ?></option>
+				<option value="<?php echo $value->getInfo('id'); ?>" <?php if ($current == $value->getInfo('id')) echo 'selected="selected"'; ?>><?php $this->set($value->getInfo('name')); ?></option>
 				<?php } ?>
 			</select>
 			<div style="clear:both;"></div>
@@ -71,7 +71,7 @@ $Smtp = $this->getVar('Smtp');
 	// all input-fields in form
 	var $$$formSmtp__allInputs = new Array();
 	$$$formSmtp__allInputs[0] = new Array(
-		'$$$formSmtp__mailaccount',
+		'$$$formSmtp__fk_mailaccount',
 		'<?php $this->set('{FORMSMTP__PRESET_MAILACCOUNT}'); ?>',
 		'<?php $this->set('{FORMSMTP__HELP_MAILACCOUNT}'); ?>'
 	);

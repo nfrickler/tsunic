@@ -4,7 +4,7 @@ function $$$editMailbox () {
 	global $TSunic;
 
 	// get input
-	$id = $TSunic->Temp->getPost('$$$formMailbox__id_mail__box');
+	$id = $TSunic->Temp->getPost('$$$formMailbox__id');
 	$name = $TSunic->Temp->getPost('$$$formMailbox__name');
 	$description = $TSunic->Temp->getPost('$$$formMailbox__description');
 

@@ -4,13 +4,13 @@ function $$$updateMailbox () {
 	global $TSunic;
 
 	// get parameters
-	$id = $TSunic->Temp->getParameter('$$$id');
 	$force = ($TSunic->Temp->getParameter('force')) ? true : false;
 
 	// get Mailbox object
+	$id = $TSunic->Temp->getParameter('$$$id');
 	$Mailbox = (empty($id))
 		? $TSunic->get('$$$Inbox')
-		: $TSunic->get('$$$Box', $id);
+		: $TSunic->get('$$$Mailbox', $id);
 
 	// check for new mails
 	$all_new_mails = $Mailbox->checkMails($force);

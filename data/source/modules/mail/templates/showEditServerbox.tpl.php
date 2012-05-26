@@ -6,11 +6,13 @@
 			<?php $this->set('{SHOWEDITSERVERBOX__TODELETESERVERBOX}'); ?></a>
 	</p>
 	<p class="ts_infotext"><?php $this->set('{SHOWEDITSERVERBOX__INFO}'); ?></p>
-	<?php $this->display('$$$formServerbox', array('Serverbox' => $this->getVar('Serverbox'),
+	<?php $this->display('$$$formServerbox', array(
+		'Serverbox' => $this->getVar('Serverbox'),
 		'mailboxes' => $this->getVar('mailboxes'),
 		'submit_text' => '{SHOWEDITSERVERBOX__SUBMIT}',
 		'reset_text' => '{SHOWEDITSERVERBOX__RESET}',
-		'submit_href_event' => '$$$editServerbox')); ?>
+		'submit_href_event' => '$$$editServerbox'
+	)); ?>
 	<p class="ts_sublinkbox">
 		<a href="<?php $this->setUrl('back'); ?>">
 			<?php $this->set('{SHOWEDITSERVERBOX__TOOVERVIEW}'); ?></a>

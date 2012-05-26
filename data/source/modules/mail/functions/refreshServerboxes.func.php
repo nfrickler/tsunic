@@ -12,10 +12,11 @@ function $$$refreshServerboxes () {
 		$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
 		// update serverboxes
-		$Mailaccount->updateServerboxes();
-
-		// add info-message
-		$TSunic->Log->alert('infos', '{REFRESHSERVERBOXES__SUCCESS}');
+		if ($Mailaccount->updateServerboxes()) {
+			$TSunic->Log->alert('info', '{REFRESHSERVERBOXES__SUCCESS}');
+		} else {
+			$TSunic->Log->alert('error', '{REFRESHSERVERBOXES__ERROR}');
+		}
 	}
 
 	// redirect back

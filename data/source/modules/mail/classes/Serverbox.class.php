@@ -1,4 +1,4 @@
-<!-- | server mailbox class -->
+<!-- | serverbox class -->
 <?php
 include_once '$system$Object.class.php';
 class $$$Serverbox extends $system$Object {
@@ -8,67 +8,61 @@ class $$$Serverbox extends $system$Object {
 	 */
 	protected $Mailaccount;
 
+	/* Mailbox object
+	 * object
+	 */
+	protected $Mailbox;
+
 	/* temporary cache
 	 * array
 	 */
 	protected $cache;
 
-	/* get all data of mailserverbox
-	 * +@param bool/string: name of data (true will return all data)
+	/* load infos from database
 	 *
-	 * @return array/false
- 	 */
-	public function getInfo ($name = true) {
+	 * @return sql query
+	 */
+	protected function loadInfoSql () {
+		return "SELECT _name_ as name,
+				fk_mailaccount as fk_mailaccount,
+				fk_mailbox as fk_mailbox,
+				deleteOnUpdate as deleteOnUpdate,
+				dateOfCreation as dateOfCreation,
+				dateOfUpdate as dateOfUpdate,
+				dateOfCheck as dateOfCheck,
+				checkAllSeconds as checkAllSeconds,
+				isActive as isActive
+			FROM #__serverboxes
+			WHERE id = '".$this->id."';";
+	}
+
+	/* get corresponding mailbox object
+	 *
+	 * @return OBJECT/bool
+	 */
+	public function getMailbox () {
+		if ($this->Mailbox) return $this->Mailbox;
+
+		// get fk_maibox
+		$fk_mailbox = $this->getInfo('fk_mailbox');
+		if ($fk_mailbox === NULL) return false;
+
+		// get object
 		global $TSunic;
+		$Mailbox = (is_numeric($fk_mailbox) and !empty($fk_mailbox))
+			? $TSunic->get('$$$Box', $fk_mailbox) : $TSunic->get('$$$Inbox');
+		if (!$Mailbox or !$Mailbox->isValid()) return false;
 
-		// check, if info already in cache
-		if (!empty($this->id) AND empty($this->info)) {
-
-			// get data from database
-			$sql = "SELECT _name_ as name,
-					fk_mail__account as fk_mail__account,
-					fk_mail__box as fk_mail__box,
-					deleteOnUpdate as deleteOnUpdate,
-					dateOfCreation as dateOfCreation,
-					dateOfUpdate as dateOfUpdate,
-					dateOfCheck as dateOfCheck,
-					checkAllSeconds as checkAllSeconds,
-					isActive as isActive
-				FROM #__serverboxes
-				WHERE id= '".$this->id."';";
-			$result = $TSunic->Db->doSelect($sql);
-
-			// return, if no server matched
-			if (empty($result_0)) return false;
-
-			// store data
-			$this->info = $result_0[0];
-			$this->info['id'] = $this->id;
-
-			// add mailbox-object
-			if ($this->info['fk_mail__box'] == 0) {
-				$this->info['Mailbox'] = $TSunic->get('$$$Inbox');
-			} else {
-				$this->info['Mailbox'] = $TSunic->get('$$$Box', $this->info['fk_mail__box']);
-			}
-
-			// get and save Mailaccount-object
-			if (empty($this->Mailaccount))
-				$this->Mailaccount = $TSunic->get('$$$Mailaccount', $this->info['fk_mail__account']);
-			$this->info['Mailaccount'] = $this->Mailaccount;
-		}
-
-		// return requested data
-		if ($name === true) return $this->info;
-		if (isset($this->info[$name])) return $this->info[$name];
-		return false;
+		// save in obj-var and return
+		$this->Mailbox = $Mailbox;
+		return $this->Mailbox;
 	}
 
 	/* get Mailaccount object, the serverbox belongs to
 	 * +@param bool: get id instead of object
 	 *
 	 * @return OBJECT/bool
- 	 */
+	 */
 	public function getMailaccount ($get_id = false) {
 		global $TSunic;
 
@@ -76,13 +70,13 @@ class $$$Serverbox extends $system$Object {
 		if (isset($this->Mailaccount) AND !empty($this->Mailaccount))
 			return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
 
-		// try to get fk_mail__account
-		$fk_mail__account = $this->getInfo('fk_mail__account');
-		if (empty($fk_mail__account)) return false;
+		// try to get fk_mailaccount
+		$fk_mailaccount = $this->getInfo('fk_mailaccount');
+		if (empty($fk_mailaccount)) return false;
 
 		// try to get object
-		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
-		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mailaccount);
+		if (!$Mailaccount or !$Mailaccount->isValid()) return false;
 
 		// save in obj-var and return
 		$this->Mailaccount = $Mailaccount;
@@ -93,7 +87,7 @@ class $$$Serverbox extends $system$Object {
 	 * @param object: mailaccount-object
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function setMailaccount ($Mailaccount) {
 		global $TSunic;
 
@@ -101,7 +95,7 @@ class $$$Serverbox extends $system$Object {
 		if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
 
 		// is new mailaccount?
-		if ($Mailaccount->getInfo('id') == $this->getInfo('fk_mail__account'))
+		if ($Mailaccount->getInfo('id') == $this->getInfo('fk_mailaccount'))
 			return true;
 
 		// save in obj-var
@@ -111,45 +105,32 @@ class $$$Serverbox extends $system$Object {
 		if (!$this->isValid()) {
 
 			// presets
-			$this->info['fk_mail__account'] = $Mailaccount->getInfo('id');
+			$this->info['fk_mailaccount'] = $Mailaccount->getInfo('id');
 
 			return true;
 		}
 
 		// update database
 		$sql = "UPDATE #__serverboxes
-			SET fk_mail__account = ".$this->Mailaccount->getInfo('id')."
+			SET fk_mailaccount = ".$this->Mailaccount->getInfo('id')."
 			WHERE id = ".$this->id.";";
 		return $TSunic->Db->doUpdate($sql);
 	}
 
-	/* update info-data
-	 *
-	 * @return true
- 	 */
-	protected function updateInfo () {
-
-		// reset info
-		$this->info = array();
-
-		return true;
-	}
-
 	/* add new serverbox
-	 * @param int: fk_mail__account
-	 * @param string: name of box on server
+	 * @param int: fk_mailaccount
+	 * @param string: name of mailbox on server
 	 * +@param int: local mailbox, where new mails are placed in
 	 * +@param bool: delete mails on server after saving them locally
 	 *
 	 * @return bool
- 	 */
-	public function createServerbox ($fk_mail__account, $name, $fk_mail__box = false, $deleteOnUpdate = false) {
+	 */
+	public function create ($fk_mailaccount, $name, $fk_mailbox = false, $deleteOnUpdate = false) {
 
 		// validate input
-		$fk_mail__box = (int) $fk_mail__box;
-		if (!$this->isValidFkAccount($fk_mail__account)
-				OR !$this->isValidName($name)
-				OR !$this->isValidFkmailbox($fk_mail__box)
+		if (!$this->isValidFkAccount($fk_mailaccount)
+			OR !$this->isValidName($name)
+			OR !$this->isValidFkmailbox($fk_mailbox)
 		) return false;
 
 		// get deleteOnUpdate
@@ -157,9 +138,9 @@ class $$$Serverbox extends $system$Object {
 
 		// add new serverbox in database
 		$sql = "INSERT INTO #__serverboxes
-			SET fk_mail__account = '".$fk_mail__account."',
+			SET fk_mailaccount = '".$fk_mailaccount."',
 				_name_ = '".$name."',
-				fk_mail__box = '".$fk_mail__box."',
+				fk_mailbox = '".$fk_mailbox."',
 				deleteOnUpdate = '".$deleteOnUpdate."'
 		;";
 		return $this->_create($sql);
@@ -171,13 +152,12 @@ class $$$Serverbox extends $system$Object {
 	 * @param bool: delete mails on server after saving them locally
 	 *
 	 * @return bool
- 	 */
-	public function editServerbox ($name, $fk_mail__box, $deleteOnUpdate) {
+	 */
+	public function edit ($name, $fk_mailbox, $deleteOnUpdate) {
 
 		// validate input
-		$fk_mail__box = (int) $fk_mail__box;
 		if (!$this->isValidName($name)
-			OR !$this->isValidFkmailbox($fk_mail__box)
+			OR !$this->isValidFkmailbox($fk_mailbox)
 		) return false;
 
 		// get deleteOnUpdate
@@ -186,18 +166,28 @@ class $$$Serverbox extends $system$Object {
 		// add new serverbox in database
 		$sql = "UPDATE #__serverboxes
 			SET _name_ = '".$name."',
-				fk_mail__box = '".$fk_mail__box."',
+				fk_mailbox = '".$fk_mailbox."',
 				deleteOnUpdate = '".$deleteOnUpdate."'
 			WHERE id = '".$this->id."'
 		;";
 		return $this->_edit($sql);
 	}
 
+	/* delete serverbox
+	 *
+	 * @return bool
+	 */
+	public function delete () {
+		$sql = "DELETE FROM #__serverboxes
+			WHERE id = '".$this->id."';";
+		return $this->_delete($sql);
+	}
+
 	/* de-/activate serverbox
 	 * @param bool: true - activate; false - deactivate
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function activate ($isActive = true) {
 		global $TSunic;
 
@@ -213,16 +203,6 @@ class $$$Serverbox extends $system$Object {
 		return $TSunic->Db->doUpdate($sql);
 	}
 
-	/* delete serverbox
-	 *
-	 * @return bool
- 	 */
-	public function deleteServerbox () {
-		$sql = "DELETE FROM #__serverboxes
-			WHERE id = '".$this->id."';";
-		return $this->_delete($sql);
-	}
-
 	/* check, if name is valid
 	 * @param string: name of serverbox
 	 *
@@ -232,38 +212,38 @@ class $$$Serverbox extends $system$Object {
 		return ($this->_validate($name, 'string')) ? true : false;
 	}
 
-	/* check, if fk_mail__account is valid
-	 * @param int: fk_mail__account
+	/* check, if fk_mailaccount is valid
+	 * @param int: fk_mailaccount
 	 *
 	 * @return bool
 	 */
-	public function isValidFkAccount ($fk_mail__account) {
+	public function isValidFkAccount ($fk_mailaccount) {
 		global $TSunic;
 
 		// try to get Mailaccount object
-		$this->Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
+		$this->Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mailaccount);
 
 		// check, if mailaccount exist
 		if ($this->Mailaccount->isValid()) return true;
 		return false;
 	}
 
-	/* check, if fk_mail__box is valid
-	 * @param int: fk_mail__box
+	/* check, if fk_mailbox is valid
+	 * @param int: fk_mailbox
 	 *
 	 * @return bool
 	 */
-	public function isValidFkmailbox ($fk_mail__box) {
+	public function isValidFkmailbox ($fk_mailbox) {
 		global $TSunic;
 
 		// is active?
 		if (!$this->getInfo('isActive')) return true;
 
 		// try to get server-object
-		if ($fk_mail__box == 0) {
+		if ($fk_mailbox == 0) {
 			$this->Mailbox = $TSunic->get('$$$Inbox');
 		} else {
-			$this->Mailbox = $TSunic->get('$$$Box', $fk_mail__box);
+			$this->Mailbox = $TSunic->get('$$$Box', $fk_mailbox);
 		}
 
 		// check, if mailserver exist
@@ -331,7 +311,7 @@ class $$$Serverbox extends $system$Object {
 		// get msg-numbers of all mails already stored locally
 		$sql = "SELECT uid as uid
 			FROM #__mails
-			WHERE fk_mail__serverbox = '".$this->id."';";
+			WHERE fk_serverbox = '".$this->id."';";
 		$return = $TSunic->Db->doSelect($sql);
 		if ($return === false) return false;
 
@@ -396,8 +376,8 @@ class $$$Serverbox extends $system$Object {
 
 			// save locally
 			$sql = "INSERT INTO #__mails
-				SET fk_mail__serverbox = '".$this->id."',
-					fk_mail__box = '".$this->getInfo('fk_mail__box')."',
+				SET fk_serverbox = '".$this->id."',
+					fk_mailbox = '".$this->getInfo('fk_mailbox')."',
 					_subject_ = '".mysql_real_escape_string($subject)."',
 					_plaincontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['plain'])."',
 					_htmlcontent_ = '".$TSunic->Parser->toSave($this->cache['bodyparts']['html'])."',
@@ -568,7 +548,7 @@ class $$$Serverbox extends $system$Object {
 	 * @param string: subject to decode
 	 *
 	 * @return string
- 	 */
+	 */
 	protected function decodeValue ($value){
 		return $this->decodeMimeString($value);
 	}
@@ -577,7 +557,7 @@ class $$$Serverbox extends $system$Object {
 	 * @source: http://php.net/imap_mime_header_decode (comments)
 	 *
 	 * @return array
- 	 */
+	 */
 	protected function mb_list_lowerencodings () {
 		$r=mb_list_encodings();
 		for ($n=sizeOf($r); $n--; ) {
@@ -594,7 +574,7 @@ class $$$Serverbox extends $system$Object {
 	 * +@param string: target-charset
 	 *
 	 * @return string
- 	 */
+	 */
 	protected function decodeMimeString ($mimeStr, $inputCharset='utf-8', $targetCharset='utf-8', $fallbackCharset='iso-8859-1') {
 
 		// get charsets

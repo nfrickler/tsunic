@@ -4,14 +4,14 @@ function $$$showAddSmtp () {
 	global $TSunic;
 
 	// get input
-	$fk_mail__account = $TSunic->Temp->getParameter('fk_mail__account');
+	$fk_mailaccount = $TSunic->Temp->getParameter('fk_mailaccount');
 
 	// get empty Smtp object
 	$Smtp = $TSunic->get('$$$Smtp');
 
 	// set mailaccount?
-	if (!empty($fk_mail__account)) {
-		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mail__account);
+	if (!empty($fk_mailaccount)) {
+		$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mailaccount);
 		$Smtp->setMailaccount($Mailaccount);
 	}
 

@@ -3,11 +3,9 @@
 function $$$showDeleteSmtp () {
 	global $TSunic;
 
-	// get id_mail__smtp
-	$id_mail__smtp = $TSunic->Temp->getParameter('id_mail__smtp');
-
-	// get smtp-object
-	$Smtp = $TSunic->get('$$$Smtp', $id_mail__smtp);
+	// get Smtp object
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$Smtp = $TSunic->get('$$$Smtp', $id);
 
 	// activate template
 	$data = array('Smtp' => $Smtp);

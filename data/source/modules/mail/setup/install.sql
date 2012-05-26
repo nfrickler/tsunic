@@ -1,6 +1,6 @@
-CREATE TABLE IF NOT EXISTS `#__accounts` (
+CREATE TABLE IF NOT EXISTS `#__mailaccounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_system_users__account` int(11) NOT NULL,
+  `fk_account` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
   `_description_` text NOT NULL,
   `dateOfCreation` datetime NOT NULL,
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS `#__attachments` (
   PRIMARY KEY (`fk_mail`, `fk_fsfile`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__boxes` (
+CREATE TABLE IF NOT EXISTS `#__mailboxes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_system_users__account` int(11) NOT NULL,
+  `fk_account` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
   `_description_` text NOT NULL,
   `dateOfCreation` datetime NOT NULL,
@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS `#__knownservers` (
 
 CREATE TABLE IF NOT EXISTS `#__mails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_mail__serverbox` int(11) NOT NULL,
-  `fk_mail__box` int(11) NOT NULL,
+  `fk_serverbox` int(11) NOT NULL,
+  `fk_mailbox` int(11) NOT NULL,
   `_subject_` varchar(500) NOT NULL,
   `_sender_` varchar(500) NOT NULL,
   `_addressee_` varchar(500) NOT NULL,
@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS `#__mails` (
 
 CREATE TABLE IF NOT EXISTS `#__serverboxes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_mail__account` int(11) NOT NULL,
+  `fk_mailaccount` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
-  `fk_mail__box` int(11) NOT NULL,
+  `fk_mailbox` int(11) NOT NULL,
   `checkAllSeconds` int(11) NOT NULL DEFAULT '300',
   `deleteOnUpdate` char(1) NOT NULL DEFAULT '0',
   `dateOfCheck` datetime NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `#__serverboxes` (
 
 CREATE TABLE IF NOT EXISTS `#__smtps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_mail__account` int(11) NOT NULL,
-  `fk_system_users__account` int(11) NOT NULL,
+  `fk_mailaccount` int(11) NOT NULL,
+  `fk_account` int(11) NOT NULL,
   `_host_` varchar(500) NOT NULL,
   `_port_` varchar(100) NOT NULL,
   `_user_` varchar(500) NOT NULL,

@@ -50,7 +50,7 @@ $mailaccounts = $this->getVar('mailaccounts');
 	// get mailaccounts
 	var $$$showListMailaccounts__all = new Array();
 	<?php foreach ($mailaccounts as $index => $value) {
-	if ($value->getInfo('id_mail__account') == 0) continue;
+	if ($value->getInfo('id') == 0) continue;
 	echo '$$$showListMailaccounts__all["id_'.$value->getInfo('id').'"] = new Array("$$$showListMailaccounts__delete_'.$value->getInfo('id').'",
 		"'.$value->getInfo('name').'",
 		"'.$this->setUrl('$$$deleteMailaccount', array('$$$id' => $value->getInfo('id')), false, false).'");';

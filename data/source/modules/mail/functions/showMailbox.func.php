@@ -3,18 +3,16 @@
 function $$$showMailbox () {
 	global $TSunic;
 
-	// get id_mail__box
-	$id_mail__box = $TSunic->Temp->getParameter('id_mail__box');
-	if (!is_numeric($id_mail__box)) $id_mail__box = 0;
-
-	// get MailBox-object
-	$Mailbox = ($id_mail__box == 0) ? $TSunic->get('$$$Inbox') : $TSunic->get('$$$Box', $id_mail__box);
+	// get MailBox object
+	$id = $TSunic->Temp->getParameter('id');
+	if (!is_numeric($id)) $id = 0;
+	$Mailbox = ($id == 0) ? $TSunic->get('$$$Inbox') : $TSunic->get('$$$Mailbox', $id);
 
 	// get mailboxes
 	$Supermail = $TSunic->get('$$$SuperMail');
 	$mailboxes = $Supermail->getMailboxes();
 	foreach ($mailboxes as $index => $Value) {
-		if ($Value->getInfo('id_mail__box') == $id_mail__box) {
+		if ($Value->getInfo('id') == $id) {
 			unset($mailboxes[$index]);
 			break;
 		}

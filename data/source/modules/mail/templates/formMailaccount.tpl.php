@@ -4,7 +4,7 @@ $Mailaccount = $this->getVar('Mailaccount');
 ?>
 <div id="div_$$$formMailaccount">
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formMailaccount__form" id="$$$formMailaccount__form" class="ts_form">
-		<input type="hidden" name="$$$formMailaccount__id_mail__account" class="ts_input" value="<?php $this->setPreset('0', $Mailaccount->getInfo('id')); ?>" />
+		<input type="hidden" name="$$$formMailaccount__id" class="ts_input" value="<?php $this->setPreset('0', $Mailaccount->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMACCOUNT__LEGEND_EMAILACCOUNT}'); ?></legend>
 			<label for="$$$formMailaccount__name"><?php echo $this->set('{FORMACCOUNT__NAME}'); ?></label>

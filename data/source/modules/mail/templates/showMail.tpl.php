@@ -11,7 +11,7 @@ $attachments = $Mail->getAttachments();
 <div id="$$$div__showMail">
 	<h1><?php $this->set('{SHOWMAIL__H1}'); ?></h1>
 	<p class="ts_suplinkbox">
-		<a href="<?php $this->setUrl('$$$showMailbox', array('$$$id' => $Mail->getInfo('fk_mail__box'))); ?>">
+		<a href="<?php $this->setUrl('$$$showMailbox', array('$$$id' => $Mail->getInfo('fk_mailbox'))); ?>">
 			<?php $this->set('{SHOWMAIL__TOSHOWMAILBOX}'); ?></a>
 	</p>
 
@@ -40,7 +40,7 @@ $attachments = $Mail->getAttachments();
 				</tr>
 			</table>
 		</div>
-		<iframe id="$$$div__showMail_mailcontent" class="$$$div__showMail_mailcontent" src="<?php $this->setUrl('$$$showMailContent', array('id_mail__mail' => $Mail->getInfo('id_mail__mail'), 'tmpl' => '$$$showMailContent')); ?>">
+		<iframe id="$$$div__showMail_mailcontent" class="$$$div__showMail_mailcontent" src="<?php $this->setUrl('$$$showMailContent', array('$$$id' => $Mail->getInfo('id'), 'tmpl' => '$$$showMailContent')); ?>">
 			<?php $this->set('{SHOWMAIL__NOIFRAMESUPPORT}'); ?>
 			<a href="<?php $this->setUrl('$$$showMailContent', array('$$$id' => $Mail->getInfo('id'), 'tmpl' => '$$$showMailContent')); ?>" target="_blank">
 				<?php $this->set('{SHOWMAIL__NOIFRAMESUPPORT_OPENMAIL}'); ?></a>
@@ -62,9 +62,6 @@ $attachments = $Mail->getAttachments();
 </div>
 
 <script type="text/javascript">
-
-	// get id_mail_mail
-	var $$$showmail__id_mail__mail = <?php echo $this->getVar('mail')->getInfo('id'); ?>;
 
 	// add delete-event
 	var deleteLink = document.getElementById('$$$showMail__delete');

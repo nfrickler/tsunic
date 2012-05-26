@@ -86,7 +86,7 @@ class $$$Log {
 
 		// manually write to log file
 		$fh = fopen($path, 'a') or die("Could not open log file!");
-		fwrite($fh, date('Y-m-d H:i:s').'['.$level.']: '.$msg);
+		fwrite($fh, date('Y-m-d H:i:s')."[$level]: $msg\n");
 		fclose($fh);
 
 		return true;

@@ -27,11 +27,11 @@ $smtps = $this->getVar('smtps');
 				<?php $this->set($value->getConnsecurity(false, false)); ?>
 			</td>
 			<td>
-				<?php if ($value->getInfo('id_mail__smtp') != 0) { ?>
+				<?php if ($value->getInfo('id') != 0) { ?>
 				<a href="<?php $this->setUrl('$$$showEditSmtp', array('$$$id' => $value->getInfo('id')));?>">
 					<img class="$system$editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWLISTSMTPS__EDIT}'); ?>" />
 				</a>
-				<a href="<?php $this->setUrl('$$$showDeleteSmtp', array('id_mail__smtp' => $value->getInfo('id')));?>"  id="$$$showListSmtps__delete_<?php $this->set($value->getInfo('id')); ?>">
+				<a href="<?php $this->setUrl('$$$showDeleteSmtp', array('id' => $value->getInfo('id')));?>"  id="$$$showListSmtps__delete_<?php $this->set($value->getInfo('id')); ?>">
 					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWLISTSMTPS__DELETE}'); ?>" />
 				</a>
 				<?php } ?>
@@ -51,7 +51,7 @@ $smtps = $this->getVar('smtps');
 	// get smtps
 	var $$$showListSmtps_all = new Array();
 	<?php foreach ($smtps as $index => $value) {
-	if ($value->getInfo('id_mail__smtp') == 0) continue;
+	if ($value->getInfo('id') == 0) continue;
 	echo '$$$showListSmtps_all["id_'.$value->getInfo('id').'"] = new Array("$$$showListSmtps__delete_'.$value->getInfo('id').'",
 			"'.$value->getInfo('name').'",
 			"'.$this->setUrl('$$$deleteSmtp', array('$$$id' => $value->getInfo('id')), false, false).'");';

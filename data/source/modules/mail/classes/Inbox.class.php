@@ -1,7 +1,7 @@
 <!-- | Inbox class -->
 <?php
-include_once '$$$Box.class.php';
-class $$$Inbox extends $$$Box {
+include_once '$$$Mailbox.class.php';
+class $$$Inbox extends $$$Mailbox {
 
 	/* get information about mailbox
 	 * +@param string/bool: name of info (true will return $this->info)
@@ -43,11 +43,11 @@ class $$$Inbox extends $$$Box {
 		$sql = "SELECT mails.id as id
 			FROM #__mails as mails,
 				#__serverboxes as serverboxes,
-				#__accounts as accounts
-			WHERE accounts.fk_system_users__account = '".$TSunic->Usr->getInfo('id')."'
-				AND serverboxes.fk_mail__account = accounts.id
-				AND mails.fk_mail__serverbox = serverboxes.id
-				AND mails.fk_mail__box = '0'
+				#__mailaccounts as accounts
+			WHERE accounts.fk_account = '".$TSunic->Usr->getInfo('id')."'
+				AND serverboxes.fk_mailaccount = accounts.id
+				AND mails.fk_serverbox = serverboxes.id
+				AND mails.fk_mailbox = '0'
 				AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return array();
@@ -67,7 +67,7 @@ class $$$Inbox extends $$$Box {
 	 *
 	 * @return bool
 	 */
-	public function createBox ($name, $description = '') {
+	public function create ($name, $description = '') {
 		return false;
 	}
 
@@ -77,7 +77,7 @@ class $$$Inbox extends $$$Box {
 	 *
 	 * @return bool
 	 */
-	public function editBox ($name, $description) {
+	public function edit ($name, $description) {
 		return false;
 	}
 
@@ -103,7 +103,7 @@ class $$$Inbox extends $$$Box {
 	 *
 	 * @return bool
 	 */
-	public function deleteBox () {
+	public function delete () {
 		return false;
 	}
 }

@@ -4,10 +4,10 @@ function $$$activateServerboxes () {
 	global $TSunic;
 
 	// get input
-	$id = $TSunic->Temp->getParameter('$$$showMailaccount__id_mail__account');
 	$activated_serverboxes = $TSunic->Temp->getByPreffix('$$$showMailaccount__serverboxes_');
 
 	// get mailaccount-object
+	$id = $TSunic->Temp->getParameter('$$$id');
 	$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
 	// get all serverboxes
@@ -21,7 +21,7 @@ function $$$activateServerboxes () {
 			// is active
 
 			// is not selected?
-			if (!isset($activated_serverboxes[$value->getInfo('id_mail__serverbox')])) {
+			if (!isset($activated_serverboxes[$value->getInfo('id')])) {
 				// deactivate
 				$value->activate(false);
 			}
@@ -30,7 +30,7 @@ function $$$activateServerboxes () {
 			// is inactive
 
 			// is selected?
-			if (isset($activated_serverboxes[$value->getInfo('id_mail__serverbox')])) {
+			if (isset($activated_serverboxes[$value->getInfo('id')])) {
 				// activate
 				$value->activate(true);
 			}

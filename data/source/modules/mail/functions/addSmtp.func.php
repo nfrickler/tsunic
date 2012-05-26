@@ -4,7 +4,7 @@ function $$$addSmtp () {
 	global $TSunic;
 
 	// get input
-	$fk_mail__account = $TSunic->Temp->getParameter('$$$formSmtp__mailaccount');
+	$fk_mailaccount = $TSunic->Temp->getParameter('$$$formSmtp__fk_mailaccount');
 	$email = $TSunic->Temp->getParameter('$$$formSmtp__email');
 	$password = $TSunic->Temp->getParameter('$$$formSmtp__password');
 	$emailname = $TSunic->Temp->getParameter('$$$formSmtp__emailname');
@@ -20,16 +20,16 @@ function $$$addSmtp () {
 
 	// validate input
 	if (!$Smtp->isValidEMail($email)
-			OR !$Smtp->isValidPassword($password)
-			OR !$Smtp->isValidDescription($description)
-			OR !$Smtp->isValidEMailname($emailname)
+		OR !$Smtp->isValidPassword($password)
+		OR !$Smtp->isValidDescription($description)
+		OR !$Smtp->isValidEMailname($emailname)
 	) {
 		$TSunic->Log->alert('error', '{ADDSMTP__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// create new smtp
-	if (!$Smtp->createSmtp($email, $password, $description, $emailname)) {
+	if (!$Smtp->create($email, $password, $description, $emailname)) {
 		$TSunic->Log->alert('error', '{ADDSMTP__ERROR}');
 		$TSunic->redirect('back');
 	}

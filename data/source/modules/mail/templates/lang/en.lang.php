@@ -171,6 +171,7 @@ $lang = array(
 
 	// refresh serverboxes
 	'REFRESHSERVERBOXES__SUCCESS' => 'The list of serverboxes has been updated.',
+	'REFRESHSERVERBOXES__ERROR' => 'An error occurred while updating the list of serverboxes!',
 
 	// showListMailaccounts
 	'SHOWLISTACCOUNTS__NAME' => 'Name',
@@ -281,16 +282,6 @@ $lang = array(
 	'SHOWEDITSERVERBOX__SUBMIT' => 'Save changes',
 	'SHOWEDITSERVERBOX__RESET' => '{$$$COMMON__RESET}',
 	'SHOWEDITSERVERBOX__TOOVERVIEW' => '{$$$COMMON__BACKTOOVERVIEW}',
-
-	// showServerboxes
-	'SHOWSERVERBOXES__H1' => 'Serverboxes of "#servername#"',
-	'SHOWSERVERBOXES__INFO' => 'This are the serverboxes registered for the server. All this serverboxes will be checked for new mails. New mails will be saved in the local mailbox, linked to the serverbox.',
-	'SHOWSERVERBOXES__NAME' => 'Name of serverbox',
-	'SHOWSERVERBOXES__TOMAILBOX' => 'Local mailbox',
-	'SHOWSERVERBOXES__EDIT' => '{$$$COMMON__EDIT}',
-	'SHOWSERVERBOXES__DELETE' => '{$$$COMMON__DELETE}',
-	'SHOWSERVERBOXES__NOSERVERBOXES' => 'No serverboxes added to this server.',
-	'SHOWSERVERBOXES__ADDSERVERBOX' => 'Add serverbox',
 
 	// formServerbox
 	'FORMSERVERBOX__LEGEND' => 'Data of serverbox',

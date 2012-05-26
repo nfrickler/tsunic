@@ -79,12 +79,13 @@ class $$$Mailaccount extends $system$Object {
 				_email_ as email,
 				_password_ as password,
 				_host_ as host,
+				_port_ as port,
 				_user_ as user,
 				protocol,
 				connsecurity,
 				auth,
 				lastServerboxUpdate
-			FROM #__accounts
+			FROM #__mailaccounts
 			WHERE id = '$this->id';";
 	}
 
@@ -219,7 +220,7 @@ class $$$Mailaccount extends $system$Object {
 		) return false;
 
 		// save in db
-		$sql = "UPDATE #__accounts
+		$sql = "UPDATE #__mailaccounts
 			SET _host_ = '$host',
 				_user_ = '$user',
 				_port_ = '$port',
@@ -231,7 +232,7 @@ class $$$Mailaccount extends $system$Object {
 		$result = $TSunic->Db->doUpdate($sql);
 
 		// update $this->info
-		$this->info(true, true);
+		$this->getInfo(true, true);
 
 		return ($result) ? true : false;
 	}
@@ -253,9 +254,12 @@ class $$$Mailaccount extends $system$Object {
 			or !$this->isValidPassword($password)
 		) return false;
 
+		// name defaults to email
+		if (empty($name)) $name = $email;
+
 		// save in db
 		global $TSunic;
-		$sql = "INSERT INTO #__accounts
+		$sql = "INSERT INTO #__mailaccounts
 			SET fk_system_users__account = '".$TSunic->Usr->getInfo('id')."',
 				_email_ = '$email',
 				_password_ = '$password',
@@ -278,12 +282,13 @@ class $$$Mailaccount extends $system$Object {
 
 		// validate input
 		if (!$this->isValidName($name)
-				OR !$this->isValidDescription($description)
-				OR !$this->isValidEmail($email)
-				OR !$this->isValidPassword($password)
-			) {
-			return false;
-		}
+			OR !$this->isValidDescription($description)
+			OR !$this->isValidEmail($email)
+			OR !$this->isValidPassword($password)
+		) return false;
+
+		// name defaults to email
+		if (empty($name)) $name = $email;
 
 		// validate password
 		$sql_set = array();
@@ -298,7 +303,7 @@ class $$$Mailaccount extends $system$Object {
 		if (empty($sql_set)) return true;
 
 		// update database
-		$sql = "UPDATE #__accounts SET ".
+		$sql = "UPDATE #__mailaccounts SET ".
 			implode(",", $sql_set).
 			" WHERE id = '$this->id';";
 		return $this->_edit($sql);
@@ -313,7 +318,6 @@ class $$$Mailaccount extends $system$Object {
 		// delete serverboxes
 		$serverboxes = $this->getServerboxes();
 		foreach ($serverboxes as $index => $value) {
-			// delete imap
 			$value->deleteServerbox();
 		}
 
@@ -325,7 +329,7 @@ class $$$Mailaccount extends $system$Object {
 		}
 
 		// delete in database
-		$sql = "DELETE FROM #__accounts
+		$sql = "DELETE FROM #__mailaccounts
 			WHERE id = '$this->id';";
 		return $this->_delete($sql);
 	}
@@ -346,7 +350,7 @@ class $$$Mailaccount extends $system$Object {
 	 * @return bool
 	 */
 	public function isValidName ($name) {
-		return (empty($name) or $this->_validate($name, 'string')
+		return (empty($name) or $this->_validate($name, 'extString')
 		) ? true : false;
 	}
 
@@ -519,9 +523,8 @@ class $$$Mailaccount extends $system$Object {
 		$port = $this->getInfo('port');
 
 		// validate data
-		if (empty($host) OR empty($port) OR !is_numeric($port)) {
+		if (empty($host) OR empty($port) OR !is_numeric($port))
 			return false;
-		}
 
 		// turn data in options
 		$protocol = (!empty($protocol)) ? '/'.$protocol : '';
@@ -567,13 +570,13 @@ class $$$Mailaccount extends $system$Object {
 			if (!$mboxstr) return false;
 
 			// try to connect
-			$stream = imap_open($mboxstr, $this->info['user'], $this->password);
+			$stream = imap_open($mboxstr, $this->getInfo('user'), $this->password);
 
 			// check, if imap-stream exist
 			if ($setError AND !$stream) {
 				// get error-msg
 				$error = '{CLASS__ACCOUNT__NOCONNECTION}';
-				$error.= ' (server: '.$this->info['host'].', user: '.$this->info['user'];
+				$error.= ' (server: '.$this->getInfo('host').', user: '.$this->getInfo('user');
 				if (!empty($boxname)) $error.= ', mailbox: '.$boxname;
 				$error.= ')';
 
@@ -681,7 +684,7 @@ class $$$Mailaccount extends $system$Object {
 		}
 
 		// set lastServerboxUpdate
-		$sql = "UPDATE #__accounts
+		$sql = "UPDATE #__mailaccounts
 			SET lastServerboxUpdate = NOW()
 			WHERE id = '".$this->id."';";
 		return $TSunic->Db->doUpdate($sql);

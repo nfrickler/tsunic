@@ -2,20 +2,20 @@
 <?php
 class $$$SuperMail {
 
-	/* mailbox-objects
+	/* mailbox objects
 	 * array
 	 */
-	private $mailboxes;
+	protected $mailboxes;
 
-	/* smtp-objects
+	/* smtp objects
 	 * array
 	 */
-	private $smtps;
+	protected $smtps;
 
-	/* mailaccount-objects
+	/* mailaccount objects
 	 * array
 	 */
-	private $mailaccounts;
+	protected $mailaccounts;
 
 	/* get all mailaccount-objects of user-account
 	 *
@@ -29,16 +29,14 @@ class $$$SuperMail {
 		// get server-info from databbase
 		global $TSunic;
 		$sql = "SELECT id
-			FROM #__accounts
-			WHERE fk_system_users__account = '".$TSunic->Usr->getInfo('id')."';";
+			FROM #__mailaccounts
+			WHERE fk_account = '".$TSunic->Usr->getInfo('id')."';";
 		$result = $TSunic->Db->doSelect($sql);
 		if ($result === false) return array();
 
 		// get server-objects
 		$this->mailaccounts = array();
 		foreach ($result as $index => $values) {
-
-			// get new object
 			$the_account = $TSunic->get('$$$Mailaccount', $values['id']);
 			if ($the_account) $this->mailaccounts[] = $the_account;
 		}
@@ -61,9 +59,9 @@ class $$$SuperMail {
 
 		// get server-info from databbase
 		$sql = "SELECT id
-				FROM #__boxes
-				WHERE fk_system_users__account = '".$id_acc."'
-				ORDER BY id ASC;";
+			FROM #__mailboxes
+			WHERE fk_account = '$id_acc'
+			ORDER BY id ASC;";
 		$result = $TSunic->Db->doSelect($sql);
 
 		// get empty array
@@ -75,7 +73,7 @@ class $$$SuperMail {
 
 		// get mailbox-objects
 		foreach ($result as $index => $values) {
-			$the_mailbox = $TSunic->get('$$$Box', $values['id']);
+			$the_mailbox = $TSunic->get('$$$Mailbox', $values['id']);
 			if ($the_mailbox) $this->mailboxes[] = $the_mailbox;
 		}
 
@@ -97,7 +95,7 @@ class $$$SuperMail {
 		global $TSunic;
 		$sql = "SELECT id
 			FROM #__smtps
-			WHERE fk_system_users__account = '".$TSunic->Usr->getInfo('id')."'
+			WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
 		";
 		$result = $TSunic->Db->doSelect($sql);
 		if ($result === false) return array();

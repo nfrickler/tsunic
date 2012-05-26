@@ -3,7 +3,7 @@
 $Imap = $this->getVar('Imap');
 $serverboxes = $this->getVar('serverboxes');
 ?>
-<div id="div_mail__showServerboxes">
+<div id="$$$div__showServerboxes">
 	<h1><?php $this->set('{SHOWSERVERBOXES__H1}', array('servername' => $Imap->getInfo('name'))); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWSERVERBOXES__INFO}'); ?></p>
 
@@ -20,7 +20,7 @@ $serverboxes = $this->getVar('serverboxes');
 				<?php $this->set($value->getInfo('name')); ?>
 			</td>
 			<td>
-				<?php $this->set($value->getInfo('fk_mail__box_obj')->getInfo('name')); ?>
+				<?php $this->set($value->getMailbox()->getInfo('name')); ?>
 			</td>
 			<td>
 				<a href="<?php $this->setUrl('mail', 'showEditServerbox', array('$$$id' => $value->getInfo('id')));?>">

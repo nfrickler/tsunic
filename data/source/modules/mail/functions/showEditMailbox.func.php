@@ -3,14 +3,15 @@
 function $$$showEditMailbox () {
 	global $TSunic;
 
-	// get id_mail_box
-	$id_mail__box = $TSunic->Temp->getParameter('id_mail__box');
-
-	// get mailbox-object
-	$Mailbox = $TSunic->get('$$$Box', $id_mail__box);
+	// get Mailbox object
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$Mailbox = $TSunic->get('$$$Mailbox', $id);
 
 	// activate template
-	$data = array('mailbox' => $Mailbox);
+	$data = array(
+		'Mailbox' => $Mailbox,
+		'name' => $Mailbox->getInfo('name'),
+	);
 	$TSunic->Tmpl->activate('$$$showEditMailbox', '$system$content', $data);
 
 	return true;

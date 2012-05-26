@@ -30,8 +30,8 @@ $mailboxes = $this->getVar('mailboxes');
 				<?php $this->set($value->getNumber()); ?>
 			</td>
 			<td>
-				<?php if ($value->getInfo('id_mail__box') != 0) { ?>
-				<a href="<?php $this->setUrl('$$$showEditMailbox', array('$$$id' => $value->getInfo('idail__box'))); ?>">
+				<?php if ($value->getInfo('id') != 0) { ?>
+				<a href="<?php $this->setUrl('$$$showEditMailbox', array('$$$id' => $value->getInfo('id'))); ?>">
 					<img class="$system$editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWMAILBOXES__EDIT}'); ?>" />
 				</a>
 				<a href="<?php $this->setUrl('$$$showDeleteMailbox', array('$$$id' => $value->getInfo('id'))); ?>"  id="$$$showmailboxes__delete_<?php $this->set($value->getInfo('id')); ?>">
@@ -54,7 +54,7 @@ $mailboxes = $this->getVar('mailboxes');
 	// get mailboxes
 	var $$$showmailboxes__all = new Array();
 	<?php foreach ($this->getVar('mailboxes') as $index => $value) {
-		if ($value->getInfo('id_mail__box') == 0) continue;
+		if ($value->getInfo('id') == 0) continue;
 		echo '$$$showmailboxes__all["id_'.$value->getInfo('id').'"] = new Array("$$$showmailboxes__delete_'.$value->getInfo('id').'",
 			"'.$value->getInfo('name').'",
 			"'.$this->setUrl('$$$deleteMailbox', array('$$$id' => $value->getInfo('id')), false, false).'");';

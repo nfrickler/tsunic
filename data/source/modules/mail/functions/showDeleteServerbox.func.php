@@ -3,11 +3,9 @@
 function $$$showDeleteServerbox () {
 	global $TSunic;
 
-	// get id_mail_serverbox
-	$id_mail__serverbox = $TSunic->Temp->getParameter('id_mail__serverbox');
-
-	// get serverbox-object
-	$Serverbox = $TSunic->get('$$$Serverbox', $id_mail__serverbox);
+	// get Serverbox object
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$Serverbox = $TSunic->get('$$$Serverbox', $id);
 
 	// serverbox exists?
 	if (!$Serverbox->isValid()) {

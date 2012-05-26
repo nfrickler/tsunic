@@ -1,12 +1,12 @@
 <!-- | mailbox class -->
 <?php
 include_once '$system$Object.class.php';
-class $$$Box extends $system$Object {
+class $$$Mailbox extends $system$Object {
 
-	/* mail-objects of mails in box
+	/* mail objects of mails in box
 	 * array
 	 */
-	private $mails;
+	protected $mails;
 
 	/* load infos from database
 	 *
@@ -17,14 +17,14 @@ class $$$Box extends $system$Object {
 				_description_,
 				dateOfCreation,
 				dateOfUpdate
-			FROM #__boxes
+			FROM #__mailboxes
 			WHERE id = '$this->id';";
 	}
 
 	/* get object of mails in box
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getMails () {
 		global $TSunic;
 
@@ -37,7 +37,7 @@ class $$$Box extends $system$Object {
 		// get ids of mails
 		$sql = "SELECT mails.id as id
 			FROM #__mails
-			WHERE mails.fk_mail__box = '".$this->id."'
+			WHERE mails.fk_mailbox = '".$this->id."'
 				AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return array();
@@ -54,7 +54,7 @@ class $$$Box extends $system$Object {
 	/* get number of mails in box
 	 *
 	 * @return int
- 	 */
+	 */
 	public function getNumber () {
 
 		// load mails
@@ -69,8 +69,8 @@ class $$$Box extends $system$Object {
 	 * +@param string: description of box
 	 *
 	 * @return bool
- 	 */
-	public function createBox ($name, $description = '') {
+	 */
+	public function create ($name, $description = '') {
 
 		// validate input
 		if (!$this->isValidName($name)
@@ -79,8 +79,8 @@ class $$$Box extends $system$Object {
 
 		// save in db
 		global $TSunic;
-		$sql = "INSERT INTO #__boxes
-			SET fk_system_users__account = '".$TSunic->Usr->getInfo('id')."',
+		$sql = "INSERT INTO #__mailboxes
+			SET fk_account = '".$TSunic->Usr->getInfo('id')."',
 				_name_ = '".$name."',
 				_description_ = '".$description."'
 			";
@@ -92,8 +92,8 @@ class $$$Box extends $system$Object {
 	 * +@param string: description of box
 	 *
 	 * @return bool
- 	 */
-	public function editBox ($name, $description = '') {
+	 */
+	public function edit ($name, $description = '') {
 
 		// validate input
 		if (!$this->isValidName($name)
@@ -102,12 +102,30 @@ class $$$Box extends $system$Object {
 
 		// save new data in db
 		global $TSunic;
-		$sql = "UPDATE #__boxes
-			SET fk_system_users__account = '".$TSunic->Usr->getInfo('id')."',
+		$sql = "UPDATE #__mailboxes
+			SET fk_account = '".$TSunic->Usr->getInfo('id')."',
 				_name_ = '".$name."',
 				_description_ = '".$description."'
 			WHERE id = '".$this->id."';";
 		return $this->_edit($sql);
+	}
+
+	/* delete mailbox
+	 *
+	 * @return bool
+	 */
+	public function delete () {
+
+		// transfere all mails in inbox
+		$mails = $this->getMails();
+		foreach ($mails as $index => $Value) {
+			if (!$Value->move(0)) return false;
+		}
+
+		// delete mailbox in database
+		$sql = "DELETE FROM #__mailboxes
+			WHERE id = '".$this->id."';";
+		return $this->_delete($sql);
 	}
 
 	/* check, if name of box is valid
@@ -130,39 +148,21 @@ class $$$Box extends $system$Object {
 		) ? true : false;
 	}
 
-	/* delete mailbox
-	 *
-	 * @return bool
-	 */
-	public function deleteBox () {
-
-		// transfere all mails in inbox
-		$mails = $this->getMails();
-		foreach ($mails as $index => $Value) {
-			if (!$Value->move(0)) return false;
-		}
-
-		// delete mailbox in database
-		$sql = "DELETE FROM #__boxes
-			WHERE id = '".$this->id."';";
-		return $this->_delete($sql);
-	}
-
 	/* get all serverboxes transfering mails into this box
 	 *
 	 * @return array
- 	 */
+	 */
 	public function getServerboxes () {
 		global $TSunic;
 
 		// get serverboxes from database
 		$sql = "SELECT serverboxes.id as id
 			FROM #__serverboxes as serverboxes,
-				#__accounts as accounts
-			WHERE serverboxes.fk_mail__box = '".$this->getInfo('id')."'
+				#__mailaccounts as accounts
+			WHERE serverboxes.fk_mailbox = '".$this->getInfo('id')."'
 				AND isActive = 1
-				AND serverboxes.fk_mail__account = accounts.id
-				AND accounts.fk_system_users__account = '".$TSunic->Usr->getInfo('id')."';";
+				AND serverboxes.fk_mailaccount = accounts.id
+				AND accounts.fk_account = '".$TSunic->Usr->getInfo('id')."';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return array();
 
@@ -178,7 +178,7 @@ class $$$Box extends $system$Object {
 	/* get seconds until checking for new mails for this mailbox
 	 *
 	 * @return int
- 	 */
+	 */
 	public function timeToCheck () {
 
 		// get all serverboxes
@@ -197,7 +197,7 @@ class $$$Box extends $system$Object {
 	 * +@param bool $force: force check?
 	 *
 	 * @return array
- 	 */
+	 */
 	public function checkMails ($force = false) {
 
 		// get serverboxes transfering mails in this mailbox

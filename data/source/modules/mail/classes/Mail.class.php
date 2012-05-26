@@ -8,54 +8,44 @@ class $$$Mail extends $system$Object {
 	 */
 	protected $attachments;
 
-	/* get all data of e-mail
-	 * +@param bool/string: name of data (true will return all data)
+	/* load infos from database
 	 *
-	 * @return array/false
- 	 */
-	public function getInfo ($name = true) {
+	 * @return sql query
+	 */
+	protected function loadInfoSql () {
+		return "SELECT mails._subject_ as subject,
+				mails._plaincontent_ as plaincontent,
+				mails._htmlcontent_ as htmlcontent,
+				mails._addressee_ as addressee,
+				mails.fk_mailbox as fk_mailbox,
+				mails.charset as charset,
+				mails._sender_ as sender,
+				mails.dateOfMail as dateOfMail,
+				mails.dateOfDownload as dateOfDownload
+			FROM #__serverboxes as serverboxes,
+				#__mails as mails
+			WHERE mails.id = '".$this->id."'
+				AND mails.fk_serverbox = serverboxes.id
+				AND mails.dateOfDeletion = '0000-00-00 00:00:00'
+			ORDER BY mails.id ASC;";
+	}
+
+	/* get plain content of mail
+	 *
+	 * @return string
+	 */
+	public function getPlainContent () {
 		global $TSunic;
+		return $TSunic->Parser->toText($this->info['plaincontent']);
+	}
 
-		// check, if mail exists
-		if (empty($this->id_mail__mail)) return false;
-
-		// check, if content already in cache
-		if (empty($this->info)) {
-			$this->info = array();
-
-			// get content from database
-			$sql = "SELECT mails._subject_ as subject,
-					mails._plaincontent_ as plaincontent,
-					mails._htmlcontent_ as htmlcontent,
-					mails._addressee_ as addressee,
-					mails.fk_mail__box as fk_mail__box,
-					mails.charset as charset,
-					mails._sender_ as sender,
-					mails.dateOfMail as dateOfMail,
-					mails.dateOfDownload as dateOfDownload
-				FROM #__serverboxes as serverboxes,
-					#__mails as mails
-				WHERE mails.id = '".$this->id."'
-					AND mails.fk_mail__serverbox = serverboxes.id
-					AND mails.dateOfDeletion = '0000-00-00 00:00:00'
-				ORDER BY mails.id ASC;";
-			$result = $TSunic->Db->doSelect($sql);
-
-			// save info in obj-vars
-			$this->info = (isset($result, $result[0])) ? $result[0] : array();
-
-			// parse content of mail
-			$this->info['plaincontent'] = $TSunic->Parser->toText($this->info['plaincontent']);
-			$this->info['htmlcontent'] = $TSunic->Parser->toHtml($this->info['htmlcontent']);
-		}
-
-		// add id to info
-		$this->info['id'] = $this->id;
-
-		// return requested data
-		if ($name === true) return $this->info;
-		if (isset($this->info[$name])) return $this->info[$name];
-		return false;
+	/* get html content of mail
+	 *
+	 * @return string
+	 */
+	public function getHtmlContent () {
+		global $TSunic;
+		return $TSunic->Parser->toHtml($this->info['htmlcontent']);
 	}
 
 	/* get attachments of mail (as objects)
@@ -101,7 +91,7 @@ class $$$Mail extends $system$Object {
 
 		// update database
 		$sql = "INSERT INTO #__attachments
-			SET fk_fsfile = '".$fk_fsfile."',
+			SET fk_fsfile = '$fk_fsfile',
 				fk_mail = '".$this->id."'
 			ON DUPLICATE KEY UPDATE dateOfUpdate = NOW();";
 		return $TSunic->Db->doInsert($sql);
@@ -120,7 +110,7 @@ class $$$Mail extends $system$Object {
 
 		// update database
 		$sql = "DELETE FROM #__attachments
-			WHERE fk_fsfile = '".$fk_fsfile."',
+			WHERE fk_fsfile = '$fk_fsfile',
 				fk_mail = '".$this->id."';";
 		return $TSunic->Db->doDelete($sql);
 	}
@@ -158,27 +148,12 @@ class $$$Mail extends $system$Object {
 		return false;
 	}
 
-	/* update info-data
-	 *
-	 * @return true
- 	 */
-	protected function updateInfo () {
-
-		// reset info
-		$this->info = array();
-
-		// get current info
-		$this->getInfo();
-
-		return true;
-	}
-
-	/* delete e-mail in database
+	/* delete mail
 	 * +@param bool: remove completely?
 	 *
 	 * @return bool
  	 */
-	public function deleteMail ($completely = false) {
+	public function delete ($completely = false) {
 		global $TSunic;
 
 		// delete attachment
@@ -186,26 +161,26 @@ class $$$Mail extends $system$Object {
 
 		// delete in database
 		if ($completely) {
-			$sql_0 = "DELETE FROM #__mails
+			$sql = "DELETE FROM #__mails
 					WHERE id = '".$this->id."';";
-			$result_0 = $TSunic->Db->doDelete($sql_0);
+			$result = $TSunic->Db->doDelete($sql);
 		} else {
-			$sql_0 = "UPDATE #__mails
-					SET _subject_ = '',
-						_plaincontent_ = '',
-						_htmlcontent_ = '',
-						_addressee_ = '',
-						fk_mail__box = '',
-						charset = '',
-						_sender_ = '',
-						dateOfMail = '',
-						dateOfDownload = '',
-						dateOfDeletion = NOW()
-					WHERE id = '".$this->id."';";
-			$result_0 = $TSunic->Db->doUpdate($sql_0);
+			$sql = "UPDATE #__mails
+				SET _subject_ = '',
+					_plaincontent_ = '',
+					_htmlcontent_ = '',
+					_addressee_ = '',
+					fk_mail__box = '',
+					charset = '',
+					_sender_ = '',
+					dateOfMail = '',
+					dateOfDownload = '',
+					dateOfDeletion = NOW()
+				WHERE id = '".$this->id."';";
+			$result = $TSunic->Db->doUpdate($sql);
 		}
 
-		if ($result_0) return true;
+		if ($result) return true;
 		return false;
 	}
 
@@ -248,32 +223,28 @@ class $$$Mail extends $system$Object {
 */
 
 	/* move mail to mailbox
-	 * @param int: $fk_mail__box
+	 * @param int: $fk_mailbox
 	 *
 	 * @return bool
  	 */
-	public function move ($fk_mail__box) {
+	public function move ($fk_mailbox) {
 		global $TSunic;
-		$fk_mail__box = (int) $fk_mail__box;
 
 		// is valid mailbox?
-		$Mailbox = $TSunic->get('$$$Box', $fk_mail__box);
-		if (!$Mailbox->isValid() AND !($fk_mail__box === 0)) {
-			return false;
-		}
+		$Mailbox = $TSunic->get('$$$Box', $fk_mailbox);
+		if (!$Mailbox->isValid() AND !($fk_mailbox === 0)) return false;
 
 		// update mail in database
-		$sql_0 = "UPDATE #__mails
-				SET fk_mail__box = '".$fk_mail__box."'
-				WHERE id = '".$this->id."'
-				  ;";
-		$result_0 = $TSunic->Db->doInsert($sql_0);
+		$sql = "UPDATE #__mails
+			SET fk_mailbox = '$fk_mailbox'
+			WHERE id = '".$this->id."'
+		;";
+		$result = $TSunic->Db->doInsert($sql);
 
 		// update $this->info
-		$this->updateInfo();
+		$this->getInfo(true, true);
 
-		if (!$result_0) return false;
-		return true;
+		return ($return) ? true : false;
 	}
 
 	/* check, if sender is valid
@@ -282,11 +253,7 @@ class $$$Mail extends $system$Object {
 	 * @return bool
  	 */
 	public function isValidSender ($sender) {
-
-		// check, if valid number
-		if (!is_numeric($sender)) return false;
-
-		return true;
+		return ($this->_validate($sender, 'int')) ? true : false;
 	}
 
 	/* check, if subject is valid
@@ -295,24 +262,16 @@ class $$$Mail extends $system$Object {
 	 * @return bool
  	 */
 	public function isValidSubject ($subject) {
-
-		// check, if exist
-		if (empty($sender)) return false;
-
-		return true;
+		return ($this->_validate($subject, 'extString')) ? true : false;
 	}
 
 	/* check, if content is valid
-	 * @param int: content of a mail
+	 * @param int: content of mail
 	 *
 	 * @return bool
  	 */
 	public function isValidContent ($content) {
-
-		// check, if exist
-		if (empty($content)) return false;
-
-		return true;
+		return (empty($content)) ? false : true;
 	}
 
 	/* download e-mail

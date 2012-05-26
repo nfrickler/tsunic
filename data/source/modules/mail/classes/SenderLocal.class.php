@@ -3,20 +3,6 @@
 include_once '$$$Smtp.class.php';
 class $$$SenderLocal extends $$$Smtp {
 
-	/* constructor
-	 * +@params int: id_mail_server
-	 */
-	public function __construct ($id_mail__smtp = 0) {
-
-		// save id
-		$this->id_mail__smtp = 0;
-
-		// load infos
-		$this->getInfo();
-
-		return;
-	}
-
 	/* get all data of smtp-server
 	 * +@param bool/string: name of data (true will return all data)
 	 *
@@ -34,7 +20,7 @@ class $$$SenderLocal extends $$$Smtp {
 			$this->info['email'] = $TSunic->Config->getConfig('system_email');
 			$this->info['emailname'] = $TSunic->CurrentUser->getInfo('name');
 			$this->info['host'] = 0;
-			$this->info['id_mail__smtp'] = 0;
+			$this->info['id'] = 0;
 		}
 
 		// return requested data
@@ -53,7 +39,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 *
 	 * @return bool
 	 */
-	public function createSmtp ($host, $port, $user, $password, $email, $emailname) {
+	public function create ($host, $port, $user, $password, $email, $emailname) {
 		return false;
 	}
 
@@ -67,7 +53,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 *
 	 * @return bool
 	 */
-	public function editSmtp ($host, $port, $user, $password, $email, $emailname) {
+	public function edit ($host, $port, $user, $password, $email, $emailname) {
 		return false;
 	}
 
@@ -75,7 +61,7 @@ class $$$SenderLocal extends $$$Smtp {
 	 *
 	 * @return bool
 	 */
-	public function deleteSmtp () {
+	public function delete () {
 		return false;
 	}
 
@@ -120,7 +106,6 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @return bool
 	 */
 	public function isValid () {
-
 		return true;
 	}
 

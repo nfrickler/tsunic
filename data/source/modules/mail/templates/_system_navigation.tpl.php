@@ -1,7 +1,5 @@
 <!-- | Template: show system navigation -->
 <?php
-
-// get input
 $mailboxes = $this->getVar('mailboxes');
 ?>
 <div id="$$$_div__navigation">
@@ -12,8 +10,8 @@ $mailboxes = $this->getVar('mailboxes');
 			</a>
 		</li>
 		<?php foreach ($mailboxes as $index => $value) { ?>
-		<li id="$$$_navigation__showMailbox_<?php $this->set($value->getInfo('id_mail__box')); ?>" class="$navigation__tsuniccoremodule$sub">
-			<a href="<?php $this->setUrl('$$$showMailbox', array('id_mail__box' => $value->getInfo('id_mail__box'))); ?>">
+		<li id="$$$_navigation__showMailbox_<?php $this->set($value->getInfo('id')); ?>" class="$navigation__tsuniccoremodule$sub">
+			<a href="<?php $this->setUrl('$$$showMailbox', array('$$$id' => $value->getInfo('id'))); ?>">
 				<?php $this->set($value->getInfo('name')); ?>
 			</a>
 		</li>
@@ -43,7 +41,7 @@ $mailboxes = $this->getVar('mailboxes');
 	// add events
 	document.getElementById('$$$_navigation__showMailBoxes').onclick = function(){location.href='<?php $this->setUrl('$$$showMailboxes', false, false); ?>';};
 	<?php foreach($this->getVar('mailboxes') as $index => $value) {
-		echo 'document.getElementById("$$$_navigation__showMailbox_'.$value->getInfo('id_mail__box').'").onclick = function(){location.href="'.$this->setUrl('$$$showMailbox', array('id_mail__box' => $value->getInfo('id_mail__box')), false, false).'";};';
+		echo 'document.getElementById("$$$_navigation__showMailbox_'.$value->getInfo('id').'").onclick = function(){location.href="'.$this->setUrl('$$$showMailbox', array('$$$id' => $value->getInfo('id')), false, false).'";};';
 	} ?>
 	document.getElementById('$$$_navigation__showMailservers').onclick = function(){location.href='<?php $this->setUrl('$$$showMailservers', false, false); ?>';};
 	document.getElementById('$$$_navigation__showSendMail').onclick = function(){location.href='<?php $this->setUrl('$$$showSendMail', false, false); ?>';};

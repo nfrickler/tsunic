@@ -4,7 +4,7 @@ function $$$editSmtp () {
 	global $TSunic;
 
 	// get input
-	$id = $TSunic->Temp->getParameter('$$$formSmtp__id_mail__smtp');
+	$id = $TSunic->Temp->getParameter('$$$formSmtp__id');
 	$fk_mail__account = $TSunic->Temp->getParameter('$$$formSmtp__mailaccount');
 	$email = $TSunic->Temp->getParameter('$$$formSmtp__email');
 	$password = $TSunic->Temp->getParameter('$$$formSmtp__password');

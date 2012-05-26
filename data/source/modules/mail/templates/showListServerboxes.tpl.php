@@ -29,7 +29,7 @@ $selectable = $this->getVar('selectable');
 				<strong><?php $this->set($value->getInfo('name')); ?></strong>
 			</td>
 			<td>
-				<?php $this->set($value->getInfo('Mailbox')->getInfo('name')); ?>
+				<?php $this->set($value->getMailbox()->getInfo('name')); ?>
 			</td>
 			<td>
 				<a href="<?php $this->setUrl('$$$showEditServerbox', array('$$$id' => $value->getInfo('id')));?>">

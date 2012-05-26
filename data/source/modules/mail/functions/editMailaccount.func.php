@@ -4,7 +4,7 @@ function $$$editMailaccount () {
 	global $TSunic;
 
 	// get input
-	$id = $TSunic->Temp->getParameter('$$$formMailaccount__id_mail__account');
+	$id = $TSunic->Temp->getParameter('$$$formMailaccount__id');
 	$email = $TSunic->Temp->getPost('$$$formMailaccount__email');
 	$password = $TSunic->Temp->getPost('$$$formMailaccount__password');
 	$name = $TSunic->Temp->getPost('$$$formMailaccount__name');

@@ -41,9 +41,11 @@ $Mailaccount = $this->getVar('Mailaccount');
 	<h2 style="margin-top:15px;"><?php $this->set('{SHOWACCOUNT__SERVERBOXES_H1}'); ?></h2>
 	<p class="ts_infotext"><?php $this->set('{SHOWACCOUNT__SERVERBOXES_INFO}'); ?></p>
 	<form action="<?php $this->setUrl('$$$activateServerboxes'); ?>" name="$$$showMailaccount__serverboxes_form" method="post">
-		<input type="hidden" name="$$$showMailaccount__id_mail__account" value="<?php $this->set($Mailaccount->getInfo('id_mail__account')); ?>" />
-		<?php $this->display('$$$showListServerboxes', array('serverboxes' => $Mailaccount->getServerboxes(),
-			'selectable' => '$$$showMailaccount__serverboxes_')); ?>
+		<input type="hidden" name="$$$showMailaccount__id" value="<?php $this->set($Mailaccount->getInfo('id')); ?>" />
+		<?php $this->display('$$$showListServerboxes', array(
+			'serverboxes' => $Mailaccount->getServerboxes(),
+			'selectable' => '$$$showMailaccount__serverboxes_'
+		)); ?>
 		<input type="submit" class="ts_submit" value="<?php $this->set('{SHOWACCOUNT__SERVERBOXES_SUBMIT}'); ?>" />
 	</form>
 	<p class="ts_sublinkbox">
@@ -57,7 +59,7 @@ $Mailaccount = $this->getVar('Mailaccount');
 	<p class="ts_infotext"><?php $this->set('{SHOWACCOUNT__SMTPS_INFO}'); ?></p>
 	<?php $this->display('$$$showListSmtps', array('smtps' => $Mailaccount->getSmtps())); ?>
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showAddSmtp', array('fk_mail__account' => $Mailaccount->getInfo('id'))); ?>">
+		<a href="<?php $this->setUrl('$$$showAddSmtp', array('fk_mailaccount' => $Mailaccount->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWACCOUNT__SMTPS_ADD}'); ?></a>
 	</p>
 </div>
