@@ -18,7 +18,7 @@ function $$$editServerbox () {
 		// create new mailbox
 
 		// create mailbox-object
-		$Mailbox = $TSunic->get('$$$Box');
+		$Mailbox = $TSunic->get('$$$Mailbox');
 
 		// validate input
 		if (empty($newMailbox) OR !$Mailbox->isValidName($newMailbox)) {
@@ -27,14 +27,14 @@ function $$$editServerbox () {
 		}
 
 		// create new mailbox
-		if (!$Mailbox->createBox($newMailbox)) {
+		if (!$Mailbox->create($newMailbox)) {
 			$TSunic->Log->alert('error', '{EDITSERVERBOX__ERROROCCURRED}');
 			$TSunic->redirect('back');
 		}
 
 	} elseif (is_numeric($selectMailbox)) {
 		// mailbox selected
-		$Mailbox = $TSunic->get('$$$Box', $selectMailbox);
+		$Mailbox = $TSunic->get('$$$Mailbox', $selectMailbox);
 
 		// check, if valid mailbox
 		if (!$Mailbox->isValid()) {

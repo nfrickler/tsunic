@@ -13,8 +13,8 @@ class $$$Mailbox extends $system$Object {
 	 * @return sql query
 	 */
 	protected function loadInfoSql () {
-		return "SELECT _name_,
-				_description_,
+		return "SELECT _name_ as name,
+				_description_ as description,
 				dateOfCreation,
 				dateOfUpdate
 			FROM #__mailboxes
@@ -35,10 +35,10 @@ class $$$Mailbox extends $system$Object {
 		if (!empty($this->mails)) return $this->mails;
 
 		// get ids of mails
-		$sql = "SELECT mails.id as id
+		$sql = "SELECT id as id
 			FROM #__mails
-			WHERE mails.fk_mailbox = '".$this->id."'
-				AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
+			WHERE fk_mailbox = '".$this->id."'
+				AND dateOfDeletion = '0000-00-00 00:00:00';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return array();
 
@@ -82,7 +82,8 @@ class $$$Mailbox extends $system$Object {
 		$sql = "INSERT INTO #__mailboxes
 			SET fk_account = '".$TSunic->Usr->getInfo('id')."',
 				_name_ = '".$name."',
-				_description_ = '".$description."'
+				_description_ = '".$description."',
+				dateOfCreation = NOW()
 			";
 		return $this->_create($sql);
 	}
@@ -101,10 +102,8 @@ class $$$Mailbox extends $system$Object {
 		) return false;
 
 		// save new data in db
-		global $TSunic;
 		$sql = "UPDATE #__mailboxes
-			SET fk_account = '".$TSunic->Usr->getInfo('id')."',
-				_name_ = '".$name."',
+			SET _name_ = '".$name."',
 				_description_ = '".$description."'
 			WHERE id = '".$this->id."';";
 		return $this->_edit($sql);

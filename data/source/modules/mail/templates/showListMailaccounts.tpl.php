@@ -9,9 +9,9 @@ $mailaccounts = $this->getVar('mailaccounts');
 	<?php if (count($mailaccounts) > 0) { ?>
 	<table>
 		<tr style="width:100%;">
-			<th><?php $this->set('{SHOWLISTACCOUNTS__NAME}'); ?></th>
-			<th><?php $this->set('{SHOWLISTACCOUNTS__DESCRIPTION}'); ?></th>
-			<th><?php $this->set('{SHOWLISTACCOUNTS__EMAIL}'); ?></th>
+			<th><?php $this->set('{SHOWLISTMAILACCOUNTS__NAME}'); ?></th>
+			<th><?php $this->set('{SHOWLISTMAILACCOUNTS__DESCRIPTION}'); ?></th>
+			<th><?php $this->set('{SHOWLISTMAILACCOUNTS__EMAIL}'); ?></th>
 			<th>&nbsp;</th>
 		</tr>
 		<?php foreach ($mailaccounts as $index => $value) { ?>
@@ -29,10 +29,10 @@ $mailaccounts = $this->getVar('mailaccounts');
 			</td>
 			<td>
 				<a href="<?php $this->setUrl('$$$showEditMailaccount', array('$$$id' => $value->getInfo('id')));?>">
-					<img class="system_editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWLISTACCOUNTS__EDIT}'); ?>" />
+					<img class="system_editImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWLISTMAILACCOUNTS__EDIT}'); ?>" />
 				</a>
 				<a href="<?php $this->setUrl('$$$showDeleteMailaccount', array('$$$id' => $value->getInfo('id')));?>"  id="$$$showListMailaccounts__delete_<?php $this->set($value->getInfo('id')); ?>">
-					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWLISTACCOUNTS__DELETE}'); ?>" />
+					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWLISTMAILACCOUNTS__DELETE}'); ?>" />
 				</a>
 			</td>
 		</tr>
@@ -40,7 +40,7 @@ $mailaccounts = $this->getVar('mailaccounts');
 	</table>
 	<?php } else { ?>
 	<p>
-		<?php $this->set('{SHOWLISTACCOUNTS__NOACCOUNTS}'); ?>
+		<?php $this->set('{SHOWLISTMAILACCOUNTS__NOMAILACCOUNTS}'); ?>
 	</p>
 	<?php } ?>
 </div>
@@ -69,10 +69,10 @@ $mailaccounts = $this->getVar('mailaccounts');
 			object.onclick = function(){
 
 				// create optionbox
-				var allobjects = $system$showOptionbox('<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_HEADER_JS}'); ?>',
-				'<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_CONTENT}'); ?>',
-				'<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_YES}'); ?>',
-				'<?php $this->setjs('{SHOWDELETEACCOUNT__POPUP_DELETE_NO}'); ?>');
+				var allobjects = $system$showOptionbox('<?php $this->setjs('{SHOWDELETEMAILACCOUNT__POPUP_DELETE_HEADER_JS}'); ?>',
+				'<?php $this->setjs('{SHOWDELETEMAILACCOUNT__POPUP_DELETE_CONTENT}'); ?>',
+				'<?php $this->setjs('{SHOWDELETEMAILACCOUNT__POPUP_DELETE_YES}'); ?>',
+				'<?php $this->setjs('{SHOWDELETEMAILACCOUNT__POPUP_DELETE_NO}'); ?>');
 
 				// add yes-button-event
 				allobjects['button1'].onclick = function(){

@@ -4,7 +4,7 @@ $mailboxes = $this->getVar('mailboxes');
 ?>
 <div id="$$$_div__navigation">
 	<ul>
-		<li id="$$$_navigation__showMailBoxes">
+		<li id="$$$_navigation__showMailboxes">
 			<a href="<?php $this->setUrl('$$$showMailboxes'); ?>">
 				<?php $this->set('{_NAVIGATION__SHOWMAILBOXES}'); ?>
 			</a>
@@ -39,7 +39,7 @@ $mailboxes = $this->getVar('mailboxes');
 <script type="text/javascript">
 
 	// add events
-	document.getElementById('$$$_navigation__showMailBoxes').onclick = function(){location.href='<?php $this->setUrl('$$$showMailboxes', false, false); ?>';};
+	document.getElementById('$$$_navigation__showMailboxes').onclick = function(){location.href='<?php $this->setUrl('$$$showMailboxes', false, false); ?>';};
 	<?php foreach($this->getVar('mailboxes') as $index => $value) {
 		echo 'document.getElementById("$$$_navigation__showMailbox_'.$value->getInfo('id').'").onclick = function(){location.href="'.$this->setUrl('$$$showMailbox', array('$$$id' => $value->getInfo('id')), false, false).'";};';
 	} ?>

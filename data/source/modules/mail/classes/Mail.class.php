@@ -231,7 +231,7 @@ class $$$Mail extends $system$Object {
 		global $TSunic;
 
 		// is valid mailbox?
-		$Mailbox = $TSunic->get('$$$Box', $fk_mailbox);
+		$Mailbox = $TSunic->get('$$$Mailbox', $fk_mailbox);
 		if (!$Mailbox->isValid() AND !($fk_mailbox === 0)) return false;
 
 		// update mail in database

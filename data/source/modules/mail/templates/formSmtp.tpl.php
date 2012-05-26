@@ -6,11 +6,11 @@ $Smtp = $this->getVar('Smtp');
 	<form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formSmtp__form" id="$$$formSmtp__form" class="ts_form">
 		<input type="hidden" name="$$$formSmtp__id" id="$$$formSmtp__id" value="<?php $this->set($Smtp->getInfo('id')); ?>" />
 		<fieldset>
-			<legend><?php echo $this->set('{FORMSMTP__LEGEND_SMTPACCOUNT}'); ?></legend>
-			<label for="$$$formSmtp__fk_mailaccount"><?php echo $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>
+			<legend><?php echo $this->set('{FORMSMTP__LEGEND_SMTPMAILACCOUNT}'); ?></legend>
+			<label for="$$$formSmtp__fk_mailaccount"><?php echo $this->set('{FORMSMTP__MAILMAILACCOUNT}'); ?></label>
 			<select name="$$$formSmtp__fk_mailaccount" id="$$$formSmtp__fk_mailaccount">
 				<?php $current = $this->setPreset('$$$formSmtp__fk_mailaccount', $Smtp->getMailaccount(true), false); ?>
-				<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__MAILACCOUNT_NOACCOUNT}'); ?></option>
+				<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__MAILMAILACCOUNT_NOMAILACCOUNT}'); ?></option>
 				<?php foreach ($this->getVar('mailaccounts') as $index => $value) { ?>
 				<option value="<?php echo $value->getInfo('id'); ?>" <?php if ($current == $value->getInfo('id')) echo 'selected="selected"'; ?>><?php $this->set($value->getInfo('name')); ?></option>
 				<?php } ?>
@@ -24,7 +24,7 @@ $Smtp = $this->getVar('Smtp');
 			<div style="clear:both;"></div>
 		</fieldset>
 		<fieldset>
-			<legend><?php echo $this->set('{FORMACCOUNT__LEGEND_OPTIONALDATA}'); ?></legend>
+			<legend><?php echo $this->set('{FORMMAILACCOUNT__LEGEND_OPTIONALDATA}'); ?></legend>
 			<label for="$$$formSmtp__emailname"><?php echo $this->set('{FORMSMTP__EMAILNAME}'); ?></label>
 			<input type="text" name="$$$formSmtp__emailname" id="$$$formSmtp__emailname" value="<?php $this->setPreset('$$$formSmtp__emailname', $Smtp->getInfo('emailname')); ?>" />
 			<div style="clear:both;"></div>
@@ -72,8 +72,8 @@ $Smtp = $this->getVar('Smtp');
 	var $$$formSmtp__allInputs = new Array();
 	$$$formSmtp__allInputs[0] = new Array(
 		'$$$formSmtp__fk_mailaccount',
-		'<?php $this->set('{FORMSMTP__PRESET_MAILACCOUNT}'); ?>',
-		'<?php $this->set('{FORMSMTP__HELP_MAILACCOUNT}'); ?>'
+		'<?php $this->set('{FORMSMTP__PRESET_MAILMAILACCOUNT}'); ?>',
+		'<?php $this->set('{FORMSMTP__HELP_MAILMAILACCOUNT}'); ?>'
 	);
 	$$$formSmtp__allInputs[1] = new Array(
 		'$$$formSmtp__email',

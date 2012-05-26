@@ -50,7 +50,7 @@ class $$$Serverbox extends $system$Object {
 		// get object
 		global $TSunic;
 		$Mailbox = (is_numeric($fk_mailbox) and !empty($fk_mailbox))
-			? $TSunic->get('$$$Box', $fk_mailbox) : $TSunic->get('$$$Inbox');
+			? $TSunic->get('$$$Mailbox', $fk_mailbox) : $TSunic->get('$$$Inbox');
 		if (!$Mailbox or !$Mailbox->isValid()) return false;
 
 		// save in obj-var and return
@@ -243,7 +243,7 @@ class $$$Serverbox extends $system$Object {
 		if ($fk_mailbox == 0) {
 			$this->Mailbox = $TSunic->get('$$$Inbox');
 		} else {
-			$this->Mailbox = $TSunic->get('$$$Box', $fk_mailbox);
+			$this->Mailbox = $TSunic->get('$$$Mailbox', $fk_mailbox);
 		}
 
 		// check, if mailserver exist

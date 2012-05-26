@@ -238,10 +238,10 @@ $mails = $Mailbox->getMails();
 			if (number_of_new_mails > 0) {
 
 				// show optionbox
-				$$$showMailbox__optionbox = $system$showOptionbox('<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_HEADER}'); ?>',
-				'<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_CONTENT}'); ?>',
-				'<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_YES}'); ?>',
-				'<?php $this->setjs('{SHOWMAILBOX__OPTIONBOX_NEWMAILS_NO}'); ?>');
+				$$$showMailbox__optionbox = $system$showOptionbox('<?php $this->setjs('{SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_HEADER}'); ?>',
+				'<?php $this->setjs('{SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_CONTENT}'); ?>',
+				'<?php $this->setjs('{SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_YES}'); ?>',
+				'<?php $this->setjs('{SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_NO}'); ?>');
 
 				// add events to optionbox-buttons
 				$$$showMailbox__optionbox['button1'].onclick = function(){

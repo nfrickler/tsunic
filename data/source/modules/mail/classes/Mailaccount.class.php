@@ -27,28 +27,28 @@ class $$$Mailaccount extends $system$Object {
 	 * array
 	 */
 	protected $auths = array(
-		1 => array('{CLASS__ACCOUNT__AUTHS_NORMAL}', ''),
-		2 => array('{CLASS__ACCOUNT__AUTHS_ENCRYPTEDPWD}', 'secure'),
-		//   3 => array('{CLASS__ACCOUNT__AUTHS_NTLM}', ''), // not supported
-		//   4 => array('{CLASS__ACCOUNT__AUTHS_KERBEROS_GSSAPI}', '') // not supported
+		1 => array('{CLASS__MAILACCOUNT__AUTHS_NORMAL}', ''),
+		2 => array('{CLASS__MAILACCOUNT__AUTHS_ENCRYPTEDPWD}', 'secure'),
+		//   3 => array('{CLASS__MAILACCOUNT__AUTHS_NTLM}', ''), // not supported
+		//   4 => array('{CLASS__MAILACCOUNT__AUTHS_KERBEROS_GSSAPI}', '') // not supported
 	);
 
 	/* protocols
 	 * array
 	 */
 	protected $protocols = array(
-		1 => array('{CLASS__ACCOUNT__PROTOCOLS_IMAP}', 'imap'),
-		2 => array('{CLASS__ACCOUNT__PROTOCOLS_POP3}', 'pop3')
+		1 => array('{CLASS__MAILACCOUNT__PROTOCOLS_IMAP}', 'imap'),
+		2 => array('{CLASS__MAILACCOUNT__PROTOCOLS_POP3}', 'pop3')
 	);
 
 	/* connections-securities
 	 * array
 	 */
 	protected $connsecurities = array(
-		1 => array('{CLASS__ACCOUNT__CONNSECURITIES_NONE}', 'novalidate-cert'),
-		2 => array('{CLASS__ACCOUNT__CONNSECURITIES_STARTTLS}', 'tls/novalidate-cert'),
-		3 => array('{CLASS__ACCOUNT__CONNSECURITIES_SSLTLS}', 'ssl'),
-		4 => array('{CLASS__ACCOUNT__CONNSECURITIES_SSLTLSNOVAL}', 'ssl/novalidate-cert')
+		1 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_NONE}', 'novalidate-cert'),
+		2 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_STARTTLS}', 'tls/novalidate-cert'),
+		3 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_SSLTLS}', 'ssl'),
+		4 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_SSLTLSNOVAL}', 'ssl/novalidate-cert')
 	);
 
 	/* imap-timeout (in seconds)
@@ -575,7 +575,7 @@ class $$$Mailaccount extends $system$Object {
 			// check, if imap-stream exist
 			if ($setError AND !$stream) {
 				// get error-msg
-				$error = '{CLASS__ACCOUNT__NOCONNECTION}';
+				$error = '{CLASS__MAILACCOUNT__NOCONNECTION}';
 				$error.= ' (server: '.$this->getInfo('host').', user: '.$this->getInfo('user');
 				if (!empty($boxname)) $error.= ', mailbox: '.$boxname;
 				$error.= ')';

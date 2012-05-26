@@ -9,10 +9,10 @@ function $$$editMailbox () {
 	$description = $TSunic->Temp->getPost('$$$formMailbox__description');
 
 	// get mailbox-object
-	$Mailbox = $TSunic->get('$$$Box', $id);
+	$Mailbox = $TSunic->get('$$$Mailbox', $id);
 
 	// edit mailbox
-	if (!$Mailbox->editBox($name, $description)) {
+	if (!$Mailbox->edit($name, $description)) {
 		$TSunic->Log->alert('error', '{EDITMAILBOX__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}

@@ -4,7 +4,7 @@
 	<p class="ts_infotext"><?php $this->set('{SHOWEDITMAILBOX__INFO}'); ?></p>
 	<?php $this->display('$$$formMailbox', array(
 		'Mailbox' => $this->getVar('Mailbox'),
-		'submit_text' => '{SHOWEDITAILBOX__SUBMIT}',
+		'submit_text' => '{SHOWEDITAILMAILBOX__SUBMIT}',
 		'reset_text' => '{SHOWEDITMAILBOX__RESET}',
 		'submit_href_event' => '$$$editMailbox'
 	)); ?>

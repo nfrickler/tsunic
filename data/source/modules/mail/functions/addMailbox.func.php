@@ -8,7 +8,7 @@ function $$$addMailbox () {
 	$description = $TSunic->Temp->getParameter('$$$formMailbox__description');
 
 	// get Mailbox object
-	$Mailbox = $TSunic->get('$$$Box');
+	$Mailbox = $TSunic->get('$$$Mailbox');
 
 	// create new mailbox
 	if (!$Mailbox->create($name, $description)) {

@@ -25,24 +25,24 @@ function $$$editMailaccount () {
 		OR !$Mailaccount->isValidName($name)
 		OR !$Mailaccount->isValidDescription($description)
 	) {
-		$TSunic->Log->alert('error', '{EDITACCOUNT__INVALIDINPUT}');
+		$TSunic->Log->alert('error', '{EDITMAILACCOUNT__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// edit mailaccount
 	if (!$Mailaccount->edit($email, $password, $name, $description)) {
-		$TSunic->Log->alert('error', '{EDITACCOUNT__ERROR}');
+		$TSunic->Log->alert('error', '{EDITMAILACCOUNT__ERROR}');
 		$TSunic->redirect('back');
 	}
 
 	// try to set connection
 	if (!$Mailaccount->setConnection($host, $port, $user, $protocol, $auth, $connsecurity)) {
-		$TSunic->Log->alert('error', '{EDITACCOUNT__CONNERROR}');
+		$TSunic->Log->alert('error', '{EDITMAILACCOUNT__CONNERROR}');
 		$TSunic->redirect('$$$showEditMailaccount', array('$$$id' => $Mailaccount->getInfo('id')));
 	}
 
 	// success
-	$TSunic->Log->alert('info', '{EDITACCOUNT__SUCCESS}');
+	$TSunic->Log->alert('info', '{EDITMAILACCOUNT__SUCCESS}');
 	$TSunic->redirect('$$$showMailaccount', array('$$$id' => $Mailaccount->getInfo('id')));
 
 	return true;

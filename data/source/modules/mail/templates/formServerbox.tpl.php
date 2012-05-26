@@ -26,7 +26,7 @@ $mailboxes = $this->getVar('mailboxes');
 			</select>
 			<div style="clear:both;"></div>
 			<div id="$$$formServerbox__newMailbox_div">
-				<label for="$$$formServerbox__newMailbox" class="ts_form_required"><?php echo $this->set('{FORMSERVERBOX__TOBOX_CREATENEW}'); ?></label>
+				<label for="$$$formServerbox__newMailbox" class="ts_form_required"><?php echo $this->set('{FORMSERVERBOX__TOMAILBOX_CREATENEW}'); ?></label>
 				<input type="text" name="$$$formServerbox__newMailbox" id="$$$formServerbox__newMailbox" class="ts_input" value="<?php $this->setPreset('$$$formServerbox__newMailbox'); ?>" />
 				<div style="clear:both;"></div>
 			</div>

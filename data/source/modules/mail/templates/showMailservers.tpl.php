@@ -3,12 +3,12 @@
 	<h1><?php $this->set('{SHOWMAILSERVERS__H1}'); ?></h1>
 	<p class="ts_infotext"><?php $this->set('{SHOWMAILSERVERS__INFOTEXT}'); ?></p>
 
-	<h2 style="margin-top:15px;"><?php $this->set('{SHOWMAILSERVERS__ACCOUNTS_H1}'); ?></h2>
-	<p class="ts_infotext"><?php $this->set('{SHOWMAILSERVERS__ACCOUNTS_INFO}'); ?></p>
+	<h2 style="margin-top:15px;"><?php $this->set('{SHOWMAILSERVERS__MAILACCOUNTS_H1}'); ?></h2>
+	<p class="ts_infotext"><?php $this->set('{SHOWMAILSERVERS__MAILACCOUNTS_INFO}'); ?></p>
 	<?php $this->display('$$$showListMailaccounts', array('mailaccounts' => $this->getVar('mailaccounts'))); ?>
 	<p class="ts_sublinkbox">
 		<a href="<?php $this->setUrl('$$$showAddMailaccount'); ?>">
-			<?php $this->set('{SHOWMAILSERVERS__ACCOUNTS_ADD}'); ?></a>
+			<?php $this->set('{SHOWMAILSERVERS__MAILACCOUNTS_ADD}'); ?></a>
 	</p>
 
 	<h2 style="margin-top:15px;"><?php $this->set('{SHOWMAILSERVERS__SMTPS_H1}'); ?></h2>

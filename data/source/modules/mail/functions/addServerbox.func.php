@@ -18,7 +18,7 @@ function $$$addServerbox () {
 		// create new mailbox
 
 		// create mailbox-object
-		$Mailbox = $TSunic->get('$$$Box');
+		$Mailbox = $TSunic->get('$$$Mailbox');
 
 		// validate input
 		if (!$Mailbox->isValidName($newMailbox)) {
@@ -34,7 +34,7 @@ function $$$addServerbox () {
 
 	} elseif (is_numeric($selectMailbox)) {
 		// mailbox selected
-		$Mailbox = $TSunic->get('$$$Box', $selectMailbox);
+		$Mailbox = $TSunic->get('$$$Mailbox', $selectMailbox);
 
 		// check, if exist
 		if (!$Mailbox->isValid()) {

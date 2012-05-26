@@ -4,8 +4,8 @@ function $$$showDeleteMailbox () {
 	global $TSunic;
 
 	// get Mailbox object
-	$id = $TSunic->Temp->getParameter('id');
-	$Mailbox = $TSunic->get('$$$Box', $id);
+	$id = $TSunic->Temp->getParameter('$$$id');
+	$Mailbox = $TSunic->get('$$$Mailbox', $id);
 
 	// activate template
 	$data = array('Mailbox' => $Mailbox);

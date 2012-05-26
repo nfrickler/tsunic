@@ -9,7 +9,7 @@ function $$$checkMails () {
 	if (!empty($id)) {
 		// check only this mailserver for new mails
 		// get mailbox-object
-		$Mailbox = $TSunic->get('$$$Box', $id);
+		$Mailbox = $TSunic->get('$$$Mailbox', $id);
 
 		// check for new mails
 		$Mailbox->checkMails();

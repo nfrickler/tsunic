@@ -5,10 +5,10 @@ function $$$deleteMailbox () {
 
 	// get mailbox object
 	$id = $TSunic->Temp->getParameter('$$$id');
-	$Mailbox = $TSunic->get('$$$Box', $id);
+	$Mailbox = $TSunic->get('$$$Mailbox', $id);
 
 	// edit mailbox
-	if (!$Mailbox->deleteBox()) {
+	if (!$Mailbox->delete()) {
 		$TSunic->Log->alert('error', '{DELETEMAILBOX__ERROR}');
 		$TSunic->redirect('back');
 	}

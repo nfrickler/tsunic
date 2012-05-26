@@ -13,7 +13,7 @@ function $$$showEditMailaccount () {
 		'name' => $Mailaccount->getInfo('name')
 	);
 	$TSunic->Tmpl->activate('$$$showEditMailaccount', '$system$content', $data);
-	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITACCOUNT__TITLE}'));
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITMAILACCOUNT__TITLE}'));
 
 	return true;
 }

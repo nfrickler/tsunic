@@ -45,7 +45,7 @@ $mailboxes = $this->getVar('mailboxes');
 
 	<p class="ts_sublinkbox">
 		<a href="<?php $this->setUrl('$$$showAddMailbox'); ?>">
-			<?php $this->set('{SHOWMAILBOXES__TOCREATENEWBOX}'); ?></a>
+			<?php $this->set('{SHOWMAILBOXES__TOCREATENEWMAILBOX}'); ?></a>
 	</p>
 </div>
 
