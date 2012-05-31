@@ -329,7 +329,7 @@ class $$$Template {
 		global $TSunic;
 
 		// get output
-		$output = $TSunic->Temp->getPost($name, 1);
+		$output = $TSunic->Temp->getPost($name, 1, true);
 
 		// check, if is output or default should be set
 		if (empty($output)) $output = $default;

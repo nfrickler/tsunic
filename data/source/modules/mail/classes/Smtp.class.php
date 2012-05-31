@@ -597,32 +597,32 @@ class $$$Smtp extends $system$Object {
 	/* ************************** send mail *******************************/
 
 	/* send-mail
-	 * @param string: addressees of mail
 	 * @param string: subject of mail
 	 * @param string: message to send
+	 * @param array: addressees of mail
 	 *
 	 * @return bool
 	 */
-	public function sendMail ($addressees, $subject, $message) {
+	public function send ($subject, $message, $addressees) {
+		if (!$this->isValid()) return false;
+		if (!is_array($addressees)) $addressees = array($addressees);
 
 		// validate input
 		if (!$this->isValidSubject($subject)
 			OR !$this->isValidMessage($message)
-			OR empty($this->id)
 		) {
 			$this->setError('Invalid input!');
 			return false;
 		}
 		foreach ($addressees as $index => $value) {
 			if (!$this->isValidAddressee($value)) {
-				$this->setError('Invalid addressee!');
+				$this->setError("Invalid addressee '$value'!");
 				return false;
 			}
 		}
 
 		// initialize connection
 		if (!$this->getConnection()) {
-			// connection failed
 			$this->setError('Connection to SMTP-Server failed!');
 			return false;
 		}
@@ -630,7 +630,6 @@ class $$$Smtp extends $system$Object {
 		// set sender
 		$this->sendData('MAIL FROM: <'.$this->getInfo('email').'>');
 		if ($this->getStatus() != 250) {
-			// error
 			$this->setError('Server rejected MAIL-FROM...');
 			return false;
 		}
@@ -641,7 +640,6 @@ class $$$Smtp extends $system$Object {
 			// add addressee
 			$this->sendData('RCPT TO: <'.$value.'>');
 			if ($this->getStatus() != 250) {
-				// error
 				$this->setError('Server rejected RCPT TO ('.$value.')...');
 				return false;
 			}
@@ -650,7 +648,6 @@ class $$$Smtp extends $system$Object {
 		// start contenct of mail
 		$this->sendData('DATA');
 		if ($this->getStatus() != 354) {
-			// error
 			$this->setError('Server rejected DATA...');
 			return false;
 		}
@@ -685,7 +682,6 @@ class $$$Smtp extends $system$Object {
 		// send message
 		$this->sendData($message."\r\n.\r\n");
 		if ($this->getStatus() != 250) {
-			// error
 			$this->setError('Server rejected header and/or message of mail...');
 			return false;
 		}

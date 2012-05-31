@@ -41,14 +41,10 @@ class $$$Inbox extends $$$Mailbox {
 
 		// get ids of mails
 		$sql = "SELECT mails.id as id
-			FROM #__mails as mails,
-				#__serverboxes as serverboxes,
-				#__mailaccounts as accounts
-			WHERE accounts.fk_account = '".$TSunic->Usr->getInfo('id')."'
-				AND serverboxes.fk_mailaccount = accounts.id
-				AND mails.fk_serverbox = serverboxes.id
-				AND mails.fk_mailbox = '0'
-				AND mails.dateOfDeletion = '0000-00-00 00:00:00';";
+			FROM #__mails as mails
+			WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
+				AND fk_mailbox = '0'
+				AND dateOfDeletion = '0000-00-00 00:00:00';";
 		$result = $TSunic->Db->doSelect($sql);
 		if (!$result) return array();
 

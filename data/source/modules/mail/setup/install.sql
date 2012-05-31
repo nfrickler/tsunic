@@ -48,21 +48,31 @@ CREATE TABLE IF NOT EXISTS `#__knownservers` (
 
 CREATE TABLE IF NOT EXISTS `#__mails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_account` int(11) NOT NULL,
   `fk_serverbox` int(11) NOT NULL,
   `fk_mailbox` int(11) NOT NULL,
+  `fk_smtp` int(11) NOT NULL,
   `_subject_` varchar(500) NOT NULL,
   `_sender_` varchar(500) NOT NULL,
-  `_addressee_` varchar(500) NOT NULL,
-  `dateOfDownload` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateOfDeletion` datetime NOT NULL,
   `dateOfCreation` datetime NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dateOfDownload` datetime NOT NULL,
+  `dateOfDeletion` datetime NOT NULL,
   `status` int(11) NOT NULL,
+  `unseen` int(1) NOT NULL,
   `dateOfMail` datetime NOT NULL,
   `uid` int(11) NOT NULL,
   `_plaincontent_` text NOT NULL,
   `_htmlcontent_` text NOT NULL,
   `charset` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `#__addressees` (
+  `fk_mail` int(11) NOT NULL,
+  `address` varchar(500) NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fk_mail`, `address`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__serverboxes` (
@@ -84,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `#__smtps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_mailaccount` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,
+  `_name_` varchar(500) NOT NULL,
   `_host_` varchar(500) NOT NULL,
   `_port_` varchar(100) NOT NULL,
   `_user_` varchar(500) NOT NULL,

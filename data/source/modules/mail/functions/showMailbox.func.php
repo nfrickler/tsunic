@@ -27,6 +27,7 @@ function $$$showMailbox () {
 		'mailboxes' => $mailboxes
 	);
 	$TSunic->Tmpl->activate('$$$showMailbox', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWMAILBOX__TITLE}'));
 
 	return true;
 }

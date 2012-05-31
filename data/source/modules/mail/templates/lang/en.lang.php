@@ -5,6 +5,7 @@ $lang = array(
 	// classes
 	'CLASS__SENDERLOCAL__HOST' => 'Localhost',
 	'CLASS__SENDERLOCAL__USER' => 'Local user',
+	'CLASS__SENDERLOCAL__NAME' => 'Local Smtp',
 
 	'CLASS__SERVERBOX__ADDATTACHMENTERROR' => 'Attachment couldn\'t be downloaded!',
 
@@ -54,6 +55,7 @@ $lang = array(
 	'UPDATEMAILBOX__SUCCESS' => 'Mailbox updated.',
 
 	/* showMailboxes */
+	'SHOWMAILBOXES__TITLE' => 'Your Mailboxes',
 	'SHOWMAILBOXES__YOURMAILBOXES' => 'Your Mailboxes',
 	'SHOWMAILBOXES__TOCREATENEWMAILBOX' => 'Create a new mailbox',
 	'SHOWMAILBOXES__EDIT' => '{$$$COMMON__EDIT}',
@@ -68,7 +70,8 @@ $lang = array(
 	'SHOWMAILBOXES__POPUP_DELETE_NO' => 'No, cancel.',
 
 	/* showMailbox */
-	'SHOWMAILBOX__H1' => 'Mails - #name#',
+	'SHOWMAILBOX__TITLE' => 'Show mailbox',
+	'SHOWMAILBOX__H1' => 'Mailbox | #name#',
 	'SHOWMAILBOX__NUMBEROFMAILS' => 'Number of mails:',
 	'SHOWMAILBOX__FROMADDRESS' => 'From',
 	'SHOWMAILBOX__SUBJECT' => 'Subject',
@@ -94,11 +97,12 @@ $lang = array(
 	'PERFORMMAILSACTION__SUCCESS' => 'Action successfully performed.',
 
 	/* showAddMailbox */
-	'SHOWADDMAILBOX__SUBMIT' => 'Create mailbox',
-	'SHOWADDMAILBOX__RESET' => '{$$$COMMON__RESET}',
+	'SHOWADDMAILBOX__TITLE' => 'Add mailbox',
 	'SHOWADDMAILBOX__H1' => 'Add mailbox',
 	'SHOWADDMAILBOX__INFO' => 'To add a local mailbox, fill in the following form and submit.',
 	'SHOWADDMAILBOX__TOSHOWMAILBOXES' => 'Back to all mailboxes',
+	'SHOWADDMAILBOX__SUBMIT' => 'Create mailbox',
+	'SHOWADDMAILBOX__RESET' => '{$$$COMMON__RESET}',
 
 	/* addmailbox */
 	'ADDMAILBOX__SUCCESS' => 'New mailbox has been successfully created.',
@@ -399,9 +403,11 @@ $lang = array(
 
 	/* **************************** mail ************************************ */
 
-	/* showMail */
+	// showMail
+	'SHOWMAIL__TITLE' => 'Your mail',
 	'SHOWMAIL__H1' => 'Your mail',
 	'SHOWMAIL__DELETE' => 'Delete mail',
+	'SHOWMAIL__EDIT' => 'Edit mail',
 	'SHOWMAIL__ANSWERMAIL' => 'Write answer',
 	'SHOWMAIL__TOSHOWMAILBOX' => 'Back to mailbox',
 	'SHOWMAIL__ATTACHMENTS' => 'Attachments',
@@ -411,49 +417,61 @@ $lang = array(
 	'SHOWMAIL__ADDRESSEE' => 'Addressee',
 	'SHOWMAIL__DATEOFMAIL' => 'Date',
 
-	/* deleteMail */
+	// deleteMail
 	'SHOWDELETEMAIL__POPUP_DELETE_HEADER' => 'Delete mail "#name#"?',
 	'SHOWDELETEMAIL__POPUP_DELETE_HEADER_JS' => 'Delete this mail?',
 	'SHOWDELETEMAIL__POPUP_DELETE_CONTENT' => 'Do you really want to delete this mail?',
 	'SHOWDELETEMAIL__POPUP_DELETE_YES' => 'Yes, delete',
 	'SHOWDELETEMAIL__POPUP_DELETE_NO' => 'No, cancel',
 	
-	/* deleteMail */
+	// deleteMail
 	'DELETEMAIL__ERROR' => 'Mail couldn\'t be deleted.',
 	'DELETEMAIL__SUCCESS' => 'Mail has been successfully deleted.',
 
-	// showSendMail
-	'SHOWSENDMAIL__H1' => 'Send mail',
-	'SHOWSENDMAIL__INFO' => 'Fill in this form to send a mail to someone.',
-	'SHOWSENDMAIL__TOSHOWMAILBOXES' => 'Cancel and show mailboxes',
-	'SHOWSENDMAIL__LEGEND_HEADER' => 'Header of mail',
-	'SHOWSENDMAIL__LEGEND_CONTENT' => 'Content of mail',
-	'SHOWSENDMAIL__SUBMIT' => 'Send mail',
-	'SHOWSENDMAIL__RESET' => '{$$$COMMON__RESET}',
-	'SHOWSENDMAIL__SENDER' => 'Sender',
-	'SHOWSENDMAIL__LOCALSENDER' => 'Local sender',
-	'SHOWSENDMAIL__ADDRESSEE' => 'Addressee',
-	'SHOWSENDMAIL__SENDER_HELP' => 'Choose a sender for the mail',
-	'SHOWSENDMAIL__ADDRESSEE_PRESET' => 'Addressee of mail',
-	'SHOWSENDMAIL__ADDRESSEE_HELP' => 'Username or e-mail-address of addressee',
-	'SHOWSENDMAIL__SUBJECT' => 'Subject',
-	'SHOWSENDMAIL__SUBJECT_PRESET' => 'Subject of your mail',
-	'SHOWSENDMAIL__SUBJECT_HELP' => 'Write down a subject for this mail',
-	'SHOWSENDMAIL__CONTENT' => 'Content',
-	'SHOWSENDMAIL__CONTENT_PRESET' => 'Content of your mail',
-	'SHOWSENDMAIL__CONTENT_HELP' => 'The message of this mail.',
-	'SHOWSENDMAIL__ADDSMTPFIRST' => 'Please add a smtp-server first, which can handle sending your e-mails.',
+	// formMail
+	'FORMMAIL__LEGEND_HEADER' => 'Mail Header',
+	'FORMMAIL__SENDER' => 'Sender',
+	'FORMMAIL__HELP_SENDER' => 'Choose a SMTP-Server to send this mail from.',
+	'FORMMAIL__ADDRESSEE' => 'Addressee',
+	'FORMMAIL__PRESET_ADDRESSEE' => 'Addressee of this mail',
+	'FORMMAIL__HELP_ADDRESSEE' => 'Enter the addressee of this mail.',
+	'FORMMAIL__SUBJECT' => 'Subject',
+	'FORMMAIL__PRESET_SUBJECT' => 'Subject of this mail',
+	'FORMMAIL__HELP_SUBJECT' => 'The subject of this mail.',
+	'FORMMAIL__CONTENT' => 'Message',
+	'FORMMAIL__PRESET_CONTENT' => 'Your message...',
+	'FORMMAIL__HELP_CONTENT' => 'Enter the message of this mail.',
+	'FORMMAIL__LEGEND_CONTENT' => 'Mail Content',
 
-	/* sendMail */
-	'SENDMAIL__INVALIDINPUT' => 'Please fill in all required fields before sending!',
-	'SENDMAIL__SUCCESS' => 'Mail has been sent successfully.',
-	'SENDMAIL__INVALIDADDRESSEE' => 'At least one invalid addressee!',
-	'SENDMAIL__ERROR' => 'Error occurred! E-Mail could not be sent.',
+	// showCreateMail
+	'SHOWCREATEMAIL__TITLE' => 'Create new mail',
+	'SHOWCREATEMAIL__H1' => 'Create new mail',
+	'SHOWCREATEMAIL__INFO' => 'Fill in the following form to create a new mail you can save as draft or send via one of your SMTP-Server.',
+	'SHOWCREATEMAIL__SUBMIT' => 'Send mail',
+	'SHOWCREATEMAIL__SUBMIT_SAVE' => 'Save as draft',
+	'SHOWCREATEMAIL__CANCEL' => 'Cancel',
+
+	// showCreateMail
+	'SHOWEDITMAIL__TITLE' => 'Edit mail',
+	'SHOWEDITMAIL__H1' => 'Edit mail',
+	'SHOWEDITMAIL__INFO' => 'Here you can edit a mail and either save the changes or send via one of your SMTP-Server.',
+	'SHOWEDITMAIL__SUBMIT' => 'Send mail',
+	'SHOWEDITMAIL__SUBMIT_SAVE' => 'Save changes',
+	'SHOWEDITMAIL__CANCEL' => 'Cancel',
+
+	// saveMail
+	'SAVEMAIL__NOTEXISTING' => 'The mail you did edit, does not exists!',
+	'SAVEMAIL__INVALIDINPUT' => 'Invalid input!',
+	'SAVEMAIL__INVALIDSENDER' => 'Invalid Smtp-Server selected!',
+	'SAVEMAIL__EDITERROR' => 'An error occurred while saving the changes.',
+	'SAVEMAIL__CREATEERROR' => 'An error occurred while create a new mail!',
+	'SAVEMAIL__SUCCESS' => 'Mail has been saved successfully.',
+	'SAVEMAIL__SUCCESS_SEND' => 'Mail has been send successfully.',
 
 	/* ***************** _system_navigation ********************************* */
 
 	'_NAVIGATION__SHOWMAILBOXES' => 'Your mailboxes',
-	'_NAVIGATION__SHOWSENDMAIL' => 'Send mail',
+	'_NAVIGATION__SHOWCREATEMAIL' => 'New mail',
 	'_NAVIGATION__SHOWMAILSETTINGS' => 'Mailsettings',
 	'_NAVIGATION__SHOWMAILSERVERS' => 'Mailservers',
 	'_NAVIGATION_HEADER' => 'Mail'

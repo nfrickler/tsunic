@@ -102,7 +102,7 @@ class $$$SuperMail {
 
 		// add localSender, if enabled
 		if ($includeLocal AND $TSunic->Config->getConfig('email_enabled') === true) {
-			$this->smtps[] = $TSunic->get('$$$SenderLocal');
+			$this->smtps[] = $TSunic->get('$$$SmtpMail');
 		}
 
 		// get smtp-objects and save them in obj-var

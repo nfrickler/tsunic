@@ -1,11 +1,10 @@
 <!-- | Template: show mail -->
 <?php
-
 // activate javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 
 // get input
-$Mail = $this->getVar('mail');
+$Mail = $this->getVar('Mail');
 $attachments = $Mail->getAttachments();
 ?>
 <div id="$$$div__showMail">
@@ -21,6 +20,8 @@ $attachments = $Mail->getAttachments();
 				<?php $this->set($Mail->getInfo('subject')); ?>
 			</div>
 			<div class="$$$div__showMail__mailheader_right">
+				<a href="<?php $this->setUrl('$$$showEditMail', array('$$$id' => $Mail->getInfo('id'))); ?>" id="$$$showMail__edit">
+					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$edit.png'); ?>" alt="<?php $this->set('{SHOWMAIL__EDIT}'); ?>" /></a>
 				<a href="<?php $this->setUrl('$$$showDeleteMail', array('$$$id' => $Mail->getInfo('id'))); ?>" id="$$$showMail__delete">
 					<img class="$system$deleteImage" src="<?php $this->setImg('project', '$system$delete.png'); ?>" alt="<?php $this->set('{SHOWMAIL__DELETE}'); ?>" /></a>
 			</div>
@@ -74,7 +75,7 @@ $attachments = $Mail->getAttachments();
 			'<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_NO}'); ?>');
 
 		allobjects['button1'].onclick = function() {
-			location.href = "<?php $this->setUrl('$$$deleteMail', array('$$$id' => $this->getVar('mail')->getInfo('id')), false); ?>";
+			location.href = "<?php $this->setUrl('$$$deleteMail', array('$$$id' => $Mail->getInfo('id')), false); ?>";
 		};
 
 		// reset onclick-event

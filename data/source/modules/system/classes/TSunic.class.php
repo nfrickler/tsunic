@@ -369,9 +369,9 @@ class TSunic {
 
 	/* redirect user
 	 * @param string: name of event to redirect to
-	 * 	OR back, this, default
+	 *	OR back, this, default
 	 * +@param bool/array/int: GET-parameters
-	 * 	OR int: time-hops to go back
+	 *	OR int: time-hops to go back
 	 *
 	 * @return EXIT
 	 */
@@ -433,6 +433,7 @@ class TSunic {
 
 		// loop-prevention
 		if (!empty($loop) AND $loop >= 6) {
+			$this->Log->log(3, "TSunic: Redirect failed!");
 			$this->throwError('Redirect failed!');
 		} elseif (!is_numeric($loop)) {
 			$loop = 0;

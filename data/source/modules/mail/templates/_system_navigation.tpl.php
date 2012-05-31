@@ -16,9 +16,9 @@ $mailboxes = $this->getVar('mailboxes');
 			</a>
 		</li>
 		<?php } ?>
-		<li id="$$$_navigation__showSendMail">
-			<a href="<?php $this->setUrl('$$$showSendMail'); ?>">
-				<?php $this->set('{_NAVIGATION__SHOWSENDMAIL}'); ?>
+		<li id="$$$_navigation__showCreateMail">
+			<a href="<?php $this->setUrl('$$$showCreateMail'); ?>">
+				<?php $this->set('{_NAVIGATION__SHOWCREATEMAIL}'); ?>
 			</a>
 		</li>
 		<li id="$$$_navigation__showMailservers">
@@ -44,7 +44,7 @@ $mailboxes = $this->getVar('mailboxes');
 		echo 'document.getElementById("$$$_navigation__showMailbox_'.$value->getInfo('id').'").onclick = function(){location.href="'.$this->setUrl('$$$showMailbox', array('$$$id' => $value->getInfo('id')), false, false).'";};';
 	} ?>
 	document.getElementById('$$$_navigation__showMailservers').onclick = function(){location.href='<?php $this->setUrl('$$$showMailservers', false, false); ?>';};
-	document.getElementById('$$$_navigation__showSendMail').onclick = function(){location.href='<?php $this->setUrl('$$$showSendMail', false, false); ?>';};
+	document.getElementById('$$$_navigation__showCreateMail').onclick = function(){location.href='<?php $this->setUrl('$$$showCreateMail', false, false); ?>';};
 /*	document.getElementById('$$$_navigation__showMailSettings').onclick = function(){location.href='<?php $this->setUrl('$$$showMailsettings', false, false); ?>';};
 */
 </script>

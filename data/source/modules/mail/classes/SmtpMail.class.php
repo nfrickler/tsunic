@@ -1,7 +1,7 @@
 <!-- | Local e-mail sender class -->
 <?php
 include_once '$$$Smtp.class.php';
-class $$$SenderLocal extends $$$Smtp {
+class $$$SmtpMail extends $$$Smtp {
 
 	/* get all data of smtp-server
 	 * +@param bool/string: name of data (true will return all data)
@@ -14,11 +14,12 @@ class $$$SenderLocal extends $$$Smtp {
 		if (empty($this->info)) {
 
 			// set data
+			$this->info['name'] = '{CLASS__SENDERLOCAL__NAME}';
 			$this->info['host'] = '{CLASS__SENDERLOCAL__HOST}';
 			$this->info['port'] = '0';
 			$this->info['user'] = '{CLASS__SENDERLOCAL__USER}';
 			$this->info['email'] = $TSunic->Config->getConfig('system_email');
-			$this->info['emailname'] = $TSunic->CurrentUser->getInfo('name');
+			$this->info['emailname'] = $TSunic->Usr->getInfo('name');
 			$this->info['host'] = 0;
 			$this->info['id'] = 0;
 		}
@@ -106,30 +107,26 @@ class $$$SenderLocal extends $$$Smtp {
 	 * @return bool
 	 */
 	public function isValid () {
-		return true;
+		global $TSunic;
+		return ($TSunic->Config->getConfig('email_enabled')) ? true : false;
 	}
 
 	/* send mail with php mail()-function
-	 * @param array: array with addressees
 	 * @param string: subject of message
 	 * @param string: the message itself
+	 * @param array: array with addressees
 	 *
 	 * @return bool
 	 */
-	public function sendMail ($addressees, $subject, $message) {
+	public function sendMail ($subject, $message, $addressees) {
 		global $TSunic;
-
-		// is system-email activated?
-		if (!$TSunic->Config->getConfig('email_enabled')) {
-			return false;
-		}
+		if (!$this->isValid()) return false;
+		if (!is_array($addressees)) $addressees = array($addressees);
 
 		// validate input
 		if (!$this->isValidSubject($subject)
-				OR !$this->isValidMessage($message)
-		) {
-			return false;
-		}
+			or !$this->isValidMessage($message)
+		) return false;
 		foreach ($addressees as $index => $value) {
 			if (!$this->isValidAddressee($value)) return false;
 		}
@@ -145,12 +142,7 @@ class $$$SenderLocal extends $$$Smtp {
 		// send mails
 		$this->info['error_msg'] = '';
 		foreach ($addressees as $index => $value) {
-
-			// send mail
-			$return = mail($value, $subject, $message, $headers);
-
-			if ($return == false) {
-				// mail could not be sent
+			if (!mail($value, $subject, $message, $headers)) {
 				$this->info['error_msg'].= 'Mail to '.$value.' could not be sent! ';
 			}
 		}

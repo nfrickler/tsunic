@@ -80,7 +80,7 @@ $mails = $Mailbox->getMails();
 	<?php } ?>
 
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showSendMail'); ?>">
+		<a href="<?php $this->setUrl('$$$showCreateMail'); ?>">
 			<?php $this->set('{SHOWMAILBOX__TOSHOWWRITEMAIL}'); ?></a>
 		<a href="<?php $this->setUrl('$$$updateMailbox',
 				array('$$$id' => $Mailbox->getInfo('id'),
