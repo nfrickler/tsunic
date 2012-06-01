@@ -25,6 +25,7 @@ function $$$showAddServerbox () {
 		'mailboxes' => $SuperMail->getMailboxes()
 	);
 	$TSunic->Tmpl->activate('$$$showAddServerbox', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWADDSERVERBOX__TITLE}'));
 
 	return true;
 }

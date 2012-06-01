@@ -13,6 +13,7 @@ function $$$showMailaccount () {
 		'name' => $Mailaccount->getInfo('name')
 	);
 	$TSunic->Tmpl->activate('$$$showMailaccount', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWMAILACCOUNT__TITLE}'));
 
 	return true;
 }

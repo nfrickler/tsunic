@@ -33,7 +33,7 @@ $attachments = $Mail->getAttachments();
 				</tr>
 				<tr>
 					<th><?php $this->set('{SHOWMAIL__ADDRESSEE}'); ?></th>
-					<td><?php $this->set($Mail->getInfo('addressee')); ?></td>
+					<td><?php $this->set($Mail->getAddressee()); ?></td>
 				</tr>
 				<tr>
 					<th><?php $this->set('{SHOWMAIL__DATEOFMAIL}'); ?></th>
@@ -50,14 +50,14 @@ $attachments = $Mail->getAttachments();
 		<div class="$$$div__showMail__attachments">
 			<h3><?php $this->set('{SHOWMAIL__ATTACHMENTS}'); ?></h3>
 			<?php foreach ($attachments as $index => $Value) { ?>
-			| <a href="<?php $this->setImg('private', $Value->getInfo('fk__usersystem__userfile'), true, true); ?>"><?php $this->set($Value->getInfo('name')); ?></a>
+			| <a href="<?php $this->setImg('private', $Value->getInfo('fk_file'), true, true); ?>"><?php $this->set($Value->getInfo('name')); ?></a>
 			<?php } ?>
 		</div>
 		<?php } ?>
 	</div>
 
 	<p class="ts_sublinkbox">
-		<a href="<?php $this->setUrl('$$$showSendMail', array('$$$id' => $Mail->getInfo('id'))); ?>">
+		<a href="<?php $this->setUrl('$$$showCreateMail', array('$$$id' => $Mail->getInfo('id'))); ?>">
 			<?php $this->set('{SHOWMAIL__ANSWERMAIL}'); ?></a>
 	</p>
 </div>

@@ -340,10 +340,8 @@ class $$$Mail extends $system$Object {
 	 */
 	public function isValidFkSmtp ($fk_smtp, $required = true) {
 		if (!$required and empty($fk_smtp)) return true;
-		if ($fk_smtp === 0) return true;
-		return ($this->_validate($fk_smtp, 'int')
-			and $this->_isObject('#__smtps', $fk_smtp)
-		) ? true : false;
+		$Smtp = $this->getSmtp($fk_smtp);
+		return $Smtp->isValid();
 	}
 
 	/* check, if subject is valid
@@ -396,15 +394,19 @@ class $$$Mail extends $system$Object {
 	}
 
 	/* get Smtp object
+	 * +@param int: id of a Smtp object (default: fk_smtp)
 	 *
 	 * @return bool
 	 */
-	public function getSmtp () {
-		if (!$this->isValid()) return NULL;
+	public function getSmtp ($fk_smtp = false) {
+		if ($fk_smtp === false and !$this->isValid()) return NULL;
 		global $TSunic;
 
+		// get fk_smtp
+		if ($fk_smtp === false) $fk_smtp = $this->getInfo('fk_smtp');
+
 		// get object
-		$Smtp = $TSunic->get('$$$Smtp', $this->getInfo('fk_smtp'));
+		$Smtp = $TSunic->get('$$$Smtp', $fk_smtp);
 		if (!$Smtp->isValid()) {
 			$Smtp = $TSunic->get('$$$SmtpMail');
 			if (!$Smtp->isValid()) return NULL;

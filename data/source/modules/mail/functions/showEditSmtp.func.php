@@ -17,6 +17,7 @@ function $$$showEditSmtp () {
 		'mailaccounts' => $SuperMail->getMailaccounts()
 	);
 	$TSunic->Tmpl->activate('$$$showEditSmtp', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITSMTP__TITLE}'));
 
 	return true;
 }

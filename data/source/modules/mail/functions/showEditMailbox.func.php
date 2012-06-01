@@ -13,6 +13,7 @@ function $$$showEditMailbox () {
 		'name' => $Mailbox->getInfo('name'),
 	);
 	$TSunic->Tmpl->activate('$$$showEditMailbox', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITMAILBOX__TITLE}'));
 
 	return true;
 }

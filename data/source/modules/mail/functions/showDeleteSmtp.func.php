@@ -10,6 +10,7 @@ function $$$showDeleteSmtp () {
 	// activate template
 	$data = array('Smtp' => $Smtp);
 	$TSunic->Tmpl->activate('$$$showDeleteSmtp', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETESMTP__TITLE}'));
 
 	return true;
 }

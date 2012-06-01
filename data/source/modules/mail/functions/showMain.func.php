@@ -9,6 +9,7 @@ function $$$showMain () {
 	// activate template
 	$data = array('mailboxes' => $SuperMail->getMailboxes());
 	$TSunic->Tmpl->activate('$$$showMain', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWMAIN__TITLE}'));
 
 	return true;
 }

@@ -10,6 +10,7 @@ function $$$showDeleteMail () {
 	// activate template
 	$data = array('Mail' => $Mail);
 	$TSunic->Tmpl->activate('$$$showDeleteMail', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETEMAIL__TITLE}'));
 
 	return true;
 }

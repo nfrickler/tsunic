@@ -16,6 +16,7 @@ function $$$showEditServerbox () {
 		'mailboxes' => $mailboxes = $SuperMail->getMailboxes()
 	);
 	$TSunic->Tmpl->activate('$$$showEditServerbox', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITSERVERBOX__TITLE}'));
 
 	return true;
 }

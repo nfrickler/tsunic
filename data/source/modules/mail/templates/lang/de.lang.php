@@ -30,11 +30,11 @@ $lang = array(
 	'CLASS__SMTP__CONNSECURITIES_STARTTLS' => 'STARTTLS',
 	'CLASS__SMTP__CONNSECURITIES_SSLTLS' => 'SLL/TLS',
 
-	/* general */
+	// general
 	'INBOX__NAME' => 'Posteingang',
 	'INBOX__DESCRIPTION' => 'Standard Posteingang des Benutzers (nicht veränderbar)',
 
-	/* common */
+	// common
 	'COMMON__BACKTOOVERVIEW' => 'Zurück zur Übersicht',
 	'COMMON__RESET' => 'Reset',
 	'COMMON__DELETE' => 'Löschen',
@@ -45,7 +45,8 @@ $lang = array(
 	'COMMON__ERROR' => 'Es ist ein Fehler aufgetreten. Bitte versuche es erneut!',
 	'COMMON__CHOOSEPLEASE' => '--Bitte wählen--',
 
-	/* showMain */
+	// showMain
+	'SHOWMAIN__TITLE' => 'Deine Mails',
 	'SHOWMAIN__H1' => 'Deine Mails',
 	'SHOWMAIN__INFO' => 'Dies ist deine Mail-Verwaltung. Um Mails von deinen E-Mail-Postfächern zu empfangen, füge bitte deinen Mailaccount in der Rubrik "Mailserver" hinzu. Um E-Mails über SMTP zu versenden, füge bitte an gleicher Stelle einen SMTP-Server hinzu.',
 
@@ -54,7 +55,7 @@ $lang = array(
 	// updateMailbox
 	'UPDATEMAILBOX__SUCCESS' => 'Mailbox aktualisiert.',
 
-	/* showMailboxes */
+	// showMailboxes
 	'SHOWMAILBOXES__TITLE' => 'Deine Mailboxen',
 	'SHOWMAILBOXES__YOURMAILBOXES' => 'Deine Mailboxen',
 	'SHOWMAILBOXES__TOCREATENEWMAILBOX' => 'Erstelle neue Mailbox',
@@ -69,7 +70,7 @@ $lang = array(
 	'SHOWMAILBOXES__POPUP_DELETE_YES' => 'Ja, löschen.',
 	'SHOWMAILBOXES__POPUP_DELETE_NO' => 'Nein, abbrechen.',
 
-	/* showMailbox */
+	// showMailbox
 	'SHOWMAILBOX__TITLE' => 'Mailbox anzeigen',
 	'SHOWMAILBOX__H1' => 'Mailbox | #name#',
 	'SHOWMAILBOX__NUMBEROFMAILS' => 'Mailanzahl:',
@@ -96,29 +97,31 @@ $lang = array(
 	// performMailsAction
 	'PERFORMMAILSACTION__SUCCESS' => 'Die gewählte Aktion wurde erfolgreich ausgeführt.',
 
-	/* showAddMailbox */
+	// showAddMailbox
 	'SHOWADDMAILBOX__TITLE' => 'Mailbox erstellen',
+	'SHOWADDMAILBOX__H1' => 'Mailbox erstellen',
 	'SHOWADDMAILBOX__INFO' => 'Bitte fülle das Formular aus, um eine neue lokale Mailbox zu erstellen.',
 	'SHOWADDMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Mailboxen',
 	'SHOWADDMAILBOX__SUBMIT' => 'Mailbox erstellen',
 	'SHOWADDMAILBOX__RESET' => 'Reset',
 
-	/* addmailbox */
+	// addMailbox
 	'ADDMAILBOX__SUCCESS' => 'Die neue Mailbox wurde erfolgreich erstellt',
 	'ADDMAILBOX__INVALIDINPUT' => 'Bitte fülle alle erforderlichen Felder aus!',
 
-	/* showEditMailbox */
+	// showEditMailbox
+	'SHOWEDITMAILBOX__TITLE' => 'Mailbox bearbeiten',
 	'SHOWEDITMAILBOX__H1' => 'Mailbox "#0#" bearbeiten',
 	'SHOWEDITMAILBOX__INFO' => 'Über dieses Formular kannst du die Daten der Mailbox bearbeiten.',
 	'SHOWEDITAILMAILBOX__SUBMIT' => 'Änderungen speichern',
 	'SHOWEDITMAILBOX__RESET' => 'Reset',
 	'SHOWEDITMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Mailboxen',
 
-	/* editMailbox */
+	// editMailbox
 	'EDITMAILBOX__SUCCESS' => 'Die Änderungen wurden erfolgreich gespeichert.',
 	'EDITMAILBOX__INVALIDINPUT' => 'Bitte fülle alle erforderlichen Felder korrekt aus!',
 
-	/* formMailbox */
+	// formMailbox
 	'FORMMAILBOX__LEGEND' => 'Deine lokale Mailbox',
 	'FORMMAILBOX__NAME' => 'Name',
 	'FORMMAILBOX__PRESET_NAME' => 'Name deiner lokalen Mailbox',
@@ -128,14 +131,15 @@ $lang = array(
 	'FORMMAILBOX__HELP_DESCRIPTION' => 'Gebe eine Beschreibung der Mailbox ein (optional).',
 	'FORMMAILBOX_ERROR_INVALIDINPUT' => 'Bitte fülle alle erforderlichen Felder korrekt aus!',
 
-	/* showDeleteMailBox */
+	// showDeleteMailbox
+	'SHOWDELETEMAILBOX__TITLE' => 'Mailbox löschen',
 	'SHOWDELETEMAILBOX__POPUP_DELETE_HEADER' => 'Mailbox "#name#" löschen?',
 	'SHOWDELETEMAILBOX__POPUP_DELETE_HEADER_JS' => 'Mailbox löschen?',
 	'SHOWDELETEMAILBOX__POPUP_DELETE_CONTENT' => 'Willst du diese Mailbox wirklich löschen?',
 	'SHOWDELETEMAILBOX__POPUP_DELETE_YES' => 'Ja, löschen.',
 	'SHOWDELETEMAILBOX__POPUP_DELETE_NO' => 'Nein, abbrechen.',
 
-	/* deleteMailbox */
+	// deleteMailbox
 	'DELETEMAILBOX__SUCCESS' => 'Die Mailbox wurde erfolgreich gelöscht',
 	'DELETEMAILBOX__ERROR' => 'Die Mailbox konnte nicht gelöscht werden.',
 
@@ -155,6 +159,7 @@ $lang = array(
 	/* ************************* mailaccount ******************************** */
 
 	// showMailaccount
+	'SHOWMAILACCOUNT__TITLE' => 'Mailaccount',
 	'SHOWMAILACCOUNT__H1' => 'Mailaccount "#name#"',
 	'SHOWMAILACCOUNT__TOEDITMAILACCOUNT' => 'Bearbeiten',
 	'SHOWMAILACCOUNT__TODELETEMAILACCOUNT' => 'Löschen',
@@ -260,7 +265,7 @@ $lang = array(
 
 	/* ***************** serverbox ***************************** */
 
-	/* showListServerboxes */
+	// showListServerboxes
 	'SHOWLISTSERVERBOXES__EDIT' => '{$$$COMMON__EDIT}',
 	'SHOWLISTSERVERBOXES__DELETE' => '{$$$COMMON__DELETE}',
 	'SHOWLISTSERVERBOXES__NOSERVER' => 'Keine Serverboxen in dieser Liste.',
@@ -272,6 +277,7 @@ $lang = array(
 	'ACTIVATESERVERBOXES__SUCCESS' => 'Änderungen wurden gespeichert.',
 
 	// showAddServerbox
+	'SHOWADDSERVERBOX__TITLE' => 'Serverbox hinzufügen',
 	'SHOWADDSERVERBOX__H1' => 'Serverbox hinzufügen',
 	'SHOWADDSERVERBOX__INFO' => 'Serverboxen sind die Mailboxen auf dem Server. Mails in dieser Serverbox werden in die korrespondierende Mailbox in diesem System geladen.',
 	'SHOWADDSERVERBOX__SUBMIT' => 'Serverbox hinzufügen',
@@ -280,6 +286,7 @@ $lang = array(
 	'SHOWADDSERVERBOX__INVALIDINPUT' => 'Ungültige Daten. Bitte versuche es erneut!',
 
 	// showEditServerbox
+	'SHOWEDITSERVERBOX__TITLE' => 'Serverbox bearbeiten',
 	'SHOWEDITSERVERBOX__H1' => 'Serverbox bearbeiten',
 	'SHOWEDITSERVERBOX__INFO' => 'Über dieses Formular kannst du die Daten der Serverbox ändern.',
 	'SHOWEDITSERVERBOX__SUBMIT' => 'Änderungen speichern',
@@ -309,6 +316,7 @@ $lang = array(
 	'ADDSERVERBOX__SUCCESS' => 'Serverbox wurde erfolgreich hinzugefügt',
 
 	// showDeleteServerbox
+	'SHOWDELETESERVERBOX__TITLE' => 'Serverbox löschen',
 	'SHOWDELETESERVERBOX__POPUP_DELETE_HEADER' => 'Serverbox #name# löschen?',
 	'SHOWDELETESERVERBOX__POPUP_DELETE_CONTENT' => 'Willst du die Serverbox wirklich vom System entfernen?',
 	'SHOWDELETESERVERBOX__POPUP_DELETE_YES' => 'Ja, entfernen.',
@@ -330,9 +338,10 @@ $lang = array(
 	'SHOWLISTSMTPS__DESCRIPTION' => 'Beschreibung',
 
 	// showAddSmtp
-	'SHOWADDSMTP__H1' => 'Smtp-Server hinzufügen',
-	'SHOWADDSMTP__INFO' => 'Füge dieses Formular aus, um einen neuen Smtp-Server hinzuzufügen.',
-	'SHOWADDSMTP__SUBMIT' => 'Smtp-Server hinzufügen',
+	'SHOWADDSMTP__TITLE' => 'SMTP-Server hinzufügen',
+	'SHOWADDSMTP__H1' => 'SMTP-Server hinzufügen',
+	'SHOWADDSMTP__INFO' => 'Füge dieses Formular aus, um einen neuen SMTP-Server hinzuzufügen.',
+	'SHOWADDSMTP__SUBMIT' => 'SMTP-Server hinzufügen',
 	'SHOWADDSMTP__RESET' => '{$$$COMMON__RESET}',
 	'SHOWADDSMTP__OVERVIEW' => '{$$$COMMON__TOBACK}',
 
@@ -343,8 +352,9 @@ $lang = array(
 	'ADDSMTP__CONNERROR' => 'Verbindung konnte nicht hergestellt werden. Bitte gebe die Verbindungdaten selber ein und versuche es erneut.',
 
 	// showEditSmtp
-	'SHOWEDITSMTP__H1' => 'Smtp-Server bearbeiten',
-	'SHOWEDITSMTP__INFO' => 'Über dieses Formular kannst du die Daten des Smtp-Servers ändern.',
+	'SHOWEDITSMTP__TITLE' => 'SMTP-Server bearbeiten',
+	'SHOWEDITSMTP__H1' => 'SMTP-Server bearbeiten',
+	'SHOWEDITSMTP__INFO' => 'Über dieses Formular kannst du die Daten des SMTP-Servers ändern.',
 	'SHOWEDITSMTP__SUBMIT' => 'Änderungen speichern',
 	'SHOWEDITSMTP__RESET' => '{$$$COMMON__RESET}',
 	'SHOWEDITSMTP__TOOVERVIEW' => '{$$$COMMON__TOBACK}',
@@ -390,6 +400,7 @@ $lang = array(
 	'FORMSMTP__HELP_AUTH' => 'Wähle ein Level für die Passwortsicherheit.',
 
 	// showDeleteSmtp
+	'SHOWDELETESMTP__TITLE' => 'SMTP löschen',
 	'SHOWDELETESMTP__POPUP_DELETE_HEADER' => 'Smtp-Server #name# löschen?',
 	'SHOWDELETESMTP__POPUP_DELETE_HEADER_JS' => 'Diesen Smtp-Server löschen?',
 	'SHOWDELETESMTP__POPUP_DELETE_CONTENT' => 'Willst du diesen Smtp-Server wirklich von diesem System löschen?',
@@ -417,6 +428,7 @@ $lang = array(
 	'SHOWMAIL__DATEOFMAIL' => 'Datum',
 
 	// showDeleteMail
+	'SHOWDELETEMAIL__TITLE' => 'Mail löschen',
 	'SHOWDELETEMAIL__POPUP_DELETE_HEADER' => 'Lösche die Mail "#name#"?',
 	'SHOWDELETEMAIL__POPUP_DELETE_HEADER_JS' => 'Diese Mail löschen?',
 	'SHOWDELETEMAIL__POPUP_DELETE_CONTENT' => 'Willst du dieser Mail wirklich löschen?',

@@ -24,6 +24,7 @@ function $$$showAddSmtp () {
 		'mailaccounts' => $SuperMail->getMailaccounts()
 	);
 	$TSunic->Tmpl->activate('$$$showAddSmtp', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWADDSMTP__TITLE}'));
 
 	return true;
 }

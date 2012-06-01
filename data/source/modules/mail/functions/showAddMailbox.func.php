@@ -9,6 +9,7 @@ function $$$showAddMailbox () {
 	// activate template
 	$data = array('Mailbox' => $Mailbox);
 	$TSunic->Tmpl->activate('$$$showAddMailbox', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWADDMAILBOX__TITLE}'));
 
 	return true;
 }

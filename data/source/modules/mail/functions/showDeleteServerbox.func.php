@@ -15,6 +15,7 @@ function $$$showDeleteServerbox () {
 	// activate template
 	$data = array('Serverbox' => $Serverbox);
 	$TSunic->Tmpl->activate('$$$showDeleteServerbox', '$system$content', $data);
+	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETESERVERBOX__TITLE}'));
 
 	return true;
 }
