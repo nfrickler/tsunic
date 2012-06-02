@@ -7,10 +7,10 @@ $Smtp = $this->getVar('Smtp');
 		<input type="hidden" name="$$$formSmtp__id" id="$$$formSmtp__id" value="<?php $this->set($Smtp->getInfo('id')); ?>" />
 		<fieldset>
 			<legend><?php echo $this->set('{FORMSMTP__LEGEND_SMTPMAILACCOUNT}'); ?></legend>
-			<label for="$$$formSmtp__fk_mailaccount"><?php echo $this->set('{FORMSMTP__MAILMAILACCOUNT}'); ?></label>
+			<label for="$$$formSmtp__fk_mailaccount"><?php echo $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>
 			<select name="$$$formSmtp__fk_mailaccount" id="$$$formSmtp__fk_mailaccount">
 				<?php $current = $this->setPreset('$$$formSmtp__fk_mailaccount', $Smtp->getMailaccount(true), false); ?>
-				<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__MAILMAILACCOUNT_NOMAILACCOUNT}'); ?></option>
+				<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__MAILACCOUNT_NOMAILACCOUNT}'); ?></option>
 				<?php foreach ($this->getVar('mailaccounts') as $index => $value) { ?>
 				<option value="<?php echo $value->getInfo('id'); ?>" <?php if ($current == $value->getInfo('id')) echo 'selected="selected"'; ?>><?php $this->set($value->getInfo('name')); ?></option>
 				<?php } ?>
@@ -72,8 +72,8 @@ $Smtp = $this->getVar('Smtp');
 	var $$$formSmtp__allInputs = new Array();
 	$$$formSmtp__allInputs[0] = new Array(
 		'$$$formSmtp__fk_mailaccount',
-		'<?php $this->set('{FORMSMTP__PRESET_MAILMAILACCOUNT}'); ?>',
-		'<?php $this->set('{FORMSMTP__HELP_MAILMAILACCOUNT}'); ?>'
+		'<?php $this->set('{FORMSMTP__PRESET_MAILACCOUNT}'); ?>',
+		'<?php $this->set('{FORMSMTP__HELP_MAILACCOUNT}'); ?>'
 	);
 	$$$formSmtp__allInputs[1] = new Array(
 		'$$$formSmtp__email',

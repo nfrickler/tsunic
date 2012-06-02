@@ -7,7 +7,7 @@
     <p class="ts_infotext">
 	<?php $this->set('{SHOWMAIN__MODULES_INFOTEXT}'); ?>
     </p>
-    <ul style="list-style-type:square;">
+    <ul>
     <?php foreach ($this->getVar('modules') as $index => $values) { ?>
 	<li style="margin-top:4px;"><a href="<?php $this->setUrl('$$$showHelp',
 	    array('$$$page' => 'mod'.$values['id'].'__index')
