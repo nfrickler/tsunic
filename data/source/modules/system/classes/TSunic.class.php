@@ -333,6 +333,27 @@ class TSunic {
 		return ($this->getRunningMode() == 'template') ? true : false;
 	}
 
+	/* get all installed modules
+	 *
+	 * @return array/bool
+	 */
+	public function getModules () {
+	    if (!$this->Db) return array();
+
+	    // get all modules from database
+	    $sql = "SELECT id__module as id,
+			name,
+			author,
+			description,
+			version_installed,
+			link
+		    FROM ".$this->Config->getConfig('preffix')."modules
+		    WHERE is_activated = 1
+			AND is_parsed = 1
+		    ORDER BY name ASC;";
+	    return $this->Db->doSelect($sql);
+	}
+
 	/* return fatale error-message and end script
 	 * @param string: error-message
 	 *

@@ -1,25 +1,33 @@
 <!-- | FUNCTION show help for current page -->
 <?php
 function $$$showHelp () {
-	global $TSunic;
-	$lang = $TSunic->Usr->config('$system$language');
+    global $TSunic;
+    $lang = $TSunic->Usr->config('$system$language');
 
-	// get page to show
-	$page_arr = explode('__', $TSunic->Temp->getGet('$$$page'));
-	$Helpfile = $TSunic->get('$system$File', "#runtime#help/".$page_arr[0]."__".$lang."__".$page_arr[1].".help.php");
+    // get page to show
+    $page_arr = explode('__', $TSunic->Temp->getGet('$$$page'));
+    $Helpfile = $TSunic->get('$system$File', "#runtime#help/".$page_arr[0]."__".$lang."__".$page_arr[1].".help.php");
+    if (!$Helpfile->isValid()) {
+	$Helpfile->setPath("#runtime#help/$$$".$lang."__nopagefound.help.php");
 	if (!$Helpfile->isValid()) {
-		$Helpfile->setPath("#runtime#help/$$$".$lang."__index.help.php");
-		if (!$Helpfile->isValid()) {
-			$TSunic->Log->log(3, "Could not find index help page '".$Helpfile->getPath()."'!");
-			$TSunic->redirect('$$$showMain');
-			exit;
-		}
+	    $TSunic->Log->log(3, "Could not find index help page '".$Helpfile->getPath()."'!");
+	    $TSunic->redirect('$$$showMain');
+	    exit;
 	}
+    }
 
-	// activate template
-	$data = array('Helpfile' => $Helpfile);
-	$TSunic->Tmpl->activate('$$$showHelp', '$system$content', $data);
+    // get id of current module
+    $mod_id = substr($page_arr[0], 3);
+    if ($page_arr[1] == 'index') $mod_id = 0;
 
-	return true;
+    // activate template
+    $data = array(
+	'Helpfile' => $Helpfile,
+	'modid' => $mod_id
+    );
+    $TSunic->Tmpl->activate('$$$showHelp', '$system$content', $data);
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWHELP__TITLE}'));
+
+    return true;
 }
 ?>
