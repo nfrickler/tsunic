@@ -55,7 +55,7 @@ class $$$Smtp extends $system$Object {
 				connsecurity,
 				auth,
 				fk_mailaccount,
-				fk_system_users__account
+				fk_account
 			FROM #__smtps
 			WHERE id = '$this->id';";
 	}

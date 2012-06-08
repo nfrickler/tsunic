@@ -217,7 +217,7 @@ $lang = array(
     'ADDMAILACCOUNT__CONNERROR' => 'Connection to mail-server could not be established. Have you entered the correct password? Otherwise, please fill in the correct connection-details manually!',
 
     // formMailaccount
-    'FORMMAILACCOUNT__LEGEND_EMAILMAILACCOUNT' => 'Data of mail-account',
+    'FORMMAILACCOUNT__LEGEND_EMAILACCOUNT' => 'Data of mail-account',
     'FORMMAILACCOUNT__NAME' => 'Name',
     'FORMMAILACCOUNT__PRESET_NAME' => 'Optional name',
     'FORMMAILACCOUNT__HELP_NAME' => 'Give this mail-account an optional name.',
@@ -368,9 +368,9 @@ $lang = array(
 
     // formSmtp
     'FORMSMTP__LEGEND_SMTPMAILACCOUNT' => 'SMTP-data',
-    'FORMSMTP__MAILMAILACCOUNT' => 'Mailaccount',
-    'FORMSMTP__MAILMAILACCOUNT_NOMAILACCOUNT' => 'Added to no account',
-    'FORMSMTP__HELP_MAILMAILACCOUNT' => 'Choose a mailaccount, this SMTP-server belongs to. You can also add a standalone SMTP-server.',
+    'FORMSMTP__MAILACCOUNT' => 'Mailaccount',
+    'FORMSMTP__MAILACCOUNT_NOMAILACCOUNT' => 'Added to no account',
+    'FORMSMTP__HELP_MAILACCOUNT' => 'Choose a mailaccount, this SMTP-server belongs to. You can also add a standalone SMTP-server.',
     'FORMSMTP__EMAIL' => 'E-Mail',
     'FORMSMTP__PRESET_EMAIL' => 'E-Mail-address',
     'FORMSMTP__HELP_EMAIL' => 'Your e-mail-address.',

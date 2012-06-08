@@ -127,7 +127,7 @@ class $$$Mailaccount extends $system$Object {
 		global $TSunic;
 		$sql = "SELECT id
 			FROM #__serverboxes
-			WHERE fk_mail__account = '".$this->id."';";
+			WHERE fk_mailaccount = '".$this->id."';";
 		$result = $TSunic->Db->doSelect($sql);
 
 		// get serverbox objects
@@ -175,7 +175,7 @@ class $$$Mailaccount extends $system$Object {
 		global $TSunic;
 		$sql = "SELECT id
 			FROM #__smtps
-			WHERE fk_mail__account = '".$this->id."';";
+			WHERE fk_mailaccount = '".$this->id."';";
 		$result = $TSunic->Db->doSelect($sql);
 
 		// get objects
@@ -260,7 +260,7 @@ class $$$Mailaccount extends $system$Object {
 		// save in db
 		global $TSunic;
 		$sql = "INSERT INTO #__mailaccounts
-			SET fk_system_users__account = '".$TSunic->Usr->getInfo('id')."',
+			SET fk_account = '".$TSunic->Usr->getInfo('id')."',
 				_email_ = '$email',
 				_password_ = '$password',
 				_name_ = '$name',
@@ -638,7 +638,7 @@ class $$$Mailaccount extends $system$Object {
 		$sql = "SELECT _name_ as name,
 				id as id
 			FROM #__serverboxes
-			WHERE fk_mail__account = '".$this->id."';";
+			WHERE fk_mailaccount = '".$this->id."';";
 		$serverbox_list = $TSunic->Db->doSelect($sql);
 
 		// get output-array
@@ -664,7 +664,7 @@ class $$$Mailaccount extends $system$Object {
 			if (!$isListed) {
 				// add serverbox in db
 				$Serverbox = $TSunic->get('$$$Serverbox');
-				$Serverbox->createServerbox($this->id, $name);
+				$Serverbox->create($this->id, $name);
 			}
 		}
 

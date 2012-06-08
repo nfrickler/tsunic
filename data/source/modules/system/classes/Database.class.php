@@ -66,7 +66,8 @@ class $$$Database {
 		// encrypt data
 		$query = $this->encrypt($query);
 
-		return $this->_callDatabase('insert', $query);
+		if (!$this->_callDatabase('insert', $query)) return false;
+		return $this->_callDatabase('lastId');
 	}
 	public function doUpdate ($query) {
 
@@ -121,11 +122,12 @@ class $$$Database {
 	}
 
 	/* parse sql-query for database
+	 * @param string: type of query
 	 * @param string: sql-query (exeptions see above)
 	 *
-	 * @return bool or REDIRECT
+	 * @return mix or REDIRECT
 	 */
-	private function _callDatabase ($type, $query) {
+	private function _callDatabase ($type, $query = '') {
 		global $TSunic;
 
 		// start timer
@@ -139,6 +141,9 @@ class $$$Database {
 				break;
 			case 'insert':
 				$return = $this->Db_obj->doInsert($query);
+				break;
+			case 'lastId':
+				$return = $this->Db_obj->lastId();
 				break;
 			case 'update':
 				$return = $this->Db_obj->doUpdate($query);

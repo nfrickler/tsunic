@@ -56,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `#__mails` (
   `_sender_` varchar(500) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dateOfDownload` datetime NOT NULL,
   `dateOfDeletion` datetime NOT NULL,
   `status` int(11) NOT NULL,
   `unseen` int(1) NOT NULL,

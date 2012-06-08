@@ -152,13 +152,14 @@ class $$$Mailbox extends $system$Object {
 	 * @return array
 	 */
 	public function getServerboxes () {
+		if (!$this->isValid()) return false;
 		global $TSunic;
 
 		// get serverboxes from database
 		$sql = "SELECT serverboxes.id as id
 			FROM #__serverboxes as serverboxes,
 				#__mailaccounts as accounts
-			WHERE serverboxes.fk_mailbox = '".$this->getInfo('id')."'
+			WHERE serverboxes.fk_mailbox = '".$this->id."'
 				AND isActive = 1
 				AND serverboxes.fk_mailaccount = accounts.id
 				AND accounts.fk_account = '".$TSunic->Usr->getInfo('id')."';";

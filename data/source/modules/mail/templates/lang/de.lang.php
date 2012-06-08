@@ -217,7 +217,7 @@ $lang = array(
     'ADDMAILACCOUNT__CONNERROR' => 'Verbindung zum Server konnte nicht hergestellt werden. Hast du das richtige Passwort angegeben? Ansonsten fülle bitte die Verbindungsdaten manuell aus und versuche es erneut!',
 
     // formMailaccount
-    'FORMMAILACCOUNT__LEGEND_EMAILMAILACCOUNT' => 'Daten des Mailaccounts',
+    'FORMMAILACCOUNT__LEGEND_EMAILACCOUNT' => 'Daten des Mailaccounts',
     'FORMMAILACCOUNT__NAME' => 'Name',
     'FORMMAILACCOUNT__PRESET_NAME' => 'Optionaler Name',
     'FORMMAILACCOUNT__HELP_NAME' => 'Gebe dem Mailaccount einen optionalen Namen.',
@@ -341,7 +341,7 @@ $lang = array(
     // showAddSmtp
     'SHOWADDSMTP__TITLE' => 'SMTP-Server hinzufügen',
     'SHOWADDSMTP__H1' => 'SMTP-Server hinzufügen',
-    'SHOWADDSMTP__INFO' => 'Füge dieses Formular aus, um einen neuen SMTP-Server hinzuzufügen.',
+    'SHOWADDSMTP__INFO' => 'Fülle dieses Formular aus, um einen neuen SMTP-Server hinzuzufügen.',
     'SHOWADDSMTP__SUBMIT' => 'SMTP-Server hinzufügen',
     'SHOWADDSMTP__RESET' => '{$$$COMMON__RESET}',
     'SHOWADDSMTP__OVERVIEW' => '{$$$COMMON__TOBACK}',
@@ -368,9 +368,9 @@ $lang = array(
 
     // formSmtp
     'FORMSMTP__LEGEND_SMTPMAILACCOUNT' => 'SMTP-Daten',
-    'FORMSMTP__MAILMAILACCOUNT' => 'Mailaccount',
-    'FORMSMTP__MAILMAILACCOUNT_NOMAILACCOUNT' => 'Mit keinem Mailaccount verbunden',
-    'FORMSMTP__HELP_MAILMAILACCOUNT' => 'Wähle einen Mailaccount, mit dem dieser SMTP-Server verbunden sein soll. Du kannst diesen SMTP-Server auch ohne eine solche Verbindung verwenden.',
+    'FORMSMTP__MAILACCOUNT' => 'Mailaccount',
+    'FORMSMTP__MAILACCOUNT_NOMAILACCOUNT' => 'Mit keinem Mailaccount verbunden',
+    'FORMSMTP__HELP_MAILACCOUNT' => 'Wähle einen Mailaccount, mit dem dieser SMTP-Server verbunden sein soll. Du kannst diesen SMTP-Server auch ohne eine solche Verbindung verwenden.',
     'FORMSMTP__EMAIL' => 'E-Mail',
     'FORMSMTP__PRESET_EMAIL' => 'E-Mail-Adresse',
     'FORMSMTP__HELP_EMAIL' => 'Deine E-Mail-Adresse.',

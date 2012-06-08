@@ -66,7 +66,40 @@ class $$$FsFile extends $system$Object {
 		// delete file in database
 		$this->delete();
 		return false;
+	}
 
+	/* create new file
+	 * @param int: id of directory
+	 * @param string: filename
+	 * @param string: content
+	 *
+	 * @return bool
+	 */
+	public function create ($fk_directory, $name, $content) {
+
+		// validate
+		if (!$this->isValidDirectory($fk_directory)
+			or !$this->isValidName($name)
+		) return false;
+
+		// update database
+		global $TSunic;
+		$sql = "INSERT INTO #__fsfiles
+			SET _name_ = '$name',
+				bytes = '".$FH['size']."',
+				dateOfCreation = NOW(),
+				fk_account = '".$TSunic->Usr->getInfo('id')."',
+				fk_directory = '$fk_directory';";
+		if (!$this->_create($sql)) return false;
+
+		// create new file
+		$File = $this->getFileObject();
+		if (!$File->write($content)) {
+			$this->delete();
+			return false;
+		}
+
+		return true;
 	}
 
 	/* edit file

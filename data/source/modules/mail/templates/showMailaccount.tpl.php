@@ -41,7 +41,7 @@ $Mailaccount = $this->getVar('Mailaccount');
 	<h2 style="margin-top:15px;"><?php $this->set('{SHOWMAILACCOUNT__SERVERBOXES_H1}'); ?></h2>
 	<p class="ts_infotext"><?php $this->set('{SHOWMAILACCOUNT__SERVERBOXES_INFO}'); ?></p>
 	<form action="<?php $this->setUrl('$$$activateServerboxes'); ?>" name="$$$showMailaccount__serverboxes_form" method="post">
-		<input type="hidden" name="$$$showMailaccount__id" value="<?php $this->set($Mailaccount->getInfo('id')); ?>" />
+		<input type="hidden" name="$$$id" value="<?php $this->set($Mailaccount->getInfo('id')); ?>" />
 		<?php $this->display('$$$showListServerboxes', array(
 			'serverboxes' => $Mailaccount->getServerboxes(),
 			'selectable' => '$$$showMailaccount__serverboxes_'

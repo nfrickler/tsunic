@@ -72,7 +72,7 @@ $mailboxes = $this->getVar('mailboxes');
 			extrainput.style.display = 'none';
 		}
 	};
-	document.getElementById('$$$formServerbox__selectMailbox').onchange();
+	document.getElementById('$$$formServerbox__fk_mailbox').onchange();
 
 	// set focus on first field
 	document.getElementById($$$formServerbox__allInputs[0][0]).focus();

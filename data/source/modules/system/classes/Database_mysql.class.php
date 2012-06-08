@@ -122,6 +122,14 @@ class $$$Database_mysql {
 	    return ($this->_sendQuery($sql)) ? true : false;
 	}
 
+	/* get id of last inserted row
+	 *
+	 * @return int
+	 */
+	public function lastId () {
+	    return mysql_insert_id();
+	}
+
 	/* delete rows in database
 	 * @param string: sql-query
 	 *

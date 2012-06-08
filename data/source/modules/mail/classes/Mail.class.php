@@ -23,7 +23,6 @@ class $$$Mail extends $system$Object {
 				dateOfMail,
 				dateOfCreation,
 				dateOfUpdate,
-				dateOfDownload,
 				uid,
 				unseen
 			FROM #__mails
@@ -211,6 +210,48 @@ class $$$Mail extends $system$Object {
 				dateOfCreation = NOW(),
 				fk_account = '".$TSunic->Usr->getInfo('id')."'
 		;";
+		if (!$this->_create($sql)) return false;
+
+		// set addressee
+		return $this->setAddressee($addressee);
+	}
+
+	/* create from IMAP source
+	 * @param int: fk serverbox
+	 * @param int: fk mailbox
+	 * @param string: sender
+	 * @param string: addressee
+	 * @param string: plain content
+	 * @param string: html content
+	 * @param int: uid
+	 * @param bool: is mail unseen?
+	 * @param string: charset
+	 *
+	 * @return bool
+	 */
+	public function createFromImap (
+		$fk_serverbox, $fk_mailbox, $sender, $addressee, $subject,
+		$plaincontent, $htmlcontent, $uid, $unseen, $charset
+	) {
+		global $TSunic;
+		$Parser = $TSunic->get('$system$Parser');
+
+		// save in database
+		$sql = "INSERT INTO #__mails
+			SET fk_account => '".$TSunic->Usr->getInfo('id')."',
+				fk_serverbox = '$fk_serverbox',
+				fk_mailbox = '$fk_mailbox',
+				_subject_ = '".$Parser->txt2db($subject)."',
+				_sender_ = '".$Parser->txt2db($from)."',
+				dateOfCreation = NOW(),
+				status = '1',
+				unseen = '".($unseen ? '1' : '0')."',
+				dateOfMail = '".$Parser->txt2db($date)."',
+				uid = '".$Parser->txt2int($uid)."',
+				_plaincontent_ = '".$Parser->txt2plain2db($this->cache['bodyparts']['plain'])."',
+				_htmlcontent_ = '".$Parser->txt2db($this->cache['bodyparts']['html'])."',
+				charset = '".$Parser->txt2db($this->cache['bodyparts']['charset'])."'
+		";
 		if (!$this->_create($sql)) return false;
 
 		// set addressee

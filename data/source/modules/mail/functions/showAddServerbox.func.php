@@ -1,10 +1,10 @@
-<!-- | function to show form to add new serverbox -->
+<!-- | FUNCTION show form to add new serverbox -->
 <?php
 function $$$showAddServerbox () {
 	global $TSunic;
 
 	// get Mailaccount object
-	$id = $TSunic->Temp->getParameter('id');
+	$id = $TSunic->Temp->getParameter('$$$id');
 	$Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
 	// valid mailaccount?
