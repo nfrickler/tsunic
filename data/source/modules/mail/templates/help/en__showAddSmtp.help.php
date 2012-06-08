@@ -4,3 +4,4 @@
     Enter the e-mail address and the password to link a SMTP server with
     TSunic.
 </p>
+<?php include '$$$en__formSmtp.help.php'; ?>

@@ -3,3 +3,4 @@
 <p>
     Here you can create and send a new mail.
 </p>
+<?php include '$$$en__formMail.help.php'; ?>

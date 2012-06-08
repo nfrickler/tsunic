@@ -3,3 +3,4 @@
 <p>
     Fill in this form to create a new mailbox.
 </p>
+<?php include '$$$en__formMailbox.help.php'; ?>
