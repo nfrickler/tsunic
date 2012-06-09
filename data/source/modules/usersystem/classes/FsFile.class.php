@@ -1,281 +1,299 @@
-<!-- | File (filesystem) class -->
+<!-- | CLASS File (filesystem) -->
 <?php
 include_once '$system$Object.class.php';
 class $$$FsFile extends $system$Object {
 
-	/* directory containing this file
-	 * object
-	 */
-	protected $Directory;
+    /* directory containing this file
+     * object
+     */
+    protected $Directory;
 
-	/* load infos from database
-	 *
-	 * @return sql query
-	 */
-	protected function loadInfoSql () {
-		return "SELECT _name_ as name,
-				fk_directory,
-				fk_account,
-				bytes,
-				dateOfCreation,
-				dateOfUpdate
-			FROM #__fsfiles
-			WHERE id = '$this->id';";
+    /* load infos from database
+     *
+     * @return sql query
+     */
+    protected function loadInfoSql () {
+	return "SELECT _name_ as name,
+		fk_directory,
+		fk_account,
+		bytes,
+		dateOfCreation,
+		dateOfUpdate
+	    FROM #__fsfiles
+	    WHERE id = '$this->id';";
+    }
+
+    /* create new file
+     * @param file-handler: file handler of uploaded file
+     * +@param int: fk of directory
+     *
+     * @return bool
+     */
+    public function createByUpload ($FH, $fk_directory = 0) {
+
+	// validate
+	if (!$this->isValidDirectory($fk_directory)
+	    or !$this->isValidFile($FH)) {
+	    return false;
 	}
 
-	/* create new file
-	 * @param file-handler: file handler of uploaded file
-	 * +@param int: fk of directory
-	 *
-	 * @return bool
-	 */
-	public function create ($FH, $fk_directory = 0) {
-
-		// validate
-		if (!$this->isValidDirectory($fk_directory)
-			or !$this->isValidFile($FH)) {
-			return false;
-		}
-
-		// get name of file
-		$name = $FH['name'];
-		$counter = 1;
-		while (!$this->isValidName($name)) {
-			$name = 'unknown_file_'.$counter;
-			$counter++;
-		}
-
-		// update database
-		global $TSunic;
-		$sql = "INSERT INTO #__fsfiles
-			SET _name_ = '$name',
-				bytes = '".$FH['size']."',
-				dateOfCreation = NOW(),
-				fk_account = '".$TSunic->Usr->getInfo('id')."',
-				fk_directory = '$fk_directory';";
-		if (!$this->_create($sql)) return false;
-
-		if (move_uploaded_file($FH['tmp_name'], $this->getPath())) {
-
-			// encrypt content of file
-			$this->setContent($this->getContent());
-
-			return true;
-		}
-
-		// delete file in database
-		$this->delete();
-		return false;
+	// get name of file
+	$name = $FH['name'];
+	$counter = 1;
+	while (!$this->isValidName($name)) {
+	    $name = 'unknown_file_'.$counter;
+	    $counter++;
 	}
 
-	/* create new file
-	 * @param int: id of directory
-	 * @param string: filename
-	 * @param string: content
-	 *
-	 * @return bool
-	 */
-	public function create ($fk_directory, $name, $content) {
+	// update database
+	global $TSunic;
+	$sql = "INSERT INTO #__fsfiles
+	    SET _name_ = '$name',
+		bytes = '".$FH['size']."',
+		dateOfCreation = NOW(),
+		fk_account = '".$TSunic->Usr->getInfo('id')."',
+		fk_directory = '$fk_directory';";
+	if (!$this->_create($sql)) return false;
 
-		// validate
-		if (!$this->isValidDirectory($fk_directory)
-			or !$this->isValidName($name)
-		) return false;
+	if (move_uploaded_file($FH['tmp_name'], $this->getPath())) {
 
-		// update database
-		global $TSunic;
-		$sql = "INSERT INTO #__fsfiles
-			SET _name_ = '$name',
-				bytes = '".$FH['size']."',
-				dateOfCreation = NOW(),
-				fk_account = '".$TSunic->Usr->getInfo('id')."',
-				fk_directory = '$fk_directory';";
-		if (!$this->_create($sql)) return false;
+	    // encrypt content of file
+	    $this->setContent($this->getContent());
 
-		// create new file
-		$File = $this->getFileObject();
-		if (!$File->write($content)) {
-			$this->delete();
-			return false;
-		}
-
-		return true;
+	    return true;
 	}
 
-	/* edit file
-	 * @param string: new name
-	 * +@param int: fk of directory
-	 *
-	 * @return bool
-	 */
-	public function edit ($name, $fk_directory = 0) {
+	// delete file in database
+	$this->delete();
+	return false;
+    }
 
-		// validate
-		if (!$this->isValidName($name)
-			or !$this->isValidDirectory($fk_directory)) {
-			return false;
-		}
+    /* create new file
+     * @param int: id of directory
+     * @param string: filename
+     * @param string: content
+     *
+     * @return bool
+     */
+    public function create ($fk_directory, $name, $content) {
 
-		// anything changed?
-		$sql_set = array();
-		if ($name != $this->getInfo('name')) {
-			$sql_set[] = "_name_ = '$name'";
-		}
-		if ($fk_directory != $this->getInfo('fk_directory')) {
-			$sql_set[] = "fk_directory = '$fk_directory'";
-		}
-		if (empty($sql_set)) return true;
+	// validate
+	if (!$this->isValidDirectory($fk_directory)
+	    or !$this->isValidName($name)
+	) return false;
 
-		// update database
-		global $TSunic;
-		$sql = "UPDATE #__fsfiles SET ".
-			implode(",", $sql_set).
-			" WHERE id = '$this->id'
-				AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
-		return $this->_edit($sql);
+	// update database
+	global $TSunic;
+	$sql = "INSERT INTO #__fsfiles
+		SET _name_ = '$name',
+		    dateOfCreation = NOW(),
+		    fk_account = '".$TSunic->Usr->getInfo('id')."',
+		    fk_directory = '$fk_directory';";
+	if (!$this->_create($sql)) return false;
+
+	// create new file
+	$File = $this->getFileObject();
+	$bytes = ($File) ? $File->writeFile($content) : false;
+	if (!$bytes) {
+	    $this->delete();
+	    return false;
 	}
 
-	/* get corresponding file-object
-	 *
-	 * @return File object
-	 */
-	protected function getFileObject () {
-		if (!$this->getInfo('id')) return NULL;
-		global $TSunic;
-		$File = $TSunic->get('$system$File', '#private#file__'.$this->getInfo('id'));
-		return $File;
+	// update filesize
+	global $TSunic;
+	$sql = "UPDATE #__fsfiles
+		SET bytes = '$bytes'
+		WHERE id = '".$this->id."'
+	;";
+	$TSunic->Db->doUpdate($sql);
+
+	return true;
+    }
+
+    /* edit file
+     * @param string: new name
+     * +@param int: fk of directory
+     *
+     * @return bool
+     */
+    public function edit ($name, $fk_directory = 0) {
+
+	// validate
+	if (!$this->isValidName($name)
+	    or !$this->isValidDirectory($fk_directory)) {
+	    return false;
 	}
 
-	/* get path of this file
-	 *
-	 * @return string
-	 */
-	protected function getPath () {
-		$File = $this->getFileObject();
-		return ($File) ? $File->getPath() : '';
+	// anything changed?
+	$sql_set = array();
+	if ($name != $this->getInfo('name')) {
+	    $sql_set[] = "_name_ = '$name'";
+	}
+	if ($fk_directory != $this->getInfo('fk_directory')) {
+	    $sql_set[] = "fk_directory = '$fk_directory'";
+	}
+	if (empty($sql_set)) return true;
+
+	// update database
+	global $TSunic;
+	$sql = "UPDATE #__fsfiles SET ".
+		implode(",", $sql_set).
+		" WHERE id = '$this->id'
+		    AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
+	return $this->_edit($sql);
+    }
+
+    /* get corresponding file-object
+     *
+     * @return File object
+     */
+    protected function getFileObject () {
+	if (!$this->getInfo('id')) return NULL;
+	global $TSunic;
+	$File = $TSunic->get('$system$File', '#private#file__'.$this->getInfo('id'));
+	return $File;
+    }
+
+    /* get path of this file
+     *
+     * @return string
+     */
+    protected function getPath () {
+	$File = $this->getFileObject();
+	return ($File) ? $File->getPath() : '';
+    }
+
+    /* delete file
+     *
+     * @return bool
+     */
+    public function delete () {
+	global $TSunic;
+
+	// delete file
+	$FH = $TSunic->get('$system$File', $this->getPath());
+	if (!$FH->deleteFile()) {
+	    $TSunic->Log->log(3, 'usersystem::FsFile::delete: Could not delete file!');
+	    return false;
 	}
 
-	/* delete file
-	 *
-	 * @return bool
-	 */
-	public function delete () {
-		global $TSunic;
+	$sql = "DELETE FROM #__fsfiles
+	    WHERE id = '$this->id'
+		AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
+	return $this->_delete($sql);
+    }
 
-		// delete file
-		$FH = $TSunic->get('$system$File', $this->getPath());
-		if (!$FH->deleteFile()) {
-			$TSunic->Log->log(3, 'usersystem::FsFile::delete: Could not delete file!');
-			return false;
-		}
+    /* is valid name for file?
+     * @param string: name
+     *
+     * @return bool
+     */
+    public function isValidName ($name) {
+	// TODO: Unique in parent directory
+	return ($this->_validate($name, 'filename')) ? true : false;
+    }
 
-		$sql = "DELETE FROM #__fsfiles
-			WHERE id = '$this->id'
-				AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
-		return $this->_delete($sql);
-	}
+    /* is valid file to upload
+     * @param file-handle: file handle of file to upload
+     *
+     * @return bool
+     */
+    public function isValidFile ($FH) {
+	return ($this->isValidFilesize($FH['size']) and
+	    $this->isValidQuota($FH['size'])) ? true : false;
+    }
 
-	/* is valid name for file?
-	 * @param string: name
-	 *
-	 * @return bool
-	 */
-	public function isValidName ($name) {
-		// TODO: Only unique in parent directory
-		return ($this->_validate($name, 'filename')
-			and $this->_isUnique('#__fsfiles', '_name_', $name)
-		) ? true : false;
-	}
+    /* is within allowed filesize
+     * @param int: bytes of new file
+     *
+     * @return bool
+     */
+    public function isValidFilesize ($filesize) {
+	global $TSunic;
+	return ($filesize <= $TSunic->Usr->config('$$$maxfilesize')) ? true : false;
+    }
 
-	/* is valid file to upload
-	 * @param file-handle: file handle of file to upload
-	 *
-	 * @return bool
-	 */
-	public function isValidFile ($FH) {
-		return ($this->isValidFilesize($FH['size']) and
-			$this->isValidQuota($FH['size'])) ? true : false;
-	}
+    /* is within allowed filesystem size
+     * @param int: bytes of new file
+     *
+     * @return bool
+     */
+    public function isValidQuota ($filesize) {
+	global $TSunic;
+	$Dir = $TSunic->get('$$$FsDirectory');
+	return (($Dir->consumedBytes() + $filesize) <=
+	    $TSunic->Usr->config('$$$filesystem_quota')) ? true : false;
+    }
 
-	/* is within allowed filesize
-	 * @param int: bytes of new file
-	 *
-	 * @return bool
-	 */
-	public function isValidFilesize ($filesize) {
-		global $TSunic;
-		return ($filesize <= $TSunic->Usr->config('$$$maxfilesize')) ? true : false;
-	}
+    /* is valid fk_directory for this file?
+     * @param int: ID of an directory
+     *
+     * @return bool
+     */
+    public function isValidDirectory ($fk_directory) {
+	return ($fk_directory == 0
+	    or ($this->_validate($fk_directory, 'int')
+		and $this->_isObject('#__fsdirectories', $fk_directory))
+	) ? true : false;
+    }
 
-	/* is within allowed filesystem size
-	 * @param int: bytes of new file
-	 *
-	 * @return bool
-	 */
-	public function isValidQuota ($filesize) {
-		global $TSunic;
-		$Dir = $TSunic->get('$$$FsDirectory');
-		return (($Dir->consumedBytes() + $filesize) <=
-			$TSunic->Usr->config('$$$filesystem_quota')) ? true : false;
-	}
+    /* get directory, that contains this file
+     *
+     * @return OBJECT
+     */
+    public function getDirectory () {
+	if (!empty($this->Directory)) return $this->Directory;
+	global $TSunic;
+	$this->Directory = $TSunic->get('$$$FsDirectory', $this->getInfo('fk_directory'));
+	return $this->Directory;
+    }
 
-	/* is valid fk_directory for this file?
-	 * @param int: ID of an directory
-	 *
-	 * @return bool
-	 */
-	public function isValidDirectory ($fk_directory) {
-		return ($fk_directory == 0
-			or ($this->_validate($fk_directory, 'int')
-				and $this->_isObject('#__fsdirectories', $fk_directory))
-		) ? true : false;
-	}
+    /* get mime-type of file
+     *
+     * @return string
+     */
+    public function getMimeType () {
+	$File = $this->getFileObject();
+	return ($File) ? $File->getMimeType() : '';
+    }
 
-	/* get directory, that contains this file
-	 *
-	 * @return OBJECT
-	 */
-	public function getDirectory () {
-		if (!empty($this->Directory)) return $this->Directory;
-		global $TSunic;
-		$this->Directory = $TSunic->get('$$$FsDirectory', $this->getInfo('fk_directory'));
-		return $this->Directory;
-	}
+    /* get content of file
+     *
+     * @return string
+     */
+    public function getContent () {
+	$File = $this->getFileObject();
+	if (!$File) return false;
 
-	/* get mime-type of file
-	 *
-	 * @return string
-	 */
-	public function getMimeType () {
-		$File = $this->getFileObject();
-		return ($File) ? $File->getMimeType() : '';
-	}
+	global $TSunic;
+	$content = $File->readFile();
+	return $TSunic->Usr->decrypt($content);
+    }
 
-	/* get content of file
-	 *
-	 * @return string
-	 */
-	public function getContent () {
-		$File = $this->getFileObject();
-		if (!$File) return false;
+    /* set content of file
+     * @param string: new content of file
+     *
+     * @return string
+     */
+    public function setContent ($content) {
+	$File = $this->getFileObject();
+	if (!$File) return false;
 
-		global $TSunic;
-		$content = $File->readFile();
-		return $TSunic->Usr->decrypt($content);
-	}
+	global $TSunic;
+	$content = $TSunic->Usr->encrypt($content);
+	return ($File->writeFile($content)) ? true : false;
+    }
 
-	/* set content of file
-	 * @param string: new content of file
-	 *
-	 * @return string
-	 */
-	public function setContent ($content) {
-		$File = $this->getFileObject();
-		if (!$File) return false;
+    /* is valid object?
+     *
+     * @return string
+     */
+    public function isValid () {
+	if (!parent::isValid()) return false;
 
-		global $TSunic;
-		$content = $TSunic->Usr->encrypt($content);
-		return ($File->writeFile($content)) ? true : false;
-	}
+	// only valid with existing file
+	$File = $this->getFileObject();
+	return $File->isValid();
+    }
 }
 ?>

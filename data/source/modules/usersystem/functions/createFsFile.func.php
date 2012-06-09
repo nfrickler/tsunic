@@ -24,7 +24,7 @@ function $$$createFsFile () {
 	}
 
 	// create file
-	$return = $File->create($_FILES['$$$formFsFile__file'], $fk_directory);
+	$return = $File->createByUpload($_FILES['$$$formFsFile__file'], $fk_directory);
 
 	// check, if create successful
 	if ($return) {

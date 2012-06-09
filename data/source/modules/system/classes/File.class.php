@@ -308,7 +308,7 @@ class $$$File {
 			@fclose($file);
 
 			// success?
-			if (is_numeric($return)) return true;
+			if (is_numeric($return)) return $return;
 		}
 
 		$TSunic->Log->log(3, 'Couldn\'t write to "'.$this->path.'"!');

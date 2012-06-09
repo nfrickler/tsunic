@@ -1,4 +1,4 @@
-<!-- | Serverbox class -->
+<!-- | CLASS Serverbox -->
 <?php
 include_once '$system$Object.class.php';
 class $$$Serverbox extends $system$Object {
@@ -365,6 +365,7 @@ class $$$Serverbox extends $system$Object {
 		$this->getInfo('fk_mailbox'),
 		$from,
 		$to,
+		$date,
 		$subject,
 		$this->cache['bodyparts']['plain'],
 		$this->cache['bodyparts']['html'],
@@ -372,20 +373,20 @@ class $$$Serverbox extends $system$Object {
 		1,
 		$this->cache['bodyparts']['charset']
 	    )) {
+		$TSunic->Log->alert('error', '{CLASS__SERVERBOX__CREATEMAILERROR}');
 		continue;
 	    }
 
 	    // save attachments
 	    foreach ($this->cache['bodyparts']['attachments'] as $index => $values) {
-
-		// create new FsFile
 		$FsFile = $TSunic->get('$usersystem$FsFile');
-		if (!$FsFile->create(0, $values['name'], $values['content'])) {
+		if (!$FsFile->create(0, $values['name'], $values['content']) or
+		    !$Mail->addAttachment($FsFile->getInfo('id'))
+		) {
+		    //$FsFile->delete();
+		    //$Mail->rmAttachment($FsFile->getInfo('id'));
 		    $TSunic->Log->alert('error', '{CLASS__SERVERBOX__ADDATTACHMENTERROR}');
 		}
-
-		// link as attachment
-		$Mail->addAttachment($FsFile->getInfo('id'));
 	    }
 
 	    // clear data

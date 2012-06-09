@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `#__mailaccounts` (
 CREATE TABLE IF NOT EXISTS `#__attachments` (
   `fk_mail` int(11) NOT NULL,
   `fk_fsfile` int(11) NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`fk_mail`, `fk_fsfile`)
 ) ENGINE=MyISAM;
 

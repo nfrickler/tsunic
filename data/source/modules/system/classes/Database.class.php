@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | CLASS database -->
 <?php
 class $$$Database {
 
@@ -67,7 +67,8 @@ class $$$Database {
 		$query = $this->encrypt($query);
 
 		if (!$this->_callDatabase('insert', $query)) return false;
-		return $this->_callDatabase('lastId');
+		$lastId = $this->_callDatabase('lastId');
+		return ($lastId) ? $lastId : true;
 	}
 	public function doUpdate ($query) {
 

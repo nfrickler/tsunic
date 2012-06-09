@@ -1,23 +1,23 @@
-<!-- | function to delete mail -->
+<!-- | FUNCTION delete mail -->
 <?php
 function $$$deleteMail () {
-	global $TSunic;
+    global $TSunic;
 
-	// get mailbox-object and fk_mail_box
-	$id = $TSunic->Temp->getParameter('id');
-	$Mail = $TSunic->get('$$$Mail', $id);
-	$fk_mail__box = $Mail->getInfo('fk_mail__box');
+    // get Mail object and fk_mailbox
+    $id = $TSunic->Temp->getParameter('$$$id');
+    $Mail = $TSunic->get('$$$Mail', $id);
+    $fk_mailbox = $Mail->getInfo('fk_mailbox');
 
-	// edit mailbox
-	if (!$Mail->deleteMail()) {
-		$TSunic->Log->alert('error', '{DELETEMAIL__ERROR}');
-		$TSunic->redirect('back');
-	}
+    // delete Mail
+    if (!$Mail->delete()) {
+	$TSunic->Log->alert('error', '{DELETEMAIL__ERROR}');
+	$TSunic->redirect('back');
+    }
 
-	// success
-	$TSunic->Log->alert('info', '{DELETEMAIL__SUCCESS}');
-	$TSunic->redirect('$$$showMailbox', array('$$$id' => $fk_mail__box));
+    // success
+    $TSunic->Log->alert('info', '{DELETEMAIL__SUCCESS}');
+    $TSunic->redirect('$$$showMailbox', array('$$$id' => $fk_mailbox));
 
-	return true;
+    return true;
 }
 ?>

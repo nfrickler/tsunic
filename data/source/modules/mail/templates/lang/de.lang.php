@@ -9,6 +9,7 @@ $lang = array(
     'CLASS__SENDERLOCAL__NAME' => 'Lokaler SMTP-Server',
 
     'CLASS__SERVERBOX__ADDATTACHMENTERROR' => 'Anhang konnte nicht heruntergeladen werden!',
+    'CLASS__SERVERBOX__CREATEMAILERROR' => 'Eine Mail konnte nicht lokal gespeichert werden!',
 
     'CLASS__MAILACCOUNT__AUTHS_NORMAL' => 'Normal',
     'CLASS__MAILACCOUNT__AUTHS_ENCRYPTEDPWD' => 'Verschlüsseltes Passwort',

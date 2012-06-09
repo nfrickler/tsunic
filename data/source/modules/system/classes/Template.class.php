@@ -1,4 +1,4 @@
-<!-- | Template class -->
+<!-- | CLASS Template -->
 <?php
 class $$$Template {
 
@@ -192,7 +192,7 @@ class $$$Template {
 		$allTemplates = $TSunic->Tmpl->activatedTemplates;
 		if (!isset($allTemplates[$this->template], $allTemplates[$this->template][$position])) return true;
 		foreach ($allTemplates[$this->template][$position] as $index => $values) {
-            $sub_templates[] = $values;
+			$sub_templates[] = $values;
 		}
 		if (count($sub_templates) == 0) return true;
 
@@ -346,7 +346,7 @@ class $$$Template {
 
 	/* get link to image
 	 * @param string: type of file
-	 * @param string: name of image 
+	 * @param string: name of image
 	 * +@param bool: print link (false returns link)
 	 * +@param bool: is download-link?
 	 *

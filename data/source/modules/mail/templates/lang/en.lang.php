@@ -9,6 +9,7 @@ $lang = array(
     'CLASS__SENDERLOCAL__NAME' => 'Local Smtp',
 
     'CLASS__SERVERBOX__ADDATTACHMENTERROR' => 'Attachment couldn\'t be downloaded!',
+    'CLASS__SERVERBOX__CREATEMAILERROR' => 'One mail cound not be saved locally!',
 
     'CLASS__MAILACCOUNT__AUTHS_NORMAL' => 'Normal',
     'CLASS__MAILACCOUNT__AUTHS_ENCRYPTEDPWD' => 'Encrypted password',

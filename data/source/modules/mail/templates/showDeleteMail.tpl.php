@@ -1,14 +1,14 @@
-<!-- | show form to delete mail -->
+<!-- | TEMPLATE confirm deletion of mail -->
 <?php
-$mail = $this->getVar('mail');
+$Mail = $this->getVar('Mail');
 ?>
 <div id="$$$div__showDeleteMail">
-	<?php $this->display('$system$showOptionbox', array(
-		'headertext' => $this->set('{SHOWDELETE{POPUP_DELETE_HEADER}', array('name' => $mail->getInfo('subject')), false),
-		'contenttext' => '{SHOWDELETE{POPUP_DELETE_CONTENT}',
-		'submittext' => '{SHOWDELETE{POPUP_DELETE_YES}',
-		'canceltext' => '{SHOWDELETE{POPUP_DELETE_NO}',
-		'submit_href' => $this->setUrl('$$$deleteMail', array('$$$id' => $mail->getInfo('id')), true, false),
-		'cancel_href' => $this->setUrl('back', true, true, false)
-	)); ?>
+    <?php $this->display('$system$showOptionbox', array(
+	'headertext' => $this->set('{SHOWDELETEMAIL__POPUP_DELETE_HEADER}', array('name' => $Mail->getInfo('subject')), false),
+	'contenttext' => '{SHOWDELETEMAIL__POPUP_DELETE_CONTENT}',
+	'submittext' => '{SHOWDELETEMAIL__POPUP_DELETE_YES}',
+	'canceltext' => '{SHOWDELETEMAIL__POPUP_DELETE_NO}',
+	'submit_href' => $this->setUrl('$$$deleteMail', array('$$$id' => $Mail->getInfo('id')), true, false),
+	'cancel_href' => $this->setUrl('back', true, true, false)
+    )); ?>
 </div>
