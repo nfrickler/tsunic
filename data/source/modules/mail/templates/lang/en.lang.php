@@ -478,6 +478,7 @@ $lang = array(
     'SAVEMAIL__INVALIDSENDER' => 'Invalid Smtp-Server selected!',
     'SAVEMAIL__EDITERROR' => 'An error occurred while saving the changes.',
     'SAVEMAIL__CREATEERROR' => 'An error occurred while create a new mail!',
+    'SAVEMAIL__SENDERROR' => 'An error occurred while sending the mail!',
     'SAVEMAIL__SUCCESS' => 'Mail has been saved successfully.',
     'SAVEMAIL__SUCCESS_SEND' => 'Mail has been send successfully.',
 

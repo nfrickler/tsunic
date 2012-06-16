@@ -1,4 +1,4 @@
-<!-- | class to handle files -->
+<!-- | CLASS File -->
 <?php
 class $$$File {
 
@@ -68,7 +68,7 @@ class $$$File {
 	 * @return bool
 	 */
 	public function isValid () {
-		return ($this->isFile()) ? true : false;
+		return $this->isFile();
 	}
 
 	/* get mime-type of file
@@ -133,7 +133,7 @@ class $$$File {
 	 * @return bool
 	 */
 	public function isFile () {
-		return (file_exists($this->getPath())) ? true : false;
+		return file_exists($this->getPath());
 	}
 
 	/* get path

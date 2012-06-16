@@ -1,8 +1,31 @@
 # ############## TSunic 4 ##################### #
 
-TSunic 4 hat das Ziel, ein Websystem zu werden, das Nutzern mit nützlichen Funktionen und Anwendungen das Leben vereinfachen soll. 
+TSunic 4 ist ein Websystem, dass seinen Nutzern vielfältige
+Verwaltungsmöglichkeiten bieten will.
+Die Software ist modular aufgebaut, der Funktionsumfang kann je nach
+installierten Modulen unterschiedlich sein.
 
-Die derzeitige Version ermöglicht die Verwaltung von E-Mails sämtlicher Mailaccounts über ein einziges System (über IMAP/POP3). Auch das Versenden von E-Mails über diese Accounts ist möglich (über SMTP). Damit unterstützt es bereits viele Funktionen üblicher E-Mailprogramme, wie z.B. Thunderbird oder Outlook. Der Vorteil von TSunic jedoch ist, dass diese Verwaltung online geschieht und somit nicht vom Computer abhängig ist, auf dem die Software läuft.
+In der Standardausführung enthalten sind:
+ - System: Systemdateien
+ - Usersystem: Benutzersystem
+    * Registrierung/Login/Logout
+    * Daten ändern/löschen
+    * Administration
+    * Kleines "Dateisystem" für jeden Nutzer (Größe konfigurierbar)
+ - Mail: Mailsystem
+    * Mails lokal verwalten
+    * E-Mails von anderen Mailaccounts holen (IMAP/POP3)
+    * E-Mails über eigene SMTP-Accounts versenden
+    * Plaintext und HTML-Mails, Anhänge
+ - Help: Hilfesystem
+    * Zeigt für jede Seite eine gesonderte Hilfeseite an (falls vorhanden)
+ - Navigation: Navigation
+    * Hilfs-Modul zum Anzeigen der Navigationsleiste
+
+ - Backend: Über das Backend kann der Administrator TSunic verwalten
+    * Module installieren/updaten/löschen
+    * Globale Einstellungen festlegen
+    * Styles installieren/updaten/löschen
 
 TSunic ist für alle unter der GNU AGPL Lizenz frei verfügbar.
 

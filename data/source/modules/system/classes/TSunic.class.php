@@ -1,4 +1,4 @@
-<!-- | TSunic class -->
+<!-- | CLASS TSunic -->
 <?php
 class TSunic {
 

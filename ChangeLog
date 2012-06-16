@@ -1,16 +1,20 @@
+-- Changes until version 4.2 (release 2012-)
+    * full reconstruction of usersystem module
+    * adding help pages for each page
+    * general fixes
 -- Changes until version 4.1.1 (release 2011-11-16)
-	* many bugfixes
-	* add public view of installed modules
+    * many bugfixes
+    * add public view of installed modules
 -- Changes until version 4.1 (release 2011-08-30)
-	* added backend and module-handling
-	* tiny changes in mail- and usersystem-modules
-	* general fixes
+    * added backend and module-handling
+    * tiny changes in mail- and usersystem-modules
+    * general fixes
 -- Changes until version 4.0.2 (release 2011-07-06)
-	* increased performance
-	* general fixes
+    * increased performance
+    * general fixes
 -- Changes until version 4.0.1 (release 2011-05-26)
-	* completely updated mail-module
-	* add simple (background-)file-system
-	* general fixes
+    * completely updated mail-module
+    * add simple (background-)file-system
+    * general fixes
 -- Changes until version 4.0.0 beta 1.0 (release 2011-04-02)
-	* no changes yet, because this is the first version^^
+    * no changes yet, because this is the first version^^

@@ -211,7 +211,7 @@ class $$$Mail extends $system$Object {
 	if (!$this->isValidSubject($subject)
 	    or !$this->isValidContent($content)
 	    or !$this->isValidAddressee($addressee)
-	    or !$this->isValidFkSmtp($sender, false)
+	    or !$this->isValidFkSmtp($fk_smtp, false)
 	) return false;
 
 	// update database
@@ -290,7 +290,7 @@ class $$$Mail extends $system$Object {
 	if (!$this->isValidSubject($subject)
 	    or !$this->isValidContent($content)
 	    or !$this->isValidAddressee($addressee)
-	    or !$this->isValidFkSmtp($sender, false)
+	    or !$this->isValidFkSmtp($fk_smtp, false)
 	) return false;
 
 	// update database

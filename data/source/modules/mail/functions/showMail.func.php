@@ -1,4 +1,4 @@
-<!-- | function to show mail -->
+<!-- | FUNCTION show mail -->
 <?php
 function $$$showMail () {
 	global $TSunic;

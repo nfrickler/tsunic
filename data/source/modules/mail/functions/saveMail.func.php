@@ -55,7 +55,7 @@ function $$$saveMail () {
 
 	// send mail
 	if (!$Mail->send()) {
-		$TSunic->Log->alert('error', '{SAVEMAIL__ERROR}');
+		$TSunic->Log->alert('error', '{SAVEMAIL__SENDERROR}');
 		$TSunic->redirect('$$$showMail', array('$$$id' => $Mail->getInfo('id')));
 	}
 

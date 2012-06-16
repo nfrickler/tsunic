@@ -20,14 +20,15 @@ $File = $TSunic->getFsFile($id);
 if (!$File->isValid()) die('Access denied!');
 
 // is download?
-$download = (isset($_GET['download']) AND $_GET['download'] == 'true') ? true : false;
+$download = (isset($_GET['download']) AND $_GET['download'] == 'true')
+    ? true : false;
 
 // send download-headers
 if ($download) {
-	header("Cache-Control: public");
-	header("Content-Description: File Transfer");
-	header('Content-Disposition: attachment; filename='.$File->getInfo('name'));
-	header("Content-Transfer-Encoding: binary");
+    header("Cache-Control: public");
+    header("Content-Description: File Transfer");
+    header('Content-Disposition: attachment; filename='.$File->getInfo('name'));
+    header("Content-Transfer-Encoding: binary");
 }
 
 // send mime-type in header

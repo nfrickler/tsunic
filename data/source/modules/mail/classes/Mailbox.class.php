@@ -45,7 +45,7 @@ class $$$Mailbox extends $system$Object {
 	// create and store objects
 	$this->mails = array();
 	foreach ($result as $index => $value) {
-	    $this->mails[] = $TSunic->get('$$$Mail', array($value['id']));
+	    $this->mails[] = $TSunic->get('$$$Mail', $value['id']);
 	}
 
 	return $this->mails;

@@ -1,4 +1,4 @@
-<!-- | Smtp class -->
+<!-- | CLASS Smtp -->
 <?php
 include_once '$system$Object.class.php';
 class $$$Smtp extends $system$Object {
@@ -217,7 +217,7 @@ class $$$Smtp extends $system$Object {
 			foreach ($array as $index => $value) {
 				if ($value[0] == $input) {
 					// match!
-					
+
 					// return number or phrase?
 					if ($getNumber == 'phrase') return $value[1];
 					return $index;
@@ -360,7 +360,7 @@ class $$$Smtp extends $system$Object {
 	 * @param string: host of server-connection
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidHost ($host) {
 		return $this->_validate($host, 'url');
 	}
@@ -396,7 +396,7 @@ class $$$Smtp extends $system$Object {
 	 * @param int: connsecurity
 	 *
 	 * @return bool
- 	 */
+	 */
 	public function isValidConnsecurity ($connsecurity) {
 		return (isset($this->connsecurities[$auth])) ? true : false;
 	}
@@ -405,7 +405,7 @@ class $$$Smtp extends $system$Object {
 	 * +@param int/bool: security
 	 *
 	 * @return int/array
- 	 */
+	 */
 	public function getAuthname ($auth = false) {
 
 		// get $auth of current object (if requested)
@@ -518,7 +518,7 @@ class $$$Smtp extends $system$Object {
 	 * +@param int/bool: connection-security
 	 *
 	 * @return bool
- 	 */
+	 */
 	protected function validateConnection ($host = false, $port = false, $user = false, $auth = false, $connsecurity = false) {
 		global $TSunic;
 

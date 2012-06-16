@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | CLASS TemplateEngine -->
 <?php
 class $$$TemplateEngine {
 
@@ -123,10 +123,10 @@ class $$$TemplateEngine {
 
 	/* save data for template
 	 * @param string/bool: template, data are for
-	 * 	false - reset all data
-	 * 	true - get all data from session
+	 *	false - reset all data
+	 *	true - get all data from session
 	 * +@param string/array: string - name of value
-	 * 	array - data-array
+	 *	array - data-array
 	 * +@param mix: value for data with name $name
 	 *
 	 * @return bool
@@ -398,7 +398,7 @@ class $$$TemplateEngine {
 		return true;
 	}
 
-	/* return ajax-response (xml)
+	/* return ajax-response (XML)
 	 *
 	 * @return bool
 	 */
@@ -422,7 +422,7 @@ class $$$TemplateEngine {
 	public function addJSfunction ($name) {
 
 		// save in array
-	    $this->activatedJavascript[$name] = $name;
+		$this->activatedJavascript[$name] = $name;
 
 		// save in SESSION
 		$_SESSION['activatedJavascript'] = $this->activatedJavascript;
@@ -440,7 +440,8 @@ class $$$TemplateEngine {
 		if (empty($template) OR empty($input)) return false;
 
 		// validate session
-		if (!isset($_SESSION['$$$TemplateEngine__extractedJS'])) $_SESSION['$$$TemplateEngine__extractedJS'] = array();
+		if (!isset($_SESSION['$$$TemplateEngine__extractedJS']))
+			$_SESSION['$$$TemplateEngine__extractedJS'] = array();
 
 		// save in SESSION
 		$_SESSION['$$$TemplateEngine__extractedJS'][$template] = base64_encode($input);

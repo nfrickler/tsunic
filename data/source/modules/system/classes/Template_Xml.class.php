@@ -1,4 +1,4 @@
-<!-- | class to handle xml-templates -->
+<!-- | CLASS XML Templates for Ajax requests -->
 <?php
 include_once '$$$Template.class.php';
 class $$$Template_Xml extends $$$Template {
@@ -12,17 +12,6 @@ class $$$Template_Xml extends $$$Template {
 
 		// get input
 		$this->template = $template;
-
-		// get design
-		if ($design == 0) {
-
-			// get default-design
-			global $TSunic;
-			$this->design = $TSunic->Config->getConfig('style');
-		} else {
-			// chosen design
-			$this->design = $design;
-		}
 
 		// get data for template
 		if (isset($TSunic->Tmpl->data[$template])) {
@@ -40,11 +29,11 @@ class $$$Template_Xml extends $$$Template {
 	public function display () {
 		global $TSunic;
 
-		// get paths (priority-orderr)
+		// get paths (priority-order)
 		$paths = array(
-			'#runtime#xmlResponses/style'.$this->style.'__'.$this->template.'.xml.php',
+			'#runtime#xmlResponses/style'.$this->getStyle().'__'.$this->template.'.xml.php',
 			'#runtime#xmlResponses/'.$this->template.'.xml.php',
-			'#runtime#xmlResponses/style'.$this->style.'__$$$noTemplateFound.xml.php',
+			'#runtime#xmlResponses/style'.$this->getStyle().'__$$$noTemplateFound.xml.php',
 			'#runtime#xmlResponses/$$$noTemplateFound.xml.php'
 		);
 
@@ -57,6 +46,7 @@ class $$$Template_Xml extends $$$Template {
 			}
 
 			$File = $TSunic->get('$$$File', $value);
+
 			if ($File->isValid()) {
 				$this->_include($File);
 				return true;

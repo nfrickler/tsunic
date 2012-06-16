@@ -12,7 +12,9 @@ $Mail = $this->getVar('Mail');
 				<?php $selected = $this->setPreset('$$$formMail__fk_smtp', $Mail->getInfo('addressee'), false); ?>
 				<?php foreach ($this->getVar('smtps') as $index => $Value) { ?>
 				<option value="<?php echo $Value->getInfo('id'); ?>" <?php if ($selected == $Value->getInfo('id')) echo "selected='selected'"; ?>>
-					<?php $this->set($Value->getInfo('name')); ?></option>
+					<?php $this->set($Value->getInfo('emailname')); ?>
+					&lt;<?php $this->set($Value->getInfo('email')); ?>&gt;
+				</option>
 				<?php } ?>
 			</select>
 			<div style="clear:both;"></div>

@@ -103,7 +103,7 @@ class $$$Template {
 			return true;
 		}
 
-		// get paths (priority-orderr)
+		// get paths (priority-order)
 		$paths = array(
 			'#runtime#templates/style'.$this->getStyle().'__'.$this->template.'.tpl.php',
 			'#runtime#templates/'.$this->template.'.tpl.php',

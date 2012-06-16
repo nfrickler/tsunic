@@ -1,4 +1,4 @@
-<!-- | FUNCTION check for new mails for this mailbox-->
+<!-- | FUNCTION check for new mails for this mailbox -->
 <?php
 function $$$updateMailbox () {
     global $TSunic;

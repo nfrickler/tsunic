@@ -50,6 +50,7 @@ $mails = $Mailbox->getMails();
 	    </tr>
 	    <?php } ?>
 	</table>
+
 	<p id="$$$showMailbox__selectMails_container" style="display:none;">
 	    <a href="javascript:$$$showMailbox__selectAll();">
 		<?php $this->set('{SHOWMAILBOX__SELECTALL}'); ?>
@@ -58,6 +59,7 @@ $mails = $Mailbox->getMails();
 		<?php $this->set('{SHOWMAILBOX__DESELECTALL}'); ?>
 	    </a>
 	</p>
+
 	<p>
 	    <img src="<?php $this->setImg('project', '$$$arrow_top2downright.gif'); ?>" style="" />
 	    <input type="submit" name="$$$showMailbox__submit_delete" value="<?php $this->set('{SHOWMAILBOX__PERFORMACTION_DELETE}'); ?>" />
@@ -92,9 +94,7 @@ $mails = $Mailbox->getMails();
 
 <script type="text/javascript">
 
-    <?php $mails = $this->getVar('Mailbox')->getMails(); ?>
     <?php if (!empty($mails)) { ?>
-    // global var
     var $$$showMailbox__checkboxes = document.getElementsByName('$$$showMailbox__selectedMails[]');
 
     // add "selectAll"-function
@@ -133,7 +133,7 @@ $mails = $Mailbox->getMails();
     <?php } ?>
     <?php } ?>
 
-    /* ****************************** update mailbox ******************** */
+    # ############################ update mailbox ############################ #
 
     // global vars
     var $$$showMailbox__updater_box;
@@ -197,7 +197,7 @@ $mails = $Mailbox->getMails();
 	    type: "GET",
 	    url: "ajax.php",
 	    async:true,
-	    data: "<?php $this->setUrl('$$$updateMailbox', array('$$$id' => $this->getVar('Mailbox')->getInfo('id')), false, true, false); ?>",
+	    data: "<?php $this->setUrl('$$$updateMailbox', array('$$$id' => $Mailbox->getInfo('id')), false, true, false); ?>",
 	    success: function(t){
 	    $$$handleAjaxSuccess(t);
 	}
@@ -265,7 +265,7 @@ $mails = $Mailbox->getMails();
 	return false;
     }
 
-    <?php if (count($this->getVar('Mailbox')->getMails()) > 0) { ?>
+    <?php if (count($mails) > 0) { ?>
     // show and hide buttons
     document.getElementById('$$$showMailbox__selectMails_container').style.display = 'block';
     $system$removeElement(document.getElementById('$$$showMailbox__submit_move'));
