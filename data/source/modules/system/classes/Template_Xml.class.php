@@ -67,5 +67,14 @@ class $$$Template_Xml extends $$$Template {
 	public function displaySub ($type, $design = 0) {
 		return true;
 	}
+
+	/* include template
+	 * @param object: File object
+	 *
+	 * @return bool
+	 */
+	protected function _include ($File) {
+		include $File->getPath();
+	}
 }
 ?>

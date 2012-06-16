@@ -378,6 +378,7 @@ class TSunic {
 			// add as error
 			// TODO
 			echo '<error>'.$output.'</error>';
+			exit;
 		} else {
 			// delete session
 			session_unset();

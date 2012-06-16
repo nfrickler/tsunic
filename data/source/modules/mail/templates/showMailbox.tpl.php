@@ -27,7 +27,7 @@ $mails = $Mailbox->getMails();
 		<th style="width:120px;"><?php $this->set('{SHOWMAILBOX__FROMADDRESS}'); ?></th>
 	    </tr>
 	    <?php foreach ($mails as $index => $mail) { ?>
-	    <?php $bg_color = ($mail->isUnseen()) ? '#EEE' : '#DDD';  ?>
+	    <?php $bg_color = ($mail->isUnseen()) ? '#EEE' : '#DDD'; ?>
 	    <tr style="background:<?php echo $bg_color; ?>; margin:1px; padding:5px;">
 		<td>
 		    <input type="checkbox" name="$$$showMailbox__selectedMails[]" value="<?php $this->set($mail->getInfo('id')); ?>" />
@@ -93,7 +93,6 @@ $mails = $Mailbox->getMails();
 </div>
 
 <script type="text/javascript">
-
     <?php if (!empty($mails)) { ?>
     var $$$showMailbox__checkboxes = document.getElementsByName('$$$showMailbox__selectedMails[]');
 
@@ -274,5 +273,4 @@ $mails = $Mailbox->getMails();
 
     // check for new mails
     setTimeout('$$$showMailbox__checkForNewMails();', <?php echo ($Mailbox->timeToCheck() * 1000); ?>);
-
 </script>

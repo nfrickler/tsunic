@@ -12,6 +12,6 @@ $TSunic = new TSunic();
 // return JS-code
 $code = $TSunic->Tmpl->getAllJavascript();
 foreach ($code as $index => $value) {
-    echo base64_decode($value);
+    echo $value;
 }
 ?>

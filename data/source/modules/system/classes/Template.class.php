@@ -132,8 +132,8 @@ class $$$Template {
 		exit;
 	}
 
-	/* display other template
-	 * @param object: file-object
+	/* include template
+	 * @param object: File object
 	 *
 	 * @return bool
 	 */

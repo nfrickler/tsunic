@@ -15,8 +15,6 @@ class $$$Mail extends $system$Object {
     protected function loadInfoSql () {
 	global $TSunic;
 	return "SELECT _subject_ as subject,
-		    _plaincontent_ as plaincontent,
-		    _htmlcontent_ as htmlcontent,
 		    fk_mailbox,
 		    charset,
 		    _sender_ as sender,
@@ -33,13 +31,35 @@ class $$$Mail extends $system$Object {
     }
 
     /* get content of mail (prefer html)
+     * +@param string: type of content (plain or html)
      *
-     * @return string/bool
+     * @return string
      */
-    public function getContent () {
-	$content = $this->getHtmlContent();
-	if (empty($content)) $content = $this->getPlainContent();
-	return $content;
+    public function getContent ($type = 'plain') {
+	global $TSunic;
+
+	// load content from database
+	if (!isset($this->info['htmlcontent'])) {
+
+	    $sql = "SELECT _plaincontent_ as plaincontent,
+			_htmlcontent_ as htmlcontent
+		    FROM #__mails
+		    WHERE id = '".$this->id."';";
+	    $result = $TSunic->Db->doSelect($sql);
+	    if (!$result) return '';
+
+	    // parse and save
+	    $Parser = $TSunic->get('$system$Parser');
+	    $this->info['plaincontent'] =
+		$Parser->toText(base64_decode($result[0]['plaincontent']));
+	    $this->info['htmlcontent'] =
+		$Parser->toHtml(base64_decode($result[0]['htmlcontent']));
+	}
+
+	if ($type == 'plain') return $this->info['plaincontent'];
+	if ($type == 'html') return $this->info['htmlcontent'];
+	return (empty($this->info['htmlcontent']))
+	    ? $this->info['plaincontent'] : $this->info['htmlcontent'];
     }
 
     /* get plain content of mail
@@ -47,10 +67,7 @@ class $$$Mail extends $system$Object {
      * @return string
      */
     public function getPlainContent () {
-	global $TSunic;
-	return $TSunic->Parser->toText(
-	    base64_decode($this->getInfo('plaincontent'))
-	);
+	return $this->getContent('plain');
     }
 
     /* get html content of mail
@@ -58,10 +75,7 @@ class $$$Mail extends $system$Object {
      * @return string
      */
     public function getHtmlContent () {
-	global $TSunic;
-	return $TSunic->Parser->toHtml(
-	    base64_decode($this->getInfo('htmlcontent'))
-	);
+	return $this->getContent('html');
     }
 
     /* get attachments of mail (as objects)

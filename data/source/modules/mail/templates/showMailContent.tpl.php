@@ -1,19 +1,14 @@
 <!-- | Template: show content of mail -->
 <?php
-
-// get input
 $Mail = $this->getVar('mail');
 
-// return content of mail
-$content = $Mail->getContent();
-
-// print html-mail
-if (strstr($content, "<html")) {
-	echo $content;
-	return;
+// print HTML mail
+if ($Mail->getHtmlContent()) {
+    echo $Mail->getHtmlContent();
+    return;
 }
 
-// print plain-text
+// print plain mail
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +18,6 @@ if (strstr($content, "<html")) {
 		<title><?php echo $Mail->getInfo('subject'); ?></title>
 	</head>
 	<body>
-		<?php echo $content; ?>
+		<?php echo $Mail->getPlainContent(); ?>
 	</body>
 </html>

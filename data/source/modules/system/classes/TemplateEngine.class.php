@@ -430,7 +430,7 @@ class $$$TemplateEngine {
 		return true;
 	}
 
-	/* returns all javascript-code from all templates
+	/* add JavaScript code to cache
 	 *
 	 * @return bool
 	 */
@@ -444,13 +444,13 @@ class $$$TemplateEngine {
 			$_SESSION['$$$TemplateEngine__extractedJS'] = array();
 
 		// save in SESSION
-		$_SESSION['$$$TemplateEngine__extractedJS'][$template] = base64_encode($input);
+		$_SESSION['$$$TemplateEngine__extractedJS'][$template] = $input;
 
 		return true;
 	}
 
-	/* returns all javascript-code from all templates
-	 * +@param bool: delete code afterwards
+	/* returns all JavaScript code from cache
+	 * +@param bool: return and flush?
 	 *
 	 * @return bool
 	 */
