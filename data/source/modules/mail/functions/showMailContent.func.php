@@ -1,23 +1,23 @@
 <!-- | function to show content of mail -->
 <?php
 function $$$showMailContent () {
-	global $TSunic;
+    global $TSunic;
 
-	// get mail object
-	$id = $TSunic->Temp->getParameter('$$$id');
-	$Mail = $TSunic->get('$$$Mail', $id);
+    // get mail object
+    $id = $TSunic->Temp->getParameter('$$$id');
+    $Mail = $TSunic->get('$$$Mail', $id);
 
-	// activate template
-	$data = array('mail' => $Mail);
-	$TSunic->Tmpl->activate('$$$showMailContent', false, $data);
+    // activate template
+    $data = array('mail' => $Mail);
+    $TSunic->Tmpl->activate('$$$showMailContent', false, $data);
 
-	// set charset
-	$charset = $Mail->getInfo('charset');
-	if (!empty($charset)) {
-		header('Content-Type: text/html; charset='.$charset);
+    // set charset
+    $charset = $Mail->getInfo('charset');
+    if (!empty($charset)) {
+	header('Content-Type: text/html; charset='.$charset);
 
-	}
+    }
 
-	return true;
+    return true;
 }
 ?>

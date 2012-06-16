@@ -1,17 +1,17 @@
 <!-- | function to ask, if SMTP shall be deleted -->
 <?php
 function $$$showDeleteSmtp () {
-	global $TSunic;
+    global $TSunic;
 
-	// get Smtp object
-	$id = $TSunic->Temp->getParameter('$$$id');
-	$Smtp = $TSunic->get('$$$Smtp', $id);
+    // get Smtp object
+    $id = $TSunic->Temp->getParameter('$$$id');
+    $Smtp = $TSunic->get('$$$Smtp', $id);
 
-	// activate template
-	$data = array('Smtp' => $Smtp);
-	$TSunic->Tmpl->activate('$$$showDeleteSmtp', '$system$content', $data);
-	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETESMTP__TITLE}'));
+    // activate template
+    $data = array('Smtp' => $Smtp);
+    $TSunic->Tmpl->activate('$$$showDeleteSmtp', '$system$content', $data);
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETESMTP__TITLE}'));
 
-	return true;
+    return true;
 }
 ?>

@@ -1,18 +1,18 @@
 <!-- | function to show system navigation -->
 <?php
 function $$$_showSystemNavigation () {
-	global $TSunic;
+    global $TSunic;
 
-	// create new SuperMail-object
-	$SuperMail = $TSunic->get('$$$SuperMail');
+    // create new SuperMail-object
+    $SuperMail = $TSunic->get('$$$SuperMail');
 
-	// get all mailboxes
-	$mailboxes = $SuperMail->getMailboxes();
+    // get all mailboxes
+    $mailboxes = $SuperMail->getMailboxes();
 
-	// activate template
-	$data = array('mailboxes' => $mailboxes);
-	$TSunic->Tmpl->activate('$$$_system_navigation', '$navigation$show', $data);
+    // activate template
+    $data = array('mailboxes' => $mailboxes);
+    $TSunic->Tmpl->activate('$$$_system_navigation', '$navigation$show', $data);
 
-	return true;
+    return true;
 }
 ?>
