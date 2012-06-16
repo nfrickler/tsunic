@@ -13,7 +13,7 @@ class $$$Smtp extends $system$Object {
 	 */
 	protected $Mailaccount;
 
-	/* timeout for smtp-connection in seconds
+	/* timeout for SMTP connection in seconds
 	 * int
 	 */
 	protected $timeout = 5;
@@ -21,15 +21,15 @@ class $$$Smtp extends $system$Object {
 	/* password-authentifications
 	 * array
 	 */
-	protected $auths = array(1 => array(
-		'{CLASS__SMTP__AUTHS_NORMAL}', ''),
+	protected $auths = array(
+		1 => array('{CLASS__SMTP__AUTHS_NORMAL}', ''),
 		2 => array('{CLASS__SMTP__AUTHS_ENCRYPTEDPWD}', 'secure'),
 		//  3 => array('{CLASS__SMTP__AUTHS_NTLM}', ''), // not supported
 		//  4 => array('{CLASS__SMTP__AUTHS_KERBEROS_GSSAPI}', ''), // not supported
 		5 => array('{CLASS__SMTP__AUTHS_NOAUTH}', '')
 	);
 
-	/* connections-securities
+	/* connections securities
 	 * array
 	 */
 	protected $connsecurities = array(
@@ -293,6 +293,7 @@ class $$$Smtp extends $system$Object {
 				auth = '".$this->getAuth($this->getInfo('auth'), true)."'
 			WHERE id = '".$this->id."';
 		";
+
 		$result = $TSunic->Db->doUpdate($sql);
 
 		// update object
@@ -309,7 +310,7 @@ class $$$Smtp extends $system$Object {
 	 *
 	 * @return bool
 	 */
-	public function editSmtp ($email, $password, $description = '', $emailname = '') {
+	public function edit ($email, $password, $description = '', $emailname = '') {
 
 		// validate input
 		if (!$this->isValidEMail($email)
@@ -435,10 +436,11 @@ class $$$Smtp extends $system$Object {
 	 * @return bool
 	 */
 	public function isValidPassword ($password) {
-		if (empty($password)) return false;
 
 		// make sure, infos are loaded
 		$this->getInfo('dateOfCreation');
+
+		if (empty($password) and empty($this->password)) return false;
 
 		// check, if no password set
 		if ($password == '**********'
@@ -473,7 +475,7 @@ class $$$Smtp extends $system$Object {
 	 * @return bool
 	 */
 	public function isValidSubject ($subject) {
-		return $this->_validate($subject, 'string');
+		return $this->_validate($subject, 'text');
 	}
 
 	/* check, if message is valid
@@ -482,7 +484,7 @@ class $$$Smtp extends $system$Object {
 	 * @return bool
 	 */
 	public function isValidMessage ($message) {
-		return $this->_validate($message, 'string');
+		return $this->_validate($message, 'html');
 	}
 
 	/* check, if addressee is valid
@@ -537,7 +539,7 @@ class $$$Smtp extends $system$Object {
 		// get matching entries from connection table
 		$sql_auth = ($auth === false) ? '' : "auth = '".$auth."' AND ";
 		$sql_connsecurity = ($connsecurity === false) ? '' : "connsecurity = '".$connsecurity."' AND ";
-		$sql_0 = "SELECT suffix as suffix,
+		$sql = "SELECT suffix as suffix,
 					host as host,
 					port as port,
 					auth as auth,
@@ -550,12 +552,12 @@ class $$$Smtp extends $system$Object {
 					OR suffix = '')
 					".$host_lookup."
 				ORDER BY suffix DESC;";
-		$result_0 = $TSunic->Db->doSelect($sql_0);
+		$result = $TSunic->Db->doSelect($sql);
 
 		// check all possibilities until found right one
 		$time_start = time();
 		$checked_versions = array();
-		foreach ($result_0 as $index => $values) {
+		foreach ($result as $index => $values) {
 
 			// check for try-timeout (assumed php-timeout of 60s)
 			$time_try = time() - $time_start;
@@ -596,7 +598,7 @@ class $$$Smtp extends $system$Object {
 
 	/* ************************** send mail *******************************/
 
-	/* send-mail
+	/* send mail
 	 * @param string: subject of mail
 	 * @param string: message to send
 	 * @param array: addressees of mail
@@ -604,13 +606,19 @@ class $$$Smtp extends $system$Object {
 	 * @return bool
 	 */
 	public function send ($subject, $message, $addressees) {
+var_dump('send1');
 		if (!$this->isValid()) return false;
 		if (!is_array($addressees)) $addressees = array($addressees);
+var_dump('send2');
 
 		// validate input
 		if (!$this->isValidSubject($subject)
 			OR !$this->isValidMessage($message)
 		) {
+var_dump($this->isValidSubject($subject));
+var_dump($this->isValidMessage($message));
+var_dump($subject);
+var_dump($message);
 			$this->setError('Invalid input!');
 			return false;
 		}
@@ -620,12 +628,14 @@ class $$$Smtp extends $system$Object {
 				return false;
 			}
 		}
+var_dump('send3');
 
 		// initialize connection
 		if (!$this->getConnection()) {
 			$this->setError('Connection to SMTP-Server failed!');
 			return false;
 		}
+var_dump('send4');
 
 		// set sender
 		$this->sendData('MAIL FROM: <'.$this->getInfo('email').'>');
@@ -634,6 +644,7 @@ class $$$Smtp extends $system$Object {
 			return false;
 		}
 
+var_dump('send5');
 		// set addressees
 		foreach ($addressees as $index => $value) {
 
@@ -652,6 +663,7 @@ class $$$Smtp extends $system$Object {
 			return false;
 		}
 
+var_dump('send7');
 		// get headers
 		$headers = '';
 		$headers['SUBJECT'] = $subject;
@@ -672,6 +684,7 @@ class $$$Smtp extends $system$Object {
 		// send headers
 		$this->sendData(implode("\r\n", $cache)."\r\n\r\n");
 
+var_dump('send10');
 		// get content
 		$message = str_replace("\r\n", "\n", $message);
 		$message = wordwrap($message, 70);
@@ -686,6 +699,7 @@ class $$$Smtp extends $system$Object {
 			return false;
 		}
 
+var_dump('send15');
 		// close connection
 		$this->closeConnection();
 
@@ -694,17 +708,17 @@ class $$$Smtp extends $system$Object {
 
 	/* *********************** connection-handling ************************/
 
-	/* send-mail
+	/* get connection to server
 	 *
 	 * @return bool/stream
 	 */
 	public function getConnection () {
 
+		// check, if valid SMTP server
+		if (!$this->isValid()) return false;
+
 		// check, if already connected
 		if (!empty($this->conn)) return $this->conn;
-
-		// check, if valid smtp-server
-		if (!$this->isValid()) return false;
 
 		// get host
 		$host = $this->getInfo('host');
@@ -716,6 +730,7 @@ class $$$Smtp extends $system$Object {
 		$this->conn = @fsockopen($host, $this->getInfo('port'), $errno, $errstr, $this->timeout);
 		if (!$this->conn OR $this->getStatus() != 220) {
 			// service not ready
+			$this->conn = NULL;
 			return false;
 		}
 
@@ -725,12 +740,12 @@ class $$$Smtp extends $system$Object {
 		// check, if connection exist
 		if (!$this->conn) {
 			// error occurred
-			$this->conn = false;
 
 			// save error in obj-vars
 			$this->errors['errno'] = $errno;
 			$this->errors['errstr'] = $errstr;
 
+			$this->conn = NULL;
 			return false;
 		}
 
@@ -742,7 +757,10 @@ class $$$Smtp extends $system$Object {
 			$this->sendData('HELO '.$this->getInfo('host'));
 
 			// check answer
-			if ($this->getStatus() != 250) return false;
+			if ($this->getStatus() != 250) {
+				$this->conn = NULL;
+				return false;
+			}
 		}
 
 		// initiate TLS
@@ -763,12 +781,16 @@ class $$$Smtp extends $system$Object {
 
 				// TODO
 
+				$this->conn = NULL;
 				return false;
 			}
 		}
 
 		// try to authenticate
-		if (!$this->authenticate()) return false;
+		if (!$this->authenticate()) {
+			$this->conn = NULL;
+			return false;
+		}
 
 		// return
 		return $this->conn;

@@ -1,4 +1,4 @@
-<!-- | function to edit Smtp -->
+<!-- | FUNCTION edit Smtp -->
 <?php
 function $$$editSmtp () {
 	global $TSunic;
@@ -21,21 +21,16 @@ function $$$editSmtp () {
 
 	// validate input
 	if (!$Smtp->isValidEMail($email)
-			OR !$Smtp->isValidPassword($password)
-			OR !$Smtp->isValidDescription($description)
-			OR !$Smtp->isValidEMailname($emailname)
-			OR !$Smtp->isValidHost($host)
-			OR !$Smtp->isValidPort($port)
-			OR !$Smtp->isValidAuth($auth)
-			OR !$Smtp->isValidConnsecurity($connsecurity)
+		OR !$Smtp->isValidPassword($password)
+		OR !$Smtp->isValidDescription($description)
+		OR !$Smtp->isValidEMailname($emailname)
 	) {
-		// invalid input
 		$TSunic->Log->alert('error', '{EDITSMTP__INVALIDINPUT}');
 		$TSunic->redirect('back');
 	}
 
 	// edit smtp
-	if (!$Smtp->editSmtp($email, $password, $description, $emailname)) {
+	if (!$Smtp->edit($email, $password, $description, $emailname)) {
 		$TSunic->Log->alert('error', '{EDITSMTP__ERROR}');
 		$TSunic->redirect('back');
 	}

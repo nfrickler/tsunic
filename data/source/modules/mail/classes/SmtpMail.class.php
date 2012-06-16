@@ -118,7 +118,7 @@ class $$$SmtpMail extends $$$Smtp {
 	 *
 	 * @return bool
 	 */
-	public function sendMail ($subject, $message, $addressees) {
+	public function send ($subject, $message, $addressees) {
 		global $TSunic;
 		if (!$this->isValid()) return false;
 		if (!is_array($addressees)) $addressees = array($addressees);

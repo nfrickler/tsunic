@@ -1,4 +1,4 @@
-<!-- | function to add new Smtp -->
+<!-- | FUNCTION add new Smtp -->
 <?php
 function $$$addSmtp () {
 	global $TSunic;

@@ -2,11 +2,6 @@
 <?php
 class $$$Validator {
 
-    /* "normal" letters
-     * string
-     */
-    protected $letters = "a-zA-Z0-9äöüÄÖÜ";
-
     /* is string (harmless chars only)
      * @param string: input value
      *
@@ -22,7 +17,25 @@ class $$$Validator {
      * @return bool
      */
     public function isExtString ($input) {
-	return (self::_isMatch("%[^-_a-z0-9äöü@\.!\?;,]%i", $input)) ? false : true;
+	return (self::_isMatch("%[^\\\/-_a-z0-9äöü@\.!\?;,]%i", $input)) ? false : true;
+    }
+
+    /* is text (extended, with newlines)
+     * @param string: input value
+     *
+     * @return bool
+     */
+    public function isText ($input) {
+	return (self::_isMatch('%[^\\\/\wäöü\d-_@\.!\?;,\s\n\r]%si', $input)) ? false : true;
+    }
+
+    /* is html text
+     * @param string: input value
+     *
+     * @return bool
+     */
+    public function isHtml ($input) {
+	return (self::_isMatch('%[^\\\/\wäöü\d-_@\.!\?;,\s\n\r<>]%si', $input)) ? false : true;
     }
 
     /* is filename

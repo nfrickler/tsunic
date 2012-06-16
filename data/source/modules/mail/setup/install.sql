@@ -118,14 +118,20 @@ INSERT INTO `#__knownservers` (`id`, `suffix`, `host`, `port`, `protocol`, `auth
 (6, '', 'imap.#suffix#', 993, 1, 1, 3, 1),
 (7, '', 'pop.#suffix#', 110, 2, 1, 1, 1),
 (8, '', 'pop.#suffix#', 995, 2, 1, 3, 1),
-(9, 'aol.com', 'imap.de.aol.com', 143, 1, 1, 1, 1),
-(10, 'gmx.de', 'pop.gmx.com', 995, 2, 1, 3, 2),
-(11, '', 'mail.#suffix#', 25, -1, 1, 0, 1),
-(12, 'web.de', 'smtp.web.de', 587, -1, 1, 2, 1),
-(13, '', 'smtp.#suffix#', 25, -1, 1, 0, 1),
-(14, '', 'mail.#suffix#', 587, -1, 1, 2, 1),
-(15, 'gmx.de', 'smtp.gmx.com', 25, -1, 1, 3, 2),
-(16, 'aol.com', 'smtp.de.aol.com', 587, -1, 5, 1, 1),
-(17, 'web.de', 'imap.web.de', 993, 1, 1, 3, 1),
-(18, 'gmx.de', 'imap.gmx.com', 993, 1, 1, 3, 2),
-(19, 't-online.de', 'secureimap.t-online.de', 993, 1, 1, 3, 2);
+(9, '', 'mail.#suffix#', 25, -1, 1, 0, 1),
+(10, '', 'smtp.#suffix#', 25, -1, 1, 0, 1),
+(11, '', 'mail.#suffix#', 587, -1, 1, 2, 1),
+
+(12, 't-online.de', 'secureimap.t-online.de', 993, 1, 1, 3, 2),
+(23, 't-online.de', 'securesmtp.t-online.de', 587, -1, 1, 2, 1),
+
+(14, 'aol.com', 'imap.de.aol.com', 143, 1, 1, 1, 1),
+(15, 'aol.com', 'smtp.de.aol.com', 587, -1, 5, 1, 1),
+
+(16, 'gmx.de', 'smtp.gmx.com', 25, -1, 1, 3, 2),
+(17, 'gmx.de', 'imap.gmx.com', 993, 1, 1, 3, 2),
+(18, 'gmx.de', 'pop.gmx.com', 995, 2, 1, 3, 2),
+
+(19, 'web.de', 'smtp.web.de', 587, -1, 1, 2, 1),
+(20, 'web.de', 'imap.web.de', 993, 1, 1, 3, 1)
+;

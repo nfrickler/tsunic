@@ -16,6 +16,7 @@ class $$$Mail extends $system$Object {
 	global $TSunic;
 	return "SELECT _subject_ as subject,
 		    fk_mailbox,
+		    fk_smtp,
 		    charset,
 		    _sender_ as sender,
 		    dateOfMail,

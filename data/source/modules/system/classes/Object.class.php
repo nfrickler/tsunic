@@ -149,6 +149,10 @@ class $$$Object {
 		return $$$Validator::isString($value);
 	    case 'extString':
 		return $$$Validator::isExtString($value);
+	    case 'text':
+		return $$$Validator::isText($value);
+	    case 'html':
+		return $$$Validator::isHtml($value);
 	    case 'filename':
 		return $$$Validator::isFilename($value);
 	    case 'int':

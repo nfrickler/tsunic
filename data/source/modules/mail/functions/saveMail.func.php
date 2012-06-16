@@ -1,4 +1,4 @@
-<!-- | function to save mail -->
+<!-- | FUNCTION save and send mail -->
 <?php
 function $$$saveMail () {
 	global $TSunic;
