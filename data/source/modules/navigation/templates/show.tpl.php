@@ -1,4 +1,4 @@
 <!-- | -->
 <div id="$$$div__show">
-	<?php $this->displaySub(); ?>
+    <?php $this->displaySub(); ?>
 </div>
