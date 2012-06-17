@@ -87,7 +87,7 @@ global $Config;
     </div>
     <div class="div_tsunic_topright">
 	<a href="../index.php" target="_blank">
-	    <img src="templates/images/tsunic4_logo_4.1.png" alt="TSunic Logo" style="width:80px; height:80px;" /></a>
+	    <img src="templates/images/tsunic4_logo.png" alt="TSunic Logo" style="width:80px; height:80px;" /></a>
     </div>
 </body>
 </html>
