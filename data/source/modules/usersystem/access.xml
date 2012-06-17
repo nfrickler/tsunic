@@ -1,12 +1,12 @@
 <!-- | access -->
 <all>
-	<access default="1">listAllUsers</access>
-	<access default="0">seeAllData</access>
-	<access default="0">seeAllAccess</access>
-	<access default="0">seeOwnAccess</access>
-	<access default="0">editAllAccess</access>
-	<access default="0">editAllUsers</access>
-	<access default="0">deleteAllUsers</access>
-	<access default="0">seeAllConfig</access>
-	<access default="0">editAllConfig</access>
+    <access default="1">listAllUsers</access>
+    <access default="0">seeAllData</access>
+    <access default="0">seeAllAccess</access>
+    <access default="0">seeOwnAccess</access>
+    <access default="0">editAllAccess</access>
+    <access default="0">editAllUsers</access>
+    <access default="0">deleteAllUsers</access>
+    <access default="0">seeAllConfig</access>
+    <access default="0">editAllConfig</access>
 </all>

@@ -1,31 +1,31 @@
 <!-- | css format -->
 
 #$$$div__userheader {
-	position:absolute;
-	padding:0px;
-	margin:0px;
-	top:0px;
-	right:0px;
-	height:80px;
-	width:300px;
-	overflow:hidden;
-	background:#DDB;
+    position:absolute;
+    padding:0px;
+    margin:0px;
+    top:0px;
+    right:0px;
+    height:80px;
+    width:300px;
+    overflow:hidden;
+    background:#DDB;
 }
 #$$$div__userheader__topright {
-	position:absolute;
-	top:0px;
-	right:0px;
-	padding:2px;
-	margin:0px;
-	text-align:right;
+    position:absolute;
+    top:0px;
+    right:0px;
+    padding:2px;
+    margin:0px;
+    text-align:right;
 }
 #$$$div__userheader__image {
-	position:absolute;
-	bottom:0px;
-	right:0px;
-	border:0px;
-	border-top:5px solid #CCA;
-	border-left:5px solid #CCA;
-	width:55px;
-	height:55px;
+    position:absolute;
+    bottom:0px;
+    right:0px;
+    border:0px;
+    border-top:5px solid #CCA;
+    border-left:5px solid #CCA;
+    width:55px;
+    height:55px;
 }
