@@ -2,10 +2,10 @@
 <?php
 class $$$Time {
 
-	/* constructor
-	 */
-	public function __construct () {
-		return;
-	}
+    /* constructor
+     */
+    public function __construct () {
+	return;
+    }
 }
 ?>

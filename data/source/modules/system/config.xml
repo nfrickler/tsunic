@@ -1,5 +1,5 @@
 <!-- | config file -->
 <all>
-	<config default="de" formtype="select" options="loadLanguages">language</config>
-	<config default="sunrise" formtype="select" options="loadStyles">style</config>
+    <config default="de" formtype="select" options="loadLanguages">language</config>
+    <config default="sunrise" formtype="select" options="loadStyles">style</config>
 </all>

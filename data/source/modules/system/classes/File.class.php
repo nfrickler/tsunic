@@ -2,407 +2,407 @@
 <?php
 class $$$File {
 
-	/* path of file
-	 * string
-	 */
-	protected $path;
+    /* path of file
+     * string
+     */
+    protected $path;
 
-	/* create no log-messages?
-	 * bool
-	 */
-	protected $silent_mode;
+    /* create no log-messages?
+     * bool
+     */
+    protected $silent_mode;
 
-	/* mime_type of file
-	 * string
-	 */
-	protected $mime_type;
+    /* mime_type of file
+     * string
+     */
+    protected $mime_type;
 
-	/* allowed letters in filename
-	 * regex-string
-	 */
-	protected $allowed_letters = 'A-Za-z0-9_-.';
+    /* allowed letters in filename
+     * regex-string
+     */
+    protected $allowed_letters = 'A-Za-z0-9_-.';
 
-	/* constructor
-	 * +@param bool/string: path of file
-	 */
-	public function __construct ($path = false, $silent_mode = false) {
+    /* constructor
+     * +@param bool/string: path of file
+     */
+    public function __construct ($path = false, $silent_mode = false) {
 
-		// save input
-		$this->setPath($path);
-		$this->silent_mode = $silent_mode;
+	// save input
+	$this->setPath($path);
+	$this->silent_mode = $silent_mode;
 
-		return;
+	return;
+    }
+
+    /* set path
+     * @param string: path of file
+     *
+     * @return bool
+     */
+    public function setPath ($path) {
+	global $TSunic;
+
+	// get phrases to replace
+	$to_replace = array();
+	$to_replace['#runtime#'] = $TSunic->Config->getRoot().'/runtime/';
+	$to_replace['#private#'] = $TSunic->Config->getRoot(true).'/files/private/';
+	$to_replace['#cache#'] = $TSunic->Config->getRoot(true).'/files/cache/';
+	$to_replace['#public#'] = $TSunic->Config->getRoot().'/files/public/';
+	$to_replace['#project#'] = $TSunic->Config->getRoot().'/files/project/';
+
+	// replace phrases
+	foreach ($to_replace as $index => $value) {
+	    $path = str_replace($index, $value, $path);
 	}
 
-	/* set path
-	 * @param string: path of file
-	 *
-	 * @return bool
-	 */
-	public function setPath ($path) {
-		global $TSunic;
+	// save path in obj-var
+	$this->path = $path;
 
-		// get phrases to replace
-		$to_replace = array();
-		$to_replace['#runtime#'] = $TSunic->Config->getRoot().'/runtime/';
-		$to_replace['#private#'] = $TSunic->Config->getRoot(true).'/files/private/';
-		$to_replace['#cache#'] = $TSunic->Config->getRoot(true).'/files/cache/';
-		$to_replace['#public#'] = $TSunic->Config->getRoot().'/files/public/';
-		$to_replace['#project#'] = $TSunic->Config->getRoot().'/files/project/';
+	return true;
+    }
 
-		// replace phrases
-		foreach ($to_replace as $index => $value) {
-			$path = str_replace($index, $value, $path);
-		}
+    /* ######################### get info about file #################### */
 
-		// save path in obj-var
-		$this->path = $path;
+    /* check, if valid file
+     *
+     * @return bool
+     */
+    public function isValid () {
+	return $this->isFile();
+    }
 
-		return true;
+    /* get mime-type of file
+     *
+     * @return string
+     */
+    public function getMimeType () {
+	$type = false;
+
+	// check, if file exist
+	if (!$this->isFile()) return false;
+
+	// heck, if mime_type already checked
+	if (!empty($this->mime_type)) return $this->mime_type;
+
+	// try to get mime-type
+	if (function_exists('finfo_file')) {
+
+	    // PHP >= 5.3.0, PECL fileinfo >= 0.1.0
+	    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+	    // get absolute path
+	    $path = $this->getPath();
+
+	    // get info
+	    $type = finfo_file($finfo, $path);
+	    finfo_close($finfo);
+	} else {
+	    // PHP < 5.3.0
+	    // require_once 'upgradephp/ext/mime.php';
+	    $type = mime_content_type($this->getPath());
 	}
 
-	/* ######################### get info about file #################### */
-
-	/* check, if valid file
-	 *
-	 * @return bool
-	 */
-	public function isValid () {
-		return $this->isFile();
+	// try OS file-command
+	if (!$type OR $type == 'application/octet-stream') {
+	    $secondOpinion = exec(
+		'file -b --mime-type '.escapeshellarg($this->getPath()),
+		$foo,
+		$returnCode
+	    );
+	    if ($returnCode == '0' && $secondOpinion) {
+		$type = $secondOpinion;
+	    }
 	}
 
-	/* get mime-type of file
-	 *
-	 * @return string
-	 */
-	public function getMimeType () {
-		$type = false;
-
-		// check, if file exist
-		if (!$this->isFile()) return false;
-
-		// heck, if mime_type already checked
-		if (!empty($this->mime_type)) return $this->mime_type;
-
-		// try to get mime-type
-		if (function_exists('finfo_file')) {
-
-			// PHP >= 5.3.0, PECL fileinfo >= 0.1.0
-			$finfo = finfo_open(FILEINFO_MIME_TYPE);
-
-			// get absolute path
-			$path = $this->getPath();
-
-			// get info
-			$type = finfo_file($finfo, $path);
-			finfo_close($finfo);
-		} else {
-			// PHP < 5.3.0
-			// require_once 'upgradephp/ext/mime.php';
-			$type = mime_content_type($this->getPath());
-		}
-
-		// try OS file-command
-		if (!$type OR $type == 'application/octet-stream') {
-			$secondOpinion = exec(
-				'file -b --mime-type '.escapeshellarg($this->getPath()),
-				$foo,
-				$returnCode
-			);
-			if ($returnCode == '0' && $secondOpinion) {
-				$type = $secondOpinion;
-			}
-		}
-
-		// try exif_imagetype
-		if (!$type OR $type == 'application/octet-stream') {
-			// require_once 'upgradephp/ext/mime.php';
-			$exifImageType = exif_imagetype($this->getPath());
-			if ($exifImageType !== false) {
-				$type = image_type_to_mime_type($exifImageType);
-			}
-		}
-
-		// save type in obj-vars
-		$this->mime_type = $type;
-		return $type;
+	// try exif_imagetype
+	if (!$type OR $type == 'application/octet-stream') {
+	    // require_once 'upgradephp/ext/mime.php';
+	    $exifImageType = exif_imagetype($this->getPath());
+	    if ($exifImageType !== false) {
+		$type = image_type_to_mime_type($exifImageType);
+	    }
 	}
 
-	/* check, if file exist
-	 *
-	 * @return bool
-	 */
-	public function isFile () {
-		return file_exists($this->getPath());
+	// save type in obj-vars
+	$this->mime_type = $type;
+	return $type;
+    }
+
+    /* check, if file exist
+     *
+     * @return bool
+     */
+    public function isFile () {
+	return file_exists($this->getPath());
+    }
+
+    /* get path
+     * +@param bool: get folder-path only
+     *
+     * @return string/bool
+     */
+    public function getPath ($folder_only = false) {
+
+	// is path?
+	if (empty($this->path)) return false;
+
+	// folder-path only?
+	if ($folder_only) {
+
+	    $cache = explode('/', $this->path);
+
+	    // is already a folder?
+	    if (!strstr(end($cache), '.')) return $this->path;
+
+	    // get folder
+	    unset($cache[(count($cache)-1)]);
+	    return implode('/', $cache);
 	}
 
-	/* get path
-	 * +@param bool: get folder-path only
-	 *
-	 * @return string/bool
-	 */
-	public function getPath ($folder_only = false) {
+	// return full path
+	return $this->path;
+    }
 
-		// is path?
-		if (empty($this->path)) return false;
+    /* get filename
+     *
+     * @return string
+     */
+    public function getFilename () {
+	return (empty($this->path)) ? false : basename($this->path);
+    }
 
-		// folder-path only?
-		if ($folder_only) {
+    /* ##################### delete/move/rename ######################### */
 
-			$cache = explode('/', $this->path);
+    /* upload file
+     * @param string: path, where file is going to be moved to
+     *
+     * @return bool
+     */
+    public function uploadFile ($new_path) {
+	// TODO
+	return true;
+    }
 
-			// is already a folder?
-			if (!strstr(end($cache), '.')) return $this->path;
+    /* delete file
+     *
+     * @return bool
+     */
+    public function deleteFile () {
+	return (!file_exists($this->getPath())
+	    OR unlink($this->getPath())) ? true : false;
+    }
 
-			// get folder
-			unset($cache[(count($cache)-1)]);
-			return implode('/', $cache);
-		}
+    /* rename file
+     * @param string: new name of file
+     *
+     * @return bool
+     */
+    public function renameFile ($new_name) {
 
-		// return full path
-		return $this->path;
+	// check $new_name
+	if (preg_match('°[^'.$this->allowed_letters.']°', $new_name) != 0) {
+	    // invalid filename
+	    return false;
 	}
 
-	/* get filename
-	 *
-	 * @return string
-	 */
-	public function getFilename () {
-		return (empty($this->path)) ? false : basename($this->path);
+	// get new path
+	$new_path = strrev(strrchr(strrev($this->getPath()), '/'));
+	$new_path.= $new_name;
+
+	// rename file
+	if (rename($this->getPath(), $new_path)) {
+	    $this->path = $new_path;
+	    return true;
 	}
 
-	/* ##################### delete/move/rename ######################### */
+	return false;
+    }
 
-	/* upload file
-	 * @param string: path, where file is going to be moved to
-	 *
-	 * @return bool
-	 */
-	public function uploadFile ($new_path) {
-		// TODO
-		return true;
+    /* move file
+     * @param string: path, where file is going to be moved to
+     *
+     * @return bool
+     */
+    public function moveFile ($new_path) {
+
+	// check dir
+	// TODO
+
+	// create dir, if neccessary
+	// TODOMimeType 
+
+	// move file
+	if (rename($this->getPath(), $new_path)) {
+	    $this->path = $new_path;
+	    return true;
 	}
 
-	/* delete file
-	 *
-	 * @return bool
-	 */
-	public function deleteFile () {
-		return (!file_exists($this->getPath())
-			OR unlink($this->getPath())) ? true : false;
+	return true;
+    }
+
+    /* include file
+     * @param bool: include once only
+     *
+     * @return bool
+     */
+    public function includeFile ($once = false) {
+
+	if ($this->isFile()) {
+	    // file exists
+	    if ($once) {
+		include_once $this->getPath();
+	    } else {
+		include $this->getPath();
+	    }
+	} else {
+	    // file not found
+	    return false;
+	}
+	return true;
+    }
+
+    /* ######################### read from file ######################### */
+
+    /* get content of file as string
+     * +@param bool: true - return as string; false - return as array
+     *
+     * @return string
+     */
+    public function readFile ($as_string = false) {
+	global $TSunic;
+
+	// try to read content
+	if (!$this->isFile()
+	    OR !($content = file_get_contents($this->getPath()))
+	    OR $content === false
+	) {
+	    $TSunic->Log->log(3, 'Couldn\'t read from "'.$this->path.'"!');
+	    return ($as_string) ? '' : array();
 	}
 
-	/* rename file
-	 * @param string: new name of file
-	 *
-	 * @return bool
-	 */
-	public function renameFile ($new_name) {
+	// return content
+	return ($as_string AND is_array($content)) ? implode(chr(10), $content) : $content;
+    }
 
-		// check $new_name
-		if (preg_match('°[^'.$this->allowed_letters.']°', $new_name) != 0) {
-			// invalid filename
-			return false;
-		}
+    /* ######################### write to file ########################## */
 
-		// get new path
-		$new_path = strrev(strrchr(strrev($this->getPath()), '/'));
-		$new_path.= $new_name;
+    /* write content in file
+     * @param string: content to write in file
+     *
+     * @return bool
+     */
+    public function writeFile ($content) {
+	global $TSunic;
 
-		// rename file
-		if (rename($this->getPath(), $new_path)) {
-		    $this->path = $new_path;
-			return true;
-		}
+	// make sure, path exists
+	if (!$this->mkFolder(dirname($this->getPath(true)))) return false;
 
+	// open file
+	$file = @fopen($this->getPath(), "w");
+	if ($file) {
+
+	    // try to write file
+	    $return = @fwrite($file, $content);
+
+	    // close file
+	    @fclose($file);
+
+	    // success?
+	    if (is_numeric($return)) return $return;
+	}
+
+	$TSunic->Log->log(3, 'Couldn\'t write to "'.$this->path.'"!');
+	return false;
+    }
+
+    /* append $to_add to end of file
+     * @param sting: content to add to file
+     *
+     * @return bool
+     */
+    public function writeAdd ($to_add) {
+
+	// get content
+	$content = $this->readFile(true);
+
+	// append to the end
+	$content.= "\n".$to_add;
+
+	// write file
+	if (!$this->writeFile($content)) return false;
+	return true;
+    }
+
+    /* ######################### folder operations ###################### */
+
+    /* create folder, if not exists
+     * @param string: path to folder
+     *
+     * @return bool
+     */
+    public function mkFolder ($path) {
+	global $TSunic;
+
+	// is folder?
+	if (is_dir($path)) return true;
+	if (file_exists($path) AND !is_dir($path)) return false;
+
+	// check all single folders
+	$cache = explode('/', $path);
+	$current = '';
+	foreach ($cache as $index => $value) {
+	    $current.= (empty($current)) ? $value : '/'.$value;
+
+	    if (!is_dir($current) AND !mkdir($current)) {
+		$TSunic->Log->log(3, 'Couldn\'t create folder "'.$current.'"!');
 		return false;
+	    }
 	}
 
-	/* move file
-	 * @param string: path, where file is going to be moved to
-	 *
-	 * @return bool
-	 */
-	public function moveFile ($new_path) {
+	return true;
+    }
 
-		// check dir
-		// TODO
+    /* get subfolders
+     *
+     * @return array
+     */
+    public function getSubfolders () {
+	$subfolders = array();
 
-		// create dir, if neccessary
-		// TODOMimeType 
+	// validate input
+	if (!$this->getPath(true) OR !is_dir($this->getPath(true))) return array();
 
-		// move file
-		if (rename($this->getPath(), $new_path)) {
-		    $this->path = $new_path;
-			return true;
-		}
-
-		return true;
+	// get subfolders
+	$openfolder = opendir($this->getPath(true));
+	while ($thefile = readdir($openfolder)) {
+	    if ($thefile == '.' OR $thefile == '..' OR !is_dir($this->getPath(true).'/'.$thefile)) continue;
+	    $subfolders[] = $thefile;
 	}
+	closedir($openfolder);
 
-	/* include file
-	 * @param bool: include once only
-	 *
-	 * @return bool
-	 */
-	public function includeFile ($once = false) {
+	return $subfolders;
+    }
 
-		if ($this->isFile()) {
-			// file exists
-			if ($once) {
-				include_once $this->getPath();
-			} else {
-				include $this->getPath();
-			}
-		} else {
-			// file not found
-			return false;
-		}
-		return true;
+    /* get files within folder
+     * @param string: path to basis-folder
+     *
+     * @return array
+     */
+    public function getSubfiles () {
+	$subfiles = array();
+
+	// validate input
+	if (!$this->getPath(true) OR !is_dir($this->getPath(true))) return array();
+
+	// get subfiles
+	$openfolder = opendir($this->getPath(true));
+	while ($thefile = readdir($openfolder)) {
+	    if ($thefile == '.' OR $thefile == '..' OR is_dir($this->getPath(true).'/'.$thefile)) continue;
+	    $subfiles[] = $thefile;
 	}
+	closedir($openfolder);
 
-	/* ######################### read from file ######################### */
-
-	/* get content of file as string
-	 * +@param bool: true - return as string; false - return as array
-	 *
-	 * @return string
-	 */
-	public function readFile ($as_string = false) {
-		global $TSunic;
-
-		// try to read content
-		if (!$this->isFile()
-			OR !($content = file_get_contents($this->getPath()))
-			OR $content === false
-		) {
-			$TSunic->Log->log(3, 'Couldn\'t read from "'.$this->path.'"!');
-			return ($as_string) ? '' : array();
-		}
-
-		// return content
-		return ($as_string AND is_array($content)) ? implode(chr(10), $content) : $content;
-	}
-
-	/* ######################### write to file ########################## */
-
-	/* write content in file
-	 * @param string: content to write in file
-	 *
-	 * @return bool
-	 */
-	public function writeFile ($content) {
-		global $TSunic;
-
-		// make sure, path exists
-		if (!$this->mkFolder(dirname($this->getPath(true)))) return false;
-
-		// open file
-		$file = @fopen($this->getPath(), "w");
-		if ($file) {
-
-			// try to write file
-			$return = @fwrite($file, $content);
-
-			// close file
-			@fclose($file);
-
-			// success?
-			if (is_numeric($return)) return $return;
-		}
-
-		$TSunic->Log->log(3, 'Couldn\'t write to "'.$this->path.'"!');
-		return false;
-	}
-
-	/* append $to_add to end of file
-	 * @param sting: content to add to file
-	 *
-	 * @return bool
-	 */
-	public function writeAdd ($to_add) {
-
-		// get content
-		$content = $this->readFile(true);
-
-		// append to the end
-		$content.= "\n".$to_add;
-
-		// write file
-		if (!$this->writeFile($content)) return false;
-		return true;
-	}
-
-	/* ######################### folder operations ###################### */
-
-	/* create folder, if not exists
-	 * @param string: path to folder
-	 *
-	 * @return bool
-	 */
-	public function mkFolder ($path) {
-		global $TSunic;
-
-		// is folder?
-		if (is_dir($path)) return true;
-		if (file_exists($path) AND !is_dir($path)) return false;
-
-		// check all single folders
-		$cache = explode('/', $path);
-		$current = '';
-		foreach ($cache as $index => $value) {
-			$current.= (empty($current)) ? $value : '/'.$value;
-
-			if (!is_dir($current) AND !mkdir($current)) {
-				$TSunic->Log->log(3, 'Couldn\'t create folder "'.$current.'"!');
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/* get subfolders
-	 *
-	 * @return array
-	 */
-	public function getSubfolders () {
-		$subfolders = array();
-
-		// validate input
-		if (!$this->getPath(true) OR !is_dir($this->getPath(true))) return array();
-
-		// get subfolders
-		$openfolder = opendir($this->getPath(true));
-		while ($thefile = readdir($openfolder)) {
-			if ($thefile == '.' OR $thefile == '..' OR !is_dir($this->getPath(true).'/'.$thefile)) continue;
-			$subfolders[] = $thefile;
-		}
-		closedir($openfolder);
-
-		return $subfolders;
-	}
-
-	/* get files within folder
-	 * @param string: path to basis-folder
-	 *
-	 * @return array
-	 */
-	public function getSubfiles () {
-		$subfiles = array();
-
-		// validate input
-		if (!$this->getPath(true) OR !is_dir($this->getPath(true))) return array();
-
-		// get subfiles
-		$openfolder = opendir($this->getPath(true));
-		while ($thefile = readdir($openfolder)) {
-			if ($thefile == '.' OR $thefile == '..' OR is_dir($this->getPath(true).'/'.$thefile)) continue;
-			$subfiles[] = $thefile;
-		}
-		closedir($openfolder);
-
-		return $subfiles;
-	}
+	return $subfiles;
+    }
 }
 ?>
