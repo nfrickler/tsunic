@@ -1,12 +1,12 @@
 <!-- | FUNCTION show login -->
 <?php
 function $$$showLogin () {
-	global $TSunic;
+    global $TSunic;
 
-	// activate template
-	$TSunic->Tmpl->activate('$$$showLogin', '$system$content');
-	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWLOGIN__TITLE}'));
+    // activate template
+    $TSunic->Tmpl->activate('$$$showLogin', '$system$content');
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWLOGIN__TITLE}'));
 
-	return true;
+    return true;
 }
 ?>

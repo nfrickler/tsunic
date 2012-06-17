@@ -1,13 +1,13 @@
 <!-- | FUNCTION show page to confirm account-deletion -->
 <?php
 function $$$showDeleteAccount () {
-	global $TSunic;
+    global $TSunic;
 
-	// activate template
-	$data = array('User' => $TSunic->Usr);
-	$TSunic->Tmpl->activate('$$$showDeleteAccount', '$system$content', $data);
-	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETEACCOUNT__TITLE}'));
+    // activate template
+    $data = array('User' => $TSunic->Usr);
+    $TSunic->Tmpl->activate('$$$showDeleteAccount', '$system$content', $data);
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDELETEACCOUNT__TITLE}'));
 
-	return true;
+    return true;
 }
 ?>

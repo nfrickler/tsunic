@@ -1,22 +1,22 @@
 <!-- | FUNCTION delete user -->
 <?php
 function $$$deleteUser () {
-	global $TSunic;
+    global $TSunic;
 
-	// get User
-	$id = $TSunic->Temp->getParameter('$$$id');
-	$User = $TSunic->get('$$$User', $id);
+    // get User
+    $id = $TSunic->Temp->getParameter('$$$id');
+    $User = $TSunic->get('$$$User', $id);
 
-	// delete user
-	if (!$User->delete()) {
-		$TSunic->Log->alert('error', '{DELETEUSER__ERROR}');
-		$TSunic->redirect('back', 2);
-		return false;
-	}
+    // delete user
+    if (!$User->delete()) {
+	$TSunic->Log->alert('error', '{DELETEUSER__ERROR}');
+	$TSunic->redirect('back', 2);
+	return false;
+    }
 
-	// success
-	$TSunic->Log->alert('info', '{DELETEUSER__SUCCESS}');
-	$TSunic->redirect('$$$showUserlist');
-	return true;
+    // success
+    $TSunic->Log->alert('info', '{DELETEUSER__SUCCESS}');
+    $TSunic->redirect('$$$showUserlist');
+    return true;
 }
 ?>

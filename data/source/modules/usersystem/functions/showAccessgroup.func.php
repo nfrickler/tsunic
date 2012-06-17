@@ -1,27 +1,27 @@
 <!-- | FUNCTION show one accessgroup -->
 <?php
 function $$$showAccessgroup () {
-	global $TSunic;
+    global $TSunic;
 
-	// get accessgroup
-	$id = $TSunic->Temp->getParameter('$$$id');
-	$Accessgroup = $TSunic->get('$$$Accessgroup', $id);
+    // get accessgroup
+    $id = $TSunic->Temp->getParameter('$$$id');
+    $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
 
-	// get all accessgroups
-	$accessgroups = array();
-	foreach ($TSunic->Usr->getAccess()->allGroups() as $iid => $values) {
-		if ($iid == 1 or $iid == $id or $Accessgroup->isInChildren($iid)) continue;
-		$accessgroups[$iid] = $values;
-	}
+    // get all accessgroups
+    $accessgroups = array();
+    foreach ($TSunic->Usr->getAccess()->allGroups() as $iid => $values) {
+	if ($iid == 1 or $iid == $id or $Accessgroup->isInChildren($iid)) continue;
+	$accessgroups[$iid] = $values;
+    }
 
-	// activate template
-	$data = array(
-		'Accessgroup' => $Accessgroup,
-		'accessgroups' => $accessgroups,
-	);
-	$TSunic->Tmpl->activate('$$$showAccessgroup', '$system$content', $data);
-	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWACCESSGROUP__TITLE}'));
+    // activate template
+    $data = array(
+	'Accessgroup' => $Accessgroup,
+	'accessgroups' => $accessgroups,
+    );
+    $TSunic->Tmpl->activate('$$$showAccessgroup', '$system$content', $data);
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWACCESSGROUP__TITLE}'));
 
-	return true;
+    return true;
 }
 ?>

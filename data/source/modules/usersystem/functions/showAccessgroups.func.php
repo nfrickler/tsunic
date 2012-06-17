@@ -1,12 +1,12 @@
 <!-- | FUNCTION show list of accessgroups -->
 <?php
 function $$$showAccessgroups () {
-	global $TSunic;
+    global $TSunic;
 
-	// activate template
-	$TSunic->Tmpl->activate('$$$showAccessgroups', '$system$content');
-	$TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWACCESSGROUPS__TITLE}'));
+    // activate template
+    $TSunic->Tmpl->activate('$$$showAccessgroups', '$system$content');
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWACCESSGROUPS__TITLE}'));
 
-	return true;
+    return true;
 }
 ?>
