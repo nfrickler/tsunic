@@ -12,12 +12,12 @@ if ($Mail->getHtmlContent()) {
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta http-equiv="cache-control" content="no-cache" />
-		<title><?php echo $Mail->getInfo('subject'); ?></title>
-	</head>
-	<body>
-		<?php echo $Mail->getPlainContent(); ?>
-	</body>
+    <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<title><?php echo $Mail->getInfo('subject'); ?></title>
+</head>
+    <body>
+	<?php echo $Mail->getPlainContent(); ?>
+    </body>
 </html>
