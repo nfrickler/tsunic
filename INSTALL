@@ -1,4 +1,4 @@
-/* **************************** TSunic 4.1 | README ************************************ */
+/* ********************** TSunic 4.2 | README ***************************** */
 
 == Inhalt ==
 
@@ -13,47 +13,47 @@
 
 == Systemvoraussetzungen ==
 
-Damit TSunic 4.1 ordnungsgemäß funktioniert, sind die folgenden
+Damit TSunic 4.2 ordnungsgemÃ¤ÃŸ funktioniert, sind die folgenden
 Systemvoraussetzungen zu beachten:
 
-- PHP 5.3 (oder höher)
-- MySQL 5 (oder höher)
-- IMAP-Funktionen (für das mail-Modul)
+- PHP 5.3 (oder hÃ¶her)
+- MySQL 5 (oder hÃ¶her)
+- IMAP-Funktionen (fÃ¼r das mail-Modul)
 
 
 == Installation ==
 
 1. Entpacke das Archiv und lade Inhalt des Ordners "TSunic4" auf deinen
-	Webspace hoch.
-2. Öffne im Browser die Datei "admin/index.php" um ins Backend der Software
-	zu gelangen (z.B.: "http://deineUrl.de/admin/")
+    Webspace hoch.
+2. Ã–ffne im Browser die Datei "admin/index.php" um ins Backend der Software
+    zu gelangen (z.B.: "http://deineUrl.de/admin/")
 3. Folge den Anweisungen des Installationsscripts
 4. TSunic 4 ist nun erfolgreich installiert.
 
 
 == Wichtige Bermerkungen zur Ordnerstruktur ==
 
-Hier zum leichteren Umgang mit der Software eine kleine Einführung in die
-	Ordnerstruktur von TSunic 4.1.
+Hier zum leichteren Umgang mit der Software eine kleine EinfÃ¼hrung in die
+Ordnerstruktur von TSunic 4.
 
-admin:		Dieser Ordner enhält das Backend von TSunic. Zugang zum Backend hat
-			nur der Systemadministrator.
-data:		Im data-Ordner sind sämtliche Dateien, auf die TSunic zwar Zugriff
-			haben muss, die jedoch nicht im Webverzeichnis liegen müssen.
-			Um die Sicherheit der Daten zu erhöhen, kann/sollte dieser Ordner
-			in ein Verzeichnis oberhalb des Webverzeichnisses verschoben werden.
-			Der Pfad muss in den Einstellungen im Backend angegeben werden!
-files:		Bilder und Dokumente, die frei zugänglich sind, lagern hier.
-runtime:	Die Laufzeitumgebung der Software befindet sich im Ordner runtime.
-			Hier befinden sich alle Dateien, die vom laufenden Programm
-			verwendet werden.
-			Beim Rendern der Software, werden die Dateien automatisch erstellt.
+admin:	    Dieser Ordner enhÃ¤lt das Backend von TSunic. Zugang zum Backend
+	    hat nur der Systemadministrator.
+data:	    Im data-Ordner sind sÃ¤mtliche Dateien, auf die TSunic zwar Zugriff
+	    haben muss, die jedoch nicht im Webverzeichnis liegen mÃ¼ssen.
+	    Um die Sicherheit der Daten zu erhÃ¶hen, kann/sollte dieser Ordner
+	    in ein Verzeichnis oberhalb des Webverzeichnisses verschoben werden.
+	    Der Pfad muss in den Einstellungen im Backend angegeben werden!
+files:	    Bilder und Dokumente, die frei zugÃ¤nglich sind, lagern hier.
+runtime:    Die Laufzeitumgebung der Software befindet sich im Ordner runtime.
+	    Hier befinden sich alle Dateien, die vom laufenden Programm
+	    verwendet werden.
+	    Beim Rendern der Software, werden die Dateien automatisch erstellt.
 
 
 == Weitere Hilfe ==
 
-Folgende Kontaktmöglichkeiten stehen zur Verfügung, falls weitere Hilfe bei
-der Verwendung der Software nötig sein sollte:
+Folgende KontaktmÃ¶glichkeiten stehen zur VerfÃ¼gung, falls weitere Hilfe bei
+der Verwendung der Software nÃ¶tig sein sollte:
 
 Webseite:	tsunic.de
 E-Mail:		authornicolas@tsunic.de

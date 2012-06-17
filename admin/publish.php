@@ -14,7 +14,7 @@ define('TS_INIT', true);
 
 // add autoloader
 function __autoload ($class_name) {
-	include_once 'classes/'.$class_name.'.class.php';
+    include_once 'classes/'.$class_name.'.class.php';
 }
 
 // start session
@@ -42,60 +42,60 @@ $PreParser = new ts_PreParser($DummyPacket);
 // preparse all backend files
 $path = $Config->getRoot(false)."/admin";
 if ($PreParser->parse($path, $path, $Config->getRoot(false), true)) {
-	echo "Backend ready.<br />\n";
+    echo "Backend ready.<br />\n";
 } else {
-	echo "ERROR: Could not preparse backend!<br />\n";
+    echo "ERROR: Could not preparse backend!<br />\n";
 }
 
 
 // preparse special files
 $special_files = array(
-	'index.php',
-	'file.php',
-	'offline.php',
-	'functions.js.php',
-	'ajax.php'
+    'index.php',
+    'file.php',
+    'offline.php',
+    'functions.js.php',
+    'ajax.php'
 );
 foreach ($special_files as $index => $file) {
-	if ($PreParser->parseFile(
-		$Config->getRoot(false)."/".$file,
-		$Config->getRoot(false)."/".$file,
-		$Config->getRoot(false),
-		true
-	)) {
-		echo "Preparsed special file $file<br />\n";
-	} else {
-		echo "ERROR: Could not preparse special file $file<br />\n";
-	}
+    if ($PreParser->parseFile(
+	$Config->getRoot(false)."/".$file,
+	$Config->getRoot(false)."/".$file,
+	$Config->getRoot(false),
+	true
+    )) {
+	echo "Preparsed special file $file<br />\n";
+    } else {
+	echo "ERROR: Could not preparse special file $file<br />\n";
+    }
 }
 
 echo "Done...\n";
 
 class ts_DummyPacket {
 
-	/* array to cache version.xml
-	 * array
-	 */
-	private $infofile = array();
+    /* array to cache version.xml
+     * array
+     */
+    private $infofile = array();
 
-	/* get info from version.xml file
-	 * @param string: name of info
-	 *
-	 * @return mix
-	 */
-	public function getInfo ($name) {
+    /* get info from version.xml file
+     * @param string: name of info
+     *
+     * @return mix
+     */
+    public function getInfo ($name) {
 
-		// check, if requested info is already in $this->info
-		if (isset($this->infofile, $this->infofile[$name]) AND !empty($this->infofile[$name])) return $this->infofile[$name];
+	// check, if requested info is already in $this->info
+	if (isset($this->infofile, $this->infofile[$name]) AND !empty($this->infofile[$name])) return $this->infofile[$name];
 
-		// load from version-file
-		if (!file_exists('version.xml')) return NULL;
-		include_once 'classes/ts_XmlHandler.class.php';
-		$this->infofile = ts_XmlHandler::readAll('version.xml');
+	// load from version-file
+	if (!file_exists('version.xml')) return NULL;
+	include_once 'classes/ts_XmlHandler.class.php';
+	$this->infofile = ts_XmlHandler::readAll('version.xml');
 
-		// try again to return requested info
-		if (isset($this->infofile, $this->infofile[$name])) return $this->infofile[$name];
-		return NULL;
-	}
+	// try again to return requested info
+	if (isset($this->infofile, $this->infofile[$name])) return $this->infofile[$name];
+	return NULL;
+    }
 }
 ?>

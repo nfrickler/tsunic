@@ -2,22 +2,22 @@
 <?php
 function deleteStyle () {
 
-	// get id__style
-	$id__style = (isset($_GET['id']) AND is_numeric($_GET['id'])) ? $_GET['id'] : 0;
-	if (empty($id__style)) return true;
+    // get id__style
+    $id__style = (isset($_GET['id']) AND is_numeric($_GET['id'])) ? $_GET['id'] : 0;
+    if (empty($id__style)) return true;
 
-	// get style-object
-	include_once 'classes/ts_Style.class.php';
-	$Style = new ts_Style($id__style);
+    // get style-object
+    include_once 'classes/ts_Style.class.php';
+    $Style = new ts_Style($id__style);
 
-	// delete
-	if (!$Style->deleteStyle()) {
-		// error
-		$_SESSION['admin_error'] = 'ERROR__DELETESTYLE';
-		return false;
-	}
+    // delete
+    if (!$Style->deleteStyle()) {
+	// error
+	$_SESSION['admin_error'] = 'ERROR__DELETESTYLE';
+	return false;
+    }
 
-	$_SESSION['admin_info'] = 'INFO__DELETESTYLE';
-	return true;
+    $_SESSION['admin_info'] = 'INFO__DELETESTYLE';
+    return true;
 }
 ?>
