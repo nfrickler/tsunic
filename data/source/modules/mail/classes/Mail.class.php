@@ -79,138 +79,6 @@ class $$$Mail extends $system$Object {
 	return $this->getContent('html');
     }
 
-    /* get attachments of mail (as objects)
-     *
-     * @return array
-     */
-    public function getAttachments () {
-
-	// already fetched?
-	if (isset($this->attachments) AND !empty($this->attachments))
-	    return $this->attachments;
-
-	// get attachments from database
-	global $TSunic;
-	$sql = "SELECT fk_fsfile
-		FROM #__attachments as attachments
-		WHERE attachments.fk_mail = '".$this->id."'
-		ORDER BY fk_fsfile ASC;";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return array();
-
-	// get FsFile objects
-	$this->attachments = array();
-	foreach ($result as $index => $values) {
-	    $FsFile = $TSunic->get('$usersystem$FsFile', $values['fk_fsfile']);
-
-	    // delete attachments with no more fsfile existing
-	    if (!$FsFile->isValid()) {
-		$this->rmAttachment($values['fk_fsfile']);
-		continue;
-	    }
-
-	    $this->attachments[] = $FsFile;
-	}
-
-	return $this->attachments;
-    }
-
-    /* add attachment to mail
-     * @param int: fk of fsfile
-     *
-     * @return bool
-     */
-    public function addAttachment ($fk_fsfile) {
-	global $TSunic;
-
-	// validate fsfile
-	$FsFile = $TSunic->get('$usersystem$FsFile', $fk_fsfile);
-	if (!$FsFile->isValid()) return false;
-
-	// delete cached attachments
-	$this->attachments = array();
-
-	// update database
-	$sql = "INSERT INTO #__attachments
-		SET fk_fsfile = '$fk_fsfile',
-		    fk_mail = '".$this->id."'
-		ON DUPLICATE KEY UPDATE dateOfUpdate = NOW();";
-	return $TSunic->Db->doInsert($sql);
-    }
-
-    /* remove attachment from mail
-     * @param int: fk of fsfile
-     *
-     * @return bool
-     */
-    public function rmAttachment ($fk_fsfile) {
-	global $TSunic;
-	// TODO: remove files as well?
-
-	// delete cached attachments
-	$this->attachments = array();
-
-	// update database
-	$sql = "DELETE FROM #__attachments
-		WHERE fk_fsfile = '$fk_fsfile'
-		    AND fk_mail = '".$this->id."';";
-	return $TSunic->Db->doDelete($sql);
-    }
-
-    /* remove all attachments from mail
-     *
-     * @return bool
-     */
-    public function rmAllAttachments () {
-	global $TSunic;
-	// TODO: remove files as well?
-
-	// delete cached attachments
-	$this->attachments = array();
-
-	// update database
-	$sql = "DELETE FROM #__attachments
-		WHERE fk_mail = '".$this->id."';";
-	return $TSunic->Db->doDelete($sql);
-    }
-
-    /* delete mail
-     * +@param bool: remove completely?
-     *
-     * @return bool
-     */
-    public function delete ($completely = false) {
-	global $TSunic;
-
-	// delete attachment
-	$this->rmAllAttachments();
-
-	// delete addressee
-	$this->setAddressee('');
-
-	// delete in database
-	if ($completely) {
-	    $sql = "DELETE FROM #__mails
-		    WHERE id = '".$this->id."';";
-	    $result = $TSunic->Db->doDelete($sql);
-	} else {
-	    $sql = "UPDATE #__mails
-		    SET _subject_ = '',
-			_plaincontent_ = '',
-			_htmlcontent_ = '',
-			fk_mailbox = '',
-			charset = '',
-			_sender_ = '',
-			dateOfMail = '',
-			dateOfCreation = '',
-			dateOfDeletion = NOW()
-		    WHERE id = '".$this->id."';";
-	    $result = $TSunic->Db->doUpdate($sql);
-	}
-
-	if ($result) return true;
-	return false;
-    }
 
     /* create new mail
      * @param string: subject of mail
@@ -509,6 +377,141 @@ class $$$Mail extends $system$Object {
 	}
 
 	return $Mailbox;
+    }
+
+    /* delete mail
+     * +@param bool: remove completely?
+     *
+     * @return bool
+     */
+    public function delete ($completely = false) {
+	global $TSunic;
+
+	// delete attachment
+	$this->rmAllAttachments();
+
+	// delete addressee
+	$this->setAddressee('');
+
+	// delete in database
+	if ($completely) {
+	    $sql = "DELETE FROM #__mails
+		    WHERE id = '".$this->id."';";
+	    $result = $TSunic->Db->doDelete($sql);
+	} else {
+	    $sql = "UPDATE #__mails
+		    SET _subject_ = '',
+			_plaincontent_ = '',
+			_htmlcontent_ = '',
+			fk_mailbox = '',
+			charset = '',
+			_sender_ = '',
+			dateOfMail = '',
+			dateOfCreation = '',
+			dateOfDeletion = NOW()
+		    WHERE id = '".$this->id."';";
+	    $result = $TSunic->Db->doUpdate($sql);
+	}
+
+	if ($result) return true;
+	return false;
+    }
+
+    // ####################### attachments ##################################
+
+    /* get attachments of mail (as objects)
+     *
+     * @return array
+     */
+    public function getAttachments () {
+
+	// already fetched?
+	if (isset($this->attachments) AND !empty($this->attachments))
+	    return $this->attachments;
+
+	// get attachments from database
+	global $TSunic;
+	$sql = "SELECT fk_fsfile
+		FROM #__attachments as attachments
+		WHERE attachments.fk_mail = '".$this->id."'
+		ORDER BY fk_fsfile ASC;";
+	$result = $TSunic->Db->doSelect($sql);
+	if (!$result) return array();
+
+	// get FsFile objects
+	$this->attachments = array();
+	foreach ($result as $index => $values) {
+	    $FsFile = $TSunic->get('$usersystem$FsFile', $values['fk_fsfile']);
+
+	    // delete attachments with no more fsfile existing
+	    if (!$FsFile->isValid()) {
+		$this->rmAttachment($values['fk_fsfile']);
+		continue;
+	    }
+
+	    $this->attachments[] = $FsFile;
+	}
+
+	return $this->attachments;
+    }
+
+    /* add attachment to mail
+     * @param int: fk of fsfile
+     *
+     * @return bool
+     */
+    public function addAttachment ($fk_fsfile) {
+	global $TSunic;
+
+	// validate fsfile
+	$FsFile = $TSunic->get('$usersystem$FsFile', $fk_fsfile);
+	if (!$FsFile->isValid()) return false;
+
+	// delete cached attachments
+	$this->attachments = array();
+
+	// update database
+	$sql = "INSERT INTO #__attachments
+		SET fk_fsfile = '$fk_fsfile',
+		    fk_mail = '".$this->id."'
+		ON DUPLICATE KEY UPDATE dateOfUpdate = NOW();";
+	return $TSunic->Db->doInsert($sql);
+    }
+
+    /* remove attachment from mail
+     * @param int: fk of fsfile
+     *
+     * @return bool
+     */
+    public function rmAttachment ($fk_fsfile) {
+	global $TSunic;
+	// TODO: remove files as well?
+
+	// delete cached attachments
+	$this->attachments = array();
+
+	// update database
+	$sql = "DELETE FROM #__attachments
+		WHERE fk_fsfile = '$fk_fsfile'
+		    AND fk_mail = '".$this->id."';";
+	return $TSunic->Db->doDelete($sql);
+    }
+
+    /* remove all attachments from mail
+     *
+     * @return bool
+     */
+    public function rmAllAttachments () {
+	global $TSunic;
+	// TODO: remove files as well?
+
+	// delete cached attachments
+	$this->attachments = array();
+
+	// update database
+	$sql = "DELETE FROM #__attachments
+		WHERE fk_mail = '".$this->id."';";
+	return $TSunic->Db->doDelete($sql);
     }
 }
 ?>

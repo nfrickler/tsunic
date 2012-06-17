@@ -62,9 +62,6 @@ class TSunic {
 	// create stats-object
 	$this->Stats = $this->get('$$$Stats');
 
-	// create parser-object
-	$this->Parser = $this->get('$$$Parser');
-
 	// create setting-object
 	$this->Config = $this->get('$$$Config');
 

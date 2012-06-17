@@ -64,13 +64,13 @@ $lang = array(
 	// showModules
 	'SHOWMODULES__TITLE' => 'Modules',
 	'SHOWMODULES__H1' => 'TS_Admin | Module verwalten',
-	'SHOWMODULES__INFOTEXT' => 'Hier kannst du Module installieren/updaten/deinstallieren und verwalten.',
+	'SHOWMODULES__INFOTEXT' => 'Hier kannst du Module installieren/updaten/deinstallieren und die Laufzeitumgebung von TSunic (neu) bauen (Build).',
 	'SHOWMODULES__MODNAME' => 'Modulname',
 	'SHOWMODULES__VERSION' => 'Version',
 	'SHOWMODULES__MODDESCRIPTION' => 'Beschreibung',
 	'SHOWMODULES__STATUS' => 'Status',
 	'SHOWMODULES__AUTHOR' => 'Autor',
-	'SHOWMODULES__RENDER' => 'TSunic rendern',
+	'SHOWMODULES__RENDER' => '(Re)Build TSunic',
 	'SHOWMODULES__SUBMIT' => 'Einstellungen speichern',
 	'SHOWMODULES__RESET' => 'Reset',
 	'SHOWMODULES__ID' => 'ID',
@@ -100,8 +100,8 @@ $lang = array(
 	'INFO__SETMODULES_SUCCESS' => 'Änderungen wurden erfolgreich gespeichert.',
 
 	// render
-	'INFO__RENDER_SUCCESS' => 'Rendern der Software erfolgreich.',
-	'ERROR__RENDER' => 'Beim Rendern ist ein Fehler aufgetreten!',
+	'INFO__RENDER_SUCCESS' => '(Re)Build der Software erfolgreich.',
+	'ERROR__RENDER' => 'Beim (Re)Build ist ein Fehler aufgetreten!',
 
 	// showStyles
 	'SHOWSTYLES__TITLE' => 'Styles',

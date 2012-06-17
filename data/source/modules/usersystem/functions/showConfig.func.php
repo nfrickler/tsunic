@@ -32,7 +32,6 @@ function $$$showConfig () {
 	    include_once $cache[0].'___system_config.func.php';
 	    eval('$config[$cache[0]][$index]["options"] = '.
 		$cache[0].'__'.$values['options'].'();');
-	$config[$cache[0]][$index]["options"]['{SHOWCONFIG__USEDEFAULT}'] = '{SHOWCONFIG__USEDEFAULT}';
 	}
     }
 

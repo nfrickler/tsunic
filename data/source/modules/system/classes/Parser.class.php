@@ -49,9 +49,6 @@ class $$$Parser {
      */
     public function toText ($string) {
 
-	// parse new lines
-	$string = nl2br($string);
-
 	// strip (back-)slashes
 	$search = array("\\\\", "\\/");
 	$replace = array("\\", "/");

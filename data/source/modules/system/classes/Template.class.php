@@ -234,10 +234,7 @@ class $$$Template {
 	    // replace variables (#...#)
 	    $text = preg_replace_callback('$#([0-9a-zA-zöäüÖÄÜ_]+)#$Us', array($this, '_replaceVar'), $text);
 
-	    // get new lines and trim finally
-	    $text = nl2br($text);
-	    $text = str_replace('\r\n', '<br />', $text);
-	    $text = str_replace('\n\n', '<br />', $text);
+	    // trim
 	    $text = trim($text);
 	}
 

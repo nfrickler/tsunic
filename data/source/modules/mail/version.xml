@@ -1,7 +1,7 @@
 <!-- | -->
 <all>
     <name>mail</name>
-    <version>1.1</version>
+    <version>1.2</version>
     <nameid>tsuniccoremodulsystem</nameid>
     <description>A mail-module, which enables you to send (SMTP) and recieve (IMAP/POP3) e-mails.</description>
     <author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>

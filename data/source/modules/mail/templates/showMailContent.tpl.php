@@ -18,6 +18,6 @@ if ($Mail->getHtmlContent()) {
 	<title><?php echo $Mail->getInfo('subject'); ?></title>
 </head>
     <body>
-	<?php echo $Mail->getPlainContent(); ?>
+	<?php echo nl2br($Mail->getPlainContent()); ?>
     </body>
 </html>

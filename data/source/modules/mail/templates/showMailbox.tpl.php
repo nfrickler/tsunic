@@ -132,7 +132,7 @@ $mails = $Mailbox->getMails();
     <?php } ?>
     <?php } ?>
 
-    # ############################ update mailbox ############################ #
+    // ######################## update mailbox ############################ #
 
     // global vars
     var $$$showMailbox__updater_box;
