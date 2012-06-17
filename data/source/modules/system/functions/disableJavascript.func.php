@@ -1,13 +1,13 @@
 <!-- | function to disable javascript -->
 <?php
 function $$$disableJavascript () {
-	global $TSunic;
+    global $TSunic;
 
-	// set runtime-variable
-	$TSunic->Usr->setConfig('$$$javascript', 'off');
+    // set runtime-variable
+    $TSunic->Usr->setConfig('$$$javascript', 'off');
 
-	// redirect back
-	$TSunic->redirect('back');
-	return true;
+    // redirect back
+    $TSunic->redirect('back');
+    return true;
 }
 ?>

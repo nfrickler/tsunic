@@ -1,19 +1,19 @@
 <!-- | function to reset all cookies -->
 <?php
 function $$$resetAllCookies () {
-	global $TSunic;
+    global $TSunic;
 
-	// delete all cookies
-	foreach ($_COOKIE as $index => $value) {
-		// delete cookie
-		setcookie ($index, "", time() - 3600);
-	}
+    // delete all cookies
+    foreach ($_COOKIE as $index => $value) {
+	// delete cookie
+	setcookie ($index, "", time() - 3600);
+    }
 
-	// add info-message
-	$TSunic->Log->alert('info', '{RESETALLCOOKIES_INFO}');
+    // add info-message
+    $TSunic->Log->alert('info', '{RESETALLCOOKIES_INFO}');
 
-	// redirect back
-	$TSunic->redirect('back');
-	exit;
+    // redirect back
+    $TSunic->redirect('back');
+    exit;
 }
 ?>

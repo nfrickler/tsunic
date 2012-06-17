@@ -1,16 +1,16 @@
 <!-- | FUNCTION set language -->
 <?php
 function $$$setLanguage () {
-	global $TSunic;
+    global $TSunic;
 
-	// get language
-	$lang = $TSunic->Temp->getParameter('lang');
+    // get language
+    $lang = $TSunic->Temp->getParameter('lang');
 
-	// set language in config
-	$TSunic->Usr->setConfig('$$$language', $lang);
+    // set language in config
+    $TSunic->Usr->setConfig('$$$language', $lang);
 
-	// redirect back
-	$TSunic->redirect('back');
-	return true;
+    // redirect back
+    $TSunic->redirect('back');
+    return true;
 }
 ?>

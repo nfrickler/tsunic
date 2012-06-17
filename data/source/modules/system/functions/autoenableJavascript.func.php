@@ -1,14 +1,14 @@
 <!-- | function to autoenable javascript -->
 <?php
 function $$$autoenableJavascript () {
-	global $TSunic;
+    global $TSunic;
 
-	// enable javascript
-	$TSunic->run('$$$enableJavascript', false, true);
+    // enable javascript
+    $TSunic->run('$$$enableJavascript', false, true);
 
-	// activate xml-template
-	$data = array('success' => 'true');
-	$TSunic->Tmpl->activate('$$$autoenableJavascript', 'xmlResponse', $data);
-	return true;
+    // activate xml-template
+    $data = array('success' => 'true');
+    $TSunic->Tmpl->activate('$$$autoenableJavascript', 'xmlResponse', $data);
+    return true;
 }
 ?>
