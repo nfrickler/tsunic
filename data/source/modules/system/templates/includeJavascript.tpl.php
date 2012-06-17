@@ -22,43 +22,43 @@ var $$$fkt_ready = 0;
 // load main js-file (function.js.php)
 function $$$startScript () {
 
-	// all functions
-	var all_functions = new Array();
-	<?php
-	$counter = 0;
-	foreach ($js_functions as $index => $value) {
-		$path = 'runtime/javascript/'.$value.'.js';
-		echo 'all_functions['.$counter.'] = "'.$path.'";'."\n";
-		$counter++;
-	} ?>
+    // all functions
+    var all_functions = new Array();
+    <?php
+    $counter = 0;
+    foreach ($js_functions as $index => $value) {
+	$path = 'runtime/javascript/'.$value.'.js';
+	echo 'all_functions['.$counter.'] = "'.$path.'";'."\n";
+	$counter++;
+    } ?>
 
-	// load all functions
-	for (var i = 0; i < all_functions.length; i++) {
+    // load all functions
+    for (var i = 0; i < all_functions.length; i++) {
 
-		// load
-		$.getScript(all_functions[i], function() {
-			$$$startReady();
-		});
-	}
+	// load
+	$.getScript(all_functions[i], function() {
+	    $$$startReady();
+	});
+    }
 
-	return true;
+    return true;
 }
 
 // check ready-status
 function $$$startReady () {
-	var fkt_number = <?php echo count($js_functions); ?>;
+    var fkt_number = <?php echo count($js_functions); ?>;
 
-	// increase amount of ready functions
-	$$$fkt_ready++;
+    // increase amount of ready functions
+    $$$fkt_ready++;
 
-	// check, if all functions ready
-	if ($$$fkt_ready == fkt_number) {
+    // check, if all functions ready
+    if ($$$fkt_ready == fkt_number) {
 
-		// load functions.js.php
-		$.getScript('functions.js.php', function() {
-			// nothing to do
-		});
-	}
+	// load functions.js.php
+	$.getScript('functions.js.php', function() {
+	    // nothing to do
+	});
+    }
 }
 
 // start javascript
