@@ -1,4 +1,4 @@
--- Changes until version 4.2 (release 2012-)
+-- Changes until version 4.2 (release 2012-06-19)
     * full reconstruction of usersystem module
     * adding help pages for each page
     * general fixes
