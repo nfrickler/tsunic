@@ -49,6 +49,9 @@ class $$$Parser {
      */
     public function toText ($string) {
 
+	$string = str_replace('\r', '', $string);
+	$string = str_replace('\n', '', $string);
+
 	// strip (back-)slashes
 	$search = array("\\\\", "\\/");
 	$replace = array("\\", "/");
@@ -62,8 +65,8 @@ class $$$Parser {
      */
     public function toHtml ($string) {
 
-	$string = str_replace('\r', '', $string);
-	$string = str_replace('\n', '', $string);
+	$string = str_replace('r', '', $string);
+	$string = str_replace('n', '', $string);
 
 	// parse < and >
 	$string = str_replace('&lt;', '<', $string);

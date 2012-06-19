@@ -1,4 +1,4 @@
-<!-- | function to delete serverbox -->
+<!-- | FUNCTION delete serverbox -->
 <?php
 function $$$deleteServerbox () {
     global $TSunic;
@@ -7,18 +7,18 @@ function $$$deleteServerbox () {
     $id = $TSunic->Temp->getParameter('$$$id');
     $Serverbox = $TSunic->get('$$$Serverbox', $id);
 
-    // get id of mail account
-    $fk_mail__account = $Serverbox->getMailaccount(true);
+    // get id of mailaccount
+    $fk_mailaccount = $Serverbox->getMailaccount(true);
 
     // delete serverbox
-    if (!$Serverbox->deleteServerbox()) {
+    if (!$Serverbox->delete()) {
 	$TSunic->Log->alert('error', '{DELETESERVERBOX__ERROR}');
 	$TSunic->redirect('back');
     }
 
     // success
     $TSunic->Log->alert('info', '{DELETESERVERBOX__SUCCESS}');
-    $TSunic->redirect('$$$showMailaccount', array('$$$id' => $fk_mail__account));
+    $TSunic->redirect('$$$showMailaccount', array('$$$id' => $fk_mailaccount));
 
     return true;
 }

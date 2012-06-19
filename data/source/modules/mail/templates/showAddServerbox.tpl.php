@@ -4,6 +4,7 @@
     <p class="ts_infotext"><?php $this->set('{SHOWADDSERVERBOX__INFO}'); ?></p>
     <?php $this->display('$$$formServerbox', array(
 	'Serverbox' => $this->getVar('Serverbox'),
+	'Mailaccount' => $this->getVar('Mailaccount'),
 	'mailboxes' => $this->getVar('mailboxes'),
 	'submit_text' => '{SHOWADDSERVERBOX__SUBMIT}',
 	'reset_text' => '{SHOWADDSERVERBOX__RESET}',

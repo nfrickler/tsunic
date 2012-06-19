@@ -1,4 +1,4 @@
-<!-- | show form to edit serverbox -->
+<!-- | TEMPLATE show form to edit serverbox -->
 <div id="$$$div__showEditMailserver">
     <h1><?php $this->set('{SHOWEDITSERVERBOX__H1}'); ?></h1>
     <p class="ts_suplinkbox">
@@ -8,6 +8,7 @@
     <p class="ts_infotext"><?php $this->set('{SHOWEDITSERVERBOX__INFO}'); ?></p>
     <?php $this->display('$$$formServerbox', array(
 	'Serverbox' => $this->getVar('Serverbox'),
+	'Mailaccount' => $this->getVar('Mailaccount'),
 	'mailboxes' => $this->getVar('mailboxes'),
 	'submit_text' => '{SHOWEDITSERVERBOX__SUBMIT}',
 	'reset_text' => '{SHOWEDITSERVERBOX__RESET}',

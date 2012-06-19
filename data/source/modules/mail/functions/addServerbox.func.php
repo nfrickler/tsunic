@@ -1,4 +1,4 @@
-<!-- | function to add new serverbox -->
+<!-- | FUNCTION create new serverbox -->
 <?php
 function $$$addServerbox () {
     global $TSunic;
@@ -6,15 +6,15 @@ function $$$addServerbox () {
     // get input
     $fk_mailaccount = $TSunic->Temp->getPost('$$$formServerbox__fk_mailaccount');
     $name = $TSunic->Temp->getPost('$$$formServerbox__name');
-    $selectMailbox = $TSunic->Temp->getPost('$$$formServerbox__selectMailbox');
+    $fk_mailbox = $TSunic->Temp->getPost('$$$formServerbox__fk_mailbox');
     $newMailbox = $TSunic->Temp->getPost('$$$formServerbox__newMailbox');
 
     // get mailbox-object
-    if ($selectMailbox === 0) {
+    if ($fk_mailbox === "0" or $fk_mailbox === 0) {
 	// inbox selected
 	$Mailbox = $TSunic->get('$$$Inbox');
 
-    } elseif ($selectMailbox == 'new') {
+    } elseif ($fk_mailbox == 'new') {
 	// create new mailbox
 
 	// create mailbox-object
@@ -28,18 +28,17 @@ function $$$addServerbox () {
 
 	// create new mailbox
 	if (!$Mailbox->create($newMailbox)) {
-	    $TSunic->Log->alert('error', '{ADDSERVERBOX__ERROROCCURRED}');
+	    $TSunic->Log->alert('error', '{ADDSERVERBOX__ERROR}');
 	    $TSunic->redirect('back');
 	}
 
-    } elseif (is_numeric($selectMailbox)) {
+    } elseif (is_numeric($fk_mailbox)) {
 	// mailbox selected
-	$Mailbox = $TSunic->get('$$$Mailbox', $selectMailbox);
+	$Mailbox = $TSunic->get('$$$Mailbox', $fk_mailbox);
 
 	// check, if exist
 	if (!$Mailbox->isValid()) {
-	    // invalid mailbox
-	    $TSunic->Log->alert('error', '{ADDSERVERBOX__ERROROCCURRED}');
+	    $TSunic->Log->alert('error', '{ADDSERVERBOX__ERROR}');
 	    $TSunic->redirect('back');
 	}
 
@@ -51,19 +50,21 @@ function $$$addServerbox () {
 
     // get serverbox-object
     $Serverbox = $TSunic->get('$$$Serverbox');
-
+var_dump($name);
+var_dump($fk_mailaccount);
     // validate input
     if (!$Serverbox->isValidName($name)
-	OR !$Serverbox->isValidFkAccount($fk_mailaccount)) {
-	// invalid input
-
+	OR !$Serverbox->isValidFkAccount($fk_mailaccount)
+    ) {
+var_dump($Serverbox->isValidName($name));
+die();
 	$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
 	$TSunic->redirect('back');
     }
 
     // add serverbox
     if (!$Serverbox->create($fk_mailaccount, $name, $Mailbox->getInfo('id'), 0)) {
-	$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
+	$TSunic->Log->alert('error', '{ADDSERVERBOX__ERROR}');
 	$TSunic->redirect('back');
     }
 

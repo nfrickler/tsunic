@@ -1,16 +1,16 @@
-<!-- | function to edit serverbox -->
+<!-- | FUNCTION edit serverbox -->
 <?php
 function $$$editServerbox () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getPost('id');
+    $id = $TSunic->Temp->getPost('$$$formServerbox__id');
     $name = $TSunic->Temp->getPost('$$$formServerbox__name');
-    $selectMailbox = $TSunic->Temp->getPost('$$$formServerbox__selectMailbox');
+    $selectMailbox = $TSunic->Temp->getPost('$$$formServerbox__fk_mailbox');
     $newMailbox = $TSunic->Temp->getPost('$$$formServerbox__newMailbox');
 
     // get mailbox-object
-    if ($selectMailbox === 0) {
+    if ($selectMailbox === "0" or $selectMailbox === 0) {
 	// inbox selected
 	$Mailbox = $TSunic->get('$$$Inbox');
 
@@ -58,14 +58,17 @@ function $$$editServerbox () {
     }
 
     // edit serverbox
-    if (!$Serverbox->editServerbox($name, $Mailbox->getInfo('id'), 0)) {
+    if (!$Serverbox->edit($name, $Mailbox->getInfo('id'), 0)) {
 	$TSunic->Log->alert('error', '{EDITSERVERBOX__INVALIDINPUT}');
 	$TSunic->redirect('back');
     }
 
     // success
     $TSunic->Log->alert('info', '{EDITSERVERBOX__SUCCESS}');
-    $TSunic->redirect('$$$showMailaccount', array('$$$id' => $Serverbox->getInfo('fk_mail__account')));
+    $TSunic->redirect(
+	'$$$showMailaccount',
+	array('$$$id' => $Serverbox->getInfo('fk_mailaccount'))
+    );
 
     return true;
 }

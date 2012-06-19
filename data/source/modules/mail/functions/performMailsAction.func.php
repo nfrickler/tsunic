@@ -1,11 +1,11 @@
-<!-- | function to perform chosen actions from form -->
+<!-- | FUNCTION perform chosen actions from form -->
 <?php
 function $$$performMailsAction () {
     global $TSunic;
 
     // get input
     $selectedMails = $TSunic->Temp->getParameter('$$$showMailbox__selectedMails');
-    $fk_mail__box = $TSunic->Temp->getPost('$$$showMailbox__moveto');
+    $fk_mailbox = $TSunic->Temp->getPost('$$$showMailbox__moveto');
 
     // is any mail selected?
     if (empty($selectedMails)) {
@@ -20,7 +20,7 @@ function $$$performMailsAction () {
 	// get mail-objects and delete mails
 	foreach ($selectedMails as $index => $value) {
 	    $Mail = $TSunic->get('$$$Mail', $value);
-	    $Mail->deleteMail();
+	    $Mail->delete();
 	}
 
     } elseif ($TSunic->Temp->getPost('$$$showMailbox__submit_spam')) {
@@ -35,7 +35,7 @@ function $$$performMailsAction () {
 	// get mail-objects and move mails
 	foreach ($selectedMails as $index => $value) {
 	    $Mail = $TSunic->get('$$$Mail', $value);
-	    $Mail->move($fk_mail__box);
+	    $Mail->move($fk_mailbox);
 	}
     }
 

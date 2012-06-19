@@ -318,14 +318,14 @@ class $$$Mailaccount extends $system$Object {
 	// delete serverboxes
 	$serverboxes = $this->getServerboxes();
 	foreach ($serverboxes as $index => $value) {
-	    $value->deleteServerbox();
+	    $value->delete();
 	}
 
 	// delete connection to smtps
 	$smtps = $this->getSmtps();
 	foreach ($smtps as $index => $value) {
 	    // delete smtp
-	    $value->editSmtp(0, true, true, true, true);
+	    $value->edit(0, true, true, true, true);
 	}
 
 	// delete in database

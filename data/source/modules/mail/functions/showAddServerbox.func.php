@@ -14,7 +14,7 @@ function $$$showAddServerbox () {
     }
 
     // get empty Serverbox object
-    $Serverbox = $TSunic->get('$$$Serverbox', array(0, $Mailaccount));
+    $Serverbox = $TSunic->get('$$$Serverbox');
 
     // create SuperMail object
     $SuperMail = $TSunic->get('$$$SuperMail');
@@ -22,6 +22,7 @@ function $$$showAddServerbox () {
     // activate template
     $data = array(
 	'Serverbox' => $Serverbox,
+	'Mailaccount' => $Mailaccount,
 	'mailboxes' => $SuperMail->getMailboxes()
     );
     $TSunic->Tmpl->activate('$$$showAddServerbox', '$system$content', $data);

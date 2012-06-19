@@ -206,7 +206,7 @@ class $$$Serverbox extends $system$Object {
      * @return bool
      */
     public function isValidName ($name) {
-	return ($this->_validate($name, 'string')) ? true : false;
+	return $this->_validate($name, 'string');
     }
 
     /* check, if fk_mailaccount is valid

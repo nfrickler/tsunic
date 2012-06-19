@@ -1,4 +1,4 @@
-<!-- | class to convert sql-queries in arrays and reverse -->
+<!-- | CLASS convert sql-queries in arrays and reverse -->
 <?php
 class $$$Sql2array {
 
@@ -57,14 +57,6 @@ class $$$Sql2array {
      */
     private $extractedData = array();
 
-    /* constructor
-     *
-     * @return OBJECT
-     */
-    public function __construct () {
-	return;
-    }
-
     /* *************** sql to array ************************************* */
 
     /* convert sql-query in array
@@ -80,8 +72,8 @@ class $$$Sql2array {
 	$sql = trim($sql);
 	if (substr($sql, -1) == ';') $sql = substr($sql, 0, (strlen($sql) - 1));
 
-	// escape #
-	if (preg_match("!#(data|subquery)_\d+#!Us", $sql) != 0) {
+	// escape #data_0# => #data#_#0#
+	if (strpos($sql, '#data_') or strpos($sql, '#subquery_')) {
 	    $sql = preg_replace(
 		"!#(data|subquery)_(\d+)#!Us",
 		"#$1".$this->escape_seq."$2#",
@@ -90,15 +82,24 @@ class $$$Sql2array {
 	    $is_escaped = true;
 	}
 
-	// extract all data
-	$sql = preg_replace_callback(
-	    '!("([^"]*)"|\'([^\']*)\'|[\s\b,=]+([0-9]+)([\s]|,|$))!Usi',
-	    array($this, '_extractData'),
-	    $sql
+	// extract data values
+	$regex_data = array(
+	    '!(".*?")!si',                 // double quotes
+	    '!(\'.*?\')!si',               // single quotes
+	    '!([\b,=]\s*\d+\s*[\b,=$])!si' // integers
 	);
+	foreach ($regex_data as $index => $regex) {
+	    $sql = preg_replace_callback(
+		$regex,
+		array($this, '_extractData'),
+		$sql
+	    );
+	}
 
 	// extract subqueries
-	$sql = preg_replace_callback('!\((.*)\)!Usi', array($this, 'getSubquery'), $sql);
+	$sql = preg_replace_callback(
+	    '!\((.*?)\)!si', array($this, 'getSubquery'), $sql
+	);
 
 	// split by primary list
 	$sql_primus = implode('[\s\n\r]*|', $this->primus).' ';
@@ -123,9 +124,7 @@ class $$$Sql2array {
 	}
 
 	// unescape
-	if ($is_escaped) {
-	    $array = $this->_unescape($array); 
-	}
+	if ($is_escaped) $array = $this->_unescape($array);
 
 	return $array;
     }

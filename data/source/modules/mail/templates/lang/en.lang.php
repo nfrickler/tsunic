@@ -314,7 +314,7 @@ $lang = array(
 
     // addServerbox
     'ADDSERVERBOX__INVALIDINPUT' => 'Invalid input!',
-    'ADDSERVERBOX__ERROROCCURRED' => 'Error occurred!',
+    'ADDSERVERBOX__ERROR' => 'Error occurred!',
     'ADDSERVERBOX__SUCCESS' => 'Serverbox successfully added.',
 
     // showDeleteServerbox

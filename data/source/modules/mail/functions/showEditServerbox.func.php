@@ -13,6 +13,7 @@ function $$$showEditServerbox () {
     // activate template
     $data = array(
 	'Serverbox' => $Serverbox,
+	'Mailaccount' => $Serverbox->getMailaccount(),
 	'mailboxes' => $mailboxes = $SuperMail->getMailboxes()
     );
     $TSunic->Tmpl->activate('$$$showEditServerbox', '$system$content', $data);

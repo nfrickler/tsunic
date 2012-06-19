@@ -249,56 +249,35 @@ class $$$Database {
      */
     protected function encryptArray ($array) {
 
-	// check, if is array
-	if (!is_array($array)) {
-	    return $array;
-	}
-	if (isset($array['VALUES'])) {
-	    // get corresponding column
-	    if (isset($array['INSERT INTO'])) {
-		// get array of insert into
-		$corr_array = reset($array['INSERT INTO']);
-	    } elseif (isset($array['UPDATE'])) {
-		$corr_array = reset($array['UPDATE']);
-	    } else {
-		continue;
-	    }
-	    $corr_array = $corr_array['list'];
-	    ksort($corr_array);
-	    $corr_array = array_values($corr_array);
+	// is array?
+	if (!is_array($array)) return $array;
 
-	    // run through values
-	    foreach ($array['VALUES'] as $index => $values) {
-		if (!isset($values['list']) or !is_array($values['list'])) continue;
-		$counter = 0;
-		foreach ($values['list'] as $in => $val) {
-		    if (isset($val['data'])) {
-			// encrypt data
-			$array['VALUES'][$index]['list'][$in]['data'] = $this->_encryptNameValue($corr_array[$counter], $val['data']);
-		    }
-		    // increase counter
-		    $counter++;
-		}
-	    }
-	}
-
-
+	// is name/value pair?
 	if (count($array) == 2) {
 
 	    foreach ($array as $index => $values) {
-		if (is_array($values) AND isset($values['data']) AND substr($index, 5) == '=') {
 
-		    // get other index
-		    foreach ($array as $in => $val) {
-			if ($in != $index) break;
-		    }
-
-		    // encrypt
-		    $array[$index]['data'] = $this->_encryptNameValue($array[$in], $values['data']);
+		// is value?
+		if (!is_array($values) or
+		    !isset($values['data']) or
+		    substr($index, -1) != '='
+		) {
+		    continue;
 		}
-	    }
 
-	    return $array;
+		// get corresponding name (the other array element)
+		$name = '';
+		foreach ($array as $in => $val) {
+		    if ($in != $index) $name = $in;
+		}
+
+		// encrypt
+		$array[$index]['data'] = $this->_encryptNameValue(
+		    $array[$name], $values['data']
+		);
+
+		return $array;
+	    }
 	}
 
 	// check, if data to encrypt
@@ -311,16 +290,15 @@ class $$$Database {
 	    // encrypt data
 	    $array['data'] = $this->_encryptNameValue($reference, $array['data']);
 	}
+
+	// encrypt sub-arrays
 	foreach ($array as $index => $values) {
 
-	    // skip columns
+	    // skip some elements
 	    $to_skip = array('VALUES', 'data');
 	    if (in_array($index, $to_skip)) continue;
 
-	    // get sub-arrays
-	    if (is_array($values)) {
-		$array[$index] = $this->encryptArray($values);
-	    }
+	    $array[$index] = $this->encryptArray($values);
 	}
 
 	return $array;
