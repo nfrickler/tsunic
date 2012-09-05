@@ -15,7 +15,7 @@ class $$$Object {
     /* temporary cache for keytypes in database (0: - 1: encrypted)
      * array
      */
-    protected $keytype;
+    protected $keytypes;
 
     /* information about object
      * array
@@ -76,12 +76,12 @@ class $$$Object {
 	    if (substr($index,0,1) == "_" and substr($index,-1) == "_") {
 		$index = substr($index,1);
 		$index = substr($index,0,(strlen($index)-1));
-		$this->keytype[$index] = 1;
+		$this->keytypes[$index] = 1;
 		$this->info[$index] = $TSunic->Usr->decrypt($value);
 
 	    // not encrypted
 	    } else {
-		$this->keytype[$index] = 0;
+		$this->keytypes[$index] = 0;
 		$this->info[$index] = $value;
 	    }
 	}
@@ -103,10 +103,10 @@ class $$$Object {
 	    foreach ($columns as $index => $value) {
 		if (substr($value,0,1) == "_" and substr($value,-1) == "_") {
 		    $value = substr($value,1);
-		    $value = substr($vlaue,0,(strlen($value)-1));
-		    $this->keytype[$value] = 1;
+		    $value = substr($value,0,(strlen($value)-1));
+		    $this->keytypes[$value] = 1;
 		} else {
-		    $this->keytype[$value] = 0;
+		    $this->keytypes[$value] = 0;
 		}
 	    }
 	}
@@ -115,14 +115,14 @@ class $$$Object {
 	foreach ($data as $index => $value) {
 
 	    // exists?
-	    if (!$this->keytype[$index]) {
-		unlink($data[$index]);
+	    if (!$this->keytypes[$index]) {
+		unset($data[$index]);
 		continue;
 	    }
 
 	    // encrypt?
-	    if ($this->keytype[$index]) {
-		unlink($data[$index]);
+	    if ($this->keytypes[$index]) {
+		unset($data[$index]);
 		$data["_".$index."_"] = $TSunic->Usr->encrypt($value);
 	    }
 	}
@@ -144,7 +144,7 @@ class $$$Object {
 
 	// save in database
 	foreach ($data as $index => $value) {
-	    $value = "$index = '$value'";
+	    $data[$index] = "$index = '$value'";
 	}
 	$sql = "INSERT INTO $this->table SET ".implode(",",$data).";";
 	$this->id = $TSunic->Db->doInsert($sql);
@@ -171,7 +171,7 @@ class $$$Object {
 
 	// update database
 	foreach ($data as $index => $value) {
-	    $value = "$index = '$value'";
+	    $data[$index] = "$index = '$value'";
 	}
 	$sql = "UPDATE $this->table
 		SET ".implode(",",$data)."
@@ -179,7 +179,7 @@ class $$$Object {
 	if (!$TSunic->Db->doUpdate($sql)) return false;
 
 	// update infos
-	$this->loadInfo();
+	$this->_loadInfo();
 
 	return true;
     }
@@ -198,7 +198,7 @@ class $$$Object {
 
 	// invalidate object
 	$this->id = 0;
-	$this->loadInfo();
+	$this->_loadInfo();
 
 	return true;
     }

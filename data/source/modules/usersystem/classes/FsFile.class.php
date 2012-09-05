@@ -3,25 +3,15 @@
 include_once '$system$Object.class.php';
 class $$$FsFile extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__fsfiles";
+
     /* directory containing this file
      * object
      */
     protected $Directory;
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT _name_ as name,
-		fk_directory,
-		fk_account,
-		bytes,
-		dateOfCreation,
-		dateOfUpdate
-	    FROM #__fsfiles
-	    WHERE id = '$this->id';";
-    }
 
     /* create new file
      * @param file-handler: file handler of uploaded file
@@ -84,12 +74,13 @@ class $$$FsFile extends $system$Object {
 
 	// update database
 	global $TSunic;
-	$sql = "INSERT INTO #__fsfiles
-		SET _name_ = '$name',
-		    dateOfCreation = NOW(),
-		    fk_account = '".$TSunic->Usr->getInfo('id')."',
-		    fk_directory = '$fk_directory';";
-	if (!$this->_create($sql)) return false;
+	$data = array(
+	    "name" => $name,
+	    "dateOfCreation" => "NOW()",
+	    "fk_account" => $TSunic->Usr->getInfo('id'),
+	    "fk_directory" => $fk_directory
+	);
+	if (!$this->_create($data)) return false;
 
 	// create new file
 	$File = $this->getFileObject();
@@ -100,7 +91,6 @@ class $$$FsFile extends $system$Object {
 	}
 
 	// update filesize
-	global $TSunic;
 	$sql = "UPDATE #__fsfiles
 		SET bytes = '$bytes'
 		WHERE id = '".$this->id."'
@@ -124,23 +114,12 @@ class $$$FsFile extends $system$Object {
 	    return false;
 	}
 
-	// anything changed?
-	$sql_set = array();
-	if ($name != $this->getInfo('name')) {
-	    $sql_set[] = "_name_ = '$name'";
-	}
-	if ($fk_directory != $this->getInfo('fk_directory')) {
-	    $sql_set[] = "fk_directory = '$fk_directory'";
-	}
-	if (empty($sql_set)) return true;
-
 	// update database
-	global $TSunic;
-	$sql = "UPDATE #__fsfiles SET ".
-		implode(",", $sql_set).
-		" WHERE id = '$this->id'
-		    AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
-	return $this->_edit($sql);
+	$data = array(
+	    "name" => $name,
+	    "fk_directory" => $fk_directory
+	);
+	return $this->_edit($data);
     }
 
     /* get corresponding file-object
@@ -177,10 +156,7 @@ class $$$FsFile extends $system$Object {
 	    return false;
 	}
 
-	$sql = "DELETE FROM #__fsfiles
-	    WHERE id = '$this->id'
-		AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* is valid name for file?

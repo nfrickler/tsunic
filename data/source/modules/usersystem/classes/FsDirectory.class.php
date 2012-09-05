@@ -3,6 +3,11 @@
 include_once '$system$Object.class.php';
 class $$$FsDirectory extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__fsdirectories";
+
     /* sub directories
      * array
      */
@@ -36,20 +41,6 @@ class $$$FsDirectory extends $system$Object {
 	return parent::getInfo($name, $update);
     }
 
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT _name_ as name,
-		    fk_account,
-		    dateOfCreation,
-		    dateOfUpdate,
-		    fk_parent as fk_parent
-		FROM #__fsdirectories
-		WHERE id = '$this->id';";
-    }
-
     /* create new directory
      * @param string: name
      * +@param int: fk of parent
@@ -65,12 +56,13 @@ class $$$FsDirectory extends $system$Object {
 	}
 
 	// update database
-	$sql = "INSERT INTO #__fsdirectories
-		SET _name_ = '$name',
-		    dateOfCreation = NOW(),
-		    fk_account = '".$this->getInfo('fk_account')."',
-		    fk_parent = '$fk_parent';";
-	return $this->_create($sql);
+	$data = array(
+	    "name" => $name,
+	    "dateOfCreation" => "NOW()",
+	    "fk_account" => $this->getInfo('fk_account'),
+	    "fk_parent" => $fk_parent
+	);
+	return $this->_create($data);
     }
 
     /* edit directory
@@ -88,21 +80,12 @@ class $$$FsDirectory extends $system$Object {
 	    return false;
 	}
 
-	// anything changed?
-	$sql_set = array();
-	if ($name != $this->getInfo('name')) {
-	    $sql_set[] = "_name_ = '$name'";
-	}
-	if ($fk_parent != $this->getInfo('fk_parent')) {
-	    $sql_set[] = "fk_parent = '$fk_parent'";
-	}
-	if (empty($sql_set)) return true;
-
 	// update database
-	$sql = "UPDATE #__fsdirectories SET ".
-		implode(",", $sql_set).
-		" WHERE id = '$this->id';";
-	return $this->_edit($sql);
+	$data = array(
+	    "name" => $name,
+	    "fk_parent" => $fk_parent
+	);
+	return $this->_edit($data);
     }
 
     /* delete directory
@@ -116,11 +99,7 @@ class $$$FsDirectory extends $system$Object {
 	    $this->getSubfiles()) {
 	    return false;
 	}
-
-	$sql = "DELETE FROM #__fsdirectories
-		WHERE id = '$this->id'
-		    AND fk_account = '".$this->getInfo('fk_account')."';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* is valid name for directory?
