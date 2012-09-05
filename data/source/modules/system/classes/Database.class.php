@@ -52,19 +52,19 @@ class $$$Database {
     public function doSelect ($query, $is_enc = true) {
 
 	// encrypt data
-	if ($is_enc) $query = $this->encrypt($query);
+#	if ($is_enc) $query = $this->encrypt($query);
 
 	// call database
 	$return = $this->_callDatabase('select', $query);
 
 	// decrypt data
-	if (is_array($return) AND $is_enc) $return = $this->decrypt($return);
+#	if (is_array($return) AND $is_enc) $return = $this->decrypt($return);
 	return $return;
     }
     public function doInsert ($query) {
 
 	// encrypt data
-	$query = $this->encrypt($query);
+#	$query = $this->encrypt($query);
 
 	if (!$this->_callDatabase('insert', $query)) return false;
 	$lastId = $this->_callDatabase('lastId');
@@ -73,7 +73,7 @@ class $$$Database {
     public function doUpdate ($query) {
 
 	// encrypt data
-	$query = $this->encrypt($query);
+#	$query = $this->encrypt($query);
 
 	return $this->_callDatabase('update', $query);
     }

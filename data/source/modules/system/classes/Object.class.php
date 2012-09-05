@@ -2,10 +2,20 @@
 <?php
 class $$$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table;
+
     /* object ID
      * int
      */
     protected $id;
+
+    /* temporary cache for keytypes in database (0: - 1: encrypted)
+     * array
+     */
+    protected $keytype;
 
     /* information about object
      * array
@@ -36,7 +46,7 @@ class $$$Object {
 	if (!$this->id) return false;
 
 	// onload data
-	if ($update or empty($this->info)) $this->loadInfo();
+	if ($update or empty($this->info)) $this->_loadInfo();
 
 	// return requested info
 	if ($name === true) return $this->info;
@@ -46,70 +56,143 @@ class $$$Object {
     }
 
     /* load information about object
-     */
-    protected function loadInfo () {
-	global $TSunic;
-
-	// get data from database
-	$result = $TSunic->Db->doSelect($this->loadInfoSql());
-	$this->info = ($result) ? $result[0] : array();
-
-	// add object ID to array
-	$this->info['id'] = $this->id;
-    }
-
-    /* get SQL query to get object information from database
-     *
-     * @return sql-query
-     */
-    protected function loadInfoSql () {
-	// to be used in child objects
-	return "";
-    }
-
-    /* create new object
-     * @param string: sql query to add entry in database
      *
      * @return bool
      */
-    protected function _create ($sql) {
+    protected function _loadInfo () {
+	if (!$this->id or !$this->table) return false;
 	global $TSunic;
 
-	// add entry in database
+	// get data from database
+	$sql = "SELECT * FROM $this->table WHERE id = '$this->id';";
+	$result = $TSunic->Db->doSelect($sql);
+	if (!$result) return array();
+
+	// decrypt
+	$this->info = array();
+	foreach ($result[0] as $index => $value) {
+
+	    // encrypted
+	    if (substr($index,0,1) == "_" and substr($index,-1) == "_") {
+		$index = substr($index,1);
+		$index = substr($index,0,(strlen($index)-1));
+		$this->keytype[$index] = 1;
+		$this->info[$index] = $TSunic->Usr->decrypt($value);
+
+	    // not encrypted
+	    } else {
+		$this->keytype[$index] = 0;
+		$this->info[$index] = $value;
+	    }
+	}
+
+	return true;
+    }
+
+    /* encrypt data to save in database
+     * @param array: new data
+     *
+     * @return data to save
+     */
+    protected function _data2db ($data) {
+	global $TSunic;
+
+	// get keytypes
+	if (!$this->keytypes) {
+	    $columns = $TSunic->Db->getColumns($this->table);
+	    foreach ($columns as $index => $value) {
+		if (substr($value,0,1) == "_" and substr($value,-1) == "_") {
+		    $value = substr($value,1);
+		    $value = substr($vlaue,0,(strlen($value)-1));
+		    $this->keytype[$value] = 1;
+		} else {
+		    $this->keytype[$value] = 0;
+		}
+	    }
+	}
+
+	// encrypt
+	foreach ($data as $index => $value) {
+
+	    // exists?
+	    if (!$this->keytype[$index]) {
+		unlink($data[$index]);
+		continue;
+	    }
+
+	    // encrypt?
+	    if ($this->keytype[$index]) {
+		unlink($data[$index]);
+		$data["_".$index."_"] = $TSunic->Usr->encrypt($value);
+	    }
+	}
+
+	return $data;
+    }
+
+    /* create new object
+     * @param array: new data
+     *
+     * @return bool
+     */
+    protected function _create ($data) {
+	if (!is_array($data) or $this->id) return false;
+	global $TSunic;
+
+	// encrypt
+	$data = $this->_data2db($data);
+
+	// save in database
+	foreach ($data as $index => $value) {
+	    $value = "$index = '$value'";
+	}
+	$sql = "INSERT INTO $this->table SET ".implode(",",$data).";";
 	$this->id = $TSunic->Db->doInsert($sql);
 
 	// update object infos
-	$this->loadInfo();
+	$this->_loadInfo();
 
 	return ($this->id) ? true : false;
     }
 
     /* edit object
-     * @param string: sql query to edit object in database
+     * @param array: new data
      *
      * @return bool
      */
-    protected function _edit ($sql) {
+    protected function _edit ($data) {
+	if (!$this->table) return false;
+	if (!$data) return true;
 	global $TSunic;
 
-	// edit object in database
-	$result = $TSunic->Db->doUpdate($sql);
+	// encrypt
+	$data = $this->_data2db($data);
+	if (!$data) return false;
+
+	// update database
+	foreach ($data as $index => $value) {
+	    $value = "$index = '$value'";
+	}
+	$sql = "UPDATE $this->table
+		SET ".implode(",",$data)."
+		WHERE id = '$this->id';";
+	if (!$TSunic->Db->doUpdate($sql)) return false;
 
 	// update infos
 	$this->loadInfo();
 
-	return ($result) ? true : false;
+	return true;
     }
 
     /* delete object
-     * @param string: sql query to delete object in database
      *
      * @return bool
      */
-    protected function _delete ($sql) {
+    protected function _delete () {
 	global $TSunic;
 
 	// delete object in database
+	$sql = "DELETE FROM $this->table WHERE id = '$this->id';";
 	$result = $TSunic->Db->doDelete($sql);
 	if (!$result) return false;
 

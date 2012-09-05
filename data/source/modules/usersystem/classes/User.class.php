@@ -3,6 +3,11 @@
 include_once '$system$Object.class.php';
 class $$$User extends $system$Object {
 
+    /* table
+     * string
+     */
+    protected $table = "#__accounts";
+
     /* Homehost
      * OBJECT
      */
