@@ -7,11 +7,6 @@ class $$$Database {
      */
     private $Db_obj;
 
-    /* sql2array-object
-     * object
-     */
-    private $Sql2array;
-
     /* constructor
      */
     public function __construct () {
@@ -35,9 +30,6 @@ class $$$Database {
 	    return;
 	}
 
-	// get sql2array-object
-	$this->Sql2array = $TSunic->get('$$$Sql2array');
-
 	return;
     }
 
@@ -50,31 +42,15 @@ class $$$Database {
      * @return mix
      */
     public function doSelect ($query, $is_enc = true) {
-
-	// encrypt data
-#	if ($is_enc) $query = $this->encrypt($query);
-
 	// call database
-	$return = $this->_callDatabase('select', $query);
-
-	// decrypt data
-#	if (is_array($return) AND $is_enc) $return = $this->decrypt($return);
-	return $return;
+	return $this->_callDatabase('select', $query);
     }
     public function doInsert ($query) {
-
-	// encrypt data
-#	$query = $this->encrypt($query);
-
 	if (!$this->_callDatabase('insert', $query)) return false;
 	$lastId = $this->_callDatabase('lastId');
 	return ($lastId) ? $lastId : true;
     }
     public function doUpdate ($query) {
-
-	// encrypt data
-#	$query = $this->encrypt($query);
-
 	return $this->_callDatabase('update', $query);
     }
     public function doDelete ($query) {
@@ -191,163 +167,6 @@ class $$$Database {
 	}
 
 	return $return;
-    }
-
-    /* ######################### encryption ############################# */
-
-    /* parse query with encryption
-     * @param array: array with sql-query-data
-     *
-     * @return array or REDIRECT
-     */
-    public function encrypt ($sql) {
-	global $TSunic;
-
-	// skip, if no TSunic-object (e.g. SESSION!)
-	if (empty($TSunic) OR !is_object($TSunic)) return $sql;
-
-	// start timer
-	$TSunic->Stats->startTimer('encryption');
-
-	// get tree
-	$array = $this->Sql2array->toArray($sql);
-
-	// encrypt data
-	$array = $this->encryptArray($array);
-
-	// convert to sql-query
-	$sql = $this->Sql2array->toSql($array);
-
-	// stop timer
-	$TSunic->Stats->stopTimer('encryption');
-
-	return $sql;
-    }
-
-    /* encrypt data, if values of name $name have to be encrypted
-     * @param string: name
-     * @param string: value
-     *
-     * @return string
-     */
-    protected function _encryptNameValue ($name, $value) {
-
-	// check, if value has to be encrypted
-	if (substr($name, 0, 1) == '_'
-		AND substr($name, -1) == '_') {
-	    // encrypt value
-	    $value = $this->doEncrypt($value);
-	}
-
-	return $value;
-    }
-
-    /* encrypt data in array
-     * @param array: array with sql-query-data
-     *
-     * @return array or REDIRECT
-     */
-    protected function encryptArray ($array) {
-
-	// is array?
-	if (!is_array($array)) return $array;
-
-	// is name/value pair?
-	if (count($array) == 2) {
-
-	    foreach ($array as $index => $values) {
-
-		// is value?
-		if (!is_array($values) or
-		    !isset($values['data']) or
-		    substr($index, -1) != '='
-		) {
-		    continue;
-		}
-
-		// get corresponding name (the other array element)
-		$name = '';
-		foreach ($array as $in => $val) {
-		    if ($in != $index) $name = $in;
-		}
-
-		// encrypt
-		$array[$index]['data'] = $this->_encryptNameValue(
-		    $array[$name], $values['data']
-		);
-
-		return $array;
-	    }
-	}
-
-	// check, if data to encrypt
-	if (isset($array['data'], $array['reference'])) {
-
-	    // get column-reference
-	    $cache = explode('.', $array['reference']);
-	    $reference = (isset($cache[1])) ? $cache[1] : $cache[0];
-
-	    // encrypt data
-	    $array['data'] = $this->_encryptNameValue($reference, $array['data']);
-	}
-
-	// encrypt sub-arrays
-	foreach ($array as $index => $values) {
-
-	    // skip some elements
-	    $to_skip = array('VALUES', 'data');
-	    if (in_array($index, $to_skip)) continue;
-
-	    $array[$index] = $this->encryptArray($values);
-	}
-
-	return $array;
-    }
-
-    /* encrypts a string
-     * @param array/string: string to encrypt
-     *
-     * @return string
-      */
-    private function doEncrypt ($data) {
-	global $TSunic;
-	if (!$TSunic->Usr) return $data;
-
-	// get first value if array
-	if (is_array($data)) $data = $data[0];
-
-	// encrypt data
-	$data = mysql_real_escape_string($TSunic->Usr->encrypt($data));
-
-	return $data;
-    }
-
-    /* decrypts a string
-     * @param array: array with data to decrypt
-     *
-     * @return string
-      */
-    private function decrypt ($data) {
-	global $TSunic;
-	if (!$TSunic->Usr) return $data;
-
-	// validate type
-	if (!is_array($data)) return $data;
-
-	// decrypt values
-	foreach ($data as $index => $value) {
-	    foreach ($value as $in => $val) {
-
-		// skip empty values
-		if (empty($val)) continue;
-
-		// decrypt value
-		$return = $TSunic->Usr->decrypt($val);
-		if ($return) $data[$index][$in] = $return;
-	    }
-	}
-
-	return $data;
     }
 }
 ?>

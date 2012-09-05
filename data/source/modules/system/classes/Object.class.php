@@ -100,6 +100,7 @@ class $$$Object {
 	// get keytypes
 	if (!$this->keytypes) {
 	    $columns = $TSunic->Db->getColumns($this->table);
+
 	    foreach ($columns as $index => $value) {
 		if (substr($value,0,1) == "_" and substr($value,-1) == "_") {
 		    $value = substr($value,1);
@@ -115,7 +116,7 @@ class $$$Object {
 	foreach ($data as $index => $value) {
 
 	    // exists?
-	    if (!$this->keytypes[$index]) {
+	    if (!isset($this->keytypes[$index])) {
 		unset($data[$index]);
 		continue;
 	    }

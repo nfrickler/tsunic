@@ -79,27 +79,6 @@ class $$$User extends $system$Object {
 	return parent::__construct($id);
     }
 
-    /* get SQL query to get object information from database
-     *
-     * @return sql-query
-     */
-    protected function loadInfoSql () {
-	global $TSunic;
-	return "SELECT ".
-	    (($this->isLoggedIn() or $TSunic->Usr->access('$$$seeAllData')) ?
-		"email as email,
-		dateOfRegistration as dateOfRegistration,
-		dateOfChange as dateOfChange,
-		dateOfDeletion as dateOfDeletion,
-		userkey as userkey,
-	    " : "")."
-		fk__homehost as fk__homehost,
-		name as name
-	    FROM #__accounts
-	    WHERE id = '$this->id'
-	;";
-    }
-
     /* register user
      * @param string: email
      * @param string: name
@@ -124,15 +103,14 @@ class $$$User extends $system$Object {
 	    return false;
 	}
 
-	// create new account
-	$sql = "INSERT INTO #__accounts
-	    SET email = '$email',
-		name = '$name',
-		password = '".$this->_password2hash($password, $email)."',
-		dateOfRegistration = NOW(),
-		fk__homehost = 0
-	;";
-	return $this->_create($sql);
+	// update database
+	$data = array(
+	    "email" => $email,
+	    "name" => $name,
+	    "password" => $this->_password2hash($password, $email),
+	    "fk_homehost" => 0
+	);
+	return $this->_create($data);
     }
 
     /* edit account
@@ -157,29 +135,20 @@ class $$$User extends $system$Object {
 	    return false;
 	}
 
-	// has sth changed?
-	$sql_set = array();
-	if ($email != $this->getInfo('email')) {
-	    $sql_set[] = "email = '$email'";
-	}
-	if ($name != $this->getInfo('name')) {
-	    $sql_set[] = "name = '$name'";
-	}
+	// update database
+	$data = array(
+	    "email" => $email,
+	    "name" => $name
+	);
 	if (!empty($password)) {
 	    if (!$this->isValidPassword($password)) return false;
-	    $sql_set[] = "password = '".$this->_password2hash($password, $email)."'";
+	    $data["password"] = $this->_password2hash($password, $email);
 	    if (!$this->_setEncPassword($this->_getPassphrase($password, $email))) return false;
 
 	    # if root password is set, note in config
 	    if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);
 	}
-	if (empty($sql_set)) return true;
-
-	// update database
-	$sql = "UPDATE #__accounts SET ".
-	    implode(", ", $sql_set).
-	    " WHERE id = '$this->id';";
-	return $this->_edit($sql);
+	return $this->_edit($data);
     }
 
     /* delete account
@@ -198,11 +167,7 @@ class $$$User extends $system$Object {
 	) return false;
 
 	// remove in database
-	$sql = "DELETE FROM #__accounts
-	    WHERE id = '$this->id';";
-	if (!$this->_delete($sql)) return false;
-
-	return true;
+	return $this->_delete();
     }
 
     /* get email to name
