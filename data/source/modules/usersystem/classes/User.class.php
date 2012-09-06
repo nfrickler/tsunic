@@ -130,7 +130,8 @@ class $$$User extends $system$Object {
 
 	// validate input
 	if (!$this->isValidEMail($email) or
-	    !$this->isValidName($name)
+	    !$this->isValidName($name) or
+	    !$this->isValidPassword($password)
 	) {
 	    return false;
 	}
@@ -138,16 +139,15 @@ class $$$User extends $system$Object {
 	// update database
 	$data = array(
 	    "email" => $email,
-	    "name" => $name
+	    "name" => $name,
+	    "password" => $this->_password2hash($password, $email)
 	);
-	if (!empty($password)) {
-	    if (!$this->isValidPassword($password)) return false;
-	    $data["password"] = $this->_password2hash($password, $email);
-	    if (!$this->_setEncPassword($this->_getPassphrase($password, $email))) return false;
+	if (!$this->_setEncPassword($this->_getPassphrase($password, $email)))
+	    return false;
 
-	    # if root password is set, note in config
-	    if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);
-	}
+	# if root password is set, note in config
+	if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);
+
 	return $this->_edit($data);
     }
 

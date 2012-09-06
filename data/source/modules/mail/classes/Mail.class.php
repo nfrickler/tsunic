@@ -3,33 +3,15 @@
 include_once '$system$Object.class.php';
 class $$$Mail extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__mails";
+
     /* attached files
      * array of fsfile objects
      */
     protected $attachments;
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	global $TSunic;
-	return "SELECT _subject_ as subject,
-		    fk_mailbox,
-		    fk_smtp,
-		    charset,
-		    _sender_ as sender,
-		    dateOfMail,
-		    dateOfCreation,
-		    dateOfUpdate,
-		    uid,
-		    unseen
-		FROM #__mails
-		WHERE id = '".$this->id."'
-		    AND fk_account = '".$TSunic->Usr->getInfo('id')."'
-		    AND dateOfDeletion = '0000-00-00 00:00:00'
-	;";
-    }
 
     /* get content of mail (prefer html)
      * +@param string: type of content (plain or html)
@@ -38,29 +20,14 @@ class $$$Mail extends $system$Object {
      */
     public function getContent ($type = 'plain') {
 	global $TSunic;
+	$Parser = $TSunic->get('$system$Parser');
 
-	// load content from database
-	if (!isset($this->info['htmlcontent'])) {
-
-	    $sql = "SELECT _plaincontent_ as plaincontent,
-			_htmlcontent_ as htmlcontent
-		    FROM #__mails
-		    WHERE id = '".$this->id."';";
-	    $result = $TSunic->Db->doSelect($sql);
-	    if (!$result) return '';
-
-	    // parse and save
-	    $Parser = $TSunic->get('$system$Parser');
-	    $this->info['plaincontent'] =
-		$Parser->toText(base64_decode($result[0]['plaincontent']));
-	    $this->info['htmlcontent'] =
-		$Parser->toHtml(base64_decode($result[0]['htmlcontent']));
+	// return parsed content
+	if ($type == 'plain' or empty($this->info['htmlcontent'])) {
+	    return $Parser->toText(base64_decode($this->info['plaincontent']));
+	} else {
+	    return $Parser->toText(base64_decode($this->info['htmlcontent']));
 	}
-
-	if ($type == 'plain') return $this->info['plaincontent'];
-	if ($type == 'html') return $this->info['htmlcontent'];
-	return (empty($this->info['htmlcontent']))
-	    ? $this->info['plaincontent'] : $this->info['htmlcontent'];
     }
 
     /* get plain content of mail
@@ -99,14 +66,14 @@ class $$$Mail extends $system$Object {
 
 	// update database
 	global $TSunic;
-	$sql = "INSERT INTO #__mails
-		SET _subject_ = '$subject',
-		    _plaincontent_ = '".base64_encode($content)."',
-		    fk_smtp = '$fk_smtp',
-		    dateOfCreation = NOW(),
-		    fk_account = '".$TSunic->Usr->getInfo('id')."'
-	;";
-	if (!$this->_create($sql)) return false;
+	$data = array(
+	    "subject" => $subject,
+	    "plaincontent" => $plaincontent,
+	    "fk_smtp" => $fk_smtp,
+	    "dateOfCreation" => "NOW()",
+	    "fk_account" => $TSunic->Usr->getInfo('id')
+	);
+	if (!$this->_create($data)) return false;
 
 	// set addressee
 	if (!$this->setAddressee($addressee)) return false;
@@ -136,22 +103,22 @@ class $$$Mail extends $system$Object {
 	$Parser = $TSunic->get('$system$Parser');
 
 	// save in database
-	$sql = "INSERT INTO #__mails
-		SET fk_account = '".$TSunic->Usr->getInfo('id')."',
-		    fk_serverbox = '$fk_serverbox',
-		    fk_mailbox = '$fk_mailbox',
-		    _subject_ = '".$Parser->txt2db($subject)."',
-		    _sender_ = '".$Parser->txt2db($sender)."',
-		    dateOfCreation = NOW(),
-		    status = '1',
-		    unseen = '".($unseen ? '1' : '0')."',
-		    dateOfMail = '".$Parser->txt2db($date)."',
-		    uid = '".$Parser->txt2int($uid)."',
-		    _plaincontent_ = '".base64_encode($Parser->txt2plain2db($plaincontent))."',
-		    _htmlcontent_ = '".base64_encode($Parser->txt2db($htmlcontent))."',
-		    charset = '".$Parser->txt2db($charset)."'
-	";
-	if (!$this->_create($sql)) return false;
+	$data = array(
+	    "fk_account" => $TSunic->Usr->getInfo('id'),
+	    "fk_serverbox" => $fk_serverbox,
+	    "fk_mailbox" => $fk_mailbox,
+	    "subject" => $Parser->text2db($subject),
+	    "sender" => $Parser->text2db($sender),
+	    "dateOfCreation" => "NOW()",
+	    "status" => 1,
+	    "unseen" => ($unseen ? 1 : 0),
+	    "dateOfMail" => $Parser->text2db($date),
+	    "uid" => $Parser->text2int($uid),
+	    "plaincontent" => base64_encode($Parser->text2plain2db($plaincontent)),
+	    "htmlcontent" => base64_encode($Parser->text2db($htmlcontent)),
+	    "charset" => $Parser->text2db($charset)
+	);
+	if (!$this->_create($data)) return false;
 
 	// set addressee
 	if (!$this->setAddressee($addressee)) return false;
@@ -177,14 +144,12 @@ class $$$Mail extends $system$Object {
 	) return false;
 
 	// update database
-	$sql = "UPDATE #__mails
-		SET _subject_ = '$subject',
-		    _plaincontent_ = '".base64_encode($content)."',
-		    fk_smtp = '$fk_smtp',
-		    dateOfUpdate = NOW()
-		WHERE id = '".$this->id."'
-	;";
-	if (!$this->_edit($sql)) return false;
+	$data = array(
+	    "subject" => $subject,
+	    "plaincontent" => base64_encode($content),
+	    "fk_smtp" => $fk_smtp
+	);
+	if (!$this->_edit($data)) return false;
 
 	// set addressee
 	$result = $this->setAddressee($addressee);
@@ -395,22 +360,20 @@ class $$$Mail extends $system$Object {
 
 	// delete in database
 	if ($completely) {
-	    $sql = "DELETE FROM #__mails
-		    WHERE id = '".$this->id."';";
-	    $result = $TSunic->Db->doDelete($sql);
+	    $this->_delete();
 	} else {
-	    $sql = "UPDATE #__mails
-		    SET _subject_ = '',
-			_plaincontent_ = '',
-			_htmlcontent_ = '',
-			fk_mailbox = '',
-			charset = '',
-			_sender_ = '',
-			dateOfMail = '',
-			dateOfCreation = '',
-			dateOfDeletion = NOW()
-		    WHERE id = '".$this->id."';";
-	    $result = $TSunic->Db->doUpdate($sql);
+	    $data = array(
+		"subject" => '',
+		"plaincontent" => '',
+		"htmlcontent" => '',
+		"fk_mailbox" => '',
+		"charset" => '',
+		"sender" => '',
+		"dateOfMail" => '',
+		"dateOfCreation" => '',
+		"dateOfDeletion" => "NOW()"
+	    );
+	    $result = $TSunic->Db->doUpdate($data);
 	}
 
 	if ($result) return true;

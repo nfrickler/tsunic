@@ -3,23 +3,15 @@
 include_once '$system$Object.class.php';
 class $$$Mailbox extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__mailboxes";
+
     /* mail objects of mails in box
      * array
      */
     protected $mails;
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT _name_ as name,
-		    _description_ as description,
-		    dateOfCreation,
-		    dateOfUpdate
-		FROM #__mailboxes
-		WHERE id = '$this->id';";
-    }
 
     /* get object of mails in box
      *
@@ -77,15 +69,13 @@ class $$$Mailbox extends $system$Object {
 	    OR !$this->isValidDescription($description)
 	) return false;
 
-	// save in db
-	global $TSunic;
-	$sql = "INSERT INTO #__mailboxes
-		SET fk_account = '".$TSunic->Usr->getInfo('id')."',
-		    _name_ = '".$name."',
-		    _description_ = '".$description."',
-		    dateOfCreation = NOW()
-	    ";
-	return $this->_create($sql);
+	// update database
+	$data = array(
+	    "name" => $name,
+	    "description" => $description,
+	    "dateOfCreation" => "NOW()"
+	);
+	return $this->_create($data);
     }
 
     /* edit data of box
@@ -101,12 +91,12 @@ class $$$Mailbox extends $system$Object {
 	    OR !$this->isValidDescription($description)
 	) return false;
 
-	// save new data in db
-	$sql = "UPDATE #__mailboxes
-		SET _name_ = '".$name."',
-		    _description_ = '".$description."'
-		WHERE id = '".$this->id."';";
-	return $this->_edit($sql);
+	// update database
+	$data = array(
+	    "name" => $name,
+	    "description" => $description,
+	);
+	return $this->_edit($data);
     }
 
     /* delete mailbox
@@ -122,9 +112,7 @@ class $$$Mailbox extends $system$Object {
 	}
 
 	// delete mailbox in database
-	$sql = "DELETE FROM #__mailboxes
-		WHERE id = '".$this->id."';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* check, if name of box is valid

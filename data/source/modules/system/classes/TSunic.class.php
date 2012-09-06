@@ -396,6 +396,7 @@ class TSunic {
      */
     public function redirect ($event, $gets = false) {
 
+
 	// TODO: Prevent internal runs from redirecting
 
 	// get loop
