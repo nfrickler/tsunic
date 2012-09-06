@@ -158,10 +158,11 @@ class $$$Object {
 
     /* edit object
      * @param array: new data
+     * @param bool: save empty strings
      *
      * @return bool
      */
-    protected function _edit ($data) {
+    protected function _edit ($data, $save_empty) {
 	if (!$this->table) return false;
 	if (!$data) return true;
 	global $TSunic;
@@ -172,6 +173,13 @@ class $$$Object {
 
 	// update database
 	foreach ($data as $index => $value) {
+	    if (!$save_empty and !$value or
+		($index == "password" and $value == "**********")
+	    ) {
+		unset($data[$index]);
+		continue;
+	    }
+
 	    $data[$index] = "$index = '$value'";
 	}
 	$sql = "UPDATE $this->table

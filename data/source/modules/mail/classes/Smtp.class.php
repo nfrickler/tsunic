@@ -3,6 +3,11 @@
 include_once '$system$Object.class.php';
 class $$$Smtp extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__smtps";
+
     /* password for smtp-server
      * string
      */
@@ -37,28 +42,6 @@ class $$$Smtp extends $system$Object {
 	2 => array('{CLASS__SMTP__CONNSECURITIES_STARTTLS}', ''),
 	3 => array('{CLASS__SMTP__CONNSECURITIES_SSLTLS}', 'tls')
     );
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT _emailname_ as emailname,
-		_description_ as description,
-		dateOfCreation,
-		dateOfUpdate,
-		_email_ as email,
-		_password_ as password,
-		_host_ as host,
-		_port_ as port,
-		_user_ as user,
-		connsecurity,
-		auth,
-		fk_mailaccount,
-		fk_account
-	    FROM #__smtps
-	    WHERE id = '$this->id';";
-    }
 
     /* load information about object
      */
@@ -127,10 +110,10 @@ class $$$Smtp extends $system$Object {
 	}
 
 	// update database
-	$sql = "UPDATE #__smtps
-		SET fk_mailaccount = ".$this->Mailaccount->getInfo('id')."
-		WHERE id = ".$this->id.";";
-	$result = $TSunic->Db->doUpdate($sql);
+	$data = array(
+	    "fk_mailaccount" => $this->Mailaccount->getInfo('id')
+	);
+	$this->_edit($data);
 
 	return true;
     }
@@ -248,15 +231,15 @@ class $$$Smtp extends $system$Object {
 
 	// create new server in database
 	global $TSunic;
-	$sql = "INSERT INTO #__smtps
-		SET _email_ = '".$email."',
-		    _password_ = '".$password."',
-		    _description_ = '".$description."',
-		    _emailname_ = '".$emailname."',
-		    fk_account = '".$TSunic->Usr->getInfo('id')."',
-		    dateOfCreation = NOW()
-	;";
-	return $this->_create($sql);
+	$data = array(
+	    "email" => $email,
+	    "password" => $password,
+	    "description" => $description,
+	    "emailname" => $emailname,
+	    "dateOfCreation" => "NOW()",
+	    "fk_account" => $TSunic->Usr->getInfo('id')
+	);
+	return $this->_create($data);
     }
 
     /* set connection for smtp-server
@@ -285,16 +268,14 @@ class $$$Smtp extends $system$Object {
 
 	// save in db
 	global $TSunic;
-	$sql = "UPDATE #__smtps
-		SET _host_ = '".$this->getInfo('host')."',
-		    _user_ = '".$this->getInfo('user')."',
-		    _port_ = '".$this->getInfo('port')."',
-		    connsecurity = '".$this->getConnsecurity($this->getInfo('connsecurity'), true)."',
-		    auth = '".$this->getAuth($this->getInfo('auth'), true)."'
-		WHERE id = '".$this->id."';
-	";
-
-	$result = $TSunic->Db->doUpdate($sql);
+	$data = array(
+	    "host" => $this->getInfo('host'),
+	    "user" => $this->getInfo('user'),
+	    "port" => $this->getInfo('port'),
+	    "connsecurity" => $this->getConnsecurity($this->getInfo('connsecurity'), true),
+	    "auth" => $this->getAuth($this->getInfo('auth'), true)
+	);
+	$result = $this->_edit($data);
 
 	// update object
 	$this->loadInfo();
@@ -319,23 +300,14 @@ class $$$Smtp extends $system$Object {
 	    OR !$this->isValidEMailname($emailname)
 	) return false;
 
-	// get sql-query-string
-	$sql_set = array();
-	if ($email != $this->getInfo('email'))
-	    $sql_set[] = "_email_ = '$email'";
-	if ($description != $this->getInfo('description'))
-	    $sql_set[] = "_description_= '$description'";
-	if ($emailname != $this->getInfo('emailname'))
-	    $sql_set[] = "_emailname_ = '$emailname'";
-	if (!empty($password) and $password != '**********')
-	    $sql_set[] = "_password_ = '$password'";
-	if (!$sql_set) return true;
-
 	// update database
-	$sql = "UPDATE #__smtps
-		SET ".implode(',', $sql_set)."
-		WHERE id = '".$this->id."' ;";
-	return $this->_edit($sql);
+	$data = array(
+	    "email" => $email,
+	    "password" => $password,
+	    "description" => $description,
+	    "emailname" => $emailname
+	);
+	return $this->_edit($data);
     }
 
     /* delete smtp-server
@@ -343,9 +315,7 @@ class $$$Smtp extends $system$Object {
      * @return bool
      */
     public function deleteSmtp () {
-	$sql = "DELETE FROM #__smtps
-		WHERE id = '".$this->id."';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* check, if fk_mailaccount is valid

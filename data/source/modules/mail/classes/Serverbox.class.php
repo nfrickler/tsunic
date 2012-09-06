@@ -3,6 +3,11 @@
 include_once '$system$Object.class.php';
 class $$$Serverbox extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__serverboxes";
+
     /* Mailaccount object
      * object
      */
@@ -17,24 +22,6 @@ class $$$Serverbox extends $system$Object {
      * array
      */
     protected $cache;
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT _name_ as name,
-		    fk_mailaccount as fk_mailaccount,
-		    fk_mailbox as fk_mailbox,
-		    deleteOnUpdate as deleteOnUpdate,
-		    dateOfCreation as dateOfCreation,
-		    dateOfUpdate as dateOfUpdate,
-		    dateOfCheck as dateOfCheck,
-		    checkAllSeconds as checkAllSeconds,
-		    isActive as isActive
-		FROM #__serverboxes
-		WHERE id = '".$this->id."';";
-    }
 
     /* get corresponding mailbox object
      *
@@ -136,14 +123,14 @@ class $$$Serverbox extends $system$Object {
 	// get deleteOnUpdate
 	$deleteOnUpdate = ($deleteOnUpdate) ? 1 : 0;
 
-	// add new serverbox in database
-	$sql = "INSERT INTO #__serverboxes
-		SET fk_mailaccount = '".$fk_mailaccount."',
-		    _name_ = '".$name."',
-		    fk_mailbox = '".$fk_mailbox."',
-		    deleteOnUpdate = '".$deleteOnUpdate."'
-	;";
-	return $this->_create($sql);
+	// update database
+	$data = array(
+	    "fk_mailaccount" => $fk_mailaccount,
+	    "name" => $name,
+	    "fk_mailbox" => $fk_mailbox,
+	    "deleteOnUpdate" => $deleteOnUpdate
+	);
+	return $this->_create($data);
     }
 
     /* edit serverbox
@@ -163,14 +150,13 @@ class $$$Serverbox extends $system$Object {
 	// get deleteOnUpdate
 	$deleteOnUpdate = ($deleteOnUpdate) ? 1 : 0;
 
-	// add new serverbox in database
-	$sql = "UPDATE #__serverboxes
-		SET _name_ = '".$name."',
-		    fk_mailbox = '".$fk_mailbox."',
-		    deleteOnUpdate = '".$deleteOnUpdate."'
-		WHERE id = '".$this->id."'
-	;";
-	return $this->_edit($sql);
+	// update database
+	$data = array(
+	    "name" => $name,
+	    "fk_mailbox" => $fk_mailbox,
+	    "deleteOnUpdate" => $deleteOnUpdate
+	);
+	return $this->_edit($data);
     }
 
     /* delete serverbox
@@ -178,9 +164,7 @@ class $$$Serverbox extends $system$Object {
      * @return bool
      */
     public function delete () {
-	$sql = "DELETE FROM #__serverboxes
-		WHERE id = '".$this->id."';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* de-/activate serverbox
@@ -193,11 +177,7 @@ class $$$Serverbox extends $system$Object {
 	$isActive = ($isActive) ? 1 : 0;
 
 	// de-/activate serverbox in database
-	$sql = "UPDATE #__serverboxes
-		SET isActive = '$isActive'
-		WHERE id = '".$this->id."'
-	;";
-	return $TSunic->Db->doUpdate($sql);
+	return $this->_edit(array("isActive" => $isActive));
     }
 
     /* check, if name is valid

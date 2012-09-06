@@ -3,6 +3,11 @@
 include_once '$system$Object.class.php';
 class $$$Mailaccount extends $system$Object {
 
+    /* tablename in database
+     * string
+     */
+    protected $table = "#__mailaccounts";
+
     /* SMPT objects
      * array
      */
@@ -65,28 +70,6 @@ class $$$Mailaccount extends $system$Object {
 	$this->frequenceServerboxUpdate = 60 * 60 * 24 * 7;
 
 	return parent::__construct($id);
-    }
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT _name_ as name,
-		    _description_ as description,
-		    dateOfCreation,
-		    dateOfUpdate,
-		    _email_ as email,
-		    _password_ as password,
-		    _host_ as host,
-		    _port_ as port,
-		    _user_ as user,
-		    protocol,
-		    connsecurity,
-		    auth,
-		    lastServerboxUpdate
-		FROM #__mailaccounts
-		WHERE id = '$this->id';";
     }
 
     /* load information about object
@@ -219,17 +202,16 @@ class $$$Mailaccount extends $system$Object {
 	    or !$this->isValidPort($port)
 	) return false;
 
-	// save in db
-	$sql = "UPDATE #__mailaccounts
-		SET _host_ = '$host',
-		    _user_ = '$user',
-		    _port_ = '$port',
-		    protocol = '".$this->getProtocol($protocol, true)."',
-		    connsecurity = '".$this->getConnsecurity($connsecurity, true)."',
-		    auth = '".$this->getAuth($auth, true)."'
-		WHERE id = '".$this->id."';
-	";
-	$result = $TSunic->Db->doUpdate($sql);
+	// udpate database
+	$data = array(
+	    "host" => $host,
+	    "user" => $user,
+	    "port" => $port,
+	    "protocol" => $this->getProtocol($protocol, true),
+	    "connsecurity" => $this->getConnsecurity($connsecurity, true),
+	    "auth" => $this->getAuth($auth, true)
+	);
+	$result = $this->_edit($data);
 
 	// update $this->info
 	$this->getInfo(true, true);
@@ -259,15 +241,15 @@ class $$$Mailaccount extends $system$Object {
 
 	// save in db
 	global $TSunic;
-	$sql = "INSERT INTO #__mailaccounts
-		SET fk_account = '".$TSunic->Usr->getInfo('id')."',
-		    _email_ = '$email',
-		    _password_ = '$password',
-		    _name_ = '$name',
-		    _description_ = '$description',
-		    dateOfCreation = NOW()
-	";
-	return $this->_create($sql);
+	$data = array(
+	    "fk_account" => $TSunic->Usr->getInfo('id'),
+	    "email" => $email,
+	    "password" => $password,
+	    "name" => $name,
+	    "description" => $description,
+	    "dateOfCreation" => "NOW()"
+	);
+	return $this->_create($data);
     }
 
     /* edit a mailaccount
@@ -290,23 +272,14 @@ class $$$Mailaccount extends $system$Object {
 	// name defaults to email
 	if (empty($name)) $name = $email;
 
-	// validate password
-	$sql_set = array();
-	if ($email != $this->getInfo('email'))
-	    $sql_set[] = "_email_ = '$email'";
-	if (!empty($password) and $password != '*******')
-	    $sql_set[] = "_password_ = '$password'";
-	if ($name != $this->getInfo('name'))
-	    $sql_set[] = "_name_ = '$name'";
-	if ($description != $this->getInfo('description'))
-	    $sql_set[] = "_description_ = '$description'";
-	if (empty($sql_set)) return true;
-
 	// update database
-	$sql = "UPDATE #__mailaccounts SET ".
-		implode(",", $sql_set).
-		" WHERE id = '$this->id';";
-	return $this->_edit($sql);
+	$data = array(
+	    "name" => $name,
+	    "email" => $email,
+	    "password" => $password,
+	    "description" => $description
+	);
+	return $this->_edit($data);
     }
 
     /* delete mail account
@@ -329,9 +302,7 @@ class $$$Mailaccount extends $system$Object {
 	}
 
 	// delete in database
-	$sql = "DELETE FROM #__mailaccounts
-		WHERE id = '$this->id';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* check, if description of mail account is valid
@@ -635,11 +606,7 @@ class $$$Mailaccount extends $system$Object {
 	if (!is_array($serverboxes)) return false;
 
 	// get locally added serverboxes
-	$sql = "SELECT _name_ as name,
-		    id as id
-		FROM #__serverboxes
-		WHERE fk_mailaccount = '".$this->id."';";
-	$serverbox_list = $TSunic->Db->doSelect($sql);
+	$local_serverboxes = getServerboxes();
 
 	// get output-array
 	$output = array();
@@ -651,13 +618,13 @@ class $$$Mailaccount extends $system$Object {
 
 	    // check, if already on list
 	    $isListed = false;
-	    foreach ($serverbox_list as $in => $val) {
-		if ($val['name'] == $name) {
+	    foreach ($local_serverboxes as $in => $val) {
+		if ($val->getInfo('name') == $name) {
 		    // already in db
 		    $isListed = true;
 
 		    // delete from list
-		    unset($serverbox_list[$in]);
+		    unset($local_serverboxes[$in]);
 		}
 	    }
 
@@ -670,8 +637,8 @@ class $$$Mailaccount extends $system$Object {
 
 	// set deleted serverboxes as deleted in database
 	$sql_where = '';
-	foreach ($serverbox_list as $index => $values) {
-	    $sql_where.= " OR id = '".$values['id']."'";
+	foreach ($local_serverboxes as $index => $values) {
+	    $sql_where.= " OR id = '".$values->getInfo('id')."'";
 	}
 	$sql_where = substr($sql_where, 3);
 
