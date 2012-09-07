@@ -76,7 +76,7 @@ class TSunic {
 	$this->Temp = $this->get('$$$Temp');
 
 	// create Log object
-	$this->Log = $this->get('$$$Log');
+	$this->Log = $this->get('$$$Log', $this->Config->getConfig('loglevel'));
 
 	// start template-engine
 	$this->Tmpl = $this->get('$$$TemplateEngine');
@@ -115,6 +115,7 @@ class TSunic {
 		}
 		$parameter_string = implode(',', $parameters);
 	    }
+
 	} else {
 	    // external
 
@@ -131,7 +132,9 @@ class TSunic {
 		$this->redirect('default');
 		exit;
 	    }
+
 	}
+	$this->Log->log(6, "Run: $event");
 
 	// get path and file-object
 	$path = '#runtime#functions/'.$event.'.func.php';
@@ -351,7 +354,7 @@ class TSunic {
 	return $this->Db->doSelect($sql);
     }
 
-    /* return fatale error-message and end script
+    /* return fatal error-message and end script
      * @param string: error-message
      *
      * @return - EXIT SCRIPT
@@ -362,6 +365,9 @@ class TSunic {
 	if ($message === 0) $message = 'Unknown error.';
 	$message = str_replace('<', '&lt;', $message); // replace <
 	$message = str_replace('>', '&gt;', $message); // replace >
+
+	// log error
+	$this->Log->log(1, "Fatal error: $message");
 
 	// display error
 	$output = '<h1>TSunic '.$this->Config->getConfig('version').' - Fatal error!</h1>';

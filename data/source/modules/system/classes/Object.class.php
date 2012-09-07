@@ -162,7 +162,7 @@ class $$$Object {
      *
      * @return bool
      */
-    protected function _edit ($data, $save_empty) {
+    protected function _edit ($data, $save_empty = false) {
 	if (!$this->table) return false;
 	if (!$data) return true;
 	global $TSunic;

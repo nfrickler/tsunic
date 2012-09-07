@@ -35,7 +35,7 @@ class $$$Factory {
     /* get instance of class
      * @param string: name of class
      * +@param array: values of object in constructor
-     * +@param bool: force object to be a new one     
+     * +@param bool: force object to be a new one
      *
      * @return OBJECT
      */

@@ -7,7 +7,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isString ($input) {
+    public static function isString ($input) {
 	return (self::_isMatch("%[^-_a-z0-9äöü]%i", $input)) ? false : true;
     }
 
@@ -16,7 +16,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isExtString ($input) {
+    public static function isExtString ($input) {
 	return (self::_isMatch("%[^\\\/-_a-z0-9äöü@\.!\?;,]%i", $input)) ? false : true;
     }
 
@@ -25,7 +25,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isText ($input) {
+    public static function isText ($input) {
 	return (self::_isMatch('%[^\\\/\wäöü\d-_@\.!\?;,\s\n\r]%si', $input)) ? false : true;
     }
 
@@ -34,7 +34,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isHtml ($input) {
+    public static function isHtml ($input) {
 	return (self::_isMatch('%[^\\\/\wäöü\d-_@\.!\?;,\s\n\r<>]%si', $input)) ? false : true;
     }
 
@@ -43,7 +43,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isFilename ($input) {
+    public static function isFilename ($input) {
 	return (self::_isMatch("%[^-_a-z0-9äöü\.\ ]%i", $input)) ? false : true;
     }
 
@@ -52,7 +52,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isInt ($input) {
+    public static function isInt ($input) {
 	return (is_numeric($input)) ? true : false;
     }
 
@@ -61,7 +61,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isUri ($input) {
+    public static function isUri ($input) {
 	// TODO: improve!
 	return (self::_isMatch("%^([a-z0-9]+://)?(?:[-a-z0-9äöü]+\.)+[a-z]{2,4}%i", $input)) ? true : false;
     }
@@ -71,7 +71,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isUrl ($input) {
+    public static function isUrl ($input) {
 	return (self::_isMatch("%^([a-z]+://)?(?:[-a-z0-9äöü]+\.)+[a-z]{2,4}/?$%i", $input)) ? true : false;
     }
 
@@ -80,7 +80,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isEMail ($input) {
+    public static function isEMail ($input) {
 
 	// Might be a better regex-phrase from James Watts and Francisco Jose Martin Moreno:
 	// /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
@@ -94,7 +94,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    public function isPassword ($input) {
+    public static function isPassword ($input) {
 	return (strlen($input) >= 7) ? true : false;
     }
 
@@ -104,7 +104,7 @@ class $$$Validator {
      *
      * @return bool
      */
-    protected function _isMatch ($regex, $string) {
+    protected static function _isMatch ($regex, $string) {
 	return (preg_match($regex, $string) != 0) ? true : false;
     }
 }

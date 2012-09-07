@@ -68,7 +68,7 @@ class $$$Mail extends $system$Object {
 	global $TSunic;
 	$data = array(
 	    "subject" => $subject,
-	    "plaincontent" => $plaincontent,
+	    "plaincontent" => $content,
 	    "fk_smtp" => $fk_smtp,
 	    "dateOfCreation" => "NOW()",
 	    "fk_account" => $TSunic->Usr->getInfo('id')
@@ -360,7 +360,7 @@ class $$$Mail extends $system$Object {
 
 	// delete in database
 	if ($completely) {
-	    $this->_delete();
+	    return $this->_delete();
 	} else {
 	    $data = array(
 		"subject" => '',
@@ -373,11 +373,8 @@ class $$$Mail extends $system$Object {
 		"dateOfCreation" => '',
 		"dateOfDeletion" => "NOW()"
 	    );
-	    $result = $TSunic->Db->doUpdate($data);
+	    return $this->_edit($data, true);
 	}
-
-	if ($result) return true;
-	return false;
     }
 
     // ####################### attachments ##################################

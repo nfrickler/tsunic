@@ -38,6 +38,66 @@ class $$$Log {
 	// load messages from SESSION
 	$this->messages = (isset($_SESSION['$$$Log']))
 	    ? $_SESSION['$$$Log'] : array();
+
+	// redirect php's error handling to save message in log
+	ini_set( 'display_errors', 1 );
+	error_reporting( -1 );
+	set_error_handler( array( '$$$Log', 'captureNormal' ) );
+	set_exception_handler( array( '$$$Log', 'captureException' ) );
+	register_shutdown_function( array( '$$$Log', 'captureShutdown' ) );
+    }
+
+    /* handle php errors
+     * @param int: error number
+     * @param string: error message
+     * @param string: path of file
+     * @param int: line in file
+     */
+    public static function captureNormal ($number, $msg, $file, $line) {
+
+	// join error message
+	$errmsg = "PHP Error: $number: $msg in $file line $line";
+
+	// log:
+	global $TSunic;
+	$TSunic->Log->log(3, "PHP error: $errmsg");
+
+	// print message
+	echo "<pre>ERROR: A PHP error occurred!</pre>";
+    }
+
+    /* handle php errors
+     * @param string: exception
+     */
+    public static function captureException ($exception) {
+
+	// log
+	global $TSunic;
+	$TSunic->Log->log(3, "PHP Exception: $exception");
+
+	// print message
+	echo "<pre>ERROR: A PHP exception occurred!</pre>";
+    }
+
+    /* handle php errors
+     */
+    public static function captureShutdown () {
+	$error = error_get_last();
+	if ($error) {
+
+	    // error message
+	    $error_msg = $error['type'].": ".$error['message']." in " .
+		$error['file']." line ".$error['line'];
+
+	    // log
+	    global $TSunic;
+	    $TSunic->Log->log(3, "PHP shutdown: $error_msg");
+
+	    // print message
+	    echo "<pre>ERROR: A PHP shutdown occurred!</pre>";
+	} else {
+	    return true;
+	}
     }
 
     /* add alert

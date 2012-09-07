@@ -8,7 +8,7 @@ class $$$Inbox extends $$$Mailbox {
      *
      * @return string/int/array
      */
-    public function getInfo ($name = true) {
+    public function getInfo ($name = true, $update = false) {
 	global $TSunic;
 
 	// set info
@@ -73,7 +73,7 @@ class $$$Inbox extends $$$Mailbox {
      *
      * @return bool
      */
-    public function edit ($name, $description) {
+    public function edit ($name, $description = '') {
 	return false;
     }
 

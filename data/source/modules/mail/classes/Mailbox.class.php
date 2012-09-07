@@ -131,7 +131,7 @@ class $$$Mailbox extends $system$Object {
      */
     public function isValidDescription ($description) {
 	return (empty($description)
-	    or $this->_validate($name, 'string')
+	    or $this->_validate($description, 'string')
 	) ? true : false;
     }
 

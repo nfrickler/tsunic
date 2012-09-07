@@ -252,6 +252,7 @@ class $$$Smtp extends $system$Object {
      * @return bool
      */
     public function setConnection ($host, $port, $user, $connsecurity, $auth) {
+	global $TSunic;
 
 	// validate input
 	if (!$this->isValidHost($host)) $host = false;
@@ -267,7 +268,6 @@ class $$$Smtp extends $system$Object {
 	}
 
 	// save in db
-	global $TSunic;
 	$data = array(
 	    "host" => $this->getInfo('host'),
 	    "user" => $this->getInfo('user'),
@@ -369,7 +369,7 @@ class $$$Smtp extends $system$Object {
      * @return bool
      */
     public function isValidConnsecurity ($connsecurity) {
-	return (isset($this->connsecurities[$auth])) ? true : false;
+	return (isset($this->connsecurities[$connsecurity])) ? true : false;
     }
 
     /* get possible auths ($auth = true) OR name of one auth ($auth = int) OR authname of this object ($auth = false)
@@ -538,7 +538,7 @@ class $$$Smtp extends $system$Object {
 	    $this->info['port'] = (empty($port)) ? $values['port'] : $port;
 	    $this->info['auth'] = (empty($auth)) ? $values['auth'] : $auth;
 	    $this->info['connsecurity'] = (empty($connsecurity)) ? $values['connsecurity'] : $connsecurity;
-	    $this->info['user'] = (($values['user'] == 2)) ? $email : $emailuser;
+	    $this->info['user'] = ($values['user'] == 2) ? $email : $emailuser;
 	    if (!empty($user)) $this->info['user'] = $user;
 
 	    // already checked these settings?
@@ -697,7 +697,7 @@ var_dump('send15');
 	}
 
 	// try to connect
-	$this->conn = @fsockopen($host, $this->getInfo('port'), $errno, $errstr, $this->timeout);
+	$this->conn = fsockopen($host, $this->getInfo('port'), $errno, $errstr, $this->timeout);
 	if (!$this->conn OR $this->getStatus() != 220) {
 	    // service not ready
 	    $this->conn = NULL;
