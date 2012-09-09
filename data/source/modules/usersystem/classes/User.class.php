@@ -108,7 +108,8 @@ class $$$User extends $system$Object {
 	    "email" => $email,
 	    "name" => $name,
 	    "password" => $this->_password2hash($password, $email),
-	    "fk_homehost" => 0
+	    "fk_homehost" => 0,
+	    "dateOfCreation" => "NOW()"
 	);
 	return $this->_create($data);
     }

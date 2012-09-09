@@ -50,14 +50,11 @@ function $$$addServerbox () {
 
     // get serverbox-object
     $Serverbox = $TSunic->get('$$$Serverbox');
-var_dump($name);
-var_dump($fk_mailaccount);
+
     // validate input
     if (!$Serverbox->isValidName($name)
 	OR !$Serverbox->isValidFkAccount($fk_mailaccount)
     ) {
-var_dump($Serverbox->isValidName($name));
-die();
 	$TSunic->Log->alert('error', '{ADDSERVERBOX__INVALIDINPUT}');
 	$TSunic->redirect('back');
     }

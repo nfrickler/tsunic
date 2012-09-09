@@ -5,7 +5,7 @@
 	<?php $this->set('{SHOWCONFIG__INFOTEXT}'); ?>
     </p>
 
-    <?php if ($TSunic->Usr->access('seeAllConfig')) { ?>
+    <?php if ($TSunic->Usr->access('$$$seeAllConfig')) { ?>
     <table>
 	<tr>
 	    <th>

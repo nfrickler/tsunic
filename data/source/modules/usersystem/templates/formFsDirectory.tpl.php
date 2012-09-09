@@ -17,9 +17,9 @@ $parent_preset = $this->setPreset('$$$formFsDirectory__parent', $parent_preset, 
 	    <label for="$$$formFsDirectory__parent"><?php echo $this->set('{FORMFSDIRECTORY__PARENT}'); ?></label>
 	    <select class="ts_required" name="$$$formFsDirectory__parent" id="$$$formFsDirectory__parent">
 		<option value="0"><?php $this->set('{FORMFSDIRECTORY__OPTION_ROOTDIR}'); ?></option>
-		<?php foreach ($this->getVar('directories') as $id => $name) { ?>
+		<?php foreach ($this->getVar('directories') as $id => $Object) { ?>
 		<option value="<?php echo $id; ?>" <?php if ($parent_preset == $id) echo 'selected="selected"'; ?>>
-		    <?php $this->set($name); ?>
+		    <?php $this->set($Object->getInfo('name')); ?>
 		</option>
 		<?php } ?>
 	    </select>

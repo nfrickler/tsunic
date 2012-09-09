@@ -108,8 +108,10 @@ class $$$Database {
 	global $TSunic;
 
 	// start timer
-	if (!empty($TSunic) AND is_object($TSunic))
+	if (!empty($TSunic) AND is_object($TSunic)) {
+	    if (isset($TSunic->Log)) $TSunic->Log->log(9, "Database: $query");
 	    $TSunic->Stats->startTimer('mysql');
+	}
 
 	// query Database by type
 	switch ($type) {

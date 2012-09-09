@@ -63,6 +63,7 @@ class $$$Mailbox extends $system$Object {
      * @return bool
      */
     public function create ($name, $description = '') {
+	global $TSunic;
 
 	// validate input
 	if (!$this->isValidName($name)
@@ -73,6 +74,7 @@ class $$$Mailbox extends $system$Object {
 	$data = array(
 	    "name" => $name,
 	    "description" => $description,
+	    "fk_account" => $TSunic->Usr->getInfo('id'),
 	    "dateOfCreation" => "NOW()"
 	);
 	return $this->_create($data);

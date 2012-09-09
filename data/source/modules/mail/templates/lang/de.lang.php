@@ -334,9 +334,9 @@ $lang = array(
     // showListSmtps
     'SHOWLISTSMTPS__EMAILNAME' => 'Absender',
     'SHOWLISTSMTPS__AUTH' => 'Sicherheit',
-    'SHOWLISTSMTPS__EDIT' => 'Smtp-Server bearbeiten',
-    'SHOWLISTSMTPS__DELETE' => 'Smtp-Server löschen',
-    'SHOWLISTSMTPS__NOSMTPS' => 'Bislang sind noch keine Smtp-Server hinzugefügt worden.',
+    'SHOWLISTSMTPS__EDIT' => 'SMTP-Server bearbeiten',
+    'SHOWLISTSMTPS__DELETE' => 'SMTP-Server löschen',
+    'SHOWLISTSMTPS__NOSMTPS' => 'Bislang sind noch keine SMTP-Server hinzugefügt worden.',
     'SHOWLISTSMTPS__DESCRIPTION' => 'Beschreibung',
 
     // showAddSmtp
@@ -348,7 +348,7 @@ $lang = array(
     'SHOWADDSMTP__OVERVIEW' => '{$$$COMMON__TOBACK}',
 
     // addSmtp
-    'ADDSMTP__SUCCESS' => 'Smtp-Server wurde erfolgreich hinzugefügt.',
+    'ADDSMTP__SUCCESS' => 'SMTP-Server wurde erfolgreich hinzugefügt.',
     'ADDSMTP__ERROR' => 'Ein Fehler ist aufgetreten. Bitte versuche es erneut!',
     'ADDSMTP__INVALIDINPUT' => 'Ungültige Daten. Bitte überprüfe deine Eingaben!',
     'ADDSMTP__CONNERROR' => 'Verbindung konnte nicht hergestellt werden. Bitte gebe die Verbindungdaten selber ein und versuche es erneut.',
@@ -403,15 +403,15 @@ $lang = array(
 
     // showDeleteSmtp
     'SHOWDELETESMTP__TITLE' => 'SMTP löschen',
-    'SHOWDELETESMTP__POPUP_DELETE_HEADER' => 'Smtp-Server #name# löschen?',
-    'SHOWDELETESMTP__POPUP_DELETE_HEADER_JS' => 'Diesen Smtp-Server löschen?',
-    'SHOWDELETESMTP__POPUP_DELETE_CONTENT' => 'Willst du diesen Smtp-Server wirklich von diesem System löschen?',
+    'SHOWDELETESMTP__POPUP_DELETE_HEADER' => 'SMTP-Server #name# löschen?',
+    'SHOWDELETESMTP__POPUP_DELETE_HEADER_JS' => 'Diesen SMTP-Server löschen?',
+    'SHOWDELETESMTP__POPUP_DELETE_CONTENT' => 'Willst du diesen SMTP-Server wirklich von diesem System löschen?',
     'SHOWDELETESMTP__POPUP_DELETE_YES' => 'Ja, löschen.',
     'SHOWDELETESMTP__POPUP_DELETE_NO' => 'Nein, abbrechen',
 
     // deleteSmtp
     'DELETESMTP__ERROR' => 'Ein Fehler ist aufgetreten. Bitte versuche es erneut!',
-    'DELETESMTP__SUCCESS' => 'Smtp-Server wurde erfolgreich gelöscht.',
+    'DELETESMTP__SUCCESS' => 'SMTP-Server wurde erfolgreich gelöscht.',
 
     /* ***************** mail ********************************** */
 
@@ -444,7 +444,7 @@ $lang = array(
     // formMail
     'FORMMAIL__LEGEND_HEADER' => 'Mail Header',
     'FORMMAIL__SENDER' => 'Absender',
-    'FORMMAIL__HELP_SENDER' => 'Wähle den Smtp-Server aus, von dem diese Mail verschickt werden soll.',
+    'FORMMAIL__HELP_SENDER' => 'Wähle den SMTP-Server aus, von dem diese Mail verschickt werden soll.',
     'FORMMAIL__ADDRESSEE' => 'Empfänger',
     'FORMMAIL__PRESET_ADDRESSEE' => 'E-Mail-Adresse des Empfängers',
     'FORMMAIL__HELP_ADDRESSEE' => 'Hier kommt die E-Mail-Adresse des Empfänger dieser Mail hin.',
@@ -462,9 +462,11 @@ $lang = array(
     'SHOWCREATEMAIL__INFO' => 'Erstelle hier eine neue Mail, die du als Entwurf speichern oder gleich über einen deiner SMTP-Server versenden kannst.',
     'SHOWCREATEMAIL__SUBMIT' => 'Mail senden',
     'SHOWCREATEMAIL__SUBMIT_SAVE' => 'Als Entwurf speichern',
+    'SHOWCREATEMAIL__ADDSMTPFIRST' => 'Please add a SMTP server before sending an e-mail!',
     'SHOWCREATEMAIL__CANCEL' => 'Abbrechen',
+    'SHOWCREATEMAIL__ADDSMTPFIRST' => 'Bitte füge zuerst einen SMTP-Server hinzu, bevor du eine E-Mail sendest!',
 
-    // showCreateMail
+    // showEditMail
     'SHOWEDITMAIL__TITLE' => 'Mail bearbeiten',
     'SHOWEDITMAIL__H1' => 'Mail bearbeiten',
     'SHOWEDITMAIL__INFO' => 'Hier kannst du eine Mail bearbeiten und speichern oder diese über einen deiner SMTP-Server versenden.',
@@ -475,7 +477,7 @@ $lang = array(
     // saveMail
     'SAVEMAIL__NOTEXISTING' => 'Die zu bearbeitende Mail existiert gar nicht!',
     'SAVEMAIL__INVALIDINPUT' => 'Ungültige Eingaben!',
-    'SAVEMAIL__INVALIDSENDER' => 'Ungültiger Smtp-Server ausgewählt!',
+    'SAVEMAIL__INVALIDSENDER' => 'Ungültiger SMTP-Server ausgewählt!',
     'SAVEMAIL__EDITERROR' => 'Beim Speichern der Änderungen ist ein Fehler aufgetreten!',
     'SAVEMAIL__CREATEERROR' => 'Beim Erstellen der Mail ist ein Fehler aufgetreten!',
     'SAVEMAIL__SENDERROR' => 'Beim Senden der Mail ist ein Fehler aufgetreten!',

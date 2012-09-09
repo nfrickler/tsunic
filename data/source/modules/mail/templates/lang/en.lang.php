@@ -463,8 +463,9 @@ $lang = array(
     'SHOWCREATEMAIL__SUBMIT' => 'Send mail',
     'SHOWCREATEMAIL__SUBMIT_SAVE' => 'Save as draft',
     'SHOWCREATEMAIL__CANCEL' => 'Cancel',
+    'SHOWCREATEMAIL__ADDSMTPFIRST' => 'Please add a SMTP server before sending an e-mail!',
 
-    // showCreateMail
+    // showEditMail
     'SHOWEDITMAIL__TITLE' => 'Edit mail',
     'SHOWEDITMAIL__H1' => 'Edit mail',
     'SHOWEDITMAIL__INFO' => 'Here you can edit a mail and either save the changes or send via one of your SMTP-Server.',

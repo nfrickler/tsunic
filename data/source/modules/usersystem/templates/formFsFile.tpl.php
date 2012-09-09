@@ -21,9 +21,9 @@ $directory_preset = $this->setPreset('$$$formFsFile__directory', $directory_pres
 	    <label for="$$$formFsFile__directory"><?php echo $this->set('{FORMFSFILE__DIRECTORY}'); ?></label>
 	    <select class="ts_required" name="$$$formFsFile__directory" id="$$$formFsFile__directory">
 		<option value="0"><?php $this->set('{FORMFSFILE__OPTION_ROOTDIR}'); ?></option>
-		<?php foreach ($this->getVar('directories') as $id => $name) { ?>
+		<?php foreach ($this->getVar('directories') as $id => $Object) { ?>
 		<option value="<?php echo $id; ?>" <?php if ($directory_preset == $id) echo 'selected="selected"'; ?>>
-		    <?php $this->set($name); ?>
+		    <?php $this->set($Object->getInfo('name')); ?>
 		</option>
 		<?php } ?>
 	    </select>

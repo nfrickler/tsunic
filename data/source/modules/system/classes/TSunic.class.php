@@ -55,30 +55,30 @@ class TSunic {
 	global $TSunic;
 	$TSunic = $this;
 
-	// create factory-object
+	// create factory object
 	include_once 'runtime/classes/$$$Factory.class.php';
 	$this->Factory = new $$$Factory();
 
-	// create stats-object
+	// create stats object
 	$this->Stats = $this->get('$$$Stats');
 
-	// create setting-object
+	// create setting object
 	$this->Config = $this->get('$$$Config');
 
-	// create database-object
+	// create database object
 	$this->Db = $this->get('$$$Database');
 
-	// create session-object (this starts session)
+	// create session object (this starts session)
 	$readonlysession = ($this->getRunningMode() == 'index') ? false : true;
 	$this->Session = $this->get('$$$Session', array($this->Db, $readonlysession));
 
-	// create Temp-object
+	// create Temp object
 	$this->Temp = $this->get('$$$Temp');
 
 	// create Log object
 	$this->Log = $this->get('$$$Log', $this->Config->getConfig('loglevel'));
 
-	// start template-engine
+	// start template engine
 	$this->Tmpl = $this->get('$$$TemplateEngine');
 
 	// create user object

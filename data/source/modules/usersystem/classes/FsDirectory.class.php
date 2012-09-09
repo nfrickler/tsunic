@@ -215,17 +215,16 @@ class $$$FsDirectory extends $system$Object {
      */
     public function allDirectories () {
 	global $TSunic;
-	$sql = "SELECT id,
-		    _name_ as name
+	$sql = "SELECT id
 		FROM #__fsdirectories
-		WHERE fk_account = '".$this->getInfo('fk_account')."'
-		ORDER BY name ASC;";
+		WHERE fk_account = '".$this->getInfo('fk_account')."';";
 	$result = $TSunic->Db->doSelect($sql);
 
 	// create output array
 	$output = array();
 	foreach ($result as $index => $values) {
-	    $output[$values['id']] = $values['name'];
+	    $output[$values['id']] =
+		$TSunic->get('$$$FsDirectory', $values['id']);
 	}
 
 	return $output;

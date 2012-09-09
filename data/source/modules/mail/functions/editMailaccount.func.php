@@ -1,4 +1,4 @@
-<!-- | function to edit mail account -->
+<!-- | FUNCTION edit mailaccount -->
 <?php
 function $$$editMailaccount () {
     global $TSunic;

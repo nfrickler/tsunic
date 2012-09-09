@@ -12,7 +12,7 @@
     <?php $this->display('$$$formFsFile', array(
 	'File' => $this->getVar('File'),
 	'directories' => $this->getVar('directories'),
-	'fk_parent' => $this->getVar('fk_directory'),
+	'fk_directory' => $this->getVar('fk_directory'),
 	'submit_link' => '$$$createFsFile',
 	'submit_text' => '{SHOWCREATEFSFILE__SUBMIT}',
 	'reset_text' => '{SHOWCREATEFSFILE__CANCEL}'

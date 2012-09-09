@@ -1,4 +1,4 @@
-<!-- | Static class offering methods to validate values -->
+<!-- | CLASS static offering methods to validate values -->
 <?php
 class $$$Validator {
 
@@ -17,7 +17,7 @@ class $$$Validator {
      * @return bool
      */
     public static function isExtString ($input) {
-	return (self::_isMatch("%[^\\\/-_a-z0-9äöü@\.!\?;,]%i", $input)) ? false : true;
+	return (self::_isMatch("%[^-\\\/_a-zA-Z0-9äöüÄÖÜ@\.!\?;,]%", $input)) ? false : true;
     }
 
     /* is text (extended, with newlines)

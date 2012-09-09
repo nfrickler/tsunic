@@ -74,8 +74,8 @@ class $$$Mailaccount extends $system$Object {
 
     /* load information about object
      */
-    protected function loadInfo () {
-	$return = parent::loadInfo();
+    protected function _loadInfo () {
+	$return = parent::_loadInfo();
 
 	// handle password
 	if (isset($this->info['password'])) {
@@ -181,7 +181,6 @@ class $$$Mailaccount extends $system$Object {
      * @return bool
      */
     public function setConnection ($host, $port, $user, $protocol, $connsecurity, $auth) {
-	global $TSunic;
 
 	// invalid connection?
 	if (!$this->validateConnection(
@@ -520,7 +519,7 @@ class $$$Mailaccount extends $system$Object {
 
 	// check, if imap-functions exist
 	if (!function_exists('imap_timeout')) {
-	    die('IMAP-functions are not supported by this server!');
+	    die('IMAP functions are not supported by this server!');
 	    return false;
 	}
 
@@ -541,6 +540,7 @@ class $$$Mailaccount extends $system$Object {
 	    if (!$mboxstr) return false;
 
 	    // try to connect
+	    $TSunic->Log->log(8, "Mailaccount->getStream: imap_open to $mboxstr with ".$this->getInfo('user')." and ".$this->password);
 	    $stream = imap_open($mboxstr, $this->getInfo('user'), $this->password);
 
 	    // check, if imap-stream exist
@@ -559,7 +559,13 @@ class $$$Mailaccount extends $system$Object {
 	}
 
 	// return, if error occurred
-	if (!$stream) return false;
+	if (!$stream) {
+	    $imap_errors = imap_errors();
+	    if ($imap_errors) $TSunic->Log->log(
+		8, "Mailaccount->getStream: ".implode(",", $imap_errors)
+	    );
+	    return false;
+	}
 
 	// save in obj-vars
 	$this->conn[$stream_index] = $stream;
@@ -606,7 +612,7 @@ class $$$Mailaccount extends $system$Object {
 	if (!is_array($serverboxes)) return false;
 
 	// get locally added serverboxes
-	$local_serverboxes = getServerboxes();
+	$local_serverboxes = $this->getServerboxes();
 
 	// get output-array
 	$output = array();
@@ -651,10 +657,10 @@ class $$$Mailaccount extends $system$Object {
 	}
 
 	// set lastServerboxUpdate
-	$sql = "UPDATE #__mailaccounts
-		SET lastServerboxUpdate = NOW()
-		WHERE id = '".$this->id."';";
-	return $TSunic->Db->doUpdate($sql);
+	$data = array(
+	    "lastServerboxUpdate" => "NOW()"
+	);
+	return $this->_edit($data);
     }
 
     /* try to get or validate connection-data automatically

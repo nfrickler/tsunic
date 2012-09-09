@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS `#__accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(300) NOT NULL,
-  `fk__homehost` int(11) NOT NULL,
+  `fk_homehost` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `userkey` varchar(100) NOT NULL,

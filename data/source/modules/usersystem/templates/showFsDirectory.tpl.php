@@ -11,7 +11,7 @@ $Dir = $this->getVar('Directory');
 	<a href="<?php $this->setUrl('$$$showEditFsDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWFSDIRECTORY__TOSHOWEDITFSDIRECTORY}'); ?></a>
 	<?php } ?>
-	<a href="<?php $this->setUrl('$$$showCreateFsFile'); ?>">
+	<a href="<?php $this->setUrl('$$$showCreateFsFile', array('fk_directory' => $Dir->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWFSDIRECTORY__TOSHOWCREATEFSFILE}'); ?></a>
     </p>
     <p class="ts_infotext">

@@ -195,8 +195,8 @@ class $$$UserConfig {
 
 	// update database
 	$sql = "DELETE FROM #__userconfig
-	    WHERE fk_account = '$this->fk_account'
-		AND fk_config = '$name';";
+		WHERE fk_account = '$this->fk_account'
+		    AND fk_config = '$name';";
 	return $TSunic->Db->doDelete($sql);
     }
 
@@ -209,14 +209,14 @@ class $$$UserConfig {
 
 	// get all config names from database
 	$sql = "SELECT name,
-		systemdefault,
-		configtype,
-		formtype,
-		options
-	    FROM #__config
-	    WHERE NOT configtype = 'system' " .
-	    ($TSunic->Usr->access('editAllConfig')
-		? "" : "AND NOT configtype = 'hidden';");
+		    systemdefault,
+		    configtype,
+		    formtype,
+		    options
+		FROM #__config
+		WHERE NOT configtype = 'system' " .
+		($TSunic->Usr->access('$$$editAllConfig')
+		    ? "" : "AND NOT configtype = 'hidden';");
 	$result = $TSunic->Db->doSelect($sql);
 	if ($result === false) return array();
 

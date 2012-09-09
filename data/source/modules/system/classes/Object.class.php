@@ -117,6 +117,9 @@ class $$$Object {
 
 	    // exists?
 	    if (!isset($this->keytypes[$index])) {
+		$TSunic->Log->log(
+		    3, "Object: key ".$this->table.".".$index." doesn't exist!"
+		);
 		unset($data[$index]);
 		continue;
 	    }
@@ -137,7 +140,7 @@ class $$$Object {
      * @return bool
      */
     protected function _create ($data) {
-	if (!is_array($data) or $this->id) return false;
+	if (!is_array($data)) return false;
 	global $TSunic;
 
 	// encrypt
@@ -145,6 +148,10 @@ class $$$Object {
 
 	// save in database
 	foreach ($data as $index => $value) {
+	    if ($value == 'NOW()') {
+		$data[$index] = "$index = NOW()";
+		continue;
+	    }
 	    $data[$index] = "$index = '$value'";
 	}
 	$sql = "INSERT INTO $this->table SET ".implode(",",$data).";";
@@ -153,7 +160,7 @@ class $$$Object {
 	// update object infos
 	$this->_loadInfo();
 
-	return ($this->id) ? true : false;
+	return ($this->id) ? $this->id : false;
     }
 
     /* edit object

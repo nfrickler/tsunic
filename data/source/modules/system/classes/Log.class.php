@@ -1,4 +1,4 @@
-<!-- | class for logging and alert messages -->
+<!-- | CLASS logging and alert messages -->
 <?php
 class $$$Log {
 
@@ -33,7 +33,7 @@ class $$$Log {
 	if (!is_numeric($level)) $level = 5;
 	if ($level > 9) $level = 9;
 	if ($level < 0) $level = 0;
-	$this->level = $level;
+	$this->level = $level || 4;
 
 	// load messages from SESSION
 	$this->messages = (isset($_SESSION['$$$Log']))
@@ -60,7 +60,7 @@ class $$$Log {
 
 	// log:
 	global $TSunic;
-	$TSunic->Log->log(3, "PHP error: $errmsg");
+	if ($TSunic and $TSunic->Log) $TSunic->Log->log(3, "PHP error: $errmsg");
 
 	// print message
 	echo "<pre>ERROR: A PHP error occurred!</pre>";
@@ -141,6 +141,7 @@ class $$$Log {
 	// only use $$$File to get path
 	// DO NOT USE IT FOR WRITING THE LOG (RECURSION!)
 	global $TSunic;
+	if (!$TSunic) return false;
 	$File = $TSunic->get('$$$File', array('#cache#frontend.log', true));
 	$path = $File->getPath();
 

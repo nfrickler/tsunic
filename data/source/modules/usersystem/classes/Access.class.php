@@ -36,6 +36,7 @@ class $$$Access {
 		AND fk__owner = '$this->fk_account'
 		AND fk__accessname = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
+
 	if ($result === false) return false;
 	if (count($result) > 0) {
 	    return ($result[0]['access']) ? true : false;

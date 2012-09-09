@@ -1,4 +1,4 @@
-<!-- | factory class to handle all objects -->
+<!-- | CLASS factory handling all objects -->
 <?php
 class $$$Factory {
 
@@ -6,12 +6,6 @@ class $$$Factory {
      * array [Class_md5values => reference]
      */
     private $objects;
-
-    /* constructor
-     */
-    public function __construct () {
-	return;
-    }
 
     /* include class
      * @param string: name of class
@@ -40,6 +34,7 @@ class $$$Factory {
      * @return OBJECT
      */
     public function get ($class, $values = array(), $forceNew = false) {
+	global $TSunic;
 
 	// parse input
 	if (!is_array($values)) $values = array($values);

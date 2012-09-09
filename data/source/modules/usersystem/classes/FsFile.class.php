@@ -37,14 +37,16 @@ class $$$FsFile extends $system$Object {
 
 	// update database
 	global $TSunic;
-	$sql = "INSERT INTO #__fsfiles
-	    SET _name_ = '$name',
-		bytes = '".$FH['size']."',
-		dateOfCreation = NOW(),
-		fk_account = '".$TSunic->Usr->getInfo('id')."',
-		fk_directory = '$fk_directory';";
-	if (!$this->_create($sql)) return false;
+	$data = array(
+	    "name" => $name,
+	    "bytes" => $FH['size'],
+	    "dateOfCreation" => "NOW()",
+	    "fk_account" => $TSunic->Usr->getInfo('id'),
+	    "fk_directory" => $fk_directory
+	);
+	if (!$this->_create($data)) return false;
 
+	// upload file
 	if (move_uploaded_file($FH['tmp_name'], $this->getPath())) {
 
 	    // encrypt content of file
@@ -91,13 +93,10 @@ class $$$FsFile extends $system$Object {
 	}
 
 	// update filesize
-	$sql = "UPDATE #__fsfiles
-		SET bytes = '$bytes'
-		WHERE id = '".$this->id."'
-	;";
-	$TSunic->Db->doUpdate($sql);
-
-	return true;
+	$data = array(
+	    "bytes" => $bytes
+	);
+	return $this->_edit($data);
     }
 
     /* edit file
