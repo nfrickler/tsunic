@@ -96,7 +96,7 @@ class $$$Mailbox extends $system$Object {
 	// update database
 	$data = array(
 	    "name" => $name,
-	    "description" => $description,
+	    "description" => $description
 	);
 	return $this->_edit($data);
     }

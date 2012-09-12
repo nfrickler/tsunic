@@ -26,7 +26,7 @@ class $$$Template_Xml extends $$$Template {
      *
      * @return bool
      */
-    public function display () {
+    public function display ($template = false, $data = false) {
 	global $TSunic;
 
 	// get paths (priority-order)
@@ -59,12 +59,11 @@ class $$$Template_Xml extends $$$Template {
     }
 
     /* include and display sub-templates
-     * @param string: type of sub-templates to be included
-     * +@param string: name of design
+     * @param string: position in template
      *
      * @return bool
      */
-    public function displaySub ($type, $design = 0) {
+    public function displaySub ($position = '#standard#') {
 	return true;
     }
 

@@ -113,7 +113,7 @@ $lang = array(
 
     // showEditMailbox
     'SHOWEDITMAILBOX__TITLE' => 'Mailbox bearbeiten',
-    'SHOWEDITMAILBOX__H1' => 'Mailbox "#0#" bearbeiten',
+    'SHOWEDITMAILBOX__H1' => 'Mailbox "#name#" bearbeiten',
     'SHOWEDITMAILBOX__INFO' => 'Über dieses Formular kannst du die Daten der Mailbox bearbeiten.',
     'SHOWEDITAILMAILBOX__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITMAILBOX__RESET' => 'Reset',

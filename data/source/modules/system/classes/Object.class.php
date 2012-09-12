@@ -12,6 +12,11 @@ class $$$Object {
      */
     protected $id;
 
+    /* Key object
+     * object
+     */
+    protected $_Key;
+
     /* temporary cache for keytypes in database (0: - 1: encrypted)
      * array
      */
@@ -40,7 +45,6 @@ class $$$Object {
      * @return mix
      */
     public function getInfo ($name = true, $update = false) {
-	global $TSunic;
 
 	// check, if is object ID
 	if (!$this->id) return false;
@@ -55,6 +59,17 @@ class $$$Object {
 	return NULL;
     }
 
+    /* load Key
+     *
+     * @return Object
+     */
+    protected function _getKey () {
+	global $TSunic;
+	if (!$this->_Key) $this->_Key =
+	    $TSunic->get('$$$Key', array($this->table, $this->id));
+	return $this->_Key;
+    }
+
     /* load information about object
      *
      * @return bool
@@ -66,7 +81,7 @@ class $$$Object {
 	// get data from database
 	$sql = "SELECT * FROM $this->table WHERE id = '$this->id';";
 	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return array();
+	if (!$result) return false;
 
 	// decrypt
 	$this->info = array();
@@ -77,7 +92,7 @@ class $$$Object {
 		$index = substr($index,1);
 		$index = substr($index,0,(strlen($index)-1));
 		$this->keytypes[$index] = 1;
-		$this->info[$index] = $TSunic->Usr->decrypt($value);
+		$this->info[$index] = $this->_getKey()->decrypt($value);
 
 	    // not encrypted
 	    } else {
@@ -127,7 +142,7 @@ class $$$Object {
 	    // encrypt?
 	    if ($this->keytypes[$index]) {
 		unset($data[$index]);
-		$data["_".$index."_"] = $TSunic->Usr->encrypt($value);
+		$data["_".$index."_"] = $this->_getKey()->encrypt($value);
 	    }
 	}
 
@@ -159,6 +174,7 @@ class $$$Object {
 
 	// update object infos
 	$this->_loadInfo();
+	$this->_getKey()->save($this->id);
 
 	return ($this->id) ? $this->id : false;
     }
@@ -187,6 +203,10 @@ class $$$Object {
 		continue;
 	    }
 
+	    if ($value == 'NOW()') {
+		$data[$index] = "$index = NOW()";
+		continue;
+	    }
 	    $data[$index] = "$index = '$value'";
 	}
 	$sql = "UPDATE $this->table
@@ -196,6 +216,7 @@ class $$$Object {
 
 	// update infos
 	$this->_loadInfo();
+	$this->_getKey()->save($this->id);
 
 	return true;
     }
@@ -215,6 +236,7 @@ class $$$Object {
 	// invalidate object
 	$this->id = 0;
 	$this->_loadInfo();
+	$this->_getKey()->delete();
 
 	return true;
     }

@@ -24,9 +24,9 @@ class $$$Mail extends $system$Object {
 
 	// return parsed content
 	if ($type == 'plain' or empty($this->info['htmlcontent'])) {
-	    return $Parser->toText(base64_decode($this->info['plaincontent']));
+	    return $Parser->toText($this->info['plaincontent']);
 	} else {
-	    return $Parser->toText(base64_decode($this->info['htmlcontent']));
+	    return $Parser->toText($this->info['htmlcontent']);
 	}
     }
 
@@ -114,8 +114,8 @@ class $$$Mail extends $system$Object {
 	    "unseen" => ($unseen ? 1 : 0),
 	    "dateOfMail" => $Parser->text2db($date),
 	    "uid" => $Parser->text2int($uid),
-	    "plaincontent" => base64_encode($Parser->text2plain2db($plaincontent)),
-	    "htmlcontent" => base64_encode($Parser->text2db($htmlcontent)),
+	    "plaincontent" => $Parser->text2plain2db($plaincontent),
+	    "htmlcontent" => $Parser->text2db($htmlcontent),
 	    "charset" => $Parser->text2db($charset)
 	);
 	if (!$this->_create($data)) return false;
@@ -146,7 +146,7 @@ class $$$Mail extends $system$Object {
 	// update database
 	$data = array(
 	    "subject" => $subject,
-	    "plaincontent" => base64_encode($content),
+	    "plaincontent" => $content,
 	    "fk_smtp" => $fk_smtp
 	);
 	if (!$this->_edit($data)) return false;

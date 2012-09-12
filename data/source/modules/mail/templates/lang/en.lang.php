@@ -113,7 +113,7 @@ $lang = array(
 
     // showEditMailbox
     'SHOWEDITMAILBOX__TITLE' => 'Edit mailbox',
-    'SHOWEDITMAILBOX__H1' => 'Edit mailbox "#0#"',
+    'SHOWEDITMAILBOX__H1' => 'Edit mailbox "#name#"',
     'SHOWEDITMAILBOX__INFO' => 'Via this form you can edit the data of your mailbox.',
     'SHOWEDITAILMAILBOX__SUBMIT' => 'Save changes',
     'SHOWEDITMAILBOX__RESET' => '{$$$COMMON__RESET}',

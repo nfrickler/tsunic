@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS `#__sessions` (
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__keys` (
-  `tablename` varchar(200) NOT NULL,
+  `fk_table` varchar(200) NOT NULL,
   `fk_id` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,
-  `key` varchar(200) NOT NULL,
-  PRIMARY KEY (`tablename`, `fk_id`, `fk_account`)
+  `readwrite` int(1) NOT NULL,
+  `_key_` varchar(200) NOT NULL,
+  PRIMARY KEY (`fk_table`, `fk_id`, `fk_account`)
 ) ENGINE=MyISAM;

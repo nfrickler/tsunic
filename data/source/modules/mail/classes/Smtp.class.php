@@ -45,11 +45,11 @@ class $$$Smtp extends $system$Object {
 
     /* load information about object
      */
-    protected function loadInfo () {
-	$return = parent::loadInfo();
+    protected function _loadInfo () {
+	$return = parent::_loadInfo();
 
 	// handle password
-	if ($this->info['password']) {
+	if (isset($this->info['password'])) {
 	    $this->password = $this->info['password'];
 	    unset($this->info['password']);
 	}
@@ -278,7 +278,7 @@ class $$$Smtp extends $system$Object {
 	$result = $this->_edit($data);
 
 	// update object
-	$this->loadInfo();
+	$this->_loadInfo();
 
 	return ($result) ? true : false;
     }

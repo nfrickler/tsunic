@@ -7,7 +7,7 @@ class $$$Parser {
      *
      * @return string
      */
-    public function txt2db ($string) {
+    public function text2db ($string) {
 	$search = array("\\", "\0", "\n", '\r', "\x1a", "'", '"');
 	$replace = array("\\\\", "\\0", "\\n", '\\r', "\Z", "\'", '\"');
 	return str_replace($search, $replace, $string);
@@ -18,7 +18,7 @@ class $$$Parser {
      *
      * @return string
      */
-    public function txt2plain ($string) {
+    public function text2plain ($string) {
 	$search = array("<", ">");
 	$replace = array("&lt;", "&gt;");
 	return str_replace($search, $replace, $string);
@@ -29,8 +29,8 @@ class $$$Parser {
      *
      * @return string
      */
-    public function txt2plain2db ($string) {
-	return $this->txt2db($this->txt2plain($string));
+    public function text2plain2db ($string) {
+	return $this->text2db($this->text2plain($string));
     }
 
     /* parse txt to int
@@ -38,7 +38,7 @@ class $$$Parser {
      *
      * @return int
      */
-    public function txt2int ($string) {
+    public function text2int ($string) {
 	return (int) $string;
     }
 

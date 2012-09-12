@@ -1,6 +1,7 @@
-<!-- | Template: show form to edit mailbox -->
+<!-- | TEMPLATE show form to edit mailbox -->
 <div id="$$$div__showAddMailserver">
-    <h1><?php $this->set('{SHOWEDITMAILBOX__H1}'); ?></h1>
+    <h1><?php $this->set('{SHOWEDITMAILBOX__H1}',
+	array('name' => $this->getVar('Mailbox')->getInfo('name'))); ?></h1>
     <p class="ts_infotext"><?php $this->set('{SHOWEDITMAILBOX__INFO}'); ?></p>
     <?php $this->display('$$$formMailbox', array(
 	'Mailbox' => $this->getVar('Mailbox'),
