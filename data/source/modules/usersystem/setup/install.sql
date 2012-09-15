@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `#__accounts` (
   `fk_homehost` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
+  `_privkey_` varchar(300) NOT NULL,
   `userkey` varchar(100) NOT NULL,
   `dateOfRegistration` datetime NOT NULL,
   `dateOfChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

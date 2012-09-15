@@ -1,4 +1,4 @@
-<!-- | function to disable javascript -->
+<!-- | FUNCTION disable javascript -->
 <?php
 function $$$disableJavascript () {
     global $TSunic;

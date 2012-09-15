@@ -103,13 +103,27 @@ class $$$User extends $system$Object {
 	    return false;
 	}
 
+	// generate public/private keypair
+	$res = openssl_pkey_new(array(
+	    'digest_alg' => 'sha1',
+	    'private_key_type' => OPENSSL_KEYTYPE_RSA,
+	    'private_key_bits' => 2048
+	));
+
+	// Get private key
+	if (!openssl_pkey_export($res, $privatekey)) {
+	    $TSunic->throwError("openssl_pkey_export failed!");
+	    exit;
+	}
+
 	// update database
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
 	    "password" => $this->_password2hash($password, $email),
 	    "fk_homehost" => 0,
-	    "dateOfCreation" => "NOW()"
+	    "dateOfCreation" => "NOW()",
+	    "privkey" => $privatekey
 	);
 	return $this->_create($data);
     }
@@ -426,6 +440,19 @@ class $$$User extends $system$Object {
 	return $this->Encryption->encrypt($input);
     }
 
+    /* encrypt input with public key
+     * @param string: input
+     *
+     * @return string
+     */
+    public function encryptPub ($input) {
+	$privkey = openssl_pkey_get_private($this->getInfo('privkey'));
+	$details= openssl_pkey_get_details($privkey);
+	$pubkey = $details['key'];
+	openssl_public_encrypt($input, $crypttext, $pubkey);
+	return $crypttext;
+    }
+
     /* decrypt input
      * @param string: input
      *
@@ -434,6 +461,17 @@ class $$$User extends $system$Object {
     public function decrypt ($input) {
 	if (!$this->Encryption) return $input;
 	return $this->Encryption->decrypt($input);
+    }
+
+    /* decrypt input with private key
+     * @param string: input
+     *
+     * @return string
+     */
+    public function decryptPriv ($input) {
+	$key = openssl_pkey_get_private($this->getInfo('privkey'));
+	openssl_private_decrypt($input, $decrypted, $key);
+	return $decrypted;
     }
 
     /* has user access?
