@@ -2,43 +2,41 @@
 
 #$$$div__show {
     position:absolute;
-    top:140px;
+    top:80px;
     left:10px;
     width:150px;
     height:auto;
 }
-#$$$div__show ul {
-    list-style-type:none;
-}
-#$$$div__show li {
-    padding:5px;
+#$$$div__show a,
+    #$$$div__show a:link,
+    #$$$div__show a:visited,
+    #$$$div__show a:active,
+    #$$$div__show a:focus
+{
+    display:block;
+    padding:3px;
     margin:2px;
     margin-bottom:5px;
-    border:0px;
-    border-left:2px solid #000;
-    background:#99A;
+    background:#AAF;
     cursor:pointer;
-}
-#$$$div__show li:hover {
-    border:0px;
-    border-left:5px solid #000;
-    background:#AAB;
-}
-#$$$div__show li a,
-    #$$$div__show li a:link,
-    #$$$div__show li a:visited {
     color:#000;
-    text-decoration:none;
     font-weight:normal;
 }
-.$$$sub,
-    #$$$div__show .$$$sub {
-    padding:2px;
-    height:14px;
-    font-size:8pt;
-    background:#BBC;
+#$$$div__show a:hover {
+    border:0px;
+    background:#003;
+    color:#FFF;
 }
-.$$$sub:hover,
-    #$$$div__show .$$$sub:hover {
-    background:#CCD;
+.$$$sub a:link,
+    .$$$sub a:visited,
+    .$$$sub
+{
+    padding:1px;
+    font-size:8pt;
+    background:#FF0;
+    color:#000;
+}
+.$$$sub:hover {
+    background:#003;
+    color:#FFF;
 }

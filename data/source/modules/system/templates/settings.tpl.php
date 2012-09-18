@@ -1,4 +1,4 @@
-<!-- | TEMPLATE - show setting-bar -->
+<!-- | TEMPLATE show setting bar -->
 <div id="$$$div__settings">
     <?php if ($TSunic->isJavascript() == true) { ?>
     <a href="<?php $this->setUrl('$$$disableJavascript'); ?>">

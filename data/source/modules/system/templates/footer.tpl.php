@@ -1,4 +1,4 @@
-<!-- | TEMPLATE - show content of tsunic -->
+<!-- | TEMPLATE show content of TSunic -->
 <?php
 // stop system-timer
 $TSunic->Stats->stopTimer('system');

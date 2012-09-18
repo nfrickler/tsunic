@@ -1,9 +1,10 @@
-<!-- | TEMPLATE - show system-messages (error & info) -->
+<!-- | TEMPLATE show system messages (error & info) -->
 <?php
 
 // add javascript-functions
-$TSunic->Tmpl->addJSfunction('$$$showPopup_error');
-$TSunic->Tmpl->addJSfunction('$$$showPopup_info');
+$TSunic->Tmpl->addJSfunction('$$$showMsgbox');
+$TSunic->Tmpl->addJSfunction('$$$showMsgbox_error');
+$TSunic->Tmpl->addJSfunction('$$$showMsgbox_info');
 
 // get input
 $Log = $this->getVar('Log');
@@ -56,7 +57,7 @@ if (!empty($infos)) {
 	    var error_text = this;
 
 	    // add error-box
-	    $$$showPopup_error('<?php $this->set('{SHOWMESSAGES__ERROR}'); ?> ', error_text, '<?php $this->set('{SHOWMESSAGES__ERRORSUBMIT}'); ?>');
+	    $$$showMsgbox_error('<?php $this->set('{SHOWMESSAGES__ERROR}'); ?> ', error_text);
 	});
     }
 
@@ -83,7 +84,7 @@ if (!empty($infos)) {
 	    var info_text = this;
 
 	    // add error-box
-	    $$$showPopup_info('<?php $this->set('{SHOWMESSAGES__INFO}'); ?>', info_text, '<?php $this->set('{SHOWMESSAGES__INFOSUBMIT}'); ?>');
+	    $$$showMsgbox_info('<?php $this->set('{SHOWMESSAGES__INFO}'); ?>', info_text);
 	});
     }
     <?php } ?>

@@ -11,10 +11,11 @@ body {
     position:absolute;
     margin:0px;
     padding:0px;
-    width:99%;
-    height:99%;
+    width:100%;
+    height:100%;
     font-family:arial;
     font-size:10pt;
+    background:#EEF;
 }
 div {
     margin:0px;
@@ -138,14 +139,15 @@ tr {
 }
 th {
     font-weight:bold;
-    background:#AA8;
+    background:#005;
+    color:#FFF;
     text-align:left;
     margin:2px;
     padding:5px;
 }
 td {
     font-weight:normal;
-    background:#DDC;
+    background:#EEF;
     text-align:left;
     margin:1px;
     padding:5px;
@@ -160,12 +162,20 @@ td {
     width:auto;
     min-width:800px !important;
     max-width:1200px !important;
-    margin:0px;
     margin-left:auto;
     margin-right:auto;
 }
+#$$$div__left {
+    position:absolute;
+    top:50px;
+    left:10px;
+    width:40px;
+    height:60%;
+    background:#449;
+}
 #$$$div__center {
     position:relative;
+    top:0px;
     margin-bottom:5px;
     text-align:left;
     width:auto;
@@ -175,22 +185,15 @@ td {
     margin-right:50px;
     height:auto;
     min-height:100% !important;
-    background:#dadac1;
+    background:#FFF;
 }
 #$$$div__header {
     position:relative;
-    width:99%;
-    height:90px;
-    padding:2px;
-    background:#CCA;
-}
-#$$$div__header__logodiv {
-    width:320px;
-    height:86px;
-    margin:0px;
-    margin-top:-3px;
-    background:#DDB;
-    padding-left:25px;
+    width:100%;
+    height:30px;
+    background:#003;
+    color:#FFF;
+    padding-top:3px;
 }
 #$$$div__content {
     position:relative;
@@ -199,9 +202,9 @@ td {
     margin-left:120px;
     padding:8px;
     padding-bottom:30px;
-    background:#CCA;
 }
 #$$$div__footer {
+    border-top: 1px solid #AAA;
     text-align:center;
     font-size:9pt;
     color:#666;
@@ -225,38 +228,30 @@ td {
     text-align:right;
     margin-top:20px;
 }
-#$$$div__left {
-    position:absolute;
-    top:100px;
-    left:10px;
-    width:40px;
-    height:60%;
-    background:#FFA;
-}
 #$$$div__settings {
     position:absolute;
-    top:2px;
-    right:2px;
-    width:30px;
+    top:40%;
+    right:0px;
+    width:28px;
     padding:2px;
-    background:#DDD;
+    padding-right:4px;
+    background:#003;
     text-align:center;
 }
 
 /**************** div_system__navigation_header ************/
 #$$$div__navigation_header {
     position:absolute;
-    top:100px;
-    width:auto;
-    left:0px;
-    right:0px;
-    padding-left:110px;
-    background:#FFA;
+    top:37px;
+    left:100px;
 }
-#$$$div__navigation_header ul {
-    list-style-type:none;
-}
-#$$$div__navigation_header ul li {
+#$$$div__navigation_header a,
+    #$$$div__navigation_header a:link,
+    #$$$div__navigation_header a:visited,
+    #$$$div__navigation_header a:active,
+    #$$$div__navigation_header a:focus,
+    #$$$div__navigation_header a:hover
+{
     display:inline;
     padding:5px;
     padding-left:7px;
@@ -267,26 +262,16 @@ td {
     margin-right:5px;
     border:0px;
     border-top:2px solid #000;
-    background:#AAB;
+    background:#AAF;
     cursor:pointer;
-}
-#$$$div__navigation_header li a,
-    #$$$div__navigation_header li a:link,
-    #$$$div__navigation_header li a:visited,
-    #$$$div__navigation_header li a:active,
-    #$$$div__navigation_header li a:focus,
-    #$$$div__navigation_header li a:hover {
     color:#000;
-    text-decoration:none;
     font-weight:normal;
 }
-#$$$div__navigation_header ul li:hover {
+#$$$div__navigation_header a:hover {
     border:0px;
-    border-top:5px solid #000;
-    background:#CCD;
-}
-#$$$div__navigation_header .$$$navigation_header_important {
-    background:#CCD;
+    border-top:5px solid #FFF;
+    background:#003;
+    color:#AAF;
 }
 
 /* *********************** special lists ******************** */
@@ -300,16 +285,18 @@ td {
 /* **************************** forms *************************************** */
 
 .ts_form {
-    padding:0px;
+    padding:4px;
     margin:0px;
     margin-bottom:20px;
     width:100%;
     min-width:450px;
+    background:#EEF;
 }
 .ts_form fieldset {
     padding:5px;
     margin:5px;
     width:90%;
+    border:0px;
 }
 .ts_form fieldset legend {
     font-weight:bold;
@@ -325,12 +312,13 @@ td {
     margin-right:0px;
     padding-right:10px;
     text-align:right;
-    background:#DDE;
-    height:18px;
-    border-top:1px solid black;
-    border-bottom:3px solid black;
+    background:#005;
+    color:#FFF;
+    height:15px;
+    border-top:1px solid #AAF;
+    border-bottom:3px solid #AAF;
     border-right:0px;
-    border-left:1px solid black;
+    border-left:1px solid #AAF;
 }
 .ts_form input,
 .ts_form fieldset input,
@@ -347,7 +335,6 @@ td {
     margin:2px;
     margin-left:0px;
     background:#FFF;
-/*    height:18px; */
     border-top:1px solid black;
     border-bottom:3px solid black;
     border-right:3px solid black;
@@ -361,7 +348,7 @@ td {
 .ts_form fieldset textarea:hover,
 .ts_form textarea:hover
 {
-    background:#FFD;
+    background:#FFC;
 }
 .ts_form input:focus,
 .ts_form input:active,
@@ -413,7 +400,7 @@ td {
     border:1px solid #FFF;
     border-bottom:2px solid #333;
     border-right:2px solid #333;
-    background:#0F0;
+    background:#5F9;
     color:#000;
     font-weight:bold;
 }
@@ -577,7 +564,7 @@ td {
     margin-bottom:20px;
 }
 
-/* popup */
+/* ########################## popup ############################### */
 .ts_js_blackbg {
     position:fixed;
     top:0px;
@@ -613,88 +600,6 @@ td {
     padding:5px;
     height:20px;
     text-align:right;
-}
-.ts_js_popup_error_header {
-    position:absolute;
-    top:0px;
-    left:0px;
-    margin:0px;
-    padding:0px;
-    height:40px;
-    width:350px;
-    background:#A00;
-}
-.ts_js_popup_error_header_in {
-    position:absolute;
-    top:0px;
-    left:0px;
-    margin:10px;
-    padding:0px;
-    height:20px;
-    width:330px;
-    color:#EEE;
-    font-size:13pt;
-    font-weight:bold;
-}
-.ts_js_popup_error_content {
-    position:absolute;
-    left:0px;
-    top:40px;
-    margin:0px;
-    padding:0px;
-    width:350px;
-    background:#FAA;
-    height:100px;
-}
-.ts_js_popup_error_content_in {
-    position:absolute;
-    left:10px;
-    top:10px;
-    margin:0px;
-    padding:0px;
-    width:330px;
-    height:80px;
-}
-.ts_js_popup_info_header {
-    position:absolute;
-    top:0px;
-    left:0px;
-    margin:0px;
-    padding:0px;
-    height:40px;
-    width:350px;
-    background:#FC0;
-}
-.ts_js_popup_info_header_in {
-    position:absolute;
-    top:0px;
-    left:0px;
-    margin:10px;
-    padding:0px;
-    height:20px;
-    width:330px;
-    color:#EEE;
-    font-size:13pt;
-    font-weight:bold;
-}
-.ts_js_popup_info_content {
-    position:absolute;
-    left:0px;
-    top:40px;
-    margin:0px;
-    padding:0px;
-    width:350px;
-    background:#FFA;
-    height:100px;
-}
-.ts_js_popup_info_content_in {
-    position:absolute;
-    left:10px;
-    top:10px;
-    margin:0px;
-    padding:0px;
-    width:330px;
-    height:80px;
 }
 .ts_popupbox_header {
     position:absolute;
@@ -754,6 +659,68 @@ td {
     margin-left:10px;
     padding:5px;
     text-align:center;
+}
+
+/* ##################### info- and error-boxes #################### */
+
+.ts_js_msgbox {
+    position:absolute;
+    top:80px;
+    right:0px;
+    height:auto;
+    min-height:20px;
+    max-height:100px;
+    width:350px;
+}
+.ts_js_msgbox_error {
+    width:350px;
+    background:#A00;
+    cursor:pointer;
+}
+.ts_js_msgbox_error_header {
+    position:absolute;
+    top:10px;
+    left:0px;
+    width:60px;
+    font-weight:bold;
+    color:#FFF;
+    text-align:center;
+}
+.ts_js_msgbox_error_content {
+    position:relative;
+    top:0px;
+    left:60px;
+    width:270px;
+    background:#FAA;
+    padding-top:3px;
+    padding-bottom:3px;
+    height:auto;
+    min-height:30px;
+}
+.ts_js_msgbox_info {
+    width:350px;
+    background:#FC0;
+    cursor:pointer;
+}
+.ts_js_msgbox_info_header {
+    position:absolute;
+    top:10px;
+    left:0px;
+    width:60px;
+    font-weight:bold;
+    color:#FFF;
+    text-align:center;
+}
+.ts_js_msgbox_info_content {
+    position:relative;
+    top:0px;
+    left:60px;
+    width:270px;
+    background:#FFA;
+    padding-top:3px;
+    padding-bottom:3px;
+    height:auto;
+    min-height:30px;
 }
 
 /* formstyle */
