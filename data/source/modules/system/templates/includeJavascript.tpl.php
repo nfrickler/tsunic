@@ -15,53 +15,17 @@ $TSunic->Tmpl->addJSfunction('$$$showFormHelp');
 
 // get js-functions and -classes for include
 $js_functions = $TSunic->Tmpl->getActivatedJavascript();
+
+foreach ($js_functions as $index => $value) {
+    $path = 'runtime/javascript/'.$value.'.js';
+    echo '<script type="text/javascript" src="'.$path.'"></script>';
+}
 ?>
 <script type="text/javascript">
-var $$$fkt_ready = 0;
-
-// load main js-file (function.js.php)
-function $$$startScript () {
-
-    // all functions
-    var all_functions = new Array();
-    <?php
-    $counter = 0;
-    foreach ($js_functions as $index => $value) {
-	$path = 'runtime/javascript/'.$value.'.js';
-	echo 'all_functions['.$counter.'] = "'.$path.'";'."\n";
-	$counter++;
-    } ?>
-
-    // load all functions
-    for (var i = 0; i < all_functions.length; i++) {
-
-	// load
-	$.getScript(all_functions[i], function() {
-	    $$$startReady();
-	});
-    }
-
-    return true;
+<?php
+$code = $TSunic->Tmpl->getAllJavascript();
+foreach ($code as $index => $value) {
+    echo base64_decode($value);
 }
-
-// check ready-status
-function $$$startReady () {
-    var fkt_number = <?php echo count($js_functions); ?>;
-
-    // increase amount of ready functions
-    $$$fkt_ready++;
-
-    // check, if all functions ready
-    if ($$$fkt_ready == fkt_number) {
-
-	// load functions.js.php
-	$.getScript('functions.js.php', function() {
-	    // nothing to do
-	});
-    }
-}
-
-// start javascript
-$$$startScript();
-
+?>
 </script>

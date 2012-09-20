@@ -64,20 +64,9 @@ class $$$Parser {
      * @return string
      */
     public function toHtml ($string) {
-
-	$string = str_replace('r', '', $string);
-	$string = str_replace('n', '', $string);
-
-	// parse < and >
-	$string = str_replace('&lt;', '<', $string);
-	$string = str_replace('&gt;', '>', $string);
-
-	// strip (back-)slashes
-	$string = str_replace('\\\\', '\\', $string);
-	$string = str_replace('\\/', '/', $string);
-	$string = str_replace('\"', '"', $string);
-
-	return $string;
+	$search = array('\"', "\'", '\r', '\n', '\\\\');
+	$replace = array('"', "'","\r", "\n", '\\');
+	return str_replace($search, $replace, $string);
     }
 }
 ?>

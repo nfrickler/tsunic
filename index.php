@@ -2,11 +2,8 @@
 <?php
 /* DEBUG ********************************/
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+#ini_set('display_errors', 1);
 /* DEBUG END ****************************/
-
-// try to change ini
-ini_set("register_globals", "0");
 
 // check installation- and offline-status
 $ts_configs = array();

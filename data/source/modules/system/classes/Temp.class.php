@@ -40,7 +40,6 @@ class $$$Temp {
 
 	// update history
 	$this->update();
-
 	return;
     }
 

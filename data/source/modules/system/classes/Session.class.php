@@ -30,11 +30,11 @@ class $$$Session {
 	$this->readonly = $readonly;
 
 	// set lifetime
-	ini_set('session.gc_maxlifetime', $this->lifetime);
+	#ini_set('session.gc_maxlifetime', $this->lifetime);
 
 	// set probability of garbage collection (1%)
-	ini_set('session.gc_probability', 1);
-	ini_set('session.gc_divisor', 100);
+	#ini_set('session.gc_probability', 1);
+	#ini_set('session.gc_divisor', 100);
 
 	// overwrite session handling
 	session_set_save_handler(

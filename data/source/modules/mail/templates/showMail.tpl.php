@@ -82,8 +82,13 @@ $attachments = $Mail->getAttachments();
 	return false;
     };
 
-    // calculate height of iframe
+    // start timeout
     function $$$showMails__calcHeight() {
+	setTimeout("$$$showMails__calcHeight2();", 100);
+    }
+
+    // calculate height of iframe
+    function $$$showMails__calcHeight2() {
 	var myiframe = document.getElementById('$$$div__showMail_mailcontent');
 
 	//find the height of the internal page
@@ -92,5 +97,7 @@ $attachments = $Mail->getAttachments();
 	//change the height of the iframe
 	myiframe.style.height = the_height + "px";
     }
-    document.getElementById('$$$div__showMail_mailcontent').onLoad = $$$showMails__calcHeight();
+
+
+    document.getElementById('$$$div__showMail_mailcontent').onload = $$$showMails__calcHeight();
 </script>

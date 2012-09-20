@@ -93,6 +93,7 @@ $mails = $Mailbox->getMails();
 </div>
 
 <script type="text/javascript">
+
     <?php if (!empty($mails)) { ?>
     var $$$showMailbox__checkboxes = document.getElementsByName('$$$showMailbox__selectedMails[]');
 
@@ -273,4 +274,5 @@ $mails = $Mailbox->getMails();
 
     // check for new mails
     setTimeout('$$$showMailbox__checkForNewMails();', <?php echo ($Mailbox->timeToCheck() * 1000); ?>);
+
 </script>

@@ -26,7 +26,7 @@ class $$$Mail extends $system$Object {
 	if ($type == 'plain' or empty($this->info['htmlcontent'])) {
 	    return $Parser->toText($this->info['plaincontent']);
 	} else {
-	    return $Parser->toText($this->info['htmlcontent']);
+	    return $Parser->toHtml($this->info['htmlcontent']);
 	}
     }
 

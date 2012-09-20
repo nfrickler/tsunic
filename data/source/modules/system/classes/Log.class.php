@@ -40,8 +40,6 @@ class $$$Log {
 	    ? $_SESSION['$$$Log'] : array();
 
 	// redirect php's error handling to save message in log
-	ini_set( 'display_errors', 1 );
-	error_reporting( -1 );
 	set_error_handler( array( '$$$Log', 'captureNormal' ) );
 	set_exception_handler( array( '$$$Log', 'captureException' ) );
 	register_shutdown_function( array( '$$$Log', 'captureShutdown' ) );
@@ -60,7 +58,12 @@ class $$$Log {
 
 	// log:
 	global $TSunic;
-	if ($TSunic and $TSunic->Log) $TSunic->Log->log(3, "PHP error: $errmsg");
+	if ($TSunic and $TSunic->Log) {
+	    $TSunic->Log->log(3, "PHP error: $errmsg");
+	} else {
+	    # exit
+	    die("PHP error: $errmsg");
+	}
 
 	// print message
 	echo "<pre>ERROR: A PHP error occurred!</pre>";

@@ -32,19 +32,16 @@ class $$$TemplateEngine {
      */
     public $activatedJavascript = array();
 
+    /* extracted javascript
+     * array
+     */
+    public $extractedJavascript = array();
+
     /* constructor
      * +@param string: name of design
      */
     public function __construct ($style = 0) {
 	global $TSunic;
-
-	// get activated templates and javascript
-	if (isset($_SESSION['activatedTemplates'])) {
-	    $this->activatedTemplates = $_SESSION['activatedTemplates'];
-	}
-	if (isset($_SESSION['activatedJavascript'])) {
-	    $this->activatedJavascript = $_SESSION['activatedJavascript'];
-	}
 
 	// get style
 	$this->style = ($style) ? $style : $TSunic->Config->getConfig('default_style');
@@ -112,7 +109,6 @@ class $$$TemplateEngine {
 	if (!$template_activated) {
 	    // activate template
 	    $this->activatedTemplates[$supTemplate][$position][] = $template;
-	    $_SESSION['activatedTemplates'] = $this->activatedTemplates;
 	}
 
 	// add data
@@ -135,16 +131,11 @@ class $$$TemplateEngine {
 
 	// load data from session?
 	if ($template === true) {
-	    $this->data = (isset($_SESSION[$this->session_key]))
-		? $_SESSION[$this->session_key]
-		: array();
 	    return true;
 
 	// reset data?
 	} elseif ($template === false) {
 	    $this->data = array();
-	    $_SESSION[$this->session_key] = array();
-	    $_SESSION['javascript_code'] = array();
 	    return true;
 	}
 
@@ -161,9 +152,6 @@ class $$$TemplateEngine {
 	    $this->data[$template] = $data;
 	}
 
-	// save data in session
-	$_SESSION[$this->session_key] = $this->data;
-
 	return true;
     }
 
@@ -177,15 +165,7 @@ class $$$TemplateEngine {
     public function getData ($template, $name = true, $unset = false) {
 
 	// load data (once)
-	if (empty($this->data)) {
-	    if (isset($_SESSION[$this->session_key])
-		AND !empty($_SESSION[$this->session_key])
-	    ) {
-		$this->data = $_SESSION[$this->session_key];
-	    } else {
-		$this->data = array();
-	    }
-	}
+	if (empty($this->data)) $this->data = array();
 
 	// data for template?
 	if (!isset($this->data[$template])
@@ -424,9 +404,6 @@ class $$$TemplateEngine {
 	// save in array
 	$this->activatedJavascript[$name] = $name;
 
-	// save in SESSION
-	$_SESSION['activatedJavascript'] = $this->activatedJavascript;
-
 	return true;
     }
 
@@ -439,12 +416,9 @@ class $$$TemplateEngine {
 	// validate input
 	if (empty($template) OR empty($input)) return false;
 
-	// validate session
-	if (!isset($_SESSION['$$$TemplateEngine__extractedJS']))
-	    $_SESSION['$$$TemplateEngine__extractedJS'] = array();
-
 	// save in SESSION
-	$_SESSION['$$$TemplateEngine__extractedJS'][$template] = $input;
+	if (!$this->extractedJavascript) $this->extractedJavascript = array();
+	$this->extractedJavascript[$template] = base64_encode($input);
 
 	return true;
     }
@@ -456,21 +430,14 @@ class $$$TemplateEngine {
      */
     public function getAllJavascript ($delete = false) {
 
-	// try to get from SESSION
-	if (isset($_SESSION['$$$TemplateEngine__extractedJS'])
-	    AND is_array($_SESSION['$$$TemplateEngine__extractedJS'])
-	    AND !empty($_SESSION['$$$TemplateEngine__extractedJS'])) {
+	# get code
+	if (!$this->extractedJavascript) $this->extractedJavascript = array();
+	$code = $this->extractedJavascript;
 
-	    // get code
-	    $code = $_SESSION['$$$TemplateEngine__extractedJS'];
+	# delete?
+	if ($delete) unset($this->extractedJavascript);
 
-	    // delete?
-	    if ($delete) $_SESSION['$$$TemplateEngine__extractedJS'] = array();
-
-	    return $code;
-	}
-
-	return array();
+	return $code;
     }
 
     /* get javascript-code (pre)
@@ -496,12 +463,11 @@ class $$$TemplateEngine {
     public function clearActivatedTemplates () {
 
 	// clear templates
-	$_SESSION['activatedTemplates'] = array();
 	$this->activatedTemplates = array();
 
 	// clear javascript
-	$_SESSION['activatedJavascript'] = array();
 	$this->activatedJavascript = array();
+	$this->extractedJavascript = array();
 
 	return true;
     }
