@@ -263,10 +263,10 @@ class $$$Template {
 
     /* parse Link for output
      * @param string: name of event
-     * +@param bool/array: false - no GET-parameter; array - GET-parameters     
+     * +@param bool/array: false - no GET-parameter; array - GET-parameters
      * +@param bool: is link placed in html-code (set false for javascript etc.)
      * +@param bool: print link (false returns link)
-     * +@param bool: add questionmark in the beginning?     
+     * +@param bool: add questionmark in the beginning?
      *
      * @return bool
      */

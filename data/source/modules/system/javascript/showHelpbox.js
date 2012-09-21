@@ -1,6 +1,9 @@
 <!-- | -->
 function $$$showHelpbox (beforeObject, helptext, cssclass) {
 
+    // reject if no helptext
+    if (!helptext) return;
+
     // get default css-class
     if (cssclass === undefined) cssclass = 'ts_input_help';
 
