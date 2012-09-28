@@ -344,12 +344,28 @@ class $$$Mail extends $system$Object {
 	return $Mailbox;
     }
 
-    /* delete mail
-     * +@param bool: remove completely?
+    /* get Serverbox object
      *
      * @return bool
      */
-    public function delete ($completely = false) {
+    public function getServerbox () {
+	if (!$this->isValid()) return NULL;
+	global $TSunic;
+
+	// get object
+	$Serverbox = $TSunic->get('$$$Serverbox', $this->getInfo('fk_serverbox'));
+	if (!$Serverbox->isValid()) return NULL;
+
+	return $Serverbox;
+    }
+
+    /* delete mail
+     * +@param bool: delete mail on server?
+     * +@param bool: remove from server completely (not only mark as deleted)?
+     *
+     * @return bool
+     */
+    public function delete ($delonserver = true, $cleanup = true) {
 	global $TSunic;
 
 	// delete attachment
@@ -358,23 +374,18 @@ class $$$Mail extends $system$Object {
 	// delete addressee
 	$this->setAddressee('');
 
-	// delete in database
-	if ($completely) {
-	    return $this->_delete();
-	} else {
-	    $data = array(
-		"subject" => '',
-		"plaincontent" => '',
-		"htmlcontent" => '',
-		"fk_mailbox" => '',
-		"charset" => '',
-		"sender" => '',
-		"dateOfMail" => '',
-		"dateOfCreation" => '',
-		"dateOfDeletion" => "NOW()"
-	    );
-	    return $this->_edit($data, true);
+	// delete on server
+	$Serverbox = $this->getServerbox();
+	if ($delonserver and $Serverbox) {
+	    $mailbox = $this->getServerbox()->getInfo('name');
+	    $Server = $Serverbox->getMailaccount()->getServer();
+
+	    if (!$Server or !$Server->deleteMail($mailbox,$this->getInfo('uid'), $cleanup))
+		return false;
 	}
+
+	// delete mail locally
+	return $this->_delete();
     }
 
     // ####################### attachments ##################################

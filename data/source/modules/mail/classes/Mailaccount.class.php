@@ -28,6 +28,11 @@ class $$$Mailaccount extends $system$Object {
      */
     protected $frequenceServerboxUpdate;
 
+    /* ImapServer object
+     * object
+     */
+    protected $ImapServer;
+
     /* password authentifications
      * array
      */
@@ -87,10 +92,11 @@ class $$$Mailaccount extends $system$Object {
     }
 
     /* get all serverboxes of this server
+     * @param bool: sync with Server?
      *
      * @return array
      */
-    public function getServerboxes () {
+    public function getServerboxes ($sync = true) {
 
 	// already computed OR invalid account?
 	if (!$this->isValid()) return array();
@@ -104,7 +110,8 @@ class $$$Mailaccount extends $system$Object {
 
 	// update serverboxes?
 	$timesince = time() - $timestamp;
-	if ($timesince >= $this->frequenceServerboxUpdate) $this->updateServerboxes();
+	if ($sync and $timesince >= $this->frequenceServerboxUpdate)
+	    $this->updateServerboxes();
 
 	// get serverboxes from database
 	global $TSunic;
@@ -144,30 +151,6 @@ class $$$Mailaccount extends $system$Object {
      */
     public function getAllProtocols () {
 	return $this->protocols;
-    }
-
-    /* get all smtps of this account
-     *
-     * @return array
-     */
-    public function getSmtps () {
-	if (!empty($this->smtps)) return $this->smtps;
-	global $TSunic;
-
-	// get smtps from database
-	global $TSunic;
-	$sql = "SELECT id
-		FROM #__smtps
-		WHERE fk_mailaccount = '".$this->id."';";
-	$result = $TSunic->Db->doSelect($sql);
-
-	// get objects
-	$this->smtps = array();
-	foreach ($result as $index => $values) {
-	    $this->smtps[] = $TSunic->get('$$$Smtp', $values['id']);
-	}
-
-	return $this->smtps;
     }
 
     /* set connection for mailaccount
@@ -478,189 +461,68 @@ class $$$Mailaccount extends $system$Object {
 
     /* ********************** interaction with server ******************* */
 
-    /* get mailbox-connection-string
-     * +@param string/bool: name of box on server (false: no serverbox)
+    /* get ImapServer object
      *
-     * @return string/bool
+     * @return object
      */
-    protected function getMboxstr ($boxname = false) {
-
-	// load data
-	$protocol = $this->getProtocol(false, 'phrase');
-	$auth = $this->getAuth(false, 'phrase');
-	$connsecurity = $this->getConnsecurity(false, 'phrase');
-	$host = $this->getInfo('host');
-	$port = $this->getInfo('port');
-
-	// validate data
-	if (empty($host) OR empty($port) OR !is_numeric($port))
-	    return false;
-
-	// turn data in options
-	$protocol = (!empty($protocol)) ? '/'.$protocol : '';
-	$auth = (!empty($auth)) ? '/'.$auth : '';
-	$connsecurity = (!empty($connsecurity)) ? '/'.$connsecurity : '';
-	if (empty($boxname)) $boxname = '';
-
-	// merge data to string
-	$output = '{'.$host.':'.$port.$protocol.$auth.$connsecurity.'}'.$boxname;
-
-	return $output;
-    }
-
-    /* connect to server
-     * +@param string/bool: name of box on server (false: no serverbox)
-     * +@param bool: set error?
-     *
-     * @return imap-stream
-     */
-    public function getStream ($boxname = false, $setError = true) {
+    public function getServer () {
+	if ($this->ImapServer) return $this->ImapServer;
 	global $TSunic;
 
-	// check, if imap-functions exist
-	if (!function_exists('imap_timeout')) {
-	    die('IMAP functions are not supported by this server!');
-	    return false;
-	}
+	$this->ImapServer = $TSunic->get('$$$ImapServer', array(
+	    $this->getInfo('host'),
+	    $this->getInfo('port'),
+	    $this->getInfo('user'),
+	    $this->password,
+	    $this->getProtocol($this->getInfo('protocol'), 'phrase'),
+	    $this->getAuth($this->getInfo('auth'), 'phrase'),
+	    $this->getConnsecurity($this->getInfo('connsecurity'), 'phrase')
+	));
 
-	// get stream-index
-	$stream_index = (empty($boxname)) ? '_all_' : $boxname;
-	if (empty($boxname)) $boxname = '';
-
-	// check, if connection already exists
-	$stream = false;
-	if (!isset($this->conn[$stream_index])) {
-
-	    // set timeout for opening and reading a connection
-	    imap_timeout(IMAP_OPENTIMEOUT, $this->timeout);
-	    imap_timeout(IMAP_READTIMEOUT, $this->timeout);
-
-	    // get mbox-string
-	    $mboxstr = $this->getMboxstr($boxname);
-	    if (!$mboxstr) return false;
-
-	    // try to connect
-	    $TSunic->Log->log(8, "Mailaccount->getStream: imap_open to $mboxstr with ".$this->getInfo('user')." and ".$this->password);
-	    $stream = imap_open($mboxstr, $this->getInfo('user'), $this->password);
-
-	    // check, if imap-stream exist
-	    if ($setError AND !$stream) {
-		// get error-msg
-		$error = '{CLASS__MAILACCOUNT__NOCONNECTION}';
-		$error.= ' (server: '.$this->getInfo('host').', user: '.$this->getInfo('user');
-		if (!empty($boxname)) $error.= ', mailbox: '.$boxname;
-		$error.= ')';
-
-		// add error
-		$TSunic->Log->alert('error', $error);
-		$TSunic->Log->log(3, $error);
-		return false;
-	    }
-	}
-
-	// return, if error occurred
-	if (!$stream) {
-	    $imap_errors = imap_errors();
-	    if ($imap_errors) $TSunic->Log->log(
-		8, "Mailaccount->getStream: ".implode(",", $imap_errors)
-	    );
-	    return false;
-	}
-
-	// save in obj-vars
-	$this->conn[$stream_index] = $stream;
-
-	// return
-	return $this->conn[$stream_index];
+	return $this->ImapServer;
     }
 
-    /* close connection to server
-     * +@param string/bool: name of box on server (false: no serverbox)
-     *
-     * @return bool
-     */
-    public function closeConnection ($boxname = false) {
 
-	// get stream-index
-	$stream_index = (empty($boxname)) ? $boxname = '_all_' : $boxname;
-
-	// close connection
-	if (isset($this->conn[$stream_index]) AND !empty($this->conn[$stream_index])) {
-	    @imap_close($this->conn[$stream_index]);
-	}
-
-	return true;
-    }
-
-    /* update local serverbox-list in database
+    /* update local serverbox list in database
      *
      * @return array/false
      */
-    public function updateServerboxes ($newOnly = false) {
+    public function updateServerboxes () {
 	global $TSunic;
 
-	// open connection
-	$conn = $this->getStream();
-	if (!$conn) return false;
+	// get remote serverboxes
+	$Server = $this->getServer();
+	if (!$Server) return false;
+	$rboxes = $Server->getServerboxes();
 
-	// get mbox-string
-	$mboxstr = $this->getMboxstr();
-	if (!$mboxstr) return false;
+	// get local serverboxes
+	$lboxes = $this->getServerboxes(false);
 
-	// get serverboxes
-	$serverboxes = imap_getmailboxes($conn, $mboxstr, '*');
-	if (!is_array($serverboxes)) return false;
+	// delete old mailboxes
+	foreach ($lboxes as $index => $Value) {
+	    if (in_array($Value->getInfo('name'),$rboxes)) continue;
 
-	// get locally added serverboxes
-	$local_serverboxes = $this->getServerboxes();
+	    // delete mailbox
+	    $Value->delete();
+	}
 
-	// get output-array
-	$output = array();
-	foreach ($serverboxes as $index => $values) {
-
-	    // get name of serverbox
-	    $name = utf8_encode(imap_utf7_decode($values->name));
-	    $name = preg_replace('!(\{(.*)\})!Usi', '', $name);
-
-	    // check, if already on list
-	    $isListed = false;
-	    foreach ($local_serverboxes as $in => $val) {
-		if ($val->getInfo('name') == $name) {
-		    // already in db
-		    $isListed = true;
-
-		    // delete from list
-		    unset($local_serverboxes[$in]);
+	// add new mailboxes
+	foreach ($rboxes as $index => $value) {
+	    $exists = 0;
+	    foreach ($lboxes as $in => $Val) {
+		if ($Val->getInfo('name') == $value) {
+		    $exists = 1;
+		    break;
 		}
 	    }
+	    if ($exists) continue;
 
-	    if (!$isListed) {
-		// add serverbox in db
-		$Serverbox = $TSunic->get('$$$Serverbox');
-		$Serverbox->create($this->id, $name);
-	    }
+	    // create new Serverbox
+	    $Serverbox = $TSunic->get('$$$Serverbox');
+	    $Serverbox->create($this->id, $value);
 	}
 
-	// set deleted serverboxes as deleted in database
-	$sql_where = '';
-	foreach ($local_serverboxes as $index => $values) {
-	    $sql_where.= " OR id = '".$values->getInfo('id')."'";
-	}
-	$sql_where = substr($sql_where, 3);
-
-	if (strlen($sql_where) > 0) {
-	    $sql = "UPDATE #__serverboxes
-		    SET dateOfDeletion = NOW(),
-			isActive = '0'
-		    WHERE ".$sql_where.";";
-	    $TSunic->Db->doUpdate($sql);
-	}
-
-	// set lastServerboxUpdate
-	$data = array(
-	    "lastServerboxUpdate" => "NOW()"
-	);
-	return $this->_edit($data);
+	return true;
     }
 
     /* try to get or validate connection-data automatically
@@ -731,8 +593,16 @@ class $$$Mailaccount extends $system$Object {
 	    }
 
 	    // try to connect
-	    if ($this->getStream(false, false)) {
-		// connected!
+	    $Server = $TSunic->get('$$$ImapServer', array(
+		$this->getInfo('host'),
+		$this->getInfo('port'),
+		$this->getInfo('user'),
+		$this->password,
+		$this->getProtocol($this->getInfo('protocol'), 'phrase'),
+		$this->getAuth($this->getInfo('auth'), 'phrase'),
+		$this->getConnsecurity($this->getInfo('connsecurity'), 'phrase')
+	    ));
+	    if ($Server->isValid()) {
 		return true;
 	    }
 

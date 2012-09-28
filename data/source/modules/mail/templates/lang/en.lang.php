@@ -175,9 +175,6 @@ $lang = array(
     'SHOWMAILACCOUNT__SERVERBOXES_ADD' => 'Add another serverbox manually',
     'SHOWMAILACCOUNT__SERVERBOXES_SUBMIT' => 'De-/Activate serverboxes',
     'SHOWMAILACCOUNT__SERVERBOXES_REFRESH' => 'Refresh serverbox-list',
-    'SHOWMAILACCOUNT__SMTPS_H1' => 'Mailaccount\'s SMTP-servers',
-    'SHOWMAILACCOUNT__SMTPS_INFO' => 'This is a list of SMTP-servers of this mailaccount.',
-    'SHOWMAILACCOUNT__SMTPS_ADD' => 'Add SMTP-server',
 
     // refresh serverboxes
     'REFRESHSERVERBOXES__SUCCESS' => 'The list of serverboxes has been updated.',

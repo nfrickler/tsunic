@@ -45,7 +45,7 @@ class $$$Validator {
      */
     public static function isFilename ($input) {
 	if (empty($input)) return false;
-	return (self::_isMatch("%[^-_a-z0-9äöü\.\ \/]%i", $input)) ? false : true;
+	return (self::_isMatch("%[^-_a-z0-9äöü\.\ ]%i", $input)) ? false : true;
     }
 
     /* is int

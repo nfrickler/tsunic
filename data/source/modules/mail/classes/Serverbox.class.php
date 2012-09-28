@@ -260,6 +260,7 @@ class $$$Serverbox extends $system$Object {
      */
     public function checkMails ($force = false) {
 	global $TSunic;
+	$out = array();
 
 	// check, if serverbox exist
 	if (!$this->isValid()) return false;
@@ -273,301 +274,105 @@ class $$$Serverbox extends $system$Object {
 		WHERE id = '".$this->id."'";
 	$result = $TSunic->Db->doUpdate($sql);
 
-	// get connection to serverbox on server
-	$stream = $this->getMailaccount()->getStream($this->getInfo('name'));
-	if (!$stream) return false;
+	// get remote mails
+	$Server = $this->getMailaccount()->getServer();
+	if (!$Server) return false;
+	$rmails = $Server->getMails($this->getInfo('name'));
+	if ($rmails === false) return false;
 
-	// get number and headers of all mails
-	$headers = @imap_check($stream);
-	$number_of_mails = $headers->Nmsgs;
-	if ($number_of_mails < 1) return array();
+	// get local mails
+	$lmails = $this->getMails();
+	if ($lmails === false) return false;
 
-	// get overview
-	$overview = imap_fetch_overview($stream, "1:$number_of_mails", 0);
+	// delete mail that doesn't not exist anymore
+	foreach ($lmails as $index => $Value) {
 
-	// get msg-numbers of all mails already stored locally
-	$sql = "SELECT uid as uid
-		FROM #__mails
-		WHERE fk_serverbox = '".$this->id."';";
-	$return = $TSunic->Db->doSelect($sql);
-	if ($return === false) return false;
+	    $exists = 0;
+	    foreach ($rmails as $in => $val) {
 
-	// get uids
-	$storedUids = array();
-	foreach ($return as $index => $value) {
-	    $storedUids[] = $value['uid'];
-	}
+		// skip mails marked for deletion
+		if ($val->deleted) continue;
 
-	// read all messages on the server and update local database
-	$new_mails = array();
-	for ($i = 0; $i < $number_of_mails; $i++) {
-	    $mail = $overview[$i];
-
-	    // get uid and message_number
-	    $uid = $mail->uid;
-	    $msg_number = $i + 1;
-
-	    // skip, if already downloaded
-	    if (in_array($uid, $storedUids)) continue;
-
-	    // get header-infos
-	    $subject = $this->decodeValue($mail->subject);
-	    $from = $this->decodeValue($mail->from);
-	    $to = $this->decodeValue($mail->to);
-	    $date = date('Y-m-d H:i:s', strtotime($mail->date));
-
-	    // init bodyparts
-	    $this->cache['bodyparts'] = array(
-		'plain' => '',
-		'html' => '',
-		'attachments' => array(),
-		'charset' => ''
-	    );
-
-	    // get body-parts of mail
-	    $structure = imap_fetchstructure($stream, $msg_number);
-
-	    if (!isset($structure->parts))  {
-		// no multipart
-		$this->getpart($stream, $msg_number, $structure, 0);
-	    } else {
-		// multipart: iterate through each part
-		foreach ($structure->parts as $partnumber => $part) {
-		    // get part
-		    $this->getpart($stream, $msg_number, $part, ($partnumber+1));
+		if ($val->uid == $Value->getInfo('uid')) {
+		    $exists = 1;
+		    break;
 		}
 	    }
+	    if ($exists) continue;
+	    $out[] = $Value->getInfo('uid');
+
+	    // delete mail
+	    $Value->delete(false);
+	}
+
+	// add new mails
+	foreach ($rmails as $index => $values) {
+
+	    // skip mails marked for deletion
+	    if ($values->deleted) continue;
+
+	    $exists = 0;
+	    foreach ($lmails as $in => $Val) {
+		if ($values->uid == $Val->getInfo('uid')) {
+
+
+		    $exists = 1;
+		}
+	    }
+	    if ($exists) continue;
+
+	    // fetch data of mail
+	    $new_mail = $Server->getMail($this->getInfo('name'), $index);
 
 	    // create new Mail
 	    $Mail = $TSunic->get('$$$Mail');
-	    if (!$Mail->createFromImap(
+	    $Mail->createFromImap(
 		$this->id,
 		$this->getInfo('fk_mailbox'),
-		$from,
-		$to,
-		$date,
-		$subject,
-		$this->cache['bodyparts']['plain'],
-		$this->cache['bodyparts']['html'],
-		$uid,
-		1,
-		$this->cache['bodyparts']['charset']
-	    )) {
-		$TSunic->Log->alert('error', '{CLASS__SERVERBOX__CREATEMAILERROR}');
-		continue;
-	    }
-
-	    // save attachments
-	    foreach ($this->cache['bodyparts']['attachments'] as $index => $values) {
-		$FsFile = $TSunic->get('$usersystem$FsFile');
-		if (!$FsFile->create(0, $values['name'], $values['content']) or
-		    !$Mail->addAttachment($FsFile->getInfo('id'))
-		) {
-		    //$FsFile->delete();
-		    //$Mail->rmAttachment($FsFile->getInfo('id'));
-		    $TSunic->Log->alert('error', '{CLASS__SERVERBOX__ADDATTACHMENTERROR}');
-		}
-	    }
-
-	    // clear data
-	    $this->cache['bodyparts'] = array();
-
-	    // get new inserted id
-	    $new_mails[] = $Mail->getInfo('id');
-	}
-
-	return $new_mails;
-    }
-
-    /* get parts of mail (plainbody, htmlbody, attatchments etc)
-     * @param stream: stream to fetch mails from
-     * @param int: mail-id
-     * @param object: part of mail
-     * @param int: part-number
-     *
-     * @return bool
-     */
-    function getpart ($stream, $mail_id, $part, $partnumber) {
-
-	// get body
-	if ($partnumber == 0) {
-	    // no multipart
-	    $bodydata = imap_body($stream, $mail_id);
-	} else {
-	    // multipart
-	    $bodydata = imap_fetchbody($stream, $mail_id, $partnumber);
-	}
-
-	// decode data (if neccesary)
-	if ($part->encoding == 4) {
-	    // decode
-	    $bodydata = quoted_printable_decode($bodydata);
-	} elseif ($part->encoding == 3) {
-	    // decode
-	    $bodydata = base64_decode($bodydata);
-	}
-
-	// get parameters
-	$params = array();
-	if (isset($part->parameters)) {
-	    foreach ($part->parameters as $x) {
-		$params[strtolower($x->attribute)] = $x->value;
-	    }
-	}
-	if (isset($part->dparameters)) {
-	    foreach ($part->dparameters as $x) {
-		$params[strtolower($x->attribute)] = $x->value;
-	    }
-	}
-
-	// get attachments
-	if (isset($params['filename']) OR isset($params['name'])) {
-	    // attachment exists
-
-	    // get name of attachment
-	    $filename = (isset($params['filename'])) ? $params['filename'] : $params['name'];
-
-	    // add attachment
-	    $this->cache['bodyparts']['attachments'][] = array(
-		'name' => $this->decodeValue($filename),
-		'content' => $bodydata
+		$new_mail['sender'],
+		$new_mail['to'],
+		$new_mail['date'],
+		$new_mail['subject'],
+		$new_mail['plaincontent'],
+		$new_mail['htmlcontent'],
+		$new_mail['uid'],
+		!$new_mail['seen'],
+		$new_mail['charset']
 	    );
-	}
+	    $out[] = $new_mail['uid'];
 
-	// get message
-	elseif ($part->type == 0 AND isset($bodydata)) {
-
-	    // add message
-	    if (strtolower($part->subtype) == 'plain') {
-		// plaintext
-		$this->cache['bodyparts']['plain'].= trim($bodydata)."\n\n";
-	    } else {
-		// html-text
-		$this->cache['bodyparts']['html'].= trim($bodydata)."<br /><br />";
-	    }
-
-	    // add charset
-	    if (isset($params['charset']))
-		$this->cache['bodyparts']['charset'] = $params['charset'];
-	}
-
-	// EMBEDDED MESSAGE
-	// Many bounce notifications embed the original message as type 2,
-	// but AOL uses type 1 (multipart), which is not handled here.
-	// There are no PHP functions to parse embedded messages,
-	// so this just appends the raw source to the main message.
-	elseif ($part->type==2 AND isset($bodydata)) {
-	    $this->cache['bodyparts']['plain'].= trim($bodydata) ."\n\n";
-	}
-
-	// try to get aol-multipart messages
-	elseif ($part->type == 1 AND isset($bodydata)) {
-
-	    // split to lines
-	    $lines = explode(chr(10), $bodydata);
-	    $cutter = trim($lines[1]);
-
-	    // split in parts
-	    $myparts = explode($cutter, $bodydata);
-	    foreach ($myparts as $index => $value) {
-		if (empty($value)) continue;
-
-		// split in lines
-		$lines = explode(chr(10), $value);
-
-		$is_message = NULL;
-		$bodytype = 'html';
-		foreach ($lines as $in => $val) {
-
-		    if (isset($is_message) AND $is_message) {
-			$this->cache['bodyparts'][$bodytype].= $val;
-		    } else {
-			$val_trimmed = trim($val);
-			if (empty($val_trimmed)) {
-			    if (!isset($is_message)) continue;
-			    $is_message = true;
-			    continue;
-			}
-			$is_message = false;
-
-			// get bodytype
-			if (strstr($val, 'plain')) $bodytype = 'plain';
-
-			// get encoding
-			// TODO
-		    }
-		}
+	    // add attachments
+	    foreach ($new_mail['attachments'] as $index => $value) {
+		$Attachment = $TSunic->get('$usersystem$');
+		$Attachment->create(0, $index, $value);
+		$Mail->addAttachment($Attachment);
 	    }
 	}
 
-	// add subparts
-	if (isset($parts->parts)) {
-	    foreach ($part->parts as $partno0 => $p2)
-		$this->getpart($stream, $mail_id, $p2, $partno.'.'.($partno0+1));  // 1.2, 1.2.1, etc.
-	}
-
-	return true;
+	return $out;
     }
 
-    /* decode value
-     * @param string: subject to decode
-     *
-     * @return string
-     */
-    protected function decodeValue ($value){
-	return $this->decodeMimeString($value);
-    }
-
-    /* return supported encodings in lowercase
-     * @source: http://php.net/imap_mime_header_decode (comments)
+    /* get all mails from this serverbox
      *
      * @return array
      */
-    protected function mb_list_lowerencodings () {
-	$r=mb_list_encodings();
-	for ($n=sizeOf($r); $n--; ) {
-	    $r[$n]=strtolower($r[$n]);
+    public function getMails () {
+	global $TSunic;
+
+	// get all mails from this mailbox
+	$sql = "SELECT id
+	    FROM #__mails
+	    WHERE fk_serverbox = '".$this->id."';";
+	$ids = $TSunic->Db->doSelect($sql);
+	if (!$ids) return $ids;
+
+	// get objects
+	$mails = array();
+	foreach ($ids as $index => $values) {
+	    $mails[] = $TSunic->get('$$$Mail', $values['id']);
 	}
 
-	return $r;
-    }
-
-    /* decode a mail-header string to a specified charset
-     * @source: http://php.net/imap_mime_header_decode (comments)
-     * @param string: mime-string
-     * +@param string: input-charset
-     * +@param string: target-charset
-     *
-     * @return string
-     */
-    protected function decodeMimeString ($mimeStr, $inputCharset='utf-8', $targetCharset='utf-8', $fallbackCharset='iso-8859-1') {
-
-	// get charsets
-	$encodings = $this->mb_list_lowerencodings();
-	$inputCharset = strtolower($inputCharset);
-	$targetCharset = strtolower($targetCharset);
-	$fallbackCharset = strtolower($fallbackCharset);
-
-	// decode
-	$decodedStr = '';
-	$mimeStrs = imap_mime_header_decode($mimeStr);
-	for ($n = count($mimeStrs), $i=0; $i<$n; $i++) {
-	    $mimeStr = $mimeStrs[$i];
-	    $mimeStr->charset=strtolower($mimeStr->charset);
-	    if (($mimeStr == 'default' && $inputCharset == $targetCharset)
-		    OR $mimeStr->charset == $targetCharset
-	    ) {
-		$decodedStr.=$mimeStr->text;
-	    } else {
-		$decodedStr.= mb_convert_encoding(
-		    $mimeStr->text,
-		    $targetCharset,
-		    (in_array($mimeStr->charset, $encodings) ? $mimeStr->charset : $fallbackCharset)
-		);
-	    }
-	}
-
-	return $decodedStr;
+	return $mails;
     }
 }
 ?>
