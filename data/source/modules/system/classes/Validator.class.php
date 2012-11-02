@@ -1,6 +1,21 @@
-<!-- | CLASS static offering methods to validate values -->
+<!-- | Class to validate data -->
 <?php
 class $$$Validator {
+
+    /* chars allowed in string
+     * string
+     */
+    private static $chars1 = "-a-zA-ZäöüÄÖÜß0-9_";
+
+    /* chars additionally allowed in extString
+     * string
+     */
+    private static $chars2 = "\\\/\s\t@\.!\?;:,|#\$'\"\+\(\)\[\]&=\<\>";
+
+    /* chars additionally allowed in text
+     * string
+     */
+    private static $chars3 = "\r\n";
 
     /* is string (harmless chars only)
      * @param string: input value
@@ -8,7 +23,8 @@ class $$$Validator {
      * @return bool
      */
     public static function isString ($input) {
-	return (self::_isMatch("%[^-_a-z0-9äöü]%i", $input)) ? false : true;
+	return (self::_isMatch("%[^".self::$chars1."]%i", $input))
+	    ? false : true;
     }
 
     /* is string (extended, but harmless chars only)
@@ -17,7 +33,8 @@ class $$$Validator {
      * @return bool
      */
     public static function isExtString ($input) {
-	return (self::_isMatch("%[^-\\\/_a-zA-Z0-9äöüÄÖÜ@\.!\?;,]%", $input)) ? false : true;
+	return (self::_isMatch("%[^".self::$chars1.self::$chars2."]%", $input))
+	    ? false : true;
     }
 
     /* is text (extended, with newlines)
@@ -26,7 +43,7 @@ class $$$Validator {
      * @return bool
      */
     public static function isText ($input) {
-	return (self::_isMatch('%[^\\\/\wäöü\d-_@\.!\?;,\s\n\r]%si', $input)) ? false : true;
+	return (self::_isMatch('%[^'.self::$chars1.self::$chars2.self::$chars3.']%s', $input)) ? false : true;
     }
 
     /* is html text
@@ -35,7 +52,7 @@ class $$$Validator {
      * @return bool
      */
     public static function isHtml ($input) {
-	return (self::_isMatch('%[^\\\/\wäöü\d-_@\.!\?;,\s\n\r<>]%si', $input)) ? false : true;
+	return (self::_isMatch('%[^\\\/\wäöüß\d-_@\.!\?;,\s\n\r<>]%si', $input)) ? false : true;
     }
 
     /* is filename
@@ -45,7 +62,7 @@ class $$$Validator {
      */
     public static function isFilename ($input) {
 	if (empty($input)) return false;
-	return (self::_isMatch("%[^-_a-z0-9äöü\.\ ]%i", $input)) ? false : true;
+	return (self::_isMatch("%[^-_a-z0-9äöüß\.\ ]%i", $input)) ? false : true;
     }
 
     /* is int
@@ -54,7 +71,7 @@ class $$$Validator {
      * @return bool
      */
     public static function isInt ($input) {
-	return (is_numeric($input)) ? true : false;
+	return (is_numeric($input) or $input === 0) ? true : false;
     }
 
     /* is uri
@@ -86,7 +103,7 @@ class $$$Validator {
 	// Might be a better regex-phrase from James Watts and Francisco Jose Martin Moreno:
 	// /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
 
-	return (self::_isMatch('%^[^\W][a-z0-9_]+(\.[a-z0-9_]+)*\@[-a-z0-9_]+(\.[-a-z0-9_]+)*\.[a-z]{2,4}$%i', $input))
+	return (self::_isMatch('%^[^\W][a-z0-9_]+(\.[a-z0-9_]+)*\@[-a-z0-9_]+(\.[-a-z0-9_]+)*\.[a-z]{2,10}$%i', $input))
 	    ? true : false;
     }
 

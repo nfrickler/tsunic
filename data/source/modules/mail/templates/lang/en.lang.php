@@ -469,6 +469,7 @@ $lang = array(
     'SHOWEDITMAIL__SUBMIT' => 'Send mail',
     'SHOWEDITMAIL__SUBMIT_SAVE' => 'Save changes',
     'SHOWEDITMAIL__CANCEL' => 'Cancel',
+    'SHOWEDITMAIL__ADDSMTPFIRST' => 'Please add a SMTP server before editing an e-mail!',
 
     // saveMail
     'SAVEMAIL__NOTEXISTING' => 'The mail you did edit, does not exists!',

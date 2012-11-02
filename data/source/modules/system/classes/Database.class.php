@@ -73,7 +73,7 @@ class $$$Database {
      *
      * @return bool
      */
-    public function runFile ($path, $id__module = false) {
+    public function runFile ($path) {
 	global $TSunic;
 
 	// get content of file

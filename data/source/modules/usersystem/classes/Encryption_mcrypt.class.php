@@ -23,13 +23,14 @@ class $$$Encryption_mcrypt {
     private $cipher_obj;
 
     /* constructor
+     * @param string: algorithm
+     * @param string: encryption mode
      */
-    public function __construct () {
-	global $TSunic;
+    public function __construct ($algorithm, $mode) {
 
-	// load algorithm and mode
-	$this->algorithm = $TSunic->Config->getConfig('encryption_algorithm');
-	$this->mode = $TSunic->Config->getConfig('encryption_mode');
+	// save
+	$this->algorithm = $algorithm;
+	$this->mode = $mode;
 
 	// get cypher-object
 	$this->cypher_obj = mcrypt_module_open($this->algorithm, '', $this->mode, '');
@@ -57,7 +58,7 @@ class $$$Encryption_mcrypt {
 	if (empty($key)) $key = $this->key;
 
 	// init
-	$iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($this->cypher_obj), MCRYPT_RAND); 
+	$iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($this->cypher_obj), MCRYPT_RAND);
 	mcrypt_generic_init($this->cypher_obj, $key, $iv);
 
 	// encrypt

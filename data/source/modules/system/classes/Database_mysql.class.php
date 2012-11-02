@@ -1,4 +1,4 @@
-<!-- | mysql-class -->
+<!-- | MySQL database class -->
 <?php
 class $$$Database_mysql {
 
@@ -52,7 +52,6 @@ class $$$Database_mysql {
      * @return bool
      */
     private function doConnect () {
-	global $TSunic;
 
 	// already connected?
 	if (!empty($this->con) AND @mysql_ping($this->con)) return true;
@@ -62,10 +61,7 @@ class $$$Database_mysql {
 	if ($this->con) $db = @mysql_select_db($this->database);
 
 	// handle errors
-	if (!$this->con OR !$db) {
-	    $TSunic->Log->log(1, 'Couldn\'t connect to Mysql-Database! Error:"'.mysql_error().'"!');
-	    return false;
-	}
+	if (!$this->con OR !$db) return false;
 
 	return true;
     }

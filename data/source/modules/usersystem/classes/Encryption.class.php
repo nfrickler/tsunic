@@ -24,7 +24,10 @@ class $$$Encryption {
 	global $TSunic;
 
 	// try to load encryption-object of chosen encryption
-	$this->MyEnc = $TSunic->get('$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'));
+	$this->MyEnc = $TSunic->get('$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'), array(
+	    $TSunic->Config->getConfig('encryption_algorithm'),
+	    $TSunic->Config->getConfig('encryption_mode')
+	));
 	if (!$this->MyEnc) {
 	    // object could not be created
 	    $TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');

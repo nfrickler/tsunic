@@ -470,6 +470,7 @@ $lang = array(
     'SHOWEDITMAIL__SUBMIT' => 'Mail senden',
     'SHOWEDITMAIL__SUBMIT_SAVE' => 'Änderungen speichern',
     'SHOWEDITMAIL__CANCEL' => 'Abbrechen',
+    'SHOWEDITMAIL__ADDSMTPFIRST' => 'Bitte füge zuerst einen SMTP-Server hinzu, bevor du eine E-Mail bearbeitest!',
 
     // saveMail
     'SAVEMAIL__NOTEXISTING' => 'Die zu bearbeitende Mail existiert gar nicht!',
