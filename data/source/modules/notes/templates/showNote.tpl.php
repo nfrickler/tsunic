@@ -17,7 +17,7 @@
 	<fieldset>
 	    <legend><?php echo $this->set('{SHOWNOTE__LEGEND_SAVE}'); ?></legend>
 	    <label for="$$$showNote__filename"><?php $this->set('{SHOWNOTE__FILENAME}'); ?></label>
-	    <input class="ts_required" type="text" name="$$$showNote__filename" id="$$$showNote__filename" value="<?php $this->setPreset('$$$showNote__filename', $FsFile->getInfo('name')); ?>" />
+	    <input class="ts_required" type="text" name="$$$showNote__filename" id="$$$showNote__filename" value="<?php $this->setPreset('$$$showNote__filename', $FsFile->getAbsPath()); ?>" />
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<input type="submit" class="ts_submit" value="<?php $this->set('{SHOWNOTE__SUBMIT}'); ?>" />

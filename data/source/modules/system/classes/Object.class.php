@@ -163,7 +163,7 @@ class $$$Object {
 
 	// save in database
 	foreach ($data as $index => $value) {
-	    if ($value == 'NOW()') {
+	    if ($value and $value == 'NOW()') {
 		$data[$index] = "$index = NOW()";
 		continue;
 	    }

@@ -129,7 +129,7 @@ class $$$FsFile extends $system$Object {
 	if (!$this->getInfo('id')) return NULL;
 	global $TSunic;
 	$File = $TSunic->get('$system$File', '#private#file__'.$this->getInfo('id'));
-	return $File;
+	return ($File) ? $File : NULL;
     }
 
     /* get path of this file
@@ -238,7 +238,7 @@ class $$$FsFile extends $system$Object {
      */
     public function getContent () {
 	$File = $this->getFileObject();
-	if (!$File) return false;
+	if (!$File or !$File->isValid()) return false;
 
 	global $TSunic;
 	$content = $File->readFile();
@@ -269,6 +269,53 @@ class $$$FsFile extends $system$Object {
 	// only valid with existing file
 	$File = $this->getFileObject();
 	return $File->isValid();
+    }
+
+    /* get absolute path to this file in filesystem
+     *
+     * @return string
+     */
+    public function getAbsPath () {
+	if (!$this->isValid()) return false;
+	$name = $this->getInfo('name');
+	return ($this->getInfo('fk_directory')) ? $this->getDirectory()->getAbsPath()."/$name" : "$name";
+    }
+
+    /* get directory object to certain path
+     *
+     * @return FsDirectory
+     */
+    public function path2dir ($path) {
+	global $TSunic;
+	$Dir = $TSunic->get('$$$FsDirectory');
+
+	if (empty($path)) return $Dir;
+	if (substr($path,0,1) == "/") $path = substr($path, 1);
+	$names = explode("/",$path);
+
+	// follow path
+	$Next = false;
+	while ($current = array_shift($names)) {
+
+	    // subdirs
+	    $subdirs = $Dir->getSubdirectories();
+	    foreach ($subdirs as $index => $Value) {
+		if ($Value->getInfo('name') == $name) {
+		    $Next = $Value;
+		    break;
+		}
+	    }
+
+	    // not exists?
+	    if (!$Next) {
+		$Next = $TSunic->get('$$$FsDirectory');
+		if (!$Next->create($current, $Dir->getInfo('id'))) return NULL;
+	    }
+
+	    $Dir = $Next;
+	}
+
+	return $Dir;
     }
 }
 ?>

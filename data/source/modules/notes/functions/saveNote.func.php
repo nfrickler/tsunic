@@ -8,18 +8,29 @@ function $$$saveNote () {
     $filename = $TSunic->Temp->getPost('$$$showNote__filename');
     $content = $TSunic->Temp->getPost('$$$showNote__content');
 
-    // get FsFile object
+    // get FsFile and FsDirectory object
     $FsFile = $TSunic->get('$usersystem$FsFile', $id_fsfile);
 
+    // split filename into dir and file
+    $filename_file = (strstr($filename,"/")) ? substr(strrchr($filename, '/'),1) : $filename;
+    $filename_dir = substr($filename, 0, (strlen($filename)-strlen($filename_file)-1));
+
+    // get FsDir
+    $FsDir = $FsFile->path2dir($filename_dir);
+    if (!$FsDir) {
+	$TSunic->Log->alert('error', "{SAVENOTE__ERROR_INVALIDFILENAMEDIR}");
+	$TSunic->redirect('$$$showNote', array('$$$id' => $FsFile->getInfo('id')));
+    }
+
     // validate filename
-    if (!$FsFile->isValidName($filename)) {
+    if (!$FsFile->isValidName($filename_file)) {
 	$TSunic->Log->alert('error', "{SAVENOTE__ERROR_INVALIDFILENAME}");
 	$TSunic->redirect('$$$showNote', array('$$$id' => $FsFile->getInfo('id')));
     }
 
     // create new file
     if (!$id_fsfile) {
-	if ($FsFile->create(0, $filename, $content)) {
+	if ($FsFile->create($FsDir->getInfo('id'), $filename_file, $content)) {
 	    $TSunic->Log->alert('info', "{SAVENOTE__SUCCESS_CREATE}");
 	} else {
 	    $TSunic->Log->alert('error', "{SAVENOTE__ERROR_CREATE}");
@@ -28,7 +39,7 @@ function $$$saveNote () {
     }
 
     // set name
-    if (!$FsFile->edit($filename)) {
+    if (!$FsFile->edit($filename_file, $FsDir->getInfo('id'))) {
 	$TSunic->Log->alert('error', "{SAVENOTE__ERROR_SETFILENAME}");
 	$TSunic->redirect('$$$showNote', array('$$$id' => $FsFile->getInfo('id')));
     }

@@ -45,6 +45,10 @@ class ts_SubcodeHandler {
 	    // replace module
 	    $cache[$i] = $Parser->replaceModule($cache[$i]);
 
+	    // make replacements in language replacements upper case
+	    $regex = '#\{mod([0-9]+[A-Z_ÄÖÜ0-9]+)\}#Us';
+	    $cache[$i] = preg_replace($regex, "{MOD$1}", $cache[$i]);
+
 	    // save content
 	    if (!isset($this->subcodes[$this->cache[($i-1)]['path']]))
 		$this->subcodes[$this->cache[($i-1)]['path']] = array();
