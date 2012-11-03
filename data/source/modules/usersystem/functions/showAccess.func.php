@@ -8,7 +8,7 @@ function $$$showAccess () {
 
     // access?
     if (!$TSunic->Usr->access('$$$seeOwnAccess')) {
-	$TSunic->Log->alert('{SHOWACCESS__PERMISSION_DENIED}');
+	$TSunic->Log->alert('error', '{SHOWACCESS__PERMISSION_DENIED}');
 	$TSunic->redirect('back');
 	return false;
     }
@@ -26,7 +26,7 @@ function $$$showAccess () {
 
 	// check rights
 	if (!$TSunic->Usr->access('$$$seeAllAccess')) {
-	    $TSunic->Log->alert('{SHOWACCESS__PERMISSION_DENIED}');
+	    $TSunic->Log->alert('error', '{SHOWACCESS__PERMISSION_DENIED}');
 	    $TSunic->redirect('$$$showAccess');
 	}
 

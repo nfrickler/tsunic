@@ -3,6 +3,11 @@
 include_once '$system$Object.class.php';
 class $$$Accessgroup extends $system$Object {
 
+    /* table
+     * string
+     */
+    protected $table = "#__accessgroups";
+
     /* parent
      * OBJECT
      */
@@ -24,20 +29,6 @@ class $$$Accessgroup extends $system$Object {
 
 	if (!$return and $name == 'fk_parent') return 1;
 	return $return;
-    }
-
-    /* load infos from database
-     *
-     * @return sql query
-     */
-    protected function loadInfoSql () {
-	return "SELECT name,
-		dateOfCreation,
-		dateOfUpdate,
-		dateOfDeletion,
-		fk_parent as fk_parent
-	    FROM #__accessgroups
-	    WHERE id = '$this->id';";
     }
 
     /* create new accessgroup
@@ -205,6 +196,11 @@ class $$$Accessgroup extends $system$Object {
      * @return bool
      */
     public function checkParent ($name) {
+global $TSunic;
+$TSunic->Log->log(1, "checkParent $name");
+$TSunic->Log->log(1, "checkParent2 ".$this->getInfo('id'));
+$TSunic->Log->log(1, "checkParent3 ".$this->id);
+$TSunic->Log->log(1, "checkParent4 ".$this->info['id']);
 	return ($this->getParent())
 	    ? $this->getParent()->check($name)
 	    : false;
@@ -288,10 +284,10 @@ class $$$Accessgroup extends $system$Object {
      */
     public function getParent () {
 	if (!empty($this->Parent)) return $this->Parent;
-	if ($this->getInfo('id') == 1) return false;
+	if ($this->getInfo('id') == 1) return NULL;
 	global $TSunic;
 	$this->Parent = $TSunic->get('$$$Accessgroup', $this->getInfo('fk_parent'));
-	return $this->Parent;
+	return ($this->Parent->isValid()) ? $this->Parent : NULL;
     }
 
     /* get array of child objects

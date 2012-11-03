@@ -276,13 +276,6 @@ class $$$Mailaccount extends $system$Object {
 	    $value->delete();
 	}
 
-	// delete connection to smtps
-	$smtps = $this->getSmtps();
-	foreach ($smtps as $index => $value) {
-	    // delete smtp
-	    $value->edit(0, true, true, true, true);
-	}
-
 	// delete in database
 	return $this->_delete();
     }
@@ -494,6 +487,7 @@ class $$$Mailaccount extends $system$Object {
 	$Server = $this->getServer();
 	if (!$Server) return false;
 	$rboxes = $Server->getServerboxes();
+	if ($rboxes === false) return false;
 
 	// get local serverboxes
 	$lboxes = $this->getServerboxes(false);

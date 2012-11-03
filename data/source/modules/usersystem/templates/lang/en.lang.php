@@ -133,6 +133,7 @@ $lang = array(
     'SHOWACCESS__CHOOSE_USER' => '---Choose user---',
     'SHOWACCESS__CHOOSE_GROUP' => '---Choose groups---',
     'SHOWACCESS__CHOOSE_SUBMIT' => 'Show',
+    'SHOWACCESS__PERMISSION_DENIED' => 'Permission denied!',
 
     'SETACCESS__SUCCESS' => 'Value have been saved.',
     'SETACCESS__ERROR' => 'An error occurred while saving value!',

@@ -133,6 +133,7 @@ $lang = array(
     'SHOWACCESS__CHOOSE_USER' => '---Benutzer wählen---',
     'SHOWACCESS__CHOOSE_GROUP' => '---Gruppe wählen---',
     'SHOWACCESS__CHOOSE_SUBMIT' => 'Anzeigen',
+    'SHOWACCESS__PERMISSION_DENIED' => 'Zugriff verweigert!',
 
     'SETACCESS__SUCCESS' => 'Die Berechtigungen wurden gespeichert.',
     'SETACCESS__ERROR' => 'Beim Speichern ist ein Fehler aufgetreten!',
