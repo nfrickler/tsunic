@@ -35,7 +35,7 @@ class ts_Parser {
     /* constructor
      * @param string: preffix
      * @param array: array with all module-objects
-     * +@param bool: in debug_mode language will not be replaced	  
+     * +@param bool: in debug_mode language will not be replaced
      */
     public function __construct ($preffix, $modules_all, $debug_mode = false) {
 
@@ -210,7 +210,7 @@ class ts_Parser {
 
 	// parse
 	if ($is_langfile) {
-	    $content = preg_replace_callback('#(\'[A-Z_][A-Z0-9_]*\')#U', array($this, '_replaceLangCb'), $content);	
+	    $content = preg_replace_callback('#(\'[A-Z_][A-Z0-9_]*\')#U', array($this, '_replaceLangCb'), $content);
 	} else {
 	    $content = preg_replace_callback('#(\{(\$[\$a-z_0-9]*\$|)[A-Z_][A-Z0-9_]*\})#U', array($this, '_replaceLangCb'), $content);
 	}
@@ -403,7 +403,7 @@ class ts_Parser {
 	    } else {
 		// strip one-line comments within javascript
 		$content = preg_replace_callback('#\<script type="text\/javascript"\>(.*)\<\/script\>#Usi', array($this, 'js_stripOneLineComments'), $content);
-	
+
 		// strip one-line comments
 		$content = $this->stripOneLineComments($content);
 	    }

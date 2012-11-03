@@ -82,6 +82,7 @@ function parseAll () {
 		AND ts_FileHandler::createFolder('../runtime/functions')
 		AND ts_FileHandler::createFolder('../runtime/javascript')
 		AND ts_FileHandler::createFolder('../runtime/templates')
+		AND ts_FileHandler::createFolder('../runtime/constant')
 		AND ts_FileHandler::createFolder('../runtime/xmlResponses'))) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER ((re-)creating runtime-folders)';
 	    return false;
@@ -138,16 +139,16 @@ function parseAll () {
 		return false;
 	    }
 	}
-    
+
 	// make sure, a default-style is chosen
 	$StyleHandler->validateDefault();
-    
+
 	// get format.css
 	if (($format = $FormatHandler->writeFiles() === false)) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (format.css)';
 	    return false;
 	}
-    
+
 	// render language-files
 	if (!$LanguageHandler->writeFiles()) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (language-files)';
@@ -168,7 +169,7 @@ function parseAll () {
 
 	// reset system_online
 	$Config->set('system_online', $pre_system_online);
-    
+
 	// update installation-progress
 	if ($Config->get('installation') < 100) {
 	    $Config->setArray('installation_progress', 'parseAll', true);

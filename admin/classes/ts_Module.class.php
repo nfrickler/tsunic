@@ -301,6 +301,7 @@ class ts_Module extends ts_Packet {
 	    AND $this->parseAccess()
 	    AND $this->parseConfig()
 	    AND $this->parseHelp()
+	    AND $this->parseConstant()
 	    AND $this->_parseLanguages()
 	) {
 	    // success
@@ -344,6 +345,23 @@ class ts_Module extends ts_Packet {
 	    $Config->getRoot().'/files/project',
 	    true,
 	    $preffix)
+	) return true;
+
+	return false;
+    }
+
+    /* parse constant
+     *
+     * @return bool
+     */
+    protected function parseConstant () {
+	global $Config;
+
+	// copy all constant
+	if (ts_FileHandler::copyFolder(
+	    $this->path.'/constant',
+	    $Config->getRoot().'/runtime/constant'
+	    )
 	) return true;
 
 	return false;
