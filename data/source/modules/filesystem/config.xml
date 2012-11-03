@@ -1,0 +1,5 @@
+<!-- | config file -->
+<all>
+    <config default="10485760" formtype="text" configtype="admin">maxfilesize</config>
+    <config default="20485760" formtype="text" configtype="admin">quota</config>
+</all>
