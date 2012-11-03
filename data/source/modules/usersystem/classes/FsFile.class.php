@@ -295,12 +295,13 @@ class $$$FsFile extends $system$Object {
 
 	// follow path
 	$Next = false;
-	while ($current = array_shift($names)) {
+	while ($names and $current = array_shift($names)) {
+	    $Next = 0;
 
 	    // subdirs
 	    $subdirs = $Dir->getSubdirectories();
 	    foreach ($subdirs as $index => $Value) {
-		if ($Value->getInfo('name') == $name) {
+		if ($Value->getInfo('name') == $current) {
 		    $Next = $Value;
 		    break;
 		}
@@ -308,7 +309,7 @@ class $$$FsFile extends $system$Object {
 
 	    // not exists?
 	    if (!$Next) {
-		$Next = $TSunic->get('$$$FsDirectory');
+		$Next = $TSunic->get('$$$FsDirectory', array(), true);
 		if (!$Next->create($current, $Dir->getInfo('id'))) return NULL;
 	    }
 

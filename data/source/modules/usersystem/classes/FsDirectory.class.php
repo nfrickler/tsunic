@@ -237,7 +237,7 @@ class $$$FsDirectory extends $system$Object {
     public function getAbsPath () {
 	if (!$this->isValid()) return false;
 	$name = $this->getInfo('name');
-	return ($this->getInfo('fk_directory')) ? $this->getParent()->getAbsPath()."/$name" : "$name";
+	return ($this->getParent() and $this->getParent()->getInfo('id')) ? $this->getParent()->getAbsPath()."/$name" : "$name";
     }
 
     /* get consumed webspace (bytes)
