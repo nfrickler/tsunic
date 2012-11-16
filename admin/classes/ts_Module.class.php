@@ -301,7 +301,7 @@ class ts_Module extends ts_Packet {
 	    AND $this->parseAccess()
 	    AND $this->parseConfig()
 	    AND $this->parseHelp()
-	    AND $this->parseConstant()
+	    AND $this->parseStatic()
 	    AND $this->_parseLanguages()
 	) {
 	    // success
@@ -350,17 +350,17 @@ class ts_Module extends ts_Packet {
 	return false;
     }
 
-    /* parse constant
+    /* parse static
      *
      * @return bool
      */
-    protected function parseConstant () {
+    protected function parseStatic() {
 	global $Config;
 
-	// copy all constant
+	// copy all static
 	if (ts_FileHandler::copyFolder(
-	    $this->path.'/constant',
-	    $Config->getRoot().'/runtime/constant'
+	    $this->path.'/static',
+	    $Config->getRoot().'/runtime/static'
 	    )
 	) return true;
 
