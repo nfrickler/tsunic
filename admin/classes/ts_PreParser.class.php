@@ -51,6 +51,13 @@ class ts_PreParser {
 
 	// parse all subfolders
 	foreach ($subfolders as $index => $value) {
+
+	    // only move directories named static
+	    if ($value == 'static') {
+		ts_FileHandler::copyFolder("$path/$value", "$path_new/$value");
+		continue;
+	    }
+
 	    if (!$this->parse("$path/$value", "$path_new/$value", $path_to_cut, $rm_flags)) {
 		$Log->doLog(3, "PreParser: Failed to preparse subfolder ($path/$value)");
 		return false;

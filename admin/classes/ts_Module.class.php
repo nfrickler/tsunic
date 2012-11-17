@@ -355,16 +355,41 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     protected function parseStatic() {
-	global $Config;
+	global $Parser, $Config;
 
-	// copy all static
-	if (ts_FileHandler::copyFolder(
+	// copy all dirs and files
+	if (!ts_FileHandler::copyFolder(
 	    $this->path.'/static',
-	    $Config->getRoot().'/runtime/static'
-	    )
-	) return true;
+	    $Config->getRoot().'/runtime/static')
+	) return false;
 
-	return false;
+	// overwrite all files directly in /static and do module replacement
+
+	// get paths
+	$path_source = $this->path.'/static';
+	$path_destination = $Config->getRoot().'/runtime/static';
+
+	// get all files
+	$files = ts_FileHandler::getSubfiles($path_source);
+
+	// parse all files
+	foreach ($files as $index => $value) {
+
+	    // read
+	    $content = ts_FileHandler::readFile($path_source.'/'.$value);
+
+	    // parse
+	    $content = $Parser->replaceModule($content, $this->id);
+
+	    // write
+	    if (!$content OR !ts_FileHandler::writeFile(
+		$path_destination.'/'.$value,
+		$content,
+		1
+	    )) return false;
+	}
+
+	return true;
     }
 
     /* parse javascript-files of this module
