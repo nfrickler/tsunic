@@ -14,10 +14,10 @@ class ts_Module extends ts_Packet {
 
 	// is name given?
 	if (!empty($this->id)) {
-	    $path = $Config->getRoot(true).'/source/modules/_mod'.$this->id.'__'.$this->getInfo('name');
+	    $path = $Config->get('dir_data').'/source/modules/_mod'.$this->id.'__'.$this->getInfo('name');
 	} else {
 	    if (empty($name)) return false;
-	    $path = $Config->getRoot(true).'/source/modules/'.$name;
+	    $path = $Config->get('dir_data').'/source/modules/'.$name;
 	}
 
 	// save?
@@ -91,7 +91,7 @@ class ts_Module extends ts_Packet {
 
 	    // backup old version
 	    ts_BackupHandler::backupModule(
-		$Config->getRoot(true).'/source/modules/_mod'.$this->id,
+		$Config->get('dir_data').'/source/modules/_mod'.$this->id,
 		$this->getInfofile('name').'_'.$this->getInfofile('nameid').
 		'__version__'.$this->getInfofile('version')
 	    );
@@ -342,7 +342,7 @@ class ts_Module extends ts_Packet {
 	// copy all images
 	if (ts_FileHandler::copyFolder(
 	    $this->path.'/templates/images',
-	    $Config->getRoot().'/files/project',
+	    $Config->get('dir_runtime').'/files',
 	    true,
 	    $preffix)
 	) return true;
@@ -360,14 +360,14 @@ class ts_Module extends ts_Packet {
 	// copy all dirs and files
 	if (!ts_FileHandler::copyFolder(
 	    $this->path.'/static',
-	    $Config->getRoot().'/runtime/static')
+	    $Config->get('dir_runtime').'/static')
 	) return false;
 
 	// overwrite all files directly in /static and do module replacement
 
 	// get paths
 	$path_source = $this->path.'/static';
-	$path_destination = $Config->getRoot().'/runtime/static';
+	$path_destination = $Config->get('dir_runtime').'/static';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);
@@ -402,7 +402,7 @@ class ts_Module extends ts_Packet {
 	// get preffix and paths
 	$preffix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/javascript';
-	$path_destination = $Config->getRoot().'/runtime/javascript';
+	$path_destination = $Config->get('dir_runtime').'/javascript';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);
@@ -437,7 +437,7 @@ class ts_Module extends ts_Packet {
 	// get preffix and paths
 	$preffix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/templates/xmlResponses';
-	$path_destination = $Config->getRoot().'/runtime/xmlResponses';
+	$path_destination = $Config->get('dir_runtime').'/xmlResponses';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);
@@ -470,7 +470,7 @@ class ts_Module extends ts_Packet {
 	// get preffix and paths
 	$preffix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/functions';
-	$path_destination = $Config->getRoot().'/runtime/functions';
+	$path_destination = $Config->get('dir_runtime').'/functions';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);
@@ -508,7 +508,7 @@ class ts_Module extends ts_Packet {
 	// get preffix and paths
 	$preffix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/classes';
-	$path_destination = $Config->getRoot().'/runtime/classes';
+	$path_destination = $Config->get('dir_runtime').'/classes';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);
@@ -556,7 +556,7 @@ class ts_Module extends ts_Packet {
 	// get preffix and paths
 	$preffix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/templates';
-	$path_destination = $Config->getRoot().'/runtime/templates';
+	$path_destination = $Config->get('dir_runtime').'/templates';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);
@@ -594,7 +594,7 @@ class ts_Module extends ts_Packet {
 	// get preffix and paths
 	$preffix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/templates/help';
-	$path_destination = $Config->getRoot().'/runtime/help';
+	$path_destination = $Config->get('dir_runtime').'/help';
 
 	// get all files
 	$files = ts_FileHandler::getSubfiles($path_source);

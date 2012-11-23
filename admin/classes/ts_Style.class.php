@@ -1,6 +1,5 @@
 <!-- | Style class -->
 <?php
-include_once 'classes/ts_Packet.class.php';
 class ts_Style extends ts_Packet {
 
     /* get/update path to style
@@ -14,11 +13,11 @@ class ts_Style extends ts_Packet {
 
 	// is name given?
 	if (!empty($this->id)) {
-	    $path = $Config->getRoot(true).'/source/styles/_style'.
+	    $path = $Config->get('dir_data').'/source/styles/_style'.
 		$this->id.'__'.$this->getInfo('name');
 	} else {
 	    if (empty($name)) return false;
-	    $path = $Config->getRoot(true).'/source/styles/'.$name;
+	    $path = $Config->get('dir_data').'/source/styles/'.$name;
 	}
 
 	// save?
@@ -88,7 +87,7 @@ class ts_Style extends ts_Packet {
 	    $result_1 = $Database->doUpdate($sql_1);
 
 	    // backup old version
-	    ts_BackupHandler::backupStyle($Config->getRoot(true).'/source/styles/_style'.$this->id, $this->getInfofile('name').'_'.$this->getInfofile('nameid').'__version__'.$this->getInfofile('version'));
+	    ts_BackupHandler::backupStyle($Config->get('dir_data').'/source/styles/_style'.$this->id, $this->getInfofile('name').'_'.$this->getInfofile('nameid').'__version__'.$this->getInfofile('version'));
 
 	    // preparse (and replace old version by that)
 	    $this->_preparse();
@@ -296,7 +295,7 @@ class ts_Style extends ts_Packet {
 	    if (!$id__module) continue;
 
 	    // get path_new
-	    $path_new = $Config->getRoot().'/files/project/';
+	    $path_new = $Config->get('dir_runtime').'/files';
 	    $preffix = 'style'.$this->id.'__mod'.$id__module.'__';
 
 	    // move all files in folder
@@ -331,7 +330,7 @@ class ts_Style extends ts_Packet {
 	    $Parser->setModule($id__module);
 
 	    // get path_new
-	    $path_new = $Config->getRoot().'/runtime/templates';
+	    $path_new = $Config->get('dir_runtime').'/templates';
 	    $preffix = 'style'.$this->id.'__mod'.$id__module.'__';
 
 	    // get current path

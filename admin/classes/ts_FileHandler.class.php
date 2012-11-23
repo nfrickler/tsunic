@@ -78,6 +78,17 @@ class ts_FileHandler {
 	return true;
     }
 
+    /* move file to other destination
+     * @param string: path of source file
+     * @param string: path of destination file
+     *
+     * @return bool
+     */
+    public function moveFile ($source, $destination) {
+	if (!file_exists($source)) return false;
+	return copy($source, $destination);
+    }
+
     /* delete folder and all it's subfolders and -files
      * @param string: path of folder to delete
      *

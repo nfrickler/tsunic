@@ -7,11 +7,6 @@ class ts_ConfigurationHandler {
      */
     private $content;
 
-    /* content of config-file
-     * string
-     */
-    private $path = '../config.php';
-
     /* current version of TSunic
      * string
      */
@@ -38,10 +33,10 @@ class ts_ConfigurationHandler {
 	if (!empty($this->content) AND !$refresh) return true;
 
 	// is file?
-	if (!file_exists($this->path)) return false;
+	if (!file_exists($this->getPath())) return false;
 
 	// get configuration from file
-	include $this->path;
+	include $this->getPath();
 	$this->content = $ts_configs;
 
 	return true;
@@ -56,13 +51,22 @@ class ts_ConfigurationHandler {
 	// try to get value
 	if (isset($this->content[$name])) return $this->content[$name];
 
+	// get possible root dir
+	$root = dirname($_SERVER['SCRIPT_FILENAME']);
+	$root = substr($root, 0, (strlen($root) - strlen('admin/')));
+
 	// get defaults
 	switch ($name) {
 	    case 'version':
 		return $this->current_version;
+	    case 'dir_admin':
+		return $root.'/admin';
+	    case 'dir_data':
+		return $root.'/data';
+	    case 'dir_runtime':
+		return $root.'';
 	    case 'root_folder':
-		$path = dirname($_SERVER['SCRIPT_FILENAME']);
-		return substr($path, 0, (strlen($path) - 6));
+		return '';
 	    case 'data_folder':
 		return 'data';
 	    case 'loglevel':
@@ -95,26 +99,12 @@ class ts_ConfigurationHandler {
 	return NULL;
     }
 
-    /* get root-path
-     * +@param bool: get dataroot instead of "normal" root
+    /* get path of config file
      *
-     * @return string
+     * @return bool
      */
-    public function getRoot ($dataroot = false) {
-
-	if ($dataroot) {
-	    // get data-root
-	    if (substr($this->get('data_folder'),0,7) == 'http://') {
-		// data-root is absolute
-		return $this->get('data_folder');
-	    } else {
-		// relative data-root
-		return $this->getRoot().'/'.$this->get('data_folder');
-	    }
-	} else {
-	    // get root
-	    return $this->get('root_folder');
-	}
+    public function getPath () {
+	return $this->get('dir_data').'/config.php';
     }
 
     /* delete configuration
@@ -227,7 +217,7 @@ class ts_ConfigurationHandler {
 	$content.= '); ?>'; ?><?php
 
 	// write output in file
-	$file = @fopen($this->path, 'w');
+	$file = @fopen($this->getPath(), 'w');
 	if (!$file) {
 	    echo 'Config-file "config.php" couldn\'t be written to!';
 	    exit;

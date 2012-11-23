@@ -55,6 +55,26 @@ function parseAll () {
     }
 
     if ($call_num == 0) {
+
+	// all directories and files that will be recreated
+	$dir_runtime = $Config->get('dir_runtime');
+	$rc_dirs = array(
+	    $Config->get('dir_runtime').'/classes',
+	    $Config->get('dir_runtime').'/functions',
+	    $Config->get('dir_runtime').'/templates',
+	    $Config->get('dir_runtime').'/files',
+	    $Config->get('dir_runtime').'/static',
+	    $Config->get('dir_runtime').'/lang',
+	    $Config->get('dir_runtime').'/javascript',
+	    $Config->get('dir_runtime').'/xmlResponses',
+	    $Config->get('dir_runtime').'/help'
+	);
+	$rc_files = array(
+	    $Config->get('dir_runtime').'/index.php',
+	    $Config->get('dir_runtime').'/ajax.php',
+	    $Config->get('dir_runtime').'/file.php'
+	);
+
 	// set system as offline
 	$pre_system_online = $Config->get('system_online');
 	$Config->set('system_online', false);
@@ -62,30 +82,22 @@ function parseAll () {
 
 	// backup current runtime
 	if (!ts_BackupHandler::backupRuntime(true)) {
-	    $_SESSION['admin_error'] = 'ERROR__RENDER (backup folder "runtime")';
+	    $_SESSION['admin_error'] = 'ERROR__RENDER (backup runtime dir)';
 	    return false;
 	}
 
-	// delete current code and files
-	if (!ts_FileHandler::emptyFolder('../runtime')) {
-	    $_SESSION['admin_error'] = 'ERROR__RENDER (delete folder "runtime")';
-	    return false;
+	// delete all dirs and files which will be recreated
+	foreach ($rc_dirs as $index => $value) {
+	    if (!ts_FileHandler::emptyFolder($value)) {
+		$_SESSION['admin_error'] = 'ERROR__RENDER (empty runtime dirs)';
+		return false;
+	    }
 	}
-	if (!ts_FileHandler::emptyFolder('../files/project')) {
-	    $_SESSION['admin_error'] = 'ERROR__RENDER (delete folder "files/project")';
-	    return false;
-	}
-
-	// recreate main-folders
-	if (!(ts_FileHandler::createFolder('../files/project')
-		AND ts_FileHandler::createFolder('../runtime/classes')
-		AND ts_FileHandler::createFolder('../runtime/functions')
-		AND ts_FileHandler::createFolder('../runtime/javascript')
-		AND ts_FileHandler::createFolder('../runtime/templates')
-		AND ts_FileHandler::createFolder('../runtime/constant')
-		AND ts_FileHandler::createFolder('../runtime/xmlResponses'))) {
-	    $_SESSION['admin_error'] = 'ERROR__RENDER ((re-)creating runtime-folders)';
-	    return false;
+	foreach ($rc_files as $index => $value) {
+	    if (!unlink($value)) {
+		$_SESSION['admin_error'] = 'ERROR__RENDER (delete runtime files)';
+		return false;
+	    }
 	}
 
     } elseif ($call_num > 0 AND $call_num <= count($modules_all)) {
@@ -164,6 +176,26 @@ function parseAll () {
 	// parse Config
 	if (!$ConfigParser->parseAll($Config->get('preffix')."mod${USERSYSTEM}__config")) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (config-files)';
+	    return false;
+	}
+
+	// move special files to runtime root
+	$special_files = array(
+	    'index.php',
+	    'ajax.php',
+	    'file.php'
+	);
+	foreach ($special_files as $index => $value) {
+	    if (!ts_FileHandler::moveFile($Config->get('dir_runtime')."/classes/$value", $Config->get('dir_runtime')."/$value")) {
+		$_SESSION['admin_error'] = 'ERROR__RENDER (copy special files)';
+		return false;
+	    }
+	}
+
+	// config
+	$config = '<?php include "'.$Config->get('dir_data').'/config.php"; ?>';
+	if (!ts_FileHandler::writeFile($Config->get('dir_runtime', '/config.php', $config)) {
+	    $_SESSION['admin_error'] = 'ERROR__RENDER (write config)';
 	    return false;
 	}
 

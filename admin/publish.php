@@ -13,18 +13,12 @@ ini_set('display_errors', 1);
 define('TS_INIT', true);
 
 // add autoloader
-function __autoload ($class_name) {
-    include_once 'classes/'.$class_name.'.class.php';
-}
+spl_autoload_register(function ($class) {
+    include __DIR__ . '/classes/' . $class . '.class.php';
+});
 
 // start session
 session_start();
-
-// include classes
-include_once 'classes/ts_ConfigurationHandler.class.php';
-include_once 'classes/ts_FileHandler.class.php';
-include_once 'classes/ts_Log.class.php';
-include_once "classes/ts_PreParser.class.php";
 
 // set global values
 global $Config;
@@ -40,8 +34,8 @@ $PreParser = new ts_PreParser($DummyPacket);
 
 
 // preparse all backend files
-$path = $Config->getRoot(false)."/admin";
-if ($PreParser->parse($path, $path, $Config->getRoot(false), true)) {
+$path = __DIR__;
+if ($PreParser->parse($path, $path, $Config->get('dir_runtime'), true)) {
     echo "Backend ready.<br />\n";
 } else {
     echo "ERROR: Could not preparse backend!<br />\n";
@@ -49,6 +43,7 @@ if ($PreParser->parse($path, $path, $Config->getRoot(false), true)) {
 
 
 // preparse special files
+/*
 $special_files = array(
     'index.php',
     'file.php',
@@ -68,6 +63,7 @@ foreach ($special_files as $index => $file) {
 	echo "ERROR: Could not preparse special file $file<br />\n";
     }
 }
+*/
 
 echo "Done...\n";
 

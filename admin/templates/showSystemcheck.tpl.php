@@ -11,11 +11,11 @@ global $Config;
     <?php $this->set('SHOWSYSTEMCHECK__INFOTEXT'); ?>
 </p>
 <table cellpadding="0" cellspacing="1" border="0">
-    <?php if (is_dir('../runtime')) { ?>
+    <?php if (is_dir($Config->get('dir_runtime'))) { ?>
     <tr>
 	<th style="width:40%;"><?php $this->set('SHOWSYSTEMCHECK__FOLDER_RUNTIME'); ?></th>
 	<td  style="width:30px; text-align:center;">
-	    <?php if (is_writable('../runtime')) { ?>
+	    <?php if (is_writable($Config->get('dir_runtime'))) { ?>
 		<img src="templates/images/good.gif" alt="Ok" class="checkSystem_good" />
 	    <?php } else { ?>
 		<img src="templates/images/bad.gif" alt="Bad" class="checkSystem_bad" />
@@ -29,13 +29,11 @@ global $Config;
 	</td>
     </tr>
     <?php } ?>
-    <?php $cache = $Config->getRoot(true); ?>
-    <?php if (empty($cache)) $cache = '../data'; ?>
-    <?php if (is_dir($cache)) { ?>
+    <?php if (is_dir($Config->get('dir_data'))) { ?>
     <tr>
 	<th style="width:40%;"><?php $this->set('SHOWSYSTEMCHECK__FOLDER_DATA'); ?></th>
 	<td  style="width:30px; text-align:center;">
-	    <?php if (is_writable($cache)) { ?>
+	    <?php if (is_writable($Config->get('dir_data'))) { ?>
 		<img src="templates/images/good.gif" alt="Ok" class="checkSystem_good" />
 	    <?php } else { ?>
 		<img src="templates/images/bad.gif" alt="Bad" class="checkSystem_bad" />
@@ -46,24 +44,6 @@ global $Config;
 	    <div id="folder_data_info">
 		<?php $this->set('SHOWSYSTEMCHECK__FOLDER_DATA_INFO'); ?>
 	    </div>
-	</td>
-    </tr>
-    <?php } ?>
-    <?php if (is_dir('../files')) { ?>
-    <tr>
-	<th><?php $this->set('SHOWSYSTEMCHECK__FOLDER_FILES'); ?></th>
-	<td style="text-align:center;">
-	    <?php if (is_writable('../files')) { ?>
-		<img src="templates/images/good.gif" alt="Ok" class="checkSystem_good" />
-	    <?php } else { ?>
-		<img src="templates/images/bad.gif" alt="Bad" class="checkSystem_bad" />
-	    <?php } ?>
-	</td>
-	<td class="table_info" onclick="javascript:toggleInfo('folder_files_info');">
-	    <div id="folder_files_info">
-		<?php $this->set('SHOWSYSTEMCHECK__FOLDER_FILES_INFO'); ?>
-	    </div>
-	    <img src="templates/images/info.gif" class="table_info_img" id="folder_files_info_img" />
 	</td>
     </tr>
     <?php } ?>
@@ -107,10 +87,9 @@ global $Config;
     // all info-fields
     var inputs = new Array();
     inputs[0] = 'folder_runtime_info';
-    inputs[1] = 'folder_files_info';
-    inputs[2] = 'phpversion_info';
-    inputs[3] = 'imapfunctions_info';
-    inputs[4] = 'folder_data_info';
+    inputs[1] = 'phpversion_info';
+    inputs[2] = 'imapfunctions_info';
+    inputs[3] = 'folder_data_info';
 
     function hideInfo (id) {
 	document.getElementById(id).style.display = 'none';
@@ -125,13 +104,13 @@ global $Config;
     }
 
     function hideAll () {
-	for (var i = 0; i < inputs.length; i++) 
+	for (var i = 0; i < inputs.length; i++)
 	    hideInfo(inputs[i]);
 	return true;
     }
 
     function showAll () {
-	for (var i = 0; i < inputs.length; i++) 
+	for (var i = 0; i < inputs.length; i++)
 	    showInfo(inputs[i]);
 	return true;
     }

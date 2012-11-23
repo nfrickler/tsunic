@@ -5,14 +5,11 @@ class ts_StyleHandler {
     /* style-objects of all existing styles
      * array
      */
-    private $styles; 
+    private $styles;
 
     /* constructor
      */
     public function __construct () {
-
-	// load style-class
-	include_once 'classes/ts_Style.class.php';
 
 	return;
     }
@@ -64,8 +61,7 @@ class ts_StyleHandler {
 	if ($result_0 === false) return false;
 
 	// get available sources
-	include_once 'classes/ts_FileHandler.class.php';
-	$subfolders = ts_FileHandler::getSubfolders($Config->getRoot(true).'/source/styles');
+	$subfolders = ts_FileHandler::getSubfolders($Config->get('dir_data').'/source/styles');
 	if (!is_array($subfolders)) return false;
 
 	// get style-objects and save them in obj-var

@@ -77,7 +77,7 @@ class ts_Packet {
 
     /* get info about packet
      * @param string: name of information to gather
-     * +@param bool: true - delete all current infos 
+     * +@param bool: true - delete all current infos
      *
      * @return mix
      */
@@ -87,7 +87,7 @@ class ts_Packet {
 
     /* get info from version.xml
      * @param string: name of information to gather
-     * +@param bool: true - delete all current infos 
+     * +@param bool: true - delete all current infos
      *
      * @return OBJECT
      */
@@ -150,7 +150,7 @@ class ts_Packet {
 	$PreParser = new ts_PreParser($this);
 
 	// parse
-	if ($PreParser->parse($this->path, $path_new, $Config->getRoot(false))) {
+	if ($PreParser->parse($this->path, $path_new, $Config->get('dir_data'))) {
 	    // success
 
 	    // delete old source

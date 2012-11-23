@@ -10,20 +10,12 @@ ini_set('display_errors', 1);
 define('TS_INIT', true);
 
 // add autoloader
-function __autoload ($class_name) {
-    include_once 'classes/'.$class_name.'.class.php';
-}
+spl_autoload_register(function ($class) {
+    include __DIR__ . '/classes/' . $class . '.class.php';
+});
 
 // start session
 session_start();
-
-// include important classes
-include_once 'classes/ts_Template.class.php';
-include_once 'classes/ts_TemplateEngine.class.php';
-include_once 'classes/ts_Database.class.php';
-include_once 'classes/ts_ConfigurationHandler.class.php';
-include_once 'classes/ts_FileHandler.class.php';
-include_once 'classes/ts_Log.class.php';
 
 // set global values
 global $Config;
@@ -54,7 +46,7 @@ switch ($_GET['event']) {
 
 	// has password been set already?
 	if (!$Config->get('admin_password')) {
-	    header('Location:?event=showSetLogin'); 
+	    header('Location:?event=showSetLogin');
 	    exit;
 	}
 

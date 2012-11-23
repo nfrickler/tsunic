@@ -108,20 +108,28 @@ global $Config;
     </fieldset>
     <fieldset>
 	<legend><?php $this->set('SHOWCONFIG__LEGEND_PATHS'); ?></legend>
-	<label for="set__root_folder"><?php $this->set('SHOWCONFIG__ROOT_FOLDER'); ?></label>
-	<input type="text" name="set__root_folder" id="set__root_folder" value="<?php echo $Config->get('root_folder'); ?>" />
-	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="root_folder_info_img" onclick="javascript:toggleInfo('root_folder_info');" />
-	<div class="form_infobox" id="root_folder_info" onclick="javascript:toggleInfo('root_folder_info');">
+	<label for="set__dir_admin"><?php $this->set('SHOWCONFIG__DIR_ADMIN'); ?></label>
+	<input type="text" name="set__dir_admin" id="set__dir_admin" value="<?php echo $Config->get('dir_admin'); ?>" />
+	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="dir_admin_info_img" onclick="javascript:toggleInfo('dir_admin_info');" />
+	<div class="form_infobox" id="dir_admin_info" onclick="javascript:toggleInfo('dir_admin_info');">
 	    <img src="templates/images/arrow_top2downright.gif" class="form_infoimg_in" />
-	    <?php $this->set('SHOWCONFIG__ROOT_FOLDER_INFO'); ?>
+	    <?php $this->set('SHOWCONFIG__DIR_ADMIN_INFO'); ?>
 	</div>
 	<div style="clear:both;"></div>
-	<label for="set__data_folder"><?php $this->set('SHOWCONFIG__DATA_FOLDER'); ?></label>
-	<input type="text" name="set__data_folder" id="set__data_folder" value="<?php echo $Config->get('data_folder'); ?>" />
-	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="data_folder_info_img" onclick="javascript:toggleInfo('data_folder_info');" />
-	<div class="form_infobox" id="data_folder_info" onclick="javascript:toggleInfo('data_folder_info');">
+	<label for="set__dir_data"><?php $this->set('SHOWCONFIG__DIR_DATA'); ?></label>
+	<input type="text" name="set__dir_data" id="set__dir_data" value="<?php echo $Config->get('dir_data'); ?>" />
+	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="dir_data_info_img" onclick="javascript:toggleInfo('dir_data_info');" />
+	<div class="form_infobox" id="dir_data_info" onclick="javascript:toggleInfo('dir_data_info');">
 	    <img src="templates/images/arrow_top2downright.gif" class="form_infoimg_in" />
-	    <?php $this->set('SHOWCONFIG__DATA_FOLDER_INFO'); ?>
+	    <?php $this->set('SHOWCONFIG__DIR_DATA_INFO'); ?>
+	</div>
+	<div style="clear:both;"></div>
+	<label for="set__dir_runtime"><?php $this->set('SHOWCONFIG__DIR_RUNTIME'); ?></label>
+	<input type="text" name="set__dir_runtime" id="set__dir_runtime" value="<?php echo $Config->get('dir_runtime'); ?>" />
+	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="dir_runtime_info_img" onclick="javascript:toggleInfo('dir_runtime_info');" />
+	<div class="form_infobox" id="dir_runtime_info" onclick="javascript:toggleInfo('dir_runtime_info');">
+	    <img src="templates/images/arrow_top2downright.gif" class="form_infoimg_in" />
+	    <?php $this->set('SHOWCONFIG__DIR_RUNTIME_INFO'); ?>
 	</div>
 	<div style="clear:both;"></div>
     </fieldset>
@@ -216,10 +224,11 @@ global $Config;
     inputs[10] = 'system_email_info';
     inputs[11] = 'preffix_info';
     inputs[12] = 'email_enabled_info';
-    inputs[13] = 'root_folder_info';
-    inputs[14] = 'data_folder_info';
-    inputs[15] = 'system_online_info';
-    inputs[16] = 'allow_registration_info';
+    inputs[13] = 'dir_admin_info';
+    inputs[14] = 'dir_data_info';
+    inputs[15] = 'dir_runtime_info';
+    inputs[16] = 'system_online_info';
+    inputs[17] = 'allow_registration_info';
 
 //    inputs[16] = 'debug_mode_info';
 
