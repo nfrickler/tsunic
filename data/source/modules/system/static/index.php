@@ -1,7 +1,7 @@
 <!-- | handle requests -->
 <?php
 // init TSunic
-include 'runtime/static/init.php';
+include 'static/init.php';
 
 // run TSunic (NO OUTPUT BEFORE THIS CODE!)
 $TSunic->run();

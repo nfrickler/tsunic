@@ -1,7 +1,7 @@
 <!-- | function to parse TSunic -->
 <?php
 function parseAll () {
-    global $Database, $Config, $ModuleHandler;
+    global $Database, $Config, $ModuleHandler, $Log;
 
     // allow only, if logged in
     if (!isset($_SESSION['admin_auth']) OR empty($_SESSION['admin_auth']))
@@ -11,17 +11,6 @@ function parseAll () {
     if (!isset($_GET['call'])) {
 	unset($_SESSION['parseAll__call']);
     }
-
-    // load classes
-    include_once 'classes/ts_FileHandler.class.php';
-    include_once 'classes/ts_FormatHandler.class.php';
-    include_once 'classes/ts_SubcodeHandler.class.php';
-    include_once 'classes/ts_AccessParser.class.php';
-    include_once 'classes/ts_ConfigParser.class.php';
-    include_once 'classes/ts_Parser.class.php';
-    include_once 'classes/ts_LanguageHandler.class.php';
-    include_once 'classes/ts_BackupHandler.class.php';
-    include_once 'classes/ts_Module.class.php';
 
     // set global Objects
     global $FormatHandler, $SubcodeHandler, $Parser, $LanguageHandler,
@@ -56,6 +45,9 @@ function parseAll () {
 
     if ($call_num == 0) {
 
+	// log
+	$Log->doLog(3, "Rendering: remove old files");
+
 	// all directories and files that will be recreated
 	$dir_runtime = $Config->get('dir_runtime');
 	$rc_dirs = array(
@@ -72,6 +64,7 @@ function parseAll () {
 	$rc_files = array(
 	    $Config->get('dir_runtime').'/index.php',
 	    $Config->get('dir_runtime').'/ajax.php',
+	    $Config->get('dir_runtime').'/js.php',
 	    $Config->get('dir_runtime').'/file.php'
 	);
 
@@ -81,10 +74,12 @@ function parseAll () {
 	$Config->set('system_offline_since', date('m/d/y H:i:s'));
 
 	// backup current runtime
+	/*
 	if (!ts_BackupHandler::backupRuntime(true)) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (backup runtime dir)';
 	    return false;
 	}
+	 */
 
 	// delete all dirs and files which will be recreated
 	foreach ($rc_dirs as $index => $value) {
@@ -94,10 +89,7 @@ function parseAll () {
 	    }
 	}
 	foreach ($rc_files as $index => $value) {
-	    if (!unlink($value)) {
-		$_SESSION['admin_error'] = 'ERROR__RENDER (delete runtime files)';
-		return false;
-	    }
+	    unlink($value);
 	}
 
     } elseif ($call_num > 0 AND $call_num <= count($modules_all)) {
@@ -129,6 +121,9 @@ function parseAll () {
 
     } else {
 
+	// log
+	$Log->doLog(3, "Rendering: finish");
+
 	// USERSYSTEM set?
 	if (!$USERSYSTEM) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (usersystem is missing!)';
@@ -142,7 +137,6 @@ function parseAll () {
 	}
 
 	// render all activated styles
-	include_once 'classes/ts_StyleHandler.class.php';
 	$StyleHandler = new ts_StyleHandler();
 	$styles_all = $StyleHandler->getStyles(true);
 	foreach ($styles_all as $index => $Value) {
@@ -183,18 +177,19 @@ function parseAll () {
 	$special_files = array(
 	    'index.php',
 	    'ajax.php',
+	    'js.php',
 	    'file.php'
 	);
 	foreach ($special_files as $index => $value) {
-	    if (!ts_FileHandler::moveFile($Config->get('dir_runtime')."/classes/$value", $Config->get('dir_runtime')."/$value")) {
-		$_SESSION['admin_error'] = 'ERROR__RENDER (copy special files)';
+	    if (!ts_FileHandler::moveFile($Config->get('dir_runtime')."/static/$value", $Config->get('dir_runtime')."/$value")) {
+		$_SESSION['admin_error'] = 'ERROR__RENDER (copy special files "'.$value.'")';
 		return false;
 	    }
 	}
 
 	// config
 	$config = '<?php include "'.$Config->get('dir_data').'/config.php"; ?>';
-	if (!ts_FileHandler::writeFile($Config->get('dir_runtime', '/config.php', $config)) {
+	if (!ts_FileHandler::writeFile($Config->get('dir_runtime').'/config.php', $config, 1)) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (write config)';
 	    return false;
 	}

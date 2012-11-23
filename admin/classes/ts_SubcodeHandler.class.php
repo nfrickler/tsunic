@@ -79,7 +79,7 @@ class ts_SubcodeHandler {
 
 	// save in cache
 	$this->cache[] = array(
-	    'path' => $Config->getRoot().'/runtime/'.$cache[1],
+	    'path' => $Config->get('dir_runtime').'/'.$cache[1],
 	    'line' => $cache[2]
 	);
 
@@ -97,9 +97,9 @@ class ts_SubcodeHandler {
 
 	// run all?
 	if ($path == false) {
-	    if ($this->parseAll($Config->getRoot().'/runtime/functions')
-		AND $this->parseAll($Config->getRoot().'/runtime/classes')
-		AND $this->parseAll($Config->getRoot().'/runtime/templates')
+	    if ($this->parseAll($Config->get('dir_runtime').'/functions')
+		AND $this->parseAll($Config->get('dir_runtime').'/classes')
+		AND $this->parseAll($Config->get('dir_runtime').'/templates')
 	    ) {
 		return true;
 	    }

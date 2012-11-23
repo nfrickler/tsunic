@@ -4,7 +4,7 @@
 header("Content-type: text/xml");
 
 // load ajax
-include 'runtime/static/init.php';
+include 'static/init.php';
 
 // run TSunic
 $TSunic->run();

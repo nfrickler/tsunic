@@ -24,7 +24,7 @@ class ts_LanguageHandler {
      * @param int: module- or style-id
      * @param string: language, replacements belong to
      * @param array/string: array with language-replacements
-     *	     OR path to language-file
+     *     OR path to language-file
      *
      * @return bool
      */
@@ -134,7 +134,7 @@ class ts_LanguageHandler {
 		    if (isset($values[$in], $values[$in][$i])
 			AND is_array($values[$in][$i]))
 		    {
-			$current = array_merge($v, $values[$in][$i]);    
+			$current = array_merge($v, $values[$in][$i]);
 		    } else {
 			$current = $v;
 		    }
@@ -152,9 +152,9 @@ class ts_LanguageHandler {
 
 		    // get path
 		    if (!($index === 0)) {
-			$path = $Config->getRoot().'/runtime/lang/style'.$index.'__mod'.$in.'__'.$i.'.lang.php';
+			$path = $Config->get('dir_runtime').'/lang/style'.$index.'__mod'.$in.'__'.$i.'.lang.php';
 		    } else {
-			$path = $Config->getRoot().'/runtime/lang/mod'.$in.'__'.$i.'.lang.php';
+			$path = $Config->get('dir_runtime').'/lang/mod'.$in.'__'.$i.'.lang.php';
 		    }
 
 		    // try to write

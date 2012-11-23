@@ -11,9 +11,6 @@ class ts_ModuleHandler {
      */
     public function __construct () {
 
-	// load module-class
-	include_once 'classes/ts_Module.class.php';
-
 	return;
     }
 
@@ -29,15 +26,14 @@ class ts_ModuleHandler {
 	if (!$force_update AND isset($this->modules) AND !empty($this->modules)) return $this->modules;
 
 	// get module-ids from database
-	$sql_0 = "SELECT id__module as id__module
+	$sql = "SELECT id__module as id__module
 		FROM #__modules
 		ORDER BY name ASC;";
-	$result_0 = $Database->doSelect($sql_0);
-	if ($result_0 === false) return false;
+	$result = $Database->doSelect($sql);
+	if ($result === false) return false;
 
 	// get available sources
-	include_once 'classes/ts_FileHandler.class.php';
-	$subfolders = ts_FileHandler::getSubfolders($Config->getRoot(true).'/source/modules/');
+	$subfolders = ts_FileHandler::getSubfolders($Config->get('dir_data').'/source/modules/');
 	if (!is_array($subfolders)) return false;
 
 	// get module-objects and save them in obj-var
@@ -51,7 +47,7 @@ class ts_ModuleHandler {
 	foreach ($modules_files as $index => $Value) {
 	    $this->modules[$Value->getInfo('name').'__'.$Value->getInfo('nameid')] = $Value;
 	}
-	foreach ($result_0 as $index => $values) {
+	foreach ($result as $index => $values) {
 	    $Module = new ts_Module($values['id__module']);
 	    if (!isset($this->modules[$Module->getInfo('name').'__'.$Module->getInfo('nameid')])) {
 		$this->modules[$Module->getInfo('name').'__'.$Module->getInfo('nameid')] = $Module;

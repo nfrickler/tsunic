@@ -15,7 +15,7 @@ class ts_BackupHandler {
 	// create new path
 	$cache = explode('/', $path);
 	if (empty($name)) $name = end($cache);
-	$path_new = $Config->getRoot(true).'/backup/modules/'.date('Y_m_d__H_i_s').'__'.$name;
+	$path_new = $Config->get('dir_data').'/backup/modules/'.date('Y_m_d__H_i_s').'__'.$name;
 
 	// move folder to backup-directory
 	if (ts_FileHandler::copyFolder($path, $path_new)) return true;
@@ -35,7 +35,7 @@ class ts_BackupHandler {
 	// create new path
 	$cache = explode('/', $path);
 	if (empty($name)) $name = end($cache);
-	$path_new = $Config->getRoot(true).'/backup/styles/'.date('Y_m_d__H_i_s').'__'.$name;
+	$path_new = $Config->get('dir_data').'/backup/styles/'.date('Y_m_d__H_i_s').'__'.$name;
 
 	// move folder to backup-directory
 	if (ts_FileHandler::copyFolder($path, $path_new)) return true;
@@ -51,8 +51,8 @@ class ts_BackupHandler {
 	global $Config, $Database;
 
 	// create paths
-	$path = $Config->getRoot(false).'/runtime';
-	$path_new = $Config->getRoot(true).'/backup/runtime/'.date('Y_m_d__H_i_s');
+	$path = $Config->get('dir_runtime');
+	$path_new = $Config->get('dir_data').'/backup/runtime/'.date('Y_m_d__H_i_s');
 
 	// move folder to backup-directory
 	if (!ts_FileHandler::copyFolder($path, $path_new)) return false;
@@ -69,7 +69,7 @@ class ts_BackupHandler {
 	}
 
 	// get number of backups
-	$path = $Config->getRoot(true).'/backup/runtime';
+	$path = $Config->get('dir_data').'/backup/runtime';
 	$backups = ts_FileHandler::getSubFolders($path);
 	rsort($backups);
 

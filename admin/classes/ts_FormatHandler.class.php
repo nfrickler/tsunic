@@ -25,7 +25,7 @@ class ts_FormatHandler {
 
     /* add css
      * @param string: css-code to add
-     * +@param string: style-id; false - no style but a module     
+     * +@param string: style-id; false - no style but a module
      *
      * @return bool
      */
@@ -135,9 +135,9 @@ class ts_FormatHandler {
 
 	    // write file
 	    if (!($index === 0) AND !empty($values)) {
-		$path = $Config->getRoot().'/runtime/css/style'.$index.'__format.css';
+		$path = $Config->get('dir_runtime').'/css/style'.$index.'__format.css';
 	    } else {
-		$path = $Config->getRoot().'/runtime/css/format.css';
+		$path = $Config->get('dir_runtime').'/css/format.css';
 	    }
 
 	    // write file
