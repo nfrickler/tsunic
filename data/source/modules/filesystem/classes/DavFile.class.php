@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Mapping webdav files to filesystem -->
 <?php
 
 /**
@@ -15,48 +15,54 @@
  */
 class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
 
-    public function getName() {
-	return "Unknown file";
+    /* FsFile object
+     * object
+     */
+    protected $File;
 
+    /* constructor
+     * +@param object: FsFile
+     */
+    public function __construct ($File = NULL) {
+	// save
+	$this->File = $File;
     }
 
+    /* get name of file
+     *
+     * @return string
+     */
+    public function getName() {
+	return ($this->File) ? $this->File->getInfo('name') : "Unknown";
+    }
 
-    /**
-     * Updates the data
+    /* update content of file
+     * @param string: new content
      *
-     * data is a readable stream resource.
-     *
-     * @param resource $data
      * @return void
      */
     public function put($data) {
-
+	if ($this->File and $this->File->setContent($data))
+	    return;
         throw new Sabre_DAV_Exception_Forbidden('Permission denied to change data');
-
     }
 
-    /**
-     * Returns the data
-     *
-     * This method may either return a string or a readable stream resource
+    /* get content of file
      *
      * @return mixed
      */
     public function get() {
-
+	if ($this->File) return $this->File->getContent();
         throw new Sabre_DAV_Exception_Forbidden('Permission denied to read this file');
 
     }
 
-    /**
-     * Returns the size of the file, in bytes.
+    /* get size of file
      *
      * @return int
      */
     public function getSize() {
-
-        return 0;
-
+	return ($this->File) ? $this->File->getInfo('bytes') : 0;
     }
 
     /**
@@ -70,23 +76,14 @@ class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
      * @return string|null
      */
     public function getETag() {
-
         return null;
-
     }
 
-    /**
-     * Returns the mime-type for a file
-     *
-     * If null is returned, we'll assume application/octet-stream
+    /* get mime type (otherwise assumed: application/octet-stream
      *
      * @return string|null
      */
     public function getContentType() {
-
-        return null;
-
+	return ($this->File) ? $this->File->getMimeType() : NULL;
     }
-
 }
-

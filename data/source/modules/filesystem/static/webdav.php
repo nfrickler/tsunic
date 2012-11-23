@@ -9,8 +9,12 @@ ini_set('display_errors', 1);
 /* DEBUG END ****************************/
 
 // include required files
-include_once '../classes/$$$DavCollection.class.php';
-include_once '../classes/$$$DavFile.class.php';
+//include_once 'classes/$$$DavCollection.class.php';
+//include_once '../classes/$$$DavFile.class.php';
+
+// init TSunic
+include_once '../classes/TSunic.class.php';
+$TSunic = new TSunic();
 
 // Now we're creating a whole bunch of objects
 

@@ -161,6 +161,28 @@ class $$$FsDirectory extends $system$Object {
 	return $this->Parent;
     }
 
+    /* get subdir/file by name
+     * @param string: name of subdir/file
+     *
+     * @return object
+     */
+    public function getSubByName ($name) {
+
+	// check for subdirectory with that name
+	$subdirs = $this->getSubdirectories();
+	foreach ($subdirs as $index => $Value) {
+	    if ($Value->getInfo('name') == $name) return $Value;
+	}
+
+	// check for subfile with that name
+	$subfiles = $this->getSubfiles();
+	foreach ($subfiles as $index => $Value) {
+	    if ($Value->getInfo('name') == $name) return $Value;
+	}
+
+	return NULL;
+    }
+
     /* get array of subdirectories
      *
      * @return array

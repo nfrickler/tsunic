@@ -1,4 +1,4 @@
-<!-- | -->
+<!-- | Mapping own filesystem to webdav -->
 <?php
 
 /**
@@ -15,108 +15,105 @@
  */
 class DavCollection extends Sabre_DAV_Node implements Sabre_DAV_ICollection {
 
-    /**
-     * Returns a child object, by its name.
-     *
-     * This method makes use of the getChildren method to grab all the child
-     * nodes, and compares the name.
-     * Generally its wise to override this, as this can usually be optimized
-     *
-     * This method must throw Sabre_DAV_Exception_NotFound if the node does not
-     * exist.
-     *
-     * @param string $name
+    /* Directory object
+     * object
+     */
+    protected $Dir;
+
+    /* constructor
+     * +@param object: FsDirectory
+     */
+    public function __construct ($Dir = NULL) {
+	global $TSunic;
+
+	// init
+	if (!$Dir) $Dir = $TSunic->get('$$$FsDirectory');
+
+	// save
+	$this->Dir = $Dir;
+    }
+
+    /* get subdir/file by name
+     * @param string: name of dir/file
      * @throws Sabre_DAV_Exception_NotFound
      * @return Sabre_DAV_INode
      */
     public function getChild($name) {
-
-        foreach($this->getChildren() as $child) {
-
-            if ($child->getName()==$name) return $child;
-
-        }
-        throw new Sabre_DAV_Exception_NotFound('File not found: ' . $name);
-
+	foreach($this->getChildren() as $child) {
+	    if ($child->getName()==$name) return $child;
+	}
+	throw new Sabre_DAV_Exception_NotFound('File not found: ' . $name);
     }
 
-    /**
-     * Checks is a child-node exists.
-     *
-     * It is generally a good idea to try and override this. Usually it can be optimized.
-     *
-     * @param string $name
+    /* check, if child-node exists
+     * @param string: name
      * @return bool
      */
     public function childExists($name) {
-
-        try {
-
-            $this->getChild($name);
-            return true;
-
-        } catch(Sabre_DAV_Exception_NotFound $e) {
-
-            return false;
-
-        }
-
+	try {
+	    $this->getChild($name);
+	    return true;
+	} catch(Sabre_DAV_Exception_NotFound $e) {
+	    return false;
+	}
     }
 
-    /**
-     * Creates a new file in the directory
+    /* create new file
      *
-     * Data will either be supplied as a stream resource, or in certain cases
-     * as a string. Keep in mind that you may have to support either.
-     *
-     * After succesful creation of the file, you may choose to return the ETag
-     * of the new file here.
-     *
-     * The returned ETag must be surrounded by double-quotes (The quotes should
-     * be part of the actual string).
-     *
-     * If you cannot accurately determine the ETag, you should not return it.
-     * If you don't store the file exactly as-is (you're transforming it
-     * somehow) you should also not return an ETag.
-     *
-     * This means that if a subsequent GET to this new file does not exactly
-     * return the same contents of what was submitted here, you are strongly
-     * recommended to omit the ETag.
-     *
-     * @param string $name Name of the file
-     * @param resource|string $data Initial payload
+     * @param string: Name of the file
+     * @param resource|string: Initial payload
      * @return null|string
      */
     public function createFile($name, $data = null) {
-
-        throw new Sabre_DAV_Exception_Forbidden('Permission denied to create file (filename ' . $name . ')');
-
+	global $TSunic;
+	$NewFile = $TSunic->get('$$$FsFile');
+	if (!$NewFile->create($this->Dir->getInfo('id'), $name, $data)) {
+	    throw new Sabre_DAV_Exception_Forbidden('Permission denied to create file (filename ' . $name . ')');
+	}
     }
 
-    /**
-     * Creates a new subdirectory
+    /* Create new subdirectory
      *
-     * @param string $name
+     * @param string: $name
      * @throws Sabre_DAV_Exception_Forbidden
      * @return void
      */
     public function createDirectory($name) {
-
-        throw new Sabre_DAV_Exception_Forbidden('Permission denied to create directory');
-
+	global $TSunic;
+	$NewDir = $TSunic->get('$$$FsDirectory');
+	if (!$NewDir->create($name, $this->Dir->getInfo('id'))) {
+	    throw new Sabre_DAV_Exception_Forbidden('Permission denied to create directory');
+	}
     }
 
-
+    /* get name of directory
+     *
+     * @return string
+     */
     public function getName() {
-
-	return "root";
+	return ($this->Dir) ? $this->Dir->getInfo('name') : "Unknown";
     }
 
+    /* get all childs
+     *
+     * @return array
+     */
     public function getChildren () {
+	if (!$this->Dir) return array();
+	$out = array();
 
-	return array();
+	// get all subdirectories
+	$dirs = $this->Dir->getSubdirectories();
+	foreach ($dirs as $index => $Value) {
+	    $out[] = new DavCollection($Value);
+	}
+
+	// get all subfiles
+	$files = $this->Dir->getSubfiles();
+	foreach ($files as $index => $Value) {
+	    $out[] = new DavFile($Value);
+	}
+
+	return $out;
     }
-
-
 }
-
