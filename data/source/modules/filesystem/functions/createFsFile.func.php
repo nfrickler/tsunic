@@ -29,7 +29,7 @@ function $$$createFsFile () {
     // check, if create successful
     if ($return) {
 	$TSunic->Log->alert('info', '{CREATEFSFILE__SUCCESS}');
-	$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $File->getInfo('fk_directory')));
+	$TSunic->redirect('$$$showIndex', array('$$$id' => $File->getInfo('fk_directory')));
 	return true;
     }
 

@@ -7,7 +7,7 @@ function $$$showNote () {
     $id_fsfile = $TSunic->Temp->getParameter('$$$id');
 
     // get FsFile object
-    $FsFile = $TSunic->get('$usersystem$FsFile', $id_fsfile);
+    $FsFile = $TSunic->get('$filesystem$FsFile', $id_fsfile);
 
     // activate template
     $data = array('FsFile' => $FsFile);

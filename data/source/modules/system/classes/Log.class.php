@@ -145,7 +145,7 @@ class $$$Log {
 	// DO NOT USE IT FOR WRITING THE LOG (RECURSION!)
 	global $TSunic;
 	if (!$TSunic) return false;
-	$File = $TSunic->get('$$$File', array('#cache#frontend.log', true));
+	$File = $TSunic->get('$$$File', array('#data#log/frontend.log', true));
 	$path = $File->getPath();
 
 	// manually write to log file

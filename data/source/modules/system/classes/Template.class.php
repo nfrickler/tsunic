@@ -360,8 +360,8 @@ class $$$Template {
 	// get by type
 	switch ($type) {
 	    case 'project':
-		$link = 'files/project/style'.$this->getStyle().'__'.$image_name;
-		if (!file_exists($link)) $link = 'files/project/'.$image_name;
+		$link = 'files/style'.$this->getStyle().'__'.$image_name;
+		if (!file_exists($link)) $link = 'files/'.$image_name;
 		break;
 	    case 'public':
 		break;

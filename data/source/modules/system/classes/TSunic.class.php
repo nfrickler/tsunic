@@ -56,7 +56,6 @@ class TSunic {
 	$TSunic = $this;
 
 	// create factory object
-	include_once 'runtime/classes/$$$Factory.class.php';
 	$this->Factory = new $$$Factory();
 
 	// create stats object

@@ -1,7 +1,7 @@
 <!-- | This page is shown, if TSunic is offline -->
 <?php
 // include config
-include __DIR__ . 'config.php';
+include __DIR__ . '/config.php';
 ?>
 <h1>Dear User,</h1>
 <p>

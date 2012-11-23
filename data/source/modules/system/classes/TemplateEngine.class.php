@@ -78,7 +78,7 @@ class $$$TemplateEngine {
      * @param string: name of template
      * @param string/bool: if supTemplate exists -> name ELSE 0 or false
      * @param bool/array: data for template
-     * @param bool/string: position to include template within sup-template 
+     * @param bool/string: position to include template within sup-template
      *
      * @return bool
      */
@@ -308,7 +308,7 @@ class $$$TemplateEngine {
 
 	// include lang-file
 	foreach ($paths as $index => $value) {
-	    $current = $TSunic->Config->getRoot().'/runtime/lang/'.$value;
+	    $current = $TSunic->Config->get('dir_runtime').'/lang/'.$value;
 
 	    // is file?
 	    if (!file_exists($current)) continue;
@@ -361,7 +361,7 @@ class $$$TemplateEngine {
 
 	// load format-path
 	$path = 'runtime/css/style'.$this->style.'__format.css';
-	if (!file_exists($path)) $path = 'runtime/css/format.css';
+	if (!file_exists($path)) $path = 'css/format.css';
 	$this->activate('$$$html', false, array('path_format' => $path));
 
 	// SUBCODE adding templates

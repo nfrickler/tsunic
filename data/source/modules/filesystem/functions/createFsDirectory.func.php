@@ -29,7 +29,7 @@ function $$$createFsDirectory () {
     if ($return) {
 	// success
 	$TSunic->Log->alert('info', '{CREATEFSDIRECTORY__SUCCESS}');
-	$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $Dir->getInfo('id')));
+	$TSunic->redirect('$$$showIndex', array('$$$id' => $Dir->getInfo('id')));
 	return true;
     }
 

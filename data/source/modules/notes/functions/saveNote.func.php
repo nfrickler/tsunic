@@ -9,7 +9,7 @@ function $$$saveNote () {
     $content = $TSunic->Temp->getPost('$$$showNote__content');
 
     // get FsFile and FsDirectory object
-    $FsFile = $TSunic->get('$usersystem$FsFile', $id_fsfile);
+    $FsFile = $TSunic->get('$filesystem$FsFile', $id_fsfile);
 
     // split filename into dir and file
     $filename_file = (strstr($filename,"/")) ? substr(strrchr($filename, '/'),1) : $filename;

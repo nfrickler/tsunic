@@ -45,12 +45,21 @@ class $$$Config {
 	return true;
     }
 
-    /* get config-data
+    /* get config-data (deprecated, use get instead)
      * @param string/bool: name of config-data (true will return all config-data)
-     * 
+     *
      * @return OBJECT
      */
     public function getConfig ($name) {
+	return $this->get($name);
+    }
+
+    /* get config-data
+     * @param string/bool: name of config-data (true will return all config-data)
+     *
+     * @return OBJECT
+     */
+    public function get ($name) {
 	global $TSunic;
 	// load config
 	if (!isset($this->config) OR empty($this->config)) $this->loadConfig();

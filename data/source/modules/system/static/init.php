@@ -15,7 +15,7 @@ spl_autoload_register(function ($class) {
 
 // load config
 $ts_configs = array();
-include __DIR__ . 'config.php';
+include __DIR__ . '/config.php';
 
 // is on/offline?
 if (!isset($ts_configs['installation']) OR $ts_configs['installation'] < 100) {

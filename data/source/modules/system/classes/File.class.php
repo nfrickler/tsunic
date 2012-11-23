@@ -44,11 +44,9 @@ class $$$File {
 
 	// get phrases to replace
 	$to_replace = array();
-	$to_replace['#runtime#'] = $TSunic->Config->getRoot().'/runtime/';
-	$to_replace['#private#'] = $TSunic->Config->getRoot(true).'/files/private/';
-	$to_replace['#cache#'] = $TSunic->Config->getRoot(true).'/files/cache/';
-	$to_replace['#public#'] = $TSunic->Config->getRoot().'/files/public/';
-	$to_replace['#project#'] = $TSunic->Config->getRoot().'/files/project/';
+	$to_replace['#data#'] = $TSunic->Config->get('dir_data').'/';
+	$to_replace['#runtime#'] = $TSunic->Config->get('dir_runtime').'/';
+	$to_replace['#admin#'] = $TSunic->Config->get('dir_admin').'/';
 
 	// replace phrases
 	foreach ($to_replace as $index => $value) {

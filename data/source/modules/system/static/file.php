@@ -1,7 +1,7 @@
 <!-- | handle/download/load private images -->
 <?php
 // init TSunic
-include __DIR__ . 'static/init.php';
+include __DIR__ . '/init.php';
 
 // get requested id
 $id = (isset($_GET['id'])) ? $_GET['id'] : false;

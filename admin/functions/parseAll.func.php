@@ -178,6 +178,7 @@ function parseAll () {
 	    'index.php',
 	    'ajax.php',
 	    'js.php',
+	    'init.php',
 	    'file.php'
 	);
 	foreach ($special_files as $index => $value) {

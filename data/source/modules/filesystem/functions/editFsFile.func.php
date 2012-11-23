@@ -31,7 +31,7 @@ function $$$editFsFile () {
     if ($return) {
 	// success
 	$TSunic->Log->alert('info', '{EDITFSFILE__SUCCESS}');
-	$TSunic->redirect('$$$showFsDirectory', array('$$$id' => $fk_dir));
+	$TSunic->redirect('$$$showIndex', array('$$$id' => $fk_dir));
 	return true;
     }
 

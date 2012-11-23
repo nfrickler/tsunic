@@ -17,7 +17,7 @@ function $$$deleteFsDirectory () {
 
     // success
     $TSunic->Log->alert('info', '{DELETEFSDIRECTORY__SUCCESS}');
-    $TSunic->redirect('$$$showFsDirectory', array('$$$id' => $fk_parent));
+    $TSunic->redirect('$$$showIndex', array('$$$id' => $fk_parent));
     return true;
 }
 ?>

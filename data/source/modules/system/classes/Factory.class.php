@@ -7,25 +7,6 @@ class $$$Factory {
      */
     private $objects;
 
-    /* include class
-     * @param string: name of class
-     *
-     * @return bool
-     */
-    private function includeClass ($class) {
-
-	// get path
-	$path = 'runtime/classes/'.$class.'.class.php';
-	if (!file_exists($path)) {
-	    die('Class doesn\'t exist! ("'.$class.'")');
-	}
-
-	// include class
-	include_once $path;
-
-	return true;
-    }
-
     /* get instance of class
      * @param string: name of class
      * +@param array: values of object in constructor
@@ -67,9 +48,6 @@ class $$$Factory {
 	if ($forceNew == false AND isset($this->objects[$obj_id])) {
 	    return $this->objects[$obj_id];
 	}
-
-	// include class
-	$this->includeClass($class);
 
 	// get object
 	if (empty($param_string)) {

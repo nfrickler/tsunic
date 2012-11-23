@@ -1,4 +1,4 @@
-<!-- | TEMPLATE - include all embedded javascript-code -->
+<!-- | TEMPLATE include all embedded javascript-code -->
 <?php
 
 // check, if javascript is disabled (=return)
@@ -17,7 +17,7 @@ $TSunic->Tmpl->addJSfunction('$$$showFormHelp');
 $js_functions = $TSunic->Tmpl->getActivatedJavascript();
 
 foreach ($js_functions as $index => $value) {
-    $path = 'runtime/javascript/'.$value.'.js';
+    $path = 'javascript/'.$value.'.js';
     echo '<script type="text/javascript" src="'.$path.'"></script>';
 }
 ?>
