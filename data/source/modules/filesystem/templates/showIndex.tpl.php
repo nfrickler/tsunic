@@ -28,7 +28,7 @@ $Dir = $this->getVar('Directory');
 	</tr>
 	<?php if ($Dir->getInfo('id')) { ?>
 	<tr>
-	    <td><a href="<?php $this->setUrl('$$$showFsDirectory', array('$$$id' => $Dir->getInfo('fk_parent'))); ?>"> ../</td>
+	    <td><a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('fk_parent'))); ?>"> ../</td>
 	    <!--<td></td>-->
 	    <td></td>
 	    <td></td>
@@ -37,7 +37,7 @@ $Dir = $this->getVar('Directory');
 	<?php } ?>
 	<?php foreach ($Dir->getSubdirectories() as $index => $Subdir) { ?>
 	<tr>
-	    <td><a href="<?php $this->setUrl('$$$showFsDirectory', array('$$$id' => $Subdir->getInfo('id'))); ?>">
+	    <td><a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Subdir->getInfo('id'))); ?>">
 		<?php $this->set($Subdir->getInfo('name')); ?></a></td>
 	    <!--<td><?php $this->set($Subdir->getInfo('fk_permission')); ?></td>-->
 	    <td><?php $this->set($Subdir->getInfo('dateOfCreation')); ?></td>

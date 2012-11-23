@@ -1,6 +1,5 @@
 <!-- | CLASS Directory (filesystem) -->
 <?php
-include_once '$system$Object.class.php';
 class $$$FsDirectory extends $system$Object {
 
     /* tablename in database

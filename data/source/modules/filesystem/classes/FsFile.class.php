@@ -1,6 +1,5 @@
 <!-- | CLASS File (filesystem) -->
 <?php
-include_once '$system$Object.class.php';
 class $$$FsFile extends $system$Object {
 
     /* tablename in database
@@ -105,7 +104,7 @@ class $$$FsFile extends $system$Object {
      *
      * @return bool
      */
-    public function edit ($name, $fk_directory = 0) {
+    public function edit ($name, $fk_directory = NULL) {
 
 	// validate
 	if (!$this->isValidName($name)
@@ -115,10 +114,10 @@ class $$$FsFile extends $system$Object {
 
 	// update database
 	$data = array(
-	    "name" => $name,
-	    "fk_directory" => $fk_directory
+	    "name" => $name
 	);
-	return $this->_edit($data);
+	if (!($fk_directory === NULL)) $data['fk_directory'] = $fk_directory;
+	return $this->_edit($data, true);
     }
 
     /* get corresponding file-object
@@ -197,7 +196,7 @@ class $$$FsFile extends $system$Object {
 	global $TSunic;
 	$Dir = $TSunic->get('$$$FsDirectory');
 	return (($Dir->consumedBytes() + $filesize) <=
-	    $TSunic->Usr->config('$$$filesystem_quota')) ? true : false;
+	    $TSunic->Usr->config('$$$quota')) ? true : false;
     }
 
     /* is valid fk_directory for this file?

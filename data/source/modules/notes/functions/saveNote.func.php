@@ -12,8 +12,12 @@ function $$$saveNote () {
     $FsFile = $TSunic->get('$filesystem$FsFile', $id_fsfile);
 
     // split filename into dir and file
-    $filename_file = (strstr($filename,"/")) ? substr(strrchr($filename, '/'),1) : $filename;
-    $filename_dir = substr($filename, 0, (strlen($filename)-strlen($filename_file)-1));
+    $filename_file = $filename;
+    $filename_dir = "";
+    if (strstr($filename, "/")) {
+	$filename_file = substr(strrchr($filename, '/'), 1);
+	$filename_dir = substr($filename, 0, (strlen($filename)-strlen($filename_file)-1));
+    }
 
     // get FsDir
     $FsDir = $FsFile->path2dir($filename_dir);
