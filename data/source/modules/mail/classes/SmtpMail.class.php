@@ -1,6 +1,5 @@
-<!-- | Local e-mail sender class -->
+<!-- | CLASS Local e-mail sender -->
 <?php
-include_once '$$$Smtp.class.php';
 class $$$SmtpMail extends $$$Smtp {
 
     /* get all data of smtp-server

@@ -36,14 +36,13 @@ Systemvoraussetzungen zu beachten:
 Hier zum leichteren Umgang mit der Software eine kleine Einführung in die
 Ordnerstruktur von TSunic 4.
 
-admin:	    Dieser Ordner enhält das Backend von TSunic. Zugang zum Backend
+admin:      Dieser Ordner enhält das Backend von TSunic. Zugang zum Backend
 	    hat nur der Systemadministrator.
-data:	    Im data-Ordner sind sämtliche Dateien, auf die TSunic zwar Zugriff
+data:       Im data-Ordner sind sämtliche Dateien, auf die TSunic zwar Zugriff
 	    haben muss, die jedoch nicht im Webverzeichnis liegen müssen.
 	    Um die Sicherheit der Daten zu erhöhen, kann/sollte dieser Ordner
 	    in ein Verzeichnis oberhalb des Webverzeichnisses verschoben werden.
 	    Der Pfad muss in den Einstellungen im Backend angegeben werden!
-files:	    Bilder und Dokumente, die frei zugänglich sind, lagern hier.
 runtime:    Die Laufzeitumgebung der Software befindet sich im Ordner runtime.
 	    Hier befinden sich alle Dateien, die vom laufenden Programm
 	    verwendet werden.
@@ -57,6 +56,6 @@ der Verwendung der Software nötig sein sollte:
 
 Webseite:	tsunic.de
 E-Mail:		authornicolas@tsunic.de
-Github:		github.com/nicofrix/tsunic/
+Github:		github.com/nfrickler/tsunic/
 
 Enjoy!

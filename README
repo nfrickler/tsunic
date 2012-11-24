@@ -21,6 +21,9 @@ In der Standardausführung enthalten sind:
     * Zeigt für jede Seite eine gesonderte Hilfeseite an (falls vorhanden)
  - Navigation: Navigation
     * Hilfs-Modul zum Anzeigen der Navigationsleiste
+ - filesystem
+    * Eigenes kleines Dateisystem für jeden Nutzer
+    * webdav Zugriff auf Dateien
 
  - Backend: Über das Backend kann der Administrator TSunic verwalten
     * Module installieren/updaten/löschen
@@ -30,4 +33,3 @@ In der Standardausführung enthalten sind:
 TSunic ist für alle unter der GNU AGPL Lizenz frei verfügbar.
 
 Weitere Informationen findet man auch auf tsunic.de
-

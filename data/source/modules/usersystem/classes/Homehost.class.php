@@ -1,6 +1,5 @@
-<!-- | Homehost class -->
+<!-- | CLASS Homehost -->
 <?php
-include_once '$system$Object.class.php';
 class $$$Homehost extends $system$Object {
 
     /* get SQL query to get object information from database

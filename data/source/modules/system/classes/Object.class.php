@@ -264,7 +264,6 @@ class $$$Object {
      * @return bool
      */
     protected function _validate ($value, $type) {
-	include_once '$$$Validator.class.php';
 
 	// validate type
 	switch ($type) {

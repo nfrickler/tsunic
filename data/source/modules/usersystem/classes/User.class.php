@@ -1,6 +1,5 @@
-<!-- | User class -->
+<!-- | CLASS User -->
 <?php
-include_once '$system$Object.class.php';
 class $$$User extends $system$Object {
 
     /* table

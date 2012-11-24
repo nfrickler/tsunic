@@ -1,6 +1,5 @@
 <!-- | CLASS ImapServer -->
 <?php
-include_once '$system$Object.class.php';
 class $$$ImapServer {
 
     /* connection details

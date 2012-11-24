@@ -1,6 +1,5 @@
 <!-- | CLASS Mail -->
 <?php
-include_once '$system$Object.class.php';
 class $$$Mail extends $system$Object {
 
     /* tablename in database

@@ -1,4 +1,4 @@
-<!-- | class handling general mail things -->
+<!-- | CLASS handling general mail things -->
 <?php
 class $$$SuperMail {
 

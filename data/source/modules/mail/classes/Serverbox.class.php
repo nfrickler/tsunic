@@ -1,6 +1,5 @@
 <!-- | CLASS Serverbox -->
 <?php
-include_once '$system$Object.class.php';
 class $$$Serverbox extends $system$Object {
 
     /* tablename in database

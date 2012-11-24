@@ -1,4 +1,3 @@
-<!-- | handle/download/load private images -->
 <?php
 // init TSunic
 include __DIR__ . '/init.php';

@@ -1,4 +1,3 @@
-<!-- | handle requests -->
 <?php
 // init TSunic
 include __DIR__ . '/init.php';

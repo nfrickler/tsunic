@@ -1,6 +1,5 @@
-<!-- | Accessgroup class -->
+<!-- | CLASS Accessgroup -->
 <?php
-include_once '$system$Object.class.php';
 class $$$Accessgroup extends $system$Object {
 
     /* table

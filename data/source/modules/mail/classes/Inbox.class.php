@@ -1,6 +1,5 @@
-<!-- | Inbox class -->
+<!-- | CLASS inbox -->
 <?php
-include_once '$$$Mailbox.class.php';
 class $$$Inbox extends $$$Mailbox {
 
     /* get information about mailbox

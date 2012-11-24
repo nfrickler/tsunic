@@ -1,4 +1,3 @@
-<!-- | handle ajax requests -->
 <?php
 // set XML-header
 header("Content-type: text/xml");

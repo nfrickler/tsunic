@@ -1,6 +1,5 @@
 <!-- | CLASS XML Templates for Ajax requests -->
 <?php
-include_once '$$$Template.class.php';
 class $$$Template_Xml extends $$$Template {
 
     /* constructor
