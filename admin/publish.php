@@ -41,30 +41,6 @@ if ($PreParser->parse($path, $path, $Config->get('dir_runtime'), true)) {
     echo "ERROR: Could not preparse backend!<br />\n";
 }
 
-
-// preparse special files
-/*
-$special_files = array(
-    'index.php',
-    'file.php',
-    'offline.php',
-    'functions.js.php',
-    'ajax.php'
-);
-foreach ($special_files as $index => $file) {
-    if ($PreParser->parseFile(
-	$Config->getRoot(false)."/".$file,
-	$Config->getRoot(false)."/".$file,
-	$Config->getRoot(false),
-	true
-    )) {
-	echo "Preparsed special file $file<br />\n";
-    } else {
-	echo "ERROR: Could not preparse special file $file<br />\n";
-    }
-}
-*/
-
 echo "Done...\n";
 
 class ts_DummyPacket {
