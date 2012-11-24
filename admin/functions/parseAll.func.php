@@ -65,6 +65,8 @@ function parseAll () {
 	    $Config->get('dir_runtime').'/index.php',
 	    $Config->get('dir_runtime').'/ajax.php',
 	    $Config->get('dir_runtime').'/js.php',
+	    $Config->get('dir_runtime').'/init.php',
+	    $Config->get('dir_runtime').'/webdav.php',
 	    $Config->get('dir_runtime').'/file.php'
 	);
 
@@ -178,6 +180,7 @@ function parseAll () {
 	    'index.php',
 	    'ajax.php',
 	    'js.php',
+	    'webdav.php',
 	    'init.php',
 	    'file.php'
 	);

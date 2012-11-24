@@ -1,4 +1,4 @@
-<!-- | Tables for usersystem -->
+<!-- | Tables for filesystem -->
 CREATE TABLE IF NOT EXISTS `#__fsdirectories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `_name_` varchar(200) NOT NULL,

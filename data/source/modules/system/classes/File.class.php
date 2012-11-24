@@ -349,6 +349,7 @@ class $$$File {
 	$cache = explode('/', $path);
 	$current = '';
 	foreach ($cache as $index => $value) {
+	    if (empty($value)) $value = '/';
 	    $current.= (empty($current)) ? $value : '/'.$value;
 
 	    if (!is_dir($current) AND !mkdir($current)) {

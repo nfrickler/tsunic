@@ -30,7 +30,8 @@ class $$$FsDirectory extends $system$Object {
 	if ($this->id == 0) {
 	    switch ($name) {
 		case 'name':
-		    return '{CLASS__FSDIRECTORY__ROOTDIR}';
+		    //return '{CLASS__FSDIRECTORY__ROOTDIR}';
+		    return '/';
 		case 'fk_account':
 		    return $TSunic->Usr->getInfo('id');
 	    }
@@ -70,7 +71,7 @@ class $$$FsDirectory extends $system$Object {
      *
      * @return bool
      */
-    public function edit ($name, $fk_parent) {
+    public function edit ($name, $fk_parent = NULL) {
 	if ($this->id == 0) return false;
 
 	// validate
@@ -81,10 +82,10 @@ class $$$FsDirectory extends $system$Object {
 
 	// update database
 	$data = array(
-	    "name" => $name,
-	    "fk_parent" => $fk_parent
+	    "name" => $name
 	);
-	return $this->_edit($data);
+	if (!($fk_parent === NULL)) $data['fk_parent'] = $fk_parent;
+	return $this->_edit($data, false);
     }
 
     /* delete directory
@@ -108,7 +109,7 @@ class $$$FsDirectory extends $system$Object {
      */
     public function isValidName ($name) {
 	// TODO: Only unique in parent directory
-	return ($name and $this->_validate($name, 'string')
+	return ($name and $this->_validate($name, 'filename')
 	    and $this->_isUnique('#__fsdirectories', '_name_', $name)
 	) ? true : false;
     }

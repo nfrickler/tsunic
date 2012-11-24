@@ -86,7 +86,7 @@ class $$$FsFile extends $system$Object {
 	// create new file
 	$File = $this->getFileObject();
 	$bytes = ($File) ? $File->writeFile($content) : false;
-	if (!$bytes) {
+	if ($content and !$bytes) {
 	    $this->delete();
 	    return false;
 	}
@@ -127,7 +127,7 @@ class $$$FsFile extends $system$Object {
     protected function getFileObject () {
 	if (!$this->getInfo('id')) return NULL;
 	global $TSunic;
-	$File = $TSunic->get('$system$File', '#private#file__'.$this->getInfo('id'));
+	$File = $TSunic->get('$system$File', '#data#users/file__'.$this->getInfo('id'));
 	return ($File) ? $File : NULL;
     }
 
@@ -150,7 +150,7 @@ class $$$FsFile extends $system$Object {
 	// delete file
 	$FH = $TSunic->get('$system$File', $this->getPath());
 	if (!$FH->deleteFile()) {
-	    $TSunic->Log->log(3, 'usersystem::FsFile::delete: Could not delete file!');
+	    $TSunic->Log->log(3, 'filesystem::FsFile::delete: Could not delete file!');
 	    return false;
 	}
 

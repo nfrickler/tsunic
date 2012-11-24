@@ -209,10 +209,12 @@ class $$$Object {
 	    }
 	    $data[$index] = "$index = '$value'";
 	}
-	$sql = "UPDATE $this->table
+	if ($data) {
+	    $sql = "UPDATE $this->table
 		SET ".implode(",",$data)."
 		WHERE id = '$this->id';";
-	if (!$TSunic->Db->doUpdate($sql)) return false;
+	    if (!$TSunic->Db->doUpdate($sql)) return false;
+	}
 
 	// update infos
 	$this->_loadInfo();

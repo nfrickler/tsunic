@@ -189,7 +189,7 @@ class TSunic {
      * @return OBJECT
      */
     public function getFsFile ($id) {
-	return $this->get('$usersystem$FsFile', $id);
+	return $this->get('$filesystem$FsFile', $id);
     }
 
     /* display output

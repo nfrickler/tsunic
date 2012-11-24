@@ -1,19 +1,6 @@
-<!-- | Mapping webdav files to filesystem -->
+<!-- | CLASS Mapping webdav files to filesystem -->
 <?php
-
-/**
- * File class
- *
- * This is a helper class, that should aid in getting file classes setup.
- * Most of its methods are implemented, and throw permission denied exceptions
- *
- * @package Sabre
- * @subpackage DAV
- * @copyright Copyright (C) 2007-2012 Rooftop Solutions. All rights reserved.
- * @author Evert Pot (http://www.rooftopsolutions.nl/)
- * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
- */
-class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
+class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 
     /* FsFile object
      * object
@@ -24,6 +11,9 @@ class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
      * +@param object: FsFile
      */
     public function __construct ($File = NULL) {
+	global $TSunic;
+	$TSunic->Log->log(9, "filesystem::DavFile::__construct('".$File->getInfo('name')."')");
+
 	// save
 	$this->File = $File;
     }
@@ -42,6 +32,17 @@ class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
      * @return void
      */
     public function put($data) {
+	global $TSunic;
+	$TSunic->Log->log(9, "filesystem::DavFile::put");
+
+	// is resource?
+	if (is_resource($data)) {
+	    // limited to 5 MB (TODO: => config)
+	    $mydata = fread($data,1024*1024*10);
+	    fclose($data);
+	    $data = $mydata;
+	}
+
 	if ($this->File and $this->File->setContent($data))
 	    return;
         throw new Sabre_DAV_Exception_Forbidden('Permission denied to change data');
@@ -52,6 +53,9 @@ class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
      * @return mixed
      */
     public function get() {
+	global $TSunic;
+	$TSunic->Log->log(9, "filesystem::DavFile::get");
+
 	if ($this->File) return $this->File->getContent();
         throw new Sabre_DAV_Exception_Forbidden('Permission denied to read this file');
 
@@ -85,5 +89,32 @@ class DavFile extends Sabre_DAV_Node implements Sabre_DAV_IFile {
      */
     public function getContentType() {
 	return ($this->File) ? $this->File->getMimeType() : NULL;
+    }
+
+    /* delete file
+     *
+     * @return void
+     */
+    public function delete () {
+	global $TSunic;
+	$TSunic->Log->log(9, "filesystem::DavFile::delete");
+
+	if (!$this->File->delete()) {
+	    throw new Sabre_DAV_Exception_Forbidden('Permission denied to delete this file');
+	}
+    }
+
+    /* rename file
+     * @param string: new name
+     *
+     * @return void
+     */
+    public function setName ($name) {
+	global $TSunic;
+	$TSunic->Log->log(9, "filesystem::DavFile::setName");
+
+	if (!$this->File->edit($name)) {
+	    throw new Sabre_DAV_Exception_Forbidden('Permission denied to rename this file');
+	}
     }
 }
