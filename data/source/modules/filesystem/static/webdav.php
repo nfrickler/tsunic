@@ -15,6 +15,13 @@ if (!$result OR !$TSunic->Usr->login($result[0], $result[1])) {
     die();
 }
 
+// allowed to use webdav?
+if (!$TSunic->Usr->access('$$$useWebdav')) {
+    $TSunic->Log->doLog(3, "webdav: Access denied!");
+    throw new Sabre_DAV_Exception_Forbidden('Permission denied to use webdav');
+    die();
+}
+
 // Get root directory object
 $rootDirectory = new $$$DavCollection();
 

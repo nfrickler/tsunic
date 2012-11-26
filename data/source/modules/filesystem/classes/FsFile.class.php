@@ -240,7 +240,7 @@ class $$$FsFile extends $system$Object {
 	if (!$File or !$File->isValid()) return false;
 
 	global $TSunic;
-	$content = $File->readFile();
+	$content = $File->readFile(true);
 	return $TSunic->Usr->decrypt($content);
     }
 

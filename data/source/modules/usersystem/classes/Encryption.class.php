@@ -70,6 +70,7 @@ class $$$Encryption {
 	global $TSunic;
 
 	// skip empty input
+	$input = trim($input);
 	if (empty($input)) return $input;
 
 	// is ready for encryption?
@@ -91,6 +92,7 @@ class $$$Encryption {
     public function decrypt ($input, $key = false) {
 
 	// check, if value is encrypted
+	$input = trim($input);
 	if (substr($input, 0, strlen($this->enc_preffix)) != $this->enc_preffix) {
 	    // input not encrypted
 	    return $input;

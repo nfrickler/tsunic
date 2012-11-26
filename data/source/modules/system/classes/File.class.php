@@ -270,10 +270,15 @@ class $$$File {
 	global $TSunic;
 
 	// try to read content
-	if (!$this->isFile()
-	    OR !($content = file_get_contents($this->getPath()))
-	    OR $content === false
-	) {
+	if (!$this->isFile()) {
+	    $TSunic->Log->log(3, 'Couldn\'t read from "'.$this->path.'"!');
+	    return ($as_string) ? '' : array();
+	}
+
+	// read
+	$content = file_get_contents($this->getPath());
+
+	if ($content === false) {
 	    $TSunic->Log->log(3, 'Couldn\'t read from "'.$this->path.'"!');
 	    return ($as_string) ? '' : array();
 	}

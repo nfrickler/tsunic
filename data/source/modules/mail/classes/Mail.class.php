@@ -411,7 +411,7 @@ class $$$Mail extends $system$Object {
 	// get FsFile objects
 	$this->attachments = array();
 	foreach ($result as $index => $values) {
-	    $FsFile = $TSunic->get('$usersystem$FsFile', $values['fk_fsfile']);
+	    $FsFile = $TSunic->get('$filesystem$FsFile', $values['fk_fsfile']);
 
 	    // delete attachments with no more fsfile existing
 	    if (!$FsFile->isValid()) {
@@ -434,7 +434,7 @@ class $$$Mail extends $system$Object {
 	global $TSunic;
 
 	// validate fsfile
-	$FsFile = $TSunic->get('$usersystem$FsFile', $fk_fsfile);
+	$FsFile = $TSunic->get('$filesystem$FsFile', $fk_fsfile);
 	if (!$FsFile->isValid()) return false;
 
 	// delete cached attachments

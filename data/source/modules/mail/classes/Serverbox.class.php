@@ -342,7 +342,7 @@ class $$$Serverbox extends $system$Object {
 
 	    // add attachments
 	    foreach ($new_mail['attachments'] as $index => $value) {
-		$Attachment = $TSunic->get('$usersystem$');
+		$Attachment = $TSunic->get('$filesystem$FsFile');
 		$Attachment->create(0, $index, $value);
 		$Mail->addAttachment($Attachment);
 	    }
