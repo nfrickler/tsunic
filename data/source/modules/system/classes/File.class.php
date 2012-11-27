@@ -227,7 +227,7 @@ class $$$File {
 	// TODO
 
 	// create dir, if neccessary
-	// TODOMimeType 
+	// TODOMimeType
 
 	// move file
 	if (rename($this->getPath(), $new_path)) {
@@ -338,7 +338,7 @@ class $$$File {
 
     /* ######################### folder operations ###################### */
 
-    /* create folder, if not exists
+    /* create folder, if not exists (recursively)
      * @param string: path to folder
      *
      * @return bool
@@ -350,20 +350,10 @@ class $$$File {
 	if (is_dir($path)) return true;
 	if (file_exists($path) AND !is_dir($path)) return false;
 
-	// check all single folders
-	$cache = explode('/', $path);
-	$current = '';
-	foreach ($cache as $index => $value) {
-	    if (empty($value)) $value = '/';
-	    $current.= (empty($current)) ? $value : '/'.$value;
-
-	    if (!is_dir($current) AND !mkdir($current)) {
-		$TSunic->Log->log(3, 'Couldn\'t create folder "'.$current.'"!');
-		return false;
-	    }
-	}
-
-	return true;
+	// check towards root directory!
+	$prev_path = substr($path, 0, strrpos($path, '/', -2) + 1 );
+	$return = self::mkFolder($prev_path);
+	return ($return && is_writable($prev_path)) ? mkdir($path) : false;
     }
 
     /* get subfolders
