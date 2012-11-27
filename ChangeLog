@@ -1,8 +1,9 @@
--- Changes until version 4.3 (release 2012-)
+-- Changes until version 4.3 (release 2012-11-27)
     * exlude filesystem in separate module
     * implement webdav support
-    * refactor directory structure
+    * refactoring of directory structure
     * add notes module to edit text files
+    * refactoring of object structure
     * general fixes
 -- Changes until version 4.2 (release 2012-06-19)
     * full reconstruction of usersystem module
