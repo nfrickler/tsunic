@@ -2,58 +2,116 @@
 <?php
 class $$$Piece extends $system$Object {
 
+    /* table
+     * string
+     */
+    protected $table = "#__pieces";
+
     /* all bits of this piece
      * array
      */
     protected $bits;
 
-
-    /* edit bit from piece
+    /* create new piece
      *
      * @return bool
      */
-    protected function editBit ($name, $value) {
-	if (!$this->id) return false;
-	global $TSunic;
-	$Bit = $TSunic->get('$$$Bit', $this->id, $name);
+    public function create () {
+
+	// update database
+	$data = array(
+	    'author' => $TSunic->Usr->getInfo('name'),
+	);
+	return $this->_create($data);
+    }
+
+    /* edit piece
+     *
+     * @return bool
+     */
+    public function edit () {
 	return true;
     }
 
+    /* delete piece
+     *
+     * @return bool
+     */
+    public function delete () {
+
+	// delete all bits of this piece
+	$bits = $this->getBits();
+	foreach ($bits as $index => $Value) {
+	    $Value->delete();
+	}
+
+	// update database
+	return $this->_delete();
+    }
+
+    /* get list of bits
+     *
+     * @return array/false
+     */
+    public function getBits () {
+	global $TSunic;
+	$sql = "SELECT name
+	    FROM #__bits
+	    WHERE fk_piece = '$this->id'
+	;";
+	$result = $TSunic->Db->doSelect($sql);
+
+	// get objects
+	$output = array();
+	foreach ($result as $index => $values) {
+	    $output = $TSunic->get('$$$Bit', array($this->id, $values['name']));
+	}
+	return $output;
+    }
+
+    /* get bit with certain name
+     * @param string: name
+     *
+     * @return $$$Bit
+     */
+    public function getBit ($name) {
+
+	// get all bits
+	$bits = $this->getBits();
+
+	// search for bit
+	foreach ($bits as $index => $Value) {
+	    if ($Value->getInfo('name') == $name) return $Value;
+	}
+
+	return NULL;
+    }
 
     /* add bit to piece
+     * @param string: name
+     * @param string: value
      *
      * @return bool
      */
-    protected function addBit ($name, $value) {
-	if (!$this->id) return false;
+    public function addBit ($name, $value) {
 	global $TSunic;
-	$Bit = $TSunic->get('$$$Bit', $this->id, $name);
-	return true;
+
+	// get empty Bit
+	$Bit = $TSunic->get('$$$Bit');
+
+	// create new Bit
+	return $Bit->create($name, $value);
     }
 
-
-    /* get all bits belonging to this piece
+    /* remove bit from piece
+     * @param string: name
      *
-     * @return array
+     * @return bool
      */
-    protected function getBit ($name) {
-	if (!$this->id) return false;
+    public function rmBit ($name) {
 	global $TSunic;
-	$Bit = $TSunic->get('$$$Bit', $this->id, $name);
-	return $Bit;
+	$Bit = $TSunic->get('$$$Bit', array($this->id, $name));
+	return $Bit->delete();
     }
-
-    /* get all bits belonging to this piece
-     *
-     * @return array
-     */
-    protected function getBits () {
-	if (!$this->id) return false;
-	$out = array();
-
-	return $out;
-    }
-
-
 }
 ?>

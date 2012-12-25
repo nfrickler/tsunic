@@ -255,7 +255,7 @@ class $$$Mail extends $system$Object {
     }
 
     /* check, if subject is valid
-     * @param int: subject of a mail
+     * @param string: subject of a mail
      *
      * @return bool
      */
@@ -264,7 +264,7 @@ class $$$Mail extends $system$Object {
     }
 
     /* check, if content is valid
-     * @param int: content of mail
+     * @param string: content of mail
      *
      * @return bool
      */
@@ -273,7 +273,7 @@ class $$$Mail extends $system$Object {
     }
 
     /* check, if addressee is valid
-     * @param int: addressee
+     * @param string: addressee
      *
      * @return bool
      */

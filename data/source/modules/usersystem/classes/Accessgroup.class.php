@@ -45,10 +45,11 @@ class $$$Accessgroup extends $system$Object {
 	}
 
 	// update database
-	$sql = "INSERT INTO #__accessgroups
-	    SET name = '$name',
-		fk_parent = '$fk_parent';";
-	return $this->_create($sql);
+	$data = array(
+	    'name' => $name,
+	    'fk_parent' => $fk_parent
+	);
+	return $this->_create($data);
     }
 
     /* edit accessgroup
@@ -92,9 +93,7 @@ class $$$Accessgroup extends $system$Object {
 	if ($this->id == 1) return false;
 
 	// update database
-	$sql = "DELETE FROM #__accessgroups
-	    WHERE id = '$this->id';";
-	return $this->_delete($sql);
+	return $this->_delete();
     }
 
     /* get list of members
@@ -195,11 +194,6 @@ class $$$Accessgroup extends $system$Object {
      * @return bool
      */
     public function checkParent ($name) {
-global $TSunic;
-$TSunic->Log->log(1, "checkParent $name");
-$TSunic->Log->log(1, "checkParent2 ".$this->getInfo('id'));
-$TSunic->Log->log(1, "checkParent3 ".$this->id);
-$TSunic->Log->log(1, "checkParent4 ".$this->info['id']);
 	return ($this->getParent())
 	    ? $this->getParent()->check($name)
 	    : false;
