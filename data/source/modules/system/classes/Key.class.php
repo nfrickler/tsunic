@@ -61,7 +61,7 @@ class $$$Key {
      * @return bool
      */
     protected function _loadInfo () {
-	if (!$this->fk_id or !$this->fk_table or !$this->fk_account) return false;
+	if (!$this->fk_table or !$this->fk_account) return false;
 	global $TSunic;
 
 	// get data from database

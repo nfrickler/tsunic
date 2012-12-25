@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `#__bits` (
   `fk_piece` int(11) NOT NULL,
   `_name_` varchar(200) NOT NULL,
   `_value_` varchar(500) NOT NULL,
-  PRIMARY KEY (`fk_piece`, `name`, `value`)
+  PRIMARY KEY (`fk_piece`, `_name_`, `_value_`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `#__pieces` (

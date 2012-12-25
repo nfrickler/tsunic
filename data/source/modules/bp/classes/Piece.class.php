@@ -12,6 +12,25 @@ class $$$Piece extends $system$Object {
      */
     protected $bits;
 
+    /* get Key for all pieces
+     *
+     * @return Object
+     */
+    public function getKey () {
+	return $this->_getKey();
+    }
+
+    /* load Key (all pieces have same Key to enable searching)
+     *
+     * @return Object
+     */
+    protected function _getKey () {
+	global $TSunic;
+	if (!$this->_Key) $this->_Key =
+	    $TSunic->get('$$$Key', array($this->table, 0));
+	return $this->_Key;
+    }
+
     /* create new piece
      *
      * @return bool

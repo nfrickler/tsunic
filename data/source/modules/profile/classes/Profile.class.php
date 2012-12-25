@@ -1,30 +1,26 @@
 <!-- | CLASS Profile -->
 <?php
-class $$$Profile extends $system$Object {
+class $$$Profile extends $bp$BpObject {
 
     /* table
      * string
      */
     protected $table = "#__profiles";
 
-    /* register user
-     * @param string: firstname
-     * @param string: lastname
+    /* TAG of this object
+     * string
+     */
+    protected $tag = "PROFILE__ID";
+
+    /* create new profile
      *
      * @return bool
      */
-    public function create ($firstname, $lastname) {
+    public function create () {
 
-	// validate input
-	if (!$this->isValidFirstname($firstname)
-	    OR !$this->isValidLastname($lastname)
-	) return false;
-	
 	// update database
 	global $TSunic;
 	$data = array(
-	    "firstname" => $firstname,
-	    "firstname" => $lastname,
 	    "fk_account" => $TSunic->Usr->getInfo('id'),
 	    "dateOfCreation" => "NOW()"
 	);

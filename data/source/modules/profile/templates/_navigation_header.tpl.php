@@ -1,3 +1,3 @@
 <!-- | TEMPLATE show header navigation -->
-<a href="<?php $this->setUrl('$$$showProfile'); ?>">
+<a href="<?php $this->setUrl('$$$showIndex'); ?>">
 <?php $this->set('{_HEADER_NAVIGATION__SHOWPROFILE}'); ?></a>
