@@ -34,10 +34,13 @@ $lang = array(
     'FORMPROFILE__LASTNAME_HELP' => 'Firstname',
     'FORMPROFILE__LASTNAME_PRESET' => 'Firstname',
     'FORMPROFILE__DATEOFBIRTH' => 'Date of birth',
+    'FORMPROFILE__DATEOFBIRTH_HELP' => 'Date of birth, like 5/20/2000',
+    'FORMPROFILE__DATEOFBIRTH_PRESET' => 'Date of birth',
 
     // createProfile
     'CREATEPROFILE__SUCCESS' => 'New profile has been created.',
     'CREATEPROFILE__ERROR' => 'An error occurred!',
+    'CREATEPROFILE__INVALID' => 'Invalid input (#field#)!',
 
     // showDeleteProfile
     'SHOWDELETEPROFILE__POPUP_DELETE_HEADER' => 'Delete profile?',

@@ -12,6 +12,48 @@ class $$$Profile extends $bp$BpObject {
      */
     protected $tag = "PROFILE__ID";
 
+    /* tags to be connected with this object
+     * array
+     */
+    protected $tags = array(
+
+	// base
+	'PROFILE__FIRSTNAME',
+	'PROFILE__LASTNAME',
+	'PROFILE__SEX',
+	'PROFILE__DATEOFBIRTH',
+	'PROFILE__PLACEOFBIRTH',
+	'PROFILE__DATEOFDEATH',
+
+	// contact
+	'PROFILE__EMAIL',
+	'PROFILE__CITY',
+	'PROFILE__ADDRESS',
+	'PROFILE__TELEFONE',
+
+	// you and him/her
+	'PROFILE__DATEOFFIRSTMEET',
+	'PROFILE__DATEOFLASTMEET',
+
+	// appearance
+	'PROFILE__HAIR',
+	'PROFILE__HAIRCOLOR',
+	'PROFILE__BODYSHAPE',
+
+	// character
+	'PROFILE__HOBBY',
+	'PROFILE__STRENGTH',
+	'PROFILE__WEAKNESS',
+	'PROFILE__RELIGION',
+
+	// job
+	'PROFILE__JOB',
+	'PROFILE__INCOME',
+
+	// owner
+	'PROFILE__OBJECT',
+    );
+
     /* create new profile
      *
      * @return bool
@@ -25,25 +67,6 @@ class $$$Profile extends $bp$BpObject {
 	    "dateOfCreation" => "NOW()"
 	);
 	return $this->_create($data);
-    }
-
-    /* edit profile
-     *
-     * @return bool
-     */
-    public function edit () {
-	global $TSunic;
-
-    }
-
-    /* delete profile
-     *
-     * @return bool
-     */
-    public function delete () {
-
-	// remove in database
-	return $this->_delete();
     }
 }
 ?>

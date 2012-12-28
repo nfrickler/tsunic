@@ -70,6 +70,22 @@ class $$$Object {
 	return $this->_Key;
     }
 
+    /* save Key
+     *
+     * @return bool
+     */
+    protected function _saveKey () {
+	return $this->_getKey()->save($this->id);
+    }
+
+    /* delete Key
+     *
+     * @return bool
+     */
+    protected function _deleteKey () {
+	return $this->_getKey()->delete();
+    }
+
     /* load information about object
      *
      * @return bool
@@ -174,7 +190,7 @@ class $$$Object {
 
 	// update object infos
 	$this->_loadInfo();
-	$this->_getKey()->save($this->id);
+	$this->_saveKey();
 
 	return ($this->id) ? $this->id : false;
     }
@@ -218,7 +234,7 @@ class $$$Object {
 
 	// update infos
 	$this->_loadInfo();
-	$this->_getKey()->save($this->id);
+	$this->_saveKey();
 
 	return true;
     }
@@ -238,7 +254,7 @@ class $$$Object {
 	// invalidate object
 	$this->id = 0;
 	$this->_loadInfo();
-	$this->_getKey()->delete();
+	$this->_deleteKey();
 
 	return true;
     }

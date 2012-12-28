@@ -27,8 +27,24 @@ class $$$Piece extends $system$Object {
     protected function _getKey () {
 	global $TSunic;
 	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$$$Key', array($this->table, 0));
+	    $TSunic->get('$system$Key', array($this->table, 1));
 	return $this->_Key;
+    }
+
+    /* save Key
+     *
+     * @return bool
+     */
+    protected function _saveKey () {
+	return $this->_getKey()->save(1);
+    }
+
+    /* delete Key
+     *
+     * @return bool
+     */
+    protected function _deleteKey () {
+	return true;
     }
 
     /* create new piece
@@ -36,12 +52,14 @@ class $$$Piece extends $system$Object {
      * @return bool
      */
     public function create () {
+	global $TSunic;
 
 	// update database
 	$data = array(
 	    'author' => $TSunic->Usr->getInfo('name'),
 	);
 	return $this->_create($data);
+
     }
 
     /* edit piece
@@ -64,7 +82,7 @@ class $$$Piece extends $system$Object {
 	    $Value->delete();
 	}
 
-	// update database
+	// keep key!
 	return $this->_delete();
     }
 
@@ -74,7 +92,9 @@ class $$$Piece extends $system$Object {
      */
     public function getBits () {
 	global $TSunic;
-	$sql = "SELECT name
+	$Key = $this->getKey();
+	$sql = "SELECT _name_ as name,
+		_value_ as value
 	    FROM #__bits
 	    WHERE fk_piece = '$this->id'
 	;";
@@ -83,7 +103,13 @@ class $$$Piece extends $system$Object {
 	// get objects
 	$output = array();
 	foreach ($result as $index => $values) {
-	    $output = $TSunic->get('$$$Bit', array($this->id, $values['name']));
+	    $values['name'] = $Key->decrypt($values['name']);
+	    $values['value'] = $Key->decrypt($values['value']);
+	    $output[] = $TSunic->get('$$$Bit', array(
+		$this->id,
+		$values['name'],
+		$values['value']
+	    ));
 	}
 	return $output;
     }
@@ -119,7 +145,7 @@ class $$$Piece extends $system$Object {
 	$Bit = $TSunic->get('$$$Bit');
 
 	// create new Bit
-	return $Bit->create($name, $value);
+	return $Bit->create($this->id, $name, $value);
     }
 
     /* remove bit from piece

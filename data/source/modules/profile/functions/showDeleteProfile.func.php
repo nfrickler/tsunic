@@ -4,7 +4,7 @@ function $$$showDeleteProfile () {
     global $TSunic;
 
     // get Profile object
-    $id = $TSunic->Temp->getParameter('id');
+    $id = $TSunic->Temp->getParameter('$$$id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
     // activate template

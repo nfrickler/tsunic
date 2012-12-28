@@ -16,10 +16,15 @@
 	<?php foreach ($this->getVar('profiles') as $index => $Profile) { ?>
 	<tr>
 	    <td>
-		<?php $this->set($Profile->getInfo('firstname')); ?>
-		<?php $this->set($Profile->getInfo('lastname')); ?>
+		<?php
+		$name = $Profile->getInfo('firstname').' '.
+		    $Profile->getInfo('lastname');
+		if (empty($name)) $name = "{SHOWINDEX__UNKNOWNNAME}";
+		?>
+		<a href="<?php $this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
+		    <?php $this->set($name); ?></a>
 	    </td>
-	    <td><?php $this->set($Profile->getInfo('dateOfBirth')); ?></td>
+	    <td><?php $this->set($Profile->getInfo('dateofbirth')); ?></td>
 	</tr>
 	<?php } ?>
     </table>

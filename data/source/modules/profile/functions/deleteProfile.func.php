@@ -1,36 +1,23 @@
-<!-- | FUNCTION delete account -->
+<!-- | FUNCTION delete profile -->
 <?php
-function $$$deleteAccount () {
+function $$$deleteProfile () {
     global $TSunic;
 
-    // get password
-    $password = $TSunic->Temp->getParameter('$$$showDeleteAccount__password');
+    // get Profile object
+    $id = $TSunic->Temp->getParameter('$$$id');
+    $Profile = $TSunic->get('$$$Profile', $id);
 
-    // validate password
-    if (!$TSunic->Usr->isCorrectPassword($password)) {
-	// wrong password
-	$TSunic->Log->alert('error', '{DELETEACCOUNT__WRONGPASSWORD}');
+    // delete profile
+    if (!$Profile->delete()) {
+	$TSunic->Log->alert('error', '{DELETEPROFILE__ERROR}');
 	$TSunic->redirect('back');
-    }
-
-    // delete cookies
-    //$TSunic->run('$system$resetAllCookies', false, true);
-
-    // delete user
-    $return = $TSunic->Usr->delete();
-    $TSunic->Usr->logout();
-
-    // check, if error occured
-    if (!$return) {
-	$TSunic->Log->alert('error', '{DELETEACCOUNT__ERROR}');
-	$TSunic->redirect('back');
+	return true;
     }
 
     // success
-    $TSunic->Log->alert('info', '{DELETEACCOUNT__SUCCESS}');
+    $TSunic->Log->alert('info', '{DELETEPROFILE__SUCCESS}');
+    $TSunic->redirect('$$$showIndex');
 
-    // redirect to showIndex
-    $TSunic->redirect('default');
     return true;
 }
 ?>

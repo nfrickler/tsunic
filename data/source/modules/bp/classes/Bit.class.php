@@ -10,7 +10,7 @@ class $$$Bit extends $system$Object {
     /* tablename of Piece object in database
      * string
      */
-    protected $table = '#__pieces';
+    protected $table_piece = '#__pieces';
 
     /* fk_piece
      * int
@@ -25,12 +25,21 @@ class $$$Bit extends $system$Object {
     /* constructor
      * @param int: foreign key of piece
      * @param string: name of bit
+     * @param string: value of bit (to prevent massive sql queries)
      */
-    public function __construct ($fk_piece, $name) {
+    public function __construct ($fk_piece = 0, $name = "", $value = NULL) {
 
 	// save input
 	$this->fk_piece = $fk_piece;
 	$this->name = $name;
+
+	// init info array
+	if (!($value === NULL)) {
+	    $this->info = array(
+		'name' => $name,
+		'value' => $value
+	    );
+	}
 
 	return;
     }
@@ -60,8 +69,24 @@ class $$$Bit extends $system$Object {
     protected function _getKey () {
 	global $TSunic;
 	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$$$Key', array($this->table_piece, $this->fk_piece));
+	    $TSunic->get('$system$Key', array($this->table_piece, 1));
 	return $this->_Key;
+    }
+
+    /* save Key
+     *
+     * @return bool
+     */
+    protected function _saveKey () {
+	return $this->_getKey()->save(1);
+    }
+
+    /* delete Key
+     *
+     * @return bool
+     */
+    protected function _deleteKey () {
+	return true;
     }
 
     /* load information about object
@@ -71,9 +96,13 @@ class $$$Bit extends $system$Object {
     protected function _loadInfo () {
 	if (!$this->fk_piece or !$this->name or !$this->table) return false;
 	global $TSunic;
+	$Key = $this->_getKey();
 
 	// get data from database (by fk_piece and name!)
-	$sql = "SELECT * FROM $this->table WHERE fk_piece = '$this->fk_piece' AND name = '$this->name';";
+	$sql = "SELECT *
+	    FROM $this->table
+	    WHERE fk_piece = '$this->fk_piece'
+		AND _name_ = '".$Key->encrypt($this->name)."';";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result) return false;
 
@@ -108,6 +137,7 @@ class $$$Bit extends $system$Object {
 	if (!$this->table) return false;
 	if (!$data) return true;
 	global $TSunic;
+	$Key = $this->_getKey();
 
 	// encrypt
 	$data = $this->_data2db($data);
@@ -131,13 +161,14 @@ class $$$Bit extends $system$Object {
 	if ($data) {
 	    $sql = "UPDATE $this->table
 		SET ".implode(",",$data)."
-		WHERE fk_piece = '$this->fk_piece' AND name = '$this->name';";
+		WHERE fk_piece = '$this->fk_piece'
+		    AND _name_ = '".$Key->encrypt($this->name)."';";
 	    if (!$TSunic->Db->doUpdate($sql)) return false;
 	}
 
 	// update infos
 	$this->_loadInfo();
-	$this->_getKey()->save($this->id);
+	$this->_saveKey();
 
 	return true;
     }
@@ -148,16 +179,20 @@ class $$$Bit extends $system$Object {
      */
     protected function _delete () {
 	global $TSunic;
+	$Key = $this->_getKey();
 
 	// delete object in database
-	$sql = "DELETE FROM $this->table WHERE fk_piece = '$this->fk_piece' AND name = '$this->name';";
+	$sql = "DELETE FROM $this->table
+	    WHERE fk_piece = '$this->fk_piece'
+		AND _name_ = '".$Key->encrypt($this->name)."'
+	;";
 	$result = $TSunic->Db->doDelete($sql);
 	if (!$result) return false;
 
 	// invalidate object
 	$this->id = 0;
 	$this->_loadInfo();
-	$this->_getKey()->delete();
+	$this->_deleteKey();
 
 	return true;
     }

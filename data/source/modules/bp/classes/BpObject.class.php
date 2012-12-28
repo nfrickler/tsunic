@@ -7,10 +7,42 @@ class $$$BpObject extends $system$Object {
      */
     protected $tag = "ID";
 
+    /* tags to be connected with this object
+     * array
+     */
+    protected $tags = array();
+
     /* pieces
      * array
      */
     protected $pieces;
+
+    /* load information about object
+     *
+     * @return bool
+     */
+    protected function _loadInfo () {
+	if (!parent::_loadInfo()) return false;
+
+	// load all tags in info array
+	// use name after first __
+	// TODO: enhance
+	$pieces = $this->getPieces();
+	foreach ($pieces as $index => $Value) {
+	    $bits = $Value->getBits();
+	    foreach ($bits as $in => $Val) {
+		foreach ($this->tags as $i => $v) {
+		    if ($Val->getInfo('name') == $v) {
+			$name = substr($Val->getInfo('name'), (strpos($Val->getInfo('name'), '__')+2));
+			$this->info[strtolower($name)] = $Val->getInfo('value');
+			break;
+		    }
+		}
+	    }
+	}
+
+	return true;
+    }
 
     /* load Key of pieces
      *
@@ -19,7 +51,7 @@ class $$$BpObject extends $system$Object {
     protected function getPiecesKey () {
 	global $TSunic;
 	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$$$Key', array($this->table, 0));
+	    $TSunic->get('$system$Key', array('#__pieces', 1));
 	return $this->_Key;
     }
 
@@ -27,15 +59,15 @@ class $$$BpObject extends $system$Object {
      *
      * @return bool
      */
-    protected function addPiece ($fk_piece = 0, $name = false, $value = false) {
+    public function addPiece ($fk_piece = 0, $name = false, $value = false) {
 	global $TSunic;
-    
+
 	// get Piece object
 	$Piece = $TSunic->get('$$$Piece', $fk_piece);
-	if (!$fk_piece AND !$Piece->create()) return NULL;
+	if (!$fk_piece AND !$Piece->create()) return false;
 
 	// add bits
-	if (!$Piece->addBit($this->tag, $this->id) OR !($name AND $Piece->addBit($name, $value))) {
+	if (!$Piece->addBit($this->tag, $this->id) OR ($name AND !$Piece->addBit($name, $value))) {
 	    return false;
 	}
 
@@ -49,9 +81,10 @@ class $$$BpObject extends $system$Object {
      *
      * @return bool
      */
-    protected function getPieces () {
+    public function getPieces () {
 	if (!$this->id) return false;
 	if ($this->pieces) return $this->pieces;
+	global $TSunic;
 	$out = array();
 
 	// get Key
@@ -60,7 +93,7 @@ class $$$BpObject extends $system$Object {
 	// load pieces
 	$sql = "SELECT pieces.id
 	    FROM #__bits as bits, #__pieces as pieces
-	    WHERE pieces.id = bits.fk_pieces
+	    WHERE pieces.id = bits.fk_piece
 		AND bits._name_ = '".$Key->encrypt($this->tag)."'
 		AND bits._value_ = '".$Key->encrypt($this->id)."'
 	;";
@@ -75,5 +108,20 @@ class $$$BpObject extends $system$Object {
 	return $this->pieces;
     }
 
+    /* delete this object
+     *
+     * @return bool
+     */
+    public function delete () {
+
+	// delete all pieces linking to this object
+	$pieces = $this->getPieces();
+	foreach ($pieces as $index => $Value) {
+	    if (!$Value->delete()) return false;
+	}
+
+	// keep key!
+	return $this->_delete();
+    }
 }
 ?>
