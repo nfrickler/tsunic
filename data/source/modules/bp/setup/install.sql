@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `#__bits` (
 
 CREATE TABLE IF NOT EXISTS `#__pieces` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_account` int(11) NOT NULL,
   `_author_` varchar(200) NOT NULL,
   `dateOfChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `dateOfCreation` datetime NOT NULL,
@@ -18,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `#__pieces` (
 
 CREATE TABLE IF NOT EXISTS `#__types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_account` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` text NOT NULL,
@@ -28,8 +30,8 @@ CREATE TABLE IF NOT EXISTS `#__types` (
 
 CREATE TABLE IF NOT EXISTS `#__tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_type` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,
+  `fk_type` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` text NOT NULL,
@@ -47,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `#__selections` (
   `dateOfCreation` datetime NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE(`fk_tags`, `name`)
+  UNIQUE(`fk_tag`, `name`)
 ) ENGINE=MyISAM;
 
 INSERT INTO `#__types` (`name`, `title`, `description`, `fk_account`) VALUES

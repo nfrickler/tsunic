@@ -26,7 +26,7 @@ INSERT IGNORE INTO `$bp$tags` (`fk_type`, `name`, `title`, `description`) VALUES
 
 ;
 
-INSERT IGNORE INTO `$bp$selections` (`fk_tags`, `name`, `description`, `dateOfCreation`) VALUES
+INSERT IGNORE INTO `$bp$selections` (`fk_tag`, `name`, `description`, `dateOfCreation`) VALUES
     ((SELECT id FROM $bp$tags as tags WHERE tags.name  = 'PROFILE__GENDER' LIMIT 1),
 	'{SELECTIONS__PROFILE__GENDER_M}',
 	'{SELECTIONS__PROFILE__GENDER_M__DESCRIPTION}',

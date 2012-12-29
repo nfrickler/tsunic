@@ -94,5 +94,29 @@ class $$$Selection extends $system$Object {
 	    and $this->_isObject('#__tags', $fk_tag)
 	) ? true : false;
     }
+
+    /* get all available tags
+     *
+     * @return array
+     */
+    public function getAllTags () {
+	global $TSunic;
+
+	// get all tags in database
+	$sql = "SELECT id
+	    FROM #__tags
+	    WHERE fk_account = '0'
+		OR fk_account = '".$TSunic->Usr->getInfo('id')."'
+	;";
+	$result = $TSunic->Db->doSelect($sql);
+
+	// get objects
+	$out = array();
+	foreach ($result as $index => $values) {
+	    $out[] = $TSunic->get('$$$Tag', $values['id']);
+	}
+
+	return $out;
+    }
 }
 ?>

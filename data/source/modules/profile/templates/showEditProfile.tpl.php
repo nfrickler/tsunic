@@ -1,10 +1,11 @@
 <!-- | TEMPLATE show form to edit profile -->
-<?php
-// get data
-$Profile = $this->getVar('Profile');
-?>
+<?php $Profile = $this->getVar('Profile'); ?>
 <div id="$$$div__showEditProfile">
     <h1><?php $this->set('{SHOWEDITPROFILE__H1}'); ?></h1>
+    <p class="ts_suplinkbox">
+	<a id="$$$showEditProfile__editlink" href="<?php $this->setUrl('$bp$showTags'); ?>">
+	    <?php $this->set('{SHOWEDITPROFILE__TOSHOWTAGS}'); ?></a>
+    </p>
     <p class="ts_infotext"><?php $this->set('{SHOWEDITPROFILE__INFOTEXT}'); ?></p>
     <?php $this->display('$$$formProfile', array(
 	'Profile' => $Profile,

@@ -21,7 +21,7 @@ function $$$editProfile () {
     if ($Profile->edit($firstname)) {
 	// success
 	$TSunic->Log->alert('info', '{EDITPROFILE__SUCCESS}');
-	$TSunic->redirect('$$$showProfile', array('id' => $id));
+	$TSunic->redirect('$$$showProfile', array('$$$id' => $id));
 	return true;
     }
 
