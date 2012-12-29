@@ -49,6 +49,14 @@ class ts_Database {
 	return;
     }
 
+    /* get table preffix
+     *
+     * @return string
+     */
+    public function getPreffix () {
+	return $this->table_pref;
+    }
+
     /* parse query
      * @param string: sql-query
      *
@@ -258,6 +266,24 @@ class ts_Database {
 	$content = file($path);
 	$content = implode(' ', $content);
 
+	return $this->runString($content, $id__module);
+    }
+
+    /* "execute" a sql-string (e.g. from a file)
+     * @param string: string with sql statements
+     * @param bool/int: id__module, if preffix shall be replaced with module-preffix
+     *
+     * @return bool: true - success
+     *     (or REDIRECT)
+      */
+    public function runString ($content, $id__module = false) {
+
+	// is database sub-object?
+	if (!$this->Db_obj) return false;
+
+	// is string?
+	if (empty($content)) return false;
+
 	// strip comments
 	$content = preg_replace('#(\<\!--.*--\>)#Usi', '', $content);
 
@@ -265,8 +291,10 @@ class ts_Database {
 	if ($id__module AND is_numeric($id__module))
 	    $content = str_replace('#__', $this->table_pref.'mod'.$id__module.'__', $content);
 
-	// split and run all queries in a row
+	// split by ;
 	$cache = explode(';', $content);
+
+	// split and run all queries in a row
 	foreach ($cache as $index => $value) {
 	    $value = trim($value);
 	    if (empty($value)) continue;

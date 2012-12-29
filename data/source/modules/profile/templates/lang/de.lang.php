@@ -18,6 +18,13 @@ $lang = array(
     'SHOWPROFILE__H1' => 'Profil',
     'SHOWPROFILE__NAME' => 'Name',
 
+    // showEditProfile
+    'SHOWEDITPROFILE__TITLE' => 'Profil bearbeiten',
+    'SHOWEDITPROFILE__H1' => 'Profil bearbeiten',
+    'SHOWEDITPROFILE__INFOTEXT' => 'Hier kannst du ein Profil bearbeiten.',
+    'SHOWEDITPROFILE__SUBMIT' => 'Änderungen speichern',
+    'SHOWEDITPROFILE__CANCEL' => 'Abbrechen',
+
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Profil erstellen',
     'SHOWCREATEPROFILE__H1' => 'Profil erstellen',

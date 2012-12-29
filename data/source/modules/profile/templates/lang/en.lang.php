@@ -25,6 +25,13 @@ $lang = array(
     'SHOWCREATEPROFILE__SUBMIT' => 'Create',
     'SHOWCREATEPROFILE__CANCEL' => 'Cancel',
 
+    // showEditProfile
+    'SHOWEDITPROFILE__TITLE' => 'Edit profile',
+    'SHOWEDITPROFILE__H1' => 'Edit profile',
+    'SHOWEDITPROFILE__INFOTEXT' => 'Here you can edit this profile.',
+    'SHOWEDITPROFILE__SUBMIT' => 'Save changes',
+    'SHOWEDITPROFILE__CANCEL' => 'Cancel',
+
     // formProfile
     'FORMPROFILE__LEGEND' => 'Profile',
     'FORMPROFILE__FIRSTNAME' => 'Firstname',

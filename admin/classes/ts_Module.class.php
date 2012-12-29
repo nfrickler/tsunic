@@ -738,12 +738,19 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     public function installModule () {
-	global $Database;
+	global $Database, $Parser;
 
 	// search for install-scripts in 'setup'-dir
 	if (file_exists($this->path.'/setup/install.sql')) {
-	    // run sql-file
-	    if (($Database->runFile($this->path.'/setup/install.sql', $this->id)) === false) return false;
+
+	    // read sql-file
+	    $content = ts_FileHandler::readFile($this->path.'/setup/install.sql');
+
+	    // parse module replacements
+	    $content = $Parser->replaceModule($content, $this->id, $Database->getPreffix());
+
+	    // run sql statements
+	    if (($Database->runString($content, $this->id)) === false) return false;
 	}
 	if (file_exists($this->path.'/setup/install.php')) {
 	    // run php-file
@@ -753,11 +760,11 @@ class ts_Module extends ts_Packet {
 	}
 
 	// successful installation (set install-time in database)
-	$sql_0 = "UPDATE #__modules
+	$sql = "UPDATE #__modules
 		SET dateOfInstall = NOW(),
 		    dateOfUninstall = NULL
 		WHERE id__module = '".$this->id."';";
-	if (!$Database->doUpdate($sql_0)) return false;
+	if (!$Database->doUpdate($sql)) return false;
 
 	return true;
     }
