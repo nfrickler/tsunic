@@ -5,7 +5,7 @@ function $$$editTag () {
 
     // get input
     $id = $TSunic->Temp->getPost('$$$formTag__id');
-    $fk_tag = $TSunic->Temp->getPost('$$$formTag__fk_tag');
+    $fk_type = $TSunic->Temp->getPost('$$$formTag__fk_type');
     $name = $TSunic->Temp->getPost('$$$formTag__name');
     $title = $TSunic->Temp->getPost('$$$formTag__title');
     $description = $TSunic->Temp->getPost('$$$formTag__description');
@@ -14,7 +14,7 @@ function $$$editTag () {
     $Tag = $TSunic->get('$$$Tag', $id);
 
     // validate input
-    if (!$Tag->isValidFkTag($fk_tag)) {
+    if (!$Tag->isValidFkType($fk_type)) {
 	$TSunic->Log->alert('error', '{EDITTAG__INVALIDFKTAG}');
 	$TSunic->redirect('back');
     }
@@ -32,7 +32,7 @@ function $$$editTag () {
     }
 
     // edit selection
-    if ($Tag->edit($fk_tag, $name, $title, $description)) {
+    if ($Tag->edit($fk_type, $name, $title, $description)) {
 	// success
 	$TSunic->Log->alert('info', '{EDITTAG__SUCCESS}');
 	$TSunic->redirect('$$$showTag', array('$$$id' => $id));

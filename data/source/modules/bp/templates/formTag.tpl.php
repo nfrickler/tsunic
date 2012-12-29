@@ -13,9 +13,7 @@ $Tag = $this->getVar('Tag');
 	    <input type="text" name="$$$formTag__title" id="$$$formTag__title" value="<?php $this->setPreset('$$$formTag__title', $Tag->getInfo('title')); ?>" />
 	    <div style="clear:both;"></div>
 	    <label for="$$$formTag__description"><?php $this->set('{FORMTAG__DESCRIPTION}'); ?></label>
-	    <textarea name="$$$formTag__description" id="$$$formTag__description">
-		<?php $this->setPreset('$$$formTag__description', $Tag->getInfo('description')); ?>
-	    </textarea>
+	    <textarea name="$$$formTag__description" id="$$$formTag__description"><?php $this->setPreset('$$$formTag__description', $Tag->getInfo('description')); ?></textarea>
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<input type="submit" class="ts_submit" value="<?php $this->set('#submit_text#'); ?>" />

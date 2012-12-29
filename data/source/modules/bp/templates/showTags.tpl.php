@@ -11,6 +11,7 @@
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
 	    <th><?php $this->set('{SHOWTAGS__NAME}'); ?></th>
+	    <th><?php $this->set('{SHOWTAGS__TITLE}'); ?></th>
 	    <th><?php $this->set('{SHOWTAGS__DESCRIPTION}'); ?></th>
 	    <th><?php $this->set('{SHOWTAGS__ACTIONS}'); ?></th>
 	</tr>
@@ -20,9 +21,8 @@
 		<a href="<?php $this->setUrl('$$$showEditTag', array('$$$id' => $Tag->getInfo('id'))); ?>">
 		    <?php $this->set($Tag->getInfo('name')); ?></a>
 	    </td>
-	    <td>
-		<?php $this->set($Tag->getInfo('description')); ?>
-	    </td>
+	    <td><?php $this->set($Tag->getInfo('title')); ?></td>
+	    <td><?php $this->set($Tag->getInfo('description')); ?></td>
 	    <td>
 		<a href="<?php $this->setUrl('$$$showDeleteTag', array('$$$id' => $Tag->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWTAGS__TODELETE}'); ?></a>

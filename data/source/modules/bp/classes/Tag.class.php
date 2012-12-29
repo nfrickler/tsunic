@@ -153,5 +153,29 @@ class $$$Tag extends $system$Object {
 	    and $this->_isObject('#__types', $fk_type)
 	) ? true : false;
     }
+
+    /* get all available types
+     *
+     * @return array
+     */
+    public function getAllTypes () {
+	global $TSunic;
+
+	// get all tags in database
+	$sql = "SELECT id
+	    FROM #__types
+	    WHERE fk_account = '0'
+		OR fk_account = '".$TSunic->Usr->getInfo('id')."'
+	;";
+	$result = $TSunic->Db->doSelect($sql);
+
+	// get objects
+	$out = array();
+	foreach ($result as $index => $values) {
+	    $out[] = $TSunic->get('$$$Type', $values['id']);
+	}
+
+	return $out;
+    }
 }
 ?>
