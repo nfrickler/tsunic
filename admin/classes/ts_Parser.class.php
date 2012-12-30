@@ -248,7 +248,8 @@ class ts_Parser {
     /* replace language
      * @param string: content of file to parse
      * +@param int: id__module of current module, the content belongs to
-     * +@param string: optional preffix to add to each replacement
+     * +@param string: optional preffix to add to each replacement (only works
+     *		with lowercase replacements!)
      *
      * @return string
      */
@@ -285,9 +286,14 @@ class ts_Parser {
 
 	    // find module
 	    foreach ($this->modules as $index => $value) {
-		if ($index == $cache[0] AND $value['nameid'] == $cache[1]) {
+		if ($index == strtolower($cache[0]) AND $value['nameid'] == strtolower($cache[1])) {
 		    // match
-		    return $this->current_replacement_preffix.'mod'.$value['id__module'].'__';
+		    $out = 'mod'.$value['id__module'].'__';
+		    if (ctype_upper($input)) {
+			return strtoupper($out);
+		    } else {
+			return $this->current_replacement_preffix.$out;
+		    }
 		}
 	    }
 	} else {
@@ -295,9 +301,14 @@ class ts_Parser {
 
 	    // find module
 	    foreach ($this->modules as $index => $value) {
-		if ($index == $cache[0]) {
+		if ($index == strtolower($cache[0])) {
 		    // match
-		    return $this->current_replacement_preffix.'mod'.$value['id__module'].'__';
+		    $out = 'mod'.$value['id__module'].'__';
+		    if (ctype_upper($input)) {
+			return strtoupper($out);
+		    } else {
+			return $this->current_replacement_preffix.$out;
+		    }
 		}
 	    }
 	}

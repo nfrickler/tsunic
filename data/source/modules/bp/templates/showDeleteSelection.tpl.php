@@ -3,7 +3,7 @@
 <div id="$$$div__showDeleteSelection">
     <?php $this->display('$system$showOptionbox', array(
 	'headertext' => $this->set('{SHOWDELETESELECTION__POPUP_DELETE_HEADER}',
-	    array('name' => $Selection->getInfo('firstname')), false
+	    array('name' => $Selection->getInfo('name')), false
 	),
 	'contenttext' => '{SHOWDELETESELECTION__POPUP_DELETE_CONTENT}',
 	'submittext' => '{SHOWDELETESELECTION__POPUP_DELETE_YES}',

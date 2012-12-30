@@ -52,11 +52,11 @@ CREATE TABLE IF NOT EXISTS `#__selections` (
   UNIQUE(`fk_tag`, `name`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `#__types` (`name`, `title`, `description`, `fk_account`) VALUES
-    ('int', '{TYPE__INT}', '{TYPE__INT__DESCRIPTION}', 0),
-    ('double', '{TYPE__DOUBLE}', '{TYPE__DOUBLE__DESCRIPTION}', 0),
-    ('string', '{TYPE__STRING}', '{TYPE__STRING__DESCRIPTION}', 0),
-    ('text', '{TYPE__TEXT}', '{TYPE__TEXT__DESCRIPTION}', 0),
-    ('selection', '{TYPE__SELECTION}', '{TYPE__SELECTION__DESCRIPTION}', 0),
-    ('radio', '{TYPE__RADIO}', '{TYPE__RADIO__DESCRIPTION}', 0)
+INSERT IGNORE INTO `#__types` (`name`, `title`, `description`, `fk_account`) VALUES
+    ('int', '{$BP$TYPE__INT}', '{$BP$TYPE__INT__DESCRIPTION}', 0),
+    ('double', '{$BP$TYPE__DOUBLE}', '{$BP$TYPE__DOUBLE__DESCRIPTION}', 0),
+    ('string', '{$BP$TYPE__STRING}', '{$BP$TYPE__STRING__DESCRIPTION}', 0),
+    ('text', '{$BP$TYPE__TEXT}', '{$BP$TYPE__TEXT__DESCRIPTION}', 0),
+    ('selection', '{$BP$TYPE__SELECTION}', '{$BP$TYPE__SELECTION__DESCRIPTION}', 0),
+    ('radio', '{$BP$TYPE__RADIO}', '{$BP$TYPE__RADIO__DESCRIPTION}', 0)
 ;

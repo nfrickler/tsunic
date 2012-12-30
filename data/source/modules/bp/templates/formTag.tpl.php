@@ -6,6 +6,20 @@ $Tag = $this->getVar('Tag');
     <form action="<?php $this->setUrl($this->getVar('submit_link')); ?>" method="post" name="$$$formTag__form" id="$$$formTag__form" class="ts_form">
 	<fieldset>
 	    <legend><?php $this->set('{FORMTAG__LEGEND}'); ?></legend>
+	    <input type="hidden" name="$$$formTag__id" id="$$$formTag__id" value="<?php echo $Tag->getInfo('id'); ?>">
+	    <label for="$$$formTag__fk_type"><?php $this->set('{FORMTAG__FK_TYPE}'); ?></label>
+	    <?php
+	    $preset = $this->setPreset('$$$formTag__fk_type', $Tag->getInfo('fk_type'), false);
+	    ?>
+	    <select name="$$$formTag__fk_type" id="$$$formTag__fk_type">
+		<option value="0"><?php $this->set('{FORMTAG__FK_TYPE_PLEASECHOOSE}'); ?></option>
+		<?php foreach ($Tag->getAllTypes() as $index => $Value) { ?>
+		<option value="<?php echo $Value->getInfo('id'); ?>" <?php if ($Value->getInfo('id') == $preset) echo 'selected="selected"'; ?>>
+		    <?php $this->set($Value->getInfo('title')); ?>
+		</option>
+		<?php } ?>
+	    </select>
+	    <div style="clear:both;"></div>
 	    <label for="$$$formTag__name"><?php $this->set('{FORMTAG__NAME}'); ?></label>
 	    <input type="text" name="$$$formTag__name" id="$$$formTag__name" value="<?php $this->setPreset('$$$formTag__name', $Tag->getInfo('name')); ?>" />
 	    <div style="clear:both;"></div>

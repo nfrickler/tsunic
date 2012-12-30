@@ -3,6 +3,20 @@
 $lang = array(
     'NAME' => 'Profil Modul',
 
+    // tags
+    'TAG__PROFILE__FIRSTNAME' => 'Vorname',
+    'TAG__PROFILE__FIRSTNAME__DESCRIPTION' => 'Vorname der Person',
+    'TAG__PROFILE__LASTNAME' => 'Nachname',
+    'TAG__PROFILE__LASTNAME__DESCRIPTION' => 'Nachname der Person',
+    'TAG__PROFILE__GENDER' => 'Geschlecht',
+    'TAG__PROFILE__GENDER__DESCRIPTION' => 'Geschlecht der Person',
+
+    // selections
+    'SELECTIONS__PROFILE__GENDER_F' => 'weiblich',
+    'SELECTIONS__PROFILE__GENDER_F__DESCRIPTION' => 'weiblich',
+    'SELECTIONS__PROFILE__GENDER_M' => 'männlich',
+    'SELECTIONS__PROFILE__GENDER_M__DESCRIPTION' => 'männlich',
+
     // showIndex
     'SHOWINDEX__TITLE' => 'Profile',
     'SHOWINDEX__H1' => 'Profile',
@@ -28,6 +42,7 @@ $lang = array(
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Profil erstellen',
     'SHOWCREATEPROFILE__H1' => 'Profil erstellen',
+    'SHOWCREATEPROFILE__TOSHOWTAGS' => 'Tags verwalten',
     'SHOWCREATEPROFILE__INFOTEXT' => 'Hier kannst du ein neues Profil anlegen. Alle Felder sind optional.',
     'SHOWCREATEPROFILE__SUBMIT' => 'Erstellen',
     'SHOWCREATEPROFILE__CANCEL' => 'Abbrechen',

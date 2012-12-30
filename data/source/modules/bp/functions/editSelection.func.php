@@ -30,7 +30,7 @@ function $$$editSelection () {
     if ($Selection->edit($fk_tag, $name, $description)) {
 	// success
 	$TSunic->Log->alert('info', '{EDITSELECTION__SUCCESS}');
-	$TSunic->redirect('$$$showSelection', array('$$$id' => $id));
+	$TSunic->redirect('$$$showEditTag', array('$$$id' => $Selection->getInfo('fk_tag')));
 	return true;
     }
 

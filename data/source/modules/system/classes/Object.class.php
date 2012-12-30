@@ -334,8 +334,14 @@ class $$$Object {
      * @return bool
      */
     protected function _isObject ($table, $id) {
-	return ($this->_validate($id, 'int'))
-	    ? !$this->_isUnique($table, 'id', $id) : false;
+	if (!$this->_validate($id, 'int')) return false;
+	global $TSunic;
+	$sql = "SELECT id
+		FROM $table
+		WHERE id = '$id'
+	;";
+	$result = $TSunic->Db->doSelect($sql);
+	return ($result) ? true : false;
     }
 }
 ?>

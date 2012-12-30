@@ -4,10 +4,12 @@ function $$$showCreateSelection () {
     global $TSunic;
 
     // create empty object
+    $fk_tag = $TSunic->Temp->getParameter('fk_tag');
     $Selection = $TSunic->get('$$$Selection');
 
     // activate template
     $data = array(
+	'fk_tag' => $fk_tag,
 	'Selection' => $Selection
     );
     $TSunic->Tmpl->activate('$$$showCreateSelection', '$system$content', $data);

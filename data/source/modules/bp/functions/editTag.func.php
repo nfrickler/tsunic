@@ -35,7 +35,7 @@ function $$$editTag () {
     if ($Tag->edit($fk_type, $name, $title, $description)) {
 	// success
 	$TSunic->Log->alert('info', '{EDITTAG__SUCCESS}');
-	$TSunic->redirect('$$$showTag', array('$$$id' => $id));
+	$TSunic->redirect('$$$showTags');
 	return true;
     }
 

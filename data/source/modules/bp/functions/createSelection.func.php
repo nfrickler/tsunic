@@ -12,15 +12,15 @@ function $$$createSelection () {
     $Selection = $TSunic->get('$$$Selection');
 
     if (!$Selection->isValidFkTag($fk_tag)) {
-	$TSunic->Log->alert('error', '{EDITSELECTION__INVALIDFKTAG}');
+	$TSunic->Log->alert('error', '{CREATESELECTION__INVALIDFKTAG}');
 	$TSunic->redirect('back');
     }
     if (!$Selection->isValidName($name)) {
-	$TSunic->Log->alert('error', '{EDITSELECTION__INVALIDNAME}');
+	$TSunic->Log->alert('error', '{CREATESELECTION__INVALIDNAME}');
 	$TSunic->redirect('back');
     }
     if (!$Selection->isValidDescription($description)) {
-	$TSunic->Log->alert('error', '{EDITSELECTION__INVALIDFKDESCRIPTION}');
+	$TSunic->Log->alert('error', '{CREATESELECTION__INVALIDFKDESCRIPTION}');
 	$TSunic->redirect('back');
     }
 
@@ -37,7 +37,7 @@ function $$$createSelection () {
 
     // success
     $TSunic->Log->alert('info', '{CREATESELECTION__SUCCESS}');
-    $TSunic->redirect('$$$showSelection', array('$$$id' => $Selection->getInfo('id')));
+    $TSunic->redirect('$$$showEditTag', array('$$$id' => $Selection->getInfo('fk_tag')));
     return true;
 }
 ?>

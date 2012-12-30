@@ -3,6 +3,20 @@
 $lang = array(
     'NAME' => 'Profile module',
 
+    // tags
+    'TAG__PROFILE__FIRSTNAME' => 'Firstname',
+    'TAG__PROFILE__FIRSTNAME__DESCRIPTION' => 'Firstname of person',
+    'TAG__PROFILE__LASTNAME' => 'Lastname',
+    'TAG__PROFILE__LASTNAME__DESCRIPTION' => 'Lastname of person',
+    'TAG__PROFILE__GENDER' => 'Gender',
+    'TAG__PROFILE__GENDER__DESCRIPTION' => 'Gender of person',
+
+    // selections
+    'SELECTIONS__PROFILE__GENDER_F' => 'female',
+    'SELECTIONS__PROFILE__GENDER_F__DESCRIPTION' => 'female',
+    'SELECTIONS__PROFILE__GENDER_M' => 'male',
+    'SELECTIONS__PROFILE__GENDER_M__DESCRIPTION' => 'male',
+
     // showIndex
     'SHOWINDEX__TITLE' => 'Profiles',
     'SHOWINDEX__H1' => 'Profiles',
@@ -21,6 +35,7 @@ $lang = array(
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Create profile',
     'SHOWCREATEPROFILE__H1' => 'Create profile',
+    'SHOWCREATEPROFILE__TOSHOWTAGS' => 'Administrate tags',
     'SHOWCREATEPROFILE__INFOTEXT' => 'Fill in the following form to create a new profile. All fields are optional.',
     'SHOWCREATEPROFILE__SUBMIT' => 'Create',
     'SHOWCREATEPROFILE__CANCEL' => 'Cancel',

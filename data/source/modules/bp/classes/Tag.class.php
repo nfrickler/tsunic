@@ -88,15 +88,16 @@ class $$$Tag extends $system$Object {
 	if ($this->getType()->getInfo('name') != 'selection'
 	    AND $this->getType()->getInfo('name') != 'radio'
 	) return array();
+	global $TSunic;
 
 	// get all selections
-	$sql = "SELECT id FROM #__selections WHERE fk_tags = '$this->id';";
+	$sql = "SELECT id FROM #__selections WHERE fk_tag = '$this->id';";
 	$result = $TSunic->Db->doSelect($sql);
 
 	// to objects
 	$out = array();
 	foreach ($result as $index => $values) {
-	    $out[] = $TSunic->get('$$$Seletion', $values['id']);
+	    $out[] = $TSunic->get('$$$Selection', $values['id']);
 	}
 
 	return $out;
@@ -107,6 +108,7 @@ class $$$Tag extends $system$Object {
      * @return object
      */
     public function getType () {
+	global $TSunic;
 	if (!$this->Type) {
 	    $this->Type = $TSunic->get('$$$Type', $this->getInfo('fk_type'));
 	}

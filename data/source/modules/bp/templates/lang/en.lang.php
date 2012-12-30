@@ -3,6 +3,14 @@
 $lang = array(
     'NAME' => 'Bits&Bytes module',
 
+    // types
+    'TYPE__INT' => 'Integer',
+    'TYPE__DOUBLE' => 'Floating point',
+    'TYPE__STRING' => 'String',
+    'TYPE__TEXT' => 'Multiline Text',
+    'TYPE__SELECTION' => 'Multiple selection',
+    'TYPE__RADIO' => 'Single selection',
+
     // showTags
     'SHOWTAGS__TITLE' => 'Tags',
     'SHOWTAGS__H1' => 'Tags',
@@ -28,8 +36,15 @@ $lang = array(
     'SHOWEDITTAG__SUBMIT' => 'Save changes',
     'SHOWEDITTAG__CANCEL' => 'Cancel',
 
+    'SHOWEDITTAG__H_SELECTIONS' => 'Options',
+    'SHOWEDITTAG__TOCREATESELECTION' => 'Add new option',
+    'SHOWEDITTAG__SELECTIONS__INFOTEXT' => 'Administrate the options for this selection or radio field.',
+
     // formTag
     'FORMTAG__LEGEND' => 'Tag',
+    'FORMTAG__FK_TYPE' => 'Type',
+    'FORMTAG__FK_TYPE_PLEASECHOOSE' => '---Choose please---',
+    'FORMTAG__FK_TYPE_HELP' => 'Please choose a type for this tag.',
     'FORMTAG__NAME' => 'Name',
     'FORMTAG__NAME_PRESET' => 'Unique name',
     'FORMTAG__NAME_HELP' => 'Unique name of this tag.',
@@ -66,6 +81,62 @@ $lang = array(
     // deleteTag
     'DELETETAG__ERROR' => 'An error occurred!',
     'DELETETAG__SUCCESS' => 'Tag has been deleted.',
+
+    // showListSelections
+    'SHOWLISTSELECTIONS__NOSELECTIONS' => 'No options available.',
+    'SHOWLISTSELECTIONS__NAME' => 'Name',
+    'SHOWLISTSELECTIONS__DESCRIPTION' => 'Description',
+    'SHOWLISTSELECTIONS__ACTIONS' => 'Actions',
+
+    // showDeleteSelection
+    'SHOWDELETESELECTION__TITLE' => 'Delete option?',
+    'SHOWDELETESELECTION__POPUP_DELETE_HEADER_JS' => 'Delete this option?',
+    'SHOWDELETESELECTION__POPUP_DELETE_HEADER' => 'Delete option "#name#"?',
+    'SHOWDELETESELECTION__POPUP_DELETE_CONTENT' => 'Do you really want to delete this option?',
+    'SHOWDELETESELECTION__POPUP_DELETE_YES' => 'Yes, delete',
+    'SHOWDELETESELECTION__POPUP_DELETE_NO' => 'No, cancel',
+
+    // showCreateSelection
+    'SHOWCREATESELECTION__TITLE' => 'Create selection',
+    'SHOWCREATESELECTION__H1' => 'Create selection',
+    'SHOWCREATESELECTION__TOBACKTOTAG' => 'Back to tag',
+    'SHOWCREATESELECTION__INFOTEXT' => 'Create a new option via the following form.',
+    'SHOWCREATESELECTION__SUBMIT' => 'Create selection',
+    'SHOWCREATESELECTION__CANCEL' => 'Cancel',
+
+    // showEditSelection
+    'SHOWEDITSELECTION__TITLE' => 'Edit selection',
+    'SHOWEDITSELECTION__H1' => 'Edit selection',
+    'SHOWEDITSELECTION__TOBACKTOTAG' => 'Back to tag',
+    'SHOWEDITSELECTION__INFOTEXT' => 'Edit this option via the following form.',
+    'SHOWEDITSELECTION__SUBMIT' => 'Save changes',
+    'SHOWEDITSELECTION__CANCEL' => 'Cancel',
+
+    // formSelection
+    'FORMSELECTION__LEGEND' => 'Option',
+    'FORMSELECTION__FK_TAG' => 'Tag',
+    'FORMSELECTION__FK_TAG_PLEASECHOOSE' => '---Choose please---',
+    'FORMSELECTION__FK_TAG_HELP' => 'Select the selection/radio tag this option shall belong to.',
+    'FORMSELECTION__NAME' => 'Name',
+    'FORMSELECTION__NAME_PRESET' => 'Name',
+    'FORMSELECTION__NAME_HELP' => 'Name of this option',
+    'FORMSELECTION__DESCRIPTION' => 'Description',
+    'FORMSELECTION__DESCRIPTION_PRESET' => 'Description',
+    'FORMSELECTION__DESCRIPTION_HELP' => 'Optional description of this option',
+
+    // createSelection
+    'CREATESELECTION__INVALIDFKTAG' => 'Invalid tag selected!',
+    'CREATESELECTION__INVALIDNAME' => 'Invalid name!',
+    'CREATESELECTION__INVALIDDESCRIPTION' => 'Invalid description!',
+    'CREATESELECTION__ERROR' => 'An error occurred!',
+    'CREATESELECTION__SUCCESS' => 'Option has been added.',
+
+    // editSelection
+    'EDITSELECTION__INVALIDFKTAG' => 'Invalid tag selected!',
+    'EDITSELECTION__INVALIDNAME' => 'Invalid name!',
+    'EDITSELECTION__INVALIDDESCRIPTION' => 'Invalid description!',
+    'EDITSELECTION__ERROR' => 'An error occurred!',
+    'EDITSELECTION__SUCCESS' => 'Changes saved.',
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'List tags'

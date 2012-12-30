@@ -25,7 +25,7 @@ class $$$Type extends $system$Object {
 	$data = array(
 	    'name' => $name,
 	    'title' => $title,
-	    'description' => $description
+	    'description' => $description,
 	    'author' => $TSunic->Usr->getInfo('name'),
 	);
 	return $this->_create($data);

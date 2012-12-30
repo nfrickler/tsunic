@@ -3,6 +3,14 @@
 $lang = array(
     'NAME' => 'Bits&Bytes Modul',
 
+    // types
+    'TYPE__INT' => 'Ganzzahl',
+    'TYPE__DOUBLE' => 'Gleitpunktzahl',
+    'TYPE__STRING' => 'Einzeiliger Text',
+    'TYPE__TEXT' => 'Mehrzeiliger Text',
+    'TYPE__SELECTION' => 'Mehrfachauswahl',
+    'TYPE__RADIO' => 'Einfachauswahl',
+
     // showTags
     'SHOWTAGS__TITLE' => 'Tags',
     'SHOWTAGS__H1' => 'Tags',
@@ -28,8 +36,15 @@ $lang = array(
     'SHOWEDITTAG__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITTAG__CANCEL' => 'Abbrechen',
 
+    'SHOWEDITTAG__H_SELECTIONS' => 'Auswahlmöglichkeiten',
+    'SHOWEDITTAG__TOCREATESELECTION' => 'Neue Auswahlmöglichkeit hinzufügen',
+    'SHOWEDITTAG__SELECTIONS__INFOTEXT' => 'Verwalte hier die Auswahlmöglichkeiten für dieses Feld.',
+
     // formTag
     'FORMTAG__LEGEND' => 'Tag',
+    'FORMTAG__FK_TYPE' => 'Typ',
+    'FORMTAG__FK_TYPE_PLEASECHOOSE' => '---Bitte wählen---',
+    'FORMTAG__FK_TYPE_HELP' => 'Bitte wählen einen Typ für diesen Tag.',
     'FORMTAG__NAME' => 'Name',
     'FORMTAG__NAME_PRESET' => 'Eindeutiger Name',
     'FORMTAG__NAME_HELP' => 'Eindeutiger Name für diesen Tag.',
@@ -66,6 +81,62 @@ $lang = array(
     // deleteTag
     'DELETETAG__ERROR' => 'Ein Fehler ist aufgetreten!',
     'DELETETAG__SUCCESS' => 'Der Tag wurde gelöscht.',
+
+    // showListSelections
+    'SHOWLISTSELECTIONS__NOSELECTIONS' => 'Keine Auswahlmöglichkeiten verfügbar.',
+    'SHOWLISTSELECTIONS__NAME' => 'Name',
+    'SHOWLISTSELECTIONS__DESCRIPTION' => 'Beschreibung',
+    'SHOWLISTSELECTIONS__ACTIONS' => 'Aktionen',
+
+    // showDeleteSelection
+    'SHOWDELETESELECTION__TITLE' => 'Auswahlmöglichkeit löschen?',
+    'SHOWDELETESELECTION__POPUP_DELETE_HEADER_JS' => 'Auswahlmöglichkeit löschen?',
+    'SHOWDELETESELECTION__POPUP_DELETE_HEADER' => 'Auswahlmöglichkeit "#name#" löschen?',
+    'SHOWDELETESELECTION__POPUP_DELETE_CONTENT' => 'Möchtest du diese Auswahlmöglichkeit wirklich löschen?',
+    'SHOWDELETESELECTION__POPUP_DELETE_YES' => 'Ja, löschen',
+    'SHOWDELETESELECTION__POPUP_DELETE_NO' => 'Nein, abbrechen',
+
+    // showCreateSelection
+    'SHOWCREATESELECTION__TITLE' => 'Auswahlmöglichkeit hinzufügen',
+    'SHOWCREATESELECTION__H1' => 'Auswahlmöglichkeit hinzufügen',
+    'SHOWCREATESELECTION__TOBACKTOTAG' => 'Zurück zum Tag',
+    'SHOWCREATESELECTION__INFOTEXT' => 'Hier kannst du eine neue Auswahlmöglichkeit erstellen.',
+    'SHOWCREATESELECTION__SUBMIT' => 'Auswahlmöglichkeit erstellen',
+    'SHOWCREATESELECTION__CANCEL' => 'Abbrechen',
+
+    // showEditSelection
+    'SHOWEDITSELECTION__TITLE' => 'Auswahlmöglichkeit bearbeiten',
+    'SHOWEDITSELECTION__H1' => 'Auswahlmöglichkeit bearbeiten',
+    'SHOWEDITSELECTION__TOBACKTOTAG' => 'Zurück zum Tag',
+    'SHOWEDITSELECTION__INFOTEXT' => 'Hier kannst du die Auswahlmöglichkeit bearbeiten.',
+    'SHOWEDITSELECTION__SUBMIT' => 'Änderungen speichern',
+    'SHOWEDITSELECTION__CANCEL' => 'Abbrechen',
+
+    // formSelection
+    'FORMSELECTION__LEGEND' => 'Auswahlmöglichkeit',
+    'FORMSELECTION__FK_TAG' => 'Tag',
+    'FORMSELECTION__FK_TAG_PLEASECHOOSE' => '---Bitte wählen---',
+    'FORMSELECTION__FK_TAG_HELP' => 'Wähle den Tag aus, zu dem diese Auswahlmöglichkeit gehört.',
+    'FORMSELECTION__NAME' => 'Name',
+    'FORMSELECTION__NAME_PRESET' => 'Name',
+    'FORMSELECTION__NAME_HELP' => 'Name dieser Auswahlmöglichkeit',
+    'FORMSELECTION__DESCRIPTION' => 'Beschreibung',
+    'FORMSELECTION__DESCRIPTION_PRESET' => 'Beschreibung',
+    'FORMSELECTION__DESCRIPTION_HELP' => 'Optionale Beschreibung dieser Auswahlmöglichkeit',
+
+    // createSelection
+    'CREATESELECTION__INVALIDFKTAG' => 'Ungültiger Tag ausgewählt!',
+    'CREATESELECTION__INVALIDNAME' => 'Ungültiger Name!',
+    'CREATESELECTION__INVALIDDESCRIPTION' => 'Ungültige Beschreibung!',
+    'CREATESELECTION__ERROR' => 'Ein Fehler ist aufgetreten!',
+    'CREATESELECTION__SUCCESS' => 'Auswahlmöglichkeit wurde hinzugefügt.',
+
+    // editSelection
+    'EDITSELECTION__INVALIDFKTAG' => 'Ungültiger Tag ausgewählt!',
+    'EDITSELECTION__INVALIDNAME' => 'Ungültiger Name!',
+    'EDITSELECTION__INVALIDDESCRIPTION' => 'Ungültige Beschreibung!',
+    'EDITSELECTION__ERROR' => 'Ein Fehler ist aufgetreten!',
+    'EDITSELECTION__SUCCESS' => 'Änderungen gespeichert.',
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tag-Liste'

@@ -43,7 +43,7 @@ function $$$createTag () {
 
     // success
     $TSunic->Log->alert('info', '{CREATETAG__SUCCESS}');
-    $TSunic->redirect('$$$showTag', array('$$$id' => $Tag->getInfo('id')));
+    $TSunic->redirect('$$$showTags');
     return true;
 }
 ?>

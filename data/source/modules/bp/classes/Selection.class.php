@@ -39,17 +39,19 @@ class $$$Selection extends $system$Object {
      *
      * @return bool
      */
-    public function edit ($name, $description) {
+    public function edit ($fk_tag, $name, $description) {
 	global $TSunic;
 
 	// validate
 	if (!$this->isValidName($name)
+	    OR !$this->isValidFkTag($fk_tag)
 	    OR !$this->isValidDescription($description)) {
 	    return false;
 	}
 
 	// update database
 	$data = array(
+	    'fk_tag' => $fk_tag,
 	    'name' => $name,
 	    'description' => $description
 	);
@@ -96,17 +98,24 @@ class $$$Selection extends $system$Object {
     }
 
     /* get all available tags
+     * @param bool: selections and radios only?
      *
      * @return array
      */
-    public function getAllTags () {
+    public function getAllTags ($selOnly = false) {
 	global $TSunic;
 
+	// selections only?
+	$selectionsOnly = ($selOnly) ? "AND (types.name = 'selection' OR types.name = 'radio')" : "";
+
 	// get all tags in database
-	$sql = "SELECT id
-	    FROM #__tags
-	    WHERE fk_account = '0'
-		OR fk_account = '".$TSunic->Usr->getInfo('id')."'
+	$sql = "SELECT tags.id
+	    FROM #__tags as tags,
+		#__types as types
+	    WHERE tags.fk_type = types.id
+		$selectionsOnly
+		AND (tags.fk_account = '0'
+		OR tags.fk_account = '".$TSunic->Usr->getInfo('id')."')
 	;";
 	$result = $TSunic->Db->doSelect($sql);
 
