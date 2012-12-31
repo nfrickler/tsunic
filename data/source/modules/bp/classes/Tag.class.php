@@ -156,6 +156,15 @@ class $$$Tag extends $system$Object {
 	) ? true : false;
     }
 
+    /* is valid value for this tag?
+     * @param string: value
+     *
+     * @return bool
+     */
+    public function isValidValue ($value) {
+	return $this->getType()->isValidValue($value);
+    }
+
     /* get all available types
      *
      * @return array

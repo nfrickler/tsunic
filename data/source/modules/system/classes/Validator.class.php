@@ -74,6 +74,24 @@ class $$$Validator {
 	return (is_numeric($input) or $input === 0) ? true : false;
     }
 
+    /* is double?
+     * @param string: input value
+     *
+     * @return bool
+     */
+    public static function isDouble ($input) {
+	$cache = explode('.', $input);
+	if (count($cache) <= 2) {
+	    foreach ($cache as $index => $value) {
+		if (!self::_isInt($cache[0])) return false;
+	    }
+	    return true;
+	}
+
+	return false;
+    }
+
+
     /* is uri
      * @param string: input value
      *

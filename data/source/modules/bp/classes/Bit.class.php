@@ -7,44 +7,12 @@ class $$$Bit extends $system$Object {
      */
     protected $table = '#__bits';
 
-    /* tablename of Piece object in database
-     * string
+    /* sub bits
+     * array
      */
-    protected $table_piece = '#__pieces';
+    protected $bits;
 
-    /* fk_piece
-     * int
-     */
-    protected $fk_piece;
-
-    /* name
-     * string
-     */
-    protected $name;
-
-    /* constructor
-     * @param int: foreign key of piece
-     * @param string: name of bit
-     * @param string: value of bit (to prevent massive sql queries)
-     */
-    public function __construct ($fk_piece = 0, $name = "", $value = NULL) {
-
-	// save input
-	$this->fk_piece = $fk_piece;
-	$this->name = $name;
-
-	// init info array
-	if (!($value === NULL)) {
-	    $this->info = array(
-		'name' => $name,
-		'value' => $value
-	    );
-	}
-
-	return;
-    }
-
-    /* get information about object
+    /* get information about object (enabling setDummy)
      * +@param string/bool: name of info (true will return $this->info)
      * +@param bool: force update of object infos?
      *
@@ -53,7 +21,9 @@ class $$$Bit extends $system$Object {
     public function getInfo ($name = true, $update = false) {
 
 	// onload data
-	if ($update or empty($this->info)) $this->_loadInfo();
+	if ($update or empty($this->info)) {
+	    $this->_loadInfo();
+	}
 
 	// return requested info
 	if ($name === true) return $this->info;
@@ -62,14 +32,24 @@ class $$$Bit extends $system$Object {
 	return NULL;
     }
 
-    /* load Key (this is the one used by fk_piece!)
+    /* set dummy values
+     * @param int: fk_tag
+     *
+     * @return bool
+     */
+    public function setDummy ($fk_tag) {
+	$this->info = array('fk_tag' => $fk_tag);
+	return true;
+    }
+
+    /* load Key (always use the same one for all bits of user)
      *
      * @return Object
      */
     protected function _getKey () {
 	global $TSunic;
 	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$system$Key', array($this->table_piece, 1));
+	    $TSunic->get('$system$Key', array($this->table, 1));
 	return $this->_Key;
     }
 
@@ -89,149 +69,47 @@ class $$$Bit extends $system$Object {
 	return true;
     }
 
-    /* load information about object
-     *
-     * @return bool
-     */
-    protected function _loadInfo () {
-	if (!$this->fk_piece or !$this->name or !$this->table) return false;
-	global $TSunic;
-	$Key = $this->_getKey();
-
-	// get data from database (by fk_piece and name!)
-	$sql = "SELECT *
-	    FROM $this->table
-	    WHERE fk_piece = '$this->fk_piece'
-		AND _name_ = '".$Key->encrypt($this->name)."';";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return false;
-
-	// decrypt
-	$this->info = array();
-	foreach ($result[0] as $index => $value) {
-
-	    // encrypted
-	    if (substr($index,0,1) == "_" and substr($index,-1) == "_") {
-		$index = substr($index,1);
-		$index = substr($index,0,(strlen($index)-1));
-		$this->keytypes[$index] = 1;
-		$this->info[$index] = $this->_getKey()->decrypt($value);
-
-	    // not encrypted
-	    } else {
-		$this->keytypes[$index] = 0;
-		$this->info[$index] = $value;
-	    }
-	}
-
-	return true;
-    }
-
-    /* edit object
-     * @param array: new data
-     * @param bool: save empty strings
-     *
-     * @return bool
-     */
-    protected function _edit ($data, $save_empty = false) {
-	if (!$this->table) return false;
-	if (!$data) return true;
-	global $TSunic;
-	$Key = $this->_getKey();
-
-	// encrypt
-	$data = $this->_data2db($data);
-	if (!$data) return false;
-
-	// update database
-	foreach ($data as $index => $value) {
-	    if (!$save_empty and !$value or
-		($index == "password" and $value == "**********")
-	    ) {
-		unset($data[$index]);
-		continue;
-	    }
-
-	    if ($value == 'NOW()') {
-		$data[$index] = "$index = NOW()";
-		continue;
-	    }
-	    $data[$index] = "$index = '$value'";
-	}
-	if ($data) {
-	    $sql = "UPDATE $this->table
-		SET ".implode(",",$data)."
-		WHERE fk_piece = '$this->fk_piece'
-		    AND _name_ = '".$Key->encrypt($this->name)."';";
-	    if (!$TSunic->Db->doUpdate($sql)) return false;
-	}
-
-	// update infos
-	$this->_loadInfo();
-	$this->_saveKey();
-
-	return true;
-    }
-
-    /* delete object
-     *
-     * @return bool
-     */
-    protected function _delete () {
-	global $TSunic;
-	$Key = $this->_getKey();
-
-	// delete object in database
-	$sql = "DELETE FROM $this->table
-	    WHERE fk_piece = '$this->fk_piece'
-		AND _name_ = '".$Key->encrypt($this->name)."'
-	;";
-	$result = $TSunic->Db->doDelete($sql);
-	if (!$result) return false;
-
-	// invalidate object
-	$this->id = 0;
-	$this->_loadInfo();
-	$this->_deleteKey();
-
-	return true;
-    }
-
     /* create new bit
-     * @param int: fk_piece
-     * @param string: name
+     * @param int: fk_object
      * @param string: value
+     * +@param int: fk_tag
      *
      * @return bool
      */
-    public function create ($fk_piece, $name, $value) {
+    public function create ($fk_object, $value, $fk_tag = 0) {
 
 	// validate input
-	if (!$this->isValidPiece($fk_piece)
-	    or !$this->isValidName($name)
+	if (!$this->isValidFkTag($fk_tag)
+	    or !$this->isValidFkObject($fk_object)
 	    or !$this->isValidValue($value)
 	) return false;
 
 	// update database
 	global $TSunic;
 	$data = array(
-	    "fk_piece" => $fk_piece,
-	    "name" => $name,
-	    "value" => $value
+	    "fk_object" => $fk_object,
+	    "value" => $value,
+	    "fk_tag" => $fk_tag,
+	    'dateOfCreation' => 'NOW()'
 	);
 	if (!$this->_create($data)) return false;
 
 	return $this->id;
     }
 
-    /* edit bit
+    /* edit bit (if value === "" or == 0 for selection/radio, Bit will be deleted)
      * @param string: value
      *
      * @return bool
      */
-    protected function edit ($value) {
+    public function edit ($value) {
 	if (!$this->isValid()) return false;
 	global $TSunic;
+
+	// delete?
+	if ($value === ""
+	    or (in_array($this->getTag()->getType()->getInfo('name'), array('selection', 'radio')) and empty($value))
+	) return $this->delete();
 
 	// validate input
 	if (!$this->isValidValue($value)) return false;
@@ -246,22 +124,26 @@ class $$$Bit extends $system$Object {
 	return true;
     }
 
-    /* check, if fk_piece is valid
-     * @param int: fk_piece
+    /* check, if fk_object is valid
+     * @param int: fk_object
      *
      * @return bool
      */
-    public function isValidPiece ($piece) {
-	return ($this->_validate($piece, 'int')) ? true : false;
+    public function isValidFkObject ($fk_object) {
+	return ($this->_validate($fk_object, 'int')
+	    and $this->_isObject('#__objects', $fk_object)
+	) ? true : false;
     }
 
-    /* check, if name is valid
-     * @param string: name
+    /* check, if fk_tag is valid
+     * @param int: fk_tag
      *
      * @return bool
      */
-    public function isValidName ($name) {
-	return ($this->_validate($name, 'string')) ? true : false;
+    public function isValidFkTag ($fk_tag) {
+	return (!$fk_tag or $this->_validate($fk_tag, 'int')
+	    and $this->_isObject('#__tags', $fk_tag)
+	) ? true : false;
     }
 
     /* check, if value is valid
@@ -279,6 +161,40 @@ class $$$Bit extends $system$Object {
      */
     public function delete () {
 	return $this->_delete();
+    }
+
+    /* get all sub bits
+     *
+     * @return array
+     */
+    public function getBits () {
+	if ($this->bits) return $this->bits;
+	global $TSunic;
+
+	// get all bits from database
+	$sql = "SELECT id
+	    FROM #__bits
+	    WHERE fk_bit = '$this->id'
+	;";
+	$result = $TSunic->Db->doSelect($sql);
+	if (!$result) return array();
+
+	// get objects
+	$this->bits = array();
+	foreach ($result as $index => $values) {
+	    $this->bits[] = $TSunic->get('$$$Bit', $values['id']);
+	}
+
+	return $this->bits;
+    }
+
+    /* get Tag object
+     *
+     * @return object
+     */
+    public function getTag () {
+	global $TSunic;
+	return $TSunic->get('$$$Tag', $this->getInfo('fk_tag'), true);
     }
 }
 ?>

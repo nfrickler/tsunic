@@ -295,6 +295,8 @@ class $$$Object {
 		return $$$Validator::isFilename($value);
 	    case 'int':
 		return $$$Validator::isInt($value);
+	    case 'double':
+		return $$$Validator::isDouble($value);
 	    case 'uri':
 		return $$$Validator::isUri($value);
 	    case 'url':

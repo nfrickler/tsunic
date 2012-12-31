@@ -32,13 +32,6 @@ $lang = array(
     'SHOWPROFILE__H1' => 'Profil',
     'SHOWPROFILE__NAME' => 'Name',
 
-    // showEditProfile
-    'SHOWEDITPROFILE__TITLE' => 'Profil bearbeiten',
-    'SHOWEDITPROFILE__H1' => 'Profil bearbeiten',
-    'SHOWEDITPROFILE__INFOTEXT' => 'Hier kannst du ein Profil bearbeiten.',
-    'SHOWEDITPROFILE__SUBMIT' => 'Änderungen speichern',
-    'SHOWEDITPROFILE__CANCEL' => 'Abbrechen',
-
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Profil erstellen',
     'SHOWCREATEPROFILE__H1' => 'Profil erstellen',
@@ -47,8 +40,17 @@ $lang = array(
     'SHOWCREATEPROFILE__SUBMIT' => 'Erstellen',
     'SHOWCREATEPROFILE__CANCEL' => 'Abbrechen',
 
+    // showEditProfile
+    'SHOWEDITPROFILE__TITLE' => 'Profil bearbeiten',
+    'SHOWEDITPROFILE__H1' => 'Profil bearbeiten',
+    'SHOWEDITPROFILE__TOSHOWTAGS' => 'Tags verwalten',
+    'SHOWEDITPROFILE__INFOTEXT' => 'Hier kannst du ein Profil bearbeiten.',
+    'SHOWEDITPROFILE__SUBMIT' => 'Änderungen speichern',
+    'SHOWEDITPROFILE__CANCEL' => 'Abbrechen',
+
     // formProfile
-    'FORMPROFILE__LEGEND' => 'Profil',
+    'FORMPROFILE__LEGEND_ID' => 'Identifikationsdaten',
+    'FORMPROFILE__LEGEND' => 'Zusätzliche Daten',
     'FORMPROFILE__FIRSTNAME' => 'Vorname',
     'FORMPROFILE__FIRSTNAME_HELP' => 'Vorname',
     'FORMPROFILE__FIRSTNAME_PRESET' => 'Vorname',
@@ -62,7 +64,12 @@ $lang = array(
     // createProfile
     'CREATEPROFILE__SUCCESS' => 'Neues Profil wurde angelegt.',
     'CREATEPROFILE__ERROR' => 'Ein Fehler ist aufgetreten!', 
-    'CREATEPROFILE__INVALID' => 'Ungültige Eingabe (#field#)!',
+    'CREATEPROFILE__INVALIDVALUE' => 'Ungültige Eingabe!',
+
+    // editProfile
+    'EDITPROFILE__SUCCESS' => 'Änderungen gespeichert.',
+    'EDITPROFILE__ERROR' => 'Ein Fehler ist aufgetreten!', 
+    'EDITPROFILE__INVALIDVALUE' => 'Ungültige Eingabe (Tag: "#field#", Wert: "#value#")!',
 
     // showDeleteProfile
     'SHOWDELETEPROFILE__POPUP_DELETE_HEADER' => 'Profil wirklich löschen?',

@@ -1,12 +1,5 @@
 <!-- | Tables for profile -->
 
-CREATE TABLE IF NOT EXISTS `#__profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_account` int(11) NOT NULL,
-  `dateOfCreation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
-
 INSERT IGNORE INTO `$bp$tags` (`fk_type`, `name`, `title`, `description`) VALUES 
     ((SELECT id FROM $bp$types as types WHERE types.name = 'string'),
 	'PROFILE__FIRSTNAME',

@@ -19,6 +19,7 @@
 		<?php
 		$name = $Profile->getInfo('firstname').' '.
 		    $Profile->getInfo('lastname');
+		$name = trim($name);
 		if (empty($name)) $name = "{SHOWINDEX__UNKNOWNNAME}";
 		?>
 		<a href="<?php $this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">

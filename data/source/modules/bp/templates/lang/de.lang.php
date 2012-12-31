@@ -11,6 +11,9 @@ $lang = array(
     'TYPE__SELECTION' => 'Mehrfachauswahl',
     'TYPE__RADIO' => 'Einfachauswahl',
 
+    // formBit
+    'FORMBIT__PLEASECHOOSE' => '---Bitte wählen---',
+
     // showTags
     'SHOWTAGS__TITLE' => 'Tags',
     'SHOWTAGS__H1' => 'Tags',

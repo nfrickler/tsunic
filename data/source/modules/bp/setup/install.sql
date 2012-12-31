@@ -1,19 +1,22 @@
 <!-- | Tables for bp -->
 
-CREATE TABLE IF NOT EXISTS `#__bits` (
-  `fk_piece` int(11) NOT NULL,
-  `fk_tag` int(11) NOT NULL,
-  `_name_` varchar(200) NOT NULL,
-  `_value_` varchar(500) NOT NULL,
-  PRIMARY KEY (`fk_piece`, `fk_tag`, `_name_`, `_value_`)
-) ENGINE=MyISAM;
-
-CREATE TABLE IF NOT EXISTS `#__pieces` (
+CREATE TABLE IF NOT EXISTS `#__objects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
-  `_author_` varchar(200) NOT NULL,
-  `dateOfChange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `class` varchar(200) NOT NULL,
   `dateOfCreation` datetime NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `#__bits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_object` int(11) NOT NULL,
+  `fk_tag` int(11) NOT NULL,
+  `fk_bit` int(11) NOT NULL,
+  `_value_` varchar(500) NOT NULL,
+  `dateOfCreation` datetime NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 

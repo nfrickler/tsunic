@@ -123,6 +123,10 @@ class $$$Template {
 	    $File = $TSunic->get('$$$File', $value);
 	    if ($File->isValid()) {
 		$this->_include($File);
+
+		// clear data
+		$this->data = array();
+
 		return true;
 	    }
 	}
@@ -258,7 +262,7 @@ class $$$Template {
 	// try to replace
 	$temp = $this->getData($input);
 	if ($temp or is_numeric($temp)) return $this->set($temp, NULL, false);
-	return '#'.$input.'#'; 
+	return '#'.$input.'#';
     }
 
     /* parse Link for output

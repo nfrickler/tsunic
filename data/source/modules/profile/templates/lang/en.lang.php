@@ -43,12 +43,14 @@ $lang = array(
     // showEditProfile
     'SHOWEDITPROFILE__TITLE' => 'Edit profile',
     'SHOWEDITPROFILE__H1' => 'Edit profile',
+    'SHOWEDITPROFILE__TOSHOWTAGS' => 'Administrate tags',
     'SHOWEDITPROFILE__INFOTEXT' => 'Here you can edit this profile.',
     'SHOWEDITPROFILE__SUBMIT' => 'Save changes',
     'SHOWEDITPROFILE__CANCEL' => 'Cancel',
 
     // formProfile
-    'FORMPROFILE__LEGEND' => 'Profile',
+    'FORMPROFILE__LEGEND_ID' => 'Identification data',
+    'FORMPROFILE__LEGEND' => 'Additional data',
     'FORMPROFILE__FIRSTNAME' => 'Firstname',
     'FORMPROFILE__FIRSTNAME_HELP' => 'Firstname',
     'FORMPROFILE__FIRSTNAME_PRESET' => 'Firstname',
@@ -62,7 +64,12 @@ $lang = array(
     // createProfile
     'CREATEPROFILE__SUCCESS' => 'New profile has been created.',
     'CREATEPROFILE__ERROR' => 'An error occurred!',
-    'CREATEPROFILE__INVALID' => 'Invalid input (#field#)!',
+    'CREATEPROFILE__INVALIDVALUE' => 'Invalid input!',
+
+    // editProfile
+    'EDITPROFILE__SUCCESS' => 'Changes saved.',
+    'EDITPROFILE__ERROR' => 'An error occurred!',
+    'EDITPROFILE__INVALIDVALUE' => 'Invalid input (tag: "#field#", value: "#value#")!',
 
     // showDeleteProfile
     'SHOWDELETEPROFILE__POPUP_DELETE_HEADER' => 'Delete profile?',
