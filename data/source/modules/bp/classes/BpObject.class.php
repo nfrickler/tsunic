@@ -241,5 +241,16 @@ class $$$BpObject extends $system$Object {
 
 	return $out;
     }
+
+    /* check, if fk_tag is valid
+     * @param int: fk_tag
+     *
+     * @return bool
+     */
+    public function isValidFkTag ($fk_tag) {
+	return (!$fk_tag or $this->_validate($fk_tag, 'int')
+	    and $this->_isObject('#__tags', $fk_tag)
+	) ? true : false;
+    }
 }
 ?>

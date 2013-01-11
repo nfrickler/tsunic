@@ -43,6 +43,7 @@ $lang = array(
     // showEditProfile
     'SHOWEDITPROFILE__TITLE' => 'Profil bearbeiten',
     'SHOWEDITPROFILE__H1' => 'Profil bearbeiten',
+    'SHOWEDITPROFILE__TOADDTAG' => 'Tag hinzufügen',
     'SHOWEDITPROFILE__TOSHOWTAGS' => 'Tags verwalten',
     'SHOWEDITPROFILE__INFOTEXT' => 'Hier kannst du ein Profil bearbeiten.',
     'SHOWEDITPROFILE__SUBMIT' => 'Änderungen speichern',
@@ -76,6 +77,24 @@ $lang = array(
     'SHOWDELETEPROFILE__POPUP_DELETE_CONTENT' => 'Willst du das Profil wirklich endgültig löschen?',
     'SHOWDELETEPROFILE__POPUP_DELETE_YES' => 'Ja, Profil löschen',
     'SHOWDELETEPROFILE__POPUP_DELETE_NO' => 'Nein, abbrechen',
+
+    // showAddTag
+    'SHOWADDTAG__TITLE' => 'Tag hinzufügen',
+    'SHOWADDTAG__H1' => 'Tag hinzufügen',
+    'SHOWADDTAG__INFOTEXT' => 'Tag zum Profil hinzufügen.',
+    'SHOWADDTAG__SUBMIT' => 'Tag hinzufügen',
+    'SHOWADDTAG__CANCEL' => 'Abbrechen',
+
+    // formAddTag
+    'FORMADDTAG__LEGEND' => 'Tag hinzufügen',
+    'FORMADDTAG__FK_TAG' => 'Tag',
+    'FORMADDTAG__FK_TAG_HELP' => 'Bitte wähle einen Tag, den du dem Profil hinzufügen willst.',
+    'FORMADDTAG__FK_TAG_PLEASECHOOSE' => '---Bitte auswählen---',
+
+    // addTag
+    'ADDTAG__INVALIDFKTYPE' => 'Ungültiger Tag',
+    'ADDTAG__ERROR' => 'Es ist ein Fehler aufgetreten',
+    'ADDTAG__SUCCESS' => 'Tag erfolgreich hinzugefügt',
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Übersicht',

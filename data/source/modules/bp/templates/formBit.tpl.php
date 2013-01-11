@@ -25,7 +25,7 @@ switch ($Tag->getType()->getInfo('name')) {
 	$name = $this->set($Bit->getTag()->getInfo('title'), false, false);
 ?>
 	<label for="$$$formBit__<?php echo $num; ?>"><?php echo $name; ?></label>
-	<textarea name="$$$formBit__<?php echo $num; ?>" id="$$$formBit__<?php echo $num; ?>"><?php $this->setPreset('$$$formSelection__'.$num, $Bit->getInfo('value')); ?></textarea>
+	<textarea name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>"><?php $this->setPreset('$$$formSelection__'.$num, $Bit->getInfo('value')); ?></textarea>
 	<div style="clear:both;"></div>
 <?php
 	break;

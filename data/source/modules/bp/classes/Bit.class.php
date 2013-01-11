@@ -81,8 +81,14 @@ class $$$Bit extends $system$Object {
 	// validate input
 	if (!$this->isValidFkTag($fk_tag)
 	    or !$this->isValidFkObject($fk_object)
-	    or !$this->isValidValue($value)
 	) return false;
+
+	// valid value?
+	if ($value === true) {
+	    $value = "";
+	} elseif (!$this->isValidValue($value)) {
+	    return false;
+	}
 
 	// update database
 	global $TSunic;
@@ -109,7 +115,9 @@ class $$$Bit extends $system$Object {
 	// delete?
 	if ($value === ""
 	    or (in_array($this->getTag()->getType()->getInfo('name'), array('selection', 'radio')) and empty($value))
-	) return $this->delete();
+	) {
+	    return $this->delete();
+	}
 
 	// validate input
 	if (!$this->isValidValue($value)) return false;
