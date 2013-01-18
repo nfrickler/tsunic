@@ -61,5 +61,8 @@ INSERT IGNORE INTO `#__types` (`name`, `title`, `description`, `fk_account`) VAL
     ('string', '{$BP$TYPE__STRING}', '{$BP$TYPE__STRING__DESCRIPTION}', 0),
     ('text', '{$BP$TYPE__TEXT}', '{$BP$TYPE__TEXT__DESCRIPTION}', 0),
     ('selection', '{$BP$TYPE__SELECTION}', '{$BP$TYPE__SELECTION__DESCRIPTION}', 0),
-    ('radio', '{$BP$TYPE__RADIO}', '{$BP$TYPE__RADIO__DESCRIPTION}', 0)
+    ('radio', '{$BP$TYPE__RADIO}', '{$BP$TYPE__RADIO__DESCRIPTION}', 0),
+    ('image', '{$BP$TYPE__IMAGE}', '{$BP$TYPE__IMAGE__DESCRIPTION}', 0),
+    ('file', '{$BP$TYPE__FILE}', '{$BP$TYPE__FILE__DESCRIPTION}', 0),
+    ('date', '{$BP$TYPE__DATE}', '{$BP$TYPE__DATE__DESCRIPTION}', 0)
 ;

@@ -103,6 +103,19 @@ class $$$Tag extends $system$Object {
 	return $out;
     }
 
+    /* get value of selection
+     *
+     * @return mix
+     */
+    public function getSelectionValue ($value) {
+	if (!is_numeric($value)) return NULL;
+
+	// get all selections
+	$selections = $this->getSelections();
+
+	return (count($selections) > $value) ? $selections[$value]->getInfo('name') : NULL;
+    }
+
     /* get Type object
      *
      * @return object

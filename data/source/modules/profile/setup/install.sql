@@ -15,6 +15,26 @@ INSERT IGNORE INTO `$bp$tags` (`fk_type`, `name`, `title`, `description`) VALUES
 	'PROFILE__GENDER',
 	'{$PROFILE$TAG__PROFILE__GENDER}',
 	'{$PROFILE$TAG__PROFILE__GENDER__DESCRIPTION}'
+    ),
+    ((SELECT id FROM $bp$types as types WHERE types.name = 'image'),
+	'PROFILE__IMAGE',
+	'{$PROFILE$TAG__PROFILE__IMAGE}',
+	'{$PROFILE$TAG__PROFILE__IMAGE__DESCRIPTION}'
+    ),
+    ((SELECT id FROM $bp$types as types WHERE types.name = 'date'),
+	'PROFILE__DATEOFBIRTH',
+	'{$PROFILE$TAG__PROFILE__DATEOFBIRTH}',
+	'{$PROFILE$TAG__PROFILE__DATEOFBIRTH__DESCRIPTION}'
+    ),
+    ((SELECT id FROM $bp$types as types WHERE types.name = 'string'),
+	'PROFILE__TEL',
+	'{$PROFILE$TAG__PROFILE__TEL}',
+	'{$PROFILE$TAG__PROFILE__TEL__DESCRIPTION}'
+    ),
+    ((SELECT id FROM $bp$types as types WHERE types.name = 'text'),
+	'PROFILE__ADDRESS',
+	'{$PROFILE$TAG__PROFILE__ADDRESS}',
+	'{$PROFILE$TAG__PROFILE__ADDRESS__DESCRIPTION}'
     )
 ;
 

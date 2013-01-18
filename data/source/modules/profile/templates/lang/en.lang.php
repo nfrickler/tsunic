@@ -10,6 +10,45 @@ $lang = array(
     'TAG__PROFILE__LASTNAME__DESCRIPTION' => 'Lastname of person',
     'TAG__PROFILE__GENDER' => 'Gender',
     'TAG__PROFILE__GENDER__DESCRIPTION' => 'Gender of person',
+    'TAG__PROFILE__IMAGE' => 'Profile image',
+    'TAG__PROFILE__IMAGE__DESCRIPTION' => 'Profile image of person',
+    'TAG__PROFILE__DATEOFBIRTH' => 'Date of birth',
+    'TAG__PROFILE__DATEOFBIRTH__DESCRIPTION' => 'Date of birth',
+    'TAG__PROFILE__TEL' => 'Phone',
+    'TAG__PROFILE__TEL__DESCRIPTION' => 'Phone number',
+    'TAG__PROFILE__ADDRESS' => 'Address',
+    'TAG__PROFILE__ADDRESS__DESCRIPTION' => 'Address of person',
+
+    // selections
+    'SELECTIONS__PROFILE__GENDER_F' => 'female',
+    'SELECTIONS__PROFILE__GENDER_F__DESCRIPTION' => 'female',
+    'SELECTIONS__PROFILE__GENDER_M' => 'male',
+    'SELECTIONS__PROFILE__GENDER_M__DESCRIPTION' => 'male',
+
+    // showIndex
+    'SHOWINDEX__TITLE' => 'Profiles',
+    'SHOWINDEX__H1' => 'Profiles',
+    'SHOWINDEX__INFOTEXT' => 'A list of all profiles you have created.',
+    'SHOWINDEX__NAME' => 'Name',
+    'SHOWINDEX__DATEOFBIRTH' => 'Date of birth',
+    'SHOWINDEX__TOCREATEPROFILE' => 'Create new profile',
+    'SHOWINDEX__UNKNOWNNAME' => 'Unknown',
+
+    // showProfile
+    'SHOWPROFILE__TITLE' => 'Profile',
+    'SHOWPROFILE__TOEDITPROFILE' => 'Edit profile',
+    'SHOWPROFILE__TODELETEPROFILE' => 'Delete profile',
+    'SHOWPROFILE__H1' => 'Profile',
+    'SHOWPROFILE__NAME' => 'Name',
+    'SHOWPROFILE__GENDER' => 'Gender',
+
+    // showCreateProfile
+    'SHOWCREATEPROFILE__TITLE' => 'Create profile',
+    'SHOWCREATEPROFILE__H1' => 'Create profile',
+    'SHOWCREATEPROFILE__TOSHOWTAGS' => 'Administrate tags',
+    'SHOWCREATEPROFILE__INFOTEXT' => 'Fill in the following form to create a new profile. All fields are optional.',
+    'SHOWCREATEPROFILE__SUBMIT' => 'Create',
+    'SHOWCREATEPROFILE__CANCEL' => 'Cancel',
 
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'female',
@@ -31,6 +70,7 @@ $lang = array(
     'SHOWPROFILE__TODELETEPROFILE' => 'Delete profile',
     'SHOWPROFILE__H1' => 'Profile',
     'SHOWPROFILE__NAME' => 'Name',
+    'SHOWPROFILE__GENDER' => 'Gender',
 
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Create profile',
@@ -77,6 +117,10 @@ $lang = array(
     'SHOWDELETEPROFILE__POPUP_DELETE_CONTENT' => 'Do you really want to delete this profile?',
     'SHOWDELETEPROFILE__POPUP_DELETE_YES' => 'Yes, delete profile',
     'SHOWDELETEPROFILE__POPUP_DELETE_NO' => 'No, abbort',
+
+    // deleteProfile
+    'DELETEPROFILE__SUCCESS' => 'Profile delted.',
+    'DELETEPROFILE__ERROR' => 'Profil could not be deleted!',
 
     // showAddTag
     'SHOWADDTAG__TITLE' => 'Add tag to profile',

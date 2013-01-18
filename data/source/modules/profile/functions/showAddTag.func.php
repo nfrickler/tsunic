@@ -8,6 +8,8 @@ function $$$showAddTag () {
 
     // get all tags
     $Selection = $TSunic->get('$bp$Selection');
+    $Profile = $TSunic->get('$$$Profile', $fk_obj);
+    $tags = $
     $tags = $Selection->getAllTags();
 
     // activate template

@@ -35,7 +35,15 @@ class $$$BpObject extends $system$Object {
 	    if (!$Value or !$Value->getTag()) continue;
 	    $cache = explode('__', $Value->getTag()->getInfo('name'));
 	    if (count($cache) < 2) continue;
-	    $this->info[strtolower($cache[1])] = $Value->getInfo('value');
+
+	    $value = $Value->getInfo('value');
+	    $Tag = $Value->getTag();
+	    if ($Tag->getInfo('name') == 'selection'
+		or $Tag->getType()->getInfo('name') == 'radio'
+	    ) {
+		$value = $Tag->getSelectionValue($value);
+	    }
+	    $this->info[strtolower($cache[1])] = $value;
 	}
 
 	return true;

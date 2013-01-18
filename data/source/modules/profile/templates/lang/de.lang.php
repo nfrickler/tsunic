@@ -10,6 +10,14 @@ $lang = array(
     'TAG__PROFILE__LASTNAME__DESCRIPTION' => 'Nachname der Person',
     'TAG__PROFILE__GENDER' => 'Geschlecht',
     'TAG__PROFILE__GENDER__DESCRIPTION' => 'Geschlecht der Person',
+    'TAG__PROFILE__IMAGE' => 'Profilbild',
+    'TAG__PROFILE__IMAGE__DESCRIPTION' => 'Profilbild der Person',
+    'TAG__PROFILE__DATEOFBIRTH' => 'Geburtsdatum',
+    'TAG__PROFILE__DATEOFBIRTH__DESCRIPTION' => 'Geburtsdatum',
+    'TAG__PROFILE__TEL' => 'Telefon',
+    'TAG__PROFILE__TEL__DESCRIPTION' => 'Telefonnummer',
+    'TAG__PROFILE__ADDRESS' => 'Adresse',
+    'TAG__PROFILE__ADDRESS__DESCRIPTION' => 'Adresse der Person',
 
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'weiblich',
@@ -24,6 +32,7 @@ $lang = array(
     'SHOWINDEX__NAME' => 'Name',
     'SHOWINDEX__DATEOFBIRTH' => 'Geburtsdatum',
     'SHOWINDEX__TOCREATEPROFILE' => 'Neues Profil erstellen',
+    'SHOWINDEX__UNKNOWNNAME' => 'Unbekannt',
 
     // showProfile
     'SHOWPROFILE__TITLE' => 'Profil',
@@ -31,6 +40,7 @@ $lang = array(
     'SHOWPROFILE__TODELETEPROFILE' => 'Profil löschen',
     'SHOWPROFILE__H1' => 'Profil',
     'SHOWPROFILE__NAME' => 'Name',
+    'SHOWPROFILE__GENDER' => 'Geschlecht',
 
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Profil erstellen',
@@ -77,6 +87,10 @@ $lang = array(
     'SHOWDELETEPROFILE__POPUP_DELETE_CONTENT' => 'Willst du das Profil wirklich endgültig löschen?',
     'SHOWDELETEPROFILE__POPUP_DELETE_YES' => 'Ja, Profil löschen',
     'SHOWDELETEPROFILE__POPUP_DELETE_NO' => 'Nein, abbrechen',
+
+    // deleteProfile
+    'DELETEPROFILE__SUCCESS' => 'Profil gelöscht.',
+    'DELETEPROFILE__ERROR' => 'Profil konnte nicht gelöscht werden!',
 
     // showAddTag
     'SHOWADDTAG__TITLE' => 'Tag hinzufügen',
