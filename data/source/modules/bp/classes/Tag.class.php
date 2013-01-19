@@ -91,7 +91,11 @@ class $$$Tag extends $system$Object {
 	global $TSunic;
 
 	// get all selections
-	$sql = "SELECT id FROM #__selections WHERE fk_tag = '$this->id';";
+	$sql = "SELECT id
+	    FROM #__selections
+	    WHERE fk_tag = '$this->id'
+	    ORDER BY id
+	;";
 	$result = $TSunic->Db->doSelect($sql);
 
 	// to objects
