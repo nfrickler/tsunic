@@ -141,6 +141,24 @@ $lang = array(
     'EDITSELECTION__ERROR' => 'An error occurred!',
     'EDITSELECTION__SUCCESS' => 'Changes saved.',
 
+    // showAddTag
+    'SHOWADDTAG__TITLE' => 'Add tag to profile',
+    'SHOWADDTAG__H1' => 'Add tag to profile',
+    'SHOWADDTAG__INFOTEXT' => 'Add a tag to profile.',
+    'SHOWADDTAG__SUBMIT' => 'Add tag',
+    'SHOWADDTAG__CANCEL' => 'Cancel',
+
+    // formAddTag
+    'FORMADDTAG__LEGEND' => 'Add tag',
+    'FORMADDTAG__FK_TAG' => 'Tag',
+    'FORMADDTAG__FK_TAG_HELP' => 'Please choose a tag to add to this profile.',
+    'FORMADDTAG__FK_TAG_PLEASECHOOSE' => '---Please choose---',
+
+    // addTag
+    'ADDTAG__INVALIDFKTYPE' => 'Invalid tag',
+    'ADDTAG__ERROR' => 'An error occurred',
+    'ADDTAG__SUCCESS' => 'Tag added to profile',
+
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'List tags'
 );

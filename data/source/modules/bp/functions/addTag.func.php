@@ -6,18 +6,21 @@ function $$$addTag () {
     // get input
     $fk_obj = $TSunic->Temp->getPost('$$$formAddTag__fk_obj');
     $fk_tag = $TSunic->Temp->getPost('$$$formAddTag__fk_tag');
+    $backlink = base64_decode($TSunic->Temp->getPost('$$$formAddTag__backlink'));
+    if (!$backlink) $backlink = '?back=2';
 
     // add tag to profile
-    $Profile = $TSunic->get('$$$Profile', $fk_obj);
+    $Obj = $TSunic->get('$$$BpObject', $fk_obj);
+    $Obj = $Obj->getObject();
 
     // valid input?
-    if (!$Profile->isValidFkTag($fk_tag)) {
+    if (!$Obj->isValidFkTag($fk_tag)) {
 	$TSunic->Log->alert('error', '{ADDTAG__INVALIDFKTYPE}');
 	$TSunic->redirect('back');
     }
 
     // add tag to object
-    if (!$Profile->addBit(true, $fk_tag)) {
+    if (!$Obj->addBit(true, $fk_tag)) {
 	// add error message and redirect back
 	$TSunic->Log->alert('error', '{ADDTAG__ERROR}');
 	$TSunic->redirect('back');
@@ -26,7 +29,7 @@ function $$$addTag () {
 
     // success
     $TSunic->Log->alert('info', '{ADDTAG__SUCCESS}');
-    $TSunic->redirect('$$$showEditProfile', array('$$$id' => $fk_obj));
+    $TSunic->redirect($backlink, true);
     return true;
 }
 ?>

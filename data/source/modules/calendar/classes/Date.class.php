@@ -22,7 +22,7 @@ class $$$Date extends $bp$BpObject {
      * @return bool
      */
     public function isValidTitle ($title) {
-	return ($name and $this->_validate($title, 'extString'))
+	return ($title and $this->_validate($title, 'extString'))
 	    ? true : false;
     }
 

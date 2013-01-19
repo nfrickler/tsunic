@@ -49,6 +49,20 @@ class $$$BpObject extends $system$Object {
 	return true;
     }
 
+    /* get object with specified class
+     *
+     * @return object
+     */
+    public function getObject () {
+	if (!$this->id) return NULL;
+	global $TSunic;
+
+	$out = NULL;
+	eval('$out = $TSunic->get("'.$this->getInfo('class').'", '.$this->id.');');
+
+	return $out;
+    }
+
     /* create new object
      *
      * @return bool
@@ -82,7 +96,7 @@ class $$$BpObject extends $system$Object {
 
     /* add bit to this object
      * @param string: value of new bit
-     * +@param int: fk_tag of new bit
+     * +@param int/string: tagname or fk_tag of new bit
      *
      * @return bool
      */
@@ -91,6 +105,9 @@ class $$$BpObject extends $system$Object {
 
 	// create new Bit object
 	$Bit = $TSunic->get('$$$Bit');
+
+	// convert fk_tag to id if neccesary
+	if (!is_numeric($fk_tag)) $fk_tag = $this->tag2id($fk_tag);
 
 	// create new Bit
 	if (!$Bit->create($this->id, $value, $fk_tag))

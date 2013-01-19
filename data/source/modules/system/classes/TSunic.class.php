@@ -434,6 +434,10 @@ class TSunic {
 	    // get link
 	    $link = '?'.substr($url_gets, 1);
 
+	} elseif ($gets === true) {
+	    // redirect to address given in $event
+	    $link = $event;
+
 	} elseif (!empty($event)) {
 
 	    // get module and event from its parameters

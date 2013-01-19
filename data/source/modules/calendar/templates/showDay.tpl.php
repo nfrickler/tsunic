@@ -17,7 +17,7 @@
 	<?php foreach ($this->getVar('dates') as $index => $Value) { ?>
 	<tr>
 	    <td><?php echo date('H:i', $Value->getInfo('start')).'-'.date('H:i', $Value->getInfo('stop')); ?></td>
-	    <td><?php $this->set($Value->getInfo('title')); ?></td>
+	    <td><a href="<?php $this->setUrl('$$$showEditDate', array('$$$id' => $Value->getInfo('id'))); ?>"><?php $this->set($Value->getInfo('title')); ?></a></td>
 	</tr>
 	<?php } ?>
     </table>

@@ -92,24 +92,6 @@ $lang = array(
     'DELETEPROFILE__SUCCESS' => 'Profil gelöscht.',
     'DELETEPROFILE__ERROR' => 'Profil konnte nicht gelöscht werden!',
 
-    // showAddTag
-    'SHOWADDTAG__TITLE' => 'Tag hinzufügen',
-    'SHOWADDTAG__H1' => 'Tag hinzufügen',
-    'SHOWADDTAG__INFOTEXT' => 'Tag zum Profil hinzufügen.',
-    'SHOWADDTAG__SUBMIT' => 'Tag hinzufügen',
-    'SHOWADDTAG__CANCEL' => 'Abbrechen',
-
-    // formAddTag
-    'FORMADDTAG__LEGEND' => 'Tag hinzufügen',
-    'FORMADDTAG__FK_TAG' => 'Tag',
-    'FORMADDTAG__FK_TAG_HELP' => 'Bitte wähle einen Tag, den du dem Profil hinzufügen willst.',
-    'FORMADDTAG__FK_TAG_PLEASECHOOSE' => '---Bitte auswählen---',
-
-    // addTag
-    'ADDTAG__INVALIDFKTYPE' => 'Ungültiger Tag',
-    'ADDTAG__ERROR' => 'Es ist ein Fehler aufgetreten',
-    'ADDTAG__SUCCESS' => 'Tag erfolgreich hinzugefügt',
-
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Übersicht',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profile'

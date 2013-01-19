@@ -5,7 +5,7 @@
     <p class="ts_suplinkbox">
 	<a id="$$$showEditProfile__editlink" href="<?php $this->setUrl('$bp$showTags'); ?>">
 	    <?php $this->set('{SHOWEDITPROFILE__TOSHOWTAGS}'); ?></a>
-	<a id="$$$showEditProfile__toaddtag" href="<?php $this->setUrl('$$$showAddTag', array('fk_obj' => $Profile->getInfo('id'))); ?>">
+	<a id="$$$showEditProfile__toaddtag" href="<?php $this->setUrl('$bp$showAddTag', array('fk_obj' => $Profile->getInfo('id'), 'backlink' => base64_encode($this->setUrl('$$$showEditProfile', array('$$$id' => $Profile->getInfo('id')), false, false)))); ?>">
 	    <?php $this->set('{SHOWEDITPROFILE__TOADDTAG}'); ?></a>
     </p>
     <p class="ts_infotext"><?php $this->set('{SHOWEDITPROFILE__INFOTEXT}'); ?></p>

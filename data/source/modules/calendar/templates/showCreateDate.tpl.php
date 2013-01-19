@@ -7,6 +7,8 @@
 
     <?php $this->display('$$$formDate', array(
 	'Date' => $this->getVar('Date'),
+	'preset_start' => $this->getVar('preset_start'),
+	'preset_stop' => $this->getVar('preset_stop'),
 	'submit_link' => '$$$createDate',
 	'submit_text' => '{SHOWCREATEDATE__SUBMIT}',
 	'reset_text' => '{SHOWCREATEDATE__CANCEL}'

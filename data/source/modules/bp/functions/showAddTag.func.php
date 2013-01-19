@@ -1,20 +1,24 @@
-<!-- | FUNCTION show form to add tag to profile -->
+<!-- | FUNCTION show form to add tag to object -->
 <?php
 function $$$showAddTag () {
     global $TSunic;
 
-    // create empty object
+    // get input
     $fk_obj = $TSunic->Temp->getParameter('fk_obj');
+    $backlink = $TSunic->Temp->getParameter('backlink');
+
+    // get Object
+    $Obj = $TSunic->get('$$$BpObject', $fk_obj);
+    $Obj = $Obj->getObject();
 
     // get all tags
     $Selection = $TSunic->get('$bp$Selection');
-    $Profile = $TSunic->get('$$$Profile', $fk_obj);
-    $tags = $
     $tags = $Selection->getAllTags();
 
     // activate template
     $data = array(
 	'fk_obj' => $fk_obj,
+	'backlink' => $backlink,
 	'tags' => $tags
     );
     $TSunic->Tmpl->activate('$$$showAddTag', '$system$content', $data);

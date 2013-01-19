@@ -59,6 +59,8 @@ $lang = array(
     'CREATEDATE__ERROR' => 'Ein Fehler ist aufgetreten!',
     'CREATEDATE__INVALIDTITLE' => 'Ungültiger Titel!',
     'CREATEDATE__INVALIDSTARTSTOP' => 'Ungültige Zeiten!',
+    'CREATEDATE__INVALIDPERIOD' => 'Ungültiger Wiederholungswert!',
+    'CREATEDATE__INVALIDPERIODTYPE' => 'Ungültige Wiederholungsart!',
 
     // editDate
     'EDITDATE__SUCCESS' => 'Änderungen gespeichert.',
