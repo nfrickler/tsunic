@@ -27,15 +27,38 @@ class $$$Object {
      */
     protected $info;
 
+    /* is $this->info really loaded from database (may be preset otherwise)
+     * bool
+     */
+    protected $info_isloaded = false;
+
     /* constructor
      * +@param int: Object ID
      */
     public function __construct ($id = 0) {
+	global $TSunic;
 
 	// save input
 	$this->id = ($this->_validate($id, 'int')) ? $id : 0;
 
+	// log
+	$TSunic->Log->log(7, get_class($this).'::__construct: id='.$this->id);
+
 	return;
+    }
+
+    /* preset information array of object (may increase performance); will fail
+     * if already loaded from database
+     * @param array: preset for $this->info
+     *
+     * @return bool
+     */
+    public function presetInfo ($preset) {
+	if (!$this->info_isloaded and is_array($preset)) {
+	    $this->info = $preset;
+	    return true;
+	}
+	return false;
     }
 
     /* get information about object
@@ -46,15 +69,15 @@ class $$$Object {
      */
     public function getInfo ($name = true, $update = false) {
 
-	// check, if is object ID
-	if (!$this->id) return false;
-
 	// onload data
 	if ($update or empty($this->info)) $this->_loadInfo();
 
 	// return requested info
 	if ($name === true) return $this->info;
 	if (isset($this->info[$name])) return $this->info[$name];
+
+	// nothing found (load if not loaded yet)
+	if (!$this->info_isloaded) return $this->getInfo($name, true);
 
 	return NULL;
     }
@@ -91,6 +114,7 @@ class $$$Object {
      * @return bool
      */
     protected function _loadInfo () {
+	$this->info_isloaded = true;
 	if (!$this->id or !$this->table) return false;
 	global $TSunic;
 

@@ -69,7 +69,6 @@ $lang = array(
     'CREATEDATE__INVALIDSTARTSTOP' => 'Invalid times!',
     'CREATEDATE__INVALIDPERIOD' => 'Invalid period!',
     'CREATEDATE__INVALIDPERIODTYPE' => 'Invalid periodtype!',
-    'CREATEDATE__INVALID' => 'Invalid times!',
 
     // editDate
     'EDITDATE__SUCCESS' => 'Changes saved.',

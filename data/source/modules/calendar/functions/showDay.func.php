@@ -3,20 +3,19 @@
 function $$$showDay () {
     global $TSunic;
 
-    $year = $TSunic->Temp->getParameter('$$$year');
-    $month = $TSunic->Temp->getParameter('$$$month');
-    $day = $TSunic->Temp->getParameter('$$$day');
-    if (empty($year)) $year = date('Y');
-    if (empty($month)) $month = date('n');
-    if (empty($day)) $day = date('j');
+    $time = $TSunic->Temp->getParameter('$$$time');
+    if (empty($time)) $time = time();
 
     // get all dates of day
-    $startofday = mktime(0, 0, 0, $month, $day, $year);
+    $startofday = mktime(0, 0, 0, date('m', $time), date('d', $time), date('Y', $time));
     $Calendar = $TSunic->get('$$$Calendar');
-    $dates = $Calendar->getDates($startofday, $startofday + 24 * 60 * 60);
+    $dates = $Calendar->getDates($startofday, $startofday + 24 * 3600);
 
     // activate template
-    $data = array('dates' => $dates);
+    $data = array(
+	'dates' => $dates,
+	'time' => $time
+    );
     $TSunic->Tmpl->activate('$$$showDay', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWDAY__TITLE}'));
 

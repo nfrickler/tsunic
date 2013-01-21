@@ -1,4 +1,5 @@
 <!-- | TEMPLATE show day -->
+<?php $time = $this->getVar('time'); ?>
 <div id="$$$div__showDay">
     <h1><?php $this->set('{SHOWDAY__H1}'); ?></h1>
     <p class="ts_suplinkbox">
@@ -11,7 +12,14 @@
 
     <table cellspacing="0" cellpadding="0" border="0">
 	<tr>
-	    <th><?php $this->set('{SHOWDAY__TIME}'); ?></th>
+	    <th style="width:20px;"><a href="<?php $this->setUrl('$$$showDay', array('$$$time' => $time - 24 * 3600)); ?>">&lt;&lt;&lt;</a></th>
+	    <th style="text-align:center;"><a href="<?php $this->setUrl('$$$showMonth', array('$$$time' => $time)); ?>"><?php echo date('d.m.Y', $time); ?></a></th>
+	    <th style="width:20px;"><a href="<?php $this->setUrl('$$$showDay', array('$$$time' => $time + 24 * 3600)); ?>">&gt;&gt;&gt;</a></th>
+	</tr>
+    </table>
+    <table cellspacing="0" cellpadding="0" border="0">
+	<tr>
+	    <th style="width:15%;"><?php $this->set('{SHOWDAY__TIME}'); ?></th>
 	    <th><?php $this->set('{SHOWDAY__TITLE}'); ?></th>
 	</tr>
 	<?php foreach ($this->getVar('dates') as $index => $Value) { ?>

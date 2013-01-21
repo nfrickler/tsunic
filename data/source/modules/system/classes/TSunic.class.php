@@ -15,7 +15,7 @@ class TSunic {
     /* reference to templateEngine-object
      * object
      */
-    public $Tmpl;
+    public $Tmpl = NULL;
 
     /* reference to temp-object
      * object
@@ -40,7 +40,7 @@ class TSunic {
     /* reference to Log object
      * object
      */
-    public $Log;
+    public $Log = NULL;
 
     /* is currently running internal
      * bool

@@ -21,13 +21,14 @@ class $$$Bit extends $system$Object {
     public function getInfo ($name = true, $update = false) {
 
 	// onload data
-	if ($update or empty($this->info)) {
-	    $this->_loadInfo();
-	}
+	if ($update or empty($this->info)) $this->_loadInfo();
 
 	// return requested info
 	if ($name === true) return $this->info;
 	if (isset($this->info[$name])) return $this->info[$name];
+
+	// nothing found (load if not loaded yet)
+	if (!$this->info_isloaded) return $this->getInfo($name, true);
 
 	return NULL;
     }
@@ -202,7 +203,7 @@ class $$$Bit extends $system$Object {
      */
     public function getTag () {
 	global $TSunic;
-	return $TSunic->get('$$$Tag', $this->getInfo('fk_tag'), true);
+	return $TSunic->get('$$$Tag', $this->getInfo('fk_tag'));
     }
 }
 ?>

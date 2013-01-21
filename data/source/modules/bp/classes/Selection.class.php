@@ -104,28 +104,24 @@ class $$$Selection extends $system$Object {
      */
     public function getAllTags ($selOnly = false) {
 	global $TSunic;
+	$Helper = $TSunic->get('$$$Helper');
 
-	// selections only?
-	$selectionsOnly = ($selOnly) ? "AND (types.name = 'selection' OR types.name = 'radio')" : "";
+	// get all tags
+	$tags = $Helper->getTags();
 
-	// get all tags in database
-	$sql = "SELECT tags.id
-	    FROM #__tags as tags,
-		#__types as types
-	    WHERE tags.fk_type = types.id
-		$selectionsOnly
-		AND (tags.fk_account = '0'
-		OR tags.fk_account = '".$TSunic->Usr->getInfo('id')."')
-	;";
-	$result = $TSunic->Db->doSelect($sql);
+	// filter
+	if ($selOnly) {
+	    $out = array();
+	    foreach ($tags as $index => $Value) {
+		if ($Value->getType()->getInfo('name') == 'selection' or $Value->getType()->getInfo('name') == 'radio') {
+		    $out[] = $Value;
+		}
+	    }
 
-	// get objects
-	$out = array();
-	foreach ($result as $index => $values) {
-	    $out[] = $TSunic->get('$$$Tag', $values['id']);
+	    return $out;
 	}
 
-	return $out;
+	return $tags;
     }
 }
 ?>

@@ -17,11 +17,6 @@ class $$$BpObject extends $system$Object {
      */
     protected $tags = array();
 
-    /* ids of idbits
-     * array
-     */
-    protected $idbits;
-
     /* load information about object
      *
      * @return bool
@@ -29,7 +24,7 @@ class $$$BpObject extends $system$Object {
     protected function _loadInfo () {
 	if (!parent::_loadInfo()) return false;
 
-	// load information from all idbits
+	// load information from all default bits
 	$bits = $this->getDefaultBits();
 	foreach ($bits as $index => $Value) {
 	    if (!$Value or !$Value->getTag()) continue;
@@ -104,7 +99,7 @@ class $$$BpObject extends $system$Object {
 	global $TSunic;
 
 	// create new Bit object
-	$Bit = $TSunic->get('$$$Bit');
+	$Bit = $TSunic->get('$$$Bit', false, true);
 
 	// convert fk_tag to id if neccesary
 	if (!is_numeric($fk_tag)) $fk_tag = $this->tag2id($fk_tag);
@@ -120,7 +115,7 @@ class $$$BpObject extends $system$Object {
     }
 
     /* get all bits belonging to this object
-     * +@param bool: get all bits (including idbits)?
+     * +@param bool: get all bits (including default bits?)
      *
      * @return array
      */
@@ -132,7 +127,7 @@ class $$$BpObject extends $system$Object {
 	    $out = array();
 
 	    // load pieces
-	    $sql = "SELECT id
+	    $sql = "SELECT id, fk_object, fk_tag
 		FROM #__bits
 		WHERE fk_object = '$this->id'
 	    ;";
@@ -142,7 +137,9 @@ class $$$BpObject extends $system$Object {
 	    // get Bit objects
 	    $this->bits = array();
 	    foreach ($result as $index => $values) {
-		$this->bits[] = $TSunic->get('$$$Bit', $values['id']);
+		$Bit = $TSunic->get('$$$Bit', $values['id']);
+		$Bit->presetInfo($values);
+		$this->bits[] = $Bit;
 	    }
 	}
 
@@ -154,8 +151,8 @@ class $$$BpObject extends $system$Object {
 	foreach ($this->bits as $index => $Value) {
 
 	    $isId = false;
-	    foreach ($this->getIdBits() as $in => $val) {
-		if ($Value->getInfo('fk_tag') == $val) {
+	    foreach ($this->getDefaultTags() as $in => $Val) {
+		if ($Value->getInfo('fk_tag') == $Val->getInfo('id')) {
 		    $isId = true;
 		    break;
 		}
@@ -167,7 +164,7 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* get all idbits of object
+    /* get all default bits of object
      *
      * @return array
      */
@@ -176,7 +173,7 @@ class $$$BpObject extends $system$Object {
 	$out = array();
 
 	// get default bits
-	$bits = $this->getBits();
+	$bits = $this->getBits(true);
 	foreach ($this->tags as $index => $value) {
 
 	    // exists?
@@ -202,44 +199,40 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* get all idbits of object
+    /* get all default tags of this object
      *
      * @return int
      */
-    public function getIdBits () {
-	if ($this->idbits) return $this->idbits;
-	global $TSunic;
+    public function getDefaultTags () {
 
-	// get ids of all idbits in $this->tags
-	$sql_where = array();
+	// get all tags
+	$tags = $this->getHelper()->getTags();
+
+	// filter only those requested
+	$out = array();
 	foreach ($this->tags as $index => $value) {
-	    $sql_where[] = "name='$value'";
-	}
-	$sql = "SELECT id, name
-	    FROM #__tags
-	    WHERE
-	    ".implode(" OR ", $sql_where)."
-	;";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return 0;
-
-	// save in object var
-	$this->idbits = array();
-	foreach ($result as $index => $values) {
-	    $this->idbits[$values['name']] = $values['id'];
+	    if (isset($tags[$value])) $out[] = $tags[$value];
 	}
 
-	return $this->idbits;
+	return $out;
     }
 
-    /* convert tag-name to id (idbits only)
+    /* get Helper object
+     *
+     * @return Helper object
+     */
+    public function getHelper () {
+	global $TSunic;
+	return $TSunic->get('$$$Helper');
+    }
+
+    /* convert tag-name to id
      * @param string: name of tag
      *
      * @return int
      */
     public function tag2id ($name) {
-	$idbits = $this->getIdBits();
-	return (isset($idbits[$name])) ? $idbits[$name] : 0;
+	return $this->getHelper()->tag2id($name);
     }
 
     /* get all objects of this class

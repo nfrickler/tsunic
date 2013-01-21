@@ -12,6 +12,11 @@ class $$$UserConfig {
      */
     protected $runtime;
 
+    /* userconfig cache
+     * array
+     */
+    protected $configcache = array();
+
     /* constructor
      * @param int: fk account
      */
@@ -39,6 +44,7 @@ class $$$UserConfig {
      * @return mix
      */
     public function get ($name, $returnDefault = true) {
+	if (isset($this->configcache[$name])) return $this->configcache[$name];
 	global $TSunic;
 
 	// try to get user config
@@ -48,7 +54,10 @@ class $$$UserConfig {
 		AND fk_config = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
 	if ($result === false) return NULL;
-	if (!empty($result)) return $result[0]['value'];
+	if (!empty($result)) {
+	    $this->configcache[$name] = $result[0]['value'];
+	    return $result[0]['value'];
+	}
 
 	// is a config value really OR is guest?
 	if (!$this->exists($name) or $this->fk_account == 2)
