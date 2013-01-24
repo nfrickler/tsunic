@@ -12,17 +12,17 @@ $lang = array(
     'TAG__DATE__LENGTH__DESCRIPTION' => 'Length of date',
     'TAG__DATE__TITLE' => 'Title',
     'TAG__DATE__TITLE__DESCRIPTION' => 'Title of date',
-    'TAG__DATE__PERIOD' => 'Repeat date every...',
-    'TAG__DATE__PERIOD__DESCRIPTION' => 'Repeat date every...',
-    'TAG__DATE__PERIODTYPE' => 'Type of period',
-    'TAG__DATE__PERIODTYPE__DESCRIPTION' => 'Type of period',
+    'TAG__DATE__REPEAT' => 'Repeat date every...',
+    'TAG__DATE__REPEAT__DESCRIPTION' => 'Repeat date every...',
+    'TAG__DATE__REPEATTYPE' => 'Type of repeat',
+    'TAG__DATE__REPEATTYPE__DESCRIPTION' => 'Type of repeat',
 
     // selections
-    'SELECTIONS__DATE__PERIODTYPE_I' => 'Minutes',
-    'SELECTIONS__DATE__PERIODTYPE_H' => 'Hours',
-    'SELECTIONS__DATE__PERIODTYPE_D' => 'Days',
-    'SELECTIONS__DATE__PERIODTYPE_M' => 'Months',
-    'SELECTIONS__DATE__PERIODTYPE_Y' => 'Years',
+    'SELECTIONS__DATE__REPEATTYPE_I' => 'Minutes',
+    'SELECTIONS__DATE__REPEATTYPE_H' => 'Hours',
+    'SELECTIONS__DATE__REPEATTYPE_D' => 'Days',
+    'SELECTIONS__DATE__REPEATTYPE_M' => 'Months',
+    'SELECTIONS__DATE__REPEATTYPE_Y' => 'Years',
 
     // showDay
     'SHOWDAY__TITLE' => 'Calendar day',
@@ -61,14 +61,17 @@ $lang = array(
     // formDate
     'FORMDATE__LEGEND_ID' => 'Identification data',
     'FORMDATE__LEGEND' => 'Additional data',
+    'FORMDATE__REPEAT' => 'Repeat every...',
+    'FORMDATE__REPEAT__COUNT' => '...x times',
+    'FORMDATE__REPEAT__UNTIL' => '...until',
 
     // createDate
     'CREATEDATE__SUCCESS' => 'New date has been created.',
     'CREATEDATE__ERROR' => 'An error occurred!',
     'CREATEDATE__INVALIDTITLE' => 'Invalid title!',
     'CREATEDATE__INVALIDSTARTSTOP' => 'Invalid times!',
-    'CREATEDATE__INVALIDPERIOD' => 'Invalid period!',
-    'CREATEDATE__INVALIDPERIODTYPE' => 'Invalid periodtype!',
+    'CREATEDATE__INVALIDREPEAT' => 'Invalid repeat!',
+    'CREATEDATE__INVALIDREPEATTYPE' => 'Invalid repeattype!',
 
     // editDate
     'EDITDATE__SUCCESS' => 'Changes saved.',

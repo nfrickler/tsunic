@@ -32,12 +32,14 @@ class $$$BpObject extends $system$Object {
 	    if (count($cache) < 2) continue;
 
 	    $value = $Value->getInfo('value');
+/*
 	    $Tag = $Value->getTag();
 	    if ($Tag->getInfo('name') == 'selection'
 		or $Tag->getType()->getInfo('name') == 'radio'
 	    ) {
-		$value = $Tag->getSelectionValue($value);
+		//$value = $Tag->getSelectionValue($value);
 	    }
+*/
 	    $this->info[strtolower($cache[1])] = $value;
 	}
 

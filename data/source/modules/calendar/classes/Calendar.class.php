@@ -23,15 +23,13 @@ class $$$Calendar {
 	// filter
 	foreach ($all as $index => $Value) {
 
-	    // from?
-	    if ($Value->getInfo('start') < $from) continue;
-
-	    // to?
-	    if ($to and $Value->getInfo('stop') > $to) continue;
-
-	    // add to array
-	    $dates[] = $Value;
+	    if ($Value->getWithin($from, $to)) {
+		$dates[] = $Value;
+	    }
 	}
+
+	// sort dates by start
+	$dates = $this->sortDates($dates);
 
 	return $dates;
     }
@@ -62,6 +60,26 @@ class $$$Calendar {
 	}
 
 	return $this->dates;
+    }
+
+    /* sort dates by DATE__START
+     * @param array: array with dates
+     *
+     * @return array
+     */
+    public function sortDates ($dates) {
+	usort($dates, array($this, '_sortDates_cb'));
+	return $dates;
+    }
+
+    /* sort dates by DATE__START (callback)
+     * @param array: array with dates
+     *
+     * @return array
+     */
+    protected function _sortDates_cb ($Date1, $Date2) {
+	if ($Date1->getInfo('start') == $Date2->getInfo('start')) return 0;
+	return ($Date1->getInfo('start') < $Date2->getInfo('start')) ? -1 : 1;
     }
 }
 ?>

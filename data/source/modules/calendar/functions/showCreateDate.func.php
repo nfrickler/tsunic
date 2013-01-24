@@ -9,14 +9,18 @@ function $$$showCreateDate () {
     // presets
     $preset_start = $TSunic->Temp->getParameter('$$$start');
     $preset_stop = $TSunic->Temp->getParameter('$$$stop');
+    $preset_repeatstop = $TSunic->Temp->getParameter('$$$repeatstop');
     if (!$preset_start) $preset_start = mktime(date('H'), 0, 0, date('m'), date('d'), date('Y'));
     if (!$preset_stop) $preset_stop = $preset_start + 60 * 60;
+    if (!$preset_repeatstop) $preset_repeatstop = $preset_stop;
 
     // activate template
     $data = array(
 	'Date' => $Date,
 	'preset_start' => $preset_start,
-	'preset_stop' => $preset_stop
+	'preset_stop' => $preset_stop,
+	'preset_repeatstop' => $preset_repeatstop,
+	'preset_radio' => 1
     );
     $TSunic->Tmpl->activate('$$$showCreateDate', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWCREATEDATE__TITLE}'));

@@ -9,6 +9,8 @@
 	'Date' => $this->getVar('Date'),
 	'preset_start' => $this->getVar('preset_start'),
 	'preset_stop' => $this->getVar('preset_stop'),
+	'preset_repeatstop' => $this->getVar('preset_repeatstop'),
+	'preset_radio' => $this->getVar('preset_radio'),
 	'submit_link' => '$$$createDate',
 	'submit_text' => '{SHOWCREATEDATE__SUBMIT}',
 	'reset_text' => '{SHOWCREATEDATE__CANCEL}'

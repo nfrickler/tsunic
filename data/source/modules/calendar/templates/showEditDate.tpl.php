@@ -13,6 +13,8 @@
 	'Date' => $Date,
 	'preset_start' => $this->getVar('preset_start'),
 	'preset_stop' => $this->getVar('preset_stop'),
+	'preset_repeatstop' => $this->getVar('preset_repeatstop'),
+	'preset_radio' => $this->getVar('preset_radio'),
 	'submit_link' => '$$$editDate',
 	'submit_text' => '{SHOWEDITDATE__SUBMIT}',
 	'reset_text' => '{SHOWEDITDATE__CANCEL}'

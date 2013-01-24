@@ -460,6 +460,14 @@ td {
     border-top:2px solid #333;
     border-left:2px solid #333;
 }
+.ts_radio {
+    width:20px;
+    background:#000;
+    height:15px;
+    padding:7px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
 .ts_input_help
 {
     position:absolute;

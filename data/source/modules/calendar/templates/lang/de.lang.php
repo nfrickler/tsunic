@@ -4,25 +4,25 @@ $lang = array(
     'NAME' => 'Kalender Modul',
 
     // tags
-    'TAG__DATE__START' => 'Startzeit',
-    'TAG__DATE__START__DESCRIPTION' => 'Startzeit des Termins',
-    'TAG__DATE__STOP' => 'Endzeit',
-    'TAG__DATE__STOP__DESCRIPTION' => 'Endzeit des Termins',
+    'TAG__DATE__START' => 'Startzeitpunkt',
+    'TAG__DATE__START__DESCRIPTION' => 'Startzeitpunkt des Termins',
+    'TAG__DATE__STOP' => 'Endzeitpunkt',
+    'TAG__DATE__STOP__DESCRIPTION' => 'Endzeitpunkt des Termins',
     'TAG__DATE__LENGTH' => 'Dauer',
     'TAG__DATE__LENGTH__DESCRIPTION' => 'Dauer des Termins',
     'TAG__DATE__TITLE' => 'Titel',
     'TAG__DATE__TITLE__DESCRIPTION' => 'Titel des Termins',
-    'TAG__DATE__PERIOD' => 'Wiederholung',
-    'TAG__DATE__PERIOD__DESCRIPTION' => 'Wiederhole Termin alle...',
-    'TAG__DATE__PERIODTYPE' => 'Wiederholungsart',
-    'TAG__DATE__PERIODTYPE__DESCRIPTION' => 'Wiederholungsart',
+    'TAG__DATE__REPEAT' => 'Wiederholung',
+    'TAG__DATE__REPEAT__DESCRIPTION' => 'Wiederhole Termin alle...',
+    'TAG__DATE__REPEATTYPE' => 'Wiederholungsart',
+    'TAG__DATE__REPEATTYPE__DESCRIPTION' => 'Wiederholungsart',
 
     // selections
-    'SELECTIONS__DATE__PERIODTYPE_I' => 'Minuten',
-    'SELECTIONS__DATE__PERIODTYPE_H' => 'Stunden',
-    'SELECTIONS__DATE__PERIODTYPE_D' => 'Tage',
-    'SELECTIONS__DATE__PERIODTYPE_M' => 'Monate',
-    'SELECTIONS__DATE__PERIODTYPE_Y' => 'Jahre',
+    'SELECTIONS__DATE__REPEATTYPE_I' => 'Minuten',
+    'SELECTIONS__DATE__REPEATTYPE_H' => 'Stunden',
+    'SELECTIONS__DATE__REPEATTYPE_D' => 'Tage',
+    'SELECTIONS__DATE__REPEATTYPE_M' => 'Monate',
+    'SELECTIONS__DATE__REPEATTYPE_Y' => 'Jahre',
 
     // showDay
     'SHOWDAY__TITLE' => 'Kalender Tag',
@@ -53,14 +53,17 @@ $lang = array(
     // formDate
     'FORMDATE__LEGEND_ID' => 'Identifikationsdaten',
     'FORMDATE__LEGEND' => 'Zusätzliche Daten',
+    'FORMDATE__REPEAT' => 'Wiederhole alle...',
+    'FORMDATE__REPEAT__COUNT' => '...x mal',
+    'FORMDATE__REPEAT__UNTIL' => '...bis',
 
     // createDate
     'CREATEDATE__SUCCESS' => 'Neuer Termin wurde angelegt.',
     'CREATEDATE__ERROR' => 'Ein Fehler ist aufgetreten!',
     'CREATEDATE__INVALIDTITLE' => 'Ungültiger Titel!',
     'CREATEDATE__INVALIDSTARTSTOP' => 'Ungültige Zeiten!',
-    'CREATEDATE__INVALIDPERIOD' => 'Ungültiger Wiederholungswert!',
-    'CREATEDATE__INVALIDPERIODTYPE' => 'Ungültige Wiederholungsart!',
+    'CREATEDATE__INVALIDREPEAT' => 'Ungültiger Wiederholungswert!',
+    'CREATEDATE__INVALIDREPEATTYPE' => 'Ungültige Wiederholungsart!',
 
     // editDate
     'EDITDATE__SUCCESS' => 'Änderungen gespeichert.',
