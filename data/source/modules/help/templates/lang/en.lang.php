@@ -19,8 +19,7 @@ $lang = array(
     'SHOWHELP__TITLE' => 'Help',
     'SHOWHELP__H' => 'Help',
     'SHOWHELP__TOINDEX' => 'To index of module',
-    'SHOWHELP__TOMAIN' => 'To oveoverall index',
-    'SHOWHELP__INFOTEXT' => 'Help for current page.',
+    'SHOWHELP__TOMAIN' => 'To overall index',
 
     // system_navigation
     '_SYSTEM_NAVIGATION__SHOWMAIN' => 'Help-Index',

@@ -19,7 +19,6 @@ $lang = array(
     'SHOWHELP__H' => 'Hilfe',
     'SHOWHELP__TOINDEX' => 'Zur Modul-Übersicht',
     'SHOWHELP__TOMAIN' => 'Zur Übersicht',
-    'SHOWHELP__INFOTEXT' => 'Hilfe für aktuelle Seite',
 
     // system_navigation
     '_SYSTEM_NAVIGATION__SHOWMAIN' => 'Hilfe-Übersicht',

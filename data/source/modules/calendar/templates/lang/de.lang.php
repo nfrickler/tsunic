@@ -56,6 +56,7 @@ $lang = array(
     'SHOWEDITDATE__TOADDTAG' => 'Tag hinzufügen',
     'SHOWEDITDATE__TOSHOWTAGS' => 'Tags verwalten',
     'SHOWEDITDATE__INFOTEXT' => 'Hier kannst du ein Termin bearbeiten.',
+    'SHOWEDITDATE__TOSHOWDELETEDATE' => 'Termin löschen',
     'SHOWEDITDATE__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITDATE__CANCEL' => 'Abbrechen',
 
@@ -90,7 +91,8 @@ $lang = array(
     'DELETEDATE__ERROR' => 'Termin konnte nicht gelöscht werden!',
 
     // navigation
-    '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Kalender',
+    '_SYSTEM_NAVIGATION__TOSHOWDAY' => 'Termine heute',
+    '_SYSTEM_NAVIGATION__TOSHOWMONTH' => 'Monatsansicht',
     '_HEADER_NAVIGATION__SHOWINDEX' => 'Kalender'
 );
 ?>

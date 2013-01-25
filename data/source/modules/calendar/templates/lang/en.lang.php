@@ -56,6 +56,7 @@ $lang = array(
     'SHOWEDITDATE__H1' => 'Edit date',
     'SHOWEDITDATE__TOADDTAG' => 'Add tag',
     'SHOWEDITDATE__TOSHOWTAGS' => 'Administrate tags',
+    'SHOWEDITDATE__TOSHOWDELETEDATE' => 'Delete date',
     'SHOWEDITDATE__INFOTEXT' => 'Here you can edit this date.',
     'SHOWEDITDATE__SUBMIT' => 'Save changes',
     'SHOWEDITDATE__CANCEL' => 'Cancel',
@@ -91,7 +92,8 @@ $lang = array(
     'DELETEDATE__ERROR' => 'Date could not be deleted!',
 
     // navigation
-    '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Calendar',
+    '_SYSTEM_NAVIGATION__TOSHOWDAY' => 'Show today',
+    '_SYSTEM_NAVIGATION__TOSHOWMONTH' => 'Show month',
     '_HEADER_NAVIGATION__SHOWINDEX' => 'Calendar'
 );
 ?>

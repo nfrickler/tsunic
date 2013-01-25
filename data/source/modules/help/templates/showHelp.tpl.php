@@ -12,8 +12,6 @@
 	    <?php $this->set('{SHOWHELP__TOMAIN}'); ?></a>
 	<?php } ?>
     </p>
-    <p class="ts_infotext"><?php $this->set('{SHOWHELP__INFOTEXT}'); ?></p>
-
     <div>
 	<?php $this->getVar('Helpfile')->includeFile(); ?>
     </div>

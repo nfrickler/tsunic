@@ -3,6 +3,8 @@
 <div id="$$$div__showEditDate">
     <h1><?php $this->set('{SHOWEDITDATE__H1}'); ?></h1>
     <p class="ts_suplinkbox">
+	<a id="$$$showEditDate__deletelink" href="<?php $this->setUrl('$$$showDeleteDate', array('$$$id' => $Date->getInfo('id'))); ?>">
+	    <?php $this->set('{SHOWEDITDATE__TOSHOWDELETEDATE}'); ?></a>
 	<a id="$$$showEditDate__editlink" href="<?php $this->setUrl('$bp$showTags'); ?>">
 	    <?php $this->set('{SHOWEDITDATE__TOSHOWTAGS}'); ?></a>
 	<a id="$$$showEditDate__toaddtag" href="<?php $this->setUrl('$bp$showAddTag', array('fk_obj' => $Date->getInfo('id'), 'backlink' => base64_encode($this->setUrl('$$$showEditDate', array('$$$id' => $Date->getInfo('id')), false, false)))); ?>">

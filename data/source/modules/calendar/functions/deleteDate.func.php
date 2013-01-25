@@ -6,6 +6,7 @@ function $$$deleteDate () {
     // get Date object
     $id = $TSunic->Temp->getParameter('$$$id');
     $Date = $TSunic->get('$$$Date', $id);
+    $start = $Date->getInfo('start');
 
     // delete date
     if (!$Date->delete()) {
@@ -16,7 +17,7 @@ function $$$deleteDate () {
 
     // success
     $TSunic->Log->alert('info', '{DELETEDATE__SUCCESS}');
-    $TSunic->redirect('$$$showIndex');
+    $TSunic->redirect('$$$showDay', array('$$$time' => $start));
 
     return true;
 }
