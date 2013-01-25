@@ -34,6 +34,15 @@ $lang = array(
     'SHOWDAY__TIME' => 'Time',
     'SHOWDAY__TITLE' => 'Title',
 
+    // showMonth
+    'SHOWMONTH__TITLE' => 'Calendar month',
+    'SHOWMONTH__H1' => 'Calendar month',
+    'SHOWMONTH__INFOTEXT' => 'All dates of this month.',
+    'SHOWMONTH__TOCREATEDATE' => 'Create new date',
+    'SHOWMONTH__DAY' => 'Day',
+    'SHOWMONTH__TIME' => 'Time',
+    'SHOWMONTH__TITLE' => 'Title',
+
     // showCreateDate
     'SHOWCREATEDATE__TITLE' => 'Create date',
     'SHOWCREATEDATE__H1' => 'Create date',
@@ -69,7 +78,7 @@ $lang = array(
     // editDate
     'EDITDATE__SUCCESS' => 'Changes saved.',
     'EDITDATE__ERROR' => 'An error occurred!',
-    'EDITDATE__INVALIDVALUE' => 'Invalid input (tag: "#field#", value: "#value#")!',
+    'EDITDATE__INVALIDVALUE' => 'Invalid input!',
 
     // showDeleteDate
     'SHOWDELETEDATE__POPUP_DELETE_HEADER' => 'Delete date?',

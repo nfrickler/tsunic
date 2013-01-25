@@ -35,7 +35,7 @@ function $$$createProfile () {
     foreach ($values as $index => $value) {
 	$Tag = $TSunic->get('$bp$Tag', $fk_tags[$index]);
 	if (!$Tag->isValidValue($value)) {
-	    $TSunic->Log->alert('error', '{CREATEPROFILE__INVALIDVALUE} (tag: '.$Tag->getInfo('name').', value: '.$value.')');
+	    $TSunic->Log->alert('error', '{CREATEPROFILE__INVALIDVALUE} ('.$Tag->getInfo('name').': '.$value.')');
 	    $TSunic->redirect('back');
 	}
     }

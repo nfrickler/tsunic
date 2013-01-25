@@ -34,6 +34,15 @@ $lang = array(
     'SHOWDAY__TIME' => 'Zeit',
     'SHOWDAY__TITLE' => 'Termin',
 
+    // showMonth
+    'SHOWMONTH__TITLE' => 'Kalendermonat',
+    'SHOWMONTH__H1' => 'Kalendermonat',
+    'SHOWMONTH__INFOTEXT' => 'Alle Termine in diesem Monat.',
+    'SHOWMONTH__TOCREATEDATE' => 'Neuer Termin',
+    'SHOWMONTH__DAY' => 'Tag',
+    'SHOWMONTH__TIME' => 'Zeit',
+    'SHOWMONTH__TITLE' => 'Termin',
+
     // showCreateDate
     'SHOWCREATEDATE__TITLE' => 'Termin erstellen',
     'SHOWCREATEDATE__H1' => 'Termin erstellen',
@@ -68,7 +77,7 @@ $lang = array(
     // editDate
     'EDITDATE__SUCCESS' => 'Änderungen gespeichert.',
     'EDITDATE__ERROR' => 'Ein Fehler ist aufgetreten!',
-    'EDITDATE__INVALIDVALUE' => 'Ungültige Eingabe (Tag: "#field#", Wert: "#value#")!',
+    'EDITDATE__INVALIDVALUE' => 'Ungültige Eingabe!',
 
     // showDeleteDate
     'SHOWDELETEDATE__POPUP_DELETE_HEADER' => 'Termin wirklich löschen?',

@@ -122,7 +122,7 @@ function $$$editDate () {
     foreach ($values as $index => $value) {
 	$Tag = $TSunic->get('$bp$Tag', $fk_tags[$index]);
 	if (!$Tag->isValidValue($value)) {
-	    $TSunic->Log->alert('error', '{EDITDATE__INVALIDVALUE} (tag: '.$Tag->getInfo('name').', value: '.$value.')');
+	    $TSunic->Log->alert('error', '{EDITDATE__INVALIDVALUE} ('.$Tag->getInfo('name').': '.$value.')');
 	    $TSunic->redirect('back');
 	}
     }
