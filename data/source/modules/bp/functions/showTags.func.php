@@ -4,11 +4,10 @@ function $$$showTags () {
     global $TSunic;
 
     // get all tags
-    $Selection = $TSunic->get('$$$Selection');
-    $tags = $Selection->getAllTags();
+    $Helper = $TSunic->get('$$$Helper');
 
     // activate template
-    $data = array('tags' => $tags);
+    $data = array('tags' => $Helper->getTags());
     $TSunic->Tmpl->activate('$$$showTags', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWTAGS__TITLE}'));
 

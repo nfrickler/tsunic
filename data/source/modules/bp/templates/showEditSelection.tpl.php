@@ -9,6 +9,7 @@
     <p class="ts_infotext"><?php $this->set('{SHOWEDITSELECTION__INFOTEXT}'); ?></p>
     <?php $this->display('$$$formSelection', array(
 	'Selection' => $Selection,
+	'tags' => $this->getVar('tags'),
 	'submit_link' => '$$$editSelection',
 	'submit_text' => '{SHOWEDITSELECTION__SUBMIT}',
 	'reset_text' => '{SHOWEDITSELECTION__CANCEL}'

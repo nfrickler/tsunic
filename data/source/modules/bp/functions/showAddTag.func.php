@@ -11,15 +11,14 @@ function $$$showAddTag () {
     $Obj = $TSunic->get('$$$BpObject', $fk_obj);
     $Obj = $Obj->getObject();
 
-    // get all tags
-    $Selection = $TSunic->get('$bp$Selection');
-    $tags = $Selection->getAllTags();
+    // get Helper object
+    $Helper = $TSunic->get('$bp$Helper');
 
     // activate template
     $data = array(
 	'fk_obj' => $fk_obj,
 	'backlink' => $backlink,
-	'tags' => $tags
+	'tags' => $Helper->getTags()
     );
     $TSunic->Tmpl->activate('$$$showAddTag', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWADDTAG__TITLE}'));

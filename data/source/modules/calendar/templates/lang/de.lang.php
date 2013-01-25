@@ -37,7 +37,7 @@ $lang = array(
     // showCreateDate
     'SHOWCREATEDATE__TITLE' => 'Termin erstellen',
     'SHOWCREATEDATE__H1' => 'Termin erstellen',
-    'SHOWCREATEDATE__INFOTEXT' => 'Hier kannst du ein neues Termin anlegen. Alle Felder sind optional.',
+    'SHOWCREATEDATE__INFOTEXT' => 'Hier kannst du ein neues Termin anlegen.',
     'SHOWCREATEDATE__SUBMIT' => 'Erstellen',
     'SHOWCREATEDATE__CANCEL' => 'Abbrechen',
 

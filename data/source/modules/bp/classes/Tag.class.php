@@ -126,7 +126,7 @@ class $$$Tag extends $system$Object {
      */
     public function getType () {
 	global $TSunic;
-	if (!$this->Type) {
+	if (empty($this->Type)) {
 	    $this->Type = $TSunic->get('$$$Type', $this->getInfo('fk_type'));
 	}
 	return $this->Type;

@@ -1,45 +1,53 @@
 <!-- | Tables for calendar -->
 
-INSERT IGNORE INTO `$bp$tags` (`fk_type`, `name`, `title`, `description`) VALUES 
+INSERT IGNORE INTO `$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES 
     ((SELECT id FROM $bp$types as types WHERE types.name = 'string'),
 	'DATE__START',
 	'{$CALENDAR$TAG__DATE__START}',
-	'{$CALENDAR$TAG__DATE__START__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__START__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'string'),
 	'DATE__STOP',
 	'{$CALENDAR$TAG__DATE__STOP}',
-	'{$CALENDAR$TAG__DATE__STOP__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__STOP__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'int'),
 	'DATE__LENGTH',
 	'{$CALENDAR$TAG__DATE__LENGTH}',
-	'{$CALENDAR$TAG__DATE__LENGTH__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__LENGTH__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'string'),
 	'DATE__TITLE',
 	'{$CALENDAR$TAG__DATE__TITLE}',
-	'{$CALENDAR$TAG__DATE__TITLE__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__TITLE__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'int'),
 	'DATE__REPEAT',
 	'{$CALENDAR$TAG__DATE__REPEAT}',
-	'{$CALENDAR$TAG__DATE__REPEAT__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__REPEAT__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'radio'),
 	'DATE__REPEATTYPE',
 	'{$CALENDAR$TAG__DATE__REPEATTYPE}',
-	'{$CALENDAR$TAG__DATE__REPEATTYPE__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__REPEATTYPE__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'int'),
 	'DATE__REPEATSTOP',
 	'{$CALENDAR$TAG__DATE__REPEATSTOP}',
-	'{$CALENDAR$TAG__DATE__REPEATSTOP__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__REPEATSTOP__DESCRIPTION}',
+	1
     ),
     ((SELECT id FROM $bp$types as types WHERE types.name = 'int'),
 	'DATE__REPEATCOUNT',
 	'{$CALENDAR$TAG__DATE__REPEATCOUNT}',
-	'{$CALENDAR$TAG__DATE__REPEATCOUNT__DESCRIPTION}'
+	'{$CALENDAR$TAG__DATE__REPEATCOUNT__DESCRIPTION}',
+	1
     )
 ;
 

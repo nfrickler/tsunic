@@ -32,14 +32,6 @@ class $$$BpObject extends $system$Object {
 	    if (count($cache) < 2) continue;
 
 	    $value = $Value->getInfo('value');
-/*
-	    $Tag = $Value->getTag();
-	    if ($Tag->getInfo('name') == 'selection'
-		or $Tag->getType()->getInfo('name') == 'radio'
-	    ) {
-		//$value = $Tag->getSelectionValue($value);
-	    }
-*/
 	    $this->info[strtolower($cache[1])] = $value;
 	}
 
@@ -208,7 +200,7 @@ class $$$BpObject extends $system$Object {
     public function getDefaultTags () {
 
 	// get all tags
-	$tags = $this->getHelper()->getTags();
+	$tags = $this->getHelper()->getTags(true);
 
 	// filter only those requested
 	$out = array();

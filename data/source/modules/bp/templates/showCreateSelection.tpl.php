@@ -11,6 +11,7 @@
 
     <?php $this->display('$$$formSelection', array(
 	'Selection' => $this->getVar('Selection'),
+	'tags' => $this->getVar('tags'),
 	'fk_tag' => $this->getVar('fk_tag'),
 	'submit_link' => '$$$createSelection',
 	'submit_text' => '{SHOWCREATESELECTION__SUBMIT}',

@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `#__tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `fk_type` int(11) NOT NULL,
+  `isId` char(1) NOT NULL,
   `name` varchar(200) NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` text NOT NULL,

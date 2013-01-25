@@ -96,32 +96,5 @@ class $$$Selection extends $system$Object {
 	    and $this->_isObject('#__tags', $fk_tag)
 	) ? true : false;
     }
-
-    /* get all available tags
-     * @param bool: selections and radios only?
-     *
-     * @return array
-     */
-    public function getAllTags ($selOnly = false) {
-	global $TSunic;
-	$Helper = $TSunic->get('$$$Helper');
-
-	// get all tags
-	$tags = $Helper->getTags();
-
-	// filter
-	if ($selOnly) {
-	    $out = array();
-	    foreach ($tags as $index => $Value) {
-		if ($Value->getType()->getInfo('name') == 'selection' or $Value->getType()->getInfo('name') == 'radio') {
-		    $out[] = $Value;
-		}
-	    }
-
-	    return $out;
-	}
-
-	return $tags;
-    }
 }
 ?>

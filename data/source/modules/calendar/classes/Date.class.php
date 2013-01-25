@@ -26,6 +26,17 @@ class $$$Date extends $bp$BpObject {
 	    ? true : false;
     }
 
+    /* get corresponding end to start
+     * +@param int: start
+     *
+     * @return int
+     */
+    public function getStop ($start = 0) {
+	if (empty($start)) $start = $this->getInfo('start');
+	$period = $this->getInfo('stop') - $this->getInfo('start');
+	return $start + $period;
+    }
+
     /* get next start time of repetition of date
      * @param int: timestamp of start
      * +@param bool: count up? (down otherwise)
@@ -37,6 +48,7 @@ class $$$Date extends $bp$BpObject {
 
 	$type = $TSunic->get('$bp$Selection', $this->getInfo('repeattype'))->getInfo('name');
 	$repeat = $this->getInfo('repeat');
+	if (empty($repeat)) $repeat = 1;
 	$pref = ($up) ? '+' : '-';
 
 	// extract type
@@ -61,16 +73,21 @@ class $$$Date extends $bp$BpObject {
 		break;
 	}
 
-	return $start;
+	// log error
+	$TSunic->Log->log(1, "calendar__Date: Error: RepeatType not found!");
+
+	// add one to prevent infinite loops
+	return $start+1;
     }
 
     /* get start of date within a certain time space?
      * @param int: from
      * @param int: to
      *
-     * @return int
+     * @return array
      */
     public function getWithin ($from, $to) {
+	$out = array();
 
 	// get start params
 	$start = $this->getInfo('start');
@@ -78,20 +95,20 @@ class $$$Date extends $bp$BpObject {
 	$repeatcount = $this->getInfo('repeatcount');
 	if (!$repeatcount) $repeatcount = 0;
 	$repeatstop = $this->getInfo('repeatstop');
+	$isCount = ($repeatcount > 0 or empty($repeatstop)) ? true : false;
 
 	// get period of date
 	$period = $stop - $start;
 
 	// search for first date within period
-	$found = 0;
-	while (!$found and $repeatcount >= 0 and (empty($repeatstop) or $start < $repeatstop)) {
+	while (($isCount and $repeatcount >= 0) or (!$isCount and $start < $repeatstop)) {
 
 	    // found sth?
 	    if ((($start+$period) < $from and ($start+$period) > $from)
 		or ($start > $from and $start < $to)
-	    ) { 
+	    ) {
 		// found it!
-		$found = $start;
+		$out[] = array('time' => $start, 'Date' => $this);
 	    }
 
 	    // increment
@@ -99,7 +116,7 @@ class $$$Date extends $bp$BpObject {
 	    $start = $this->nextRepeat($start);
 	}
 
-	return $found;
+	return $out;
     }
 }
 ?>

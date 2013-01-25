@@ -22,10 +22,10 @@
 	    <th style="width:15%;"><?php $this->set('{SHOWDAY__TIME}'); ?></th>
 	    <th><?php $this->set('{SHOWDAY__TITLE}'); ?></th>
 	</tr>
-	<?php foreach ($this->getVar('dates') as $index => $Value) { ?>
+	<?php foreach ($this->getVar('dates') as $index => $values) { ?>
 	<tr>
-	    <td><?php echo date('H:i', $Value->getInfo('start')).'-'.date('H:i', $Value->getInfo('stop')); ?></td>
-	    <td><a href="<?php $this->setUrl('$$$showEditDate', array('$$$id' => $Value->getInfo('id'))); ?>"><?php $this->set($Value->getInfo('title')); ?></a></td>
+	    <td><?php echo date('H:i', $values['time']).'-'.date('H:i', $values['Date']->getStop($values['time'])); ?></td>
+	    <td><a href="<?php $this->setUrl('$$$showEditDate', array('$$$id' => $values['Date']->getInfo('id'))); ?>"><?php $this->set($values['Date']->getInfo('title')); ?></a></td>
 	</tr>
 	<?php } ?>
     </table>

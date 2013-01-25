@@ -1,6 +1,8 @@
 <!-- | TEMPLATE show form for selection -->
 <?php
 $Selection = $this->getVar('Selection');
+$tags = $this->getVar('tags');
+if (!is_array($tags)) $tags = array();
 ?>
 <div id="$$$div__formSelection">
     <form action="<?php $this->setUrl($this->getVar('submit_link')); ?>" method="post" name="$$$formSelection__form" id="$$$formSelection__form" class="ts_form">
@@ -14,7 +16,7 @@ $Selection = $this->getVar('Selection');
 	    ?>
 	    <select name="$$$formSelection__fk_tag" id="$$$formSelection__fk_tag">
 		<option value="0"><?php $this->set('{FORMSELECTION__FK_TAG_PLEASECHOOSE}'); ?></option>
-		<?php foreach ($Selection->getAllTags(true) as $index => $Value) { ?>
+		<?php foreach ($tags as $index => $Value) { ?>
 		<option value="<?php echo $Value->getInfo('id'); ?>" <?php if ($Value->getInfo('id') == $preset) echo 'selected="selected"'; ?>>
 		    <?php $this->set($Value->getInfo('title')); ?>
 		</option>

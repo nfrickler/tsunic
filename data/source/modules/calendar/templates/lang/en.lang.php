@@ -38,14 +38,7 @@ $lang = array(
     'SHOWCREATEDATE__TITLE' => 'Create date',
     'SHOWCREATEDATE__H1' => 'Create date',
     'SHOWCREATEDATE__TOSHOWTAGS' => 'Administrate tags',
-    'SHOWCREATEDATE__INFOTEXT' => 'Fill in the following form to create a new date. All fields are optional.',
-    'SHOWCREATEDATE__SUBMIT' => 'Create',
-    'SHOWCREATEDATE__CANCEL' => 'Cancel',
-
-    // showCreateDate
-    'SHOWCREATEDATE__TITLE' => 'Create date',
-    'SHOWCREATEDATE__H1' => 'Create date',
-    'SHOWCREATEDATE__INFOTEXT' => 'Fill in the following form to create a new date. All fields are optional.',
+    'SHOWCREATEDATE__INFOTEXT' => 'Fill in the following form to create a new date.',
     'SHOWCREATEDATE__SUBMIT' => 'Create',
     'SHOWCREATEDATE__CANCEL' => 'Cancel',
 
