@@ -1,13 +1,13 @@
 <!-- |  -->
 <all>
-	<name>sunrise</name>
-	<version>1.0</version>
-	<nameid>tsunicnativestyle</nameid>
-	<core>true</core>
-	<description>Sunrise-Style</description>
-	<author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>
-	<copyright>Copyright 2012 Nicolas Frinker</copyright>
-	<licence>This program is free software: you can redistribute it and/or modify
+    <name>sunrise</name>
+    <version>1.0</version>
+    <nameid>tsunicnativestyle</nameid>
+    <core>true</core>
+    <description>Sunrise-Style</description>
+    <author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>
+    <copyright>Copyright 2013 Nicolas Frinker</copyright>
+    <licence>This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation, either version 3 of the
 License, or (at your option) any later version.
