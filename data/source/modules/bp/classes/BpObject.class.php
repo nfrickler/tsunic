@@ -96,7 +96,7 @@ class $$$BpObject extends $system$Object {
 	$Bit = $TSunic->get('$$$Bit', false, true);
 
 	// convert fk_tag to id if neccesary
-	if (!is_numeric($fk_tag)) $fk_tag = $this->tag2id($fk_tag);
+	$fk_tag = $this->tag2id($fk_tag);
 
 	// create new Bit
 	if (!$Bit->create($this->id, $value, $fk_tag))
@@ -108,12 +108,40 @@ class $$$BpObject extends $system$Object {
 	return true;
     }
 
+    /* get first bit with specified tag
+     * @param string/int: id or name of tag
+     *
+     * @return Bit
+     */
+    public function getBit ($tag) {
+	$Helper = $this->getHelper();
+	$tag = $Helper->tag2id($tag);
+
+	// get all Bits
+	$bits = $this->getBits(true);
+
+	// get first Bit that has specified Tag
+	$Bit = NULL;
+	foreach ($bits as $index => $Value) {
+	    if ($Value->getInfo('fk_tag') == $tag) $Bit = $Value;
+	}
+
+	// get empty Bit if nothing found
+	if (empty($Bit)) {
+	    global $TSunic;
+	    $Bit = $TSunic->get('$bp$Bit', false, true);
+	    $Bit->presetInfo(array('fk_tag' => $tag, 'fk_obj' => $this->id));
+	}
+
+	return $Bit;
+    }
+
     /* get all bits belonging to this object
      * +@param bool: get all bits (including default bits?)
      *
      * @return array
      */
-    public function getBits ($incId = true) {
+    public function getBits ($incId = false) {
 	if (!$this->id) return array();
 
 	if (!$this->bits) {

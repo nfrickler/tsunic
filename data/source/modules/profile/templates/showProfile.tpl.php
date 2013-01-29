@@ -21,6 +21,12 @@
 		<?php $this->set($Profile->getInfo('gender')); ?>
 	    </td>
 	</tr>
+	<tr>
+	    <th style="min-width:100px;"><?php $this->set('{SHOWPROFILE__DATEOFBIRTH}'); ?></th>
+	    <td style="min-width:100px;">
+		<?php $this->set(date('d.m.Y', $this->getVar('Date')->getInfo('start'))); ?>
+	    </td>
+	</tr>
     </table>
 
     <table cellspacing="2" cellpadding="0" border="0">

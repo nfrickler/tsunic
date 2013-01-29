@@ -82,7 +82,7 @@ global $Config;
 		| <a href="?event=<?php echo $_GET['event']; ?>&amp;lang=de">Deutsch</a>
 	    </p>
 	    Powered by <a href="http://tsunic.de" target="_blank">TSunic <?php echo $Config->get('version'); ?></a> <br />
-	    Copyright &copy;2012 Nicolas Frinker
+	    Copyright &copy;2012-2013 Nicolas Frinker
 	</div>
     </div>
     <div class="div_tsunic_topright">

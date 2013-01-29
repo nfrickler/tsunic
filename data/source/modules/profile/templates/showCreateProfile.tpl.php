@@ -11,6 +11,7 @@
 
     <?php $this->display('$$$formProfile', array(
 	'Profile' => $this->getVar('Profile'),
+	'preset_dateofbirth' => $this->getVar('preset_dateofbirth'),
 	'submit_link' => '$$$createProfile',
 	'submit_text' => '{SHOWCREATEPROFILE__SUBMIT}',
 	'reset_text' => '{SHOWCREATEPROFILE__CANCEL}'

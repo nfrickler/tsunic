@@ -1,12 +1,14 @@
 <!-- | TEMPLATE show form for bit -->
 <?php
 $Bit = $this->getVar('Bit');
-$Tag = $Bit->getTag();
-$num = $this->getVar('num');
+$Tag = (isset($Bit)) ? $Bit->getTag() : $this->getVar('Tag');
+$value = (isset($Bit)) ? $Bit->getInfo('value') : $this->getVar('value');
+$id = (isset($Bit)) ? $Bit->getInfo('id') : $this->getVar('id');
 
+$num = $this->getVar('num');
 ?>
 	<input type="hidden" name="$$$formBit__fk_tag__<?php echo $num; ?>" id="$$$formBit__fk_tag__<?php echo $num; ?>" value="<?php echo $Tag->getInfo('id'); ?>" />
-	<input type="hidden" name="$$$formBit__fk_bit__<?php echo $num; ?>" id="$$$formBit__fk_bit__<?php echo $num; ?>" value="<?php echo $Bit->getInfo('id'); ?>" />
+	<input type="hidden" name="$$$formBit__fk_bit__<?php echo $num; ?>" id="$$$formBit__fk_bit__<?php echo $num; ?>" value="<?php echo $id; ?>" />
 <?php
 
 switch ($Tag->getType()->getInfo('name')) {
@@ -14,29 +16,29 @@ switch ($Tag->getType()->getInfo('name')) {
     case 'int':
     case 'double':
     case 'string':
-	$name = $this->set($Bit->getTag()->getInfo('title'), false, false);
+	$name = $this->set($Tag->getInfo('title'), false, false);
 ?>
 	<label for="$$$formBit__<?php echo $num; ?>"><?php echo $name; ?></label>
-	<input type="text" name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>" value="<?php $this->setPreset('$$$formBit__value__'.$num, $Bit->getInfo('value')); ?>" />
+	<input type="text" name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>" value="<?php $this->setPreset('$$$formBit__value__'.$num, $value); ?>" />
 	<div style="clear:both;"></div>
 <?php
 	break;
     case 'text':
-	$name = $this->set($Bit->getTag()->getInfo('title'), false, false);
+	$name = $this->set($Tag->getInfo('title'), false, false);
 ?>
 	<label for="$$$formBit__<?php echo $num; ?>"><?php echo $name; ?></label>
-	<textarea name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>"><?php $this->setPreset('$$$formSelection__'.$num, $Bit->getInfo('value')); ?></textarea>
+	<textarea name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>"><?php $this->setPreset('$$$formSelection__'.$num, $value); ?></textarea>
 	<div style="clear:both;"></div>
 <?php
 	break;
     case 'selection':
-	$name = $this->set($Bit->getTag()->getInfo('title'), false, false);
-	$preset = $this->setPreset('$$$formBit__value__'.$num, $Bit->getInfo('value'), false);
+	$name = $this->set($Tag->getInfo('title'), false, false);
+	$preset = $this->setPreset('$$$formBit__value__'.$num, $value, false);
 ?>
 	    <label for="$$$formBit__value__<?php echo $num; ?>"><?php echo $name; ?></label>
 	    <select name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>" multiple="multiple">
 		<option value="0"><?php $this->set('{FORMBIT__PLEASECHOOSE}'); ?></option>
-		<?php foreach ($Bit->getTag()->getSelections() as $index => $Value) { ?>
+		<?php foreach ($Tag->getSelections() as $index => $Value) { ?>
 		<option value="<?php echo $Value->getInfo('id'); ?>" <?php if ($Value->getInfo('id') == $preset) echo 'selected="selected"'; ?>>
 		    <?php $this->set($Value->getInfo('name')); ?>
 		</option>
@@ -47,13 +49,13 @@ switch ($Tag->getType()->getInfo('name')) {
 	break;
 
     case 'radio':
-	$name = $this->set($Bit->getTag()->getInfo('title'), false, false);
-	$preset = $this->setPreset('$$$formBit__value__'.$num, $Bit->getInfo('value'), false);
+	$name = $this->set($Tag->getInfo('title'), false, false);
+	$preset = $this->setPreset('$$$formBit__value__'.$num, $value, false);
 ?>
 	    <label for="$$$formBit__value__<?php echo $num; ?>"><?php echo $name; ?></label>
 	    <select name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>">
 		<option value="0"><?php $this->set('{FORMBIT__PLEASECHOOSE}'); ?></option>
-		<?php foreach ($Bit->getTag()->getSelections() as $index => $Value) { ?>
+		<?php foreach ($Tag->getSelections() as $index => $Value) { ?>
 		<option value="<?php echo $Value->getInfo('id'); ?>" <?php if ($Value->getInfo('id') == $preset) echo 'selected="selected"'; ?>>
 		    <?php $this->set($Value->getInfo('name')); ?>
 		</option>

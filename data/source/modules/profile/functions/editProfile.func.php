@@ -3,6 +3,16 @@
 function $$$editProfile () {
     global $TSunic;
 
+    // get input
+    $dateofbirth_d = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_d');
+    $dateofbirth_m = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_m');
+    $dateofbirth_Y = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_y');
+    $dateofbirth = mktime(0, 0, 0, $dateofbirth_m, $dateofbirth_d, $dateofbirth_Y);
+
+    // get profile object
+    $id = $TSunic->Temp->getPost('$$$formProfile__id');
+    $Profile = $TSunic->get('$$$Profile', $id);
+
     // get all posts
     $posts = $TSunic->Temp->getPost(true);
 
@@ -40,16 +50,18 @@ function $$$editProfile () {
 	}
     }
 
-    // create profile object
-    $id = $TSunic->Temp->getPost('$$$formProfile__id');
-    $Profile = $TSunic->get('$$$Profile', $id);
-
     // create profile
     if (!$Profile->isValid()) {
 	// add error message and redirect back
 	$TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
 	$TSunic->redirect('back');
 	return true;
+    }
+
+    // edit dateofbirth
+    if (!$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$values[0].' '.$values[1].'"')) {
+	$TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
+	$TSunic->redirect('back');
     }
 
     // add/edit all bits

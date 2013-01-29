@@ -10,7 +10,7 @@ class $$$Validator {
     /* chars additionally allowed in extString
      * string
      */
-    private static $chars2 = "\\\/\s\t@\.!\?;:,|#\$'\"\+\(\)\[\]&=\<\>";
+    private static $chars2 = "\\\/\s\t@\.!\?;:,|#\$'\"\+\(\)\[\]&=\<\>\{\}";
 
     /* chars additionally allowed in text
      * string

@@ -80,14 +80,34 @@ class $$$Tag extends $system$Object {
 	return $this->_delete();
     }
 
+    /* convert idname to id (selections and radios only)
+     * @param int/string: id or idname
+     *
+     * @return int/mix
+     */
+    public function toid ($input) {
+	$type = $this->getType()->getInfo('name');
+	if ($type != 'selection' and $type != 'radio') return $input;
+	if (is_numeric($input)) return $input;
+
+	// convert
+	$selections = $this->getSelections();
+	$out = 0;
+	foreach ($selections as $index => $Value) {
+	    if ($Value->getInfo('idname') == $input)
+		$out = $Value->getInfo('id');
+	}
+
+	return $out;
+    }
+
     /* get selections (only if type=selection/radio)
      *
      * @return array
      */
     public function getSelections () {
-	if ($this->getType()->getInfo('name') != 'selection'
-	    AND $this->getType()->getInfo('name') != 'radio'
-	) return array();
+	$type = $this->getType()->getInfo('name');
+	if ($type != 'selection' and $type != 'radio') return array();
 	global $TSunic;
 
 	// get all selections

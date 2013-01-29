@@ -61,6 +61,9 @@ class $$$Type extends $system$Object {
 	    case 'radio':
 		return ($this->_isObject('#__selections', $value));
 		break;
+	    case 'fk':
+		return ($this->_isObject('#__objects', $value));
+		break;
 	    default:
 		return false;
 	}

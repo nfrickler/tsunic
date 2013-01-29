@@ -83,12 +83,14 @@ class $$$Bit extends $system$Object {
 	if (!$this->isValidFkTag($fk_tag)
 	    or !$this->isValidFkObject($fk_object)
 	) return false;
+	$this->presetInfo(array('fk_tag' => $fk_tag));
 
 	// valid value?
 	if ($value === true) {
 	    $value = "";
-	} elseif (!$this->isValidValue($value)) {
-	    return false;
+	} else {
+	    $value = $this->value2save($value);
+	    if (!$this->isValidValue($value)) return false;
 	}
 
 	// update database
@@ -121,6 +123,7 @@ class $$$Bit extends $system$Object {
 	}
 
 	// validate input
+	$value = $this->value2save($value);
 	if (!$this->isValidValue($value)) return false;
 
 	// update database
@@ -131,6 +134,15 @@ class $$$Bit extends $system$Object {
 	if (!$this->_edit($data)) return false;
 
 	return true;
+    }
+
+    /* convert value in value to be saved
+     * @param mix: value
+     *
+     * @return mix
+     */
+    public function value2save ($value) {
+	return $this->getTag()->toid($value);
     }
 
     /* check, if fk_object is valid
@@ -156,12 +168,13 @@ class $$$Bit extends $system$Object {
     }
 
     /* check, if value is valid
-     * @param string: value
+     * @param mix: value
      *
      * @return bool
      */
     public function isValidValue ($value) {
-	return ($this->_validate($value, 'extString')) ? true : false;
+	$Type = $this->getTag()->getType();
+	return $Type->isValidValue($value);
     }
 
     /* delete bit

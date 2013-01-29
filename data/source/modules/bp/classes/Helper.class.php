@@ -54,6 +54,7 @@ class $$$Helper {
      * @return int
      */
     public function tag2id ($name) {
+	if (is_numeric($name)) return $name;
 	$tags = $this->getTags(true);
 	return (isset($tags[$name])) ? $tags[$name]->getInfo('id') : 0;
     }

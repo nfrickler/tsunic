@@ -11,6 +11,7 @@
     <p class="ts_infotext"><?php $this->set('{SHOWEDITPROFILE__INFOTEXT}'); ?></p>
     <?php $this->display('$$$formProfile', array(
 	'Profile' => $Profile,
+	'preset_dateofbirth' => $this->getVar('preset_dateofbirth'),
 	'submit_link' => '$$$editProfile',
 	'submit_text' => '{SHOWEDITPROFILE__SUBMIT}',
 	'reset_text' => '{SHOWEDITPROFILE__CANCEL}'

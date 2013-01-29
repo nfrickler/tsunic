@@ -3,6 +3,9 @@
 $lang = array(
     'NAME' => 'Profile module',
 
+    // special
+    'PROFILE__DATEOFBIRTH__TITLE' => 'Birthday',
+
     // tags
     'TAG__PROFILE__FIRSTNAME' => 'Firstname',
     'TAG__PROFILE__FIRSTNAME__DESCRIPTION' => 'Firstname of person',
@@ -41,6 +44,7 @@ $lang = array(
     'SHOWPROFILE__H1' => 'Profile',
     'SHOWPROFILE__NAME' => 'Name',
     'SHOWPROFILE__GENDER' => 'Gender',
+    'SHOWPROFILE__DATEOFBIRTH' => 'Date of birth',
 
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Create profile',
