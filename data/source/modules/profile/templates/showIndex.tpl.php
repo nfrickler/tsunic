@@ -25,7 +25,10 @@
 		<a href="<?php $this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 		    <?php $this->set($name); ?></a>
 	    </td>
-	    <td><?php $this->set($Profile->getInfo('dateofbirth')); ?></td>
+	    <td>
+		<?php $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth')); ?>
+		<?php $this->set(date('d.m.Y', $Date->getInfo('start'))); ?>
+	    </td>
 	</tr>
 	<?php } ?>
     </table>

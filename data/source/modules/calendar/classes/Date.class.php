@@ -97,15 +97,18 @@ class $$$Date extends $bp$BpObject {
 	$repeatstop = $this->getInfo('repeatstop');
 	$isCount = ($repeatcount > 0 or empty($repeatstop)) ? true : false;
 
+	// is start before to?
+	if ($start > $to) return $out;
+
 	// get period of date
 	$period = $stop - $start;
 
 	// search for first date within period
-	while (($isCount and $repeatcount >= 0) or (!$isCount and $start < $repeatstop)) {
+	while (($start < $to) and (($isCount and $repeatcount >= 0) or (!$isCount and $start < $repeatstop))) {
 
 	    // found sth?
-	    if ((($start+$period) < $from and ($start+$period) > $from)
-		or ($start > $from and $start < $to)
+	    if ((($start+$period) < $from and ($start+$period) >= $from)
+		or ($start >= $from and $start < $to)
 	    ) {
 		// found it!
 		$out[] = array('time' => $start, 'Date' => $this);

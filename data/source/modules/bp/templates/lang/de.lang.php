@@ -10,6 +10,7 @@ $lang = array(
     'TYPE__TEXT' => 'Mehrzeiliger Text',
     'TYPE__SELECTION' => 'Mehrfachauswahl',
     'TYPE__RADIO' => 'Einfachauswahl',
+    'TYPE__FK' => 'Irgendein Objekt',
 
     // formBit
     'FORMBIT__PLEASECHOOSE' => '---Bitte wählen---',
@@ -20,7 +21,7 @@ $lang = array(
     'SHOWTAGS__INFOTEXT' => 'Dies sind alle verfügbaren Tags. Du kannst neue hinzufügen und bestehende bearbeiten oder löschen.',
     'SHOWTAGS__TOCREATETAG' => 'Neuen Tag erstellen',
     'SHOWTAGS__NAME' => 'Name',
-    'SHOWTAGS__TITLE' => 'Titel',
+    'SHOWTAGS__TAGTITLE' => 'Titel',
     'SHOWTAGS__DESCRIPTION' => 'Beschreibung',
     'SHOWTAGS__ACTIONS' => 'Aktionen',
     'SHOWTAGS__TODELETE' => 'Löschen',
@@ -28,6 +29,7 @@ $lang = array(
     // showCreateTag
     'SHOWCREATETAG__TITLE' => 'Tags',
     'SHOWCREATETAG__H1' => 'Tags',
+    'SHOWCREATETAG__TOSHOWTAGS' => 'Zur Tag-Übersicht',
     'SHOWCREATETAG__INFOTEXT' => 'Über das folgenden Formular kannst du einen neuen Tag erstellen.',
     'SHOWCREATETAG__SUBMIT' => 'Neuen Tag erstellen',
     'SHOWCREATETAG__CANCEL' => 'Abbrechen',
@@ -35,6 +37,7 @@ $lang = array(
     // showEditTag
     'SHOWEDITTAG__TITLE' => 'Tags',
     'SHOWEDITTAG__H1' => 'Tags',
+    'SHOWEDITTAG__TOSHOWTAGS' => 'Zur Tag-Übersicht',
     'SHOWEDITTAG__INFOTEXT' => 'Über das folgenden Formular kannst du den Tag bearbeiten.',
     'SHOWEDITTAG__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITTAG__CANCEL' => 'Abbrechen',

@@ -97,12 +97,12 @@ $num = 0;
 
 	    <label for="$$$formDate__repeat"><?php $this->set('{FORMDATE__REPEAT}'); ?></label>
 
-	    <input class="ts_required" type="text" name="$$$formDate__repeat" id="$$$formDate__repeat" value="<?php $this->setPreset('$$$formDate__repeat', $Date->getInfo('repeat')); ?>" style="width:100px;" />
+	    <input type="text" name="$$$formDate__repeat" id="$$$formDate__repeat" value="<?php $this->setPreset('$$$formDate__repeat', $Date->getInfo('repeat')); ?>" style="width:100px;" />
 	    <?php
 	    $preset = $this->setPreset('$$$formDate__repeattype', $Date->getInfo('repeattype'), false);
 	    $Tag = $TSunic->get('$bp$Tag', $Date->tag2id('DATE__REPEATTYPE'));
 	    ?>
-	    <select class="ts_required" name="$$$formDate__repeattype" id="$$$formDate__repeattype" style="width:300px;">
+	    <select name="$$$formDate__repeattype" id="$$$formDate__repeattype" style="width:300px;">
 		<?php foreach ($Tag->getSelections() as $index => $Value) { ?>
 		<option value="<?php echo $Value->getInfo('id'); ?>" <?php if ($Value->getInfo('id') == $preset) echo 'selected="selected"'; ?>>
 		    <?php $this->set($Value->getInfo('name')); ?>
@@ -114,44 +114,44 @@ $num = 0;
 	    <label for="$$$formDate__repeat"><?php $this->set('{FORMDATE__REPEAT__COUNT}'); ?></label>
 	    <input class="ts_radio" <?php if ($this->getVar('preset_radio')) echo 'checked="checked"'; ?> style="width:40px; padding:10px;" type="radio" id="$$$formDate__repeat_radio" name="$$$formDate__repeat_radio" value="1" />
 
-	    <input class="ts_required" type="text" name="$$$formDate__repeatcount" id="$$$formDate__repeatcount" value="<?php $this->setPreset('$$$formDate__repeatcount', $Date->getInfo('repeatcount')); ?>" style="width:100px;" />
+	    <input type="text" name="$$$formDate__repeatcount" id="$$$formDate__repeatcount" value="<?php $this->setPreset('$$$formDate__repeatcount', $Date->getInfo('repeatcount')); ?>" style="width:100px;" />
 	    <div style="clear:both;"></div>
 
 	    <label for="$$$formDate__repeat"><?php $this->set('{FORMDATE__REPEAT__UNTIL}'); ?></label>
 	    <input class="ts_radio" <?php if (!$this->getVar('preset_radio')) echo 'checked="checked"'; ?> style="width:40px; padding:10px;" type="radio" id="$$$formDate__repeat_radio" name="$$$formDate__repeat_radio" value="0" />
 
 	    <?php $preset = $this->setPreset('$$$formDate__repeatstop_d', date('d', $preset_repeatstop), false); ?>
-	    <select class="ts_required" name="$$$formDate__repeatstop_d" id="$$$formDate__repeatstop_d" style="width:50px;" />
+	    <select name="$$$formDate__repeatstop_d" id="$$$formDate__repeatstop_d" style="width:50px;" />
 		<?php for ($i = 1; $i <= 31; $i++) { ?>
 		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"' ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
 		<?php } ?>
 	    </select>
 	    <?php $preset = $this->setPreset('$$$formDate__repeatstop_m', date('m', $preset_repeatstop), false); ?>
-	    <select class="ts_required" name="$$$formDate__repeatstop_m" id="$$$formDate__repeatstop_m" style="width:50px;"/>
+	    <select name="$$$formDate__repeatstop_m" id="$$$formDate__repeatstop_m" style="width:50px;"/>
 		<?php for ($i = 1; $i <= 12; $i++) { ?>
 		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"'; ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
 		<?php } ?>
 	    </select>
 	    <?php $preset = $this->setPreset('$$$formDate__repeatstop_y', date('Y', $preset_repeatstop), false); ?>
-	    <select class="ts_required" name="$$$formDate__repeatstop_y" id="$$$formDate__repeatstop_y" style="width:100px;"/>
+	    <select name="$$$formDate__repeatstop_y" id="$$$formDate__repeatstop_y" style="width:100px;"/>
 		<?php for ($i = 1900; $i <= date('Y') + 100; $i++) { ?>
 		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"'; ?>><?php echo $i; ?></option>
 		<?php } ?>
 	    </select>
 	    <?php $preset = $this->setPreset('$$$formDate__repeatstop_H', date('H', $preset_repeatstop), false); ?>
-	    <select class="ts_required" name="$$$formDate__repeatstop_H" id="$$$formDate__repeatstop_H" style="margin-left:20px; width:50px;" />
+	    <select name="$$$formDate__repeatstop_H" id="$$$formDate__repeatstop_H" style="margin-left:20px; width:50px;" />
 		<?php for ($i = 0; $i <= 23; $i++) { ?>
 		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"' ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
 		<?php } ?>
 	    </select>
 	    <?php $preset = $this->setPreset('$$$formDate__repeatstop_i', date('i', $preset_repeatstop), false); ?>
-	    <select class="ts_required" name="$$$formDate__repeatstop_i" id="$$$formDate__repeatstop_i" style="width:50px;" />
+	    <select name="$$$formDate__repeatstop_i" id="$$$formDate__repeatstop_i" style="width:50px;" />
 		<?php for ($i = 0; $i <= 59; $i++) { ?>
 		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"' ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
 		<?php } ?>
 	    </select>
 	    <?php $preset = $this->setPreset('$$$formDate__repeatstop_s', date('s', $preset_repeatstop), false); ?>
-	    <select class="ts_required" name="$$$formDate__repeatstop_s" id="$$$formDate__repeatstop_s" style="width:50px;" />
+	    <select name="$$$formDate__repeatstop_s" id="$$$formDate__repeatstop_s" style="width:50px;" />
 		<?php for ($i = 0; $i <= 59; $i++) { ?>
 		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"' ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
 		<?php } ?>

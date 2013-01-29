@@ -31,7 +31,7 @@ class $$$Profile extends $bp$BpObject {
 
 	// save bits
 	if ($Date->addBit($start, 'DATE__START') and
-	    $Date->addBit($start + 24 * 60 * 59 + 59 * 60 + 59, 'DATE__STOP') and
+	    $Date->addBit($start + (24 * 60 * 60) - 1, 'DATE__STOP') and
 	    $Date->addBit(1, 'DATE__REPEAT') and
 	    $Date->addBit('y', 'DATE__REPEATTYPE') and
 	    $Date->addBit(1000, 'DATE__REPEATCOUNT') and

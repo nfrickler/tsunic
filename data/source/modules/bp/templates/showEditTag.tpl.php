@@ -2,6 +2,10 @@
 <?php $Tag = $this->getVar('Tag'); ?>
 <div id="$$$div__showEditTag">
     <h1><?php $this->set('{SHOWEDITTAG__H1}'); ?></h1>
+    <p class="ts_suplinkbox">
+	<a id="$$$showEditTag__editlink" href="<?php $this->setUrl('$$$showTags'); ?>">
+	    <?php $this->set('{SHOWEDITTAG__TOSHOWTAGS}'); ?></a>
+    </p>
     <p class="ts_infotext"><?php $this->set('{SHOWEDITTAG__INFOTEXT}'); ?></p>
     <?php $this->display('$$$formTag', array(
 	'Tag' => $Tag,

@@ -11,7 +11,7 @@
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
 	    <th><?php $this->set('{SHOWTAGS__NAME}'); ?></th>
-	    <th><?php $this->set('{SHOWTAGS__TITLE}'); ?></th>
+	    <th><?php $this->set('{SHOWTAGS__TAGTITLE}'); ?></th>
 	    <th><?php $this->set('{SHOWTAGS__DESCRIPTION}'); ?></th>
 	    <th><?php $this->set('{SHOWTAGS__ACTIONS}'); ?></th>
 	</tr>

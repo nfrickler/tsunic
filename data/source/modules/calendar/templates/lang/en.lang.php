@@ -3,6 +3,9 @@
 $lang = array(
     'NAME' => 'Calendar module',
 
+    // types
+    'TYPE__FK_DATE' => 'Date',
+
     // tags
     'TAG__DATE__START' => 'Start of date',
     'TAG__DATE__START__DESCRIPTION' => 'Start of date',

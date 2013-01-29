@@ -18,7 +18,7 @@
 	<tr>
 	    <th style="min-width:100px;"><?php $this->set('{SHOWPROFILE__GENDER}'); ?></th>
 	    <td style="min-width:100px;">
-		<?php $this->set($Profile->getInfo('gender')); ?>
+		<?php $this->set($Profile->get2show('PROFILE__GENDER')); ?>
 	    </td>
 	</tr>
 	<tr>

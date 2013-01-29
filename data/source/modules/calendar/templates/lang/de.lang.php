@@ -3,6 +3,9 @@
 $lang = array(
     'NAME' => 'Kalender Modul',
 
+    // types
+    'TYPE__FK_DATE' => 'Termin',
+
     // tags
     'TAG__DATE__START' => 'Startzeitpunkt',
     'TAG__DATE__START__DESCRIPTION' => 'Startzeitpunkt des Termins',

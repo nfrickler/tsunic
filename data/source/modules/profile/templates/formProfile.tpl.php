@@ -46,10 +46,14 @@ $num = 0;
 	    <div style="clear:both;"></div>
 
 	</fieldset>
+	<?php
+	$bits = $Profile->getBits(false);
+	if ($bits) {
+	?>
 	<fieldset>
 	    <legend><?php $this->set('{FORMPROFILE__LEGEND}'); ?></legend>
 	    <?php
-	    foreach ($Profile->getBits(false) as $index => $Value) {
+	    foreach ($bits as $index => $Value) {
 		$this->display('$bp$formBit', array(
 		    'Bit' => $Value,
 		    'num' => $num++,
@@ -57,6 +61,7 @@ $num = 0;
 	    }
 	    ?>
 	</fieldset>
+	<?php } ?>
 	<input type="submit" class="ts_submit" value="<?php $this->set('#submit_text#'); ?>" />
 	<?php if ($this->getVar('reset_text')) { ?>
 	<a href="<?php $this->setUrl('back'); ?>" class="ts_reset">

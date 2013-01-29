@@ -10,6 +10,7 @@ $lang = array(
     'TYPE__TEXT' => 'Multiline Text',
     'TYPE__SELECTION' => 'Multiple selection',
     'TYPE__RADIO' => 'Single selection',
+    'TYPE__FK' => 'Any object',
 
     // formBit
     'FORMBIT__PLEASECHOOSE' => '---Choose please---',
@@ -20,7 +21,7 @@ $lang = array(
     'SHOWTAGS__INFOTEXT' => 'This are all available tags. You can add, edit and delete them.',
     'SHOWTAGS__TOCREATETAG' => 'Create new tag',
     'SHOWTAGS__NAME' => 'Name',
-    'SHOWTAGS__TITLE' => 'Title',
+    'SHOWTAGS__TAGTITLE' => 'Title',
     'SHOWTAGS__DESCRIPTION' => 'Description',
     'SHOWTAGS__ACTIONS' => 'Actions',
     'SHOWTAGS__TODELETE' => 'Delete',
@@ -28,6 +29,7 @@ $lang = array(
     // showCreateTag
     'SHOWCREATETAG__TITLE' => 'Create tag',
     'SHOWCREATETAG__H1' => 'Create tag',
+    'SHOWCREATETAG__TOSHOWTAGS' => 'Back to Tag summary',
     'SHOWCREATETAG__INFOTEXT' => 'Create a new tag via the following form.',
     'SHOWCREATETAG__SUBMIT' => 'Create new tag',
     'SHOWCREATETAG__CANCEL' => 'Cancel',
@@ -35,6 +37,7 @@ $lang = array(
     // showEditTag
     'SHOWEDITTAG__TITLE' => 'Edit tag',
     'SHOWEDITTAG__H1' => 'Edit tag',
+    'SHOWEDITTAG__TOSHOWTAGS' => 'Back to Tag summary',
     'SHOWEDITTAG__INFOTEXT' => 'Edit the tag via the following form.',
     'SHOWEDITTAG__SUBMIT' => 'Save changes',
     'SHOWEDITTAG__CANCEL' => 'Cancel',
