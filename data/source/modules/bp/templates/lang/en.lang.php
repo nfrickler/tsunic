@@ -175,6 +175,7 @@ $lang = array(
     'SHOWDELETEOBJECT__POPUP_DELETE_CONTENT' => 'Do you really want to delete this object?',
     'SHOWDELETEOBJECT__POPUP_DELETE_YES' => 'Yes, delete',
     'SHOWDELETEOBJECT__POPUP_DELETE_NO' => 'No, cancel',
+    'SHOWDELETEOBJECT__ERROR' => 'An error occurred!',
 
     // deleteObject
     'DELETEOBJECT__ERROR' => 'Could not delete Object!',

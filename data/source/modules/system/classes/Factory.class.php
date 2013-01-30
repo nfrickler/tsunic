@@ -50,6 +50,7 @@ class $$$Factory {
 	}
 
 	// get object
+	$object = NULL;
 	if (empty($param_string)) {
 	    $object = new $class();
 	} else {

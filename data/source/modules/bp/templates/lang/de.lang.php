@@ -175,6 +175,7 @@ $lang = array(
     'SHOWDELETEOBJECT__POPUP_DELETE_CONTENT' => 'Möchtest du diese Objekt wirklich löschen?',
     'SHOWDELETEOBJECT__POPUP_DELETE_YES' => 'Ja, löschen',
     'SHOWDELETEOBJECT__POPUP_DELETE_NO' => 'Nein, abbrechen',
+    'SHOWDELETEOBJECT__ERROR' => 'Ein Fehler ist aufgetreten!',
 
     // deleteObject
     'DELETEOBJECT__ERROR' => 'Objekt konnte nicht gelöscht werden!',

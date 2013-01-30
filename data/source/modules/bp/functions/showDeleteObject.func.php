@@ -10,6 +10,11 @@ function $$$showDeleteObject () {
     // get Object
     $Object = $TSunic->get('$bp$BpObject', $id);
     $Object = $Object->getObject();
+    if (!$Object or !$Object->isValid()) {
+	$TSunic->Log->alert('error', '{SHOWDELETEOBJECT__ERROR}');
+	$TSunic->redirect('back');
+	return true;
+    }
 
     // activate template
     $data = array(

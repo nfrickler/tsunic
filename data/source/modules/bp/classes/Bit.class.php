@@ -33,6 +33,22 @@ class $$$Bit extends $system$Object {
 	return NULL;
     }
 
+    /* load information about object
+     *
+     * @return bool
+     */
+    protected function _loadInfo () {
+	if (!parent::_loadInfo()) return false;
+
+	// if typename == mod, then check, if object exists
+	$typename = $this->getTag()->getType()->getInfo('name');
+	if (substr($typename,0,3) == 'mod' and !$this->_isObject('#__objects', $this->info['value'])) {
+	    $this->info['value'] = 0;
+	}
+
+	return true;
+    }
+
     /* get value to be showed
      *
      * @return mix

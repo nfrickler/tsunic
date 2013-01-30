@@ -6,6 +6,9 @@ $lang = array(
     // special
     'PROFILE__DATEOFBIRTH__TITLE' => 'Birthday',
 
+    // types
+    'TYPE__FK_PROFILE' => 'Profile',
+
     // tags
     'TAG__PROFILE__FIRSTNAME' => 'Firstname',
     'TAG__PROFILE__FIRSTNAME__DESCRIPTION' => 'Firstname of person',

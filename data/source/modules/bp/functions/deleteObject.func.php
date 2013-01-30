@@ -17,7 +17,7 @@ function $$$deleteObject () {
 
     // success
     $TSunic->Log->alert('info', '{DELETEOBJECT__SUCCESS}');
-    $TSunic->redirect($backlink);
+    $TSunic->redirect($backlink, true);
 
     return true;
 }
