@@ -58,5 +58,33 @@ class $$$Helper {
 	$tags = $this->getTags(true);
 	return (isset($tags[$name])) ? $tags[$name]->getInfo('id') : 0;
     }
+
+    /* get all objects of certain class (class can be omitted)
+     * @param string: name class
+     *
+     * @return array
+     */
+    public function getObjects ($class) {
+	global $TSunic;
+
+	// query database
+	$sql_where = (empty($class)) ? "" : "AND class = '$class'";
+	$sql = "SELECT id
+	    FROM #__objects
+	    WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
+		$sql_where;";
+	$result = $TSunic->Db->doSelect($sql);
+	if (!$result) return array();
+
+	// get objects
+	$out = array();
+	foreach ($result as $index => $values) {
+	    $Obj = $TSunic->get($class, $values['id']);
+	    $Obj->presetInfo($values);
+	    $out[] = $Obj;
+	}
+
+	return $out;
+    }
 }
 ?>

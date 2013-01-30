@@ -4,8 +4,8 @@ function $$$showIndex () {
     global $TSunic;
 
     // get all profiles
-    $Meta = $TSunic->get('$$$Profile');
-    $profiles = $Meta->getAll();
+    $Helper = $TSunic->get('$bp$Helper');
+    $profiles = $Helper->getObjects('$$$Profile');
 
     // activate template
     $data = array('profiles' => $profiles);

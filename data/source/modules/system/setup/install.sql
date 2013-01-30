@@ -1,12 +1,12 @@
 <!-- | -->
-CREATE TABLE IF NOT EXISTS `#__sessions` (
+CREATE TABLE IF NOT EXISTS `#__$system$sessions` (
   `id` varchar(100) NOT NULL,
   `data` text NOT NULL,
   `timestamp` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__keys` (
+CREATE TABLE IF NOT EXISTS `#__$system$keys` (
   `fk_table` varchar(200) NOT NULL,
   `fk_id` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,

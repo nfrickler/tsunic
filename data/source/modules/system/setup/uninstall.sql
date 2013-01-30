@@ -1,2 +1,3 @@
 <!-- | -->
-DROP TABLE IF EXISTS `#__sessions`;
+DROP TABLE IF EXISTS `#__$system$sessions`;
+DROP TABLE IF EXISTS `#__$system$keys`;

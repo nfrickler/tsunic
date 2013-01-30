@@ -1,10 +1,10 @@
 <!-- | uninstall sql tables -->
-DROP TABLE IF EXISTS `#__users`;
-DROP TABLE IF EXISTS `#__access`;
-DROP TABLE IF EXISTS `#__accessgroups`;
-DROP TABLE IF EXISTS `#__accessgroupmembers`;
-DROP TABLE IF EXISTS `#__accessnames`;
-DROP TABLE IF EXISTS `#__accounts`;
-DROP TABLE IF EXISTS `#__config`;
-DROP TABLE IF EXISTS `#__connections`;
-DROP TABLE IF EXISTS `#__userconfig`;
+DROP TABLE IF EXISTS `#__$usersystemusers`;
+DROP TABLE IF EXISTS `#__$usersystemaccess`;
+DROP TABLE IF EXISTS `#__$usersystemaccessgroups`;
+DROP TABLE IF EXISTS `#__$usersystemaccessgroupmembers`;
+DROP TABLE IF EXISTS `#__$usersystemaccessnames`;
+DROP TABLE IF EXISTS `#__$usersystemaccounts`;
+DROP TABLE IF EXISTS `#__$usersystemconfig`;
+DROP TABLE IF EXISTS `#__$usersystemconnections`;
+DROP TABLE IF EXISTS `#__$usersystemuserconfig`;

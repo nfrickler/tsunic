@@ -184,6 +184,21 @@ $lang = array(
     'UNLINKTAG__SUCCESS' => 'Tag entfernt',
     'UNLINKTAG__ERROR' => 'Tag konnte nicht entfernt werden!',
 
+    // showChooseObject
+    'SHOWCHOOSEOBJECT__TITLE' => 'Objekt auswählen',
+    'SHOWCHOOSEOBJECT__H1' => 'Objekt auswählen',
+    'SHOWCHOOSEOBJECT__INFOTEXT' => 'Bite wähle ein Objekt aus der Liste aus.',
+    'SHOWCHOOSEOBJECT__SUBMIT' => 'Auswahl speichern',
+    'SHOWCHOOSEOBJECT__CANCEL' => 'Abbrechen',
+
+    // formChooseObject
+    'FORMCHOOSEOBJECT__LEGEND' => 'Bitte wähle ein Objekt aus.',
+
+
+    // chooseObject
+    'CHOOSEOBJECT__SUCCESS' => 'Auswahl gespeichert.',
+    'CHOOSEOBJECT__ERROR' => 'Auswahl konnte nicht gespeichert werden!',
+
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tag-Liste'
 );

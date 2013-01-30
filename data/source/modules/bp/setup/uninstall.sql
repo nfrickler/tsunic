@@ -1,6 +1,6 @@
 <!-- | uninstall sql tables -->
-DROP TABLE IF EXISTS `#__objects`;
-DROP TABLE IF EXISTS `#__bits`;
-DROP TABLE IF EXISTS `#__types`;
-DROP TABLE IF EXISTS `#__selections`;
-DROP TABLE IF EXISTS `#__tags`;
+DROP TABLE IF EXISTS `#__$bp$objects`;
+DROP TABLE IF EXISTS `#__$bp$bits`;
+DROP TABLE IF EXISTS `#__$bp$types`;
+DROP TABLE IF EXISTS `#__$bp$selections`;
+DROP TABLE IF EXISTS `#__$bp$tags`;

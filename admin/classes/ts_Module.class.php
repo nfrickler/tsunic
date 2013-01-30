@@ -750,7 +750,7 @@ class ts_Module extends ts_Packet {
 	    $content = $Parser->replaceModule($content, $this->id, $Database->getPreffix());
 
 	    // run sql statements
-	    if (($Database->runString($content, $this->id)) === false) return false;
+	    if (($Database->runString($content)) === false) return false;
 	}
 	if (file_exists($this->path.'/setup/install.php')) {
 	    // run php-file

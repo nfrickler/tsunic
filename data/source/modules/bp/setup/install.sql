@@ -1,6 +1,6 @@
 <!-- | Tables for bp -->
 
-CREATE TABLE IF NOT EXISTS `#__objects` (
+CREATE TABLE IF NOT EXISTS `#__$bp$objects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `class` varchar(200) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__objects` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__bits` (
+CREATE TABLE IF NOT EXISTS `#__$bp$bits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_object` int(11) NOT NULL,
   `fk_tag` int(11) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `#__bits` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__types` (
+CREATE TABLE IF NOT EXISTS `#__$bp$types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `#__types` (
   UNIQUE(`name`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__tags` (
+CREATE TABLE IF NOT EXISTS `#__$bp$tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `fk_type` int(11) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `#__tags` (
   UNIQUE(`name`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__selections` (
+CREATE TABLE IF NOT EXISTS `#__$bp$selections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_tag` int(11) NOT NULL,
   `idname` varchar(200) NOT NULL,
@@ -57,14 +57,12 @@ CREATE TABLE IF NOT EXISTS `#__selections` (
   UNIQUE(`fk_tag`, `name`)
 ) ENGINE=MyISAM;
 
-INSERT IGNORE INTO `#__types` (`name`, `title`, `description`, `fk_account`) VALUES
+INSERT IGNORE INTO `#__$bp$types` (`name`, `title`, `description`, `fk_account`) VALUES
     ('int', '{$BP$TYPE__INT}', '{$BP$TYPE__INT__DESCRIPTION}', 0),
     ('double', '{$BP$TYPE__DOUBLE}', '{$BP$TYPE__DOUBLE__DESCRIPTION}', 0),
     ('string', '{$BP$TYPE__STRING}', '{$BP$TYPE__STRING__DESCRIPTION}', 0),
     ('text', '{$BP$TYPE__TEXT}', '{$BP$TYPE__TEXT__DESCRIPTION}', 0),
     ('selection', '{$BP$TYPE__SELECTION}', '{$BP$TYPE__SELECTION__DESCRIPTION}', 0),
     ('radio', '{$BP$TYPE__RADIO}', '{$BP$TYPE__RADIO__DESCRIPTION}', 0),
-    ('fk', '{$BP$TYPE__FK}', '{$BP$TYPE__FK__DESCRIPTION}', 0),
-    ('image', '{$BP$TYPE__IMAGE}', '{$BP$TYPE__IMAGE__DESCRIPTION}', 0),
-    ('file', '{$BP$TYPE__FILE}', '{$BP$TYPE__FILE__DESCRIPTION}', 0)
+    ('$$$BpObject', '{$BP$TYPE__FK}', '{$BP$TYPE__FK__DESCRIPTION}', 0)
 ;

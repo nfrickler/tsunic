@@ -32,11 +32,6 @@ class ts_Parser {
      */
     private $current_preffix;
 
-    /* current preffix for replacement
-     * int
-     */
-    private $current_replacement_preffix;
-
     /* constructor
      * @param string: preffix
      * @param array: array with all module-objects
@@ -248,18 +243,13 @@ class ts_Parser {
     /* replace language
      * @param string: content of file to parse
      * +@param int: id__module of current module, the content belongs to
-     * +@param string: optional preffix to add to each replacement (only works
-     *		with lowercase replacements!)
      *
      * @return string
      */
-    public function replaceModule ($content, $id__module = false, $preffix = false) {
+    public function replaceModule ($content, $id__module = false) {
 
 	// set module
 	$this->setModule($id__module);
-
-	// set preffix
-	$this->current_replacement_preffix = ($preffix) ? $preffix : "";
 
 	// validate id__module
 	if (empty($this->current_module) OR !is_numeric($this->current_module)) return false;
@@ -292,7 +282,7 @@ class ts_Parser {
 		    if (ctype_upper($input)) {
 			return strtoupper($out);
 		    } else {
-			return $this->current_replacement_preffix.$out;
+			return $out;
 		    }
 		}
 	    }
@@ -307,7 +297,7 @@ class ts_Parser {
 		    if (ctype_upper($input)) {
 			return strtoupper($out);
 		    } else {
-			return $this->current_replacement_preffix.$out;
+			return $out;
 		    }
 		}
 	    }

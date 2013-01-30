@@ -68,7 +68,7 @@ switch ($Tag->getType()->getInfo('name')) {
 	break;
 }
 
-if (substr($Tag->getType()->getInfo('name'),0,3) == 'fk_') {
+if (substr($Tag->getType()->getInfo('name'),0,3) == 'mod') {
 	$name = $this->set($Tag->getInfo('title'), false, false);
 	$preset = $this->setPreset('$$$formBit__value__'.$num, $value, false);
 ?>

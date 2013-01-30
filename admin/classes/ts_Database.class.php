@@ -249,12 +249,11 @@ class ts_Database {
 
     /* "execute" a sql-file
      * @param string: path to sql-file
-     * @param bool/int: id__module, if preffix shall be replaced with module-preffix
      *
      * @return bool: true - success
      *     (or REDIRECT)
       */
-    public function runFile ($path, $id__module = false) {
+    public function runFile ($path) {
 
 	// is database sub-object?
 	if (!$this->Db_obj) return false;
@@ -266,17 +265,16 @@ class ts_Database {
 	$content = file($path);
 	$content = implode(' ', $content);
 
-	return $this->runString($content, $id__module);
+	return $this->runString($content);
     }
 
     /* "execute" a sql-string (e.g. from a file)
      * @param string: string with sql statements
-     * @param bool/int: id__module, if preffix shall be replaced with module-preffix
      *
      * @return bool: true - success
      *     (or REDIRECT)
       */
-    public function runString ($content, $id__module = false) {
+    public function runString ($content) {
 
 	// is database sub-object?
 	if (!$this->Db_obj) return false;
@@ -287,9 +285,8 @@ class ts_Database {
 	// strip comments
 	$content = preg_replace('#(\<\!--.*--\>)#Usi', '', $content);
 
-	// replace preffix
-	if ($id__module AND is_numeric($id__module))
-	    $content = str_replace('#__', $this->table_pref.'mod'.$id__module.'__', $content);
+	// replace prefix
+	$content = str_replace('#__', $this->table_pref, $content);
 
 	// split by ;
 	$cache = explode(';', $content);

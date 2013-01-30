@@ -41,6 +41,17 @@ class $$$Type extends $system$Object {
 	// always allow empty values
 	if (empty($value)) return true;
 
+	// get typename
+	$typename = $this->getInfo('name');
+
+	// is object?
+	if (substr($typename, 0, 3) == 'mod') {
+	    global $TSunic;
+	    $Obj = $TSunic->get('$$$BpObject', $value);
+	    $Obj = $Obj->getObject();
+	    return (get_class($Obj) == $typename) ? true : false;
+	}
+
 	// check if value matches type conventions
 	switch ($this->getInfo('name')) {
 	    case 'int':
@@ -61,10 +72,9 @@ class $$$Type extends $system$Object {
 	    case 'radio':
 		return ($this->_isObject('#__selections', $value));
 		break;
-	    case 'fk':
-		return ($this->_isObject('#__objects', $value));
-		break;
 	    default:
+		global $TSunic;
+		$TSunic->Log->log(3, 'Error: $bp$Type missing name='.$typename.'!');
 		return false;
 	}
 

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `#__mailaccounts` (
+CREATE TABLE IF NOT EXISTS `#__$mail$mailaccounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS `#__mailaccounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__attachments` (
+CREATE TABLE IF NOT EXISTS `#__$mail$attachments` (
   `fk_mail` int(11) NOT NULL,
   `fk_fsfile` int(11) NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`fk_mail`, `fk_fsfile`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__mailboxes` (
+CREATE TABLE IF NOT EXISTS `#__$mail$mailboxes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `#__mailboxes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__knownservers` (
+CREATE TABLE IF NOT EXISTS `#__$mail$knownservers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `suffix` varchar(500) NOT NULL,
   `host` varchar(500) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `#__knownservers` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__mails` (
+CREATE TABLE IF NOT EXISTS `#__$mail$mails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,
   `fk_serverbox` int(11) NOT NULL,
@@ -68,14 +68,14 @@ CREATE TABLE IF NOT EXISTS `#__mails` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__addressees` (
+CREATE TABLE IF NOT EXISTS `#__$mail$addressees` (
   `fk_mail` int(11) NOT NULL,
   `address` varchar(500) NOT NULL,
   `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`fk_mail`, `address`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__serverboxes` (
+CREATE TABLE IF NOT EXISTS `#__$mail$serverboxes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_mailaccount` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `#__serverboxes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__smtps` (
+CREATE TABLE IF NOT EXISTS `#__$mail$smtps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_mailaccount` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `#__smtps` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `#__knownservers` (`id`, `suffix`, `host`, `port`, `protocol`, `auth`, `connsecurity`, `user`) VALUES
+INSERT INTO `#__$mail$knownservers` (`id`, `suffix`, `host`, `port`, `protocol`, `auth`, `connsecurity`, `user`) VALUES
 (1, '', 'mail.#suffix#', 143, 1, 1, 1, 1),
 (2, '', 'mail.#suffix#', 993, 1, 1, 3, 1),
 (3, '', 'mail.#suffix#', 110, 2, 1, 1, 1),

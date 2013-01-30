@@ -1,5 +1,5 @@
 <!-- | Tables for filesystem -->
-CREATE TABLE IF NOT EXISTS `#__fsdirectories` (
+CREATE TABLE IF NOT EXISTS `#__$filesystem$fsdirectories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `_name_` varchar(200) NOT NULL,
   `fk_account` int(11) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__fsdirectories` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `#__fsfiles` (
+CREATE TABLE IF NOT EXISTS `#__$filesystem$fsfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `_name_` varchar(200) NOT NULL,
   `fk_directory` int(11) NOT NULL,

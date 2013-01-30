@@ -184,6 +184,20 @@ $lang = array(
     'UNLINKTAG__SUCCESS' => 'Tag unlinked.',
     'UNLINKTAG__ERROR' => 'Tag could not be unlinked!',
 
+    // showChooseObject
+    'SHOWCHOOSEOBJECT__TITLE' => 'Choose object',
+    'SHOWCHOOSEOBJECT__H1' => 'Choose object',
+    'SHOWCHOOSEOBJECT__INFOTEXT' => 'Please choose an object.',
+    'SHOWCHOOSEOBJECT__SUBMIT' => 'Save decision',
+    'SHOWCHOOSEOBJECT__CANCEL' => 'Cancel',
+
+    // formChooseObject
+    'FORMCHOOSEOBJECT__LEGEND' => 'Please choose an object',
+
+    // chooseObject
+    'CHOOSEOBJECT__SUCCESS' => 'Decision saved.',
+    'CHOOSEOBJECT__ERROR' => 'Decision could not be saved!',
+
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'List tags'
 );

@@ -153,7 +153,7 @@ class $$$Database {
 
 	    // when called from Session-object there might be no TSunic object
 	    // anymore...
-	    if ($TSunic) {
+	    if ($TSunic and $TSunic->Log) {
 		$TSunic->Log->log(3, '$$$Database: Database error: "'.$this->Db_obj->getError().'" (query: '.$query.')"');
 		$TSunic->Log->alert('error', '{CLASS__DATABASE__ERROR}');
 	    } else {
@@ -161,7 +161,7 @@ class $$$Database {
 	    }
 	}
 	if ($return === false) {
-	    if ($TSunic) {
+	    if ($TSunic and $TSunic->Log) {
 		$TSunic->Log->log(2, '$$$Database: Critical database error: "'.$this->Db_obj->getError().'" (query: '.$query.')"');
 		$TSunic->throwError('{CLASS__DATABASE__CRITICAL_ERROR}');
 	    }

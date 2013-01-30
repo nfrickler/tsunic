@@ -48,9 +48,9 @@ class $$$Bit extends $system$Object {
 	}
 
 	// is fk?
-	if (substr($typename,0,3) == 'fk_') {
+	if (substr($typename,0,3) == 'mod') {
 	    $Obj = $this->getFkObject();
-	    return $Obj->getName();
+	    return ($Obj) ? $Obj->getName() : 'Unknown';
 	}
 
 	return $this->getInfo('value');
@@ -62,9 +62,10 @@ class $$$Bit extends $system$Object {
      */
     public function getFkObject () {
 	$typename = $this->getTag()->getType()->getInfo('name');
-	if (substr($typename,0,3) != 'fk_') return NULL;
+	if (substr($typename,0,3) != 'mod') return NULL;
 	global $TSunic;
-	return $TSunic->get('$$$BpObject', $this->getInfo('value'));
+	$Obj = $TSunic->get('$$$BpObject', $this->getInfo('value'));
+	return $Obj->getObject();
     }
 
 

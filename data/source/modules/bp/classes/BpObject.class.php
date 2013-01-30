@@ -275,31 +275,6 @@ class $$$BpObject extends $system$Object {
 	return $this->getHelper()->tag2id($name);
     }
 
-    /* get all objects of this class
-     *
-     * @return bool
-     */
-    public function getAll () {
-	global $TSunic;
-	$out = array();
-
-	// update database
-	$sql = "SELECT id
-	    FROM #__objects
-	    WHERE class = '".get_class($this)."'
-		AND fk_account = '".$TSunic->Usr->getInfo('id')."'
-	;";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return array();
-
-	// get objects
-	foreach ($result as $index => $values) {
-	    $out[] = $TSunic->get(get_class($this), $values['id']);
-	}
-
-	return $out;
-    }
-
     /* check, if fk_tag is valid
      * @param int: fk_tag
      *
