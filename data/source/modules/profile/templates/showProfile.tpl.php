@@ -35,9 +35,13 @@
 	    <th>
 		<?php $this->set($Value->getTag()->getInfo('title')); ?></th>
 	    </th>
-	    <td style="min-width:200px;">
-		<?php $this->set($Value->getInfo('value')); ?>
-	    </td>
+	    <?php
+	    $this->display('$bp$showBit', array(
+		'Bit' => $Value,
+		'fk_obj' => $Profile->getInfo('id'),
+		'backlink' => base64_encode($this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id')), false, false))
+	    ));
+	    ?>
 	</tr>
 	<?php } ?>
     </table>

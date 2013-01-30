@@ -121,5 +121,13 @@ class $$$Date extends $bp$BpObject {
 
 	return $out;
     }
+
+    /* get name of this object (this will be the one shown to user)
+     *
+     * @return string
+     */
+    public function getName () {
+	return date('d.m.Y H:i:s', $this->getInfo('start'));
+    }
 }
 ?>

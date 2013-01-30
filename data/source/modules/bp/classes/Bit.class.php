@@ -33,6 +33,41 @@ class $$$Bit extends $system$Object {
 	return NULL;
     }
 
+    /* get value to be showed
+     *
+     * @return mix
+     */
+    public function get2show () {
+	$typename = $this->getTag()->getType()->getInfo('name');
+
+	// is radio/selection?
+	if ($typename == 'radio' or $typename == 'selection') {
+	    global $TSunic;
+	    $Selection = $TSunic->get('$$$Selection', $this->getInfo('value'));
+	    return $Selection->getInfo('name');
+	}
+
+	// is fk?
+	if (substr($typename,0,3) == 'fk_') {
+	    $Obj = $this->getFkObject();
+	    return $Obj->getName();
+	}
+
+	return $this->getInfo('value');
+    }
+
+    /* get object, if typename == fk_...
+     *
+     * @return object
+     */
+    public function getFkObject () {
+	$typename = $this->getTag()->getType()->getInfo('name');
+	if (substr($typename,0,3) != 'fk_') return NULL;
+	global $TSunic;
+	return $TSunic->get('$$$BpObject', $this->getInfo('value'));
+    }
+
+
     /* set dummy values
      * @param int: fk_tag
      *

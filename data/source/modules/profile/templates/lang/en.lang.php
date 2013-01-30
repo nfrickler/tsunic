@@ -46,14 +46,6 @@ $lang = array(
     'SHOWPROFILE__GENDER' => 'Gender',
     'SHOWPROFILE__DATEOFBIRTH' => 'Date of birth',
 
-    // showCreateProfile
-    'SHOWCREATEPROFILE__TITLE' => 'Create profile',
-    'SHOWCREATEPROFILE__H1' => 'Create profile',
-    'SHOWCREATEPROFILE__TOSHOWTAGS' => 'Administrate tags',
-    'SHOWCREATEPROFILE__INFOTEXT' => 'Fill in the following form to create a new profile. All fields are optional.',
-    'SHOWCREATEPROFILE__SUBMIT' => 'Create',
-    'SHOWCREATEPROFILE__CANCEL' => 'Cancel',
-
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'female',
     'SELECTIONS__PROFILE__GENDER_F__DESCRIPTION' => 'female',
@@ -87,6 +79,7 @@ $lang = array(
     // showEditProfile
     'SHOWEDITPROFILE__TITLE' => 'Edit profile',
     'SHOWEDITPROFILE__H1' => 'Edit profile',
+    'SHOWEDITPROFILE__TOSHOWPROFILE' => 'Show profile',
     'SHOWEDITPROFILE__TOADDTAG' => 'Add tag',
     'SHOWEDITPROFILE__TOSHOWTAGS' => 'Administrate tags',
     'SHOWEDITPROFILE__INFOTEXT' => 'Here you can edit this profile.',

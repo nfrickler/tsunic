@@ -38,6 +38,14 @@ class $$$BpObject extends $system$Object {
 	return true;
     }
 
+    /* get name of this object (this will be the one shown to user)
+     *
+     * @return string
+     */
+    public function getName () {
+	return 'Unknown';
+    }
+
     /* get value to be showed
      * @param string/int: id or name of tag
      *
@@ -45,22 +53,7 @@ class $$$BpObject extends $system$Object {
      */
     public function get2show ($fk_tag) {
 	$Bit = $this->getBit($fk_tag);
-	$typename = $Bit->getTag()->getType()->getInfo('name');
-
-	// is radio/selection?
-	if ($typename == 'radio' or $typename == 'selection') {
-	    global $TSunic;
-	    $Selection = $TSunic->get('$$$Selection', $Bit->getInfo('value'));
-	    return $Selection->getInfo('name');
-	}
-
-	// is fk?
-	if (substr($typename,0,3) == 'fk_') {
-	    global $TSunic;
-	    return $TSunic->get('$$$BpObject', $Bit->getInfo('value'));
-	}
-
-	return $Bit->getInfo('value');
+	return $Bit->get2show();
     }
 
     /* get object with specified class

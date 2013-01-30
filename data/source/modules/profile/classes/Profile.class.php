@@ -44,5 +44,13 @@ class $$$Profile extends $bp$BpObject {
 
 	return false;
     }
+
+    /* get name of this object (this will be the one shown to user)
+     *
+     * @return string
+     */
+    public function getName () {
+	return $this->getInfo('firstname').' '.$this->getInfo('lastname');
+    }
 }
 ?>

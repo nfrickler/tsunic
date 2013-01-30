@@ -67,6 +67,16 @@ switch ($Tag->getType()->getInfo('name')) {
     default:
 	break;
 }
+
+if (substr($Tag->getType()->getInfo('name'),0,3) == 'fk_') {
+	$name = $this->set($Tag->getInfo('title'), false, false);
+	$preset = $this->setPreset('$$$formBit__value__'.$num, $value, false);
+?>
+	    <label for="$$$formBit__value__<?php echo $num; ?>"><?php echo $name; ?></label>
+	    <input type="text" name="dump" value="<?php $this->set('{FORMBIT__FK_DISABLED}'); ?>" disabled="disabled" />
+	    <div style="clear:both;"></div>
+<?php
+}
 ?>
 
 <script type="text/javascript">

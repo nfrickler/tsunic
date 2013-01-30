@@ -12,8 +12,14 @@ $lang = array(
     'TYPE__RADIO' => 'Single selection',
     'TYPE__FK' => 'Any object',
 
+    // showBit
+    'SHOWBIT__TOEDITOBJECT' => 'Edit',
+    'SHOWBIT__TODELETEOBJECT' => 'Delete',
+    'SHOWBIT__TOUNLINKTAG' => 'Remove tag',
+
     // formBit
     'FORMBIT__PLEASECHOOSE' => '---Choose please---',
+    'FORMBIT__FK_DISABLED' => 'Only editable in profile view.',
 
     // showTags
     'SHOWTAGS__TITLE' => 'Tags',
@@ -161,6 +167,22 @@ $lang = array(
     'ADDTAG__INVALIDFKTYPE' => 'Invalid tag',
     'ADDTAG__ERROR' => 'An error occurred',
     'ADDTAG__SUCCESS' => 'Tag added to profile',
+
+    // showDeleteObject
+    'SHOWDELETEOBJECT__TITLE' => 'Delete object?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_HEADER_JS' => 'Delete this object?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_HEADER' => 'Delete object "#name#"?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_CONTENT' => 'Do you really want to delete this object?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_YES' => 'Yes, delete',
+    'SHOWDELETEOBJECT__POPUP_DELETE_NO' => 'No, cancel',
+
+    // deleteObject
+    'DELETEOBJECT__ERROR' => 'Could not delete Object!',
+    'DELETEOBJECT__SUCCESS' => 'Object deleted.',
+
+    // unlinkTag
+    'UNLINKTAG__SUCCESS' => 'Tag unlinked.',
+    'UNLINKTAG__ERROR' => 'Tag could not be unlinked!',
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'List tags'

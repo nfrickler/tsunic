@@ -12,8 +12,14 @@ $lang = array(
     'TYPE__RADIO' => 'Einfachauswahl',
     'TYPE__FK' => 'Irgendein Objekt',
 
+    // showBit
+    'SHOWBIT__TOEDITOBJECT' => 'Ändern',
+    'SHOWBIT__TODELETEOBJECT' => 'Löschen',
+    'SHOWBIT__TOUNLINKTAG' => 'Tag entfernen',
+
     // formBit
     'FORMBIT__PLEASECHOOSE' => '---Bitte wählen---',
+    'FORMBIT__FK_DISABLED' => 'Kann nur in der Profilansicht geändert werden.',
 
     // showTags
     'SHOWTAGS__TITLE' => 'Tags',
@@ -161,6 +167,22 @@ $lang = array(
     'ADDTAG__INVALIDFKTYPE' => 'Ungültiger Tag',
     'ADDTAG__ERROR' => 'Es ist ein Fehler aufgetreten',
     'ADDTAG__SUCCESS' => 'Tag erfolgreich hinzugefügt',
+
+    // showDeleteObject
+    'SHOWDELETEOBJECT__TITLE' => 'Objekt löschen?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_HEADER_JS' => 'Objekt löschen?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_HEADER' => 'Objekt "#name#" löschen?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_CONTENT' => 'Möchtest du diese Objekt wirklich löschen?',
+    'SHOWDELETEOBJECT__POPUP_DELETE_YES' => 'Ja, löschen',
+    'SHOWDELETEOBJECT__POPUP_DELETE_NO' => 'Nein, abbrechen',
+
+    // deleteObject
+    'DELETEOBJECT__ERROR' => 'Objekt konnte nicht gelöscht werden!',
+    'DELETEOBJECT__SUCCESS' => 'Objekt gelöscht.',
+
+    // unlinkTag
+    'UNLINKTAG__SUCCESS' => 'Tag entfernt',
+    'UNLINKTAG__ERROR' => 'Tag konnte nicht entfernt werden!',
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tag-Liste'

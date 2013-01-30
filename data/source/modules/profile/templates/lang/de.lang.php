@@ -57,6 +57,7 @@ $lang = array(
     // showEditProfile
     'SHOWEDITPROFILE__TITLE' => 'Profil bearbeiten',
     'SHOWEDITPROFILE__H1' => 'Profil bearbeiten',
+    'SHOWEDITPROFILE__TOSHOWPROFILE' => 'Profil anzeigen',
     'SHOWEDITPROFILE__TOADDTAG' => 'Tag hinzufügen',
     'SHOWEDITPROFILE__TOSHOWTAGS' => 'Tags verwalten',
     'SHOWEDITPROFILE__INFOTEXT' => 'Hier kannst du ein Profil bearbeiten.',

@@ -12,6 +12,10 @@ function $$$addTag () {
     // add tag to profile
     $Obj = $TSunic->get('$$$BpObject', $fk_obj);
     $Obj = $Obj->getObject();
+    if (!$Obj) {
+	$TSunic->Log->alert('error', '{ADDTAG__ERROR}');
+	$TSunic->redirect('back');
+    }
 
     // valid input?
     if (!$Obj->isValidFkTag($fk_tag)) {
