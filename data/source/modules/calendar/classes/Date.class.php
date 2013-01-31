@@ -43,19 +43,13 @@ class $$$Date extends $bp$BpObject {
      *
      * @return int
      */
-    public function nextRepeat ($start, $up = true) {
-	global $TSunic;
-
-	$type = $TSunic->get('$bp$Selection', $this->getInfo('repeattype'))->getInfo('name');
+    public function nextRepeat ($start, $repeattype, $up = true) {
 	$repeat = $this->getInfo('repeat');
 	if (empty($repeat)) $repeat = 1;
 	$pref = ($up) ? '+' : '-';
 
-	// extract type
-	$type = substr($type, -2, 1);
-
 	// return new start
-	switch ($type) {
+	switch ($repeattype) {
 	    case 'Y':
 		return strtotime($pref."$repeat years", $start);
 		break;
@@ -63,13 +57,13 @@ class $$$Date extends $bp$BpObject {
 		return strtotime($pref."$repeat months", $start);
 		break;
 	    case 'D':
-		return strtotime($pref."$repeat days", $start);
+		return $start + $repeat * 24 * 3600;
 		break;
 	    case 'H':
-		return strtotime($pref."$repeat hours", $start);
+		return $start + $repeat * 3600;
 		break;
 	    case 'I':
-		return strtotime($pref."$repeat minutes", $start);
+		return $start + $repeat * 60;
 		break;
 	}
 
@@ -80,6 +74,47 @@ class $$$Date extends $bp$BpObject {
 	return $start+1;
     }
 
+    /* move start in front of $from
+     * @param int: timestamp to forward
+     * @param int: timestamp to forward to
+     * @param int: repeatcount
+     * @param int: repeatstop
+     * @param string: repeattype
+     *
+     * @return int
+     */
+    public function fastForward ($start, $from, $repeatcount, $repeatstop, $repeattype) {
+
+	// get period or return
+	switch ($repeattype) {
+	    case 'Y':
+	    case 'M':
+		return array($start, $repeatcount);
+		break;
+	    case 'D':
+		$period = 24*3600;
+		break;
+	    case 'H':
+		$period = 3600;
+		break;
+	    case 'I':
+		$period = 60;
+		break;
+	}
+
+	// get diff
+	$diff = $from - $start;
+
+	// update repeatcount
+	$repeated_times = (int) ($diff/$period);
+	$repeatcount -= $repeated_times;
+
+	// update start
+	$start += $repeated_times * $period;
+
+	return array($start, $repeatcount);
+    }
+
     /* get start of date within a certain time space?
      * @param int: from
      * @param int: to
@@ -87,6 +122,7 @@ class $$$Date extends $bp$BpObject {
      * @return array
      */
     public function getWithin ($from, $to) {
+	global $TSunic;
 	$out = array();
 
 	// get start params
@@ -97,11 +133,20 @@ class $$$Date extends $bp$BpObject {
 	$repeatstop = $this->getInfo('repeatstop');
 	$isCount = ($repeatcount > 0 or empty($repeatstop)) ? true : false;
 
+	// repeattype
+	$repeattype = $TSunic->get('$bp$Selection', $this->getInfo('repeattype'))->getInfo('name');
+	$repeattype = substr($repeattype, -2, 1);
+
 	// is start before to?
 	if ($start > $to) return $out;
 
 	// get period of date
 	$period = $stop - $start;
+
+	// fast-forward (performance)
+	if ($from - $start > 365*24*3600) {
+	    list($start,$repeatcount) = $this->fastForward($start, $from, $repeatcount, $repeatstop, $repeattype);
+	}
 
 	// search for first date within period
 	while (($start < $to) and (($isCount and $repeatcount >= 0) or (!$isCount and $start < $repeatstop))) {
@@ -116,7 +161,7 @@ class $$$Date extends $bp$BpObject {
 
 	    // increment
 	    $repeatcount--;
-	    $start = $this->nextRepeat($start);
+	    $start = $this->nextRepeat($start, $repeattype);
 	}
 
 	return $out;
