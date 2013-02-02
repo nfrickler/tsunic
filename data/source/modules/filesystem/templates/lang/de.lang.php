@@ -3,6 +3,17 @@
 $lang = array(
     'NAME' => 'Filesystem Modul',
 
+    // types
+    'TYPE__FK_DIRECTORY' => 'Verzeichnis',
+    'TYPE__FK_FILE' => 'Datei',
+
+    // tags
+    'TAG__DIRECTORY__NAME' => 'Verzeichnisname',
+    'TAG__DIRECTORY__PARENT' => 'Übergeordnetes Verzeichnis',
+    'TAG__FILE__NAME' => 'Dateiname',
+    'TAG__FILE__PARENT' => 'Übergeordnetes Verzeichnis',
+    'TAG__FILE__SIZE' => 'Dateigröße',
+
     // special
     'CLASS__DIRECTORY__ROOTDIR' => 'Root Verzeichnis',
 
@@ -31,7 +42,7 @@ $lang = array(
     'SHOWINDEX__DATEOFUPDATE' => 'Letzte Änderung',
     'SHOWINDEX__ACTION' => 'Aktion',
     'SHOWINDEX__DELETE' => 'Löschen',
-    'SHOWINDEX__EDIT' => 'Umbennenen/Verschieben',
+    'SHOWINDEX__EDIT' => 'Umbennenen',
 
     // formFsDirectory
     'FORMDIRECTORY__NAME' => 'Name',
@@ -53,8 +64,7 @@ $lang = array(
     // createFsDirectory
     'CREATEDIRECTORY__SUCCESS' => 'Verzeichnis wurde angelegt.',
     'CREATEDIRECTORY__ERROR' => 'Verzeichnis konnte nicht angelegt werden!',
-    'CREATEDIRECTORY__INVALIDNAME' => 'Der Name ist ungültig!',
-    'CREATEDIRECTORY__INVALIDPARENT' => 'Das übergeordnete Verzeichnis ist ungültig!',
+    'CREATEDIRECTORY__INVALIDVALUE' => 'Ungültige Eingabe!',
 
     // showEditFsDirectory
     'SHOWEDITDIRECTORY__TITLE' => 'Verzeichnis bearbeiten',

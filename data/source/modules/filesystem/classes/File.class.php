@@ -22,13 +22,10 @@ class $$$File extends $bp$BpObject {
      *
      * @return bool
      */
-    public function createByUpload ($FH, $fk_directory = 0) {
+    public function createByUpload ($FH) {
 
 	// validate
-	if (!$this->isValidDirectory($fk_directory)
-	    or !$this->isValidFile($FH)) {
-	    return false;
-	}
+	if (!$this->isValidFile($FH)) return false;
 
 	// get name of file
 	$name = $FH['name'];
@@ -38,79 +35,70 @@ class $$$File extends $bp$BpObject {
 	    $counter++;
 	}
 
-	// update database
-	global $TSunic;
-	$data = array(
-	    "name" => $name,
-	    "bytes" => $FH['size'],
-	    "dateOfCreation" => "NOW()",
-	    "fk_account" => $TSunic->Usr->getInfo('id'),
-	    "fk_directory" => $fk_directory
-	);
-	if (!$this->_create($data)) return false;
+	// create object
+	if (!$this->create()) return false;
+
+	// set name
+	if (!$this->addBit($name, 'FILE__NAME')) return false;
 
 	// upload file
-	if (move_uploaded_file($FH['tmp_name'], $this->getPath())) {
-
-	    // encrypt content of file
-	    $this->setContent($this->getContent());
-
-	    return true;
-	}
-
-	// delete file in database
-	$this->delete();
-	return false;
-    }
-
-    /* create new file
-     * @param int: id of directory
-     * @param string: filename
-     * @param string: content
-     *
-     * @return bool
-     */
-    public function create ($fk_directory, $name, $content) {
-
-	// validate
-	if (!$this->isValidDirectory($fk_directory)
-	    or !$this->isValidName($name)
-	) return false;
-
-	// update database
-	global $TSunic;
-	$data = array(
-	    "name" => $name,
-	    "dateOfCreation" => "NOW()",
-	    "fk_account" => $TSunic->Usr->getInfo('id'),
-	    "fk_directory" => $fk_directory
-	);
-	if (!$this->_create($data)) return false;
-
-	// create new file
-	$File = $this->getFileObject();
-	$bytes = ($File) ? $File->writeFile($content) : false;
-	if ($content and !$bytes) {
+	if (!move_uploaded_file($FH['tmp_name'], $this->getPath())) {
 	    $this->delete();
 	    return false;
 	}
 
-	// update filesize
-	$data = array(
-	    "bytes" => $bytes
-	);
-	return $this->_edit($data);
+	// encrypt content of file
+	$this->setContent($this->getContent());
+
+	return true;
+    }
+
+    /* is valid filename?
+     * @param string: name
+     *
+     * @return bool
+     */
+    public function isValidName ($name) {
+	global $TSunic;
+	$Helper = $TSunic->get('$bp$Helper');
+	$Tag = $TSunic->get('$bp$Tag', $Helper->tag2id('FILE__NAME'));
+	if (!$Tag->getType()->isValidValue($name)) return false;
+
+	// unique in directory?
+	$Parent = $this->getParent();
+	if ($Parent and $Parent->getSubByName($name)) return false;
+
+	return true;
+    }
+
+    /* get name to show
+     *
+     * @return string
+     */
+    public function getName () {
+	return $this->getAbsPath();
     }
 
     /* get corresponding file-object
      *
      * @return File object
      */
-    protected function getFileObject () {
+    public function getFileObject () {
 	if (!$this->getInfo('id')) return NULL;
 	global $TSunic;
 	$File = $TSunic->get('$system$File', '#data#users/file__'.$this->getInfo('id'));
 	return ($File) ? $File : NULL;
+    }
+
+    /* get parent Directory object
+     *
+     * @return Directory object
+     */
+    protected function getParent () {
+	global $TSunic;
+	$fk_dir = $this->getInfo('parent');
+	if (!$fk_dir) return NULL;
+	return $TSunic->get('$$$Directory', $fk_dir);
     }
 
     /* get path of this file
@@ -130,9 +118,9 @@ class $$$File extends $bp$BpObject {
 	global $TSunic;
 
 	// delete file
-	$FH = $TSunic->get('$system$File', $this->getPath());
-	if (!$FH->deleteFile()) {
-	    $TSunic->Log->log(3, 'filesystem::FsFile::delete: Could not delete file!');
+	$File = $TSunic->get('$system$File', $this->getPath());
+	if (!$File->deleteFile()) {
+	    $TSunic->Log->log(3, 'filesystem::File::delete: Could not delete file!');
 	    return false;
 	}
 
@@ -166,7 +154,7 @@ class $$$File extends $bp$BpObject {
      */
     public function isValidQuota ($filesize) {
 	global $TSunic;
-	$Dir = $TSunic->get('$$$FsDirectory');
+	$Dir = $TSunic->get('$$$Directory');
 	return (($Dir->consumedBytes() + $filesize) <=
 	    $TSunic->Usr->config('$$$quota')) ? true : false;
     }
@@ -178,7 +166,7 @@ class $$$File extends $bp$BpObject {
     public function getDirectory () {
 	if (!empty($this->Directory)) return $this->Directory;
 	global $TSunic;
-	$this->Directory = $TSunic->get('$$$FsDirectory', $this->getInfo('parent'));
+	$this->Directory = $TSunic->get('$$$Directory', $this->getInfo('parent'));
 	return $this->Directory;
     }
 
@@ -212,10 +200,17 @@ class $$$File extends $bp$BpObject {
     public function setContent ($content) {
 	$File = $this->getFileObject();
 	if (!$File) return false;
-
 	global $TSunic;
+
+	// encrypt content
 	$content = $TSunic->Usr->encrypt($content);
-	return ($File->writeFile($content)) ? true : false;
+	if (!$File->writeFile($content)) return false;
+
+	// update filesize
+	$Bit = $this->getBit('FILE__SIZE');
+	if (!$this->addeditBit('FILE__SIZE', $Bit->getInfo('id'), $File->getFilesize())) return false;
+
+	return true;
     }
 
     /* is valid object?
@@ -242,11 +237,11 @@ class $$$File extends $bp$BpObject {
 
     /* get directory object to certain path
      *
-     * @return FsDirectory
+     * @return Directory
      */
     public function path2dir ($path) {
 	global $TSunic;
-	$Dir = $TSunic->get('$$$FsDirectory');
+	$Dir = $TSunic->get('$$$Directory');
 
 	if (empty($path)) return $Dir;
 	if (substr($path,0,1) == "/") $path = substr($path, 1);
@@ -268,7 +263,7 @@ class $$$File extends $bp$BpObject {
 
 	    // not exists?
 	    if (!$Next) {
-		$Next = $TSunic->get('$$$FsDirectory', array(), true);
+		$Next = $TSunic->get('$$$Directory', array(), true);
 		if (!$Next->create($current, $Dir->getInfo('id'))) return NULL;
 	    }
 

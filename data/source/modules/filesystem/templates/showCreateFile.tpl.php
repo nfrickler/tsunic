@@ -1,20 +1,20 @@
 <!-- | TEMPLATE show form to create new filesystem file -->
 <div id="$$$div__showCreateFsFile">
-    <h1><?php $this->set('{SHOWCREATEFSFILE__H1}'); ?></h1>
+    <h1><?php $this->set('{SHOWCREATEFILE__H1}'); ?></h1>
     <p class="ts_suplinkbox">
-	<a href="<?php $this->setUrl('$$$showFsDirectory', array('$$$id' => $this->getVar('fk_directory'))); ?>">
-	    <?php $this->set('{SHOWCREATEFSFILE__TOPARENT}'); ?></a>
+	<a href="<?php $this->setUrl('$$$showDirectory', array('$$$id' => $this->getVar('fk_directory'))); ?>">
+	    <?php $this->set('{SHOWCREATEFILE__TOPARENT}'); ?></a>
     </p>
     <p class="ts_infotext">
-	<?php $this->set('{SHOWCREATEFSFILE__INFOTEXT}'); ?>
+	<?php $this->set('{SHOWCREATEFILE__INFOTEXT}'); ?>
     </p>
 
-    <?php $this->display('$$$formFsFile', array(
+    <?php $this->display('$$$formFile', array(
 	'File' => $this->getVar('File'),
-	'directories' => $this->getVar('directories'),
+	'showUpload' => true,
 	'fk_directory' => $this->getVar('fk_directory'),
-	'submit_link' => '$$$createFsFile',
-	'submit_text' => '{SHOWCREATEFSFILE__SUBMIT}',
-	'reset_text' => '{SHOWCREATEFSFILE__CANCEL}'
+	'submit_link' => '$$$createFile',
+	'submit_text' => '{SHOWCREATEFILE__SUBMIT}',
+	'reset_text' => '{SHOWCREATEFILE__CANCEL}'
     )); ?>
 </div>

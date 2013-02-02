@@ -1,22 +1,20 @@
 <!-- | FUNCTION show form to edit file -->
 <?php
-function $$$showEditFsFile () {
+function $$$showEditFile () {
     global $TSunic;
 
     // get id
     $id = $TSunic->Temp->getParameter('$$$id');
 
-    // create objects
-    $File = $TSunic->get('$$$FsFile', $id);
-    $Dir = $TSunic->get('$$$FsDirectory');
+    // create File object
+    $File = $TSunic->get('$$$File', $id);
 
     // activate template
     $data = array(
-	'File' => $File,
-	'directories' => $Dir->allDirectories(),
+	'File' => $File
     );
-    $TSunic->Tmpl->activate('$$$showEditFsFile', '$system$content', $data);
-    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITFSFILE__TITLE}'));
+    $TSunic->Tmpl->activate('$$$showEditFile', '$system$content', $data);
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITFILE__TITLE}'));
 
     return true;
 }

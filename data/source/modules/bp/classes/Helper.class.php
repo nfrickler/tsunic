@@ -145,7 +145,7 @@ class $$$Helper {
 
 	// validate input
 	foreach ($form as $index => $values) {
-	    $Tag = $TSunic->get('$bp$Tag', $values['fk_tag']);
+	    $Tag = $TSunic->get('$bp$Tag', $this->tag2id($values['fk_tag']));
 	    if (!$Tag->isValidValue($values['value'])) {
 		$values['tagname'] = $Tag->getInfo('name');
 		return $values;

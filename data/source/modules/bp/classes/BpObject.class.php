@@ -120,6 +120,9 @@ class $$$BpObject extends $system$Object {
 	if (!$Bit->create($this->id, $value, $fk_tag))
 	    return false;
 
+	// update dateOfChange
+	$this->_edit(array('dateOfUpdate' => 'NOW()'));
+
 	// empty cache
 	$this->bits = array();
 
@@ -134,6 +137,9 @@ class $$$BpObject extends $system$Object {
      * @return bool
      */
     public function addeditBit ($fk_tag, $fk_bit, $value) {
+
+	// update dateOfChange
+	$this->_edit(array('dateOfUpdate' => 'NOW()'));
 
 	// exists already?
 	if ($fk_bit) {

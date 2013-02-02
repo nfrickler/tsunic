@@ -11,6 +11,6 @@ $Dir = $this->getVar('Directory');
     </p>
     <a style="ts_submit" href="<?php $this->setUrl('$$$deleteDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
 	<?php $this->set('{SHOWDELETEDIRECTORY__SUBMIT}'); ?></a>
-    <a style="ts_cancel" href="<?php $this->setUrl('$$$showDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
+    <a style="ts_cancel" href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('id'))); ?>">
 	<?php $this->set('{SHOWDELETEDIRECTORY__CANCEL}'); ?></a>
 </div>

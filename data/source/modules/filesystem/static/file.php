@@ -7,7 +7,8 @@ $id = (isset($_GET['id'])) ? $_GET['id'] : false;
 if (empty($id) OR !is_numeric($id)) die('Access denied!');
 
 // get File-object
-$File = $TSunic->getFsFile($id);
+$File = $TSunic->get('$$$File', $id);
+
 if (!$File->isValid()) die('Access denied!');
 
 // is download?

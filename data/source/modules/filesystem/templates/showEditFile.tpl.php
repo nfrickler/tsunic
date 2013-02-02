@@ -2,21 +2,21 @@
 <?php
 $File = $this->getVar('File');
 ?>
-<div id="$$$div__showEditFsFile">
-    <h1><?php $this->set('{SHOWEDITFSFILE__H1}', array('name' => $File->getInfo('name'))); ?></h1>
+<div id="$$$div__showEditFile">
+    <h1><?php $this->set('{SHOWEDITFILE__H1}', array('name' => $File->getInfo('name'))); ?></h1>
     <p class="ts_suplinkbox">
-	<a href="<?php $this->setUrl('$$$showFsDirectory', array('$$$id' => $File->getInfo('fk_directory'))); ?>">
-	    <?php $this->set('{SHOWEDITFSFILE__TOPARENT}'); ?></a>
+	<a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $File->getInfo('parent'))); ?>">
+	    <?php $this->set('{SHOWEDITFILE__TOPARENT}'); ?></a>
     </p>
     <p class="ts_infotext">
-	<?php $this->set('{SHOWEDITFSFILE__INFOTEXT}'); ?>
+	<?php $this->set('{SHOWEDITFILE__INFOTEXT}'); ?>
     </p>
 
-    <?php $this->display('$$$formFsFile', array(
+    <?php $this->display('$$$formFile', array(
 	'File' => $File,
-	'directories' => $this->getVar('directories'),
-	'submit_link' => '$$$editFsFile',
-	'submit_text' => '{SHOWEDITFSFILE__SUBMIT}',
-	'reset_text' => '{SHOWEDITFSFILE__CANCEL}'
+	'showUpload' => false,
+	'submit_link' => '$$$editFile',
+	'submit_text' => '{SHOWEDITFILE__SUBMIT}',
+	'reset_text' => '{SHOWEDITFILE__CANCEL}'
     )); ?>
 </div>

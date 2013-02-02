@@ -3,6 +3,17 @@
 $lang = array(
     'NAME' => 'Filesystem module',
 
+    // types
+    'TYPE__FK_DIRECTORY' => 'Directory',
+    'TYPE__FK_FILE' => 'File',
+
+    // tags
+    'TAG__DIRECTORY__NAME' => 'Directory name',
+    'TAG__DIRECTORY__PARENT' => 'Parent directory',
+    'TAG__FILE__NAME' => 'File name',
+    'TAG__FILE__PARENT' => 'Containig directory',
+    'TAG__FILE__SIZE' => 'File size',
+
     // special
     'CLASS__DIRECTORY__ROOTDIR' => 'Root directory',
 
@@ -31,7 +42,7 @@ $lang = array(
     'SHOWINDEX__DATEOFUPDATE' => 'Date of update',
     'SHOWINDEX__ACTION' => 'Action',
     'SHOWINDEX__DELETE' => 'Delete',
-    'SHOWINDEX__EDIT' => 'Rename/Move',
+    'SHOWINDEX__EDIT' => 'Rename',
 
     // formFsDirectory
     'FORMDIRECTORY__NAME' => 'Name',
@@ -53,8 +64,7 @@ $lang = array(
     // createFsDirectory
     'CREATEDIRECTORY__SUCCESS' => 'Directory created.',
     'CREATEDIRECTORY__ERROR' => 'Directory could not be created!',
-    'CREATEDIRECTORY__INVALIDNAME' => 'The name is invalid!',
-    'CREATEDIRECTORY__INVALIDPARENT' => 'The parent directory is invalid!',
+    'CREATEDIRECTORY__INVALIDVALUE' => 'Invalid value!',
 
     // showEditFsDirectory
     'SHOWEDITDIRECTORY__TITLE' => 'Edit directory',

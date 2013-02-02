@@ -183,15 +183,6 @@ class TSunic {
 	return $this->Factory->get($class, $values, $forceNew);
     }
 
-    /* get FsFile object (for: file.php!)
-     * @param int: id of file in users filesystem
-     *
-     * @return OBJECT
-     */
-    public function getFsFile ($id) {
-	return $this->get('$filesystem$FsFile', $id);
-    }
-
     /* display output
      * +@param string: main-template to display
      *

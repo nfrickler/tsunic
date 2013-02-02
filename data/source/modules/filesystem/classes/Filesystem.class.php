@@ -22,7 +22,7 @@ class $$$Filesystem {
 	// get all directories
 	if (empty($this->directories)) {
 	    $Helper = $TSunic->get('$bp$Helper');
-	    $this->directories = $Helper->getObjects('$$$FsDirectory');
+	    $this->directories = $Helper->getObjects('$$$Directory');
 	}
 
 	return $this->directories;
@@ -38,7 +38,7 @@ class $$$Filesystem {
 	// get all files
 	if (empty($this->files)) {
 	    $Helper = $TSunic->get('$bp$Helper');
-	    $this->files = $Helper->getObjects('$$$FsFile');
+	    $this->files = $Helper->getObjects('$$$File');
 	}
 
 	return $this->files;

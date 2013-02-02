@@ -4,11 +4,18 @@ function $$$createDirectory () {
     global $TSunic;
 
     // get input
-    $preset_parent = $TSunic->Temp->getPost('$$$formDirectory__preset_parent');
+    $preset_parent = $TSunic->Temp->getPost('$$$formDirectory__parent_preset');
 
     // get values from form
     $Helper = $TSunic->get('$bp$Helper');
     $form = $Helper->getFormValues();
+
+    // add preset_parent
+    $form[] = array(
+	'fk_tag' => 'DIRECTORY__PARENT',
+	'fk_bit' => 0,
+	'value' => $preset_parent
+    );
 
     // validate input
     $fail = $Helper->validateFormValues($form);

@@ -5,7 +5,7 @@ function $$$showIndex() {
 
     // get directory id
     $id = $TSunic->Temp->getParameter('$$$id');
-    $Dir = $TSunic->get('$$$Directory', $id);
+    $Dir = $TSunic->get('$$$Directory', $id ? $id : 0);
 
     // activate template
     $data = array('Directory' => $Dir);

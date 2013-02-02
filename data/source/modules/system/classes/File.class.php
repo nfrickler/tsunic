@@ -61,6 +61,14 @@ class $$$File {
 
     /* ######################### get info about file #################### */
 
+    /* get filesize
+     *
+     * @return int
+     */
+    public function getFilesize () {
+	return ($this->isFile()) ? filesize($this->getPath()) : 0;
+    }
+
     /* check, if valid file
      *
      * @return bool

@@ -30,6 +30,14 @@ class $$$Directory extends $bp$BpObject {
 	return parent::delete();
     }
 
+    /* get name to be shown
+     *
+     * @return string
+     */
+    public function getName () {
+	return ($this->id) ? $this->getInfo('name') : '{CLASS__DIRECTORY__ROOTDIR}';
+    }
+
     /* is directory within childrens of this directory?
      * @param int: ID of an accessgroup
      *
@@ -60,7 +68,7 @@ class $$$Directory extends $bp$BpObject {
 	if (!empty($this->Parent)) return $this->Parent;
 	if ($this->getInfo('id') == 1) return false;
 	global $TSunic;
-	$this->Parent = $TSunic->get('$$$FsDirectory', $this->getInfo('parent'));
+	$this->Parent = $TSunic->get('$$$Directory', $this->getInfo('parent'));
 	return $this->Parent;
     }
 
@@ -101,7 +109,7 @@ class $$$Directory extends $bp$BpObject {
 	// filter subdirectories
 	$this->subdirectories = array();
 	foreach ($all as $index => $Value) {
-	    if ($Value->getInfo('parent') == $this->id)
+	    if ((empty($this->id) and $Value->getInfo('parent')) or $Value->getInfo('parent') == $this->id)
 		$this->subdirectories[] = $Value;
 	}
 
@@ -161,7 +169,7 @@ class $$$Directory extends $bp$BpObject {
 
 	// get all files
 	$Helper = $TSunic->get('$bp$Helper');
-	$all = $Helper->getObjects('$$$FsFile');
+	$all = $Helper->getObjects('$$$File');
 
 	// sum
 	$sum = 0;

@@ -3,13 +3,13 @@
 $Dir = $this->getVar('Directory');
 ?>
 <div id="$$$div__showDirectory">
-    <h1><?php $this->set('{SHOWINDEX__H1}', array('name' => $Dir->getInfo('name'))); ?></h1>
+    <h1><?php $this->set('{SHOWINDEX__H1}', array('name' => $Dir->getName())); ?></h1>
     <p class="ts_suplinkbox">
 	<a href="<?php $this->setUrl('$$$showCreateDirectory', array('fk_parent' => $Dir->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWINDEX__TOSHOWCREATEDIRECTORY}'); ?></a>
 	<?php if ($Dir->getInfo('id')) { ?>
 	<a href="<?php $this->setUrl('$$$showEditDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
-	    <?php $this->set('{SHOWINDEX__TOSHOWEDITFSDIRECTORY}'); ?></a>
+	    <?php $this->set('{SHOWINDEX__TOSHOWEDITDIRECTORY}'); ?></a>
 	<?php } ?>
 	<a href="<?php $this->setUrl('$$$showCreateFile', array('fk_directory' => $Dir->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWINDEX__TOSHOWCREATEFILE}'); ?></a>
@@ -43,7 +43,7 @@ $Dir = $this->getVar('Directory');
 	    <td><?php $this->set($Subdir->getInfo('dateOfCreation')); ?></td>
 	    <td><?php $this->set($Subdir->getInfo('dateOfUpdate')); ?></td>
 	    <td>
-		<a href="<?php $this->setUrl('$$$showDeleteFsDirectory', array('$$$id' => $Subdir->getInfo('id'))); ?>">
+		<a href="<?php $this->setUrl('$$$showDeleteDirectory', array('$$$id' => $Subdir->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWINDEX__DELETE}'); ?></a>
 	    </td>
 	</tr>

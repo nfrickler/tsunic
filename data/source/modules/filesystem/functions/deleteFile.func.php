@@ -1,23 +1,23 @@
 <!-- | FUNCTION delete file -->
 <?php
-function $$$deleteFsFile () {
+function $$$deleteFile () {
     global $TSunic;
 
     // get file
     $id = $TSunic->Temp->getParameter('$$$id');
-    $File = $TSunic->get('$$$FsFile', $id);
-    $fk_directory = $File->getInfo('fk_directory');
+    $File = $TSunic->get('$$$File', $id);
+    $parent = $File->getInfo('parent');
 
     // delete file
     if (!$File->delete()) {
-	$TSunic->Log->alert('error', '{DELETEFSFILE__ERROR}');
+	$TSunic->Log->alert('error', '{DELETEFILE__ERROR}');
 	$TSunic->redirect('back', 2);
 	return false;
     }
 
     // success
-    $TSunic->Log->alert('info', '{DELETEFSFILE__SUCCESS}');
-    $TSunic->redirect('$$$showIndex', array('$$$id' => $fk_directory));
+    $TSunic->Log->alert('info', '{DELETEFILE__SUCCESS}');
+    $TSunic->redirect('$$$showIndex', array('$$$id' => $parent));
     return true;
 }
 ?>
