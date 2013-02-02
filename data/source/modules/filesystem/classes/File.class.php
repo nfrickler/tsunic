@@ -1,13 +1,17 @@
-<!-- | CLASS File (filesystem) -->
+<!-- | CLASS File -->
 <?php
-class $$$FsFile extends $system$Object {
+class $$$File extends $bp$BpObject {
 
-    /* tablename in database
-     * string
+    /* tags to be connected with this object
+     * array
      */
-    protected $table = "#__fsfiles";
+    protected $tags = array(
+	'FILE__NAME',
+	'FILE__PARENT',
+	'FILE__SIZE',
+    );
 
-    /* directory containing this file
+    /* parent directory
      * object
      */
     protected $Directory;
@@ -98,28 +102,6 @@ class $$$FsFile extends $system$Object {
 	return $this->_edit($data);
     }
 
-    /* edit file
-     * @param string: new name
-     * +@param int: fk of directory
-     *
-     * @return bool
-     */
-    public function edit ($name, $fk_directory = NULL) {
-
-	// validate
-	if (!$this->isValidName($name)
-	    or !$this->isValidDirectory($fk_directory)) {
-	    return false;
-	}
-
-	// update database
-	$data = array(
-	    "name" => $name
-	);
-	if (!($fk_directory === NULL)) $data['fk_directory'] = $fk_directory;
-	return $this->_edit($data, true);
-    }
-
     /* get corresponding file-object
      *
      * @return File object
@@ -154,17 +136,7 @@ class $$$FsFile extends $system$Object {
 	    return false;
 	}
 
-	return $this->_delete();
-    }
-
-    /* is valid name for file?
-     * @param string: name
-     *
-     * @return bool
-     */
-    public function isValidName ($name) {
-	// TODO: Unique in parent directory
-	return ($this->_validate($name, 'filename')) ? true : false;
+	return parent::delete();
     }
 
     /* is valid file to upload
@@ -199,18 +171,6 @@ class $$$FsFile extends $system$Object {
 	    $TSunic->Usr->config('$$$quota')) ? true : false;
     }
 
-    /* is valid fk_directory for this file?
-     * @param int: ID of an directory
-     *
-     * @return bool
-     */
-    public function isValidDirectory ($fk_directory) {
-	return ($fk_directory == 0
-	    or ($this->_validate($fk_directory, 'int')
-		and $this->_isObject('#__fsdirectories', $fk_directory))
-	) ? true : false;
-    }
-
     /* get directory, that contains this file
      *
      * @return OBJECT
@@ -218,7 +178,7 @@ class $$$FsFile extends $system$Object {
     public function getDirectory () {
 	if (!empty($this->Directory)) return $this->Directory;
 	global $TSunic;
-	$this->Directory = $TSunic->get('$$$FsDirectory', $this->getInfo('fk_directory'));
+	$this->Directory = $TSunic->get('$$$FsDirectory', $this->getInfo('parent'));
 	return $this->Directory;
     }
 
@@ -277,7 +237,7 @@ class $$$FsFile extends $system$Object {
     public function getAbsPath () {
 	if (!$this->isValid()) return false;
 	$name = $this->getInfo('name');
-	return ($this->getInfo('fk_directory')) ? $this->getDirectory()->getAbsPath()."/$name" : "$name";
+	return ($this->getInfo('parent')) ? $this->getDirectory()->getAbsPath()."/$name" : "$name";
     }
 
     /* get directory object to certain path

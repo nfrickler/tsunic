@@ -86,5 +86,73 @@ class $$$Helper {
 
 	return $out;
     }
+
+    /* get all values from Bit form
+     *
+     * @return array
+     */
+    public function getFormValues () {
+	global $TSunic;
+
+	// get all posts
+	$posts = $TSunic->Temp->getPost(true);
+
+	// get all fk_tags, fk_bits and values
+	$fk_tags = array();
+	$fk_bits = array();
+	$values = array();
+	foreach ($posts as $index => $value) {
+	    $cache = explode('__', $index);
+	    if (count($cache) != 4 or $cache[1] != 'formBit') continue;
+
+	    // get values
+	    switch ($cache[2]) {
+		case 'fk_tag':
+		    $fk_tags[$cache[3]] = $value;
+		    break;
+		case 'fk_bit':
+		    $fk_bits[$cache[3]] = $value;
+		    break;
+		case 'value':
+		    $values[$cache[3]] = $value;
+		    break;
+		default:
+		    // skip
+		    break;
+	    }
+	}
+
+	// sum up
+	$out = array();
+	foreach ($fk_tags as $index => $value) {
+	    $out[] = array(
+		'fk_tag' => $value,
+		'fk_bit' => (isset($fk_bits[$index])) ? $fk_bits[$index] : 0,
+		'value' => (isset($values[$index])) ? $values[$index] : 0
+	    );
+	}
+
+	return $out;
+    }
+
+    /* are valid form values?
+     * @param array: form values
+     *
+     * @return array
+     */
+    public function validateFormValues ($form) {
+	global $TSunic;
+
+	// validate input
+	foreach ($form as $index => $values) {
+	    $Tag = $TSunic->get('$bp$Tag', $values['fk_tag']);
+	    if (!$Tag->isValidValue($values['value'])) {
+		$values['tagname'] = $Tag->getInfo('name');
+		return $values;
+	    }
+	}
+
+	return array();
+    }
 }
 ?>

@@ -185,7 +185,7 @@ function parseAll () {
 	    'file.php'
 	);
 	foreach ($special_files as $index => $value) {
-	    if (!ts_FileHandler::moveFile($Config->get('dir_runtime')."/static/$value", $Config->get('dir_runtime')."/$value")) {
+	    if (file_exists($Config->get('dir_runtime')."/static/$value") and !ts_FileHandler::moveFile($Config->get('dir_runtime')."/static/$value", $Config->get('dir_runtime')."/$value")) {
 		$_SESSION['admin_error'] = 'ERROR__RENDER (copy special files "'.$value.'")';
 		return false;
 	    }

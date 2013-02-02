@@ -2,17 +2,17 @@
 <?php
 $Dir = $this->getVar('Directory');
 ?>
-<div id="$$$div__showFsDirectory">
+<div id="$$$div__showDirectory">
     <h1><?php $this->set('{SHOWINDEX__H1}', array('name' => $Dir->getInfo('name'))); ?></h1>
     <p class="ts_suplinkbox">
-	<a href="<?php $this->setUrl('$$$showCreateFsDirectory', array('fk_parent' => $Dir->getInfo('id'))); ?>">
-	    <?php $this->set('{SHOWINDEX__TOSHOWCREATEFSDIRECTORY}'); ?></a>
+	<a href="<?php $this->setUrl('$$$showCreateDirectory', array('fk_parent' => $Dir->getInfo('id'))); ?>">
+	    <?php $this->set('{SHOWINDEX__TOSHOWCREATEDIRECTORY}'); ?></a>
 	<?php if ($Dir->getInfo('id')) { ?>
-	<a href="<?php $this->setUrl('$$$showEditFsDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
+	<a href="<?php $this->setUrl('$$$showEditDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWINDEX__TOSHOWEDITFSDIRECTORY}'); ?></a>
 	<?php } ?>
-	<a href="<?php $this->setUrl('$$$showCreateFsFile', array('fk_directory' => $Dir->getInfo('id'))); ?>">
-	    <?php $this->set('{SHOWINDEX__TOSHOWCREATEFSFILE}'); ?></a>
+	<a href="<?php $this->setUrl('$$$showCreateFile', array('fk_directory' => $Dir->getInfo('id'))); ?>">
+	    <?php $this->set('{SHOWINDEX__TOSHOWCREATEFILE}'); ?></a>
     </p>
     <p class="ts_infotext">
 	<?php $this->set('{SHOWINDEX__INFOTEXT}'); ?>
@@ -28,7 +28,7 @@ $Dir = $this->getVar('Directory');
 	</tr>
 	<?php if ($Dir->getInfo('id')) { ?>
 	<tr>
-	    <td><a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('fk_parent'))); ?>"> ../</td>
+	    <td><a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('parent'))); ?>"> ../</td>
 	    <!--<td></td>-->
 	    <td></td>
 	    <td></td>
@@ -56,9 +56,9 @@ $Dir = $this->getVar('Directory');
 	    <td><?php $this->set($Subfile->getInfo('dateOfCreation')); ?></td>
 	    <td><?php $this->set($Subfile->getInfo('dateOfUpdate')); ?></td>
 	    <td>
-		<a href="<?php $this->setUrl('$$$showDeleteFsFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
+		<a href="<?php $this->setUrl('$$$showDeleteFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWINDEX__DELETE}'); ?></a>
-		<a href="<?php $this->setUrl('$$$showEditFsFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
+		<a href="<?php $this->setUrl('$$$showEditFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWINDEX__EDIT}'); ?></a>
 	    </td>
 	</tr>

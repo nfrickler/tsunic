@@ -126,6 +126,29 @@ class $$$BpObject extends $system$Object {
 	return true;
     }
 
+    /* add new bit or edit existing one
+     * @param int: fk_tag
+     * @param int: fk_bit
+     * @param mix: new value
+     *
+     * @return bool
+     */
+    public function addeditBit ($fk_tag, $fk_bit, $value) {
+
+	// exists already?
+	if ($fk_bit) {
+	    // edit
+	    global $TSunic;
+	    $Bit = $TSunic->get('$bp$Bit', $fk_bit);
+	    return $Bit->edit($value);
+	} else {
+	    // add
+	    return $this->addBit($value, $fk_tag);
+	}
+
+	return false;
+    }
+
     /* get first bit with specified tag
      * @param string/int: id or name of tag
      *

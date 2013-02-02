@@ -13,44 +13,18 @@ function $$$editProfile () {
     $id = $TSunic->Temp->getPost('$$$formProfile__id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
-    // get all posts
-    $posts = $TSunic->Temp->getPost(true);
-
-    // get all fk_tags, fk_bits and values
-    $fk_tags = array();
-    $fk_bits = array();
-    $values = array();
-    foreach ($posts as $index => $value) {
-	$cache = explode('__', $index);
-	if (count($cache) != 4 or $cache[1] != 'formBit') continue;
-
-	// get values
-	switch ($cache[2]) {
-	    case 'fk_tag':
-		$fk_tags[$cache[3]] = $value;
-		break;
-	    case 'fk_bit':
-		$fk_bits[$cache[3]] = $value;
-		break;
-	    case 'value':
-		$values[$cache[3]] = $value;
-		break;
-	    default:
-		// skip
-		break;
-	}
-    }
+    // get values from form
+    $Helper = $TSunic->get('$bp$Helper');
+    $form = $Helper->getFormValues();
 
     // validate input
-    foreach ($values as $index => $value) {
-	$Tag = $TSunic->get('$bp$Tag', $fk_tags[$index]);
-	if (!$Tag->isValidValue($value)) {
-	    $TSunic->Log->alert('error', '{CREATEPROFILE__INVALIDVALUE} ('.$Tag->getInfo('name').': '.$value.')');
-	    $TSunic->redirect('back');
-	}
+    $fail = $Helper->validateFormValues($form);
+    if ($fail) {
+	$TSunic->Log->alert('error', '{EDITPROFILE__INVALIDVALUE} ('.$fail['tagname'].': '.$fail['value'].')');
+	$TSunic->redirect('back');
     }
 
-    // create profile
+    // is valid profile?
     if (!$Profile->isValid()) {
 	// add error message and redirect back
 	$TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
@@ -65,20 +39,8 @@ function $$$editProfile () {
     }
 
     // add/edit all bits
-    foreach ($values as $index => $value) {
-
-	// exists?
-	if ($fk_bits[$index]) {
-	    $Bit = $TSunic->get('$bp$Bit', $fk_bits[$index]);
-	    if (!$Bit->edit($value)) {
-		$TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
-		$TSunic->redirect('back');
-	    }
-	    continue;
-	}
-
-	// create new Bit
-	if (!$Profile->addBit($value, $fk_tags[$index])) {
+    foreach ($form as $index => $values) {
+	if (!$Profile->addeditBit($values['fk_tag'], $values['fk_bit'], $values['value'])) {
 	    $TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
 	    $TSunic->redirect('back');
 	}
