@@ -168,7 +168,7 @@ class $$$Bit extends $system$Object {
 	global $TSunic;
 
 	// delete?
-	if ($value === ""
+	if ($value === NULL or $value === ""
 	    or (in_array($this->getTag()->getType()->getInfo('name'), array('selection', 'radio')) and empty($value))
 	) {
 	    return $this->delete();

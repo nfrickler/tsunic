@@ -29,7 +29,7 @@ $lang = array(
 
     /* ***************** filesystem ******************** */
 
-    // showFsDirectory
+    // showIndex
     'SHOWINDEX__TITLE' => 'Verzeichnis anzeigen',
     'SHOWINDEX__H1' => 'Verzeichnis "#name#"',
     'SHOWINDEX__INFOTEXT' => 'Diese Seite zeigt dir den Inhalt des Verzeichnisses.',
@@ -43,17 +43,17 @@ $lang = array(
     'SHOWINDEX__ACTION' => 'Aktion',
     'SHOWINDEX__DELETE' => 'Löschen',
     'SHOWINDEX__EDIT' => 'Umbennenen',
+    'SHOWINDEX__TOMOVEFILE' => 'Verschieben',
+    'SHOWINDEX__MOVEFILE__H1' => 'Datei verschieben',
+    'SHOWINDEX__MOVEFILE__INFOTEXT' => 'Bitte wähle das Verzeichnis, in das die Datei verschoben werden soll. Um die Datei ins Root-Verzeichnis zu verschieben, wähle nichts aus.',
+    'SHOWINDEX__TOMOVEDIRECTORY' => 'Verschieben',
+    'SHOWINDEX__MOVEDIRECTORY__H1' => 'Verzeichnis verschieben',
+    'SHOWINDEX__MOVEDIRECTORY__INFOTEXT' => 'Bitte wähle das Verzeichnis, in das das Verzeichnis verschoben werden soll. Um das Verzeichnis ins Root-Verzeichnis zu schieben, wähle nichts aus.',
 
-    // formFsDirectory
-    'FORMDIRECTORY__NAME' => 'Name',
-    'FORMDIRECTORY__NAME_PRESET' => 'Verzeichnisname',
+    // formDirectory
     'FORMDIRECTORY__LEGEND' => 'Verzeichnis',
-    'FORMDIRECTORY__NAME_HELP' => 'Lege einen Namen für das Verzeichnis fest.',
-    'FORMDIRECTORY__PARENT' => 'Übergeordnetes Verzeichnis',
-    'FORMDIRECTORY__PARENT_HELP' => 'Wähle ein übergeordnetes Verzeichnis.',
-    'FORMDIRECTORY__OPTION_ROOTDIR' => 'Root Verzeichnis',
 
-    // showCreateFsDirectory
+    // showCreateDirectory
     'SHOWCREATEDIRECTORY__TITLE' => 'Neues Verzeichnis anlegen',
     'SHOWCREATEDIRECTORY__H1' => 'Neues Verzeichnis anlegen',
     'SHOWCREATEDIRECTORY__TOPARENT' => 'Zurück zum Verzeichnis',
@@ -61,12 +61,12 @@ $lang = array(
     'SHOWCREATEDIRECTORY__SUBMIT' => 'Verzeichnis anlegen',
     'SHOWCREATEDIRECTORY__CANCEL' => 'Abbrechen',
 
-    // createFsDirectory
+    // createDirectory
     'CREATEDIRECTORY__SUCCESS' => 'Verzeichnis wurde angelegt.',
     'CREATEDIRECTORY__ERROR' => 'Verzeichnis konnte nicht angelegt werden!',
     'CREATEDIRECTORY__INVALIDVALUE' => 'Ungültige Eingabe!',
 
-    // showEditFsDirectory
+    // showEditDirectory
     'SHOWEDITDIRECTORY__TITLE' => 'Verzeichnis bearbeiten',
     'SHOWEDITDIRECTORY__H1' => 'Verzeichnis "#name#" bearbeiten',
     'SHOWEDITDIRECTORY__TOPARENT' => 'Zurück zum Verzeichnis',
@@ -74,13 +74,13 @@ $lang = array(
     'SHOWEDITDIRECTORY__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITDIRECTORY__CANCEL' => 'Abbrechen',
 
-    // editFsDirectory
+    // editDirectory
     'EDITDIRECTORY__SUCCESS' => 'Änderungen wurden gespeichert.',
     'EDITDIRECTORY__ERROR' => 'Änderungen konnten nicht gespeichert werden!',
     'EDITDIRECTORY__INVALIDNAME' => 'Der Name ist ungültig!',
     'EDITDIRECTORY__INVALIDPARENT' => 'Das übergeordnete Verzeichnis ist ungültig!',
 
-    // showDeleteFsDirectory
+    // showDeleteDirectory
     'SHOWDELETEDIRECTORY__TITLE' => 'Verzeichnis löschen',
     'SHOWDELETEDIRECTORY__H1' => 'Verzeichnis #name# löschen?',
     'SHOWDELETEDIRECTORY__INFOTEXT' => 'Willst du dieses Verzeichnis wirklich löschen?',
@@ -88,22 +88,15 @@ $lang = array(
     'SHOWDELETEDIRECTORY__CANCEL' => 'Nein, abbrechen.',
     'SHOWDELETEDIRECTORY__NOTEMPTY' => 'Das Verzeichnis muss leer sein, bevor es gelöscht werden kann!',
 
-    // deleteFsDirectory
+    // deleteDirectory
     'DELETEDIRECTORY__SUCCESS' => 'Verzeichnis wurde gelöscht',
     'DELETEDIRECTORY__ERROR' => 'Verzeichnis konnte nicht gelöscht werden!',
 
-    // formFsFile
-    'FORMFILE__NAME' => 'Name',
-    'FORMFILE__NAME_PRESET' => 'Name der Datei',
-    'FORMFILE__NAME_HELP' => 'Ein frei wählbarer Name für diese Datei.',
+    // formFile
     'FORMFILE__FILE' => 'Datei',
-    'FORMFILE__FILE_HELP' => 'Wähle eine Datei aus, die du hochladen willst.',
     'FORMFILE__LEGEND' => 'Datei',
-    'FORMFILE__DIRECTORY' => 'Verzeichnis der Datei',
-    'FORMFILE__DIRECTORY_HELP' => 'Verzeichnis, in dem die Datei gespeichert ist.',
-    'FORMFILE__OPTION_ROOTDIR' => 'Root Verzeichnis',
 
-    // showCreateFsFile
+    // showCreateFile
     'SHOWCREATEFILE__TITLE' => 'Neue Datei hochladen',
     'SHOWCREATEFILE__H1' => 'Neue Datei hochladen',
     'SHOWCREATEFILE__TOPARENT' => 'Zurück zum Verzeichnis',
@@ -111,14 +104,14 @@ $lang = array(
     'SHOWCREATEFILE__SUBMIT' => 'Datei hochladen',
     'SHOWCREATEFILE__CANCEL' => 'Abbrechen',
 
-    // createFsFile
+    // createFile
     'CREATEFILE__SUCCESS' => 'Datei wurde hochgeladen.',
     'CREATEFILE__ERROR' => 'Datei konnte nicht hochgeladen werden!',
     'CREATEFILE__INVALIDFILESIZE' => 'Die Datei ist zu groß!',
     'CREATEFILE__INVALIDQUOTA' => 'Der Upload dieser Datei würde das Speicherlimit überschreiten!',
     'CREATEFILE__INVALIDDIRECTORY' => 'Das Verzeichnis ist ungültig!',
 
-    // showEditFsFile
+    // showEditFile
     'SHOWEDITFILE__TITLE' => 'Datei bearbeiten',
     'SHOWEDITFILE__H1' => 'Datei "#name#" bearbeiten',
     'SHOWEDITFILE__TOPARENT' => 'Zurück zum Verzeichnis',
@@ -126,20 +119,20 @@ $lang = array(
     'SHOWEDITFILE__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITFILE__CANCEL' => 'Abbrechen',
 
-    // editFsFile
+    // editFile
     'EDITFILE__SUCCESS' => 'Änderungen wurden gespeichert.',
     'EDITFILE__ERROR' => 'Änderungen konnten nicht gespeichert werden!',
     'EDITFILE__INVALIDNAME' => 'Der Name ist ungültig!',
     'EDITFILE__INVALIDPARENT' => 'Das Verzeichnis ist ungültig!',
 
-    // showDeleteFsFile
+    // showDeleteFile
     'SHOWDELETEFILE__TITLE' => 'Datei löschen',
     'SHOWDELETEFILE__H1' => 'Datei #name# löschen?',
     'SHOWDELETEFILE__INFOTEXT' => 'Willst du dieses Datei wirklich löschen?',
     'SHOWDELETEFILE__SUBMIT' => 'Ja, löschen.',
     'SHOWDELETEFILE__CANCEL' => 'Nein, abbrechen.',
 
-    // deleteFsFile
+    // deleteFile
     'DELETEFILE__SUCCESS' => 'Datei wurde gelöscht',
     'DELETEFILE__ERROR' => 'Datei konnte nicht gelöscht werden!',
 

@@ -1,6 +1,7 @@
 <!-- | TEMPLATE show content of fs directory -->
 <?php
 $Dir = $this->getVar('Directory');
+$backlink = base64_encode($this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('id')), false, false));
 ?>
 <div id="$$$div__showDirectory">
     <h1><?php $this->set('{SHOWINDEX__H1}', array('name' => $Dir->getName())); ?></h1>
@@ -45,6 +46,8 @@ $Dir = $this->getVar('Directory');
 	    <td>
 		<a href="<?php $this->setUrl('$$$showDeleteDirectory', array('$$$id' => $Subdir->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWINDEX__DELETE}'); ?></a>
+		<a href="<?php $this->setUrl('$bp$showChooseObject', array('$bp$fk_bit' => $Subdir->getBit('DIRECTORY__PARENT', true)->getInfo('id'), '$bp$headline' => '{SHOWINDEX__MOVEDIRECTORY__H1}', '$bp$infotext' => '{SHOWINDEX__MOVEDIRECTORY__INFOTEXT}', '$bp$backlink' => $backlink)); ?>">
+		    <?php $this->set('{SHOWINDEX__TOMOVEDIRECTORY}'); ?></a>
 	    </td>
 	</tr>
 	<?php } ?>
@@ -58,6 +61,8 @@ $Dir = $this->getVar('Directory');
 	    <td>
 		<a href="<?php $this->setUrl('$$$showDeleteFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWINDEX__DELETE}'); ?></a>
+		<a href="<?php $this->setUrl('$bp$showChooseObject', array('$bp$fk_bit' => $Subfile->getBit('FILE__PARENT', true)->getInfo('id'), '$bp$headline' => '{SHOWINDEX__MOVEFILE__H1}', '$bp$infotext' => '{SHOWINDEX__MOVEFILE__INFOTEXT}', '$$$backlink' => $backlink)); ?>">
+		    <?php $this->set('{SHOWINDEX__TOMOVEFILE}'); ?></a>
 		<a href="<?php $this->setUrl('$$$showEditFile', array('$$$id' => $Subfile->getInfo('id'))); ?>">
 		    <?php $this->set('{SHOWINDEX__EDIT}'); ?></a>
 	    </td>

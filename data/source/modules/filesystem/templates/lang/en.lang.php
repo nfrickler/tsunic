@@ -29,7 +29,7 @@ $lang = array(
 
     /* ***************** filesystem ******************** */
 
-    // showFsDirectory
+    // showIndex
     'SHOWINDEX__TITLE' => 'Show directory',
     'SHOWINDEX__H1' => 'Directory "#name#"',
     'SHOWINDEX__INFOTEXT' => 'This page shows you the content of your filesystem directory.',
@@ -43,17 +43,17 @@ $lang = array(
     'SHOWINDEX__ACTION' => 'Action',
     'SHOWINDEX__DELETE' => 'Delete',
     'SHOWINDEX__EDIT' => 'Rename',
+    'SHOWINDEX__TOMOVEFILE' => 'Move',
+    'SHOWINDEX__MOVEFILE__H1' => 'Move file',
+    'SHOWINDEX__MOVEFILE__INFOTEXT' => 'Choose directory to move file to. To move it to root directory, choose nothing.',
+    'SHOWINDEX__TOMOVEDIRECTORY' => 'Move',
+    'SHOWINDEX__MOVEDIRECTORY__H1' => 'Move directory',
+    'SHOWINDEX__MOVEDIRECTORY__INFOTEXT' => 'Choose directoy to move directory into. To move it to root directory, choose nothing.',
 
-    // formFsDirectory
-    'FORMDIRECTORY__NAME' => 'Name',
-    'FORMDIRECTORY__NAME_PRESET' => 'Name of directory',
+    // formDirectory
     'FORMDIRECTORY__LEGEND' => 'Directory',
-    'FORMDIRECTORY__NAME_HELP' => 'Fill in a name for this directory.',
-    'FORMDIRECTORY__PARENT' => 'Parent directory',
-    'FORMDIRECTORY__PARENT_HELP' => 'Please choose a parent directory.',
-    'FORMDIRECTORY__OPTION_ROOTDIR' => 'Root Directory',
 
-    // showCreateFsDirectory
+    // showCreateDirectory
     'SHOWCREATEDIRECTORY__TITLE' => 'Create new directory',
     'SHOWCREATEDIRECTORY__H1' => 'Create new directory',
     'SHOWCREATEDIRECTORY__TOPARENT' => 'Back to directory',
@@ -61,12 +61,12 @@ $lang = array(
     'SHOWCREATEDIRECTORY__SUBMIT' => 'Create directory',
     'SHOWCREATEDIRECTORY__CANCEL' => 'Cancel',
 
-    // createFsDirectory
+    // createDirectory
     'CREATEDIRECTORY__SUCCESS' => 'Directory created.',
     'CREATEDIRECTORY__ERROR' => 'Directory could not be created!',
     'CREATEDIRECTORY__INVALIDVALUE' => 'Invalid value!',
 
-    // showEditFsDirectory
+    // showEditDirectory
     'SHOWEDITDIRECTORY__TITLE' => 'Edit directory',
     'SHOWEDITDIRECTORY__H1' => 'Edit directory "#name#"',
     'SHOWEDITDIRECTORY__TOPARENT' => 'Back to directory',
@@ -74,13 +74,13 @@ $lang = array(
     'SHOWEDITDIRECTORY__SUBMIT' => 'Save changes',
     'SHOWEDITDIRECTORY__CANCEL' => 'Cancel',
 
-    // editFsDirectory
+    // editDirectory
     'EDITDIRECTORY__SUCCESS' => 'Changes has been saved.',
     'EDITDIRECTORY__ERROR' => 'Changes could not be saved!',
     'EDITDIRECTORY__INVALIDNAME' => 'The name is invalid!',
     'EDITDIRECTORY__INVALIDPARENT' => 'The parent directory is invalid!',
 
-    // showDeleteFsDirectory
+    // showDeleteDirectory
     'SHOWDELETEDIRECTORY__TITLE' => 'Delete directory',
     'SHOWDELETEDIRECTORY__H1' => 'Delete directory #name#?',
     'SHOWDELETEDIRECTORY__INFOTEXT' => 'Do you really want to delete this directory?',
@@ -88,22 +88,15 @@ $lang = array(
     'SHOWDELETEDIRECTORY__CANCEL' => 'No, cancel.',
     'SHOWDELETEDIRECTORY__NOTEMPTY' => 'The directory has to be empty before you can delete it!',
 
-    // deleteFsDirectory
+    // deleteDirectory
     'DELETEDIRECTORY__SUCCESS' => 'Directory deleted.',
     'DELETEDIRECTORY__ERROR' => 'Directory could not be deleted!',
 
-    // formFsFile
-    'FORMFILE__NAME' => 'Name',
-    'FORMFILE__NAME_PRESET' => 'Name of file',
-    'FORMFILE__NAME_HELP' => 'A name for this file.',
+    // formFile
     'FORMFILE__FILE' => 'File',
-    'FORMFILE__FILE_HELP' => 'Choose a file to upload to TSunic.',
     'FORMFILE__LEGEND' => 'File',
-    'FORMFILE__DIRECTORY' => 'Directory of file',
-    'FORMFILE__DIRECTORY_HELP' => 'Please choose a directory, this file is saved in.',
-    'FORMFILE__OPTION_ROOTDIR' => 'Root Directory',
 
-    // showCreateFsFile
+    // showCreateFile
     'SHOWCREATEFILE__TITLE' => 'Upload file',
     'SHOWCREATEFILE__H1' => 'Upload file',
     'SHOWCREATEFILE__TOPARENT' => 'Back to directory',
@@ -111,14 +104,14 @@ $lang = array(
     'SHOWCREATEFILE__SUBMIT' => 'Upload file',
     'SHOWCREATEFILE__CANCEL' => 'Cancel',
 
-    // createFsFile
+    // createFile
     'CREATEFILE__SUCCESS' => 'File uploaded.',
     'CREATEFILE__ERROR' => 'File could not be uploaded!',
     'CREATEFILE__INVALIDFILESIZE' => 'The file is to big!',
     'CREATEFILE__INVALIDQUOTA' => 'Uploading this file would exceed the filesystem quota!',
     'CREATEFILE__INVALIDDIRECTORY' => 'The directory is invalid!',
 
-    // showEditFsFile
+    // showEditFile
     'SHOWEDITFILE__TITLE' => 'Edit file',
     'SHOWEDITFILE__H1' => 'Edit file "#name#"',
     'SHOWEDITFILE__TOPARENT' => 'Back to directory',
@@ -126,20 +119,20 @@ $lang = array(
     'SHOWEDITFILE__SUBMIT' => 'Save changes',
     'SHOWEDITFILE__CANCEL' => 'Cancel',
 
-    // editFsFile
+    // editFile
     'EDITFILE__SUCCESS' => 'Changes has been saved.',
     'EDITFILE__ERROR' => 'Changes could not be saved!',
     'EDITFILE__INVALIDNAME' => 'The name is invalid!',
     'EDITFILE__INVALIDPARENT' => 'The directory is invalid!',
 
-    // showDeleteFsFile
+    // showDeleteFile
     'SHOWDELETEFILE__TITLE' => 'Delete file',
     'SHOWDELETEFILE__H1' => 'Delete file #name#?',
     'SHOWDELETEFILE__INFOTEXT' => 'Do you really want to delete this file?',
     'SHOWDELETEFILE__SUBMIT' => 'Yes, delete.',
     'SHOWDELETEFILE__CANCEL' => 'No, cancel.',
 
-    // deleteFsFile
+    // deleteFile
     'DELETEFILE__SUCCESS' => 'File deleted.',
     'DELETEFILE__ERROR' => 'File could not be deleted!',
 

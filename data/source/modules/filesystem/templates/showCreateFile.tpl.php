@@ -1,8 +1,8 @@
 <!-- | TEMPLATE show form to create new filesystem file -->
-<div id="$$$div__showCreateFsFile">
+<div id="$$$div__showCreateFile">
     <h1><?php $this->set('{SHOWCREATEFILE__H1}'); ?></h1>
     <p class="ts_suplinkbox">
-	<a href="<?php $this->setUrl('$$$showDirectory', array('$$$id' => $this->getVar('fk_directory'))); ?>">
+	<a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $this->getVar('fk_directory'))); ?>">
 	    <?php $this->set('{SHOWCREATEFILE__TOPARENT}'); ?></a>
     </p>
     <p class="ts_infotext">

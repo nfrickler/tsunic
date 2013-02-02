@@ -1,8 +1,6 @@
 <!-- | HELP create directory -->
 <h2>Verzeichnis anlegen</h2>
 <p>
-    Über das folgende Formular kannst du den Namen bzw. das
-    übergeordnete Verzeichnis festlegen und ein neues Verzeichnis
-    erstellen.
+    Gebe dem neuen Verzeichnis hier einen Namen.
 </p>
-<?php include '$$$de__formFsDirectory.help.php'; ?>
+<?php include '$$$de__formDirectory.help.php'; ?>

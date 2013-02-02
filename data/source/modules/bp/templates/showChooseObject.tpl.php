@@ -1,8 +1,8 @@
 <!-- | TEMPLATE show form to choose object -->
 <div id="$$$div__showChooseObject">
-    <h1><?php $this->set('{SHOWCHOOSEOBJECT__H1}'); ?></h1>
+    <h1><?php $this->set($this->getVar('headline')); ?></h1>
     <p class="ts_infotext">
-	<?php $this->set('{SHOWCHOOSEOBJECT__INFOTEXT}'); ?>
+	<?php $this->set($this->getVar('infotext')); ?>
     </p>
 
     <?php $this->display('$$$formChooseObject', array(

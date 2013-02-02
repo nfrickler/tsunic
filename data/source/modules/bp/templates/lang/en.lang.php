@@ -193,7 +193,7 @@ $lang = array(
     'SHOWCHOOSEOBJECT__CANCEL' => 'Cancel',
 
     // formChooseObject
-    'FORMCHOOSEOBJECT__LEGEND' => 'Please choose an object',
+    'FORMCHOOSEOBJECT__LEGEND' => 'Available',
 
     // chooseObject
     'CHOOSEOBJECT__SUCCESS' => 'Decision saved.',

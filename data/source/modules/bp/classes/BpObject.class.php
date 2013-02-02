@@ -105,7 +105,7 @@ class $$$BpObject extends $system$Object {
      * @param string: value of new bit
      * +@param int/string: tagname or fk_tag of new bit
      *
-     * @return bool
+     * @return false/Bit object
      */
     public function addBit ($value, $fk_tag = 0) {
 	global $TSunic;
@@ -126,7 +126,7 @@ class $$$BpObject extends $system$Object {
 	// empty cache
 	$this->bits = array();
 
-	return true;
+	return $Bit;
     }
 
     /* add new bit or edit existing one
@@ -157,10 +157,11 @@ class $$$BpObject extends $system$Object {
 
     /* get first bit with specified tag
      * @param string/int: id or name of tag
+     * +@param bool: add Bit if not exists?
      *
      * @return Bit
      */
-    public function getBit ($tag) {
+    public function getBit ($tag, $add = false) {
 	$Helper = $this->getHelper();
 	$tag = $Helper->tag2id($tag);
 
@@ -173,11 +174,15 @@ class $$$BpObject extends $system$Object {
 	    if ($Value->getInfo('fk_tag') == $tag) $Bit = $Value;
 	}
 
-	// get empty Bit if nothing found
+	// get (empty) Bit if nothing found
 	if (empty($Bit)) {
 	    global $TSunic;
-	    $Bit = $TSunic->get('$bp$Bit', false, true);
-	    $Bit->presetInfo(array('fk_tag' => $tag, 'fk_obj' => $this->id));
+	    if ($add) {
+		$Bit = $this->addBit(0, $tag);
+	    } else {
+		$Bit = $TSunic->get('$bp$Bit', false, true);
+		$Bit->presetInfo(array('fk_tag' => $tag, 'fk_obj' => $this->id));
+	    }
 	}
 
 	return $Bit;

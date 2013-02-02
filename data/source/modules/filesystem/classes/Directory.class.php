@@ -35,7 +35,7 @@ class $$$Directory extends $bp$BpObject {
      * @return string
      */
     public function getName () {
-	return ($this->id) ? $this->getInfo('name') : '{CLASS__DIRECTORY__ROOTDIR}';
+	return ($this->id) ? $this->getAbsPath() : '{CLASS__DIRECTORY__ROOTDIR}';
     }
 
     /* is directory within childrens of this directory?
@@ -109,7 +109,7 @@ class $$$Directory extends $bp$BpObject {
 	// filter subdirectories
 	$this->subdirectories = array();
 	foreach ($all as $index => $Value) {
-	    if ((empty($this->id) and $Value->getInfo('parent')) or $Value->getInfo('parent') == $this->id)
+	    if ($Value->getInfo('parent') == $this->id)
 		$this->subdirectories[] = $Value;
 	}
 

@@ -1,7 +1,6 @@
 <!-- | HELP edit directory -->
 <h2>Edit directory</h2>
 <p>
-    Via the following formular you can edit the name and the
-    parent directory.
+    Via the following formular you can edit the name of the directory.
 </p>
-<?php include '$$$en__formFsDirectory.help.php'; ?>
+<?php include '$$$en__formDirectory.help.php'; ?>
