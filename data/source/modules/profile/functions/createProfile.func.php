@@ -27,6 +27,7 @@ function $$$createProfile () {
     if (!$Profile->create()) {
 	// add error message and redirect back
 	$TSunic->Log->alert('error', '{CREATEPROFILE__ERROR}');
+	$TSunic->Log->log('3', 'profile::createProfile: ERROR: Failed to create new profile');
 	$TSunic->redirect('back');
 	return true;
     }
@@ -34,6 +35,7 @@ function $$$createProfile () {
     // create new Date for dateofbirth
     if (!$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$form[0]['value'].' '.$form[1]['value'].'"')) {
 	$TSunic->Log->alert('error', '{CREATEPROFILE__ERROR}');
+	$TSunic->Log->log('3', 'profile::createProfile: ERROR: Failed to save date of birth');
 	$TSunic->redirect('back');
     }
 
@@ -41,6 +43,7 @@ function $$$createProfile () {
     foreach ($form as $index => $values) {
 	if (!$Profile->addeditBit($values['fk_tag'], $values['fk_bit'], $values['value'])) {
 	    $TSunic->Log->alert('error', '{CREATEPROFILE__ERROR}');
+	    $TSunic->Log->log('3', 'profile::createProfile: ERROR: Failed to add bit');
 	    $TSunic->redirect('back');
 	}
     }

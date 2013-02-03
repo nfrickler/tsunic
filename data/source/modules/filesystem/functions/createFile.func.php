@@ -5,22 +5,26 @@ function $$$createFile () {
 
     // get input
     $parent_preset = $TSunic->Temp->getPost('$$$formFile__parent_preset');
+    $FH = $_FILES['$$$formFile__file'];
 
-    // create file object
-    $File = $TSunic->get('$$$File', 0);
+    // is file Image?
+    $File = $TSunic->get('$$$Image', 0);
+    if (!$File->isImage($FH['name'])) {
+	$File = $TSunic->get('$$$File', 0);
+    }
 
     // validate input
-    if (!$File->isValidFilesize($_FILES['$$$formFile__file']['size'])) {
+    if (!$File->isValidFilesize($FH['size'])) {
 	$TSunic->Log->alert('error', '{CREATEFILE__INVALIDFILESIZE}');
 	$TSunic->redirect('back');
     }
-    if (!$File->isValidQuota($_FILES['$$$formFile__file']['size'])) {
+    if (!$File->isValidQuota($FH['size'])) {
 	$TSunic->Log->alert('error', '{CREATEFILE__INVALIDQUOTA}');
 	$TSunic->redirect('back');
     }
 
     // create file
-    if (!$File->createByUpload($_FILES['$$$formFile__file'])) {
+    if (!$File->createByUpload($FH)) {
 	$TSunic->Log->alert('error', '{CREATEFILE__ERROR}');
 	$TSunic->redirect('back');
     }

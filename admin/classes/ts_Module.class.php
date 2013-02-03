@@ -774,7 +774,7 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     public function updateModule () {
-	global $Database;
+	global $Database, $Parser;
 
 	// get versions
 	$sql_0 = "SELECT version_installed,
@@ -817,10 +817,15 @@ class ts_Module extends ts_Packet {
 	    // search for update-files and run them
 	    if (file_exists($this->path.'/setup/update_'.$index.'_to_'.$value.'.sql')) {
 		// run sql-file
-		if (($Database->runFile(
-		    $this->path.'/setup/update_'.$index.'_to_'.$value.'.sql',
-		    $this->id)
-		) === false) break;
+
+		// read sql-file
+		$content = ts_FileHandler::readFile($this->path.'/setup/uninstall.sql');
+
+		// parse module replacements
+		$content = $Parser->replaceModule($content, $this->id, $Database->getPreffix());
+
+		// run sql statements
+		if (($Database->runString($content)) === false) break;
 	    }
 	    if (file_exists($this->path.'/setup/update_'.$index.'_to_'.$value.'.php')) {
 		// run php-file
@@ -890,12 +895,19 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     public function uninstallModule () {
-	global $Database;
+	global $Database, $Parser;
 
 	// search for uninstall-scripts in 'setup'-dir
 	if (file_exists($this->path.'/setup/uninstall.sql')) {
-	    // run sql-file
-	    if (($Database->runFile($this->path.'/setup/uninstall.sql', $this->id)) === false) return false;
+
+	    // read sql-file
+	    $content = ts_FileHandler::readFile($this->path.'/setup/uninstall.sql');
+
+	    // parse module replacements
+	    $content = $Parser->replaceModule($content, $this->id, $Database->getPreffix());
+
+	    // run sql statements
+	    if (($Database->runString($content)) === false) return false;
 	}
 	if (file_exists($this->path.'/setup/uninstall.php')) {
 	    // run php-file

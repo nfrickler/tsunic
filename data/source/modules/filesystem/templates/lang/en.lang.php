@@ -4,15 +4,27 @@ $lang = array(
     'NAME' => 'Filesystem module',
 
     // types
-    'TYPE__FK_DIRECTORY' => 'Directory',
-    'TYPE__FK_FILE' => 'File',
+    'TYPE__DIRECTORY' => 'Directory',
+    'TYPE__FILE' => 'File',
+    'TYPE__IMAGE' => 'Image',
 
     // tags
     'TAG__DIRECTORY__NAME' => 'Directory name',
+    'TAG__DIRECTORY__NAME__DESCRIPTION' => 'Name of directory',
     'TAG__DIRECTORY__PARENT' => 'Parent directory',
+    'TAG__DIRECTORY__PARENT__DESCRIPTION' => 'Parent directory',
     'TAG__FILE__NAME' => 'File name',
+    'TAG__FILE__NAMEDESCRIPTION' => 'File name',
     'TAG__FILE__PARENT' => 'Containig directory',
+    'TAG__FILE__DESCRIPTION' => 'Containig directory',
     'TAG__FILE__SIZE' => 'File size',
+    'TAG__FILE__SIZE__DESCRIPTION' => 'File size',
+    'TAG__FILE' => 'File',
+    'TAG__FILE__DESCRIPTION' => 'File',
+    'TAG__IMAGE' => 'Image',
+    'TAG__IMAGE__DESCRIPTION' => 'An image file',
+    'TAG__DIRECTORY' => 'Directory',
+    'TAG__DIRECTORY__DESCRIPTION' => 'A directory',
 
     // special
     'CLASS__DIRECTORY__ROOTDIR' => 'Root directory',

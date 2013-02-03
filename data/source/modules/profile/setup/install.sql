@@ -1,10 +1,10 @@
 <!-- | Tables for profile -->
 
 INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) VALUES
-    ('$$$Profile', '{$PROFILE$TYPE__FK_PROFILE}', '{$PROFILE$TYPE__FK_PROFILE__DESCRIPTION}', 0)
+    ('$profile$Profile', '{$PROFILE$TYPE__PROFILE}', '{$PROFILE$TYPE__PROFILE__DESCRIPTION}', 0)
 ;
 
-INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES 
+INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
 	'PROFILE__FIRSTNAME',
 	'{$PROFILE$TAG__PROFILE__FIRSTNAME}',
@@ -23,7 +23,7 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$PROFILE$TAG__PROFILE__GENDER__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'image'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$filesystem$Image'),
 	'PROFILE__IMAGE',
 	'{$PROFILE$TAG__PROFILE__IMAGE}',
 	'{$PROFILE$TAG__PROFILE__IMAGE__DESCRIPTION}',
@@ -33,6 +33,12 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'PROFILE__DATEOFBIRTH',
 	'{$PROFILE$TAG__PROFILE__DATEOFBIRTH}',
 	'{$PROFILE$TAG__PROFILE__DATEOFBIRTH__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$filesystem$Image'),
+	'PROFILE__MAINIMAGE',
+	'{$PROFILE$TAG__PROFILE__MAINIMAGE}',
+	'{$PROFILE$TAG__PROFILE__MAINIMAGE__DESCRIPTION}',
 	1
     ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
@@ -45,6 +51,12 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'PROFILE__ADDRESS',
 	'{$PROFILE$TAG__PROFILE__ADDRESS}',
 	'{$PROFILE$TAG__PROFILE__ADDRESS__DESCRIPTION}',
+	0
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$$$Profile'),
+	'PROFILE',
+	'{$PROFILE$TAG__PROFILE}',
+	'{$PROFILE$TAG__PROFILE__DESCRIPTION}',
 	0
     )
 ;

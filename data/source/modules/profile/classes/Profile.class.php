@@ -10,6 +10,7 @@ class $$$Profile extends $bp$BpObject {
 	'PROFILE__LASTNAME',
 	'PROFILE__GENDER',
 	'PROFILE__DATEOFBIRTH',
+	'PROFILE__MAINIMAGE',
     );
 
     /* save dateofbirth
@@ -51,6 +52,20 @@ class $$$Profile extends $bp$BpObject {
      */
     public function getName () {
 	return $this->getInfo('firstname').' '.$this->getInfo('lastname');
+    }
+
+    /* delete
+     *
+     * @return bool
+     */
+    public function delete () {
+
+	// delete date of birth
+	$Bit = $this->getBit('PROFILE__DATEOFBIRTH');
+	$Date = $Bit->getFkObject();
+	if ($Date and !$Date->delete()) return false;
+
+	return parent::delete();
     }
 }
 ?>

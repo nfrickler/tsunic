@@ -132,7 +132,6 @@ switch ($_GET['event']) {
 	if (!initDatabase()) header('Location:?event=showInitDatabase');
 
 	// start ModuleHandler
-	include_once 'classes/ts_ModuleHandler.class.php';
 	global $ModuleHandler;
 	$ModuleHandler = new ts_ModuleHandler();
 	$Modules = $ModuleHandler->getModules();
@@ -143,7 +142,6 @@ switch ($_GET['event']) {
     case 'setModules':
 
 	// start ModuleHandler
-	include_once 'classes/ts_ModuleHandler.class.php';
 	global $ModuleHandler;
 	$ModuleHandler = new ts_ModuleHandler();
 
@@ -157,7 +155,6 @@ switch ($_GET['event']) {
     case 'parseAll':
 
 	// start ModuleHandler
-	include_once 'classes/ts_ModuleHandler.class.php';
 	global $ModuleHandler;
 	$ModuleHandler = new ts_ModuleHandler();
 
@@ -193,7 +190,6 @@ switch ($_GET['event']) {
 	if (!initDatabase()) header('Location:?event=showInitDatabase');
 
 	// start StyleHandler
-	include_once 'classes/ts_StyleHandler.class.php';
 	global $StyleHandler;
 	$StyleHandler = new ts_StyleHandler();
 	$Styles = $StyleHandler->getStyles();
@@ -204,7 +200,6 @@ switch ($_GET['event']) {
     case 'setStyles':
 
 	// start StyleHandler
-	include_once 'classes/ts_StyleHandler.class.php';
 	global $StyleHandler;
 	$StyleHandler = new ts_StyleHandler();
 

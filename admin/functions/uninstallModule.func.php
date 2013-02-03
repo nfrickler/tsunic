@@ -1,6 +1,12 @@
 <!-- | function to uninstall modules -->
 <?php
 function uninstallModule () {
+    global $Config, $Parser;
+
+    // get Parser object
+    $ModuleHandler = new ts_ModuleHandler();
+    $modules_all = $ModuleHandler->getModules(true);
+    $Parser = new ts_Parser($Config->get('preffix'), $modules_all, $Config->get('debug_mode'));
 
     // get id__module
     $id__module = (isset($_GET['id']) AND is_numeric($_GET['id'])) ? $_GET['id'] : 0;

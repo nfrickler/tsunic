@@ -7,7 +7,7 @@ $lang = array(
     'PROFILE__DATEOFBIRTH__TITLE' => 'Geburtstag',
 
     // types
-    'TYPE__FK_PROFILE' => 'Profil',
+    'TYPE__PROFILE' => 'Profil',
 
     // tags
     'TAG__PROFILE__FIRSTNAME' => 'Vorname',
@@ -24,6 +24,10 @@ $lang = array(
     'TAG__PROFILE__TEL__DESCRIPTION' => 'Telefonnummer',
     'TAG__PROFILE__ADDRESS' => 'Adresse',
     'TAG__PROFILE__ADDRESS__DESCRIPTION' => 'Adresse der Person',
+    'TAG__PROFILE' => 'Profil',
+    'TAG__PROFILE__DESCRIPTION' => 'Profil einer Person',
+    'TAG__PROFILE__MAINIMAGE' => 'Hauptbild',
+    'TAG__PROFILE__MAINIMAGE__DESCRIPTION' => 'Hauptbild des Profils',
 
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'weiblich',
@@ -91,6 +95,7 @@ $lang = array(
     'EDITPROFILE__INVALIDVALUE' => 'Ungültige Eingabe (Tag: "#field#", Wert: "#value#")!',
 
     // showDeleteProfile
+    'SHOWDELETEPROFILE__TITLE' => 'Profil wirklich löschen?',
     'SHOWDELETEPROFILE__POPUP_DELETE_HEADER' => 'Profil wirklich löschen?',
     'SHOWDELETEPROFILE__POPUP_DELETE_CONTENT' => 'Willst du das Profil wirklich endgültig löschen?',
     'SHOWDELETEPROFILE__POPUP_DELETE_YES' => 'Ja, Profil löschen',

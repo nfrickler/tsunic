@@ -7,7 +7,7 @@ $lang = array(
     'PROFILE__DATEOFBIRTH__TITLE' => 'Birthday',
 
     // types
-    'TYPE__FK_PROFILE' => 'Profile',
+    'TYPE__PROFILE' => 'Profile',
 
     // tags
     'TAG__PROFILE__FIRSTNAME' => 'Firstname',
@@ -24,6 +24,10 @@ $lang = array(
     'TAG__PROFILE__TEL__DESCRIPTION' => 'Phone number',
     'TAG__PROFILE__ADDRESS' => 'Address',
     'TAG__PROFILE__ADDRESS__DESCRIPTION' => 'Address of person',
+    'TAG__PROFILE' => 'Profile',
+    'TAG__PROFILE__DESCRIPTION' => 'A profile of a person',
+    'TAG__PROFILE__MAINIMAGE' => 'Main picture',
+    'TAG__PROFILE__MAINIMAGE__DESCRIPTION' => 'Main profile picture',
 
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'female',
@@ -113,6 +117,7 @@ $lang = array(
     'EDITPROFILE__INVALIDVALUE' => 'Invalid input (tag: "#field#", value: "#value#")!',
 
     // showDeleteProfile
+    'SHOWDELETEPROFILE__TITLE' => 'Delete profile?',
     'SHOWDELETEPROFILE__POPUP_DELETE_HEADER' => 'Delete profile?',
     'SHOWDELETEPROFILE__POPUP_DELETE_CONTENT' => 'Do you really want to delete this profile?',
     'SHOWDELETEPROFILE__POPUP_DELETE_YES' => 'Yes, delete profile',

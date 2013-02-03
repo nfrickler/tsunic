@@ -68,6 +68,7 @@ class $$$Date extends $bp$BpObject {
 	}
 
 	// log error
+	global $TSunic;
 	$TSunic->Log->log(1, "calendar__Date: Error: RepeatType not found!");
 
 	// add one to prevent infinite loops
@@ -100,6 +101,10 @@ class $$$Date extends $bp$BpObject {
 	    case 'I':
 		$period = 60;
 		break;
+	    default:
+		global $TSunic;
+		$TSunic->Log->log(3, "calendar::Date::fastForward ERROR: invalid repeattype!");
+		return array($start, $repeatcount);
 	}
 
 	// get diff

@@ -2,15 +2,20 @@
 <?php
 class $$$Filesystem {
 
-    /* all available FsDirectory objects
+    /* all available Directory objects
      * array
      */
     protected $directories = array();
 
-    /* all available FsFile objects
+    /* all available File objects
      * array
      */
     protected $files = array();
+
+    /* all available Image objects
+     * array
+     */
+    protected $images = array();
 
     /* get all available directories
      *
@@ -39,9 +44,10 @@ class $$$Filesystem {
 	if (empty($this->files)) {
 	    $Helper = $TSunic->get('$bp$Helper');
 	    $this->files = $Helper->getObjects('$$$File');
+	    $this->images = $Helper->getObjects('$$$Image');
 	}
 
-	return $this->files;
+	return array_merge($this->images, $this->files);
     }
 }
 ?>
