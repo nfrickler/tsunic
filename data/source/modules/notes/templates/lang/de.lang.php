@@ -20,12 +20,7 @@ $lang = array(
     'SHOWNOTE__CANCEL' => 'Abbrechen',
 
     // saveNote
-    'SAVENOTE__ERROR_INVALIDFILENAME' => 'Ungültiger Dateiname!',
-    'SAVENOTE__ERROR_INVALIDFILENAMEDIR' => 'Ungültiges Verzeichnis!',
-    'SAVENOTE__ERROR_CREATE' => 'Datei konnte nicht erstellt werden!',
-    'SAVENOTE__ERROR_SETFILENAME' => 'Dateiname konnte nicht gespeichert werden!',
-    'SAVENOTE__ERROR_SETCONTENT' => 'Änderungen konnten nicht gespeichert werden!',
-    'SAVENOTE__SUCCESS_CREATE' => 'Neue Datei wurde gespeichert.',
+    'SAVENOTE__ERROR' => 'Datei konnte nicht gespeichert werden!',
     'SAVENOTE__SUCCESS' => 'Änderungen wurden gespeichert.',
 
     /* ################### navigation ############################# */

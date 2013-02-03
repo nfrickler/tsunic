@@ -263,14 +263,35 @@ class $$$File extends $bp$BpObject {
 
 	    // not exists?
 	    if (!$Next) {
+		// create new Directory
 		$Next = $TSunic->get('$$$Directory', array(), true);
-		if (!$Next->create($current, $Dir->getInfo('id'))) return NULL;
+		if (!$Next->create()) return NULL;
+		if (!$Next->saveByTag('DIRECTORY__NAME', $current) or
+		    !$Next->saveByTag('DIRECTORY__PARENT', $Dir->getInfo('id'))
+		) return NULL;
 	    }
 
 	    $Dir = $Next;
 	}
 
 	return $Dir;
+    }
+
+    /* split path of file to dir and file path
+     *
+     * @return Directory
+     */
+    public function splitPath2names ($path) {
+	if (!strstr($path, '/')) return array('', $path);
+
+	// normalize path
+	if (substr($path,0,1) == "/") $path = substr($path, 1);
+
+	// split
+	$file = substr(strrchr($path, "/"), 1);
+	$dir = substr($path, 0, (strlen($path) - strlen($file) - 1));
+
+	return array($dir, $file);
     }
 }
 ?>

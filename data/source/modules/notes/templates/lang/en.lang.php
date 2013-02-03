@@ -20,12 +20,7 @@ $lang = array(
     'SHOWNOTE__CANCEL' => 'Cancel',
 
     // saveNote
-    'SAVENOTE__ERROR_INVALIDFILENAME' => 'Invalid filename!',
-    'SAVENOTE__ERROR_INVALIDFILENAMEDIR' => 'Invalid directory!',
-    'SAVENOTE__ERROR_CREATE' => 'File could not be created!',
-    'SAVENOTE__ERROR_SETFILENAME' => 'File could not be saved!',
-    'SAVENOTE__ERROR_SETCONTENT' => 'Changes could not be saved!',
-    'SAVENOTE__SUCCESS_CREATE' => 'New file has been saved.',
+    'SAVENOTE__ERROR' => 'File could not be saved!',
     'SAVENOTE__SUCCESS' => 'Changes have been saved.',
 
     /* ################### navigation ############################# */

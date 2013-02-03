@@ -4,13 +4,13 @@ function $$$showNote () {
     global $TSunic;
 
     // get param
-    $id_fsfile = $TSunic->Temp->getParameter('$$$id');
+    $id_file = $TSunic->Temp->getParameter('$$$id');
 
-    // get FsFile object
-    $FsFile = $TSunic->get('$filesystem$FsFile', $id_fsfile);
+    // get File object
+    $File = $TSunic->get('$filesystem$File', $id_file);
 
     // activate template
-    $data = array('FsFile' => $FsFile);
+    $data = array('File' => $File);
     $TSunic->Tmpl->activate('$$$showNote', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWNOTE__TITLE}'));
 

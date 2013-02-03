@@ -79,7 +79,7 @@ class $$$BpObject extends $system$Object {
 	// update database
 	global $TSunic;
 	$data = array(
-	    "class" => get_class($this),
+	    "class" => $this->getClass(),
 	    "fk_account" => $TSunic->Usr->getInfo('id'),
 	    "dateOfCreation" => "NOW()"
 	);
@@ -153,6 +153,21 @@ class $$$BpObject extends $system$Object {
 	}
 
 	return false;
+    }
+
+    /* add new bit or edit existing one (unique Tag per object)
+     * @param int: fk_tag
+     * @param mix: new value
+     *
+     * @return bool
+     */
+    public function saveByTag ($fk_tag, $value) {
+
+	// get Bit
+	$Bit = $this->getBit($fk_tag, true);
+
+	// save value and return
+	return ($Bit and $Bit->edit($value)) ? true : false;
     }
 
     /* get first bit with specified tag
@@ -318,6 +333,14 @@ class $$$BpObject extends $system$Object {
 	return (!$fk_tag or $this->_validate($fk_tag, 'int')
 	    and $this->_isObject('#__tags', $fk_tag)
 	) ? true : false;
+    }
+
+    /* get class name of this object
+     *
+     * @return string
+     */
+    public function getClass () {
+	return get_class($this);
     }
 }
 ?>
