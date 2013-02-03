@@ -72,7 +72,7 @@ class $$$Bit extends $system$Object {
 	return $this->getInfo('value');
     }
 
-    /* get object, if typename == fk_...
+    /* get object, if typename == mod...
      *
      * @return object
      */
@@ -83,7 +83,6 @@ class $$$Bit extends $system$Object {
 	$Obj = $TSunic->get('$$$BpObject', $this->getInfo('value'));
 	return $Obj->getObject();
     }
-
 
     /* set dummy values
      * @param int: fk_tag

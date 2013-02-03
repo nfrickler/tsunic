@@ -4,7 +4,8 @@ $lang = array(
     'NAME' => 'Calendar module',
 
     // types
-    'TYPE__FK_DATE' => 'Date',
+    'TYPE__DATE' => 'Date',
+    'TYPE__DATE__DESCRIPTION' => 'A Date',
 
     // tags
     'TAG__DATE__START' => 'Start of date',
@@ -36,6 +37,7 @@ $lang = array(
     'SHOWDAY__TODELETEDAY' => 'Delete date',
     'SHOWDAY__TIME' => 'Time',
     'SHOWDAY__TITLE' => 'Title',
+    'SHOWDAY__NODATES' => 'No dates on this day.',
 
     // showMonth
     'SHOWMONTH__TITLE' => 'Calendar month',
@@ -45,6 +47,7 @@ $lang = array(
     'SHOWMONTH__DAY' => 'Day',
     'SHOWMONTH__TIME' => 'Time',
     'SHOWMONTH__TITLE' => 'Title',
+    'SHOWMONTH__NODATES' => 'No dates this month.',
 
     // showCreateDate
     'SHOWCREATEDATE__TITLE' => 'Create date',

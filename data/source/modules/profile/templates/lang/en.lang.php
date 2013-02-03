@@ -43,6 +43,7 @@ $lang = array(
     'SHOWINDEX__DATEOFBIRTH' => 'Date of birth',
     'SHOWINDEX__TOCREATEPROFILE' => 'Create new profile',
     'SHOWINDEX__UNKNOWNNAME' => 'Unknown',
+    'SHOWINDEX__NOPROFILES' => 'No profiles.',
 
     // showProfile
     'SHOWPROFILE__TITLE' => 'Profile',

@@ -33,7 +33,7 @@ function $$$editProfile () {
     }
 
     // edit dateofbirth
-    if (!$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$values[0].' '.$values[1].'"')) {
+    if (!$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$form[0]['value'].' '.$values[1]['value'].'"')) {
 	$TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
 	$TSunic->redirect('back');
     }

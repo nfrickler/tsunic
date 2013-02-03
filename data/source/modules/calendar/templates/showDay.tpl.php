@@ -17,6 +17,8 @@
 	    <th style="width:20px;"><a href="<?php $this->setUrl('$$$showDay', array('$$$time' => $time + 24 * 3600)); ?>">&gt;&gt;&gt;</a></th>
 	</tr>
     </table>
+
+    <?php if ($this->getVar('dates')) { ?>
     <table cellspacing="0" cellpadding="0" border="0">
 	<tr>
 	    <th style="width:15%;"><?php $this->set('{SHOWDAY__TIME}'); ?></th>
@@ -29,4 +31,7 @@
 	</tr>
 	<?php } ?>
     </table>
+    <?php } else { ?>
+    <p style="margin-top:20px;" class="ts_infotext"><?php $this->set('{SHOWDAY__NODATES}'); ?></p>
+    <?php } ?>
 </div>

@@ -8,6 +8,8 @@
     <p class="ts_infotext">
 	<?php $this->set('{SHOWINDEX__INFOTEXT}'); ?>
     </p>
+
+    <?php if ($this->getVar('profiles')) { ?>
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
 	    <th><?php $this->set('{SHOWINDEX__NAME}'); ?></th>
@@ -32,4 +34,7 @@
 	</tr>
 	<?php } ?>
     </table>
+    <?php } else { ?>
+    <p style="margin-top:20px;" class="ts_infotext"><?php $this->set('{SHOWINDEX__NOPROFILES}'); ?></p>
+    <?php } ?>
 </div>

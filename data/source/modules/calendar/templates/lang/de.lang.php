@@ -4,7 +4,8 @@ $lang = array(
     'NAME' => 'Kalender Modul',
 
     // types
-    'TYPE__FK_DATE' => 'Termin',
+    'TYPE__DATE' => 'Termin',
+    'TYPE__DATE__DESCRIPTION' => 'Ein Termin',
 
     // tags
     'TAG__DATE__START' => 'Startzeitpunkt',
@@ -36,6 +37,7 @@ $lang = array(
     'SHOWDAY__TODELETEDAY' => 'Termin löschen',
     'SHOWDAY__TIME' => 'Zeit',
     'SHOWDAY__TITLE' => 'Termin',
+    'SHOWDAY__NODATES' => 'An diesem Tag gibt es noch keine Termine.',
 
     // showMonth
     'SHOWMONTH__TITLE' => 'Kalendermonat',
@@ -45,6 +47,7 @@ $lang = array(
     'SHOWMONTH__DAY' => 'Tag',
     'SHOWMONTH__TIME' => 'Zeit',
     'SHOWMONTH__TITLE' => 'Termin',
+    'SHOWMONTH__NODATES' => 'In diesem Monat sind noch keine Termine vorhanden.',
 
     // showCreateDate
     'SHOWCREATEDATE__TITLE' => 'Termin erstellen',

@@ -1,4 +1,4 @@
-<!-- | FUNCTION edit date data -->
+<!-- | FUNCTION edit Date object -->
 <?php
 function $$$editDate () {
     global $TSunic;
@@ -8,6 +8,7 @@ function $$$editDate () {
     $Date = $TSunic->get('$$$Date', $id);
     if (!$Date->isValid()) {
 	$TSunic->Log->alert('error', '{EDITDATE__ERROR}');
+	$TSunic->Log->log(3, "calendar::editDate: ERROR: Could not get Date object");
 	$TSunic->redirect('back');
     }
 
@@ -47,46 +48,9 @@ function $$$editDate () {
 	$repeatcount = 0;
     }
 
-    // valid input?
-    if (!$Date->isValidTitle($title)) {
-	$TSunic->Log->alert('error', '{EDITDATE__INVALIDTITLE}');
-	$TSunic->redirect('back');
-    }
+    // valid start and stop?
     if (!$start or !$stop or $start > $stop) {
 	$TSunic->Log->alert('error', '{EDITDATE__INVALIDSTARTSTOP}');
-	$TSunic->redirect('back');
-    }
-    $Tag = $TSunic->get('$bp$Tag', $Date->tag2id('DATE__REPEAT'));
-    if (!$Tag->isValidValue($repeat)) {
-	$TSunic->Log->alert('error', '{EDITDATE__INVALIDREPEAT}');
-	$TSunic->redirect('back');
-    }
-    $Tag = $TSunic->get('$bp$Tag', $Date->tag2id('DATE__REPEATTYPE'));
-    if (!$Tag->isValidValue($repeattype)) {
-	$TSunic->Log->alert('error', '{EDITDATE__INVALIDREPEATTYPE}');
-	$TSunic->redirect('back');
-    }
-    $Tag = $TSunic->get('$bp$Tag', $Date->tag2id('DATE__REPEATCOUNT'));
-    if (!$Tag->isValidValue($repeatcount)) {
-	$TSunic->Log->alert('error', '{CREATEDATE__INVALIDREPEATCOUNT}');
-	$TSunic->redirect('back');
-    }
-    $Tag = $TSunic->get('$bp$Tag', $Date->tag2id('DATE__REPEATSTOP'));
-    if (!$Tag->isValidValue($repeatstop)) {
-	$TSunic->Log->alert('error', '{CREATEDATE__INVALIDREPEATSTOP}');
-	$TSunic->redirect('back');
-    }
-
-    // add tags to date
-    if (!$Date->addBit($title, 'DATE__TITLE') or
-	!$Date->addBit($start, 'DATE__START') or
-	!$Date->addBit($stop, 'DATE__STOP') or
-	!$Date->addBit($repeat, 'DATE__REPEAT') or
-	!$Date->addBit($repeattype, 'DATE__REPEATTYPE') or
-	!$Date->addBit($repeatcount, 'DATE__REPEATCOUNT') or
-	!$Date->addBit($repeatstop, 'DATE__REPEATSTOP')
-    ) {
-	$TSunic->Log->alert('error', '{EDITDATE__ERROR}');
 	$TSunic->redirect('back');
     }
 
@@ -94,28 +58,55 @@ function $$$editDate () {
     $Helper = $TSunic->get('$bp$Helper');
     $form = $Helper->getFormValues();
 
+    // add idBits to form values
+    $form[] = array(
+	'fk_tag' => 'DATE__TITLE',
+	'fk_bit' => $Date->getBit('DATE__TITLE', true)->getInfo('id'),
+	'value' => $title
+    );
+    $form[] = array(
+	'fk_tag' => 'DATE__START',
+	'fk_bit' => $Date->getBit('DATE__START', true)->getInfo('id'),
+	'value' => $start
+    );
+    $form[] = array(
+	'fk_tag' => 'DATE__STOP',
+	'fk_bit' => $Date->getBit('DATE__STOP', true)->getInfo('id'),
+	'value' => $stop
+    );
+    $form[] = array(
+	'fk_tag' => 'DATE__REPEAT',
+	'fk_bit' => $Date->getBit('DATE__REPEAT', true)->getInfo('id'),
+	'value' => $repeat
+    );
+    $form[] = array(
+	'fk_tag' => 'DATE__REPEATTYPE',
+	'fk_bit' => $Date->getBit('DATE__REPEATTYPE', true)->getInfo('id'),
+	'value' => $repeattype
+    );
+    $form[] = array(
+	'fk_tag' => 'DATE__REPEATCOUNT',
+	'fk_bit' => $Date->getBit('DATE__REPEATCOUNT', true)->getInfo('id'),
+	'value' => $repeatcount
+    );
+    $form[] = array(
+	'fk_tag' => 'DATE__REPEATSTOP',
+	'fk_bit' => $Date->getBit('DATE__REPEATSTOP', true)->getInfo('id'),
+	'value' => $repeatstop
+    );
+
     // validate input
-    if (!$Helper->validateFormValues($form)) {
-	$TSunic->Log->alert('error', '{EDITDATE__INVALIDVALUE} ('.$Tag->getInfo('name').': '.$value.')');
+    $fail = $Helper->validateFormValues($form);
+    if ($fail) {
+	$TSunic->Log->alert('error', '{EDITDATE__INVALIDVALUE} ('.$fail['tagname'].': '.$fail['value'].')');
 	$TSunic->redirect('back');
-    }
-
-    // create date object
-    $id = $TSunic->Temp->getPost('$$$formDate__id');
-    $Date = $TSunic->get('$$$Date', $id);
-
-    // create date
-    if (!$Date->isValid()) {
-	// add error message and redirect back
-	$TSunic->Log->alert('error', '{EDITDATE__ERROR}');
-	$TSunic->redirect('back');
-	return true;
     }
 
     // add/edit all bits
     foreach ($form as $index => $values) {
-	if (!$Profile->addeditBit($values['fk_tag'], $values['fk_bit'], $values['value'])) {
+	if (!$Date->addeditBit($values['fk_tag'], $values['fk_bit'], $values['value'])) {
 	    $TSunic->Log->alert('error', '{EDITDATE__ERROR}');
+	    $TSunic->Log->log(3, "calendar::editDate: ERROR: addedit all Bits failed");
 	    $TSunic->redirect('back');
 	}
     }

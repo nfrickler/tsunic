@@ -20,6 +20,7 @@ $time = $this->getVar('time');
 	</tr>
     </table>
 
+    <?php if ($this->getVar('dates')) { ?>
     <table cellspacing="0" cellpadding="0" border="0">
 	<tr>
 	    <th style="width:5%;"><?php $this->set('{SHOWMONTH__DAY}'); ?></th>
@@ -43,4 +44,8 @@ $time = $this->getVar('time');
 	<?php } ?>
 	<?php } ?>
     </table>
+
+    <?php } else { ?>
+    <p style="margin-top:20px;" class="ts_infotext"><?php $this->set('{SHOWMONTH__NODATES}'); ?></p>
+    <?php } ?>
 </div>

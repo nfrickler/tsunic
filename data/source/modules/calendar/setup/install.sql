@@ -1,7 +1,7 @@
 <!-- | Tables for calendar -->
 
 INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) VALUES
-    ('$$$Date', '{$CALENDAR$TYPE__FK_DATE}', '{$CALENDAR$TYPE__FK_DATE__DESCRIPTION}', 0)
+    ('$$$Date', '{$CALENDAR$TYPE__DATE}', '{$CALENDAR$TYPE__DATE__DESCRIPTION}', 0)
 ;
 
 INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES 

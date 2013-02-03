@@ -227,6 +227,9 @@ class $$$Template {
 	// replace language
 	$text = $TSunic->Tmpl->replaceLang($text);
 
+	// replace special htmlchars
+	$text = htmlspecialchars($text);
+
 	// replace everything else
 	if (!$lang_only) {
 
