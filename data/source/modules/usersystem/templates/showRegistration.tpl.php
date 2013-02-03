@@ -1,7 +1,7 @@
 <!-- | TEMPLATE show registration -->
 <div id="$$$div__showRegistration">
-    <h1><?php echo $this->set('{SHOWREGISTRATION__H1}'); ?></h1>
-    <p class="ts_infotext"><?php echo $this->set('{SHOWREGISTRATION__INFOTEXT}'); ?></p>
+    <h1><?php $this->set('{SHOWREGISTRATION__H1}'); ?></h1>
+    <p class="ts_infotext"><?php $this->set('{SHOWREGISTRATION__INFOTEXT}'); ?></p>
     <?php $this->display('$$$formAccount', array(
 	'User' => $this->getVar('User'),
 	'submit_link' => '$$$doRegister',

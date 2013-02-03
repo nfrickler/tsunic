@@ -6,8 +6,8 @@ $Smtp = $this->getVar('Smtp');
     <form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formSmtp__form" id="$$$formSmtp__form" class="ts_form">
 	<input type="hidden" name="$$$formSmtp__id" id="$$$formSmtp__id" value="<?php $this->set($Smtp->getInfo('id')); ?>" />
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMSMTP__LEGEND_SMTPMAILACCOUNT}'); ?></legend>
-	    <label for="$$$formSmtp__fk_mailaccount"><?php echo $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>
+	    <legend><?php $this->set('{FORMSMTP__LEGEND_SMTPMAILACCOUNT}'); ?></legend>
+	    <label for="$$$formSmtp__fk_mailaccount"><?php $this->set('{FORMSMTP__MAILACCOUNT}'); ?></label>
 	    <select name="$$$formSmtp__fk_mailaccount" id="$$$formSmtp__fk_mailaccount">
 		<?php $current = $this->setPreset('$$$formSmtp__fk_mailaccount', $Smtp->getMailaccount(true), false); ?>
 		<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__MAILACCOUNT_NOMAILACCOUNT}'); ?></option>
@@ -18,34 +18,34 @@ $Smtp = $this->getVar('Smtp');
 		<?php } ?>
 	    </select>
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__email"><?php echo $this->set('{FORMSMTP__EMAIL}'); ?></label>
+	    <label for="$$$formSmtp__email"><?php $this->set('{FORMSMTP__EMAIL}'); ?></label>
 	    <input type="text" name="$$$formSmtp__email" id="$$$formSmtp__email" class="ts_required" value="<?php $this->setPreset('$$$formSmtp__email', $Smtp->getInfo('email')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__password"><?php echo $this->set('{FORMSMTP__PASSWORD}'); ?></label>
+	    <label for="$$$formSmtp__password"><?php $this->set('{FORMSMTP__PASSWORD}'); ?></label>
 	    <input type="password" name="$$$formSmtp__password" id="$$$formSmtp__password" class="ts_required" value="<?php $this->setPreset('$$$formSmtp__password', $Smtp->getInfo('password')); ?>" />
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMMAILACCOUNT__LEGEND_OPTIONALDATA}'); ?></legend>
-	    <label for="$$$formSmtp__emailname"><?php echo $this->set('{FORMSMTP__EMAILNAME}'); ?></label>
+	    <legend><?php $this->set('{FORMMAILACCOUNT__LEGEND_OPTIONALDATA}'); ?></legend>
+	    <label for="$$$formSmtp__emailname"><?php $this->set('{FORMSMTP__EMAILNAME}'); ?></label>
 	    <input type="text" name="$$$formSmtp__emailname" id="$$$formSmtp__emailname" value="<?php $this->setPreset('$$$formSmtp__emailname', $Smtp->getInfo('emailname')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__description"><?php echo $this->set('{FORMSMTP__DESCRIPTION}'); ?></label>
+	    <label for="$$$formSmtp__description"><?php $this->set('{FORMSMTP__DESCRIPTION}'); ?></label>
 	    <textarea rows="2" name="$$$formSmtp__description" id="$$$formSmtp__description"><?php $this->setPreset('$$$formSmtp__description', $Smtp->getInfo('description')); ?></textarea>
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMSMTP__LEGEND_CONNECTION}'); ?></legend>
-	    <label for="$$$formSmtp__host"><?php echo $this->set('{FORMSMTP__HOST}'); ?></label>
+	    <legend><?php $this->set('{FORMSMTP__LEGEND_CONNECTION}'); ?></legend>
+	    <label for="$$$formSmtp__host"><?php $this->set('{FORMSMTP__HOST}'); ?></label>
 	    <input type="text" name="$$$formSmtp__host" id="$$$formSmtp__host" value="<?php $this->setPreset('$$$formSmtp__host', $Smtp->getInfo('host')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__port"><?php echo $this->set('{FORMSMTP__PORT}'); ?></label>
+	    <label for="$$$formSmtp__port"><?php $this->set('{FORMSMTP__PORT}'); ?></label>
 	    <input type="text" name="$$$formSmtp__port" id="$$$formSmtp__port" value="<?php $this->setPreset('$$$formSmtp__port', $Smtp->getInfo('port')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__user"><?php echo $this->set('{FORMSMTP__USER}'); ?></label>
+	    <label for="$$$formSmtp__user"><?php $this->set('{FORMSMTP__USER}'); ?></label>
 	    <input type="text" name="$$$formSmtp__user" id="$$$formSmtp__user" value="<?php $this->setPreset('$$$formSmtp__user', $Smtp->getInfo('user')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__connsecurity"><?php echo $this->set('{FORMSMTP__CONNSECURITY}'); ?></label>
+	    <label for="$$$formSmtp__connsecurity"><?php $this->set('{FORMSMTP__CONNSECURITY}'); ?></label>
 	    <select name="$$$formSmtp__connsecurity" id="$$$formSmtp__connsecurity">
 		<?php $current = $this->setPreset('$$$formSmtp__connsecurity', $Smtp->getInfo('connsecurity'), false); ?>
 		<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__CONNSECURITY_CHOOSE}'); ?></option>
@@ -54,7 +54,7 @@ $Smtp = $this->getVar('Smtp');
 		<?php } ?>
 	    </select>
 	    <div style="clear:both;"></div>
-	    <label for="$$$formSmtp__auth"><?php echo $this->set('{FORMSMTP__AUTH}'); ?></label>
+	    <label for="$$$formSmtp__auth"><?php $this->set('{FORMSMTP__AUTH}'); ?></label>
 	    <select name="$$$formSmtp__auth" id="$$$formSmtp__auth">
 		<?php $current = $this->setPreset('$$$formSmtp__auth', $Smtp->getInfo('auth'), false); ?>
 		<option value="0" <?php if (empty($current)) echo 'selected="selected"'; ?>><?php $this->set('{FORMSMTP__AUTH_CHOOSE}'); ?></option>
@@ -64,8 +64,8 @@ $Smtp = $this->getVar('Smtp');
 	    </select>
 	    <div style="clear:both;"></div>
 	</fieldset>
-	<input type="submit" class="ts_submit" value="<?php $this->setVar('submit_text'); ?>" />
-	<input type="reset" class="ts_reset" value="<?php $this->setVar('reset_text'); ?>" />
+	<input type="submit" class="ts_submit" value="<?php $this->set('#submit_text#'); ?>" />
+	<input type="reset" class="ts_reset" value="<?php $this->set('#reset_text#'); ?>" />
     </form>
 </div>
 <script type="text/javascript">

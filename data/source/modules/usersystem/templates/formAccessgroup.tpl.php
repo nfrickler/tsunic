@@ -5,12 +5,12 @@ $Accessgroup = $this->getVar('Accessgroup');
 <div id="$$$div__formAccessgroup">
     <form action="<?php $this->setUrl($this->getVar('submit_link')); ?>" method="post" name="$$$formAccessgroup__form" id="$$$formAccessgroup__form" class="ts_form">
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMACCESSGROUP__LEGEND}'); ?></legend>
+	    <legend><?php $this->set('{FORMACCESSGROUP__LEGEND}'); ?></legend>
 	    <input type="hidden" name="$$$formAccessgroup__id" id="$$$formAccessgroup__id" value="<?php echo $Accessgroup->getInfo('id'); ?>" />
-	    <label for="$$$formAccessgroup__name"><?php echo $this->set('{FORMACCESSGROUP__NAME}'); ?></label>
+	    <label for="$$$formAccessgroup__name"><?php $this->set('{FORMACCESSGROUP__NAME}'); ?></label>
 	    <input type="text" class="ts_required" name="$$$formAccessgroup__name" id="$$$formAccessgroup__name" value="<?php $this->setPreset('$$$formAccessgroup__name', $Accessgroup->getInfo('name')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formAccessgroup__parent"><?php echo $this->set('{FORMACCESSGROUP__PARENT}'); ?></label>
+	    <label for="$$$formAccessgroup__parent"><?php $this->set('{FORMACCESSGROUP__PARENT}'); ?></label>
 	    <select class="ts_required" name="$$$formAccessgroup__parent" id="$$$formAccessgroup__parent">
 		<option value="1"><?php $this->set('{FORMACCESSGROUP__OPTION_ALLGROUP}'); ?></option>
 		<?php foreach ($this->getVar('accessgroups') as $id => $name) { ?>

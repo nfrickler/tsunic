@@ -6,7 +6,7 @@ $Mail = $this->getVar('Mail');
     <form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formMail__form" id="$$$formMail__form" class="ts_form">
 	<input type="hidden" name="$$$formMail__id" id="$$$formMail__id" value="<?php $this->set($Mail->getInfo('id')); ?>" />
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMMAIL__LEGEND_HEADER}'); ?></legend>
+	    <legend><?php $this->set('{FORMMAIL__LEGEND_HEADER}'); ?></legend>
 	    <label for="$$$formMail__fk_smtp"><?php $this->set('{FORMMAIL__SENDER}'); ?></label>
 	    <select name="$$$formMail__fk_smtp" id="$$$formMail__fk_smtp">
 		<?php $selected = $this->setPreset('$$$formMail__fk_smtp', $Mail->getInfo('addressee'), false); ?>
@@ -26,15 +26,15 @@ $Mail = $this->getVar('Mail');
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMMAIL__LEGEND_CONTENT}'); ?></legend>
-	    <label for="$$$formMail__content"><?php echo $this->set('{FORMMAIL__CONTENT}'); ?></label>
+	    <legend><?php $this->set('{FORMMAIL__LEGEND_CONTENT}'); ?></legend>
+	    <label for="$$$formMail__content"><?php $this->set('{FORMMAIL__CONTENT}'); ?></label>
 	    <textarea name="$$$formMail__content" rows="20" id="$$$formMail__content"><?php $this->setPreset('$$$formMail__content', $Mail->getPlainContent()); ?></textarea>
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<input type="submit" name="$$$formMail__send" class="ts_submit" value="<?php $this->set('#submit_text#'); ?>" />
 	<input type="submit" name="$$$formMail__save" class="ts_submit" value="<?php $this->set('#save_text#'); ?>" />
 	<?php if ($this->getVar('cancel_href')) { ?>
-	<a class="ts_cancel" href="<?php echo $this->getVar('cancel_href'); ?>">
+	<a class="ts_cancel" href="<?php $this->getVar('cancel_href'); ?>">
 	    <?php $this->set('#reset_text#'); ?></a>
 	<?php } ?>
     </form>

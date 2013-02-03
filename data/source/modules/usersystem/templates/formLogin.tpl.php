@@ -2,15 +2,15 @@
 <div id="$$$div__formLogin">
     <form action="<?php $this->setUrl('$$$doLogin'); ?>" method="post" name="$$$formLogin__form" id="$$$formLogin__form" class="ts_form">
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMLOGIN__LEGEND}'); ?></legend>
-	    <label for="$$$formLogin__emailname"><?php echo $this->set('{FORMLOGIN__EMAIL}'); ?></label>
+	    <legend><?php $this->set('{FORMLOGIN__LEGEND}'); ?></legend>
+	    <label for="$$$formLogin__emailname"><?php $this->set('{FORMLOGIN__EMAIL}'); ?></label>
 	    <input type="text" class="ts_required" name="$$$formLogin__emailname" id="$$$formLogin__emailname" value="<?php $this->setPreset('$$$formLogin_emailname', $TSunic->Temp->getCookie('$$$formLogin__emailname')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formLogin__password"><?php echo $this->set('{FORMLOGIN__PASSWORD}'); ?></label>
+	    <label for="$$$formLogin__password"><?php $this->set('{FORMLOGIN__PASSWORD}'); ?></label>
 	    <input type="password" class="ts_required" name="$$$formLogin__password" id="$$$formLogin__password" />
 	    <div style="clear:both;"></div>
 	</fieldset>
-	<input type="submit" class="ts_submit" value="<?php echo $this->set('{FORMLOGIN__SUBMIT}'); ?>" />
+	<input type="submit" class="ts_submit" value="<?php $this->set('{FORMLOGIN__SUBMIT}'); ?>" />
     </form>
 </div>
 

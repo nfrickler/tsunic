@@ -10,7 +10,7 @@ $Accessgroup = $this->getVar('Accessgroup');
 
     <form action="<?php $this->setUrl('$$$addAccessgroupmember'); ?>" method="post" name="$$$showAddAccessgroupmember__form" id="$$$showAddAccessgroupmember__form" class="ts_form">
 	<fieldset>
-	    <legend><?php echo $this->set('{SHOWADDACCESSGROUPMEMBER__LEGEND}'); ?></legend>
+	    <legend><?php $this->set('{SHOWADDACCESSGROUPMEMBER__LEGEND}'); ?></legend>
 	    <input type="hidden" name="$$$showAddAccessgroupmember__id" id="$$$showAddAccessgroupmember__id" value="<?php echo $Accessgroup->getInfo('id'); ?>" />
 	    <label for="$$$showAddAccessgroupmember__user"><?php $this->set('{SHOWADDACCESSGROUPMEMBER__USER}'); ?></label>
 	    <select class="ts_required" name="$$$showAddAccessgroupmember__user" id="$$$showAddAccessgroupmember__user">

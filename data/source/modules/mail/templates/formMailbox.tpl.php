@@ -6,11 +6,11 @@ $Mailbox = $this->getVar('Mailbox');
     <form action="<?php $this->setUrl($this->getVar('submit_href_event')); ?>" method="post" name="$$$formMailbox__form" id="$$$formMailbox__form" class="ts_form">
 	<input type="hidden" name="$$$formMailbox__id" id="$$$formMailbox__id" value="<?php $this->set($Mailbox->getInfo('id')); ?>" />
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMMAILBOX__LEGEND}'); ?></legend>
-	    <label for="$$$formMailbox__name"><?php echo $this->set('{FORMMAILBOX__NAME}'); ?></label>
+	    <legend><?php $this->set('{FORMMAILBOX__LEGEND}'); ?></legend>
+	    <label for="$$$formMailbox__name"><?php $this->set('{FORMMAILBOX__NAME}'); ?></label>
 	    <input class="ts_required" type="text" name="$$$formMailbox__name" id="$$$formMailbox__name" value="<?php $this->setPreset('$$$formMailbox__name', $Mailbox->getInfo('name')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formMailbox__description"><?php echo $this->set('{FORMMAILBOX__DESCRIPTION}'); ?></label>
+	    <label for="$$$formMailbox__description"><?php $this->set('{FORMMAILBOX__DESCRIPTION}'); ?></label>
 	    <textarea name="$$$formMailbox__description" id="$$$formMailbox__description"><?php $this->setPreset('$$$formMailbox__description', $Mailbox->getInfo('description')); ?></textarea>
 	    <div style="clear:both;"></div>
 	</fieldset>

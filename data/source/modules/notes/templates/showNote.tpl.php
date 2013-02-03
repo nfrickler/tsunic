@@ -10,12 +10,12 @@
     <form action="<?php $this->setUrl('$$$saveNote'); ?>" method="post" name="$$$showNote__form" id="$$$showNote__form" class="ts_form">
 	<input type="hidden" name="$$$showNote__id" id="$$$showNote__id" value="<?php $this->set($FsFile->getInfo('id')); ?>" />
 	<fieldset>
-	    <legend><?php echo $this->set('{SHOWNOTE__LEGEND}'); ?></legend>
+	    <legend><?php $this->set('{SHOWNOTE__LEGEND}'); ?></legend>
 	    <textarea style="width:99%;" name="$$$showNote__content" rows="20" id="$$$showNote__content"><?php $this->setPreset('$$$showNote__content', $FsFile->getContent()); ?></textarea>
 	    <div style="clear:both;"></div>
 	</fieldset>
 	<fieldset>
-	    <legend><?php echo $this->set('{SHOWNOTE__LEGEND_SAVE}'); ?></legend>
+	    <legend><?php $this->set('{SHOWNOTE__LEGEND_SAVE}'); ?></legend>
 	    <label for="$$$showNote__filename"><?php $this->set('{SHOWNOTE__FILENAME}'); ?></label>
 	    <input class="ts_required" type="text" name="$$$showNote__filename" id="$$$showNote__filename" value="<?php $this->setPreset('$$$showNote__filename', $FsFile->getAbsPath()); ?>" />
 	    <div style="clear:both;"></div>

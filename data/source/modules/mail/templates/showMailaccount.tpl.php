@@ -18,22 +18,22 @@ $Mailaccount = $this->getVar('Mailaccount');
     <table cellspacing="2" cellpadding="0" border="0">
 	<?php if ($name = $Mailaccount->getInfo('name') AND !empty($name)) { ?>
 	<tr>
-	    <th style="min-width:200px;"><?php echo $this->set('{SHOWMAILACCOUNT__NAME}'); ?></th>
+	    <th style="min-width:200px;"><?php $this->set('{SHOWMAILACCOUNT__NAME}'); ?></th>
 	    <td style="min-width:200px;" id="$$$showMailaccount__name"><?php $this->set($Mailaccount->getInfo('name')); ?></td>
 	</tr>
 	<?php } ?>
 	<?php if ($description = $Mailaccount->getInfo('description') AND !empty($description)) { ?>
 	<tr>
-	    <th><?php echo $this->set('{SHOWMAILACCOUNT__DESCRIPTION}'); ?></th>
+	    <th><?php $this->set('{SHOWMAILACCOUNT__DESCRIPTION}'); ?></th>
 	    <td id="$$$showMailaccount__description"><?php $this->set($Mailaccount->getInfo('description')); ?></td>
 	</tr>
 	<?php } ?>
 	<tr>
-	    <th><?php echo $this->set('{SHOWMAILACCOUNT__EMAIL}'); ?></th>
+	    <th><?php $this->set('{SHOWMAILACCOUNT__EMAIL}'); ?></th>
 	    <td id="$$$showMailaccount__email"><?php $this->set($Mailaccount->getInfo('email')); ?></td>
 	</tr>
 	<tr>
-	    <th><?php echo $this->set('{SHOWMAILACCOUNT__DATEOFCREATION}'); ?></th>
+	    <th><?php $this->set('{SHOWMAILACCOUNT__DATEOFCREATION}'); ?></th>
 	    <td id="$$$showMailaccount__dateOfCreation"><?php $this->set($Mailaccount->getInfo('dateOfCreation')); ?></td>
 	</tr>
     </table>

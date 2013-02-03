@@ -9,11 +9,11 @@ $mailboxes = $this->getVar('mailboxes');
 	<input type="hidden" name="$$$formServerbox__id" value="<?php $this->set($Serverbox->getInfo('id')); ?>" />
 	<input type="hidden" name="$$$formServerbox__fk_mailaccount" value="<?php $this->set($Mailaccount->getInfo('id')); ?>" />
 	<fieldset>
-	    <legend><?php echo $this->set('{FORMSERVERBOX__LEGEND}'); ?></legend>
-	    <label for="$$$formServerbox__name" class="ts_form_required"><?php echo $this->set('{FORMSERVERBOX__NAME}'); ?></label>
+	    <legend><?php $this->set('{FORMSERVERBOX__LEGEND}'); ?></legend>
+	    <label for="$$$formServerbox__name" class="ts_form_required"><?php $this->set('{FORMSERVERBOX__NAME}'); ?></label>
 	    <input type="text" class="ts_required" name="$$$formServerbox__name" id="$$$formServerbox__name" value="<?php $this->setPreset('$$$formServerbox__name', $Serverbox->getInfo('name')); ?>" />
 	    <div style="clear:both;"></div>
-	    <label for="$$$formServerbox__selectMailbox" class="ts_form_required"><?php echo $this->set('{FORMSERVERBOX__SELECTMAILBOX}'); ?></label>
+	    <label for="$$$formServerbox__selectMailbox" class="ts_form_required"><?php $this->set('{FORMSERVERBOX__SELECTMAILBOX}'); ?></label>
 	    <select name="$$$formServerbox__fk_mailbox" id="$$$formServerbox__fk_mailbox" class="ts_required">
 		<?php $selectedPreset = $this->setPreset('$$$formServerbox__fk_mailbox', $Serverbox->getInfo('fk_mailbox'), false); ?>
 		<option value="new" <?php if ($selectedPreset == 'new') echo 'selected="selected"'; ?>><?php $this->set('{FORMSERVERBOX__SELECTMAILBOX_CREATENEW}'); ?></option>
@@ -21,13 +21,13 @@ $mailboxes = $this->getVar('mailboxes');
 		<?php if ($value->getInfo('id') == $selectedPreset) { ?>
 		<option value="<?php echo $value->getInfo('id'); ?>" selected="selected"><?php $this->set($value->getInfo('name')); ?></option>
 		<?php } else { ?>
-		<option value="<?php echo $value->getInfo('id'); ?>"><?php $this->set($value->getInfo('name')); ?></option>     
+		<option value="<?php echo $value->getInfo('id'); ?>"><?php $this->set($value->getInfo('name')); ?></option>
 		<?php } ?>
 		<?php } ?>
 	    </select>
 	    <div style="clear:both;"></div>
 	    <div id="$$$formServerbox__newMailbox_div">
-		<label for="$$$formServerbox__newMailbox" class="ts_form_required"><?php echo $this->set('{FORMSERVERBOX__TOMAILBOX_CREATENEW}'); ?></label>
+		<label for="$$$formServerbox__newMailbox" class="ts_form_required"><?php $this->set('{FORMSERVERBOX__TOMAILBOX_CREATENEW}'); ?></label>
 		<input type="text" name="$$$formServerbox__newMailbox" id="$$$formServerbox__newMailbox" class="ts_input" value="<?php $this->setPreset('$$$formServerbox__newMailbox'); ?>" />
 		<div style="clear:both;"></div>
 	    </div>

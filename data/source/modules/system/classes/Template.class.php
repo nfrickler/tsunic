@@ -397,17 +397,6 @@ class $$$Template {
 	return $link;
     }
 
-    /* get value from $this->data
-     * @param string: name of data | $name = true => all data
-     *
-     * @return bool
-     */
-    public function setVar ($name) {
-	// set value
-	$this->set($this->getData($name));
-	return;
-    }
-
     # ############################ set (js) ############################## #
 
     /* parse for javascript-output (language- and bbcode-replacements)

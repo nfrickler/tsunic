@@ -3,7 +3,7 @@
 $Accessgroup = $this->getVar('Accessgroup');
 ?>
 <div id="$$$div__showAccessgroupmembers">
-    <h1><?php echo $this->set('{SHOWACCESSGROUPMEMBERS__H1}', array('name' => $Accessgroup->getInfo('name'))); ?></h1>
+    <h1><?php $this->set('{SHOWACCESSGROUPMEMBERS__H1}', array('name' => $Accessgroup->getInfo('name'))); ?></h1>
     <p class="ts_suplinkbox">
 	<a href="<?php $this->setUrl('$$$showAccessgroup', array('$$$id' => $Accessgroup->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWACCESSGROUPMEMBERS__TOSHOWACCESSGROUP}'); ?></a>
@@ -15,9 +15,9 @@ $Accessgroup = $this->getVar('Accessgroup');
     </p>
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
-	    <th><?php echo $this->set('{SHOWACCESSGROUPMEMBERS__NAME}'); ?></th>
+	    <th><?php $this->set('{SHOWACCESSGROUPMEMBERS__NAME}'); ?></th>
 	    <?php if ($TSunic->Usr->access('editAllAccess')) { ?>
-	    <th><?php echo $this->set('{SHOWACCESSGROUPMEMBERS__ACTION}'); ?></th>
+	    <th><?php $this->set('{SHOWACCESSGROUPMEMBERS__ACTION}'); ?></th>
 	    <?php } ?>
 	</tr>
 	<?php foreach ($this->getVar('members') as $userid => $username) { ?>

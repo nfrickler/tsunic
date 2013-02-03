@@ -1,18 +1,18 @@
 <!-- | TEMPLATE show list of users -->
 <div id="$$$div__showUserlist">
-    <h1><?php echo $this->set('{SHOWUSERLIST__H1}'); ?></h1>
+    <h1><?php $this->set('{SHOWUSERLIST__H1}'); ?></h1>
     <p class="ts_infotext">
 	<?php $this->set('{SHOWUSERLIST__INFOTEXT}'); ?>
     </p>
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
-	    <th><?php echo $this->set('{SHOWUSERLIST__NAME}'); ?></th>
+	    <th><?php $this->set('{SHOWUSERLIST__NAME}'); ?></th>
 	    <?php if ($TSunic->Usr->access('$$$seeAllData')) { ?>
-	    <th><?php echo $this->set('{SHOWUSERLIST__EMAIL}'); ?></th>
-	    <th><?php echo $this->set('{SHOWUSERLIST__DATEOFREGISTRATION}'); ?></th>
-	    <th><?php echo $this->set('{SHOWUSERLIST__DATEOFLASTLOGIN}'); ?></th>
+	    <th><?php $this->set('{SHOWUSERLIST__EMAIL}'); ?></th>
+	    <th><?php $this->set('{SHOWUSERLIST__DATEOFREGISTRATION}'); ?></th>
+	    <th><?php $this->set('{SHOWUSERLIST__DATEOFLASTLOGIN}'); ?></th>
 	    <?php if ($TSunic->Usr->access('deleteAllUsers')) { ?>
-	    <th><?php echo $this->set('{SHOWUSERLIST__ACTION}'); ?></th>
+	    <th><?php $this->set('{SHOWUSERLIST__ACTION}'); ?></th>
 	    <?php } ?>
 	    <?php } ?>
 	</tr>
