@@ -62,7 +62,6 @@ class ts_DummyPacket {
 
 	// load from version-file
 	if (!file_exists('version.xml')) return NULL;
-	include_once 'classes/ts_XmlHandler.class.php';
 	$this->infofile = ts_XmlHandler::readAll('version.xml');
 
 	// try again to return requested info

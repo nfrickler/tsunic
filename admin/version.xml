@@ -1,7 +1,7 @@
 <!-- | -->
 <all>
     <name>_backend</name>
-    <version>1.2</version>
+    <version>1.3</version>
     <description>This is the backend of TSunic. This is not a real module and cannot be used as one.</description>
     <author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>
     <link>http://tsunic.de</link>

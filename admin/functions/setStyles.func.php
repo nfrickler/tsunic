@@ -5,7 +5,6 @@ function setStyles () {
     global $Config;
 
     // get styleHandler-object
-    include_once 'classes/ts_StyleHandler.class.php';
     $StyleHandler = new ts_StyleHandler();
 
     // allow only, if logged in

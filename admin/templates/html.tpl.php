@@ -1,4 +1,4 @@
-<!-- | main template file -->
+<!-- | TEMPLATE main file for backend -->
 <?php
 // deny direct access
 defined('TS_INIT') OR die('Access denied!');

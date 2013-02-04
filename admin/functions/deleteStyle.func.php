@@ -7,7 +7,6 @@ function deleteStyle () {
     if (empty($id__style)) return true;
 
     // get style-object
-    include_once 'classes/ts_Style.class.php';
     $Style = new ts_Style($id__style);
 
     // delete

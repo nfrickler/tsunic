@@ -1,6 +1,5 @@
 <!-- | Module class -->
 <?php
-include_once 'classes/ts_Packet.class.php';
 class ts_Module extends ts_Packet {
 
     /* get/update path to module

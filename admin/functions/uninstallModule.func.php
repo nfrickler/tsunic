@@ -13,7 +13,6 @@ function uninstallModule () {
     if (empty($id__module)) return true;
 
     // get module-object
-    include_once 'classes/ts_Module.class.php';
     $Module = new ts_Module($id__module);
 
     // uninstall

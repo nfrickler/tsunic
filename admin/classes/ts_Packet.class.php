@@ -34,9 +34,6 @@ class ts_Packet {
     public function __construct ($id = false, $name = false) {
 	global $Config;
 
-	// make sure that classes are loaded
-	include_once 'classes/ts_BackupHandler.class.php';
-
 	// is id?
 	$this->id = (!empty($id) AND is_numeric($id)) ? $id : false;
 
@@ -150,7 +147,6 @@ class ts_Packet {
 	ts_FileHandler::deleteFolder($path_new);
 
 	// load PreParser-object
-	include_once 'classes/ts_PreParser.class.php';
 	$PreParser = new ts_PreParser($this);
 
 	// parse
