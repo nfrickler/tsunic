@@ -3,7 +3,7 @@
     <name>calendar</name>
     <version>1.0</version>
     <nameid>tsuniccoremodule</nameid>
-    <core>true</core>
+    <core>false</core>
     <description>This module provides a calendar system build onto the bp module</description>
     <author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>
     <link>http://tsunic.de</link>
@@ -20,4 +20,10 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</licence>
+    <dependencies>
+	<module version="1.4" nameid="tsuniccoremodule">system</module>
+	<module version="2.2" nameid="tsuniccoremodule">usersystem</module>
+	<module version="1.0" nameid="tsuniccoremodule">bp</module>
+	<module version="1.1" nameid="tsuniccoremodule">filesystem</module>
+    </dependencies>
 </all>

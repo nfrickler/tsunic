@@ -133,7 +133,7 @@ class ts_Module extends ts_Packet {
 
     /* get info about module
      * @param string: name of information to gather
-     * +@param bool: true - delete all current infos
+     * +@param bool: reload all data?
      *
      * @return mix
      */
@@ -150,13 +150,13 @@ class ts_Module extends ts_Packet {
 	}
 
 	// load data from database
-	$sql_0 = "SELECT *
+	$sql = "SELECT *
 		FROM #__modules
 		WHERE id__module = '".$this->id."';";
-	$result_0 = $Database->doSelect($sql_0);
+	$result = $Database->doSelect($sql);
 
 	// save data
-	if (!empty($result_0)) $this->info = $result_0[0];
+	if (!empty($result)) $this->info = $result[0];
 
 	// try again to return data
 	if (

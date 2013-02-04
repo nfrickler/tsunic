@@ -1,4 +1,4 @@
-<!-- | Class to handle XML files -->
+<!-- | CLASS to handle XML files -->
 <?php
 // static
 class ts_XmlHandler {
@@ -11,19 +11,40 @@ class ts_XmlHandler {
     public function readAll ($path) {
 	$output = array();
 
-	// load content of xml-file
+	// load content of XML file
 	if (!file_exists($path)) return false;
 	$Xml = simplexml_load_file($path);
-	if (!$Xml) return false;
 
-	// get content
-	foreach ($Xml->children() as $Data) {
-	    $array = array();
+	return ($Xml) ? self::xml2array($Xml) : array();
+    }
 
-	    // add to output
-	    $output[$Data->getName()] = utf8_decode("$Data");
+    /* convert Xml-Object to array
+     * @param object: Xml object
+     *
+     * @return array
+     */
+    public function xml2array ($Xml) {
+	$out = array();
+	foreach ($Xml as $element) {
+
+	    // create new array element
+	    $arr = array();
+	    $arr['tag'] = $element->getName();
+
+	    // get all attributes
+	    $arr['attrs'] = array();
+	    foreach ($element->attributes() as $index => $value) {
+		$arr['attrs'][$index] = "$value";
+	    }
+	    
+	    // get value
+	    if ($element->count()) {
+		$arr['value'] = self::xml2array($element);
+	    } else {
+		$arr['value'] = "$element";
+	    }
+	    $out[] = $arr;
 	}
-
-	return $output;
+	return $out;
     }
 }

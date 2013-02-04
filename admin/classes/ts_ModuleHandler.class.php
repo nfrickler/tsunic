@@ -57,6 +57,33 @@ class ts_ModuleHandler {
 	// sort
 	ksort($this->modules);
 
+	// sort modules by dependencies
+	usort($this->modules, array($this, 'cb_sortByDependencies'));
+
+	// reverse order
+	$this->modules = array_reverse($this->modules);
+
 	return $this->modules;
+    }
+
+    /* validate source-code
+     * @param bool: force to get new list from database (not a cached one from obj-var)
+     *
+     * @return int
+     */
+    public function cb_sortByDependencies ($modA, $modB) {
+	if ($modA->getInfo('name') == $modB->getInfo('name')) return 0;
+
+	// get dependencies of modA
+	$deps = $modB->getInfo('dependencies');
+	if (empty($deps) or !is_array($deps)) return -1;
+
+	// modB in dependencies
+	$found = 0;
+	foreach ($deps as $index => $values) {
+	    if ($values['value'] == $modA->getInfo('name')) $found = 1;
+	}
+
+	return ($found) ? 1 : -1;
     }
 }

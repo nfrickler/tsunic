@@ -1,4 +1,4 @@
-<!-- | language file german -->
+<!-- | LANGUAGE german -->
 <?php
 $lang = array(
 
@@ -64,7 +64,7 @@ $lang = array(
 	// showModules
 	'SHOWMODULES__TITLE' => 'Modules',
 	'SHOWMODULES__H1' => 'TS_Admin | Module verwalten',
-	'SHOWMODULES__INFOTEXT' => 'Hier kannst du Module installieren/updaten/deinstallieren und die Laufzeitumgebung von TSunic (neu) bauen (Build).',
+	'SHOWMODULES__INFOTEXT' => 'Hier kannst du Module installieren/updaten/deinstallieren und die Laufzeitumgebung von TSunic (neu) bauen (Build). Die Reihenfolge der Liste entspricht der Installationsreihenfolge.',
 	'SHOWMODULES__MODNAME' => 'Modulname',
 	'SHOWMODULES__VERSION' => 'Version',
 	'SHOWMODULES__MODDESCRIPTION' => 'Beschreibung',

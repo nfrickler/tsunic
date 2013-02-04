@@ -104,8 +104,12 @@ class ts_Packet {
 
 	// load from version-file
 	if (!$this->path OR !file_exists($this->path.'/version.xml')) return NULL;
-	include_once 'classes/ts_XmlHandler.class.php';
-	$this->infofile = ts_XmlHandler::readAll($this->path.'/version.xml');
+	$xmldata = ts_XmlHandler::readAll($this->path.'/version.xml');
+
+	// read data in infofile
+	foreach ($xmldata as $index => $values) {
+	    $this->infofile[$values['tag']] = $values['value'];
+	}
 
 	// try again to return requested info
 	if (isset($this->infofile, $this->infofile[$name]))
