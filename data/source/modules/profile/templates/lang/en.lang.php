@@ -89,7 +89,6 @@ $lang = array(
     'SHOWEDITPROFILE__H1' => 'Edit profile',
     'SHOWEDITPROFILE__TOSHOWPROFILE' => 'Show profile',
     'SHOWEDITPROFILE__TOADDTAG' => 'Add tag',
-    'SHOWEDITPROFILE__TOSHOWTAGS' => 'Administrate tags',
     'SHOWEDITPROFILE__INFOTEXT' => 'Here you can edit this profile.',
     'SHOWEDITPROFILE__SUBMIT' => 'Save changes',
     'SHOWEDITPROFILE__CANCEL' => 'Cancel',
@@ -130,6 +129,7 @@ $lang = array(
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
+    '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Administrate tags',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profil'
 );
 ?>

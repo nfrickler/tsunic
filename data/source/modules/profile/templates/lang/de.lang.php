@@ -67,7 +67,6 @@ $lang = array(
     'SHOWEDITPROFILE__H1' => 'Profil bearbeiten',
     'SHOWEDITPROFILE__TOSHOWPROFILE' => 'Profil anzeigen',
     'SHOWEDITPROFILE__TOADDTAG' => 'Tag hinzufügen',
-    'SHOWEDITPROFILE__TOSHOWTAGS' => 'Tags verwalten',
     'SHOWEDITPROFILE__INFOTEXT' => 'Hier kannst du ein Profil bearbeiten.',
     'SHOWEDITPROFILE__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITPROFILE__CANCEL' => 'Abbrechen',
@@ -108,6 +107,7 @@ $lang = array(
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Übersicht',
+    '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tags verwalten',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profile'
 );
 ?>
