@@ -1,4 +1,4 @@
-<!-- | HELP create new date -->
+<!-- | HELP showCreateDate -->
 <h2>Create new date</h2>
 <p>
     Via the following form a new date can be created.
