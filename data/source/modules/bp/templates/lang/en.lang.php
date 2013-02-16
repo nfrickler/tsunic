@@ -33,8 +33,8 @@ $lang = array(
     'SHOWTAGS__TODELETE' => 'Delete',
 
     // showCreateTag
-    'SHOWCREATETAG__TITLE' => 'Create tag',
-    'SHOWCREATETAG__H1' => 'Create tag',
+    'SHOWCREATETAG__TITLE' => 'Create new tag',
+    'SHOWCREATETAG__H1' => 'Create new tag',
     'SHOWCREATETAG__TOSHOWTAGS' => 'Back to Tag summary',
     'SHOWCREATETAG__INFOTEXT' => 'Create a new tag via the following form.',
     'SHOWCREATETAG__SUBMIT' => 'Create new tag',

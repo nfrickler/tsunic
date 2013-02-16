@@ -33,16 +33,16 @@ $lang = array(
     'SHOWTAGS__TODELETE' => 'Löschen',
 
     // showCreateTag
-    'SHOWCREATETAG__TITLE' => 'Tags',
-    'SHOWCREATETAG__H1' => 'Tags',
+    'SHOWCREATETAG__TITLE' => 'Neuen Tag erstellen',
+    'SHOWCREATETAG__H1' => 'Neuen Tag erstellen',
     'SHOWCREATETAG__TOSHOWTAGS' => 'Zur Tag-Übersicht',
     'SHOWCREATETAG__INFOTEXT' => 'Über das folgenden Formular kannst du einen neuen Tag erstellen.',
     'SHOWCREATETAG__SUBMIT' => 'Neuen Tag erstellen',
     'SHOWCREATETAG__CANCEL' => 'Abbrechen',
 
     // showEditTag
-    'SHOWEDITTAG__TITLE' => 'Tags',
-    'SHOWEDITTAG__H1' => 'Tags',
+    'SHOWEDITTAG__TITLE' => 'Tag bearbeiten',
+    'SHOWEDITTAG__H1' => 'Tag bearbeiten',
     'SHOWEDITTAG__TOSHOWTAGS' => 'Zur Tag-Übersicht',
     'SHOWEDITTAG__INFOTEXT' => 'Über das folgenden Formular kannst du den Tag bearbeiten.',
     'SHOWEDITTAG__SUBMIT' => 'Änderungen speichern',
