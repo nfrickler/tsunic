@@ -10,7 +10,7 @@ class ts_ConfigurationHandler {
     /* current version of TSunic
      * string
      */
-    private $current_version = '4.3';
+    private $current_version = '4.4';
 
     /* constructor
      */
