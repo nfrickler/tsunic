@@ -7,13 +7,6 @@ class ts_ModuleHandler {
      */
     private $modules;
 
-    /* constructor
-     */
-    public function __construct () {
-
-	return;
-    }
-
     /* validate source-code
      * @param bool: force to get new list from database (not a cached one from obj-var)
      *
@@ -28,7 +21,7 @@ class ts_ModuleHandler {
 	// get module-ids from database
 	$sql = "SELECT id__module as id__module
 		FROM #__modules
-		ORDER BY name ASC;";
+		ORDER BY id__module ASC;";
 	$result = $Database->doSelect($sql);
 	if ($result === false) return false;
 
@@ -74,16 +67,23 @@ class ts_ModuleHandler {
     public function cb_sortByDependencies ($modA, $modB) {
 	if ($modA->getInfo('name') == $modB->getInfo('name')) return 0;
 
-	// get dependencies of modA
-	$deps = $modB->getInfo('dependencies');
-	if (empty($deps) or !is_array($deps)) return -1;
-
-	// modB in dependencies
-	$found = 0;
-	foreach ($deps as $index => $values) {
-	    if ($values['value'] == $modA->getInfo('name')) $found = 1;
+	// Does modA depend on modB?
+	$deps = $modA->getInfo('dependencies');
+	if ($deps and is_array($deps)) {
+	    foreach ($deps as $index => $values) {
+		if ($values['value'] == $modB->getInfo('name')) return -1;
+	    }
 	}
 
-	return ($found) ? 1 : -1;
+	// Does modB depend on modA?
+	$deps = $modB->getInfo('dependencies');
+	if ($deps and is_array($deps)) {
+	    foreach ($deps as $index => $values) {
+		if ($values['value'] == $modA->getInfo('name')) return 1;
+	    }
+	}
+
+	return 1;
     }
 }
+?>

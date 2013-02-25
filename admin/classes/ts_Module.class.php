@@ -51,7 +51,6 @@ class ts_Module extends ts_Packet {
 	    $sql_0 = "INSERT INTO #__modules
 		    SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
 			nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
-			dateOfPreParsing = NOW(),
 			version = '".mysql_real_escape_string($this->getInfofile('version'))."',
 			author = '".mysql_real_escape_string($this->getInfofile('author'))."',
 			link = '".mysql_real_escape_string($this->getInfofile('link'))."',
@@ -87,6 +86,7 @@ class ts_Module extends ts_Packet {
 		    WHERE id__module = '".$this->id."'
 	    ;";
 	    $result_1 = $Database->doUpdate($sql_1);
+	    if (!$result_1) return false;
 
 	    // backup old version
 	    ts_BackupHandler::backupModule(
@@ -240,13 +240,25 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     protected function _preparse () {
+	global $Database;
 
 	// preparse
 	if (!parent::_preparse()) {
 	    $_SESSION['admin_error'] =
 		'ERROR__CLASSMODULE__PREPARSE (module: '.
-		$this->getInfo('name').')';
+		$this->getInfo('name').' error=PreParse)';
 	    return false;
+	}
+
+	// update database
+	$sql = "UPDATE #__modules
+	    SET dateOfPreParsing = NOW()
+	    WHERE id__module = '".$this->id."'
+	;";
+	if (!$Database->doUpdate($sql)) {
+	    $_SESSION['admin_error'] =
+		'ERROR__CLASSMODULE__PREPARSE (module: '.
+		$this->getInfo('name').' error=Update database)';
 	}
 
 	return true;

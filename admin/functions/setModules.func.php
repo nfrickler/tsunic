@@ -1,4 +1,4 @@
-<!-- | function to activate/deactivate  modules -->
+<!-- | FUNCTION activate/deactivate modules -->
 <?php
 function setModules () {
     global $Database;

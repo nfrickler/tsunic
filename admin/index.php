@@ -146,7 +146,7 @@ switch ($_GET['event']) {
 	$ModuleHandler = new ts_ModuleHandler();
 
 	include_once 'functions/setModules.func.php';
-	if (setModules() AND isset($_POST['submit_render'])) {
+	if (setModules() AND isset($_POST['submit_build'])) {
 	    include_once 'functions/parseAll.func.php';
 	    parseAll();
 	}

@@ -7,7 +7,7 @@ defined('TS_INIT') OR die('Access denied!');
 <p>
     <?php $this->set('SHOWLOGIN__INFOTEXT'); ?>
 </p>
-<form action="?event=doLogin" method="post" class="ts_form">
+<form action="?event=doLogin" method="post" class="ts_form" name="admin__formLogin__form">
     <fieldset>
 	<legend><?php echo $this->set('SHOWLOGIN__LEGEND'); ?></legend>
 	<label for="pass"><?php echo $this->set('SHOWLOGIN__PASSWORD'); ?></label>

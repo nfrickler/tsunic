@@ -1,4 +1,4 @@
-<!-- | template to list modules -->
+<!-- | TEMPLATE list modules -->
 <?php
 // deny direct access
 defined('TS_INIT') OR die('Access denied!');
@@ -10,7 +10,7 @@ global $ModuleHandler;
 <p>
     <?php $this->set('SHOWMODULES__INFOTEXT'); ?>
 </p>
-<form action="?event=setModules" method="post">
+<form action="?event=setModules" method="post" name="admin__showModules__form">
     <table>
 	<tr>
 	    <th>&nbsp;</th>
@@ -88,7 +88,7 @@ global $ModuleHandler;
 	</tr>
 	<?php } ?>
     </table>
-    <input type="submit" name="submit_render" class="ts_submit" value="<?php $this->set('SHOWMODULES__RENDER'); ?>" />
+    <input type="submit" name="submit_build" class="ts_submit" value="<?php $this->set('SHOWMODULES__RENDER'); ?>" />
     <input type="submit" name="submit_setModules" class="ts_submit" value="<?php $this->set('SHOWMODULES__SUBMIT'); ?>" />
-    <input type="reset" class="ts_reset" value="<?php $this->set('SHOWMODULES__RESET'); ?>" />    
+    <input type="reset" class="ts_reset" value="<?php $this->set('SHOWMODULES__RESET'); ?>" />
 </form>
