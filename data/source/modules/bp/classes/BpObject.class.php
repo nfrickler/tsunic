@@ -306,6 +306,25 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
+    /* get Bits of this object with a certain tag
+     * @param int: tag to search for
+     *
+     * @return array
+     */
+    public function getByTag ($fk_tag) {
+	$fk_tag = $this->tag2id($fk_tag);
+	$bits = $this->getBits(true);
+
+	// search for bits with certain tag
+	$out = array();
+	foreach ($bits as $index => $Value) {
+	    if ($Value->getTag()->getInfo('id') == $fk_tag)
+		$out[] = $Value;
+	}
+
+	return $out;
+    }
+
     /* get Helper object
      *
      * @return Helper object

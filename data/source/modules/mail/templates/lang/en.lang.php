@@ -3,10 +3,20 @@
 $lang = array(
     'NAME' => 'Mail module',
 
+    // types
+    'TYPE__MAIL' => 'Mail',
+
+    // tags
+    'TAG__MAIL__SENDER' => 'From',
+    'TAG__MAIL__ADDRESSEE' => 'To',
+    'TAG__MAIL__UID' => 'UID',
+    'TAG__MAIL__DATE' => 'Date',
+    'TAG__MAIL__SUBJECT' => 'Subject',
+    'TAG__MAIL__PLAINCONTENT' => 'Text content',
+    'TAG__MAIL__HTMLCONTENT' => 'HTML content',
+
     // classes
-    'CLASS__SENDERLOCAL__HOST' => 'Localhost',
-    'CLASS__SENDERLOCAL__USER' => 'Local user',
-    'CLASS__SENDERLOCAL__NAME' => 'Local Smtp',
+    'CLASS__SENDERLOCAL__NAME' => '(Local)',
 
     'CLASS__SERVERBOX__ADDATTACHMENTERROR' => 'Attachment couldn\'t be downloaded!',
     'CLASS__SERVERBOX__CREATEMAILERROR' => 'One mail cound not be saved locally!',
@@ -439,47 +449,36 @@ $lang = array(
     'DELETEMAIL__SUCCESS' => 'Mail has been successfully deleted.',
 
     // formMail
-    'FORMMAIL__LEGEND_HEADER' => 'Mail Header',
-    'FORMMAIL__SENDER' => 'Sender',
-    'FORMMAIL__HELP_SENDER' => 'Choose a SMTP-Server to send this mail from.',
-    'FORMMAIL__ADDRESSEE' => 'Addressee',
-    'FORMMAIL__PRESET_ADDRESSEE' => 'Addressee of this mail',
-    'FORMMAIL__HELP_ADDRESSEE' => 'Enter the addressee of this mail.',
-    'FORMMAIL__SUBJECT' => 'Subject',
-    'FORMMAIL__PRESET_SUBJECT' => 'Subject of this mail',
-    'FORMMAIL__HELP_SUBJECT' => 'The subject of this mail.',
-    'FORMMAIL__CONTENT' => 'Message',
-    'FORMMAIL__PRESET_CONTENT' => 'Your message...',
-    'FORMMAIL__HELP_CONTENT' => 'Enter the message of this mail.',
-    'FORMMAIL__LEGEND_CONTENT' => 'Mail Content',
+    'FORMMAIL__LEGEND_HEADER' => 'General information',
+    'FORMMAIL__LEGEND_CONTENT' => 'Your message',
 
     // showCreateMail
     'SHOWCREATEMAIL__TITLE' => 'Create new mail',
     'SHOWCREATEMAIL__H1' => 'Create new mail',
-    'SHOWCREATEMAIL__INFO' => 'Fill in the following form to create a new mail you can save as draft or send via one of your SMTP-Server.',
+    'SHOWCREATEMAIL__INFO' => 'Fill in the following form to create a new mail you can either send to your contacts or save as draft.',
     'SHOWCREATEMAIL__SUBMIT' => 'Send mail',
     'SHOWCREATEMAIL__SUBMIT_SAVE' => 'Save as draft',
     'SHOWCREATEMAIL__CANCEL' => 'Cancel',
-    'SHOWCREATEMAIL__ADDSMTPFIRST' => 'Please add a SMTP server before sending an e-mail!',
 
     // showEditMail
+    'SHOWEDITMAIL__NOTEXISTING' => 'The mail you did edit, does not exists!',
     'SHOWEDITMAIL__TITLE' => 'Edit mail',
     'SHOWEDITMAIL__H1' => 'Edit mail',
     'SHOWEDITMAIL__INFO' => 'Here you can edit a mail and either save the changes or send via one of your SMTP-Server.',
     'SHOWEDITMAIL__SUBMIT' => 'Send mail',
     'SHOWEDITMAIL__SUBMIT_SAVE' => 'Save changes',
     'SHOWEDITMAIL__CANCEL' => 'Cancel',
-    'SHOWEDITMAIL__ADDSMTPFIRST' => 'Please add a SMTP server before editing an e-mail!',
 
-    // saveMail
-    'SAVEMAIL__NOTEXISTING' => 'The mail you did edit, does not exists!',
-    'SAVEMAIL__INVALIDINPUT' => 'Invalid input!',
-    'SAVEMAIL__INVALIDSENDER' => 'Invalid Smtp-Server selected!',
-    'SAVEMAIL__EDITERROR' => 'An error occurred while saving the changes.',
-    'SAVEMAIL__CREATEERROR' => 'An error occurred while create a new mail!',
-    'SAVEMAIL__SENDERROR' => 'An error occurred while sending the mail!',
-    'SAVEMAIL__SUCCESS' => 'Mail has been saved successfully.',
-    'SAVEMAIL__SUCCESS_SEND' => 'Mail has been send successfully.',
+    // updateMail
+    'UPDATEMAIL__ERROR' => 'An error occurred while creating and saving the mail!',
+    'UPDATEMAIL__NOTEXISTING' => 'The mail you did edit, does not exists!',
+    'UPDATEMAIL__INVALIDSENDER' => 'Invalid sender selected!',
+    'UPDATEMAIL__ERRORADDSENDER' => 'An error occurred while adding the sender to mail!',
+    'UPDATEMAIL__ERRORADDCONTENT' => 'An error occurred while adding the content to mail!',
+    'UPDATEMAIL__INVALIDVALUE' => 'Invalid value!',
+    'UPDATEMAIL__SENDERROR' => 'An error occurred while sending the mail!',
+    'UPDATEMAIL__SENDSUCCESS' => 'Mail has been sent.',
+    'UPDATEMAIL__SAVESUCCESS' => 'Mail has been saved.',
 
     /* ***************** _system_navigation ********************************* */
 

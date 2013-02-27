@@ -18,7 +18,7 @@ switch ($Tag->getType()->getInfo('name')) {
     case 'string':
 	$name = $this->set($Tag->getInfo('title'), false, false);
 ?>
-	<label for="$$$formBit__<?php echo $num; ?>"><?php echo $name; ?></label>
+	<label for="$$$formBit__value__<?php echo $num; ?>"><?php echo $name; ?></label>
 	<input type="text" name="$$$formBit__value__<?php echo $num; ?>" id="$$$formBit__value__<?php echo $num; ?>" value="<?php $this->setPreset('$$$formBit__value__'.$num, $value); ?>" />
 	<div style="clear:both;"></div>
 <?php

@@ -28,17 +28,19 @@ $attachments = $Mail->getAttachments();
 	    <div style="clear:both;"></div>
 	    <table class="$$$div__showMail__mailheader_table">
 		<tr>
-		    <th><?php $this->set('{SHOWMAIL__SENDER}'); ?></th>
+		    <th><?php $this->set('{TAG__MAIL__SENDER}'); ?></th>
 		    <td><?php $this->set($Mail->getInfo('sender')); ?></td>
 		</tr>
 		<tr>
-		    <th><?php $this->set('{SHOWMAIL__ADDRESSEE}'); ?></th>
-		    <td><?php $this->set($Mail->getAddressee()); ?></td>
+		    <th><?php $this->set('{TAG__MAIL__ADDRESSEE}'); ?></th>
+		    <td><?php $this->set($Mail->getInfo('addressee')); ?></td>
 		</tr>
+		<?php if ($Mail->getInfo('date')) { ?>
 		<tr>
-		    <th><?php $this->set('{SHOWMAIL__DATEOFMAIL}'); ?></th>
-		    <td><?php $this->set($Mail->getInfo('dateOfMail')); ?></td>
+		    <th><?php $this->set('{TAG__MAIL__DATE}'); ?></th>
+		    <td><?php $this->set($Mail->getInfo('date')); ?></td>
 		</tr>
+		<?php } ?>
 	    </table>
 	</div>
 	<iframe id="$$$div__showMail_mailcontent" class="$$$div__showMail_mailcontent" src="<?php $this->setUrl('$$$showMailContent', array('$$$id' => $Mail->getInfo('id'), 'tmpl' => '$$$showMailContent')); ?>">

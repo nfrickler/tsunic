@@ -1,3 +1,68 @@
+<!-- | Tables for mail module -->
+
+INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) VALUES
+    ('$mail$Mail', '{$MAIL$TYPE__MAIL}', '{$MAIL$TYPE__MAIL__DESCRIPTION}', 0)
+;
+
+INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'MAIL__UID',
+	'{$MAIL$TAG__MAIL__UID}',
+	'{$MAIL$TAG__MAIL__UID__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+	'MAIL__HTMLCONTENT',
+	'{$MAIL$TAG__MAIL__HTMLCONTENT}',
+	'{$MAIL$TAG__MAIL__HTMLCONTENT__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+	'MAIL__PLAINCONTENT',
+	'{$MAIL$TAG__MAIL__PLAINCONTENT}',
+	'{$MAIL$TAG__MAIL__PLAINCONTENT__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+	'MAIL__DATE',
+	'{$MAIL$TAG__MAIL__DATE}',
+	'{$MAIL$TAG__MAIL__DATE__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+	'MAIL__SUBJECT',
+	'{$MAIL$TAG__MAIL__SUBJECT}',
+	'{$MAIL$TAG__MAIL__SUBJECT__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'MAIL__SENDER',
+	'{$MAIL$TAG__MAIL__SENDER}',
+	'{$MAIL$TAG__MAIL__SENDER__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+	'MAIL__ADDRESSEE',
+	'{$MAIL$TAG__MAIL__ADDRESSEE}',
+	'{$MAIL$TAG__MAIL__ADDRESSEE__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'MAIL__FKADDRESSEE',
+	'{$MAIL$TAG__MAIL__FKADDRESSEE}',
+	'{$MAIL$TAG__MAIL__FKADDRESSEE__DESCRIPTION}',
+	1
+    ),
+
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'MAIL__UNSEEN',
+	'{$MAIL$TAG__MAIL__UNSEEN}',
+	'{$MAIL$TAG__MAIL__UNSEEN__DESCRIPTION}',
+	1
+    )
+;
+
+
 CREATE TABLE IF NOT EXISTS `#__$mail$mailaccounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_account` int(11) NOT NULL,

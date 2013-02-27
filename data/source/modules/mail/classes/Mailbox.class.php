@@ -7,7 +7,7 @@ class $$$Mailbox extends $system$Object {
      */
     protected $table = "#__mailboxes";
 
-    /* mail objects of mails in box
+    /* Mail objects of mails in box
      * array
      */
     protected $mails;
@@ -17,26 +17,19 @@ class $$$Mailbox extends $system$Object {
      * @return array
      */
     public function getMails () {
+	if (!$this->isValid()) return false;
+	if (!empty($this->mails)) return $this->mails;
 	global $TSunic;
 
-	// check, if mailbox exists
-	if (!$this->id) return false;
+	// get all mails
+	$BpHelper = $TSunic->get('$bp$Helper');
+	$mails = $BpHelper->getObjects('$$$Mail');
 
-	// check, if info already in obj-vars
-	if (!empty($this->mails)) return $this->mails;
-
-	// get ids of mails
-	$sql = "SELECT id as id
-		FROM #__mails
-		WHERE fk_mailbox = '".$this->id."'
-		    AND dateOfDeletion = '0000-00-00 00:00:00';";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return array();
-
-	// create and store objects
+	// find those mails which are in this mailbox
 	$this->mails = array();
-	foreach ($result as $index => $value) {
-	    $this->mails[] = $TSunic->get('$$$Mail', $value['id']);
+	foreach ($mails as $index => $Value) {
+	    if ($Value->getInfo('box') == $this->id)
+		$this->mails[] = $Value;
 	}
 
 	return $this->mails;

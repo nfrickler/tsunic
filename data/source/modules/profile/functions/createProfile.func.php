@@ -20,14 +20,13 @@ function $$$createProfile () {
 	$TSunic->redirect('back');
     }
 
-    // create profile object
+    // create new Profile object
     $Profile = $TSunic->get('$$$Profile', 0);
-
-    // create profile
     if (!$Profile->create()) {
-	// add error message and redirect back
+	// an error occurred!
 	$TSunic->Log->alert('error', '{CREATEPROFILE__ERROR}');
-	$TSunic->Log->log('3', 'profile::createProfile: ERROR: Failed to create new profile');
+	$TSunic->Log->log('3',
+	    'profile::createProfile: ERROR: Failed to create new profile');
 	$TSunic->redirect('back');
 	return true;
     }

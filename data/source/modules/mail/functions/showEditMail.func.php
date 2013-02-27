@@ -1,15 +1,11 @@
-<!-- | function to show form to edit mail -->
+<!-- | FUNCTION show form to edit mail -->
 <?php
 function $$$showEditMail () {
     global $TSunic;
 
-    // any smtp servers available?
+    // get all Smtp objects
     $SuperMail = $TSunic->get('$$$SuperMail');
-    $smtps = $SuperMail->getSmtps(true);
-    if (empty($smtps)) {
-	$TSunic->Log->alert('error', '{SHOWEDITMAIL__ADDSMTPFIRST}');
-	$TSunic->redirect('$$$showAddSmtp');
-    }
+    $sender = $SuperMail->getSmtps(true);
 
     // get Mail object
     $id = $TSunic->Temp->getParameter('$$$id');
@@ -22,7 +18,7 @@ function $$$showEditMail () {
     // activate template
     $data = array(
 	'Mail' => $Mail,
-	'smtps' => $smtps
+	'sender' => $sender
     );
     $TSunic->Tmpl->activate('$$$showEditMail', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITMAIL__TITLE}'));

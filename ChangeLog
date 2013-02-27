@@ -1,3 +1,6 @@
+-- Changes until version 4.4 (release 2013-02-25)
+    * add new modules bp, profile, calendar
+    * refactoring of filesystem module
 -- Changes until version 4.3 (release 2012-11-27)
     * exlude filesystem in separate module
     * implement webdav support

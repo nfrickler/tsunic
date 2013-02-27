@@ -3,10 +3,20 @@
 $lang = array(
     'NAME' => 'Mail Modul',
 
+    // types
+    'TYPE__MAIL' => 'Nachricht',
+
+    // tags
+    'TAG__MAIL__SENDER' => 'Von',
+    'TAG__MAIL__ADDRESSEE' => 'An',
+    'TAG__MAIL__UID' => 'UID',
+    'TAG__MAIL__DATE' => 'Datum',
+    'TAG__MAIL__SUBJECT' => 'Betreff',
+    'TAG__MAIL__PLAINCONTENT' => 'Textinhalt',
+    'TAG__MAIL__HTMLCONTENT' => 'HTML-Inhalt',
+
     // classes
-    'CLASS__SENDERLOCAL__HOST' => 'Localhost',
-    'CLASS__SENDERLOCAL__USER' => 'Lokaler Benutzer',
-    'CLASS__SENDERLOCAL__NAME' => 'Lokaler SMTP-Server',
+    'CLASS__SMTPLOCAL__NAME' => '(Lokal)',
 
     'CLASS__SERVERBOX__ADDATTACHMENTERROR' => 'Anhang konnte nicht heruntergeladen werden!',
     'CLASS__SERVERBOX__CREATEMAILERROR' => 'Eine Mail konnte nicht lokal gespeichert werden!',
@@ -439,53 +449,41 @@ $lang = array(
     'DELETEMAIL__SUCCESS' => 'Die Mail wurde erfolgreich gelöscht.',
 
     // formMail
-    'FORMMAIL__LEGEND_HEADER' => 'Mail Header',
-    'FORMMAIL__SENDER' => 'Absender',
-    'FORMMAIL__HELP_SENDER' => 'Wähle den SMTP-Server aus, von dem diese Mail verschickt werden soll.',
-    'FORMMAIL__ADDRESSEE' => 'Empfänger',
-    'FORMMAIL__PRESET_ADDRESSEE' => 'E-Mail-Adresse des Empfängers',
-    'FORMMAIL__HELP_ADDRESSEE' => 'Hier kommt die E-Mail-Adresse des Empfänger dieser Mail hin.',
-    'FORMMAIL__SUBJECT' => 'Thema',
-    'FORMMAIL__PRESET_SUBJECT' => 'Thema der Mail',
-    'FORMMAIL__HELP_SUBJECT' => 'Dies ist das Thema, die Überschrift dieser Mail',
-    'FORMMAIL__CONTENT' => 'Nachricht',
-    'FORMMAIL__PRESET_CONTENT' => 'Deine Nachricht...',
-    'FORMMAIL__HELP_CONTENT' => 'Dies ist die eigentliche Nachricht derr Mail',
-    'FORMMAIL__LEGEND_CONTENT' => 'Mail Inhalt',
+    'FORMMAIL__LEGEND_HEADER' => 'Allgemeine Informationen',
+    'FORMMAIL__LEGEND_CONTENT' => 'Deine Nachricht',
 
     // showCreateMail
-    'SHOWCREATEMAIL__TITLE' => 'Neue Mail erstellen',
-    'SHOWCREATEMAIL__H1' => 'Neue Mail erstellen',
-    'SHOWCREATEMAIL__INFO' => 'Erstelle hier eine neue Mail, die du als Entwurf speichern oder gleich über einen deiner SMTP-Server versenden kannst.',
-    'SHOWCREATEMAIL__SUBMIT' => 'Mail senden',
+    'SHOWCREATEMAIL__TITLE' => 'Neue Nachricht',
+    'SHOWCREATEMAIL__H1' => 'Neue Nachricht',
+    'SHOWCREATEMAIL__INFO' => 'Verfasse hier eine neue Nachricht, die du dann an deine Kontakte versenden oder erstmal als Entwurf abspeichern kannst.',
+    'SHOWCREATEMAIL__SUBMIT' => 'Nachricht senden',
     'SHOWCREATEMAIL__SUBMIT_SAVE' => 'Als Entwurf speichern',
-    'SHOWCREATEMAIL__ADDSMTPFIRST' => 'Please add a SMTP server before sending an e-mail!',
     'SHOWCREATEMAIL__CANCEL' => 'Abbrechen',
-    'SHOWCREATEMAIL__ADDSMTPFIRST' => 'Bitte füge zuerst einen SMTP-Server hinzu, bevor du eine E-Mail sendest!',
 
     // showEditMail
-    'SHOWEDITMAIL__TITLE' => 'Mail bearbeiten',
-    'SHOWEDITMAIL__H1' => 'Mail bearbeiten',
-    'SHOWEDITMAIL__INFO' => 'Hier kannst du eine Mail bearbeiten und speichern oder diese über einen deiner SMTP-Server versenden.',
-    'SHOWEDITMAIL__SUBMIT' => 'Mail senden',
+    'SHOWEDITMAIL__NOTEXISTING' => 'Die zu bearbeitende Mail existiert gar nicht!',
+    'SHOWEDITMAIL__TITLE' => 'Nachricht bearbeiten',
+    'SHOWEDITMAIL__H1' => 'Nachricht bearbeiten',
+    'SHOWEDITMAIL__INFO' => 'Hier kannst du eine Nachricht bearbeiten, speichern oder diese an deine Kontakte versenden.',
+    'SHOWEDITMAIL__SUBMIT' => 'Nachricht senden',
     'SHOWEDITMAIL__SUBMIT_SAVE' => 'Änderungen speichern',
     'SHOWEDITMAIL__CANCEL' => 'Abbrechen',
-    'SHOWEDITMAIL__ADDSMTPFIRST' => 'Bitte füge zuerst einen SMTP-Server hinzu, bevor du eine E-Mail bearbeitest!',
 
-    // saveMail
-    'SAVEMAIL__NOTEXISTING' => 'Die zu bearbeitende Mail existiert gar nicht!',
-    'SAVEMAIL__INVALIDINPUT' => 'Ungültige Eingaben!',
-    'SAVEMAIL__INVALIDSENDER' => 'Ungültiger SMTP-Server ausgewählt!',
-    'SAVEMAIL__EDITERROR' => 'Beim Speichern der Änderungen ist ein Fehler aufgetreten!',
-    'SAVEMAIL__CREATEERROR' => 'Beim Erstellen der Mail ist ein Fehler aufgetreten!',
-    'SAVEMAIL__SENDERROR' => 'Beim Senden der Mail ist ein Fehler aufgetreten!',
-    'SAVEMAIL__SUCCESS' => 'Die Mail wurde erfolgreich gespeichert.',
-    'SAVEMAIL__SUCCESS_SEND' => 'Die Mail wurde erfolgreich versandt.',
+    // updateMail
+    'UPDATEMAIL__ERROR' => 'Beim Speichern der Nachricht ist ein Fehler aufgetreten!',
+    'UPDATEMAIL__NOTEXISTING' => 'Die zu bearbeitende Nachricht existiert gar nicht!',
+    'UPDATEMAIL__INVALIDSENDER' => 'Ungültiger Sender ausgewählt!',
+    'UPDATEMAIL__ERRORADDSENDER' => 'Sender konnte nicht gespeichert werden!',
+    'UPDATEMAIL__ERRORADDCONTENT' => 'Inhalt der Nachricht konnte nicht gespeichert werden!',
+    'UPDATEMAIL__INVALIDVALUE' => 'Ungültige Eingabe!',
+    'UPDATEMAIL__SENDERROR' => 'Beim Senden der Nachricht ist ein Fehler aufgetreten!',
+    'UPDATEMAIL__SENDSUCCESS' => 'Die Nachricht wurde gesendet.',
+    'UPDATEMAIL__SAVESUCCESS' => 'Die Nachricht wurde gespeichert.',
 
     /* ***************** _system_navigation ********************************* */
 
     '_NAVIGATION__SHOWMAILBOXES' => 'Deine Mailboxen',
-    '_NAVIGATION__SHOWCREATEMAIL' => 'Neue Mail',
+    '_NAVIGATION__SHOWCREATEMAIL' => 'Neue Nachricht',
     '_NAVIGATION__SHOWMAILSETTINGS' => 'Maileinstellungen',
     '_NAVIGATION__SHOWMAILSERVERS' => 'Mailserver',
     '_NAVIGATION_HEADER' => 'Mail'

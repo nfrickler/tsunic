@@ -12,11 +12,6 @@ class $$$Smtp extends $system$Object {
      */
     private $password;
 
-    /* Mailaccount object
-     * object
-     */
-    protected $Mailaccount;
-
     /* timeout for SMTP connection in seconds
      * int
      */
@@ -56,65 +51,14 @@ class $$$Smtp extends $system$Object {
 	return $return;
     }
 
-    /* get Mailaccount object connected to smtp-server
-     * +@param bool: get id instead of object
+    /* get name of this object
      *
-     * @return OBJECT/bool
+     * @return string
      */
-    public function getMailaccount ($get_id = false) {
-
-	// is already in obj-vars?
-	if (isset($this->Mailaccount) AND !empty($this->Mailaccount))
-	    return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
-
-	// try to get fk_mailaccount
-	$fk_mailaccount = $this->getInfo('fk_mailaccount');
-	if (empty($fk_mailaccount)) return false;
-
-	// try to get object
-	global $TSunic;
-	$Mailaccount = $TSunic->get('$$$Mailaccount', $fk_mailaccount);
-	if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
-
-	// save in obj-var and return
-	$this->Mailaccount = $Mailaccount;
-	return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
-    }
-
-    /* set mailaccount
-     * @param object: mailaccount object
-     *
-     * @return bool
-     */
-    public function setMailaccount ($Mailaccount) {
-	global $TSunic;
-
-	// is valid account?
-	if (!$Mailaccount OR !$Mailaccount->isValid()) return false;
-
-	// is new mailaccount?
-	if ($Mailaccount->getInfo('id') == $this->getInfo('fk_mailaccount'))
-	    return true;
-
-	// save in obj-var
-	$this->Mailaccount = $Mailaccount;
-
-	// is Smtp object
-	if (!$this->isValid()) {
-
-	    // presets
-	    $this->info['email'] = $Mailaccount->getInfo('email');
-
-	    return true;
-	}
-
-	// update database
-	$data = array(
-	    "fk_mailaccount" => $this->Mailaccount->getInfo('id')
-	);
-	$this->_edit($data);
-
-	return true;
+    public function getName () {
+	$name = $this->getInfo('emailname');
+	if ($this->getInfo('email')) $name .= "&lt;".$this->getInfo('email')."&gt;";
+	return $name;
     }
 
     /* get all available connection-security-options
@@ -211,11 +155,11 @@ class $$$Smtp extends $system$Object {
 	}
     }
 
-    /* create new smtp-server
-     * @param string: email-address
+    /* create new Smtp object
+     * @param string: email address
      * @param string: password
      * +@param string: description
-     * +@param string: email-name
+     * +@param string: email name
      *
      * @return bool
      */
@@ -282,7 +226,7 @@ class $$$Smtp extends $system$Object {
 	return ($result) ? true : false;
     }
 
-    /* edit smtp-server
+    /* edit Smtp object
      * @param string: email-address
      * @param string: password
      * +@param string: description
@@ -309,7 +253,7 @@ class $$$Smtp extends $system$Object {
 	return $this->_edit($data);
     }
 
-    /* delete smtp-server
+    /* delete Smtp object
      *
      * @return bool
      */
@@ -438,33 +382,6 @@ class $$$Smtp extends $system$Object {
 	return $this->_validate($emailname, 'string');
     }
 
-    /* check, if subject is valid
-     * @param string: subject of message
-     *
-     * @return bool
-     */
-    public function isValidSubject ($subject) {
-	return $this->_validate($subject, 'text');
-    }
-
-    /* check, if message is valid
-     * @param string: message itself
-     *
-     * @return bool
-     */
-    public function isValidMessage ($message) {
-	return $this->_validate($message, 'html');
-    }
-
-    /* check, if addressee is valid
-     * @param string: addressee of mail
-     *
-     * @return bool
-     */
-    public function isValidAddressee ($addressee) {
-	return $this->_validate($addressee, 'email');
-    }
-
     /* save connection-errors
      * @param string: error-message
      *
@@ -567,44 +484,22 @@ class $$$Smtp extends $system$Object {
 
     /* ************************** send mail *******************************/
 
-    /* send mail
-     * @param string: subject of mail
-     * @param string: message to send
-     * @param array: addressees of mail
+    /* send Mail
+     * @param object: Mail object to be send
+     * @param string: e-mail of addressee
      *
      * @return bool
      */
-    public function send ($subject, $message, $addressees) {
-var_dump('send1');
+    public function send ($Mail, $addressee) {
 	if (!$this->isValid()) return false;
-	if (!is_array($addressees)) $addressees = array($addressees);
-var_dump('send2');
-
-	// validate input
-	if (!$this->isValidSubject($subject)
-	    OR !$this->isValidMessage($message)
-	) {
-var_dump($this->isValidSubject($subject));
-var_dump($this->isValidMessage($message));
-var_dump($subject);
-var_dump($message);
-	    $this->setError('Invalid input!');
-	    return false;
-	}
-	foreach ($addressees as $index => $value) {
-	    if (!$this->isValidAddressee($value)) {
-		$this->setError("Invalid addressee '$value'!");
-		return false;
-	    }
-	}
-var_dump('send3');
+	if (!$Mail->isValid()) return false;
+	if (!$this->isValidEMail($addressee)) return false;
 
 	// initialize connection
 	if (!$this->getConnection()) {
-	    $this->setError('Connection to SMTP-Server failed!');
+	    $this->setError('Connection to SMTP server failed!');
 	    return false;
 	}
-var_dump('send4');
 
 	// set sender
 	$this->sendData('MAIL FROM: <'.$this->getInfo('email').'>');
@@ -613,16 +508,10 @@ var_dump('send4');
 	    return false;
 	}
 
-var_dump('send5');
-	// set addressees
-	foreach ($addressees as $index => $value) {
-
-	    // add addressee
-	    $this->sendData('RCPT TO: <'.$value.'>');
-	    if ($this->getStatus() != 250) {
-		$this->setError('Server rejected RCPT TO ('.$value.')...');
-		return false;
-	    }
+	$this->sendData('RCPT TO: <'.$addressee.'>');
+	if ($this->getStatus() != 250) {
+	    $this->setError('Server rejected RCPT TO ('.$addressee.')...');
+	    return false;
 	}
 
 	// start contenct of mail
@@ -632,17 +521,17 @@ var_dump('send5');
 	    return false;
 	}
 
-var_dump('send7');
 	// get headers
 	$headers = '';
-	$headers['SUBJECT'] = $subject;
+	$headers['SUBJECT'] = $Mail->getInfo('subject');
 	$headers['FROM'] = $this->getInfo('emailname').' <'.$this->getInfo('email').'>';
-	$headers['TO'] = '<'.implode('>, <' ,$addressees).'>';
+	$headers['TO'] = '<'.$addressee.'>';
 	$headers['DATE'] = date('r');
 	$headers['CONTENT-TYPE'] = 'text/plain; charset:UTF-8';
 	$headers['MIME-VERSION'] = '1.0';
 	$headers['PRIORITY'] = 'normal';
-	$headers['X-MAILER'] = 'PHP/'. phpversion(). ' via TSunic 4.0';
+	$headers['X-MAILER'] = 'PHP/'. phpversion(). ' via TSunic '.
+	    $TSunic->Config->getConfig('version');
 
 	// sum headers
 	$cache = array();
@@ -653,8 +542,8 @@ var_dump('send7');
 	// send headers
 	$this->sendData(implode("\r\n", $cache)."\r\n\r\n");
 
-var_dump('send10');
 	// get content
+	$message = $Mail->getContent();
 	$message = str_replace("\r\n", "\n", $message);
 	$message = wordwrap($message, 70);
 
@@ -668,7 +557,6 @@ var_dump('send10');
 	    return false;
 	}
 
-var_dump('send15');
 	// close connection
 	$this->closeConnection();
 
@@ -851,7 +739,6 @@ var_dump('send15');
      * @return bool/int
      */
     protected function getStatus () {
-
 	// get first 3 characters of answer
 	return (int) substr($this->getData(), 0, 3);
     }

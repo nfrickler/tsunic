@@ -80,6 +80,19 @@ class $$$SuperMail {
 	return $this->mailboxes;
     }
 
+    /* get Smtp with specified id (including 0 for SmtpLocal)
+     * @param int: id of Smtp object
+     *
+     * @return object
+     */
+    public function getSmtp ($id) {
+	$smtps = $this->getSmtps(true);
+	foreach ($smtps as $index => $Value) {
+	    if ($Value->getInfo('id') == $id) return $Value;
+	}
+	return NULL;
+    }
+
     /* get all smtp-objects of user-account
      * +@param bool: include local sender (if enabled)?
      *
@@ -101,8 +114,8 @@ class $$$SuperMail {
 	if ($result === false) return array();
 
 	// add localSender, if enabled
-	if ($includeLocal AND $TSunic->Config->getConfig('email_enabled') === true) {
-	    $this->smtps[] = $TSunic->get('$$$SmtpMail');
+	if ($includeLocal) {
+	    $this->smtps[] = $TSunic->get('$$$SmtpLocal');
 	}
 
 	// get smtp-objects and save them in obj-var

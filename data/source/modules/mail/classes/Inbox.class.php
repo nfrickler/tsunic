@@ -1,4 +1,4 @@
-<!-- | CLASS inbox -->
+<!-- | CLASS Inbox -->
 <?php
 class $$$Inbox extends $$$Mailbox {
 
@@ -33,24 +33,18 @@ class $$$Inbox extends $$$Mailbox {
      * @return array
      */
     public function getMails () {
+	if (!empty($this->mails)) return $this->mails;
 	global $TSunic;
 
-	// check, if info already in obj-vars
-	if (!empty($this->mails)) return $this->mails;
+	// get all mails
+	$BpHelper = $TSunic->get('$bp$Helper');
+	$mails = $BpHelper->getObjects('$$$Mail');
 
-	// get ids of mails
-	$sql = "SELECT mails.id as id
-	    FROM #__mails as mails
-	    WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
-		AND fk_mailbox = '0'
-		AND dateOfDeletion = '0000-00-00 00:00:00';";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return array();
-
-	// create and store objects
+	// find those mails which are in this mailbox
 	$this->mails = array();
-	foreach ($result as $index => $value) {
-	    $this->mails[] = $TSunic->get('$$$Mail', array($value['id']));
+	foreach ($mails as $index => $Value) {
+	    if ($Value->getInfo('box') == 0)
+		$this->mails[] = $Value;
 	}
 
 	return $this->mails;
@@ -73,24 +67,6 @@ class $$$Inbox extends $$$Mailbox {
      * @return bool
      */
     public function edit ($name, $description = '') {
-	return false;
-    }
-
-    /* check, if name of box is valid
-     * @param string: name of mailbox
-     *
-     * @return bool
-     */
-    public function isValidName ($name) {
-	return false;
-    }
-
-    /* check, if description of box is valid
-     * @param string: description of mailbox
-     *
-     * @return bool
-     */
-    public function isValidDescription ($description) {
 	return false;
     }
 

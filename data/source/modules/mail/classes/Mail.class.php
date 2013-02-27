@@ -1,16 +1,24 @@
 <!-- | CLASS Mail -->
 <?php
-class $$$Mail extends $system$Object {
+class $$$Mail extends $bp$BpObject {
 
-    /* tablename in database
-     * string
+    /* tags to be connected with this object
+     * array
      */
-    protected $table = "#__mails";
-
-    /* attached files
-     * array of fsfile objects
-     */
-    protected $attachments;
+    protected $tags = array(
+	'MAIL__SUBJECT',
+	'MAIL__SENDER',
+	'MAIL__ADDRESSEE',
+	'MAIL__ATTACHMENT',
+	'MAIL__HTMLCONTENT',
+	'MAIL__PLAINCONTENT',
+	'MAIL__SERVERBOX',
+	'MAIL__BOX',
+	'MAIL__MAILBOX',
+	'MAIL__CHARSET',
+	'MAIL__UID',
+	'MAIL__UNSEEN',
+    );
 
     /* get content of mail (prefer html)
      * +@param string: type of content (plain or html)
@@ -22,10 +30,11 @@ class $$$Mail extends $system$Object {
 	$Parser = $TSunic->get('$system$Parser');
 
 	// return parsed content
-	if ($type == 'plain' or empty($this->info['htmlcontent'])) {
-	    return $Parser->toText($this->info['plaincontent']);
+	$htmlcontent = $this->getInfo('htmlcontent');
+	if ($type == 'plain' or empty($htmlcontent)) {
+	    return $Parser->toText($this->getInfo('plaincontent'));
 	} else {
-	    return $Parser->toHtml($this->info['htmlcontent']);
+	    return $Parser->toHtml($htmlcontent);
 	}
     }
 
@@ -43,41 +52,6 @@ class $$$Mail extends $system$Object {
      */
     public function getHtmlContent () {
 	return $this->getContent('html');
-    }
-
-
-    /* create new mail
-     * @param string: subject of mail
-     * @param string: content of mail
-     * @param string: e-mail address of addressee
-     * @param int: fk_smtp
-     *
-     * @return bool
-     */
-    public function create ($subject, $content, $addressee, $fk_smtp = 0) {
-
-	// validate input
-	if (!$this->isValidSubject($subject)
-	    or !$this->isValidContent($content)
-	    or !$this->isValidAddressee($addressee)
-	    or !$this->isValidFkSmtp($fk_smtp, false)
-	) return false;
-
-	// update database
-	global $TSunic;
-	$data = array(
-	    "subject" => $subject,
-	    "plaincontent" => $content,
-	    "fk_smtp" => $fk_smtp,
-	    "dateOfCreation" => "NOW()",
-	    "fk_account" => $TSunic->Usr->getInfo('id')
-	);
-	if (!$this->_create($data)) return false;
-
-	// set addressee
-	if (!$this->setAddressee($addressee)) return false;
-
-	return $this->id;
     }
 
     /* create from IMAP source
@@ -125,36 +99,6 @@ class $$$Mail extends $system$Object {
 	return $this->id;
     }
 
-    /* edit mail
-     * @param string: subject of mail
-     * @param string: content of mail
-     * @param string: e-mail address of addressee
-     * @param int: fk_smtp
-     *
-     * @return bool
-     */
-    public function edit ($subject, $content, $addressee, $fk_smtp = 0) {
-
-	// validate input
-	if (!$this->isValidSubject($subject)
-	    or !$this->isValidContent($content)
-	    or !$this->isValidAddressee($addressee)
-	    or !$this->isValidFkSmtp($fk_smtp, false)
-	) return false;
-
-	// update database
-	$data = array(
-	    "subject" => $subject,
-	    "plaincontent" => $content,
-	    "fk_smtp" => $fk_smtp
-	);
-	if (!$this->_edit($data)) return false;
-
-	// set addressee
-	$result = $this->setAddressee($addressee);
-	return ($result === false) ? false : true;
-    }
-
     /* send mail
      *
      * @return bool
@@ -163,59 +107,23 @@ class $$$Mail extends $system$Object {
 	if (!$this->isValid()) return false;
 	global $TSunic;
 
+	// update date
+	$this->saveByTag('MAIL__DATE', date('Y-m-d H:i:s'));
+
 	// get Smtp object
 	$Smtp = $this->getSmtp();
 	if (!$Smtp) return false;
 
-	// send
-	return $Smtp->send(
-	    $this->getInfo('subject'),
-	    $this->getContent(),
-	    $this->getAddressee()
-	);
-    }
+	// send to all addressees
+	$errors = 0;
+	$addressees = $this->getByTag('MAIL__ADDRESSEE');
+	foreach ($addressees as $index => $Value) {
+	    if (!$Smtp->send($this, $Value->getInfo('value'))) {
+		$errors++;
+	    }
+	}
 
-    /* set addressee
-     * @param string: e-mail address of addressee
-     *
-     * @return bool
-     */
-    public function setAddressee ($addressee) {
-	global $TSunic;
-
-	// delete old ones
-	$sql = "DELETE FROM #__addressees
-		WHERE fk_mail = '".$this->id."'
-		    AND NOT address = '$addressee';";
-	if (!$TSunic->Db->doDelete($sql)) return false;
-
-	// return, if $addresse empty
-	if (empty($addressee)) return true;
-
-	// add new ones
-	$sql = "INSERT INTO #__addressees
-		SET fk_mail = '".$this->id."',
-		address = '$addressee'
-		ON DUPLICATE KEY UPDATE dateOfUpdate = NOW()
-	;";
-	return ($TSunic->Db->doInsert($sql) === false) ? false : true;
-    }
-
-    /* get addressee
-     *
-     * @return bool/string
-     */
-    public function getAddressee () {
-	global $TSunic;
-
-	// get from database
-	$sql = "SELECT address
-		FROM #__addressees
-		WHERE fk_mail = '".$this->id."';";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return false;
-
-	return $result[0]['address'];
+	return ($errors) ? false : true;
     }
 
     /* move mail to mailbox
@@ -230,37 +138,17 @@ class $$$Mail extends $system$Object {
 	$Mailbox = $TSunic->get('$$$Mailbox', $fk_mailbox);
 	if (!$Mailbox->isValid() AND !($fk_mailbox === 0)) return false;
 
-	// update mail in database
-	$sql = "UPDATE #__mails
-		SET fk_mailbox = '$fk_mailbox'
-		WHERE id = '".$this->id."'
-	;";
-	$result = $TSunic->Db->doInsert($sql);
-
-	// update $this->info
-	$this->getInfo(true, true);
-
-	return ($return) ? true : false;
+	// update Bit
+	return $this->saveByTag('MAIL__BOX', $fk_mailbox);
     }
 
-    /* check, if fk_smtp is valid
-     * @param int: fk_smtp of a mail
+    /* check, if sender is valid
+     * @param int: sender of a mail
      *
      * @return bool
      */
-    public function isValidFkSmtp ($fk_smtp, $required = true) {
-	if (!$required and empty($fk_smtp)) return true;
-	$Smtp = $this->getSmtp($fk_smtp);
-	return $Smtp->isValid();
-    }
-
-    /* check, if subject is valid
-     * @param string: subject of a mail
-     *
-     * @return bool
-     */
-    public function isValidSubject ($subject) {
-	return ($this->_validate($subject, 'extString')) ? true : false;
+    public function isValidSender($sender) {
+	return ($this->getSmtp($sender)) ? true : false;
     }
 
     /* check, if content is valid
@@ -294,35 +182,17 @@ class $$$Mail extends $system$Object {
      * @return bool
      */
     public function setSeen () {
-	global $TSunic;
-
-	// update database
-	$sql = "UPDATE #__mails
-		SET unseen = 0
-		WHERE id = '".$this->id."';";
-	return $TSunic->Db->doUpdate($sql);
+	return $this->saveByTag('MAIL__SEEN', 0);
     }
 
-    /* get Smtp object
-     * +@param int: id of a Smtp object (default: fk_smtp)
+    /* get Smtp object of this Mail
      *
-     * @return bool
+     * @return object
      */
-    public function getSmtp ($fk_smtp = false) {
-	if ($fk_smtp === false and !$this->isValid()) return NULL;
+    public function getSmtp () {
 	global $TSunic;
-
-	// get fk_smtp
-	if ($fk_smtp === false) $fk_smtp = $this->getInfo('fk_smtp');
-
-	// get object
-	$Smtp = $TSunic->get('$$$Smtp', $fk_smtp);
-	if (!$Smtp->isValid()) {
-	    $Smtp = $TSunic->get('$$$SmtpMail');
-	    if (!$Smtp->isValid()) return NULL;
-	}
-
-	return $Smtp;
+	$Meta = $TSunic->get('$$$SuperMail');
+	return $Meta->getSmtp($this->getInfo('sender'));
     }
 
     /* get Mailbox object
@@ -366,12 +236,6 @@ class $$$Mail extends $system$Object {
      */
     public function delete ($delonserver = true, $cleanup = true) {
 	global $TSunic;
-
-	// delete attachment
-	$this->rmAllAttachments();
-
-	// delete addressee
-	$this->setAddressee('');
 
 	// delete on server
 	$Serverbox = $this->getServerbox();
