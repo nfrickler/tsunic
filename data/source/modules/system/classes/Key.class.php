@@ -158,12 +158,12 @@ class $$$Key {
 	if (!$User) return false;
 
 	// update database
-	$key = $User->encrypt($this->getInfo('key'));
+	$enckey = $User->encrypt($this->getInfo('key'));
 	$sql_set = "
 	    fk_account = '".$this->getInfo('fk_account')."',
 	    fk_account_origin = '".$this->getInfo('fk_account_origin')."',
 	    can_write = '".$this->getInfo('can_write')."',
-	    _key_ = '$key'
+	    _key_ = '".$enckey."'
 	";
 	$sql = "INSERT INTO #__keys
 	    SET fk_id = '".$this->getInfo('fk_id')."',
@@ -182,9 +182,9 @@ class $$$Key {
      */
     public function edit ($fk_account, $can_write) {
 	global $TSunic;
-	$this->getInfo();
+	$this->getInfo(true);
 
-	// update
+	// update key if saving for other user
 	if ($fk_account != $TSunic->Usr->getInfo('id')) {
 	    // push to other user
 	    $this->info['key'] = $this->gen_key();
@@ -193,7 +193,7 @@ class $$$Key {
 	$this->info['can_write'] = $can_write;
 
 	// save new key
-	$this->saveKey();
+	$this->save();
 
 	return true;
     }

@@ -51,6 +51,8 @@ class ts_ModuleHandler {
 	ksort($this->modules);
 
 	// sort modules by dependencies
+	// Serveral times required... Fix?
+	usort($this->modules, array($this, 'cb_sortByDependencies'));
 	usort($this->modules, array($this, 'cb_sortByDependencies'));
 
 	// reverse order

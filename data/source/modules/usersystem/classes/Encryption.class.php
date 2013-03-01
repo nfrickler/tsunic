@@ -51,10 +51,13 @@ class $$$Encryption {
 	$this->fk_account = $fk_account;
 
 	// try to load encryption object of chosen encryption
-	$this->MyEnc = $TSunic->get('$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'), array(
-	    $TSunic->Config->getConfig('encryption_algorithm'),
-	    $TSunic->Config->getConfig('encryption_mode')
-	));
+	$this->MyEnc = $TSunic->get(
+	    '$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'),
+	    array(
+		$TSunic->Config->getConfig('encryption_algorithm'),
+		$TSunic->Config->getConfig('encryption_mode')
+	    )
+	);
 	if (!$this->MyEnc) {
 	    // object could not be created
 	    $TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
@@ -139,7 +142,7 @@ class $$$Encryption {
     /* encrypt
      * @param string: text to encrypt
      * +@param string: key to be used
-     * +@param bool: use asymmetric encryption (if key exists, this is 
+     * +@param bool: use asymmetric encryption (if key exists, this is
      * forced)?
      *
      * @return string
@@ -160,6 +163,7 @@ class $$$Encryption {
 	    // get key
 	    if (empty($key)) $key = $this->symkey;
 
+	    // encrypt
 	    $text = base64_encode($this->MyEnc->encrypt($text, $key));
 
 	    // add prefix
@@ -169,11 +173,15 @@ class $$$Encryption {
 	    // encrypt asymmetric
 
 	    // get key
-	    if (empty($key)) $key = $this->privkey;
+	    if (empty($key)) $key = $this->pubkey;
 
 	    // encrypt
 	    $crypttext = $text;
 	    openssl_public_encrypt($crypttext, $text, $key);
+	    $text = base64_encode($text);
+
+	    // add prefix
+	    $text = $this->prefix_asym.$text;
 	}
 
 	return $text;
@@ -206,7 +214,7 @@ class $$$Encryption {
 	} elseif (substr($text, 0, strlen($this->prefix_asym)) == $this->prefix_asym) {
 
 	    // get key
-	    if (empty($key)) $key = $this->pubkey;
+	    if (empty($key)) $key = $this->privkey;
 
 	    // is ready for encryption?
 	    if (!$key and !$this->ready) $this->throwEncError();
@@ -215,7 +223,7 @@ class $$$Encryption {
 	    $text = substr($text, (strlen($this->prefix_asym)));
 
 	    // decrypt asymmetric
-	    $crypttext = $text;
+	    $crypttext = base64_decode($text);
 	    $key = openssl_pkey_get_private($key);
 	    openssl_private_decrypt($crypttext, $text, $key);
 	}

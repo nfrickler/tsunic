@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS `#__$system$keys` (
   `fk_account` int(11) NOT NULL,
   `fk_account_origin` int(11) NOT NULL,
   `can_write` int(1) NOT NULL,
-  `_key_` varchar(500) NOT NULL,
+  `_key_` text NOT NULL,
   PRIMARY KEY (`fk_table`, `fk_id`)
 ) ENGINE=MyISAM;

@@ -89,7 +89,7 @@ class $$$SmtpLocal extends $$$Smtp {
 
 	// if addressee is valid mail, then send extern, otherwise try
 	// intern
-	if (!$this->isValidEMail($addressee)) {
+	if ($this->isValidEMail($addressee)) {
 	    return $this->sendExtern($Mail, $addressee);
 	} else {
 	    return $this->sendIntern($Mail, $addressee);
@@ -104,13 +104,14 @@ class $$$SmtpLocal extends $$$Smtp {
      */
     public function sendIntern ($Mail, $addressee) {
 	if (!$Mail->isValid()) return false;
+	global $TSunic;
 
 	// get account id of addressee
 	$users = $TSunic->Usr->allUsers();
 	$fk_user = 0;
-	foreach ($users as $index => $Value) {
-	    if ($Value->getInfo('name') == $addressee) {
-		$fk_user = $Value->getInfo('id');
+	foreach ($users as $index => $value) {
+	    if ($value == $addressee) {
+		$fk_user = $index;
 		break;
 	    }
 	}
@@ -119,12 +120,12 @@ class $$$SmtpLocal extends $$$Smtp {
 	if (empty($fk_user)) return false;
 
 	// send mail to this user
-	$Mail->push($fk_user, true);
+	if (!$Mail->push($fk_user, true)) return false;
 
 	// save sent mail in sent mailbox
 
 	// TODO
-	return false;
+	return true;
     }
 
     /* send mail via PHP mail function to specified e-mail address

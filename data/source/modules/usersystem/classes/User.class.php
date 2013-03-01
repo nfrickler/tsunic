@@ -54,7 +54,7 @@ class $$$User extends $system$Object {
 	global $TSunic;
 	if ($id == 'root') $id = 1;
 	if ($id == 'guest') $id = 2;
-	if (isset($_SESSION['$$$id__account']))
+	if (empty($id) and isset($_SESSION['$$$id__account']))
 	    $id = $_SESSION['$$$id__account'];
 
 	// use guest as default
@@ -106,6 +106,10 @@ class $$$User extends $system$Object {
 	    $TSunic->Log->alert('error', '{ISROOTPASSWORD__FAILED}');
 	    return false;
 	}
+
+	// set passphrase
+	$passphrase = $this->_getPassphrase($password, $email);
+	$this->Encryption->setPassphrase($passphrase);
 
 	// generate new keys
 	$newkeys = $this->Encryption->gen_keys();
@@ -165,6 +169,9 @@ class $$$User extends $system$Object {
 	    "privkey" => $newkeys['privkey'],
 	    "pubkey" => $newkeys['pubkey'],
 	);
+
+	// update session
+	$_SESSION['$$$passphrase'] = $passphrase;
 
 	# if root password is set, note in config
 	if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);

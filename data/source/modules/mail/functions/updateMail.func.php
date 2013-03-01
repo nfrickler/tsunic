@@ -52,19 +52,23 @@ function $$$updateMail () {
     }
 
     // add/edit all bits
+    $error = '';
     foreach ($form as $index => $values) {
 	if (!$Mail->addeditBit($values['fk_tag'], $values['fk_bit'], $values['value'])) {
-	    $TSunic->Log->alert('error', '{UPDATEMAIL__ERROR}');
+	    $error = '{UPDATEMAIL__ERROR}';
 	    $TSunic->Log->log('3', 'mail::createMail: ERROR: Failed to add bit');
-	    $TSunic->redirect('back');
 	}
+    }
+    if ($error) {
+	$TSunic->redirect('$$$showEditMail', array('$$$id' => $Mail->getInfo('id')));
+	$TSunic->redirect('back');
     }
 
     // send Mail if requested
     if ($send) {
 	if (!$Mail->send()) {
 	    $TSunic->Log->alert('error', '{UPDATEMAIL__SENDERROR}');
-	    $TSunic->redirect('back');
+	    $TSunic->redirect('$$$showEditMail', array('$$$id' => $Mail->getInfo('id')));
 	} else {
 	    $TSunic->Log->alert('info', '{UPDATEMAIL__SENDSUCCESS}');
 	}

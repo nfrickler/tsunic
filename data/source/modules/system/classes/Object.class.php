@@ -219,6 +219,14 @@ class $$$Object {
 	return ($this->id) ? $this->id : false;
     }
 
+    /* resave all data (e.g. with new key)
+     * 
+     * @return bool
+     */
+    public function resave () {
+	return $this->_edit($this->getInfo(true), true);
+    }
+
     /* edit object
      * @param array: new data
      * @param bool: save empty strings
@@ -387,13 +395,16 @@ class $$$Object {
 	$key = $this->_getKey();
 
 	// load all data
-	$infos = $this->getInfo();
+	$this->getInfo();
 
 	// update key
-	$key->edit();
+	$key->edit($User->getInfo('id'), 1);
 
-	// re-save data with new key
-	$this->edit($infos, true);
+	// update fk_account
+	$this->info['fk_account'] = $User->getInfo('id');
+
+	// resave data with new key
+	$this->resave();
 
 	return true;
     }

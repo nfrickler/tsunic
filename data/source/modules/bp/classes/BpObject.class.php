@@ -70,6 +70,17 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
+    /* load Key (always use the same one for all bits of user)
+     *
+     * @return Object
+     */
+    protected function _getKey () {
+	global $TSunic;
+	if (!$this->_Key) $this->_Key =
+	    $TSunic->get('$system$Key', array('#__bits', 1));
+	return $this->_Key;
+    }
+
     /* create new object
      *
      * @return bool
@@ -84,6 +95,23 @@ class $$$BpObject extends $system$Object {
 	    "dateOfCreation" => "NOW()"
 	);
 	return $this->_create($data);
+    }
+
+    /* resave all data (e.g. with new key)
+     * 
+     * @return bool
+     */
+    public function resave () {
+
+	// get all bits
+	$bits = $this->getBits(true);
+
+	// save bits again
+	foreach ($bits as $index => $Value) {
+	    if (!$Value->resave()) return false;
+	}
+
+	return parent::resave();
     }
 
     /* delete this object
