@@ -7,11 +7,6 @@ class $$$User extends $system$Object {
      */
     protected $table = "#__accounts";
 
-    /* Homehost
-     * OBJECT
-     */
-    protected $Homehost;
-
     /* Connection
      * OBJECT
      */
@@ -56,29 +51,39 @@ class $$$User extends $system$Object {
      * @param int/string: account ID (or "guest", "root")
      */
     public function __construct ($id = false) {
+	global $TSunic;
 	if ($id == 'root') $id = 1;
 	if ($id == 'guest') $id = 2;
-
-	// is logged in?
-	if (
-	    empty($id) and
-	    isset($_SESSION['$$$id__account'],
-		$_SESSION['$$$passphrase']) and
-	    !empty($_SESSION['$$$id__account']) and
-	    !empty($_SESSION['$$$passphrase'])
-	) {
+	if (isset($_SESSION['$$$id__account']))
 	    $id = $_SESSION['$$$id__account'];
-	    $this->_loadEncryption($_SESSION['$$$passphrase']);
-	    $this->getInfo(true, true);
-	}
 
 	// use guest as default
 	if (empty($id) or !$this->_validate($id, 'int')) $id = 2;
 
-	return parent::__construct($id);
+	// run object constructor
+	parent::__construct($id);
+
+	// load Encryption
+	$this->Encryption = $TSunic->get('$$$Encryption', $this->id);
+	if (isset($_SESSION['$$$passphrase'])) {
+	    $this->Encryption->setPassphrase($_SESSION['$$$passphrase']);
+	    $this->Encryption->setKeys(
+		$this->getInfo('symkey'),
+		$this->getInfo('privkey'),
+		$this->getInfo('pubkey')
+	    );
+	} else {
+	    $this->Encryption->setKeys(
+		false,
+		false,
+		$this->getInfo('pubkey')
+	    );
+	}
+
+	return;
     }
 
-    /* register user
+    /* create new user
      * @param string: email
      * @param string: name
      * @param string: password
@@ -102,27 +107,18 @@ class $$$User extends $system$Object {
 	    return false;
 	}
 
-	// generate public/private keypair
-	$res = openssl_pkey_new(array(
-	    'digest_alg' => 'sha1',
-	    'private_key_type' => OPENSSL_KEYTYPE_RSA,
-	    'private_key_bits' => 2048
-	));
-
-	// Get private key
-	if (!openssl_pkey_export($res, $privatekey)) {
-	    $TSunic->throwError("openssl_pkey_export failed!");
-	    exit;
-	}
+	// generate new keys
+	$newkeys = $this->Encryption->gen_keys();
 
 	// update database
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
 	    "password" => $this->_password2hash($password, $email),
-	    "fk_homehost" => 0,
-	    "dateOfCreation" => "NOW()",
-	    "privkey" => $privatekey
+	    "dateOfRegistration" => "NOW()",
+	    "symkey" => $newkeys['symkey'],
+	    "privkey" => $newkeys['privkey'],
+	    "pubkey" => $newkeys['pubkey']
 	);
 	return $this->_create($data);
     }
@@ -150,14 +146,25 @@ class $$$User extends $system$Object {
 	    return false;
 	}
 
+	// update encryption keys
+	$passphrase = $this->_getPassphrase($password, $email);
+	$this->Encryption->setPassphrase($passphrase);
+	$newkeys = $this->Encryption->getKeys();
+
+	// generate new keys, if not generated yet (for root)
+	if (empty($newkeys['symkey'])) {
+	    $newkeys = $this->Encryption->gen_keys();
+	}
+
 	// update database
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
-	    "password" => $this->_password2hash($password, $email)
+	    "password" => $this->_password2hash($password, $email),
+	    "symkey" => $newkeys['symkey'],
+	    "privkey" => $newkeys['privkey'],
+	    "pubkey" => $newkeys['pubkey'],
 	);
-	if (!$this->_setEncPassword($this->_getPassphrase($password, $email)))
-	    return false;
 
 	# if root password is set, note in config
 	if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);
@@ -240,7 +247,7 @@ class $$$User extends $system$Object {
 
 	// load encryption
 	$passphrase = $this->_getPassphrase($password, $email);
-	$this->_loadEncryption($passphrase);
+	$this->Encryption = $TSunic->get('$$$Encryption', array($this->id, $passphrase));
 
 	// get session
 	$_SESSION['$$$id__account'] = $this->id;
@@ -310,7 +317,10 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function isLoggedIn () {
-	return (empty($this->Encryption)) ? false : true;
+	return (
+	    isset($_SESSION['$$$passphrase']) and
+	    !empty($_SESSION['$$$passphrase'])
+	) ? true : false;
     }
 
     /* is registered user?
@@ -386,91 +396,24 @@ class $$$User extends $system$Object {
 	return $this->_validate($password, 'password');
     }
 
-    /* Load encryption object
-     *
-     * @return bool
-     */
-    protected function _loadEncryption ($passphrase) {
-	global $TSunic;
-	$this->Encryption = $TSunic->get('$$$Encryption', $passphrase);
-	return true;
-    }
-
-    /* Set encryption passphrase
-     * @param string: new passphrase
-     *
-     * @return bool
-     */
-    protected function _setEncPassword ($new_passphrase) {
-	global $TSunic;
-
-	// get userkey
-	$userkey = $this->decrypt($this->getInfo('userkey'));
-
-	// create new userkey
-	if (empty($userkey)) {
-	    $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-	    for ($i = 0; $i < 50; $i++) {
-		$userkey.= $characters[mt_rand(0, (strlen($characters)-1))];
-	    }
-	}
-
-	// create new encryption object and encrypt userkey
-	$this->Encryption = $TSunic->get('$$$Encryption', $new_passphrase);
-	$userkey = $this->encrypt($userkey, false);
-
-	// update database
-	$sql = "UPDATE #__accounts
-	    SET userkey = '$userkey'
-	    WHERE id = '$this->id';";
-	$result = $TSunic->Db->doUpdate($sql);
-	if (!$result) return false;
-
-	return true;
-    }
-
     /* encrypt input
      * @param string: input
+     * +@param string: encryption key
      *
      * @return string
      */
-    public function encrypt ($input) {
-	if (!$this->Encryption) return $input;
-	return $this->Encryption->encrypt($input);
-    }
-
-    /* encrypt input with public key
-     * @param string: input
-     *
-     * @return string
-     */
-    public function encryptPub ($input) {
-	$privkey = openssl_pkey_get_private($this->getInfo('privkey'));
-	$details= openssl_pkey_get_details($privkey);
-	$pubkey = $details['key'];
-	openssl_public_encrypt($input, $crypttext, $pubkey);
-	return $crypttext;
+    public function encrypt ($input, $key = false, $asym = false) {
+	return $this->Encryption->encrypt($input, $key, $asym);
     }
 
     /* decrypt input
      * @param string: input
+     * +@param string: decryption key
      *
      * @return string
      */
-    public function decrypt ($input) {
-	if (!$this->Encryption) return $input;
-	return $this->Encryption->decrypt($input);
-    }
-
-    /* decrypt input with private key
-     * @param string: input
-     *
-     * @return string
-     */
-    public function decryptPriv ($input) {
-	$key = openssl_pkey_get_private($this->getInfo('privkey'));
-	openssl_private_decrypt($input, $decrypted, $key);
-	return $decrypted;
+    public function decrypt ($input, $key = false) {
+	return $this->Encryption->decrypt($input, $key);
     }
 
     /* has user access?

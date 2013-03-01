@@ -104,6 +104,25 @@ class $$$SmtpLocal extends $$$Smtp {
      */
     public function sendIntern ($Mail, $addressee) {
 	if (!$Mail->isValid()) return false;
+
+	// get account id of addressee
+	$users = $TSunic->Usr->allUsers();
+	$fk_user = 0;
+	foreach ($users as $index => $Value) {
+	    if ($Value->getInfo('name') == $addressee) {
+		$fk_user = $Value->getInfo('id');
+		break;
+	    }
+	}
+
+	// found account?
+	if (empty($fk_user)) return false;
+
+	// send mail to this user
+	$Mail->push($fk_user, true);
+
+	// save sent mail in sent mailbox
+
 	// TODO
 	return false;
     }

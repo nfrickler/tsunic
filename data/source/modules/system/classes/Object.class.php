@@ -369,5 +369,33 @@ class $$$Object {
 	$result = $TSunic->Db->doSelect($sql);
 	return ($result) ? true : false;
     }
+
+    /* push object to other user
+     * @param int: id of user to push to
+     * +@param bool: push copy?
+     *
+     * @return bool
+     */
+    public function push ($fk_user, $copy = false) {
+	global $TSunic;
+
+	// get User object
+	$User = $TSunic->get('$usersystem$User', $fk_user);
+	if (!$User->isValid()) return false;
+
+	// get current key
+	$key = $this->_getKey();
+
+	// load all data
+	$infos = $this->getInfo();
+
+	// update key
+	$key->edit();
+
+	// re-save data with new key
+	$this->edit($infos, true);
+
+	return true;
+    }
 }
 ?>

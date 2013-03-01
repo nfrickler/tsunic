@@ -12,11 +12,6 @@ class $$$Key {
      */
     protected $fk_id;
 
-    /* fk_account
-     * int
-     */
-    protected $fk_account;
-
     /* information about key
      * array
      */
@@ -26,20 +21,15 @@ class $$$Key {
      * @param string: name of table
      * @param int: id of entry
      */
-    public function __construct ($fk_table, $fk_id, $fk_account = 0) {
-	global $TSunic;
-
-	// set fk_account
-	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
+    public function __construct ($fk_table, $fk_id) {
 
 	// save
 	$this->fk_table = $fk_table;
 	$this->fk_id = $fk_id;
-	$this->fk_account = $fk_account;
     }
 
     /* get information about key
-     * +@param string: name of info
+     * @param string: name of info
      *
      * @return mix
      */
@@ -61,7 +51,7 @@ class $$$Key {
      * @return bool
      */
     protected function _loadInfo () {
-	if (!$this->fk_table or !$this->fk_account) return false;
+	if (!$this->fk_table) return false;
 	global $TSunic;
 
 	// get data from database
@@ -69,7 +59,7 @@ class $$$Key {
 	    FROM #__keys
 	    WHERE fk_table = '$this->fk_table'
 		AND fk_id = '$this->fk_id'
-		AND fk_account = '$this->fk_account';";
+		AND fk_account = '".$TSunic->Usr->getInfo('id')."';";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result) return false;
 	$this->info = $result[0];
@@ -95,7 +85,9 @@ class $$$Key {
 	    $this->create();
 	}
 
-	$data = $TSunic->Usr->encrypt($data, $this->getInfo('key'));
+	// can_write?
+	if (!$this->getInfo('can_write')) return $data;
+	$data = $TSunic->Usr->encrypt($data, $this->getInfo('key'), false);
 	return $data;
     }
 
@@ -115,6 +107,19 @@ class $$$Key {
 	return $data;
     }
 
+    /* get new random key phrase
+     *
+     * @return string
+     */
+    protected function gen_key () {
+	$string = '';
+	$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+	for ($i = 0; $i < 30; $i++) {
+	    $string .= $characters[mt_rand(0, (strlen($characters)-1))];
+	}
+	return $string;
+    }
+
     /* get key
      *
      * @return string
@@ -123,18 +128,15 @@ class $$$Key {
 	global $TSunic;
 
 	// get string
-	$string = '';
-	$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-	for ($i = 0; $i < 30; $i++) {
-	    $string .= $characters[mt_rand(0, (strlen($characters)-1))];
-	}
+	$string = $this->gen_key();
 
 	// create tmp info
 	$this->info = array(
 	    'fk_table' => $this->fk_table,
 	    'fk_id' => 0,
 	    'fk_account' => $TSunic->Usr->getInfo('id'),
-	    'readwrite' => 0,
+	    'fk_account_origin' => $TSunic->Usr->getInfo('id'),
+	    'can_write' => 1,
 	    'key' => $string
 	);
 
@@ -142,25 +144,58 @@ class $$$Key {
     }
 
     /* save new key in database
-     * @param int: fk_id
+     * +@param int: fk_id
      *
      * @return bool
      */
-    public function save ($fk_id) {
+    public function save ($fk_id = false) {
 	if (empty($this->info)) return false;
 	global $TSunic;
-	$this->info['fk_id'] = $fk_id;
+	if ($fk_id) $this->info['fk_id'] = $fk_id;
+
+	// get User object to save for
+	$User = $TSunic->get('$usersystem$User', $this->getInfo('fk_account'));
+	if (!$User) return false;
 
 	// update database
-	$key = $TSunic->Usr->encrypt($this->getInfo('key'));
+	$key = $User->encrypt($this->getInfo('key'));
+	$sql_set = "
+	    fk_account = '".$this->getInfo('fk_account')."',
+	    fk_account_origin = '".$this->getInfo('fk_account_origin')."',
+	    can_write = '".$this->getInfo('can_write')."',
+	    _key_ = '$key'
+	";
 	$sql = "INSERT INTO #__keys
-	    SET fk_table = '".$this->getInfo('fk_table')."',
-		fk_id = '".$this->getInfo('fk_id')."',
-		fk_account = '".$this->getInfo('fk_account')."',
-		readwrite = '".$this->getInfo('readwrite')."',
-		_key_ = '$key'
-	    ON DUPLICATE KEY UPDATE _key_ = '$key';";
+	    SET fk_id = '".$this->getInfo('fk_id')."',
+		fk_table = '".$this->getInfo('fk_table')."',
+		".$sql_set."
+	    ON DUPLICATE KEY UPDATE ".$sql_set.";";
 	return $TSunic->Db->doInsert($sql);
+    }
+
+    /* edit data of key
+     * @param int: new fk_account
+     * @param bool: can write?
+     * @param bool: is private key?
+     *
+     * @return bool
+     */
+    public function edit ($fk_account, $can_write) {
+	global $TSunic;
+	$this->getInfo();
+
+	// update
+	if ($fk_account != $TSunic->Usr->getInfo('id')) {
+	    // push to other user
+	    $this->info['key'] = $this->gen_key();
+	}
+	$this->info['fk_account'] = $fk_account;
+	$this->info['can_write'] = $can_write;
+
+	// save new key
+	$this->saveKey();
+
+	return true;
     }
 
     /* delete key
@@ -179,3 +214,4 @@ class $$$Key {
 	return $TSunic->Db->doDelete($sql);
     }
 }
+?>
