@@ -7,6 +7,9 @@ $lang = array(
     'CLASS__DATABASE__ERROR' => 'Es ist ein Fehler in der Datenbank aufgetreten! Es können weitere Probleme auftreten.',
     'CLASS__DATABASE__CRITICAL_ERROR' => 'Es ist ein kritischer Datenbankfehler aufgetreten! Das Script wurde abgebrochen.',
 
+    // general
+    'PERMISSION_DENIED' => 'Zugriff verweigert!',
+
     // config
     'CONFIG__LANGUAGE' => 'Sprache',
     'CONFIG__LANGUAGE__DESCRIPTION' => 'Die Sprache, in der TSunic dir die Seiten anzeigt.',

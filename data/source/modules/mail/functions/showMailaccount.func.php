@@ -1,7 +1,13 @@
-<!-- | function to show mail account -->
+<!-- | FUNCTION show mail account -->
 <?php
 function $$$showMailaccount () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get mailaccount object
     $id = $TSunic->Temp->getParameter('$$$id');

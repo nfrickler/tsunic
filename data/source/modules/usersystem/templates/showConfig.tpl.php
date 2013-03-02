@@ -34,7 +34,7 @@
     <form action="<?php $this->setUrl('$$$setConfig'); ?>" method="post">
 	<input type="hidden" name="$$$showConfig__id" id="$$$showConfig__id" value="<?php echo $this->getVar('User')->getInfo('id'); ?>" />
 	<?php foreach ($this->getVar('config') as $index => $values) { ?>
-	<h2><?php $this->set($index); ?></h2>
+	<h2><?php $this->set('{'.strtoupper($index).'__NAME}'); ?></h2>
 	<table cellspacing="2" cellpadding="0" border="0">
 	    <tr>
 		<th><?php $this->set('{SHOWCONFIG__NAME}'); ?></th>

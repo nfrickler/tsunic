@@ -1,0 +1,4 @@
+<!-- | access -->
+<all>
+    <access default="0">useImapSmtp</access>
+</all>

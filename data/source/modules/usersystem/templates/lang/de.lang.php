@@ -108,8 +108,8 @@ $lang = array(
     // showAccess
     'SHOWACCESS__TITLE' => 'Berechtigungen',
     'SHOWACCESS__H1' => 'Berechtigungen',
-    'SHOWACCESS__TOACCESSGROUPS' => 'Accessgruppen bearbeiten',
-    'SHOWACCESS__INFOTEXT' => 'Hier kannst du die Berechtigungen von Nutzern ändern',
+    'SHOWACCESS__TOACCESSGROUPS' => 'Berechtigungsgruppen bearbeiten',
+    'SHOWACCESS__INFOTEXT' => 'Hier kannst du die Berechtigungen von Nutzern und Berechtigungsgruppen ändern.',
     'SHOWACCESS__H_ACCESSOF' => 'Berechtigungen von #name#',
     'SHOWACCESS__NAME' => 'Name',
     'SHOWACCESS__VALUE' => 'Zugriff?',
@@ -134,10 +134,10 @@ $lang = array(
     /* ***************** accessgroups *************************** */
 
     // showAccessgroups
-    'SHOWACCESSGROUPS__TITLE' => 'Accessgruppen',
-    'SHOWACCESSGROUPS__H1' => 'Accessgruppen',
-    'SHOWACCESSGROUPS__INFOTEXT' => 'Hier sind alle Accessgruppen aufgelistet. Du kannst neue hinzufügen oder existierende bearbeiten und entfernen.',
-    'SHOWACCESSGROUPS__TOCREATEACCESSGROUP' => 'Create new accessgroup',
+    'SHOWACCESSGROUPS__TITLE' => 'Berechtigungsgruppen',
+    'SHOWACCESSGROUPS__H1' => 'Berechtigungsgruppen',
+    'SHOWACCESSGROUPS__INFOTEXT' => 'Hier sind alle Berechtigungsgruppen aufgelistet. Du kannst neue hinzufügen oder existierende bearbeiten und entfernen.',
+    'SHOWACCESSGROUPS__TOCREATEACCESSGROUP' => 'Neue Berechtigungsgruppe erstellen',
 
     // showAccessgroup
     'SHOWACCESSGROUP__TITLE' => 'Berechtigungsgruppe',

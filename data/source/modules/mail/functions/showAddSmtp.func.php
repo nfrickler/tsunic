@@ -1,7 +1,13 @@
-<!-- | function to show form to add new SMTP -->
+<!-- | FUNCTION show form to add new SMTP -->
 <?php
 function $$$showAddSmtp () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get input
     $fk_mailaccount = $TSunic->Temp->getParameter('fk_mailaccount');

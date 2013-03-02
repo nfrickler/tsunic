@@ -42,9 +42,13 @@ $lang = array(
     'CLASS__SMTP__CONNSECURITIES_STARTTLS' => 'STARTTLS',
     'CLASS__SMTP__CONNSECURITIES_SSLTLS' => 'SLL/TLS',
 
+    // access
+    'ACCESS__USEIMAPSMTP' => 'Use IMAP/SMTP',
+    'ACCESS__USEIMAPSMTP_DESCRIPTION' => 'Is it allowed to use IMAP/SMTP to administrate external mail accounts?',
+
     // general
     'INBOX__NAME' => 'Local inbox',
-    'INBOX__DESCRIPTION' => 'Default Inbox of user (not editable)',
+    'INBOX__DESCRIPTION' => 'Default Inbox (not editable)',
 
     // common
     'COMMON__BACKTOOVERVIEW' => 'Back to overview',
@@ -57,11 +61,6 @@ $lang = array(
     'COMMON__ERROR' => 'An error occurred! Please try again!',
     'COMMON__CHOOSEPLEASE' => '--Choose please--',
 
-    // showMain
-    'SHOWMAIN__TITLE' => 'Your mails',
-    'SHOWMAIN__H1' => 'Your mails',
-    'SHOWMAIN__INFO' => 'This is your mail-administration. To recieve mails from certain mailservers, you have to add these servers. All mails in your INBOX on this server will be automatically recieved and stored locally.',
-
     /* ************************* mailbox ************************************ */
 
     // updateMailbox
@@ -69,7 +68,8 @@ $lang = array(
 
     // showMailboxes
     'SHOWMAILBOXES__TITLE' => 'Your Mailboxes',
-    'SHOWMAILBOXES__YOURMAILBOXES' => 'Your Mailboxes',
+    'SHOWMAILBOXES__H1' => 'Your Mailboxes',
+    'SHOWMAILBOXES__INFOTEXT' => 'This are your mailboxes. Click on the name of one to get a list of all mails within this mailbox.',
     'SHOWMAILBOXES__TOCREATENEWMAILBOX' => 'Create a new mailbox',
     'SHOWMAILBOXES__EDIT' => '{$$$COMMON__EDIT}',
     'SHOWMAILBOXES__DELETE' => '{$$$COMMON__DELETE}',

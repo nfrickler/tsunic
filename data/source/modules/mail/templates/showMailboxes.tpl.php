@@ -1,4 +1,4 @@
-<!-- | Template: show all mailboxes -->
+<!-- | TEMPLATE show all mailboxes -->
 <?php
 // add javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
@@ -7,7 +7,8 @@ $TSunic->Tmpl->addJSfunction('$system$showOptionbox');
 $mailboxes = $this->getVar('mailboxes');
 ?>
 <div id="div_mail__showMailBoxes">
-    <h2><?php $this->set('{SHOWMAILBOXES__YOURMAILBOXES}'); ?></h2>
+    <h1><?php $this->set('{SHOWMAILBOXES__H1}'); ?></h1>
+    <p><?php $this->set('{SHOWMAILBOXES__INFOTEXT}'); ?></p>
 
     <table cellspacing="1" cellpadding="5" border="0">
 	<tr style="width:100%;">

@@ -53,7 +53,7 @@
 	<input type="hidden" name="$$$id" value="<?php echo $this->getVar('id'); ?>"\>
 	<input type="hidden" name="$$$isuser" value="<?php echo $this->getVar('isuser') ? "1" : "0"; ?>"\>
 	<?php foreach ($this->getVar('accessnames') as $index => $values) { ?>
-	<h3><?php $this->set($index); ?></h3>
+	<h3><?php $this->set('{'.strtoupper($index).'__NAME}'); ?></h3>
 	<table cellspacing="2" cellpadding="0" border="0">
 	    <tr>
 		<th><?php $this->set('{SHOWACCESS__NAME}'); ?></th>

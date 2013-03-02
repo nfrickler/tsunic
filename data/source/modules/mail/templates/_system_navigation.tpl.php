@@ -13,9 +13,7 @@ $mailboxes = $this->getVar('mailboxes');
 
 <a href="<?php $this->setUrl('$$$showCreateMail'); ?>">
     <?php $this->set('{_NAVIGATION__SHOWCREATEMAIL}'); ?></a>
+<?php if ($TSunic->Usr->access('useImapSmtp')) { ?>
 <a href="<?php $this->setUrl('$$$showMailservers'); ?>">
     <?php $this->set('{_NAVIGATION__SHOWMAILSERVERS}'); ?></a>
-<!--
-<a href="<?php $this->setUrl('$$$showMailsettings'); ?>">
-    <?php $this->set('{_NAVIGATION__SHOWMAILSETTINGS}'); ?></a>
--->
+<?php } ?>

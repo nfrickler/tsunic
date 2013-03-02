@@ -1,7 +1,13 @@
-<!-- | function to ask, if SMTP shall be deleted -->
+<!-- | FUNCTION delete Smtp object? -->
 <?php
 function $$$showDeleteSmtp () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get Smtp object
     $id = $TSunic->Temp->getParameter('$$$id');

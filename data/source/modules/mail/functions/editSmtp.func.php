@@ -3,6 +3,12 @@
 function $$$editSmtp () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get input
     $id = $TSunic->Temp->getParameter('$$$formSmtp__id');
     $fk_mail__account = $TSunic->Temp->getParameter('$$$formSmtp__mailaccount');

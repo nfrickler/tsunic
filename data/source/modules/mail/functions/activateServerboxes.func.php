@@ -3,6 +3,12 @@
 function $$$activateServerboxes () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get input
     $activated_serverboxes = $TSunic->Temp->getByPreffix('$$$showMailaccount__serverboxes_');
 

@@ -1,7 +1,13 @@
-<!-- | function to show form to edit serverbox -->
+<!-- | FUNCTION show form to edit serverbox -->
 <?php
 function $$$showEditServerbox () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get Serverbox object
     $id = $TSunic->Temp->getParameter('$$$id');

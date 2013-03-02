@@ -3,6 +3,12 @@
 function $$$showAddServerbox () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get Mailaccount object
     $id = $TSunic->Temp->getParameter('$$$id');
     $Mailaccount = $TSunic->get('$$$Mailaccount', $id);

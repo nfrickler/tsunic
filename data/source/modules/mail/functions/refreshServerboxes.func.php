@@ -1,7 +1,13 @@
-<!-- | function to refresh serverboxes -->
+<!-- | FUNCTION refresh serverboxes -->
 <?php
 function $$$refreshServerboxes () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get id
     $id = $TSunic->Temp->getParameter('$$$id');

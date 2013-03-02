@@ -3,6 +3,12 @@
 function $$$editServerbox () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get input
     $id = $TSunic->Temp->getPost('$$$formServerbox__id');
     $name = $TSunic->Temp->getPost('$$$formServerbox__name');

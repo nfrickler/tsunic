@@ -42,9 +42,13 @@ $lang = array(
     'CLASS__SMTP__CONNSECURITIES_STARTTLS' => 'STARTTLS',
     'CLASS__SMTP__CONNSECURITIES_SSLTLS' => 'SLL/TLS',
 
+    // access
+    'ACCESS__USEIMAPSMTP' => 'IMAP/SMTP erlauben',
+    'ACCESS__USEIMAPSMTP_DESCRIPTION' => 'Ist es erlaubt, dass man eigene Mail-Accounts über IMAP/SMTP mit diesem System verwaltet?',
+
     // general
     'INBOX__NAME' => 'Posteingang',
-    'INBOX__DESCRIPTION' => 'Standard Posteingang des Benutzers (nicht veränderbar)',
+    'INBOX__DESCRIPTION' => 'Standard-Posteingang (nicht veränderbar)',
 
     // common
     'COMMON__BACKTOOVERVIEW' => 'Zurück zur Übersicht',
@@ -57,39 +61,35 @@ $lang = array(
     'COMMON__ERROR' => 'Es ist ein Fehler aufgetreten. Bitte versuche es erneut!',
     'COMMON__CHOOSEPLEASE' => '--Bitte wählen--',
 
-    // showMain
-    'SHOWMAIN__TITLE' => 'Deine Mails',
-    'SHOWMAIN__H1' => 'Deine Mails',
-    'SHOWMAIN__INFO' => 'Dies ist deine Mail-Verwaltung. Um Mails von deinen E-Mail-Postfächern zu empfangen, füge bitte deinen Mailaccount in der Rubrik "Mailserver" hinzu. Um E-Mails über SMTP zu versenden, füge bitte an gleicher Stelle einen SMTP-Server hinzu.',
-
     /* ***************** mailbox ******************************* */
 
     // updateMailbox
-    'UPDATEMAILBOX__SUCCESS' => 'Mailbox aktualisiert.',
+    'UPDATEMAILBOX__SUCCESS' => 'Postfach aktualisiert.',
 
     // showMailboxes
-    'SHOWMAILBOXES__TITLE' => 'Deine Mailboxen',
-    'SHOWMAILBOXES__YOURMAILBOXES' => 'Deine Mailboxen',
-    'SHOWMAILBOXES__TOCREATENEWMAILBOX' => 'Erstelle neue Mailbox',
+    'SHOWMAILBOXES__TITLE' => 'Deine Postfächer',
+    'SHOWMAILBOXES__H1' => 'Deine Postfächer',
+    'SHOWMAILBOXES__INFOTEXT' => 'Hier siehst du deine Postfächer. Klicke auf den Namen eines Postfaches, um die darin enthaltenen Nachrichten zu angezeigt zu bekommen.',
+    'SHOWMAILBOXES__TOCREATENEWMAILBOX' => 'Erstelle neues Postfach',
     'SHOWMAILBOXES__EDIT' => 'Bearbeiten',
     'SHOWMAILBOXES__DELETE' => 'Löschen',
     'SHOWMAILBOXES__NAME' => 'Name',
     'SHOWMAILBOXES__DESCRIPTION' => 'Beschreibung',
     'SHOWMAILBOXES__MAILNUMBER' => 'Zahl der Mails',
-    'SHOWMAILBOXES__POPUP_DELETE_HEADER' => 'Mailbox "#name#" löschen?',
-    'SHOWMAILBOXES__POPUP_DELETE_HEADER_JS' => 'Mailbox löschen?',
-    'SHOWMAILBOXES__POPUP_DELETE_CONTENT' => 'Willst du wirklich diese Mailbox löschen?',
+    'SHOWMAILBOXES__POPUP_DELETE_HEADER' => 'Postfach "#name#" löschen?',
+    'SHOWMAILBOXES__POPUP_DELETE_HEADER_JS' => 'Postfach löschen?',
+    'SHOWMAILBOXES__POPUP_DELETE_CONTENT' => 'Willst du wirklich dieses Postfach löschen?',
     'SHOWMAILBOXES__POPUP_DELETE_YES' => 'Ja, löschen.',
     'SHOWMAILBOXES__POPUP_DELETE_NO' => 'Nein, abbrechen.',
 
     // showMailbox
-    'SHOWMAILBOX__TITLE' => 'Mailbox anzeigen',
-    'SHOWMAILBOX__H1' => 'Mailbox | #name#',
+    'SHOWMAILBOX__TITLE' => 'Postfach anzeigen',
+    'SHOWMAILBOX__H1' => 'Postfach | #name#',
     'SHOWMAILBOX__NUMBEROFMAILS' => 'Mailanzahl:',
     'SHOWMAILBOX__FROMADDRESS' => 'Von',
     'SHOWMAILBOX__SUBJECT' => 'Betreff',
-    'SHOWMAILBOX__NOMAILINBOX' => 'In dieser Mailbox sind keine Mails...',
-    'SHOWMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Mailboxen',
+    'SHOWMAILBOX__NOMAILINBOX' => 'In diesem Postfach sind keine Mails...',
+    'SHOWMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Postfächern',
     'SHOWMAILBOX__TOSHOWWRITEMAIL' => 'Mail schreiben',
     'SHOWMAILBOX__JS_UPDATER' => 'Suche neue Mails...',
     'SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_HEADER' => 'Neue Mails',
@@ -97,7 +97,7 @@ $lang = array(
     'SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_YES' => 'Aktualisieren',
     'SHOWMAILBOX__OPTIONMAILBOX_NEWMAILS_NO' => 'Abbrechen',
     'SHOWMAILBOX__UPDATER_NONEWMAILS' => 'Keine neuen Mails gefunden',
-    'SHOWMAILBOX__UPDATER_FAIL' => 'Aktualisierung der Mailbox ist fehlgeschlagen!',
+    'SHOWMAILBOX__UPDATER_FAIL' => 'Aktualisierung des Postfachs ist fehlgeschlagen!',
     'SHOWMAILBOX__SELECTALL' => 'Alle auswählen',
     'SHOWMAILBOX__DESELECTALL' => 'Auswahl aufheben',
     'SHOWMAILBOX__PERFORMACTION_DELETE' => 'Löschen',
@@ -110,50 +110,50 @@ $lang = array(
     'PERFORMMAILSACTION__SUCCESS' => 'Die gewählte Aktion wurde erfolgreich ausgeführt.',
 
     // showAddMailbox
-    'SHOWADDMAILBOX__TITLE' => 'Mailbox erstellen',
-    'SHOWADDMAILBOX__H1' => 'Mailbox erstellen',
-    'SHOWADDMAILBOX__INFO' => 'Bitte fülle das Formular aus, um eine neue lokale Mailbox zu erstellen.',
-    'SHOWADDMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Mailboxen',
-    'SHOWADDMAILBOX__SUBMIT' => 'Mailbox erstellen',
+    'SHOWADDMAILBOX__TITLE' => 'Neues Postfach erstellen',
+    'SHOWADDMAILBOX__H1' => 'Postfach erstellen',
+    'SHOWADDMAILBOX__INFO' => 'Bitte fülle das Formular aus, um ein neues lokales Postfach zu erstellen.',
+    'SHOWADDMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Postfächern',
+    'SHOWADDMAILBOX__SUBMIT' => 'Postfach erstellen',
     'SHOWADDMAILBOX__RESET' => 'Reset',
 
     // addMailbox
-    'ADDMAILBOX__SUCCESS' => 'Die neue Mailbox wurde erfolgreich erstellt',
+    'ADDMAILBOX__SUCCESS' => 'Das neue Postfach wurde erfolgreich erstellt',
     'ADDMAILBOX__INVALIDINPUT' => 'Bitte fülle alle erforderlichen Felder aus!',
 
     // showEditMailbox
-    'SHOWEDITMAILBOX__TITLE' => 'Mailbox bearbeiten',
-    'SHOWEDITMAILBOX__H1' => 'Mailbox "#name#" bearbeiten',
-    'SHOWEDITMAILBOX__INFO' => 'Über dieses Formular kannst du die Daten der Mailbox bearbeiten.',
+    'SHOWEDITMAILBOX__TITLE' => 'Postfach bearbeiten',
+    'SHOWEDITMAILBOX__H1' => 'Postfach "#name#" bearbeiten',
+    'SHOWEDITMAILBOX__INFO' => 'Über dieses Formular kannst du die Daten des Postfaches bearbeiten.',
     'SHOWEDITAILMAILBOX__SUBMIT' => 'Änderungen speichern',
     'SHOWEDITMAILBOX__RESET' => 'Reset',
-    'SHOWEDITMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Mailboxen',
+    'SHOWEDITMAILBOX__TOSHOWMAILBOXES' => 'Zurück zu allen Postfächern',
 
     // editMailbox
     'EDITMAILBOX__SUCCESS' => 'Die Änderungen wurden erfolgreich gespeichert.',
     'EDITMAILBOX__INVALIDINPUT' => 'Bitte fülle alle erforderlichen Felder korrekt aus!',
 
     // formMailbox
-    'FORMMAILBOX__LEGEND' => 'Deine lokale Mailbox',
+    'FORMMAILBOX__LEGEND' => 'Dein lokales Postfach',
     'FORMMAILBOX__NAME' => 'Name',
-    'FORMMAILBOX__PRESET_NAME' => 'Name deiner lokalen Mailbox',
-    'FORMMAILBOX__HELP_NAME' => 'Gebe einen beliebigen Namen für deine lokale Mailbox ein',
+    'FORMMAILBOX__PRESET_NAME' => 'Name deines lokalen Postfaches',
+    'FORMMAILBOX__HELP_NAME' => 'Gebe einen beliebigen Namen für dein lokales Postfaches ein',
     'FORMMAILBOX__DESCRIPTION' => 'Beschreibung',
-    'FORMMAILBOX__PRESET_DESCRIPTION' => 'Eine Beschreibung der Mailbox',
-    'FORMMAILBOX__HELP_DESCRIPTION' => 'Gebe eine Beschreibung der Mailbox ein (optional).',
+    'FORMMAILBOX__PRESET_DESCRIPTION' => 'Eine Beschreibung des Postfachs',
+    'FORMMAILBOX__HELP_DESCRIPTION' => 'Gebe eine Beschreibung des Postfachs ein (optional).',
     'FORMMAILBOX_ERROR_INVALIDINPUT' => 'Bitte fülle alle erforderlichen Felder korrekt aus!',
 
     // showDeleteMailbox
-    'SHOWDELETEMAILBOX__TITLE' => 'Mailbox löschen',
-    'SHOWDELETEMAILBOX__POPUP_DELETE_HEADER' => 'Mailbox "#name#" löschen?',
-    'SHOWDELETEMAILBOX__POPUP_DELETE_HEADER_JS' => 'Mailbox löschen?',
-    'SHOWDELETEMAILBOX__POPUP_DELETE_CONTENT' => 'Willst du diese Mailbox wirklich löschen?',
+    'SHOWDELETEMAILBOX__TITLE' => 'Postfach löschen',
+    'SHOWDELETEMAILBOX__POPUP_DELETE_HEADER' => 'Postfach "#name#" löschen?',
+    'SHOWDELETEMAILBOX__POPUP_DELETE_HEADER_JS' => 'Postfach löschen?',
+    'SHOWDELETEMAILBOX__POPUP_DELETE_CONTENT' => 'Willst du dieses Postfach wirklich löschen?',
     'SHOWDELETEMAILBOX__POPUP_DELETE_YES' => 'Ja, löschen.',
     'SHOWDELETEMAILBOX__POPUP_DELETE_NO' => 'Nein, abbrechen.',
 
     // deleteMailbox
-    'DELETEMAILBOX__SUCCESS' => 'Die Mailbox wurde erfolgreich gelöscht',
-    'DELETEMAILBOX__ERROR' => 'Die Mailbox konnte nicht gelöscht werden.',
+    'DELETEMAILBOX__SUCCESS' => 'Das Postfach wurde erfolgreich gelöscht',
+    'DELETEMAILBOX__ERROR' => 'Das Postfach konnte nicht gelöscht werden.',
 
     /* ********************** mailservers *********************************** */
 
@@ -181,7 +181,7 @@ $lang = array(
     'SHOWMAILACCOUNT__EMAIL' => 'E-Mail',
     'SHOWMAILACCOUNT__DATEOFCREATION' => 'Erstellungsdatum',
     'SHOWMAILACCOUNT__SERVERBOXES_H1' => 'Serverboxen des Mailaccounts',
-    'SHOWMAILACCOUNT__SERVERBOXES_INFO' => 'Serverboxen sind die Mailboxen deines externen E-Mailaccounts. Aktiviere eine Serverbox, um E-Mails aus dieser Box in eine lokale Mailbox zu laden.',
+    'SHOWMAILACCOUNT__SERVERBOXES_INFO' => 'Serverboxen sind die Mailboxen deines externen E-Mailaccounts. Aktiviere eine Serverbox, um E-Mails aus dieser Box in ein lokales Postfach zu laden.',
     'SHOWMAILACCOUNT__SERVERBOXES_ADD' => 'Manuell eine weitere Serverbox hinzufügen',
     'SHOWMAILACCOUNT__SERVERBOXES_SUBMIT' => 'Serverboxen de-/aktivieren',
     'SHOWMAILACCOUNT__SERVERBOXES_REFRESH' => 'Serverbox-Liste aktualisieren',
@@ -288,7 +288,7 @@ $lang = array(
     // showAddServerbox
     'SHOWADDSERVERBOX__TITLE' => 'Serverbox hinzufügen',
     'SHOWADDSERVERBOX__H1' => 'Serverbox hinzufügen',
-    'SHOWADDSERVERBOX__INFO' => 'Serverboxen sind die Mailboxen auf dem Server. Mails in dieser Serverbox werden in die korrespondierende Mailbox in diesem System geladen.',
+    'SHOWADDSERVERBOX__INFO' => 'Serverboxen sind die Mailboxen auf dem Server. Mails in dieser Serverbox werden in das korrespondierende Postfach auf diesem System geladen.',
     'SHOWADDSERVERBOX__SUBMIT' => 'Serverbox hinzufügen',
     'SHOWADDSERVERBOX__RESET' => 'Reset',
     'SHOWADDSERVERBOX__TOOVERVIEW' => '{$$$COMMON__BACKTOOVERVIEW}',
@@ -305,14 +305,14 @@ $lang = array(
     // formServerbox
     'FORMSERVERBOX__LEGEND' => 'Daten der Serverbox',
     'FORMSERVERBOX__NAME' => 'Name der Serverbox',
-    'FORMSERVERBOX__SELECTMAILBOX' => 'Lokale Mailbox',
-    'FORMSERVERBOX__SELECTMAILBOX_CREATENEW' => 'Neue Mailbox erstellen',
-    'FORMSERVERBOX__TOMAILBOX_CREATENEW' => 'Name der neuen Mailbox',
+    'FORMSERVERBOX__SELECTMAILBOX' => 'Lokales Postfach',
+    'FORMSERVERBOX__SELECTMAILBOX_CREATENEW' => 'Neues Postfach erstellen',
+    'FORMSERVERBOX__TOMAILBOX_CREATENEW' => 'Name des neuen Postfachs',
     'FORMSERVERBOX__PRESET_NAME' => 'Name der Serverbox',
     'FORMSERVERBOX__HELP_NAME' => 'Name der Serverbox, also der Name der Mailbox auf dem externen Mailserver, von dem du E-Mails herunterladen willst (z.B. "INBOX")',
-    'FORMSERVERBOX__HELP_SELECTMAILBOX' => 'Wähle eine lokale Mailbox aus, in die neue Mails geladen werden sollen.',
-    'FORMSERVERBOX__PRESET_NEWMAILBOX' => 'Name der neuen Mailbox',
-    'FORMSERVERBOX__HELP_NEWMAILBOX' => 'Füge einen Name für die neue, lokale Mailbox ein.',
+    'FORMSERVERBOX__HELP_SELECTMAILBOX' => 'Wähle ein lokales Postfach aus, in die neue Mails geladen werden sollen.',
+    'FORMSERVERBOX__PRESET_NEWMAILBOX' => 'Name der neuen Postfachs',
+    'FORMSERVERBOX__HELP_NEWMAILBOX' => 'Füge einen Name für das neue, lokale Postfach ein.',
 
     // editServerbox
     'EDITSERVERBOX__INVALIDINPUT' => 'Ungültige Eingaben!',
@@ -428,7 +428,7 @@ $lang = array(
     'SHOWMAIL__DELTE' => 'Mail löschen',
     'SHOWMAIL__EDIT' => 'Mail bearbeiten',
     'SHOWMAIL__ANSWERMAIL' => 'Antwort schreiben',
-    'SHOWMAIL__TOSHOWMAILBOX' => 'Zurück zur Mailbox',
+    'SHOWMAIL__TOSHOWMAILBOX' => 'Zurück zum Postfach',
     'SHOWMAIL__ATTACHMENTS' => 'Anhänge',
     'SHOWMAIL__NOIFRAMESUPPORT' => 'Dein Browser unterstützt leider keine iframes, so dass die E-Mail hier nicht eingefügt werden konnte...',
     'SHOWMAIL__NOIFRAMESUPPORT_OPENMAIL' => 'Mail in neuem Fenster öffnen',
@@ -482,7 +482,7 @@ $lang = array(
 
     /* ***************** _system_navigation ********************************* */
 
-    '_NAVIGATION__SHOWMAILBOXES' => 'Deine Mailboxen',
+    '_NAVIGATION__SHOWMAILBOXES' => 'Deine Postfächer',
     '_NAVIGATION__SHOWCREATEMAIL' => 'Neue Nachricht',
     '_NAVIGATION__SHOWMAILSETTINGS' => 'Maileinstellungen',
     '_NAVIGATION__SHOWMAILSERVERS' => 'Mailserver',

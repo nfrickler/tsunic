@@ -1,7 +1,13 @@
-<!-- | function to ask if mail account shall be deleted -->
+<!-- | FUNCTION delete mail account? -->
 <?php
 function $$$showDeleteMailaccount () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get Mailaccount object
     $id = $TSunic->Temp->getParameter('$$$id');

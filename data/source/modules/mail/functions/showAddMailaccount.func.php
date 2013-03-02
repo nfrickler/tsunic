@@ -1,7 +1,13 @@
-<!-- | function to show form to add new mail account -->
+<!-- | FUNCTION show form to add new mail account -->
 <?php
 function $$$showAddMailaccount () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get empty Mailaccount object
     $Mailaccount = $TSunic->get('$$$Mailaccount');

@@ -1,8 +1,13 @@
-<!-- | function to show form to edit SMTP -->
+<!-- | FUNCTION show form to edit SMTP -->
 <?php
-
 function $$$showEditSmtp () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get Smtp object
     $id = $TSunic->Temp->getParameter('$$$id');

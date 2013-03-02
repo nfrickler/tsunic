@@ -1,7 +1,13 @@
-<!-- | function to show form to edit mail account -->
+<!-- | FUNCTION show form to edit mail account -->
 <?php
 function $$$showEditMailaccount () {
     global $TSunic;
+
+    // permission?
+    if (!$TSunic->Usr->access('useImapSmtp')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
 
     // get Mailaccount object
     $id = $TSunic->Temp->getParameter('$$$id');
