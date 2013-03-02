@@ -8,8 +8,11 @@ $lang = array(
 
     // types
     'TYPE__PROFILE' => 'Profil',
+    'TYPE__MYPROFILE' => 'Eigenes Profil',
 
     // tags
+    'TAG__PROFILE__ACCOUNT' => 'Account',
+    'TAG__PROFILE__ACCOUNT__DESCRIPTION' => 'Account dieser Person',
     'TAG__PROFILE__FIRSTNAME' => 'Vorname',
     'TAG__PROFILE__FIRSTNAME__DESCRIPTION' => 'Vorname der Person',
     'TAG__PROFILE__LASTNAME' => 'Nachname',
@@ -26,8 +29,8 @@ $lang = array(
     'TAG__PROFILE__ADDRESS__DESCRIPTION' => 'Adresse der Person',
     'TAG__PROFILE' => 'Profil',
     'TAG__PROFILE__DESCRIPTION' => 'Profil einer Person',
-    'TAG__PROFILE__MAINIMAGE' => 'Hauptbild',
-    'TAG__PROFILE__MAINIMAGE__DESCRIPTION' => 'Hauptbild des Profils',
+    'TAG__PROFILE__MAINIMAGE' => 'Profilbild',
+    'TAG__PROFILE__MAINIMAGE__DESCRIPTION' => 'Bild, das für dieses Profil angezeigt wird.',
 
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'weiblich',
@@ -53,6 +56,11 @@ $lang = array(
     'SHOWPROFILE__NAME' => 'Name',
     'SHOWPROFILE__GENDER' => 'Geschlecht',
     'SHOWPROFILE__DATEOFBIRTH' => 'Geburtsdatum',
+
+    // showMyProfile
+    'SHOWMYPROFILE__TITLE' => 'Dein Profil',
+    'SHOWMYPROFILE__H1' => 'Dein Profil',
+    'SHOWMYPROFILE__INFOTEXT' => 'Das hier ist dein Profil. Alle diese Angaben sind für alle Benutzer dieses Systems sichtbar.',
 
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Profil erstellen',
@@ -108,6 +116,7 @@ $lang = array(
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Übersicht',
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tags verwalten',
+    '_SYSTEM_NAVIGATION__TOSHOWMYPROFILE' => 'Dein Profil',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profile'
 );
 ?>

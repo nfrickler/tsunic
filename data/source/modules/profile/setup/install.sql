@@ -5,6 +5,12 @@ INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) V
 ;
 
 INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'PROFILE__ACCOUNT',
+	'{$PROFILE$TAG__PROFILE__ACCOUNT}',
+	'{$PROFILE$TAG__PROFILE__ACCOUNT__DESCRIPTION}',
+	1
+    ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
 	'PROFILE__FIRSTNAME',
 	'{$PROFILE$TAG__PROFILE__FIRSTNAME}',

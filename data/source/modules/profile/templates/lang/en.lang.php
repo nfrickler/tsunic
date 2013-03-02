@@ -8,8 +8,11 @@ $lang = array(
 
     // types
     'TYPE__PROFILE' => 'Profile',
+    'TYPE__MYPROFILE' => 'My profile',
 
     // tags
+    'TAG__PROFILE__ACCOUNT' => 'Account',
+    'TAG__PROFILE__ACCOUNT__DESCRIPTION' => 'Account of this person',
     'TAG__PROFILE__FIRSTNAME' => 'Firstname',
     'TAG__PROFILE__FIRSTNAME__DESCRIPTION' => 'Firstname of person',
     'TAG__PROFILE__LASTNAME' => 'Lastname',
@@ -53,6 +56,11 @@ $lang = array(
     'SHOWPROFILE__NAME' => 'Name',
     'SHOWPROFILE__GENDER' => 'Gender',
     'SHOWPROFILE__DATEOFBIRTH' => 'Date of birth',
+
+    // showMyProfile
+    'SHOWMYPROFILE__TITLE' => 'Your profile',
+    'SHOWMYPROFILE__H1' => 'Your profile',
+    'SHOWMYPROFILE__INFOTEXT' => 'This is your own profile. This profile is visible to all users of this system.',
 
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'female',
@@ -130,6 +138,7 @@ $lang = array(
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Administrate tags',
+    '_SYSTEM_NAVIGATION__TOSHOWMYPROFILE' => 'Your profile',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profil'
 );
 ?>

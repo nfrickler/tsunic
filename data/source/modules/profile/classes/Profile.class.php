@@ -11,6 +11,7 @@ class $$$Profile extends $bp$BpObject {
 	'PROFILE__GENDER',
 	'PROFILE__DATEOFBIRTH',
 	'PROFILE__MAINIMAGE',
+	'PROFILE__ACCOUNT',
     );
 
     /* save dateofbirth
@@ -52,6 +53,17 @@ class $$$Profile extends $bp$BpObject {
      */
     public function getName () {
 	return $this->getInfo('firstname').' '.$this->getInfo('lastname');
+    }
+
+    /* get account object connected with this profile
+     *
+     * @return object
+     */
+    public function getAccount () {
+	global $TSunic;
+	return ($this->getInfo('account'))
+	    ? $TSunic->get('$usersystem$User', $this->getInfo('account'))
+	    : NULL;
     }
 
     /* delete

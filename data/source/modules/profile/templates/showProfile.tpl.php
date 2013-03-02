@@ -1,35 +1,56 @@
 <!-- | TEMPLATE show profile -->
 <?php $Profile = $this->getVar('Profile'); ?>
 <div id="$$$div__showProfile">
-    <h1><?php $this->set('{SHOWPROFILE__H1}'); ?></h1>
+    <h1><?php $this->set($this->getVar('h1')); ?></h1>
     <p class="ts_suplinkbox">
 	<a id="$$$showProfile__editlink" href="<?php $this->setUrl('$$$showEditProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWPROFILE__TOEDITPROFILE}'); ?></a>
+	<?php if ($this->getVar('showDelete')) { ?>
 	<a id="$$$showProfile__deletelink" href="<?php $this->setUrl('$$$showDeleteProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWPROFILE__TODELETEPROFILE}'); ?></a>
+	<?php } ?>
     </p>
+    <?php if ($this->getVar('infotext')) { ?>
+    <p>
+	<?php $this->set($this->getVar('infotext')); ?>
+    </p>
+    <?php } ?>
     <?php if ($Profile->getInfo('mainimage')) { ?>
     <img style="float:right; max-width:350px; max-height:280px;" src="<?php $this->setImg('private', $Profile->getInfo('mainimage')); ?>" />
     <?php } ?>
     <table cellspacing="2" cellpadding="0" border="0" style="width:50%">
+	<?php if ($Profile->getAccount()) { ?>
+	<tr>
+	    <th style="min-width:100px;"><?php $this->set('{TAG__PROFILE__ACCOUNT}'); ?></th>
+	    <td style="min-width:100px;">
+		<?php $this->set($Profile->getAccount()->getName()); ?>
+	    </td>
+	</tr>
+	<?php } ?>
+	<?php if ($Profile->getInfo('firstname') or $Profile->getInfo('lastname')) { ?>
 	<tr>
 	    <th style="min-width:100px;"><?php $this->set('{SHOWPROFILE__NAME}'); ?></th>
 	    <td style="min-width:100px;">
 		<?php $this->set($Profile->getInfo('firstname')." ".$Profile->getInfo('lastname')); ?>
 	    </td>
 	</tr>
+	<?php } ?>
+	<?php if ($Profile->get2show('PROFILE__GENDER')) { ?>
 	<tr>
 	    <th><?php $this->set('{SHOWPROFILE__GENDER}'); ?></th>
 	    <td>
 		<?php $this->set($Profile->get2show('PROFILE__GENDER')); ?>
 	    </td>
 	</tr>
+	<?php } ?>
+	<?php if ($this->getVar('Date')->getInfo('start')) { ?>
 	<tr>
 	    <th><?php $this->set('{SHOWPROFILE__DATEOFBIRTH}'); ?></th>
 	    <td>
 		<?php $this->set(date('d.m.Y', $this->getVar('Date')->getInfo('start'))); ?>
 	    </td>
 	</tr>
+	<?php } ?>
 	<tr>
 	    <th><?php $this->set('{TAG__PROFILE__MAINIMAGE}'); ?></th>
 	    <?php

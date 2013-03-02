@@ -11,7 +11,10 @@ function $$$showProfile () {
     // activate template
     $data = array(
 	'Profile' => $Profile,
-	'Date' => $Date
+	'Date' => $Date,
+	'showDelete' => true,
+	'h1' => '{SHOWPROFILE__H1}',
+	'infotext' => '',
     );
     $TSunic->Tmpl->activate('$$$showProfile', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWPROFILE__TITLE}'));

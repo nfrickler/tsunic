@@ -7,20 +7,10 @@ class $$$User extends $system$Object {
      */
     protected $table = "#__accounts";
 
-    /* Connection
-     * OBJECT
-     */
-    protected $Connection;
-
     /* Access
      * OBJECT
      */
     protected $Access;
-
-    /* Filesystem
-     * OBJECT
-     */
-    protected $Filesystem;
 
     /* Userconfig
      * OBJECT
@@ -31,16 +21,6 @@ class $$$User extends $system$Object {
      * OBJECT
      */
     protected $Profile;
-
-    /* Contacts
-     * OBJECT
-     */
-    protected $Contacts;
-
-    /* Usermodules
-     * OBJECT
-     */
-    protected $Usermodules;
 
     /* Encryption
      * OBJECT
@@ -83,6 +63,14 @@ class $$$User extends $system$Object {
 	return;
     }
 
+    /* get username of this user
+     *
+     * @return string
+     */
+    public function getName () {
+	return $this->getInfo('name');
+    }
+
     /* create new user
      * @param string: email
      * @param string: name
@@ -91,6 +79,7 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function create ($email, $name, $password) {
+	global $TSunic;
 
 	// validate input
 	if (!$this->isValidEMail($email) or
@@ -124,7 +113,9 @@ class $$$User extends $system$Object {
 	    "privkey" => $newkeys['privkey'],
 	    "pubkey" => $newkeys['pubkey']
 	);
-	return $this->_create($data);
+	if (!$this->_create($data)) return false;
+
+	return true;
     }
 
     /* edit account

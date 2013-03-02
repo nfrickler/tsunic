@@ -61,14 +61,16 @@ class $$$Helper {
 
     /* get all objects of certain class (class can be omitted)
      * @param string: name class
+     * @param string: sql-where statements
      *
      * @return array
      */
-    public function getObjects ($class) {
+    public function getObjects ($class, $sql_where = '') {
 	global $TSunic;
 
 	// query database
-	$sql_where = (empty($class)) ? "" : "AND class = '$class'";
+	if (!empty($sql_where)) $sql_where = " AND ".$sql_where;
+	if (!empty($class)) $sql_where = " AND class= '$class'".$sql_where;
 	$sql = "SELECT id
 	    FROM #__objects
 	    WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
