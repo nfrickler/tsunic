@@ -1,0 +1,32 @@
+<!-- | CSS format -->
+
+#$$$div__userheader {
+    position:absolute;
+    padding:0px;
+    margin:0px;
+    top:0px;
+    right:0%;
+    height:70px;
+    width:350px;
+    overflow:hidden;
+    background:#225;
+    color:#FFF;
+}
+#$$$div__userheader__topright {
+    position:absolute;
+    top:0px;
+    right:70px;
+    padding:2px;
+    margin:0px;
+    text-align:right;
+}
+#$$$div__userheader__image {
+    position:absolute;
+    top:0px;
+    right:0px;
+    border:0px;
+    border-left:2px solid #AAF;
+    background:#AAF;
+    width:70px;
+    height:70px;
+}

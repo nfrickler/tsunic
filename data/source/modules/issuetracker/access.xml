@@ -1,0 +1,6 @@
+<!-- | access -->
+<all>
+    <access default="1">openIssues</access>
+    <access default="0">handleIssues</access>
+    <access default="0">removeIssues</access>
+</all>
