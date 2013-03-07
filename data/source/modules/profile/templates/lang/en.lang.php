@@ -133,7 +133,7 @@ $lang = array(
 
     // deleteProfile
     'DELETEPROFILE__SUCCESS' => 'Profile delted.',
-    'DELETEPROFILE__ERROR' => 'Profil could not be deleted!',
+    'DELETEPROFILE__ERROR' => 'Profile could not be deleted!',
 
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',

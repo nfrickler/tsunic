@@ -12,9 +12,9 @@
     <?php if ($this->getVar('issues')) { ?>
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
-	    <th><?php $this->set('{SHOWINDEX__NAME}'); ?></th>
-	    <th><?php $this->set('{SHOWINDEX__AUTHOR}'); ?></th>
-	    <th><?php $this->set('{SHOWINDEX__DESCRIPTION}'); ?></th>
+	    <th><?php $this->set('{TAG__ISSUE__NAME}'); ?></th>
+	    <th><?php $this->set('{TAG__ISSUE__AUTHOR}'); ?></th>
+	    <th><?php $this->set('{TAG_ISSUE__DESCRIPTION}'); ?></th>
 	</tr>
 	<?php foreach ($this->getVar('issues') as $index => $Issue) { ?>
 	<tr>
