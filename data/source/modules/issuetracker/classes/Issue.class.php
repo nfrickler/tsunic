@@ -1,6 +1,6 @@
 <!-- | CLASS Issue -->
 <?php
-class $$$Profile extends $bp$BpObject {
+class $$$Issue extends $bp$BpObject {
 
     /* tags to be connected with this object
      * array

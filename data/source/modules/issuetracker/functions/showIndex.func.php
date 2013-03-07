@@ -5,7 +5,7 @@ function $$$showIndex () {
 
     // get all issues
     $Helper = $TSunic->get('$bp$Helper');
-    $issues = $Helper->getObjects('$$$Issues');
+    $issues = $Helper->getObjects('$$$Issue');
 
     // activate template
     $data = array('issues' => $issues);

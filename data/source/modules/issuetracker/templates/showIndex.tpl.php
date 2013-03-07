@@ -19,7 +19,8 @@
 	<?php foreach ($this->getVar('issues') as $index => $Issue) { ?>
 	<tr>
 	    <td>
-		<?php $this->set($Issue->getInfo('name')); ?>
+		<a href="<?php $this->setUrl('$$$showIssue', array('$$$id' => $Issue->getInfo('id'))); ?>">
+		    <?php $this->set($Issue->getInfo('name')); ?></a>
 	    </td>
 	    <td>
 		<?php $Author = $TSunic->get('$profile$MyProfile', $Issue->getInfo('author')); ?>
