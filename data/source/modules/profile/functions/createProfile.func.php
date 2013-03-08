@@ -9,12 +9,6 @@ function $$$createProfile () {
 	$TSunic->redirect('back');
     }
 
-    // get input
-    $dateofbirth_d = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_d');
-    $dateofbirth_m = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_m');
-    $dateofbirth_Y = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_y');
-    $dateofbirth = mktime(0, 0, 0, $dateofbirth_m, $dateofbirth_d, $dateofbirth_Y);
-
     // get values from form
     $Helper = $TSunic->get('$bp$Helper');
     $form = $Helper->getFormValues();
@@ -37,8 +31,8 @@ function $$$createProfile () {
 	return true;
     }
 
-    // create new Date for dateofbirth
-    if (!$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$form[0]['value'].' '.$form[1]['value'].'"')) {
+    // create new Date for birthday
+    if (0 and !$Profile->saveDateofbirth($birthday, '{PROFILE__DATEOFBIRTH__TITLE} "'.$form[0]['value'].' '.$form[1]['value'].'"')) {
 	$TSunic->Log->alert('error', '{CREATEPROFILE__ERROR}');
 	$TSunic->Log->log('3', 'profile::createProfile: ERROR: Failed to save date of birth');
 	$TSunic->redirect('back');

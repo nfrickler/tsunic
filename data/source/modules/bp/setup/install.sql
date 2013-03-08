@@ -64,5 +64,7 @@ INSERT IGNORE INTO `#__$bp$types` (`name`, `title`, `description`, `fk_account`)
     ('text', '{$BP$TYPE__TEXT}', '{$BP$TYPE__TEXT__DESCRIPTION}', 0),
     ('selection', '{$BP$TYPE__SELECTION}', '{$BP$TYPE__SELECTION__DESCRIPTION}', 0),
     ('radio', '{$BP$TYPE__RADIO}', '{$BP$TYPE__RADIO__DESCRIPTION}', 0),
+    ('timestamp', '{$BP$TYPE__TIMESTAMP}', '{$BP$TYPE__TIMESTAMP__DESCRIPTION}', 0),
+    ('date', '{$BP$TYPE__DATE}', '{$BP$TYPE__DATE__DESCRIPTION}', 0),
     ('$$$BpObject', '{$BP$TYPE__FK}', '{$BP$TYPE__FK__DESCRIPTION}', 0)
 ;

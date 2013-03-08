@@ -22,29 +22,11 @@ $num = 0;
 		'Bit' => $Profile->getBit('PROFILE__GENDER'),
 		'num' => $num++,
 	    ));
+	    $this->display('$bp$formBit', array(
+		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH'),
+		'num' => $num++,
+	    ));
 	    ?>
-
-	    <label for="$$$formProfile__dateofbirth_d"><?php $this->set('{TAG__PROFILE__DATEOFBIRTH}'); ?></label>
-	    <?php $preset = $this->setPreset('$$$formProfile__dateofbirth_d', date('d', $preset_dateofbirth), false); ?>
-	    <select name="$$$formProfile__dateofbirth_d" id="$$$formProfile__dateofbirth_d" style="width:50px;" />
-		<?php for ($i = 1; $i <= 31; $i++) { ?>
-		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"' ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
-		<?php } ?>
-	    </select>
-	    <?php $preset = $this->setPreset('$$$formProfile__dateofbirth_m', date('m', $preset_dateofbirth), false); ?>
-	    <select name="$$$formProfile__dateofbirth_m" id="$$$formProfile__dateofbirth_m" style="width:50px;"/>
-		<?php for ($i = 1; $i <= 12; $i++) { ?>
-		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"'; ?>><?php echo ($i < 10) ? '0'.$i : $i; ?></option>
-		<?php } ?>
-	    </select>
-	    <?php $preset = $this->setPreset('$$$formProfile__dateofbirth_y', date('Y', $preset_dateofbirth), false); ?>
-	    <select name="$$$formProfile__dateofbirth_y" id="$$$formProfile__dateofbirth_y" style="width:100px;"/>
-		<?php for ($i = 1900; $i <= date('Y') + 100; $i++) { ?>
-		<option value="<?php echo $i; ?>" <?php if ($preset == $i) echo 'selected="selected"'; ?>><?php echo $i; ?></option>
-		<?php } ?>
-	    </select>
-	    <div style="clear:both;"></div>
-
 	</fieldset>
 	<?php
 	$bits = $Profile->getBits(false);

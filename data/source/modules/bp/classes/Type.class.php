@@ -55,6 +55,8 @@ class $$$Type extends $system$Object {
 	// check if value matches type conventions
 	switch ($this->getInfo('name')) {
 	    case 'int':
+	    case 'date':
+	    case 'timestamp':
 		return ($this->_validate($value, 'int'));
 		break;
 	    case 'double':

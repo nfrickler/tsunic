@@ -43,14 +43,19 @@
 	    </td>
 	</tr>
 	<?php } ?>
-	<?php if ($this->getVar('Date')->getInfo('start')) { ?>
 	<tr>
-	    <th><?php $this->set('{SHOWPROFILE__DATEOFBIRTH}'); ?></th>
-	    <td>
-		<?php $this->set(date('d.m.Y', $this->getVar('Date')->getInfo('start'))); ?>
-	    </td>
+	    <th style="min-width:100px;">
+		<?php $this->set('{TAG__PROFILE__DATEOFBIRTH}'); ?></th>
+	    </th>
+	    <?php
+	    $this->display('$bp$showBit', array(
+		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH'),
+		'fk_obj' => $Profile->getInfo('id'),
+		'backlink' => base64_encode($this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id')), false, false))
+	    ));
+	    ?>
 	</tr>
-	<?php } ?>
+
 	<tr>
 	    <th><?php $this->set('{TAG__PROFILE__MAINIMAGE}'); ?></th>
 	    <?php

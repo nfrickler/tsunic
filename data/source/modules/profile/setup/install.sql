@@ -35,10 +35,16 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$PROFILE$TAG__PROFILE__IMAGE__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$calendar$Date'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'date'),
 	'PROFILE__DATEOFBIRTH',
 	'{$PROFILE$TAG__PROFILE__DATEOFBIRTH}',
 	'{$PROFILE$TAG__PROFILE__DATEOFBIRTH__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$calendar$Date'),
+	'PROFILE__BIRTHDAY',
+	'{$PROFILE$TAG__PROFILE__BIRTHDAY}',
+	'{$PROFILE$TAG__PROFILE__BIRTHDAY__DESCRIPTION}',
 	1
     ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = '$filesystem$Image'),

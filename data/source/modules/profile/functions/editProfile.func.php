@@ -3,12 +3,6 @@
 function $$$editProfile () {
     global $TSunic;
 
-    // get input
-    $dateofbirth_d = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_d');
-    $dateofbirth_m = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_m');
-    $dateofbirth_Y = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_y');
-    $dateofbirth = mktime(0, 0, 0, $dateofbirth_m, $dateofbirth_d, $dateofbirth_Y);
-
     // get profile object
     $id = $TSunic->Temp->getPost('$$$formProfile__id');
     $Profile = $TSunic->get('$$$Profile', $id);
@@ -33,7 +27,7 @@ function $$$editProfile () {
     }
 
     // edit dateofbirth
-    if (!$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$form[0]['value'].' '.$values[1]['value'].'"')) {
+    if (0 and !$Profile->saveDateofbirth($dateofbirth, '{PROFILE__DATEOFBIRTH__TITLE} "'.$form[0]['value'].' '.$values[1]['value'].'"')) {
 	$TSunic->Log->alert('error', '{EDITPROFILE__ERROR}');
 	$TSunic->redirect('back');
     }

@@ -105,7 +105,7 @@ class $$$Helper {
 	$values = array();
 	foreach ($posts as $index => $value) {
 	    $cache = explode('__', $index);
-	    if (count($cache) != 4 or $cache[1] != 'formBit') continue;
+	    if (count($cache) < 4 or $cache[1] != 'formBit') continue;
 
 	    // get values
 	    switch ($cache[2]) {
@@ -116,7 +116,14 @@ class $$$Helper {
 		    $fk_bits[$cache[3]] = $value;
 		    break;
 		case 'value':
-		    $values[$cache[3]] = $value;
+		    // get multivalues
+		    if ($cache[3] == "multi" and count($cache) >= 5) {
+			if (!isset($values[$cache[4]]) or !is_array($values[$cache[4]]))
+			    $values[$cache[4]] = array();
+			$values[$cache[4]][$cache[5]] = $value;
+		    } else {
+			$values[$cache[3]] = $value;
+		    }
 		    break;
 		default:
 		    // skip
@@ -127,10 +134,61 @@ class $$$Helper {
 	// sum up
 	$out = array();
 	foreach ($fk_tags as $index => $value) {
+	    $Tag = $TSunic->get('$$$Tag', $value);
+	    $value_value = (isset($values[$index])) ? $values[$index] : 0;
+
+	    // sum multiline
+	    if (is_array($value_value)) {
+
+		var_dump($value_value);
+
+		switch ($Tag->getType()->getInfo('name')) {
+		    case 'date':
+			if (!isset($value_value['d'], $value_value['m'],
+			    $value_value['y']
+			)) {
+			    // error: missing value
+			    $TSunic->Log->log(3, "bp::Helper::getFormValues: ".
+				"Missing multi value!");
+			}
+
+			// create timestamp
+			$value_value = mktime(
+			    0,0,0, $value_value['m'],
+			    $value_value['d'], $value_value['y']
+			);
+
+			break;
+		    case 'timestamp':
+			if (!isset($value_value['d'], $value_value['m'],
+			    $value_value['y'], $value_value['h'],
+			    $value_value['i'], $value_value['s']
+			)) {
+			    // error: missing value
+			    $TSunic->Log->log(3, "bp::Helper::getFormValues: ".
+				"Missing multi value!");
+			}
+
+			// create timestamp
+			$value_value = mktime(
+			    $value_value['h'], $value_value['i'],
+			    $value_value['s'], $value_value['m'],
+			    $value_value['d'], $value_value['y']
+			);
+
+			break;
+		    default:
+			// error
+			$TSunic->Log->log(3, "bp::Helper::getFormValues: ".
+			    "Unknown multi-value type!");
+			break;
+		}
+	    }
+
 	    $out[] = array(
 		'fk_tag' => $value,
 		'fk_bit' => (isset($fk_bits[$index])) ? $fk_bits[$index] : 0,
-		'value' => (isset($values[$index])) ? $values[$index] : 0
+		'value' => $value_value
 	    );
 	}
 

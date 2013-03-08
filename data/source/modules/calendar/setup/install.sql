@@ -5,13 +5,13 @@ INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) V
 ;
 
 INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES 
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'timestamp'),
 	'DATE__START',
 	'{$CALENDAR$TAG__DATE__START}',
 	'{$CALENDAR$TAG__DATE__START__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'timestamp'),
 	'DATE__STOP',
 	'{$CALENDAR$TAG__DATE__STOP}',
 	'{$CALENDAR$TAG__DATE__STOP__DESCRIPTION}',
@@ -41,7 +41,7 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$CALENDAR$TAG__DATE__REPEATTYPE__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'timestamp'),
 	'DATE__REPEATSTOP',
 	'{$CALENDAR$TAG__DATE__REPEATSTOP}',
 	'{$CALENDAR$TAG__DATE__REPEATSTOP__DESCRIPTION}',
