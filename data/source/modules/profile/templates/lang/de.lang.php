@@ -38,6 +38,10 @@ $lang = array(
     'SELECTIONS__PROFILE__GENDER_M' => 'männlich',
     'SELECTIONS__PROFILE__GENDER_M__DESCRIPTION' => 'männlich',
 
+    // access
+    'ACCESS__USEPROFILES' => 'Profile anlegen',
+    'ACCESS__USEPROFILES_DESCRIPTION' => 'Benutzer kann Profile über beliebige Personen anlegen und verwalten.',
+
     // showIndex
     'SHOWINDEX__TITLE' => 'Profile',
     'SHOWINDEX__H1' => 'Profile',
@@ -117,6 +121,7 @@ $lang = array(
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Übersicht',
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tags verwalten',
     '_SYSTEM_NAVIGATION__TOSHOWMYPROFILE' => 'Dein Profil',
+    '_HEADER_NAVIGATION__SHOWMYPROFILE' => 'Dein Profil',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profile'
 );
 ?>

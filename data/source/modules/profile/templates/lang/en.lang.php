@@ -38,6 +38,10 @@ $lang = array(
     'SELECTIONS__PROFILE__GENDER_M' => 'male',
     'SELECTIONS__PROFILE__GENDER_M__DESCRIPTION' => 'male',
 
+    // access
+    'ACCESS__USEPROFILES' => 'Create profiles',
+    'ACCESS__USEPROFILES_DESCRIPTION' => 'Users can create and administrate profiles of multiple persons.',
+
     // showIndex
     'SHOWINDEX__TITLE' => 'Profiles',
     'SHOWINDEX__H1' => 'Profiles',
@@ -139,6 +143,7 @@ $lang = array(
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Administrate tags',
     '_SYSTEM_NAVIGATION__TOSHOWMYPROFILE' => 'Your profile',
-    '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profil'
+    '_HEADER_NAVIGATION__SHOWMYPROFILE' => 'Your Profile',
+    '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profiles'
 );
 ?>

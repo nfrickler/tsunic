@@ -3,6 +3,12 @@
 function $$$createProfile () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('$$$useProfiles')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get input
     $dateofbirth_d = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_d');
     $dateofbirth_m = $TSunic->Temp->getPost('$$$formProfile__dateofbirth_m');

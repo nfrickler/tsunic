@@ -3,6 +3,12 @@
 function $$$showIndex () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('$$$useProfiles')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get all profiles
     $Helper = $TSunic->get('$bp$Helper');
     $profiles = $Helper->getObjects('$$$Profile');

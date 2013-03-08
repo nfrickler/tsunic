@@ -8,6 +8,20 @@ function $$$showProfile () {
     $Profile = $TSunic->get('$$$Profile', $id);
     $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth'));
 
+    // is MyProfile?
+    if ($Profile->getInfo('class') == '$$$MyProfile') {
+	// redirect to showMyProfile
+	$TSunic->redirect('$$$showMyProfile',
+	    array('$$$id' => $Profile->getInfo('id'))
+	);
+    }
+
+    // permission?
+    if (!$TSunic->Usr->access('$$$useProfiles')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // activate template
     $data = array(
 	'Profile' => $Profile,

@@ -3,6 +3,12 @@
 function $$$showCreateProfile () {
     global $TSunic;
 
+    // permission?
+    if (!$TSunic->Usr->access('$$$useProfiles')) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // create empty object
     $Profile = $TSunic->get('$$$Profile');
 
