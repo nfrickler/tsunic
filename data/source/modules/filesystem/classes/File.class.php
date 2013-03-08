@@ -42,7 +42,8 @@ class $$$File extends $bp$BpObject {
 	if (!$this->addBit($name, 'FILE__NAME')) return false;
 
 	// upload file
-	if (!move_uploaded_file($FH['tmp_name'], $this->getPath())) {
+	$File = $this->getFileObject();
+	if (!$File->uploadFile($FH, $this->getPath())) {
 	    $this->delete();
 	    return false;
 	}
@@ -230,7 +231,6 @@ class $$$File extends $bp$BpObject {
      * @return string
      */
     public function getAbsPath () {
-	if (!$this->isValid()) return false;
 	$name = $this->getInfo('name');
 	return ($this->getInfo('parent')) ? $this->getDirectory()->getAbsPath()."/$name" : "$name";
     }

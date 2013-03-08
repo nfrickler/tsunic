@@ -180,13 +180,19 @@ class $$$File {
     /* ##################### delete/move/rename ######################### */
 
     /* upload file
+     * @param $__FILES
      * @param string: path, where file is going to be moved to
      *
      * @return bool
      */
-    public function uploadFile ($new_path) {
-	// TODO
-	return true;
+    public function uploadFile ($FH, $new_path) {
+
+	// make sure, directory exists
+	$this->mkFolder(dirname($new_path));
+    
+	// upload file
+	return (move_uploaded_file($FH['tmp_name'], $new_path))
+	    ? true : false;
     }
 
     /* delete file

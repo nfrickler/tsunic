@@ -19,18 +19,19 @@ $backlink = base64_encode($this->setUrl('$$$showIndex', array('$$$id' => $Dir->g
 	<?php $this->set('{SHOWINDEX__INFOTEXT}'); ?>
     </p>
 
+    <?php if ($Dir->getInfo('id') or $Dir->getSubdirectories() or $Dir->getSubfiles()) { ?>
     <table cellspacing="2" cellpadding="0" border="0">
 	<tr>
 	    <th><?php $this->set('{SHOWINDEX__NAME}'); ?></th>
-	    <!--<th><?php $this->set('{SHOWINDEX__PERMISSIONS}'); ?></th>-->
 	    <th><?php $this->set('{SHOWINDEX__DATEOFCREATION}'); ?></th>
 	    <th><?php $this->set('{SHOWINDEX__DATEOFUPDATE}'); ?></th>
 	    <th><?php $this->set('{SHOWINDEX__ACTION}'); ?></th>
 	</tr>
 	<?php if ($Dir->getInfo('id')) { ?>
 	<tr>
-	    <td><a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('parent'))); ?>"> ../</td>
-	    <!--<td></td>-->
+	    <td>
+		<a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('parent'))); ?>">
+		     ../</a></td>
 	    <td></td>
 	    <td></td>
 	    <td></td>
@@ -40,7 +41,6 @@ $backlink = base64_encode($this->setUrl('$$$showIndex', array('$$$id' => $Dir->g
 	<tr>
 	    <td><a href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Subdir->getInfo('id'))); ?>">
 		<?php $this->set($Subdir->getInfo('name')); ?></a></td>
-	    <!--<td><?php $this->set($Subdir->getInfo('fk_permission')); ?></td>-->
 	    <td><?php $this->set($Subdir->getInfo('dateOfCreation')); ?></td>
 	    <td><?php $this->set($Subdir->getInfo('dateOfUpdate')); ?></td>
 	    <td>
@@ -55,7 +55,6 @@ $backlink = base64_encode($this->setUrl('$$$showIndex', array('$$$id' => $Dir->g
 	<tr>
 	    <td><a href="<?php $this->setImg('private', $Subfile->getInfo('id'), true ,true); ?>">
 		<?php $this->set($Subfile->getInfo('name')); ?></a></td>
-	    <!--<td><?php $this->set($Subfile->getInfo('fk_permission')); ?></td>-->
 	    <td><?php $this->set($Subfile->getInfo('dateOfCreation')); ?></td>
 	    <td><?php $this->set($Subfile->getInfo('dateOfUpdate')); ?></td>
 	    <td>
@@ -69,4 +68,9 @@ $backlink = base64_encode($this->setUrl('$$$showIndex', array('$$$id' => $Dir->g
 	</tr>
 	<?php } ?>
     </table>
+    <?php } else { ?>
+    <p>
+	<?php $this->set('{SHOWINDEX__EMPTYDIR}'); ?>
+    </p>
+    <?php } ?>
 </div>

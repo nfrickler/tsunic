@@ -6,7 +6,7 @@ function $$$deleteDirectory () {
     // get directory
     $id = $TSunic->Temp->getParameter('$$$id');
     $Directory = $TSunic->get('$$$Directory', $id);
-    $fk_parent = $Directory->getInfo('fk_parent');
+    $parent = $Directory->getInfo('parent');
 
     // delete directory
     if (!$Directory->delete()) {
@@ -17,7 +17,7 @@ function $$$deleteDirectory () {
 
     // success
     $TSunic->Log->alert('info', '{DELETEDIRECTORY__SUCCESS}');
-    $TSunic->redirect('$$$showIndex', array('$$$id' => $fk_parent));
+    $TSunic->redirect('$$$showIndex', array('$$$id' => $parent));
     return true;
 }
 ?>

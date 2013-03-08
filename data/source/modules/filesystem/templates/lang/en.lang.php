@@ -45,7 +45,7 @@ $lang = array(
     'SHOWINDEX__TITLE' => 'Show directory',
     'SHOWINDEX__H1' => 'Directory "#name#"',
     'SHOWINDEX__INFOTEXT' => 'This page shows you the content of your filesystem directory.',
-    'SHOWINDEX__TOSHOWCREATEDIRECTORY' => 'Create new directory',
+    'SHOWINDEX__TOSHOWCREATEDIRECTORY' => 'Create new subdirectory',
     'SHOWINDEX__TOSHOWCREATEFILE' => 'Upload new file',
     'SHOWINDEX__TOSHOWEDITDIRECTORY' => 'Edit directory',
     'SHOWINDEX__NAME' => 'Name',
@@ -61,6 +61,7 @@ $lang = array(
     'SHOWINDEX__TOMOVEDIRECTORY' => 'Move',
     'SHOWINDEX__MOVEDIRECTORY__H1' => 'Move directory',
     'SHOWINDEX__MOVEDIRECTORY__INFOTEXT' => 'Choose directoy to move directory into. To move it to root directory, choose nothing.',
+    'SHOWINDEX__EMPTYDIR' => 'The directory is empty.',
 
     // formDirectory
     'FORMDIRECTORY__LEGEND' => 'Directory',
@@ -94,10 +95,11 @@ $lang = array(
 
     // showDeleteDirectory
     'SHOWDELETEDIRECTORY__TITLE' => 'Delete directory',
-    'SHOWDELETEDIRECTORY__H1' => 'Delete directory #name#?',
-    'SHOWDELETEDIRECTORY__INFOTEXT' => 'Do you really want to delete this directory?',
-    'SHOWDELETEDIRECTORY__SUBMIT' => 'Yes, delete.',
-    'SHOWDELETEDIRECTORY__CANCEL' => 'No, cancel.',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_HEADER' => 'Delete directory  "#name#"?',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_HEADER_JS' => 'Delete directory?',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_CONTENT' => 'Do you really want to delete this directory?',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_YES' => 'Yes, delete.',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_NO' => 'No, cancel.',
     'SHOWDELETEDIRECTORY__NOTEMPTY' => 'The directory has to be empty before you can delete it!',
 
     // deleteDirectory
@@ -139,10 +141,11 @@ $lang = array(
 
     // showDeleteFile
     'SHOWDELETEFILE__TITLE' => 'Delete file',
-    'SHOWDELETEFILE__H1' => 'Delete file #name#?',
-    'SHOWDELETEFILE__INFOTEXT' => 'Do you really want to delete this file?',
-    'SHOWDELETEFILE__SUBMIT' => 'Yes, delete.',
-    'SHOWDELETEFILE__CANCEL' => 'No, cancel.',
+    'SHOWDELETEFILE__POPUP_DELETE_HEADER' => 'Delete file "#name#"?',
+    'SHOWDELETEFILE__POPUP_DELETE_HEADER_JS' => 'Delete file?',
+    'SHOWDELETEFILE__POPUP_DELETE_CONTENT' => 'Do you really want to delete this file?',
+    'SHOWDELETEFILE__POPUP_DELETE_YES' => 'Yes, delete.',
+    'SHOWDELETEFILE__POPUP_DELETE_NO' => 'No, cancel.',
 
     // deleteFile
     'DELETEFILE__SUCCESS' => 'File deleted.',

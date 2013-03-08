@@ -3,14 +3,14 @@
 $Dir = $this->getVar('Directory');
 ?>
 <div id="$$$div__showdeleteDirectory">
-    <h1><?php $this->set('{SHOWDELETEDIRECTORY__H1}',
-	array('name' => $Dir->getInfo('name'))
-    ); ?></h1>
-    <p class="ts_infotext">
-	<?php $this->set('{SHOWDELETEDIRECTORY__INFOTEXT}'); ?>
-    </p>
-    <a style="ts_submit" href="<?php $this->setUrl('$$$deleteDirectory', array('$$$id' => $Dir->getInfo('id'))); ?>">
-	<?php $this->set('{SHOWDELETEDIRECTORY__SUBMIT}'); ?></a>
-    <a style="ts_cancel" href="<?php $this->setUrl('$$$showIndex', array('$$$id' => $Dir->getInfo('id'))); ?>">
-	<?php $this->set('{SHOWDELETEDIRECTORY__CANCEL}'); ?></a>
+    <?php $this->display('$system$showOptionbox', array(
+	'headertext' => $this->set('{SHOWDELETEDIRECTORY__POPUP_DELETE_HEADER}',
+	    array('name' => $Dir->getName()), false
+	),
+	'contenttext' => '{SHOWDELETEDIRECTORY__POPUP_DELETE_CONTENT}',
+	'submittext' => '{SHOWDELETEDIRECTORY__POPUP_DELETE_YES}',
+	'canceltext' => '{SHOWDELETEDIRECTORY__POPUP_DELETE_NO}',
+	'submit_href' => $this->setUrl('$$$deleteDirectory', array('$$$id' => $Dir->getInfo('id')), true, false),
+	'cancel_href' => $this->setUrl('back', true, true, false)
+    )); ?>
 </div>

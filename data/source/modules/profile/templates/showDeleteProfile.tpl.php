@@ -1,14 +1,11 @@
 <!-- | TEMPLATE delete profile? -->
 <?php
-
-// get data
 $Profile = $this->getVar('Profile');
 ?>
 <div id="$$$div__showDeleteProfile">
     <?php $this->display('$system$showOptionbox', array(
 	'headertext' => $this->set('{SHOWDELETEPROFILE__POPUP_DELETE_HEADER}',
-	    array('name' => $Profile->getInfo('firstname')." ".
-	    $Profile->getInfo('lastname')), false
+	    array('name' => $Profile->getName()), false
 	),
 	'contenttext' => '{SHOWDELETEPROFILE__POPUP_DELETE_CONTENT}',
 	'submittext' => '{SHOWDELETEPROFILE__POPUP_DELETE_YES}',

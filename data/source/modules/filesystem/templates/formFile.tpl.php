@@ -8,7 +8,7 @@ $num = 0;
 	<fieldset>
 	    <legend><?php $this->set('{FORMFILE__LEGEND}'); ?></legend>
 	    <input type="hidden" name="$$$formFile__id" id="$$$formFile__id" value="<?php echo $File->getInfo('id'); ?>" />
-	    <input type="hidden" name="$$$formFile__parent_preset" id="$$$formFile__parent_preset" value="<?php $this->getVar('fk_directory'); ?>" />
+	    <input type="hidden" name="$$$formFile__parent_preset" id="$$$formFile__parent_preset" value="<?php echo $this->getVar('fk_directory'); ?>" />
 	    <?php
 	    $this->display('$bp$formBit', array(
 		'Bit' => $File->getBit('FILE__NAME'),

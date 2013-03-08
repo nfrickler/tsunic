@@ -76,7 +76,7 @@ class $$$Template {
 	return true;
     }
 
-    # ######################## display & include ######################### #
+    /* ****************** display and include ******************** */
 
     /* display template
      * +@param bool/string: false - display this template
@@ -209,7 +209,7 @@ class $$$Template {
 	return true;
     }
 
-    # ############################ set ################################### #
+    /* *************************** set **************************** */
 
     /* parse for output
      * @param string: text to parse
@@ -221,32 +221,26 @@ class $$$Template {
     public function set ($text, $data = NULL, $doEcho = true) {
 	global $TSunic;
 
-	// is only lang-replacement?
-	$lang_only = (preg_match('#[^A-Z0-9_]#', $text)) ? false : true;
-
 	// replace language
 	$text = $TSunic->Tmpl->replaceLang($text);
 
-	// replace special htmlchars
-	$text = htmlspecialchars($text);
+	// add data
+	if (empty($data)) $data = array();
+	if (!is_array($data)) $data = array($data);
+	$this->setData($data);
 
-	// replace everything else
-	if (!$lang_only) {
+	// replace variables (#...#)
+	$text = preg_replace_callback('$#([0-9a-zA-zöäüÖÄÜ_]+)#$Us', array($this, '_replaceVar'), $text);
 
-	    // add data
-	    if (empty($data)) $data = array();
-	    if (!is_array($data)) $data = array($data);
-	    $this->setData($data);
-
-	    // replace variables (#...#)
-	    $text = preg_replace_callback('$#([0-9a-zA-zöäüÖÄÜ_]+)#$Us', array($this, '_replaceVar'), $text);
-
-	    // trim
-	    $text = trim($text);
-	}
+	// trim
+	$text = trim($text);
 
 	// echo?
 	if ($doEcho == true) {
+
+	    // replace special htmlchars
+	    $text = htmlspecialchars($text);
+
 	    echo $text;
 	    return '';
 	}

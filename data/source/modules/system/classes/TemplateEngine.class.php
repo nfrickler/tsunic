@@ -210,8 +210,7 @@ class $$$TemplateEngine {
 	$TSunic->Temp->setCache('ts_TemplateEngine_class_replaceLang_doEscape', $doEscape);
 
 	// skip, if no matches
-	$matches_pre_count = preg_match_all($regex, $text, $matches_pre, PREG_SET_ORDER);
-	if (empty($matches_pre_count)) {
+	if (!strstr($text, '{')) {
 	    // no matches
 	    return $text;
 	}
@@ -228,13 +227,7 @@ class $$$TemplateEngine {
 	if ($nested >= 5) return $text;
 
 	// check, if all replacements done
-	$matches_post_count = preg_match_all(
-	    $regex,
-	    $text,
-	    $matches_post,
-	    PREG_SET_ORDER
-	);
-	if (empty($matches_post_count)) {
+	if (!strstr($text, '{')) {
 	    // no matches
 	    return $text;
 	}

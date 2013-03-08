@@ -44,8 +44,8 @@ $lang = array(
     // showIndex
     'SHOWINDEX__TITLE' => 'Verzeichnis anzeigen',
     'SHOWINDEX__H1' => 'Verzeichnis "#name#"',
-    'SHOWINDEX__INFOTEXT' => 'Diese Seite zeigt dir den Inhalt des Verzeichnisses.',
-    'SHOWINDEX__TOSHOWCREATEDIRECTORY' => 'Neues Verzeichnis erstellen',
+    'SHOWINDEX__INFOTEXT' => 'Diese Seite zeigt dir die Unterverzeichnisse und Dateien in diesem Verzeichnis an.',
+    'SHOWINDEX__TOSHOWCREATEDIRECTORY' => 'Neues Unterverzeichnis erstellen',
     'SHOWINDEX__TOSHOWCREATEFILE' => 'Neue Datei hochladen',
     'SHOWINDEX__TOSHOWEDITDIRECTORY' => 'Verzeichnis bearbeiten',
     'SHOWINDEX__NAME' => 'Name',
@@ -61,6 +61,7 @@ $lang = array(
     'SHOWINDEX__TOMOVEDIRECTORY' => 'Verschieben',
     'SHOWINDEX__MOVEDIRECTORY__H1' => 'Verzeichnis verschieben',
     'SHOWINDEX__MOVEDIRECTORY__INFOTEXT' => 'Bitte wähle das Verzeichnis, in das das Verzeichnis verschoben werden soll. Um das Verzeichnis ins Root-Verzeichnis zu schieben, wähle nichts aus.',
+    'SHOWINDEX__EMPTYDIR' => 'Das Verzeichnis ist leer.',
 
     // formDirectory
     'FORMDIRECTORY__LEGEND' => 'Verzeichnis',
@@ -94,10 +95,11 @@ $lang = array(
 
     // showDeleteDirectory
     'SHOWDELETEDIRECTORY__TITLE' => 'Verzeichnis löschen',
-    'SHOWDELETEDIRECTORY__H1' => 'Verzeichnis #name# löschen?',
-    'SHOWDELETEDIRECTORY__INFOTEXT' => 'Willst du dieses Verzeichnis wirklich löschen?',
-    'SHOWDELETEDIRECTORY__SUBMIT' => 'Ja, löschen.',
-    'SHOWDELETEDIRECTORY__CANCEL' => 'Nein, abbrechen.',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_HEADER' => 'Verzeichnis "#name#" wirklich löschen?',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_HEADER_JS' => 'Verzeichnis löschen?',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_CONTENT' => 'Willst du das Verzeichnis wirklich endgültig löschen?',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_YES' => 'Ja, löschen.',
+    'SHOWDELETEDIRECTORY__POPUP_DELETE_NO' => 'Nein, abbrechen.',
     'SHOWDELETEDIRECTORY__NOTEMPTY' => 'Das Verzeichnis muss leer sein, bevor es gelöscht werden kann!',
 
     // deleteDirectory
@@ -139,10 +141,11 @@ $lang = array(
 
     // showDeleteFile
     'SHOWDELETEFILE__TITLE' => 'Datei löschen',
-    'SHOWDELETEFILE__H1' => 'Datei #name# löschen?',
-    'SHOWDELETEFILE__INFOTEXT' => 'Willst du dieses Datei wirklich löschen?',
-    'SHOWDELETEFILE__SUBMIT' => 'Ja, löschen.',
-    'SHOWDELETEFILE__CANCEL' => 'Nein, abbrechen.',
+    'SHOWDELETEFILE__POPUP_DELETE_HEADER' => 'Datei "#name#" wirklich löschen?',
+    'SHOWDELETEFILE__POPUP_DELETE_HEADER_JS' => 'Datei löschen?',
+    'SHOWDELETEFILE__POPUP_DELETE_CONTENT' => 'Willst du die Datei wirklich endgültig löschen?',
+    'SHOWDELETEFILE__POPUP_DELETE_YES' => 'Ja, löschen.',
+    'SHOWDELETEFILE__POPUP_DELETE_NO' => 'Nein, abbrechen.',
 
     // deleteFile
     'DELETEFILE__SUCCESS' => 'Datei wurde gelöscht',

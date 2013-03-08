@@ -131,8 +131,10 @@ class $$$Directory extends $bp$BpObject {
 	// filter subfiles
 	$this->subfiles = array();
 	foreach ($all as $index => $Value) {
-	    if ($Value->getInfo('parent') == $this->id)
-		$this->subfiles[] = $Value;
+	    $parent = $Value->getInfo('parent');
+	    if ((empty($parent) and empty($this->id))
+		or $parent == $this->id
+	    ) $this->subfiles[] = $Value;
 	}
 
 	return $this->subfiles;

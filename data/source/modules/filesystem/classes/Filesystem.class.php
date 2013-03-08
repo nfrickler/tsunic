@@ -41,7 +41,7 @@ class $$$Filesystem {
 	global $TSunic;
 
 	// get all files
-	if (empty($this->files)) {
+	if (empty($this->files) and empty($this->images)) {
 	    $Helper = $TSunic->get('$bp$Helper');
 	    $this->files = $Helper->getObjects('$$$File');
 	    $this->images = $Helper->getObjects('$$$Image');
