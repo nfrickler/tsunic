@@ -3,6 +3,7 @@
 $lang = array(
     'NAME' => 'Notes Module',
     'OPEN' => 'Open',
+    'TOCREATENEW' => 'New text file',
 
     /* ################### showNote ############################### */
 
