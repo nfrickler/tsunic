@@ -1,7 +1,8 @@
 <!-- | Tables for issuetracker -->
 
 INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) VALUES
-    ('$issuetracker$Issue', '{$ISSUETRACKER$TYPE__ISSUE}', '{$ISSUETRACKER$TYPE__ISSUE__DESCRIPTION}', 0)
+    ('$issuetracker$Issue', '{$ISSUETRACKER$TYPE__ISSUE}', '{$ISSUETRACKER$TYPE__ISSUE__DESCRIPTION}', 0),
+    ('$issuetracker$Queue', '{$ISSUETRACKER$TYPE__QUEUE}', '{$ISSUETRACKER$TYPE__QUEUE__DESCRIPTION}', 0)
 ;
 
 INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES
@@ -23,7 +24,7 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$ISSUETRACKER$TAG__ISSUE__DESCRIPTION__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$issuetracker$Queue'),
 	'ISSUE__QUEUE',
 	'{$ISSUETRACKER$TAG__ISSUE__QUEUE}',
 	'{$ISSUETRACKER$TAG__ISSUE__QUEUE__DESCRIPTION}',
@@ -39,6 +40,18 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'ISSUE__STATUS',
 	'{$ISSUETRACKER$TAG__ISSUE__STATUS}',
 	'{$ISSUETRACKER$TAG__ISSUE__STATUS__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
+	'QUEUE__NAME',
+	'{$ISSUETRACKER$TAG__QUEUE__NAME}',
+	'{$ISSUETRACKER$TAG__QUEUE__NAME__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'text'),
+	'QUEUE__DESCRIPTION',
+	'{$ISSUETRACKER$TAG__QUEUE__DESCRIPTION}',
+	'{$ISSUETRACKER$TAG__QUEUE__DESCRIPTION__DESCRIPTION}',
 	1
     )
 ;

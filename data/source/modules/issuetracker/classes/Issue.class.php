@@ -21,5 +21,14 @@ class $$$Issue extends $bp$BpObject {
     public function getName () {
 	return $this->getInfo('name').' ('.$this->getInfo('author').')';
     }
+
+    /* get Queue object
+     *
+     * @return object
+     */
+    public function getQueue () {
+	global $TSunic;
+	return $TSunic->get('$$$Queue', $this->getInfo('queue'));
+    }
 }
 ?>

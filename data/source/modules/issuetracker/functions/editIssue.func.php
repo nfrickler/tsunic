@@ -1,4 +1,4 @@
-<!-- | FUNCTION edit profile data -->
+<!-- | FUNCTION edit Issue object -->
 <?php
 function $$$editIssue () {
     global $TSunic;
@@ -18,7 +18,7 @@ function $$$editIssue () {
 	$TSunic->redirect('back');
     }
 
-    // is valid profile?
+    // is valid Issue?
     if (!$Issue->isValid()) {
 	// add error message and redirect back
 	$TSunic->Log->alert('error', '{EDITISSUE__ERROR}');

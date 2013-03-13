@@ -5,6 +5,7 @@ $lang = array(
 
     // types
     'TYPE__ISSUE' => 'Issue',
+    'TYPE__QUEUE' => 'Queue',
 
     // tags
     'TAG__ISSUE__NAME' => 'Name',
@@ -13,6 +14,8 @@ $lang = array(
     'TAG__ISSUE__DESCRIPTION' => 'Description',
     'TAG__ISSUE__QUEUE' => 'Queue',
     'TAG__ISSUE__STATUS' => 'Status',
+    'TAG__QUEUE__NAME' => 'Name',
+    'TAG__QUEUE__DESCRIPTION' => 'Description',
 
     // selections
     'SELECTIONS__ISSUE__STATUS_NEW' => 'New',
@@ -20,6 +23,8 @@ $lang = array(
     'SELECTIONS__ISSUE__STATUS_DONE' => 'Done',
     'SELECTIONS__ISSUE__STATUS_CLOSED' => 'Closed',
     'SELECTIONS__ISSUE__STATUS_REJECTED' => 'Rejected',
+
+    /* issues */
 
     // showIndex
     'SHOWINDEX__TITLE' => 'Your issues',
@@ -74,10 +79,66 @@ $lang = array(
     'DELETEISSUE__SUCCESS' => 'Issue deleted.',
     'DELETEISSUE__ERROR' => 'Issue could not be deleted!',
 
+    /* queues */
+
+    // showIndex
+    'SHOWQUEUES__TITLE' => 'Queues',
+    'SHOWQUEUES__H1' => 'Queues',
+    'SHOWQUEUES__INFOTEXT' => 'This is a summary of all queues.',
+    'SHOWQUEUES__NOQUEUE' => 'No queues in queue.',
+    'SHOWQUEUES__TOCREATEQUEUE' => 'Create new queue',
+
+    // showQueue
+    'SHOWQUEUE__TITLE' => 'Show queue',
+    'SHOWQUEUE__H1' => 'Queue',
+    'SHOWQUEUE__TOEDITQUEUE' => 'Edit queue',
+    'SHOWQUEUE__TODELETEQUEUE' => 'Delete queue',
+
+    // showCreateQueue
+    'SHOWCREATEQUEUE__TITLE' => 'Create new queue',
+    'SHOWCREATEQUEUE__H1' => 'Create new queue',
+    'SHOWCREATEQUEUE__INFOTEXT' => 'Here you can create a new queue.',
+    'SHOWCREATEQUEUE__SUBMIT' => 'Create queue',
+    'SHOWCREATEQUEUE__CANCEL' => 'Cancel',
+
+    // showEditQueue
+    'SHOWEDITQUEUE__TITLE' => 'Edit queue',
+    'SHOWEDITQUEUE__H1' => 'Edit queue',
+    'SHOWEDITQUEUE__INFOTEXT' => 'Here you can edit the queue.',
+    'SHOWEDITQUEUE__TOSHOWQUEUE' => 'Show queue',
+    'SHOWEDITQUEUE__TOADDTAG' => 'Add tag',
+    'SHOWEDITQUEUE__SUBMIT' => 'Save changes',
+    'SHOWEDITQUEUE__CANCEL' => 'Cancel',
+
+    // formQueue
+    'FORMQUEUE__LEGEND_ID' => 'Queue',
+
+    // createQueue
+    'CREATEQUEUE__SUCCESS' => 'New queue has been created.',
+    'CREATEQUEUE__ERROR' => 'An error occurred!',
+    'CREATEQUEUE__INVALIDVALUE' => 'Invalid input!',
+
+    // editQueue
+    'EDITQUEUE__SUCCESS' => 'Changes saved.',
+    'EDITQUEUE__ERROR' => 'An error occurred!',
+    'EDITQUEUE__INVALIDVALUE' => 'Invalid input (tag: "#field#", value: "#value#")!',
+
+    // showDeleteQueue
+    'SHOWDELETEQUEUE__TITLE' => 'Delete queue?',
+    'SHOWDELETEQUEUE__POPUP_DELETE_HEADER' => 'Delete queue?',
+    'SHOWDELETEQUEUE__POPUP_DELETE_CONTENT' => 'Do you really want to delete this queue?',
+    'SHOWDELETEQUEUE__POPUP_DELETE_YES' => 'Yes, delete queue',
+    'SHOWDELETEQUEUE__POPUP_DELETE_NO' => 'No, abbort',
+
+    // deleteQueue
+    'DELETEQUEUE__SUCCESS' => 'Queue deleted.',
+    'DELETEQUEUE__ERROR' => 'Queue could not be deleted!',
+
     /* ***************** navigation ******************** */
 
     '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Show summary',
     '_SYSTEM_NAVIGATION__TOSHOWCREATEISSUE' => 'New issue',
+    '_SYSTEM_NAVIGATION__TOSHOWQUEUES' => 'Show queues',
     '_HEADER_NAVIGATION__TOINDEX' => 'IssueTracker'
 );
 ?>
