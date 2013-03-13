@@ -49,7 +49,7 @@
 	    </th>
 	    <?php
 	    $this->display('$bp$showBit', array(
-		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH'),
+		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH', true),
 		'fk_obj' => $Profile->getInfo('id'),
 		'backlink' => base64_encode($this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id')), false, false))
 	    ));

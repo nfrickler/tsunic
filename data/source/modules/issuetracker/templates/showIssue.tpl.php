@@ -41,6 +41,20 @@
 	    </td>
 	</tr>
 	<?php } ?>
+
+	<tr>
+	    <th>
+		<?php $this->set('{TAG__ISSUE__QUEUE}'); ?></th>
+	    </th>
+	    <?php
+	    $this->display('$bp$showBit', array(
+		'Bit' => $Issue->getBit('ISSUE__QUEUE', true),
+		'fk_obj' => $Issue->getInfo('id'),
+		'backlink' => base64_encode($this->setUrl('$$$showIssue', array('$$$id' => $Issue->getInfo('id')), false, false))
+	    ));
+	    ?>
+	</tr>
+
     </table>
 
     <table cellspacing="2" cellpadding="0" border="0">

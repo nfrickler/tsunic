@@ -3,6 +3,9 @@
 $lang = array(
     'NAME' => 'IssueTracking Modul',
 
+    // class
+    'CLASS__QUEUE__NAMEALL' => 'Alle Queues',
+
     // types
     'TYPE__ISSUE' => 'Anfrage',
     'TYPE__QUEUE' => 'Queue',
@@ -30,8 +33,12 @@ $lang = array(
     'SHOWINDEX__TITLE' => 'Deine Anfragen',
     'SHOWINDEX__H1' => 'Deine Anfragen',
     'SHOWINDEX__INFOTEXT' => 'Hier findest du ein Übersicht über alle deine Anfragen.',
-    'SHOWINDEX__NOISSUES' => 'Keine Anfragen vorhanden.',
     'SHOWINDEX__TOCREATEISSUE' => 'Neue Anfrage erstellen',
+    'SHOWINDEX__SUBMIT' => 'Anfragen anzeigen',
+    'SHOWINDEX__H1__ISSUESOFQUEUE' => 'Anfragen in der Queue "#name#"',
+
+    // showListIssues
+    'SHOWLISTISSUES__NOISSUES' => 'Keine Anfragen gefunden.',
 
     // showIssue
     'SHOWISSUE__TITLE' => 'Anfrage anzeigen',

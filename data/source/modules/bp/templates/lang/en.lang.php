@@ -20,6 +20,7 @@ $lang = array(
     // formBit
     'FORMBIT__PLEASECHOOSE' => '---Choose please---',
     'FORMBIT__FK_DISABLED' => 'Only editable in profile view.',
+    'FORMBIT__NOSELECTION' => '---No selection---',
 
     // showTags
     'SHOWTAGS__TITLE' => 'Tags',

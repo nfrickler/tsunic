@@ -66,6 +66,7 @@ class $$$Helper {
      * @return array
      */
     public function getObjects ($class, $sql_where = '') {
+	if (!$class and !$sql_where) return array();
 	global $TSunic;
 
 	// query database

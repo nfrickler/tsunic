@@ -1,7 +1,8 @@
 <!-- | Tables for profile -->
 
 INSERT IGNORE INTO #__$bp$types (`name`, `title`, `description`, `fk_account`) VALUES
-    ('$profile$Profile', '{$PROFILE$TYPE__PROFILE}', '{$PROFILE$TYPE__PROFILE__DESCRIPTION}', 0)
+    ('$profile$Profile', '{$PROFILE$TYPE__PROFILE}', '{$PROFILE$TYPE__PROFILE__DESCRIPTION}', 0),
+    ('$profile$MyProfile', '{$PROFILE$TYPE__MYPROFILE}', '{$PROFILE$TYPE__MYPROFILE__DESCRIPTION}', 0)
 ;
 
 INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `isId`) VALUES

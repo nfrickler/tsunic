@@ -3,6 +3,9 @@
 $lang = array(
     'NAME' => 'IssueTracking module',
 
+    // class
+    'CLASS__QUEUE__NAMEALL' => 'All queues',
+
     // types
     'TYPE__ISSUE' => 'Issue',
     'TYPE__QUEUE' => 'Queue',
@@ -30,8 +33,12 @@ $lang = array(
     'SHOWINDEX__TITLE' => 'Your issues',
     'SHOWINDEX__H1' => 'Your issues',
     'SHOWINDEX__INFOTEXT' => 'This is a summary of all your issues.',
-    'SHOWINDEX__NOISSUES' => 'No issues in queue.',
     'SHOWINDEX__TOCREATEISSUE' => 'Create new issue',
+    'SHOWINDEX__SUBMIT' => 'Show issues',
+    'SHOWINDEX__H1__ISSUESOFQUEUE' => 'Issues in queue "#name#"',
+
+    // showListIssues
+    'SHOWLISTISSUES__NOISSUES' => 'No issues found.',
 
     // showIssue
     'SHOWISSUE__TITLE' => 'Show issue',

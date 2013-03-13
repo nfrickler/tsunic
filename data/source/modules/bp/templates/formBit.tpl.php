@@ -6,6 +6,7 @@ $value = (isset($Bit)) ? $Bit->getInfo('value') : $this->getVar('value');
 $id = (isset($Bit)) ? $Bit->getInfo('id') : $this->getVar('id');
 $required = ($this->getVar('required')) ? ' class="ts_required" ' : '';
 $show_label = $this->getVar('show_label');
+$typename = $Tag->getType()->getInfo('name');
 if ($show_label === NULL) $show_label = true;
 
 $num = $this->getVar('num');
@@ -39,8 +40,8 @@ switch ($Tag->getType()->getInfo('name')) {
 ?>
 <textarea name="$$$formBit__value__<?php echo $num; ?>"
     <?php echo $required; ?>
-    id="$$$formBit__value__<?php echo $num; ?>">
-    <?php $this->setPreset('$$$formSelection__'.$num, $value); ?></textarea>
+    id="$$$formBit__value__<?php echo $num; ?>"
+    ><?php $this->setPreset('$$$formSelection__'.$num, $value); ?></textarea>
 <?php
 	break;
     case 'selection':
@@ -194,14 +195,24 @@ switch ($Tag->getType()->getInfo('name')) {
 	break;
 }
 
-if (substr($Tag->getType()->getInfo('name'),0,3) == 'mod') {
-	$preset = $this->setPreset('$$$formBit__value__'.$num, $value, false);
-?>
-<input type="text" name="dump"
-    value="<?php $this->set('{FORMBIT__FK_DISABLED}'); ?>"
-    disabled="disabled" />
-<?php } ?>
+if (substr($typename,0,3) == 'mod') {
+    $preset = $this->setPreset('$$$formBit__value__'.$num, $value, false);
 
+    // get objects
+    $Obj = $TSunic->get('$bp$Helper');
+    $obj_list = $Obj->getObjects($typename);
+?>
+<select name="$$$formBit__value__<?php echo $num; ?>"
+    <?php echo $required; ?>
+    id="$$$formBit__value__<?php echo $num; ?>">
+    <option value="0"><?php $this->set('{FORMBIT__NOSELECTION}'); ?></option>
+    <?php foreach ($obj_list as $index => $Value) { ?>
+    <option value="<?php echo $Value->getInfo('id'); ?>"
+	<?php if ($Value->getInfo('id') == $preset) echo 'selected="selected"'; ?>>
+	<?php $this->set($Value->getName()); ?></option>
+    <?php } ?>
+</select>
+<?php } ?>
 
 <?php if ($show_label) { ?>
 <div style="clear:both;"></div>
