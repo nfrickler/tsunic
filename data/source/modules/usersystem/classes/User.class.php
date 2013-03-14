@@ -27,18 +27,29 @@ class $$$User extends $system$Object {
      */
     protected $Encryption = NULL;
 
+    /* define id of root
+     * int
+     */
+    protected $id_root = 1;
+
+    /* define id of guest
+     * int
+     */
+    protected $id_guest = 2;
+
     /* constructor
      * @param int/string: account ID (or "guest", "root")
      */
     public function __construct ($id = false) {
 	global $TSunic;
-	if ($id == 'root') $id = 1;
-	if ($id == 'guest') $id = 2;
+	if ($id == 'root') $id = $this->id_root;
+	if ($id == 'guest') $id = $this->id_guest;
 	if (empty($id) and isset($_SESSION['$$$id__account']))
 	    $id = $_SESSION['$$$id__account'];
 
 	// use guest as default
-	if (empty($id) or !$this->_validate($id, 'int')) $id = 2;
+	if (empty($id) or !$this->_validate($id, 'int'))
+	    $id = $this->id_guest;
 
 	// run object constructor
 	parent::__construct($id);
@@ -337,7 +348,7 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function isRoot () {
-	return ($this->id == 1) ? true : false;
+	return ($this->id == $this->id_root) ? true : false;
     }
 
     /* is user guest?
@@ -345,7 +356,15 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function isGuest () {
-	return ($this->id == 2) ? true : false;
+	return ($this->id == $this->id_guest) ? true : false;
+    }
+
+    /* get id of guest
+     *
+     * @return int
+     */
+    public function getIdGuest () {
+	return $this->id_guest;
     }
 
     /* is valid e-mail?

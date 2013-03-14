@@ -120,7 +120,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	if (empty($fk_user)) return false;
 
 	// send mail to this user
-	if (!$Mail->push($fk_user, true)) return false;
+	if (!$Mail->pushTo($fk_user)) return false;
 
 	// save sent mail in sent mailbox
 

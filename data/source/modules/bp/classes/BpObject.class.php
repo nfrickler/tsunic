@@ -70,17 +70,6 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* load Key (always use the same one for all bits of user)
-     *
-     * @return Object
-     */
-    protected function _getKey () {
-	global $TSunic;
-	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$system$Key', array('#__bits', 1));
-	return $this->_Key;
-    }
-
     /* create new object
      *
      * @return bool
@@ -98,7 +87,7 @@ class $$$BpObject extends $system$Object {
     }
 
     /* resave all data (e.g. with new key)
-     * 
+     *
      * @return bool
      */
     public function resave () {
@@ -139,7 +128,7 @@ class $$$BpObject extends $system$Object {
 	global $TSunic;
 
 	// create new Bit object
-	$Bit = $TSunic->get('$$$Bit', false, true);
+	$Bit = $this->_getNewBit();
 
 	// convert fk_tag to id if neccesary
 	$fk_tag = $this->tag2id($fk_tag);
@@ -198,6 +187,15 @@ class $$$BpObject extends $system$Object {
 	return ($Bit and $Bit->edit($value)) ? true : false;
     }
 
+    /* get new empty Bit object
+     *
+     * @return object
+     */
+    protected function _getNewBit () {
+	global $TSunic;
+	return $TSunic->get('$$$Bit', false, true);
+    }
+
     /* get first bit with specified tag
      * @param string/int: id or name of tag
      * +@param bool: add Bit if not exists?
@@ -223,7 +221,7 @@ class $$$BpObject extends $system$Object {
 	    if ($add) {
 		$Bit = $this->addBit(0, $tag);
 	    } else {
-		$Bit = $TSunic->get('$bp$Bit', false, true);
+		$Bit = $this->_getNewBit();
 		$Bit->presetInfo(array('fk_tag' => $tag, 'fk_obj' => $this->id));
 	    }
 	}
@@ -304,7 +302,7 @@ class $$$BpObject extends $system$Object {
 
 	    // create dummy Bit
 	    if (!$exists) {
-		$Bit = $TSunic->get('$$$Bit', false, true);
+		$Bit = $this->_getNewBit();
 		$fk_tag = $this->tag2id($value);
 		if ($fk_tag) {
 		    $Bit->setDummy($fk_tag);

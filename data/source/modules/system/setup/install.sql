@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS `#__$system$keys` (
   `fk_account_origin` int(11) NOT NULL,
   `can_write` int(1) NOT NULL,
   `_key_` text NOT NULL,
-  PRIMARY KEY (`fk_table`, `fk_id`)
+  PRIMARY KEY (`fk_table`, `fk_id`, `fk_account`)
 ) ENGINE=MyISAM;

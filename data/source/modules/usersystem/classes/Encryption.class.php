@@ -150,6 +150,9 @@ class $$$Encryption {
     public function encrypt ($text, $key = false, $asym = false) {
 	global $TSunic;
 
+	// do not encrypt for guest user
+	if ($this->fk_account == $TSunic->Usr->getIdGuest()) return $text;
+
 	// is ready for encryption?
 	if (!$key and !$this->ready) $this->throwEncError();
 

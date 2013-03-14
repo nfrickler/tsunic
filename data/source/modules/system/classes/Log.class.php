@@ -33,7 +33,7 @@ class $$$Log {
 	if (!is_numeric($level)) $level = 3;
 	if ($level > 9) $level = 9;
 	if ($level < 0) $level = 0;
-	$this->level = $level || 3;
+	$this->level = ($level) ? $level : 3;
 
 	// load messages from SESSION
 	$this->messages = (isset($_SESSION['$$$Log']))

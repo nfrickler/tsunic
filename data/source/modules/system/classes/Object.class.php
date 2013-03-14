@@ -12,7 +12,12 @@ class $$$Object {
      */
     protected $id;
 
-    /* Key object
+    /* array of Key objects of this object
+     * array
+     */
+    protected $_keys = array();
+
+    /* Key object (if set, overwrites _keys)
      * object
      */
     protected $_Key;
@@ -82,31 +87,92 @@ class $$$Object {
 	return NULL;
     }
 
+    /* set key for this object
+     * @param object: Key object
+     *
+     * @return bool
+     */
+    public function setKey ($Key) {
+
+	// set table and id
+	$Key->edit(0, 1, $this->table, $this->id, false);
+
+	$this->_Key = $Key;
+	return true;
+    }
+
+    /* get all Key objects for this object
+     *
+     * @return array
+     */
+    public function getKeys () {
+	global $TSunic;
+
+	// query database
+	$sql = "SELECT fk_account
+	    FROM #__keys
+	    WHERE fk_table = '$this->table'
+		AND fk_id = '$this->id'
+	";
+	$result = $TSunic->Db->doSelect($sql);
+
+	// get Key objects
+	$this->_keys = array();
+	foreach ($result as $index => $values) {
+	    $this->_keys = $TSunic->get('$$$Key', array(
+		$this->table, $this->id, $values['fk_account'])
+	    );
+	}
+
+	return $this->_keys;
+    }
+
     /* load Key
+     * +@param int: fk_account of key to return
      *
      * @return Object
      */
-    protected function _getKey () {
+    protected function _getKey ($fk_account = 0) {
 	global $TSunic;
-	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$$$Key', array($this->table, $this->id));
-	return $this->_Key;
+	$empty_fk_account = ($fk_account) ? false : true;
+	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
+
+	// if _Key is set, use this one!
+	if ($this->_Key) return $this->_Key;
+
+	// load key
+	if (!isset($this->_keys[$fk_account])) {
+	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
+	}
+
+	// if no valid key found and no $fk_account parameter, try to find 
+	// guest-key
+	if (!$this->_keys[$fk_account]->isValid() and
+	    $empty_fk_account and
+	    $fk_account == $TSunic->Usr->getInfo('id')
+	) {
+	    return $this->_getKey($TSunic->Usr->getIdGuest());
+	}
+
+	return $this->_keys[$fk_account];
     }
 
     /* save Key
+     * +@param int: fk_account of key
      *
      * @return bool
      */
-    protected function _saveKey () {
-	return $this->_getKey()->save($this->id);
+    protected function _saveKey ($fk_account = 0) {
+	return $this->_getKey($fk_account)->save($this->id);
     }
 
     /* delete Key
+     * +@param int: fk_account of key
      *
      * @return bool
      */
-    protected function _deleteKey () {
-	return $this->_getKey()->delete();
+    protected function _deleteKey ($fk_account = 0) {
+	return $this->_getKey($fk_account)->delete();
     }
 
     /* load information about object
@@ -182,7 +248,8 @@ class $$$Object {
 	    // encrypt?
 	    if ($this->keytypes[$index]) {
 		unset($data[$index]);
-		$data["_".$index."_"] = $this->_getKey()->encrypt($value);
+		$data["_".$index."_"] = $this->_getKey(
+		    $TSunic->Usr->getInfo('id'))->encrypt($value);
 	    }
 	}
 
@@ -214,7 +281,7 @@ class $$$Object {
 
 	// update object infos
 	$this->_loadInfo();
-	$this->_saveKey();
+	$this->_saveKey($TSunic->Usr->getInfo('id'));
 
 	return ($this->id) ? $this->id : false;
     }
@@ -266,7 +333,7 @@ class $$$Object {
 
 	// update infos
 	$this->_loadInfo();
-	$this->_saveKey();
+	$this->_saveKey($TSunic->Usr->getInfo('id'));
 
 	return true;
     }
@@ -378,13 +445,80 @@ class $$$Object {
 	return ($result) ? true : false;
     }
 
-    /* push object to other user
-     * @param int: id of user to push to
-     * +@param bool: push copy?
+    /* make copy of this object
+     *
+     * @return int (id of copy)
+     */
+    public function copy () {
+	if (!$this->id) return 0;
+
+	// save current id
+	$myid = $this->id;
+
+	// get current data
+	$data = $this->getInfo(true);
+
+	// delete some info
+	unset($data['id']);
+
+	// create new object with the same data
+	$copyid = $this->_create($data);
+
+	// reset id again
+	$this->id = $myid;
+	$this->_loadInfo();
+
+	return $copyid;
+    }
+
+    /* *********************** shared objects ********************* */
+
+    /* give someone access to this object
+     * @param array: list of users with access (array('id' => 'writable?'))
+     * +@param bool: make writable for other user?
      *
      * @return bool
      */
-    public function push ($fk_user, $copy = false) {
+    public function shareWith ($access, $writable = false) {
+	global $TSunic;
+
+	// add myself to access list
+	$access[$TSunic->Usr->getInfo('id')] = 1;
+
+	// remove all keys without access
+	foreach ($this->getKeys() as $index => $Value) {
+	    $fk_account = $Value->getInfo('fk_account');
+	    $ok = 0;
+	    foreach ($access as $in => $val) {
+		if ($in == $fk_account) {
+		    $ok = 1;
+		    break;
+		}
+	    }
+
+	    // delete key if not ok
+	    if (!$ok) $this->_deleteKey($fk_account);
+	}
+
+	// add new keys and set writable
+	foreach ($access as $index => $value) {
+
+	    // get Key object
+	    $Key = $this->_getKey($index);
+
+	    // set writable
+	    $Key->edit($index, $value);
+	}
+
+	return true;
+    }
+
+    /* push this object to other user
+     * @param int: id of other user
+     *
+     * @return bool
+     */
+    public function pushTo ($fk_account) {
 	global $TSunic;
 
 	// get User object
@@ -407,6 +541,21 @@ class $$$Object {
 	$this->resave();
 
 	return true;
+    }
+
+    /* push copy of this object to other user
+     * @param int: id of other user
+     *
+     * @return bool
+     */
+    public function copyTo ($fk_account) {
+
+	// make copy
+	$copyid = $this->copy();
+
+	// push copy to other user
+	$Obj = $TSunic->get(get_class(), $copyid);
+	return $Obj->pushTo($fk_account);
     }
 }
 ?>

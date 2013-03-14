@@ -94,33 +94,6 @@ class $$$Bit extends $system$Object {
 	return true;
     }
 
-    /* load Key (always use the same one for all bits of user)
-     *
-     * @return Object
-     */
-    protected function _getKey () {
-	global $TSunic;
-	if (!$this->_Key) $this->_Key =
-	    $TSunic->get('$system$Key', array($this->table, 1));
-	return $this->_Key;
-    }
-
-    /* save Key
-     *
-     * @return bool
-     */
-    protected function _saveKey () {
-	return $this->_getKey()->save(1);
-    }
-
-    /* delete Key
-     *
-     * @return bool
-     */
-    protected function _deleteKey () {
-	return true;
-    }
-
     /* create new bit
      * @param int: fk_object
      * @param string: value
