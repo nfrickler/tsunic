@@ -37,7 +37,7 @@ function parseAll () {
 	$AccessParser = new ts_AccessParser();
 	$ConfigParser = new ts_ConfigParser();
 	$modules_all = $ModuleHandler->getModules(true);
-	$Parser = new ts_Parser($Config->get('preffix'), $modules_all, $Config->get('debug_mode'));
+	$Parser = new ts_Parser($Config->get('prefix'), $modules_all, $Config->get('debug_mode'));
 	$USERSYSTEM = 0;
 	$LanguageHandler = new ts_LanguageHandler();
 	$pre_system_online = false;
@@ -164,13 +164,13 @@ function parseAll () {
 	}
 
 	// parse Access
-	if (!$AccessParser->parseAll($Config->get("preffix")."mod${USERSYSTEM}__")) {
+	if (!$AccessParser->parseAll($Config->get("prefix")."mod${USERSYSTEM}__")) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (access-files)';
 	    return false;
 	}
 
 	// parse Config
-	if (!$ConfigParser->parseAll($Config->get('preffix')."mod${USERSYSTEM}__config")) {
+	if (!$ConfigParser->parseAll($Config->get('prefix')."mod${USERSYSTEM}__config")) {
 	    $_SESSION['admin_error'] = 'ERROR__RENDER (config-files)';
 	    return false;
 	}

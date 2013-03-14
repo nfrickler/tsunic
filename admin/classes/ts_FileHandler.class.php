@@ -53,7 +53,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function copyFolder ($source, $destination, $files_only = false, $preffix = false) {
+    public function copyFolder ($source, $destination, $files_only = false, $prefix = false) {
 
 	// check source and destination-folders
 	if (!is_dir($source)) return true;
@@ -62,7 +62,7 @@ class ts_FileHandler {
 	// move all subfiles
 	$subfiles = self::getSubfiles($source);
 	foreach ($subfiles as $index => $value) {
-	    $dst_name = (!empty($preffix)) ? $preffix.$value : $value;
+	    $dst_name = (!empty($prefix)) ? $prefix.$value : $value;
 	    copy($source.'/'.$value, $destination.'/'.$dst_name);
 	}
 

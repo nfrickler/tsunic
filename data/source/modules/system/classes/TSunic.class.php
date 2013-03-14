@@ -337,7 +337,7 @@ class TSunic {
 	    description,
 	    version_installed,
 	    link
-	    FROM ".$this->Config->getConfig('preffix')."modules
+	    FROM ".$this->Config->getConfig('prefix')."modules
 	    WHERE is_activated = 1
 	    AND is_parsed = 1
 	    ORDER BY name ASC;";

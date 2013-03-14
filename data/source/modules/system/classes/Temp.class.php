@@ -408,13 +408,13 @@ class $$$Temp {
 	return false;
     }
 
-    /* get post-parameters with a certain preffix
-     * @param string: preffix of post-name
+    /* get post-parameters with a certain prefix
+     * @param string: prefix of post-name
      * +@param int: module in history (0 = current; 1 = last; ...)
      *
      * @return bool
      */
-    public function getByPreffix ($preffix, $time = 0) {
+    public function getByPreffix ($prefix, $time = 0) {
 	global $TSunic;
 
 	// get all post-parameters
@@ -423,9 +423,9 @@ class $$$Temp {
 	// get requested elements
 	$output = array();
 	foreach ($all_posts as $index => $value) {
-	    if (substr($index, 0, strlen($preffix)) == $preffix) {
+	    if (substr($index, 0, strlen($prefix)) == $prefix) {
 		// add to output
-		$output[substr($index, (strlen($preffix)+1))] = $value;
+		$output[substr($index, (strlen($prefix)+1))] = $value;
 	    }
 	}
 

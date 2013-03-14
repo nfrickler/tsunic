@@ -37,7 +37,7 @@ class ts_Database_mysql {
      * @param string: mysql-login: user
      * @param string: mysql-login: password
      * @param string: mysql-login: database
-     * @param string: preffix of all TSunic-tables
+     * @param string: prefix of all TSunic-tables
      */
     public function __construct ($host, $user, $password, $database) {
 

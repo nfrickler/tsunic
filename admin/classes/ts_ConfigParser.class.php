@@ -15,11 +15,11 @@ class ts_ConfigParser {
 
     /* read content from config file
      * @param string: path of config file
-     * @param string: preffix to add to each configname
+     * @param string: prefix to add to each configname
      *
      * @return bool
      */
-    public function add ($path, $preffix) {
+    public function add ($path, $prefix) {
 	global $Parser;
 
 	// is such file?
@@ -35,7 +35,7 @@ class ts_ConfigParser {
 	    $configtype = (string) $Value->attributes()->configtype;
 	    $options = (string) $Value->attributes()->options;
 	    $this->data[] = array(
-		'name' => $preffix.utf8_decode("$Value"),
+		'name' => $prefix.utf8_decode("$Value"),
 		'default' => $default,
 		'configtype' => $configtype,
 		'formtype' => $formtype,

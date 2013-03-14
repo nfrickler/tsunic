@@ -14,10 +14,10 @@ class $$$Meta {
 	// get object with this id
 	$Helper = $TSunic->get('$bp$Helper');
 	$profiles = $Helper->getObjects(
-	    '$$$MyProfile', "fk_account = '".$fk_account."'"
+	    '$$$MyProfile', "objects.fk_account = '".$fk_account."'"
 	);
 
-	return (isset($profiles[0])) ? $profiles[0] : NULL;
+	return (count($profiles)) ? array_shift($profiles) : NULL;
     }
 }
 ?>

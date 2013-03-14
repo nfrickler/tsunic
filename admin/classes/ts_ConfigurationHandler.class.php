@@ -83,7 +83,7 @@ class ts_ConfigurationHandler {
 		return true;
 	    case 'allow_registration':
 		return true;
-	    case 'preffix':
+	    case 'prefix':
 		return 'ts_';
 	    case 'encryption_class':
 		return 'mcrypt';

@@ -15,11 +15,11 @@ class ts_AccessParser {
 
     /* read content from access file
      * @param string: path of access file
-     * @param string: preffix to add to each accessname
+     * @param string: prefix to add to each accessname
      *
      * @return bool
      */
-    public function add ($path, $preffix) {
+    public function add ($path, $prefix) {
 
 	// is such file?
 	if (!file_exists($path)) return true;
@@ -32,7 +32,7 @@ class ts_AccessParser {
 	    $myval = (string) $Value->attributes()->default;
 	    if ($myval == "false") $myval = 0;
 	    $this->data[] = array(
-		'name' => $preffix.utf8_decode("$Value"),
+		'name' => $prefix.utf8_decode("$Value"),
 		'default' => ($myval ? 1 : 0)
 	    );
 	}
@@ -41,16 +41,16 @@ class ts_AccessParser {
     }
 
     /* update accessnames in database
-     * @param string: preffix of usersystem tables
+     * @param string: prefix of usersystem tables
      *
      * @return bool
      */
-    public function parseAll ($preffix) {
+    public function parseAll ($prefix) {
 	global $Log, $Database;
 
 	// udpate database
 	foreach ($this->data as $index => $values) {
-	    $sql = "INSERT INTO ${preffix}accessnames (name)
+	    $sql = "INSERT INTO ${prefix}accessnames (name)
 		VALUES ('".$values['name']."')
 		ON DUPLICATE KEY UPDATE dateOfCreation = NOW()
 	    ;";
@@ -61,7 +61,7 @@ class ts_AccessParser {
 	    }
 
 	    // update default setting in allGroup
-	    $sql = "INSERT INTO ${preffix}access (fk__accessname, fk__owner, isUser, access)
+	    $sql = "INSERT INTO ${prefix}access (fk__accessname, fk__owner, isUser, access)
 		VALUES ('".$values['name']."', 1, 0, ".($values['default'] ? 1 : 0).")
 		ON DUPLICATE KEY UPDATE access = ".($values['default'] ? 1 : 0)."
 	    ;";

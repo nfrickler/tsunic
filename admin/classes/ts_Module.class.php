@@ -347,15 +347,15 @@ class ts_Module extends ts_Packet {
     protected function parseImages () {
 	global $Config;
 
-	// get preffix
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix
+	$prefix = 'mod'.$this->id.'__';
 
 	// copy all images
 	if (ts_FileHandler::copyFolder(
 	    $this->path.'/templates/images',
 	    $Config->get('dir_runtime').'/files',
 	    true,
-	    $preffix)
+	    $prefix)
 	) return true;
 
 	return false;
@@ -410,8 +410,8 @@ class ts_Module extends ts_Packet {
     protected function parseJavascript () {
 	global $Parser, $Config;
 
-	// get preffix and paths
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix and paths
+	$prefix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/javascript';
 	$path_destination = $Config->get('dir_runtime').'/javascript';
 
@@ -429,7 +429,7 @@ class ts_Module extends ts_Packet {
 
 	    // write
 	    if (!$content OR !ts_FileHandler::writeFile(
-		$path_destination.'/'.$preffix.$value,
+		$path_destination.'/'.$prefix.$value,
 		$content,
 		true
 	    )) return false;
@@ -445,8 +445,8 @@ class ts_Module extends ts_Packet {
     protected function parseXmlResponses () {
 	global $Parser, $Config;
 
-	// get preffix and paths
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix and paths
+	$prefix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/templates/xmlResponses';
 	$path_destination = $Config->get('dir_runtime').'/xmlResponses';
 
@@ -462,7 +462,7 @@ class ts_Module extends ts_Packet {
 
 	    // write
 	    if (!$content OR !ts_FileHandler::writeFile(
-		$path_destination.'/'.$preffix.$value,
+		$path_destination.'/'.$prefix.$value,
 		$content,
 		true
 	    )) return false;
@@ -478,8 +478,8 @@ class ts_Module extends ts_Packet {
     protected function parseFunctions () {
 	global $Parser, $Config;
 
-	// get preffix and paths
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix and paths
+	$prefix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/functions';
 	$path_destination = $Config->get('dir_runtime').'/functions';
 
@@ -500,7 +500,7 @@ class ts_Module extends ts_Packet {
 
 	    // write
 	    if (!$content OR !ts_FileHandler::writeFile(
-		$path_destination.'/'.$preffix.$value,
+		$path_destination.'/'.$prefix.$value,
 		$content,
 		true
 	    )) return false;
@@ -516,8 +516,8 @@ class ts_Module extends ts_Packet {
     protected function parseClasses () {
 	global $Parser, $Config;
 
-	// get preffix and paths
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix and paths
+	$prefix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/classes';
 	$path_destination = $Config->get('dir_runtime').'/classes';
 
@@ -548,7 +548,7 @@ class ts_Module extends ts_Packet {
 
 	    // write
 	    if (!$content OR !ts_FileHandler::writeFile(
-		$path_destination.'/'.$preffix.$value,
+		$path_destination.'/'.$prefix.$value,
 		$content,
 		true
 	    )) return false;
@@ -564,8 +564,8 @@ class ts_Module extends ts_Packet {
     protected function parseTemplates () {
 	global $Parser, $Config;
 
-	// get preffix and paths
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix and paths
+	$prefix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/templates';
 	$path_destination = $Config->get('dir_runtime').'/templates';
 
@@ -586,7 +586,7 @@ class ts_Module extends ts_Packet {
 
 	    // write
 	    if (!$content OR !ts_FileHandler::writeFile(
-		$path_destination.'/'.$preffix.$value,
+		$path_destination.'/'.$prefix.$value,
 		$content,
 		true
 	    )) return false;
@@ -602,8 +602,8 @@ class ts_Module extends ts_Packet {
     protected function parseHelp () {
 	global $Parser, $Config;
 
-	// get preffix and paths
-	$preffix = 'mod'.$this->id.'__';
+	// get prefix and paths
+	$prefix = 'mod'.$this->id.'__';
 	$path_source = $this->path.'/templates/help';
 	$path_destination = $Config->get('dir_runtime').'/help';
 
@@ -619,7 +619,7 @@ class ts_Module extends ts_Packet {
 
 	    // write
 	    if (!$content OR !ts_FileHandler::writeFile(
-		$path_destination.'/'.$preffix.$value,
+		$path_destination.'/'.$prefix.$value,
 		$content,
 		true
 	    )) return false;
@@ -713,8 +713,8 @@ class ts_Module extends ts_Packet {
 
 	// parse file
 	$path = $this->path.'/access.xml';
-	$preffix = 'mod'.$this->id.'__';
-	if (!$AccessParser->add($path, $preffix)) {
+	$prefix = 'mod'.$this->id.'__';
+	if (!$AccessParser->add($path, $prefix)) {
 	    $Log->doLog(3, "Module: Failed to parse access-File of module".
 		"'".$this->getInfo('module')."'");
 	    return false;
@@ -732,8 +732,8 @@ class ts_Module extends ts_Packet {
 
 	// add file
 	$path = $this->path.'/config.xml';
-	$preffix = 'mod'.$this->id.'__';
-	if (!$ConfigParser->add($path, $preffix)) {
+	$prefix = 'mod'.$this->id.'__';
+	if (!$ConfigParser->add($path, $prefix)) {
 	    $Log->doLog(3, "Module: Failed to parse config-File of module".
 		"'".$this->getInfo('module')."'");
 	    return false;

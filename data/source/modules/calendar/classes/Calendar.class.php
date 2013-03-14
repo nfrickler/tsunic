@@ -41,10 +41,10 @@ class $$$Calendar {
 	    $this->dates = array();
 
 	    // get from database
-	    $preffix = $TSunic->Config->get('preffix');
+	    $prefix = $TSunic->Config->get('prefix');
 	    $classname = '$$$Date';
 	    $sql = "SELECT obj.id as id
-		FROM ".$preffix."$bp$objects as obj
+		FROM ".$prefix."$bp$objects as obj
 		WHERE obj.class = '$classname'
 		    AND fk_account = '".$TSunic->Usr->getInfo('id')."'
 	    ;";

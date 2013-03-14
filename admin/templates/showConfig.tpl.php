@@ -56,12 +56,12 @@ global $Config;
 	    <?php $this->set('SHOWCONFIG__DB_DATABASE_INFO'); ?>
 	</div>
 	<div style="clear:both;"></div>
-	<label for="set__preffix"><?php $this->set('SHOWCONFIG__PREFFIX'); ?></label>
-	<input type="text" name="set__preffix" id="set__preffix" value="<?php echo $Config->get('preffix'); ?>" />
-	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="preffix_info_img" onclick="javascript:toggleInfo('preffix_info');" />
-	<div class="form_infobox" id="preffix_info" onclick="javascript:toggleInfo('preffix_info');">
+	<label for="set__prefix"><?php $this->set('SHOWCONFIG__PREFIX'); ?></label>
+	<input type="text" name="set__prefix" id="set__prefix" value="<?php echo $Config->get('prefix'); ?>" />
+	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="prefix_info_img" onclick="javascript:toggleInfo('prefix_info');" />
+	<div class="form_infobox" id="prefix_info" onclick="javascript:toggleInfo('prefix_info');">
 	    <img src="templates/images/arrow_top2downright.gif" class="form_infoimg_in" />
-	    <?php $this->set('SHOWCONFIG__PREFFIX_INFO'); ?>
+	    <?php $this->set('SHOWCONFIG__PREFIX_INFO'); ?>
 	</div>
 	<div style="clear:both;"></div>
     </fieldset>
@@ -222,7 +222,7 @@ global $Config;
     inputs[8] = 'system_secret_info';
     inputs[9] = 'default_language_info';
     inputs[10] = 'system_email_info';
-    inputs[11] = 'preffix_info';
+    inputs[11] = 'prefix_info';
     inputs[12] = 'email_enabled_info';
     inputs[13] = 'dir_admin_info';
     inputs[14] = 'dir_data_info';

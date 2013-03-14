@@ -2,10 +2,10 @@
 <?php
 class ts_Parser {
 
-    /* preffix
+    /* prefix
      * string
      */
-    private $preffix;
+    private $prefix;
 
     /* debug mode on or off
      * bool
@@ -28,14 +28,14 @@ class ts_Parser {
     private $current_module;
 
     /* constructor
-     * @param string: preffix
+     * @param string: prefix
      * @param array: array with all module-objects
      * +@param bool: in debug_mode language will not be replaced
      */
-    public function __construct ($preffix, $modules_all, $debug_mode = false) {
+    public function __construct ($prefix, $modules_all, $debug_mode = false) {
 
 	// init
-	$this->preffix = $preffix;
+	$this->prefix = $prefix;
 	$this->modules = array();
 	$this->debug_mode = $debug_mode;
 
@@ -301,7 +301,7 @@ class ts_Parser {
 	return $input;
     }
 
-    /* replace database-preffix
+    /* replace database-prefix
      * @param string $content: content of file to parse
      * +@param int: id__module of current module, the content belongs to
      *
@@ -313,7 +313,7 @@ class ts_Parser {
 	$this->setModule($id__module);
 
 	// replace and return
-	return str_replace('#__', $this->preffix, $content);
+	return str_replace('#__', $this->prefix, $content);
     }
 
     /* remove BOM

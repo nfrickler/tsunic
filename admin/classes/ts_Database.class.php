@@ -7,7 +7,7 @@ class ts_Database {
      */
     private $Db_obj;
 
-    /* preffix of all TSunic-tables
+    /* prefix of all TSunic-tables
      * string
      */
     private $table_pref;
@@ -23,7 +23,7 @@ class ts_Database {
 	$user = $Config->get('db_user');
 	$pass = $Config->get('db_pass');
 	$database = $Config->get('db_database');
-	$this->table_pref = $Config->get('preffix');
+	$this->table_pref = $Config->get('prefix');
 
 	// validate input
 	if (empty($db_class) OR empty($host) OR empty($user) OR empty($database) OR $pass === NULL) {
@@ -49,7 +49,7 @@ class ts_Database {
 	return;
     }
 
-    /* get table preffix
+    /* get table prefix
      *
      * @return string
      */
@@ -65,7 +65,7 @@ class ts_Database {
       */
     protected function _parseQuery ($sql) {
 
-	// replace preffix
+	// replace prefix
 	$sql = str_replace('#__', $this->table_pref, $sql);
 
 	return $sql;

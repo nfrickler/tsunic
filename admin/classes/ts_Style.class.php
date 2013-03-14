@@ -296,10 +296,10 @@ class ts_Style extends ts_Packet {
 
 	    // get path_new
 	    $path_new = $Config->get('dir_runtime').'/files';
-	    $preffix = 'style'.$this->id.'__mod'.$id__module.'__';
+	    $prefix = 'style'.$this->id.'__mod'.$id__module.'__';
 
 	    // move all files in folder
-	    if (!ts_FileHandler::copyFolder($path_source.'/'.$value.'/images', $path_new, true, $preffix)) {
+	    if (!ts_FileHandler::copyFolder($path_source.'/'.$value.'/images', $path_new, true, $prefix)) {
 		return false;
 	    }
 	}
@@ -331,7 +331,7 @@ class ts_Style extends ts_Packet {
 
 	    // get path_new
 	    $path_new = $Config->get('dir_runtime').'/templates';
-	    $preffix = 'style'.$this->id.'__mod'.$id__module.'__';
+	    $prefix = 'style'.$this->id.'__mod'.$id__module.'__';
 
 	    // get current path
 	    $path_current = $path_source.'/'.$value;
@@ -349,7 +349,7 @@ class ts_Style extends ts_Packet {
 		$content = $Parser->parse($content, true);
 
 		// write
-		if (!$content OR !ts_FileHandler::writeFile($path_new.'/'.$preffix.$val, $content, true)) return false;
+		if (!$content OR !ts_FileHandler::writeFile($path_new.'/'.$prefix.$val, $content, true)) return false;
 	    }
 	}
 
