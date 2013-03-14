@@ -91,7 +91,7 @@ class $$$BpObject extends $system$Object {
      * @return bool
      */
     public function resave () {
-
+/*
 	// get all bits
 	$bits = $this->getBits(true);
 
@@ -99,7 +99,7 @@ class $$$BpObject extends $system$Object {
 	foreach ($bits as $index => $Value) {
 	    if (!$Value->resave()) return false;
 	}
-
+ */
 	return parent::resave();
     }
 
@@ -386,6 +386,26 @@ class $$$BpObject extends $system$Object {
      */
     public function getClass () {
 	return get_class($this);
+    }
+
+    /* push this object to other user (move bits!)
+     * @param int: id of other user
+     *
+     * @return bool
+     */
+    public function pushTo ($fk_account) {
+	global $TSunic;
+
+	// push all bits to other user
+	$bits = $this->getBits(true);
+	foreach ($bits as $index => $Value) {
+	    if (!$Value->pushTo($fk_account)) {
+		$TSunic->Log->log(3, "BpObject::pushTo: Failed to push Bit!");
+		return false;
+	    }
+	}
+
+	return parent::pushTo($fk_account);
     }
 }
 ?>

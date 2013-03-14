@@ -32,7 +32,8 @@ class $$$Key {
 	// save
 	$this->fk_table = $fk_table;
 	$this->fk_id = $fk_id;
-	$this->fk_account = ($fk_account) ? $fk_account : $TSunic->Usr->getInfo('id');
+	$this->fk_account = ($fk_account)
+	    ? $fk_account : $TSunic->Usr->getInfo('id');
     }
 
     /* get information about key
@@ -223,6 +224,10 @@ class $$$Key {
 	// delete old one
 	if ($deleteOld) {
 
+	    // save old values (required to save values with asym for other user 
+	    // as we cannot reload values from database
+	    $new_info = $this->info;
+
 	    // reset old values
 	    $this->fk_table = $old_table;
 	    $this->fk_id = $old_id;
@@ -236,7 +241,7 @@ class $$$Key {
 	    $this->fk_table = $new_table;
 	    $this->fk_id = $new_id;
 	    $this->fk_account = $new_account;
-	    $this->info = array();
+	    $this->info = $new_info;
 	}
 
 	return true;

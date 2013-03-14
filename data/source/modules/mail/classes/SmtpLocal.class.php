@@ -123,8 +123,8 @@ class $$$SmtpLocal extends $$$Smtp {
 	if (!$Mail->pushTo($fk_user)) return false;
 
 	// save sent mail in sent mailbox
-
 	// TODO
+
 	return true;
     }
 

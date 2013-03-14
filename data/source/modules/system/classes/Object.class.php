@@ -287,7 +287,7 @@ class $$$Object {
     }
 
     /* resave all data (e.g. with new key)
-     * 
+     *
      * @return bool
      */
     public function resave () {
@@ -522,7 +522,7 @@ class $$$Object {
 	global $TSunic;
 
 	// get User object
-	$User = $TSunic->get('$usersystem$User', $fk_user);
+	$User = $TSunic->get('$usersystem$User', $fk_account);
 	if (!$User->isValid()) return false;
 
 	// get current key
