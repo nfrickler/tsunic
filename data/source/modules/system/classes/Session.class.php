@@ -73,7 +73,7 @@ class $$$Session {
 
 	// fetch data from database
 	$sql = "SELECT data as data
-		FROM #__sessions
+		FROM #__$system$sessions
 		WHERE id = '$id'
 		    AND NOT timestamp < $expired;";
 	$data = $this->Db->doSelect($sql);
@@ -95,7 +95,7 @@ class $$$Session {
 	if ($this->readonly) return true;
 
 	// get query
-	$sql = "INSERT INTO #__sessions
+	$sql = "INSERT INTO #__$system$sessions
 		SET id = '$id',
 		    data = '$data',
 		    timestamp = '".time()."'
@@ -118,7 +118,7 @@ class $$$Session {
 	if ($this->readonly) return true;
 
 	// get query
-	$sql = "DELETE FROM #__sessions
+	$sql = "DELETE FROM #__$system$sessions
 		WHERE id = '$id';";
 	return $this->Db->doDelete($sql);
     }
@@ -135,7 +135,7 @@ class $$$Session {
 
 	// delete all sessions, which have been expired
 	$expired = time() - $life;
-	$sql = "DELETE FROM #__sessions
+	$sql = "DELETE FROM #__$system$sessions
 		WHERE timestamp < $expired;";
 	return $this->Db->doDelete($sql);
     }

@@ -20,7 +20,7 @@ class $$$Helper {
 
 	    // get tags from database
 	    $sql = "SELECT id, name, title, fk_type, isId
-		FROM #__tags
+		FROM #__$bp$tags
 		WHERE fk_account = '0'
 		    OR fk_account = '".$TSunic->Usr->getInfo('id')."'
 	    ;";
@@ -73,9 +73,14 @@ class $$$Helper {
 	if (!empty($sql_where)) $sql_where = " AND ".$sql_where;
 	if (!empty($class)) $sql_where = " AND class= '$class'".$sql_where;
 	$sql = "SELECT id
-	    FROM #__objects
-	    WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
-		$sql_where;";
+	    FROM #__$bp$objects as objects,
+		#__$system$keys as keytable
+	    WHERE keytable.fk_table = '#__$bp$objects'
+		AND objects.id = keytable.fk_id
+		AND (keytable.fk_account = '".$TSunic->Usr->getInfo('id')."'
+		OR keytable.fk_account = '".$TSunic->Usr->getIdGuest()."')
+		$sql_where
+	;";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result) return array();
 
@@ -84,7 +89,7 @@ class $$$Helper {
 	foreach ($result as $index => $values) {
 	    $Obj = $TSunic->get($class, $values['id']);
 	    $Obj->presetInfo($values);
-	    $out[] = $Obj;
+	    $out[$values['id']] = $Obj;
 	}
 
 	return $out;

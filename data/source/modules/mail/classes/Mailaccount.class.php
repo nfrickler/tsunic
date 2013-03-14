@@ -5,7 +5,7 @@ class $$$Mailaccount extends $system$Object {
     /* tablename in database
      * string
      */
-    protected $table = "#__mailaccounts";
+    protected $table = "#__$mail$mailaccounts";
 
     /* SMPT objects
      * array
@@ -115,7 +115,7 @@ class $$$Mailaccount extends $system$Object {
 	// get serverboxes from database
 	global $TSunic;
 	$sql = "SELECT id
-		FROM #__serverboxes
+		FROM #__$mail$serverboxes
 		WHERE fk_mailaccount = '".$this->id."';";
 	$result = $TSunic->Db->doSelect($sql);
 
@@ -554,7 +554,7 @@ class $$$Mailaccount extends $system$Object {
 		    auth as auth,
 		    connsecurity as connsecurity,
 		    user as user
-		FROM #__knownservers
+		FROM #__$mail$knownservers
 		WHERE ".$sql_protocol.$sql_auth.$sql_connsecurity."
 		    suffix = '$suffix'
 		    OR suffix = ''

@@ -65,7 +65,7 @@ class $$$Key {
 
 	// get data from database
 	$sql = "SELECT *
-	    FROM #__keys
+	    FROM #__$system$keys
 	    WHERE fk_table = '$this->fk_table'
 		AND fk_id = '$this->fk_id'
 		AND fk_account = '$this->fk_account'
@@ -179,7 +179,7 @@ class $$$Key {
 	    can_write = '".$this->getInfo('can_write')."',
 	    _key_ = '".$enckey."'
 	";
-	$sql = "INSERT INTO #__keys
+	$sql = "INSERT INTO #__$system$keys
 	    SET fk_id = '".$this->fk_id."',
 		fk_table = '".$this->fk_table."',
 		".$sql_set."
@@ -198,7 +198,7 @@ class $$$Key {
      */
     public function edit ($new_account, $can_write, $new_table = 0, $new_id = 0, $deleteOld = true) {
 	global $TSunic;
-	$this->getInfo(true);
+	$this->getInfo('key');
 	if (empty($new_account)) $new_account = $this->fk_account;
 	if (empty($new_table)) $new_table = $this->fk_table;
 	if (empty($new_id)) $new_id = $this->fk_id;
@@ -255,7 +255,7 @@ class $$$Key {
 	global $TSunic;
 
 	// delete in database
-	$sql = "DELETE FROM #__keys
+	$sql = "DELETE FROM #__$system$keys
 	    WHERE fk_table = '".$this->fk_table."'
 		AND fk_id = '".$this->fk_id."'
 		AND fk_account = '".$this->fk_account."';";

@@ -5,7 +5,7 @@ class $$$Smtp extends $system$Object {
     /* tablename in database
      * string
      */
-    protected $table = "#__smtps";
+    protected $table = "#__$mail$smtps";
 
     /* password for smtp-server
      * string
@@ -267,7 +267,7 @@ class $$$Smtp extends $system$Object {
      * @return bool
      */
     public function isValidFkmailaccount ($fk) {
-	return $this->_isObject('#__mailaccounts', $fk);
+	return $this->_isObject('#__$mail$mailaccounts', $fk);
     }
 
     /* check, if host is valid
@@ -431,7 +431,7 @@ class $$$Smtp extends $system$Object {
 		    auth as auth,
 		    connsecurity as connsecurity,
 		    user as user
-		FROM #__knownservers
+		FROM #__$mail$knownservers
 		WHERE ".$sql_auth.$sql_connsecurity."
 		    protocol = '-1'
 		    AND (suffix = '".mysql_real_escape_string($suffix)."'

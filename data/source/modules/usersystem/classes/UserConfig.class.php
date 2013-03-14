@@ -49,7 +49,7 @@ class $$$UserConfig {
 
 	// try to get user config
 	$sql = "SELECT value
-	    FROM #__userconfig
+	    FROM #__$usersystem$userconfig
 	    WHERE fk_account = '$this->fk_account'
 		AND fk_config = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
@@ -99,7 +99,7 @@ class $$$UserConfig {
 
 	// try to get default config
 	$sql = "SELECT systemdefault
-	    FROM #__config
+	    FROM #__$usersystem$config
 	    WHERE name = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
 	if ($result === false) return NULL;
@@ -125,7 +125,7 @@ class $$$UserConfig {
 	if (!$TSunic->Usr->access('$$$editAllConfig')) return false;
 
 	// update database
-	$sql = "INSERT INTO #__config
+	$sql = "INSERT INTO #__$usersystem$config
 	    SET name = '$name',
 		systemdefault = '$value',
 		configtype = '".($isSystem ? 'system' : '0')."',
@@ -179,7 +179,7 @@ class $$$UserConfig {
 
 	// update database
 	global $TSunic;
-	$sql = "INSERT INTO #__userconfig
+	$sql = "INSERT INTO #__$usersystem$userconfig
 	    SET fk_config = '$name',
 		fk_account = '$this->fk_account',
 		value = '$value'
@@ -203,7 +203,7 @@ class $$$UserConfig {
 	}
 
 	// update database
-	$sql = "DELETE FROM #__userconfig
+	$sql = "DELETE FROM #__$usersystem$userconfig
 		WHERE fk_account = '$this->fk_account'
 		    AND fk_config = '$name';";
 	return $TSunic->Db->doDelete($sql);
@@ -222,7 +222,7 @@ class $$$UserConfig {
 		    configtype,
 		    formtype,
 		    options
-		FROM #__config
+		FROM #__$usersystem$config
 		WHERE NOT configtype = 'system' " .
 		($TSunic->Usr->access('$$$editAllConfig')
 		    ? "" : "AND NOT configtype = 'hidden';");
@@ -255,7 +255,7 @@ class $$$UserConfig {
 
 	// try to get default config
 	$sql = "SELECT configtype
-	    FROM #__config
+	    FROM #__$usersystem$config
 	    WHERE name = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
 	if ($result === false) return NULL;

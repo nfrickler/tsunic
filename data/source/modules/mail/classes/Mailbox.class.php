@@ -5,7 +5,7 @@ class $$$Mailbox extends $system$Object {
     /* tablename in database
      * string
      */
-    protected $table = "#__mailboxes";
+    protected $table = "#__$mail$mailboxes";
 
     /* Mail objects of mails in box
      * array
@@ -139,8 +139,8 @@ class $$$Mailbox extends $system$Object {
 
 	// get serverboxes from database
 	$sql = "SELECT serverboxes.id as id
-		FROM #__serverboxes as serverboxes,
-		    #__mailaccounts as accounts
+		FROM #__$mail$serverboxes as serverboxes,
+		    #__$mail$mailaccounts as accounts
 		WHERE serverboxes.fk_mailbox = '".$this->id."'
 		    AND isActive = 1
 		    AND serverboxes.fk_mailaccount = accounts.id

@@ -10,6 +10,7 @@ function $$$showMyProfile () {
 	$MyProfile = $TSunic->get('$profile$MyProfile');
 	$MyProfile->create();
 	$MyProfile->saveByTag('PROFILE__ACCOUNT', $TSunic->Usr->getInfo('id'));
+	$MyProfile->pushTo($TSunic->Usr->getIdGuest(), 0);
     }
     $Date = $TSunic->get('$calendar$Date', $MyProfile->getInfo('dateofbirth'));
 

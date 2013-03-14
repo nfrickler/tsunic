@@ -5,7 +5,7 @@ class $$$Type extends $system$Object {
     /* table
      * string
      */
-    protected $table = "#__types";
+    protected $table = "#__$bp$types";
 
     /* create
      *
@@ -69,10 +69,10 @@ class $$$Type extends $system$Object {
 		return ($this->_validate($value, 'extString'));
 		break;
 	    case 'selection':
-		return ($this->_isObject('#__selections', $value));
+		return ($this->_isObject('#__$bp$selections', $value));
 		break;
 	    case 'radio':
-		return ($this->_isObject('#__selections', $value));
+		return ($this->_isObject('#__$bp$selections', $value));
 		break;
 	    default:
 		global $TSunic;

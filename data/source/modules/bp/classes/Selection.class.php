@@ -5,7 +5,7 @@ class $$$Selection extends $system$Object {
     /* table
      * string
      */
-    protected $table = "#__selections";
+    protected $table = "#__$bp$selections";
 
     /* create new selection
      * @param int: fk_tag
@@ -93,7 +93,7 @@ class $$$Selection extends $system$Object {
      */
     public function isValidFkTag ($fk_tag) {
 	return ($fk_tag and $this->_validate($fk_tag, 'int')
-	    and $this->_isObject('#__tags', $fk_tag)
+	    and $this->_isObject('#__$bp$tags', $fk_tag)
 	) ? true : false;
     }
 }

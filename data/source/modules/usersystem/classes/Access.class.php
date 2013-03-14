@@ -31,7 +31,7 @@ class $$$Access {
 
 	// check own access
 	$sql = "SELECT access as access
-	    FROM #__access
+	    FROM #__$usersystem$access
 	    WHERE isUser = '1'
 		AND fk__owner = '$this->fk_account'
 		AND fk__accessname = '$name';";
@@ -67,7 +67,7 @@ class $$$Access {
 	global $TSunic;
 
 	$sql = "SELECT fk_accessgroup as id
-	    FROM #__accessgroupmembers
+	    FROM #__$usersystem$accessgroupmembers
 	    WHERE fk_account = '$this->fk_account';";
 	$result = $TSunic->Db->doSelect($sql);
 	if ($result === false) return $result;
@@ -91,7 +91,7 @@ class $$$Access {
 
 	// get all groups from database
 	$sql = "SELECT id, name
-	    FROM #__accessgroups;";
+	    FROM #__$usersystem$accessgroups;";
 	$results = $TSunic->Db->doSelect($sql);
 	if (!$results) return array();
 
@@ -118,7 +118,7 @@ class $$$Access {
 
 	// set to default?
 	if ($value === NULL) {
-	    $sql = "DELETE FROM #__access
+	    $sql = "DELETE FROM #__$usersystem$access
 		WHERE fk__owner = '$this->fk_account'
 		    AND isUser = '1'
 		    AND fk__accessname = '$name';";
@@ -126,7 +126,7 @@ class $$$Access {
 	}
 
 	// udpate database
-	$sql = "INSERT INTO #__access
+	$sql = "INSERT INTO #__$usersystem$access
 	    SET fk__owner = '$this->fk_account',
 		isUser = '1',
 		fk__accessname = '$name',
@@ -164,7 +164,7 @@ class $$$Access {
     public function getAccessnames () {
 	global $TSunic;
 	$sql = "SELECT name
-	    FROM #__accessnames
+	    FROM #__$usersystem$accessnames
 	    ORDER BY name ASC;";
 	$result = $TSunic->Db->doSelect($sql);
 

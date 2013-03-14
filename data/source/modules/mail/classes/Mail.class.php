@@ -266,7 +266,7 @@ class $$$Mail extends $bp$BpObject {
 	// get attachments from database
 	global $TSunic;
 	$sql = "SELECT fk_fsfile
-		FROM #__attachments as attachments
+		FROM #__$mail$attachments as attachments
 		WHERE attachments.fk_mail = '".$this->id."'
 		ORDER BY fk_fsfile ASC;";
 	$result = $TSunic->Db->doSelect($sql);
@@ -305,7 +305,7 @@ class $$$Mail extends $bp$BpObject {
 	$this->attachments = array();
 
 	// update database
-	$sql = "INSERT INTO #__attachments
+	$sql = "INSERT INTO #__$mail$attachments
 		SET fk_fsfile = '$fk_fsfile',
 		    fk_mail = '".$this->id."'
 		ON DUPLICATE KEY UPDATE dateOfUpdate = NOW();";
@@ -325,7 +325,7 @@ class $$$Mail extends $bp$BpObject {
 	$this->attachments = array();
 
 	// update database
-	$sql = "DELETE FROM #__attachments
+	$sql = "DELETE FROM #__$mail$attachments
 		WHERE fk_fsfile = '$fk_fsfile'
 		    AND fk_mail = '".$this->id."';";
 	return $TSunic->Db->doDelete($sql);
@@ -343,7 +343,7 @@ class $$$Mail extends $bp$BpObject {
 	$this->attachments = array();
 
 	// update database
-	$sql = "DELETE FROM #__attachments
+	$sql = "DELETE FROM #__$mail$attachments
 		WHERE fk_mail = '".$this->id."';";
 	return $TSunic->Db->doDelete($sql);
     }

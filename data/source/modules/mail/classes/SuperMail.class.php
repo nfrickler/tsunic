@@ -29,7 +29,7 @@ class $$$SuperMail {
 	// get server-info from databbase
 	global $TSunic;
 	$sql = "SELECT id
-	    FROM #__mailaccounts
+	    FROM #__$mail$mailaccounts
 	    WHERE fk_account = '".$TSunic->Usr->getInfo('id')."';";
 	$result = $TSunic->Db->doSelect($sql);
 	if ($result === false) return array();
@@ -59,7 +59,7 @@ class $$$SuperMail {
 
 	// get server-info from databbase
 	$sql = "SELECT id
-	    FROM #__mailboxes
+	    FROM #__$mail$mailboxes
 	    WHERE fk_account = '$id_acc'
 	    ORDER BY id ASC;";
 	$result = $TSunic->Db->doSelect($sql);
@@ -107,7 +107,7 @@ class $$$SuperMail {
 	// get all smtps from database
 	global $TSunic;
 	$sql = "SELECT id
-	    FROM #__smtps
+	    FROM #__$mail$smtps
 	    WHERE fk_account = '".$TSunic->Usr->getInfo('id')."'
 	";
 	$result = $TSunic->Db->doSelect($sql);

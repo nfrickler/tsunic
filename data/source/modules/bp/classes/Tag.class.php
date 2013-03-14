@@ -5,7 +5,7 @@ class $$$Tag extends $system$Object {
     /* table
      * string
      */
-    protected $table = "#__tags";
+    protected $table = "#__$bp$tags";
 
     /* Type object
      * object
@@ -112,7 +112,7 @@ class $$$Tag extends $system$Object {
 
 	// get all selections
 	$sql = "SELECT id
-	    FROM #__selections
+	    FROM #__$bp$selections
 	    WHERE fk_tag = '$this->id'
 	    ORDER BY id
 	;";
@@ -176,7 +176,7 @@ class $$$Tag extends $system$Object {
      */
     public function isValidFkType ($fk_type) {
 	return ($fk_type and $this->_validate($fk_type, 'int')
-	    and $this->_isObject('#__types', $fk_type)
+	    and $this->_isObject('#__$bp$types', $fk_type)
 	) ? true : false;
     }
 
@@ -198,7 +198,7 @@ class $$$Tag extends $system$Object {
 
 	// get all tags in database
 	$sql = "SELECT id
-	    FROM #__types
+	    FROM #__$bp$types
 	    WHERE fk_account = '0'
 		OR fk_account = '".$TSunic->Usr->getInfo('id')."'
 	;";

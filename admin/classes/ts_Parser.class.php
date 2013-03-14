@@ -27,11 +27,6 @@ class ts_Parser {
      */
     private $current_module;
 
-    /* current preffix
-     * int
-     */
-    private $current_preffix;
-
     /* constructor
      * @param string: preffix
      * @param array: array with all module-objects
@@ -67,7 +62,6 @@ class ts_Parser {
 
 	// save
 	$this->current_module = $id__module;
-	$this->current_preffix = $this->preffix.$this->replaceModule('$$$');
 
 	return true;
     }
@@ -307,7 +301,7 @@ class ts_Parser {
 	return $input;
     }
 
-    /* replace preffix
+    /* replace database-preffix
      * @param string $content: content of file to parse
      * +@param int: id__module of current module, the content belongs to
      *
@@ -319,7 +313,7 @@ class ts_Parser {
 	$this->setModule($id__module);
 
 	// replace and return
-	return str_replace('#__', $this->current_preffix, $content);
+	return str_replace('#__', $this->preffix, $content);
     }
 
     /* remove BOM

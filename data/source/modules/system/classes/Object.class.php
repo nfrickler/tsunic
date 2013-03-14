@@ -110,7 +110,7 @@ class $$$Object {
 
 	// query database
 	$sql = "SELECT fk_account
-	    FROM #__keys
+	    FROM #__$system$keys
 	    WHERE fk_table = '$this->table'
 		AND fk_id = '$this->id'
 	";
@@ -119,7 +119,7 @@ class $$$Object {
 	// get Key objects
 	$this->_keys = array();
 	foreach ($result as $index => $values) {
-	    $this->_keys = $TSunic->get('$$$Key', array(
+	    $this->_keys[] = $TSunic->get('$$$Key', array(
 		$this->table, $this->id, $values['fk_account'])
 	    );
 	}
@@ -474,12 +474,11 @@ class $$$Object {
     /* *********************** shared objects ********************* */
 
     /* give someone access to this object
-     * @param array: list of users with access (array('id' => 'writable?'))
-     * +@param bool: make writable for other user?
+     * @param array/int: list of users with access (array('id' => 'writable?'))
      *
      * @return bool
      */
-    public function shareWith ($access, $writable = false) {
+    public function shareWith ($access) {
 	global $TSunic;
 
 	// add myself to access list
@@ -489,15 +488,21 @@ class $$$Object {
 	foreach ($this->getKeys() as $index => $Value) {
 	    $fk_account = $Value->getInfo('fk_account');
 	    $ok = 0;
+$TSunic->Log->log(1, "shareWith: fk_account: ".$fk_account);
 	    foreach ($access as $in => $val) {
+$TSunic->Log->log(1, "shareWith: access: ".$in);
 		if ($in == $fk_account) {
+$TSunic->Log->log(1, "shareWith: ok");
 		    $ok = 1;
 		    break;
 		}
 	    }
-
+//TODO
 	    // delete key if not ok
-	    if (!$ok) $this->_deleteKey($fk_account);
+	    if (!$ok) {
+$TSunic->Log->log(1, "shareWith: delete key!");
+		$this->_deleteKey($fk_account);
+	    }
 	}
 
 	// add new keys and set writable
@@ -506,8 +511,9 @@ class $$$Object {
 	    // get Key object
 	    $Key = $this->_getKey($index);
 
+$TSunic->Log->log(1, "shareWith: edit key!");
 	    // set writable
-	    $Key->edit($index, $value);
+	    $Key->edit($index, $value, 0, 0, false);
 	}
 
 	return true;

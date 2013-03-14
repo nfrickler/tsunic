@@ -5,7 +5,7 @@ class $$$BpObject extends $system$Object {
     /* table of objects
      * string
      */
-    protected $table = '#__objects';
+    protected $table = '#__$bp$objects';
 
     /* bits
      * array
@@ -84,23 +84,6 @@ class $$$BpObject extends $system$Object {
 	    "dateOfCreation" => "NOW()"
 	);
 	return $this->_create($data);
-    }
-
-    /* resave all data (e.g. with new key)
-     *
-     * @return bool
-     */
-    public function resave () {
-/*
-	// get all bits
-	$bits = $this->getBits(true);
-
-	// save bits again
-	foreach ($bits as $index => $Value) {
-	    if (!$Value->resave()) return false;
-	}
- */
-	return parent::resave();
     }
 
     /* delete this object
@@ -243,7 +226,7 @@ class $$$BpObject extends $system$Object {
 
 	    // load pieces
 	    $sql = "SELECT id, fk_object, fk_tag
-		FROM #__bits
+		FROM #__$bp$bits
 		WHERE fk_object = '$this->id'
 	    ;";
 	    $result = $TSunic->Db->doSelect($sql);
@@ -376,7 +359,7 @@ class $$$BpObject extends $system$Object {
      */
     public function isValidFkTag ($fk_tag) {
 	return (!$fk_tag or $this->_validate($fk_tag, 'int')
-	    and $this->_isObject('#__tags', $fk_tag)
+	    and $this->_isObject('#__$bp$tags', $fk_tag)
 	) ? true : false;
     }
 
@@ -386,6 +369,26 @@ class $$$BpObject extends $system$Object {
      */
     public function getClass () {
 	return get_class($this);
+    }
+
+    /* give someone access to this object (share bits!)
+     * @param array/int: list of users with access (array('id' => 'writable?'))
+     *
+     * @return bool
+     */
+    public function shareWith ($access) {
+	global $TSunic;
+
+	// share all bits with other users
+	$bits = $this->getBits(true);
+	foreach ($bits as $index => $Value) {
+	    if (!$Value->shareWith($access)) {
+		$TSunic->Log->log(3, "BpObject::pushTo: Failed to push Bit!");
+		return false;
+	    }
+	}
+
+	return parent::shareWith($access);
     }
 
     /* push this object to other user (move bits!)

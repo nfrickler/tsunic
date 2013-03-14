@@ -5,7 +5,7 @@ class $$$Bit extends $system$Object {
     /* tablename in database
      * string
      */
-    protected $table = '#__bits';
+    protected $table = '#__$bp$bits';
 
     /* sub bits
      * array
@@ -42,7 +42,7 @@ class $$$Bit extends $system$Object {
 
 	// if typename == mod, then check, if object exists
 	$typename = $this->getTag()->getType()->getInfo('name');
-	if (substr($typename,0,3) == 'mod' and !$this->_isObject('#__objects', $this->info['value'])) {
+	if (substr($typename,0,3) == 'mod' and !$this->_isObject('#__$bp$objects', $this->info['value'])) {
 	    $this->info['value'] = 0;
 	}
 
@@ -176,7 +176,7 @@ class $$$Bit extends $system$Object {
      */
     public function isValidFkObject ($fk_object) {
 	return ($this->_validate($fk_object, 'int')
-	    and $this->_isObject('#__objects', $fk_object)
+	    and $this->_isObject('#__$bp$objects', $fk_object)
 	) ? true : false;
     }
 
@@ -187,7 +187,7 @@ class $$$Bit extends $system$Object {
      */
     public function isValidFkTag ($fk_tag) {
 	return (!$fk_tag or $this->_validate($fk_tag, 'int')
-	    and $this->_isObject('#__tags', $fk_tag)
+	    and $this->_isObject('#__$bp$tags', $fk_tag)
 	) ? true : false;
     }
 
@@ -219,7 +219,7 @@ class $$$Bit extends $system$Object {
 
 	// get all bits from database
 	$sql = "SELECT id
-	    FROM #__bits
+	    FROM #__$bp$bits
 	    WHERE fk_bit = '$this->id'
 	;";
 	$result = $TSunic->Db->doSelect($sql);

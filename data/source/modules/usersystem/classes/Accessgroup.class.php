@@ -5,7 +5,7 @@ class $$$Accessgroup extends $system$Object {
     /* table
      * string
      */
-    protected $table = "#__accessgroups";
+    protected $table = "#__$usersystem$accessgroups";
 
     /* parent
      * OBJECT
@@ -77,7 +77,7 @@ class $$$Accessgroup extends $system$Object {
 	if (empty($sql_set)) return true;
 
 	// update database
-	$sql = "UPDATE #__accessgroups SET ".
+	$sql = "UPDATE #__$usersystem$accessgroups SET ".
 	    implode(",", $sql_set).
 	    " WHERE id = '$this->id';";
 	return $this->_edit($sql);
@@ -104,8 +104,8 @@ class $$$Accessgroup extends $system$Object {
 	global $TSunic;
 	$sql = "SELECT accounts.id as id,
 		accounts.name as name
-	    FROM #__accessgroupmembers as members,
-		#__accounts as accounts
+	    FROM #__$usersystem$accessgroupmembers as members,
+		#__$usersystem$accounts as accounts
 	    WHERE members.fk_accessgroup = '$this->id'
 		AND members.fk_account = accounts.id
 	;";
@@ -127,7 +127,7 @@ class $$$Accessgroup extends $system$Object {
     public function isMember ($fk_account) {
 	global $TSunic;
 	$sql = "SELECT dateOfJoin
-	    FROM #__accessgroupmembers
+	    FROM #__$usersystem$accessgroupmembers
 	    WHERE fk_accessgroup = '$this->id'
 		AND fk_account = '$fk_account';";
 	return ($TSunic->Db->doSelect($sql)) ? true : false;
@@ -140,7 +140,7 @@ class $$$Accessgroup extends $system$Object {
      */
     public function addMember ($fk_account) {
 	global $TSunic;
-	$sql = "INSERT INTO #__accessgroupmembers
+	$sql = "INSERT INTO #__$usersystem$accessgroupmembers
 	    SET fk_accessgroup = '$this->id',
 		fk_account = '$fk_account'
 	    ON DUPLICATE KEY UPDATE fk_account = '$fk_account'
@@ -155,7 +155,7 @@ class $$$Accessgroup extends $system$Object {
      */
     public function rmMember ($fk_account) {
 	global $TSunic;
-	$sql = "DELETE FROM #__accessgroupmembers
+	$sql = "DELETE FROM #__$usersystem$accessgroupmembers
 	    WHERE fk_accessgroup = '$this->id'
 		AND fk_account = '$fk_account';";
 	return $TSunic->Db->doDelete($sql);
@@ -172,7 +172,7 @@ class $$$Accessgroup extends $system$Object {
 
 	// check own access
 	$sql = "SELECT access as access
-	    FROM #__access
+	    FROM #__$usersystem$access
 	    WHERE fk__accessname = '$name'
 		AND fk__owner = '$this->id'
 		AND isUser = '0';";
@@ -210,7 +210,7 @@ class $$$Accessgroup extends $system$Object {
 
 	// set to default?
 	if ($value === NULL) {
-	    $sql = "DELETE FROM #__access
+	    $sql = "DELETE FROM #__$usersystem$access
 		WHERE fk__owner = '$this->id'
 		    AND isUser = '0'
 		    AND fk__accessname = '$name';";
@@ -218,7 +218,7 @@ class $$$Accessgroup extends $system$Object {
 	}
 
 	// update database
-	$sql = "INSERT INTO #__access
+	$sql = "INSERT INTO #__$usersystem$access
 	    SET fk__owner = '$this->id',
 		isUser = '0',
 		fk__accessname = '$name',
@@ -234,7 +234,7 @@ class $$$Accessgroup extends $system$Object {
      */
     public function isValidName ($name) {
 	return ($this->_validate($name, 'string')
-	    and $this->_isUnique('#__accessgroups', 'name', $name)
+	    and $this->_isUnique('#__$usersystem$accessgroups', 'name', $name)
 	) ? true : false;
     }
 
@@ -245,7 +245,7 @@ class $$$Accessgroup extends $system$Object {
      */
     public function isValidParent ($fk_parent) {
 	return ($this->_validate($fk_parent, 'int')
-	    and $this->_isObject('#__accessgroups', $fk_parent)
+	    and $this->_isObject('#__$usersystem$accessgroups', $fk_parent)
 	    and !$this->isInChildren($fk_parent)
 	) ? true : false;
     }
@@ -294,7 +294,7 @@ class $$$Accessgroup extends $system$Object {
 
 	// get childs from database
 	$sql = "SELECT id
-	    FROM #__accessgroups
+	    FROM #__$usersystem$accessgroups
 	    WHERE fk_parent = '$this->id';";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result) return $result;

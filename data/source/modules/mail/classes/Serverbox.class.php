@@ -5,7 +5,7 @@ class $$$Serverbox extends $system$Object {
     /* tablename in database
      * string
      */
-    protected $table = "#__serverboxes";
+    protected $table = "#__$mail$serverboxes";
 
     /* Mailaccount object
      * object
@@ -97,7 +97,7 @@ class $$$Serverbox extends $system$Object {
 	}
 
 	// update database
-	$sql = "UPDATE #__serverboxes
+	$sql = "UPDATE #__$mail$serverboxes
 		SET fk_mailaccount = ".$this->Mailaccount->getInfo('id')."
 		WHERE id = ".$this->id.";";
 	return $TSunic->Db->doUpdate($sql);
@@ -268,7 +268,7 @@ class $$$Serverbox extends $system$Object {
 	if (!$force AND !$this->isTimeToCheck()) return true;
 
 	// update dateOfCheck
-	$sql = "UPDATE #__serverboxes
+	$sql = "UPDATE #__$mail$serverboxes
 		SET dateOfCheck = NOW()
 		WHERE id = '".$this->id."'";
 	$result = $TSunic->Db->doUpdate($sql);
@@ -360,7 +360,7 @@ class $$$Serverbox extends $system$Object {
 
 	// get all mails from this mailbox
 	$sql = "SELECT id
-	    FROM #__mails
+	    FROM #__$mail$mails
 	    WHERE fk_serverbox = '".$this->id."';";
 	$ids = $TSunic->Db->doSelect($sql);
 	if (!$ids) return $ids;

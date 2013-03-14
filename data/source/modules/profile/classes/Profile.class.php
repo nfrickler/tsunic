@@ -52,7 +52,15 @@ class $$$Profile extends $bp$BpObject {
      * @return string
      */
     public function getName () {
-	return $this->getInfo('firstname').' '.$this->getInfo('lastname');
+	$out = $this->getInfo('firstname').' '.$this->getInfo('lastname');
+	$out = trim($out);
+	if (empty($out)) {
+	    global $TSunic;
+	    $User = $TSunic->get('$usersystem$User', $this->getInfo('account'));
+	    $out = $User->getInfo('name');
+	}
+	if (empty($out)) $out = '???';
+	return $out;
     }
 
     /* get account object connected with this profile

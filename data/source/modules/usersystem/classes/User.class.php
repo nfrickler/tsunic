@@ -5,7 +5,7 @@ class $$$User extends $system$Object {
     /* table
      * string
      */
-    protected $table = "#__accounts";
+    protected $table = "#__$usersystem$accounts";
 
     /* Access
      * OBJECT
@@ -176,9 +176,13 @@ class $$$User extends $system$Object {
 	$_SESSION['$$$passphrase'] = $passphrase;
 
 	# if root password is set, note in config
-	if ($this->isRoot()) $this->getConfig()->setDefault('$$$isRootPassword', 1);
+	if ($this->isRoot()) {
+	    $this->getConfig()->setDefault('$$$isRootPassword', 1);
+	}
 
-	return $this->_edit($data);
+	$return = $this->_edit($data);
+
+	return $return;
     }
 
     /* delete account
@@ -212,7 +216,7 @@ class $$$User extends $system$Object {
 
 	// ask database
 	$sql = "SELECT email as email
-	    FROM #__accounts
+	    FROM #__$usersystem$accounts
 	    WHERE name = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result) return false;
@@ -232,7 +236,7 @@ class $$$User extends $system$Object {
 	// try to get user with matching identity
 	$email = $this->name2email($email);
 	$sql = "SELECT id as id
-	    FROM #__accounts
+	    FROM #__$usersystem$accounts
 	    WHERE email = '$email'
 		AND password = '".$this->_password2hash($password, $email)."'
 	;";
@@ -246,7 +250,7 @@ class $$$User extends $system$Object {
 	if ($this->id == 2) return false;
 
 	// update database
-	$sql = "UPDATE #__accounts
+	$sql = "UPDATE #__$usersystem$accounts
 	    SET dateOfLastLogin = NOW(),
 		dateOfLastLastLogin = '".$this->getInfo('dateOfLastLogin')."'
 	    WHERE id = '".$this->id."';";
@@ -277,7 +281,7 @@ class $$$User extends $system$Object {
 
 	// try to get user with matching identity
 	$sql = "SELECT id as id
-	    FROM #__accounts
+	    FROM #__$usersystem$accounts
 	    WHERE id = '$this->id'
 		AND password = '".$this->_password2hash($password)."'
 	;";
@@ -378,7 +382,7 @@ class $$$User extends $system$Object {
 
 	// check if e-mail is unique
 	$sql = "SELECT id as id
-	    FROM #__accounts
+	    FROM #__$usersystem$accounts
 	    WHERE email = '$email';";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!empty($result) and $result[0]['id'] != $this->id) return false;
@@ -397,7 +401,7 @@ class $$$User extends $system$Object {
 
 	// check if name is unique
 	$sql = "SELECT id as id
-	    FROM #__accounts
+	    FROM #__$usersystem$accounts
 	    WHERE name = '$name';";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!empty($result) and $result[0]['id'] != $this->id) return false;
@@ -498,7 +502,7 @@ class $$$User extends $system$Object {
 
 	// get all users from database
 	$sql = "SELECT id, name
-	    FROM #__accounts;";
+	    FROM #__$usersystem$accounts;";
 	$results = $TSunic->Db->doSelect($sql);
 	if (!$results) return array();
 
