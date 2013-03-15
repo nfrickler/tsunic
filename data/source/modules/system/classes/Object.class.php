@@ -119,7 +119,7 @@ class $$$Object {
 	// get Key objects
 	$this->_keys = array();
 	foreach ($result as $index => $values) {
-	    $this->_keys[] = $TSunic->get('$$$Key', array(
+	    $this->_keys[$values['fk_account']] = $TSunic->get('$$$Key', array(
 		$this->table, $this->id, $values['fk_account'])
 	    );
 	}
@@ -140,21 +140,41 @@ class $$$Object {
 	// if _Key is set, use this one!
 	if ($this->_Key) return $this->_Key;
 
-	// load key
-	if (!isset($this->_keys[$fk_account])) {
+	// load keys
+	if (empty($this->_keys)) $this->getKeys();
+
+	// if no valid key found and no $fk_account parameter, try to find
+	// guest-key
+	if ((!isset($this->_keys[$fk_account]) or
+	    !$this->_keys[$fk_account]->isValid()) and
+	    $empty_fk_account and
+	    $fk_account == $TSunic->Usr->getInfo('id') and
+	    isset($this->_keys[$TSunic->Usr->getIdGuest()])
+	) {
+	    return $this->_keys[$TSunic->Usr->getIdGuest()];
+	}
+
+	// if still empty, create new empty key
+	if (empty($this->_keys)) {
 	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
 	}
 
-	// if no valid key found and no $fk_account parameter, try to find 
-	// guest-key
-	if (!$this->_keys[$fk_account]->isValid() and
-	    $empty_fk_account and
-	    $fk_account == $TSunic->Usr->getInfo('id')
-	) {
-	    return $this->_getKey($TSunic->Usr->getIdGuest());
+	// if no valid key, but another key is valid, return copy of this key
+	if (!isset($this->_keys[$fk_account])) {
+
+	    // is any valid key?
+	    foreach ($this->_keys as $index => $Value) {
+		$Copy = $Value->getCopy();
+		if ($Copy) {
+		    $Copy->edit($fk_account, $Value->getInfo('can_write'), 0, 0, false);
+		    $this->_keys[$fk_account] = $Copy;
+		    break;
+		}
+	    }
 	}
 
-	return $this->_keys[$fk_account];
+	return (isset($this->_keys[$fk_account]))
+	    ? $this->_keys[$fk_account] : NULL;
     }
 
     /* save Key
@@ -488,19 +508,15 @@ class $$$Object {
 	foreach ($this->getKeys() as $index => $Value) {
 	    $fk_account = $Value->getInfo('fk_account');
 	    $ok = 0;
-$TSunic->Log->log(1, "shareWith: fk_account: ".$fk_account);
 	    foreach ($access as $in => $val) {
-$TSunic->Log->log(1, "shareWith: access: ".$in);
 		if ($in == $fk_account) {
-$TSunic->Log->log(1, "shareWith: ok");
 		    $ok = 1;
 		    break;
 		}
 	    }
-//TODO
+
 	    // delete key if not ok
 	    if (!$ok) {
-$TSunic->Log->log(1, "shareWith: delete key!");
 		$this->_deleteKey($fk_account);
 	    }
 	}
@@ -511,7 +527,6 @@ $TSunic->Log->log(1, "shareWith: delete key!");
 	    // get Key object
 	    $Key = $this->_getKey($index);
 
-$TSunic->Log->log(1, "shareWith: edit key!");
 	    // set writable
 	    $Key->edit($index, $value, 0, 0, false);
 	}
@@ -539,6 +554,10 @@ $TSunic->Log->log(1, "shareWith: edit key!");
 
 	// update key
 	$key->edit($User->getInfo('id'), 1);
+
+	// create new key
+	$key->create();
+	$key->save();
 
 	// update fk_account
 	$this->info['fk_account'] = $User->getInfo('id');

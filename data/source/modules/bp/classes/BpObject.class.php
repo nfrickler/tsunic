@@ -176,7 +176,9 @@ class $$$BpObject extends $system$Object {
      */
     protected function _getNewBit () {
 	global $TSunic;
-	return $TSunic->get('$$$Bit', false, true);
+	$Bit = $TSunic->get('$$$Bit', false, true);
+	//$Bit->pushTo($this->_getKey()->getInfo('fk_account'));
+	return $Bit;
     }
 
     /* get first bit with specified tag
@@ -332,6 +334,16 @@ class $$$BpObject extends $system$Object {
 	}
 
 	return $out;
+    }
+
+    /* get first Bit of this object with a certain tag
+     * @param int: tag to search for
+     *
+     * @return object
+     */
+    public function getFirstByTag ($fk_tag) {
+	$all = $this->getByTag($fk_tag);
+	return array_shift($all);
     }
 
     /* get Helper object

@@ -23,17 +23,19 @@ class $$$Queue extends $bp$BpObject {
      *
      * @return Object
      */
+    /*
     protected function _getKey ($fk_account = 0) {
 	global $TSunic;
 
 	// save for guest only!
 	return parent::_getKey($TSunic->Usr->getIdGuest());
     }
-
+     */
     /* get new empty Bit object
      *
      * @return object
      */
+    /*
     protected function _getNewBit () {
 	global $TSunic;
 	$Bit = $TSunic->get('$bp$Bit', false, true);
@@ -47,7 +49,7 @@ class $$$Queue extends $bp$BpObject {
 	$Bit->setKey($Key);
 	return $Bit;
     }
-
+     */
     /* get all issues in this queue
      *
      * @return array

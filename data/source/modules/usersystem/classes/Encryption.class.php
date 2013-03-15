@@ -17,6 +17,11 @@ class $$$Encryption {
      */
     private $passphrase;
 
+    /* encryption infix
+     * string
+     */
+    private $infix = '#infix#';
+
     /* symmetric encryption prefix
      * string
      */
@@ -52,7 +57,7 @@ class $$$Encryption {
 
 	// try to load encryption object of chosen encryption
 	$this->MyEnc = $TSunic->get(
-	    '$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'),
+	   '$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'),
 	    array(
 		$TSunic->Config->getConfig('encryption_algorithm'),
 		$TSunic->Config->getConfig('encryption_mode')
@@ -81,6 +86,7 @@ class $$$Encryption {
      * @return array
      */
     public function gen_keys () {
+	global $TSunic;
 
 	// generate public/private keypair
 	$res = openssl_pkey_new(array(
@@ -159,6 +165,9 @@ class $$$Encryption {
 	// do not encrypt empty text
 	if ($text === '' or $text === false) return $text;
 
+	// add infix
+	$text = $this->infix.$text;
+
 	// encrypt for other user?
 	if (($key and !$asym) or $TSunic->Usr->getInfo('id') == $this->fk_account) {
 	    // encrypt symmetric
@@ -198,12 +207,13 @@ class $$$Encryption {
      */
     public function decrypt ($text, $key = false) {
 	global $TSunic;
+	$text_in = $text;
 
 	// get encryption prefix
 	if (substr($text, 0, strlen($this->prefix_sym)) == $this->prefix_sym) {
-
 	    // get key
 	    if (empty($key)) $key = $this->symkey;
+	    if (empty($key)) return $text;
 
 	    // is ready for encryption?
 	    if (!$key and !$this->ready) $this->throwEncError();
@@ -218,6 +228,7 @@ class $$$Encryption {
 
 	    // get key
 	    if (empty($key)) $key = $this->privkey;
+	    if (empty($key)) return $text;
 
 	    // is ready for encryption?
 	    if (!$key and !$this->ready) $this->throwEncError();
@@ -231,6 +242,14 @@ class $$$Encryption {
 	    openssl_private_decrypt($crypttext, $text, $key);
 	}
 
+	// check infix
+	if (substr($text, 0, strlen($this->infix)) == $this->infix) {
+	    $text = substr($text, strlen($this->infix));
+	} else {
+	    // Decryption failed! Return original text
+	    $text = $text_in;
+	}
+
 	return $text;
     }
 
@@ -240,26 +259,6 @@ class $$$Encryption {
     protected function throwEncError () {
 	$TSunic->Log->log(1, 'Encryption called, but not ready yet!');
 	$TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
-    }
-
-    /* load en-/decryption-password of current user
-     * @param string: passphrase
-     *
-     * @return bool
-     */
-    private function _getKey ($passphrase) {
-	global $TSunic;
-	$this->ready = false;
-
-	// get system secret
-	$system_secret = $TSunic->Config->getConfig('system_secret');
-
-	// encrypt passphrase with system_secret to get userkey
-	$userkey = $this->MyEnc->encrypt($passphrase, $system_secret);
-	$this->MyEnc->setKey($userkey);
-
-	$this->ready = true;
-	return true;
     }
 }
 ?>

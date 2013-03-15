@@ -35,13 +35,10 @@ function $$$createIssue () {
     }
 
     // share issue with maintainer
-    $maintainer = $Issue->getByTag("ISSUE__MAINTAINER");
-	    $TSunic->Log->log(1, 'issue::createIssue: maintainer= '.$maintainer);
-    if ($maintainer) {
-	$Maintainer = $TSunic->get('$profile$MyProfile', $maintainer);
-	//TODO
-	    $TSunic->Log->log(1, 'issue::createIssue: share!');
-	if (!$Issue->shareWith($Maintainer->getInfo('account'),1)) {
+    $Maintainer_Bit = $Issue->getFirstByTag("ISSUE__MAINTAINER");
+    if ($Maintainer_Bit) {
+	$Maintainer = $TSunic->get('$profile$MyProfile', $Maintainer_Bit->getInfo('value'));
+	if (!$Issue->shareWith(array($Maintainer->getInfo('account') => 1))) {
 	    $TSunic->Log->alert('error', '{CREATEISSUE__ERROR}');
 	    $TSunic->Log->log(3, 'issue::createIssue: ERROR: Failed to share issue with other user');
 	    $TSunic->redirect('back');

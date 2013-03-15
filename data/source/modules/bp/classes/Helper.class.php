@@ -22,6 +22,7 @@ class $$$Helper {
 	    $sql = "SELECT id, name, title, fk_type, isId
 		FROM #__$bp$tags
 		WHERE fk_account = '0'
+		    OR fk_account = '".$TSunic->Usr->getIdGuest()."'
 		    OR fk_account = '".$TSunic->Usr->getInfo('id')."'
 	    ;";
 	    $result = $TSunic->Db->doSelect($sql);
@@ -72,7 +73,7 @@ class $$$Helper {
 	// query database
 	if (!empty($sql_where)) $sql_where = " AND ".$sql_where;
 	if (!empty($class)) $sql_where = " AND class= '$class'".$sql_where;
-	$sql = "SELECT id
+	$sql = "SELECT objects.id
 	    FROM #__$bp$objects as objects,
 		#__$system$keys as keytable
 	    WHERE keytable.fk_table = '#__$bp$objects'

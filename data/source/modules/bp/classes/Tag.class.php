@@ -200,6 +200,7 @@ class $$$Tag extends $system$Object {
 	$sql = "SELECT id
 	    FROM #__$bp$types
 	    WHERE fk_account = '0'
+		OR fk_account = '".$TSunic->Usr->getIdGuest()."'
 		OR fk_account = '".$TSunic->Usr->getInfo('id')."'
 	;";
 	$result = $TSunic->Db->doSelect($sql);

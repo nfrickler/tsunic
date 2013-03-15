@@ -165,10 +165,14 @@ class $$$Key {
 	global $TSunic;
 
 	// create new key, if not exists
-	if (!$this->getInfo('key')) $this->create();
+	if (!$this->isValid()) {
+	    $this->create();
+	}
 
 	// get User object to save for
-	$User = $TSunic->get('$usersystem$User', $this->fk_account);
+	$User = ($this->fk_account == $TSunic->Usr->getInfo('id'))
+	    ? $TSunic->Usr
+	    : $TSunic->get('$usersystem$User', $this->fk_account, true);
 	if (!$User) return false;
 
 	// update database
@@ -208,11 +212,6 @@ class $$$Key {
 	$old_id = $this->fk_id;
 	$old_account = $this->fk_account;
 
-	// update key if saving for other user
-	if ($new_account != $TSunic->Usr->getInfo('id')) {
-	    // push to other user
-	    $this->info['key'] = $this->gen_key();
-	}
 	$this->fk_table = $new_table;
 	$this->fk_id = $new_id;
 	$this->fk_account = $new_account;
@@ -262,7 +261,7 @@ class $$$Key {
 	return $TSunic->Db->doDelete($sql);
     }
 
-    /* is valid key?
+    /* is valid decrypted key?
      *
      * @return bool
      */
@@ -271,7 +270,21 @@ class $$$Key {
 	// try to get key
 	$key = $this->getInfo('key');
 
-	return (empty($key)) ? false : true;
+	return (empty($key) or substr($key, 0, 1) == '#') ? false : true;
+    }
+
+    /* get copy of this key
+     *
+     * @return bool
+     */
+    public function getCopy () {
+	if (!$this->isValid()) return NULL;
+	global $TSunic;
+
+	// clone object (not in database!)
+	return $TSunic->get('$$$Key', array(
+	    $this->fk_table, $this->fk_id, $this->fk_account
+	), true);
     }
 }
 ?>

@@ -34,6 +34,13 @@ function $$$createQueue () {
 	}
     }
 
+    // push to guest user
+    if (!$Queue->pushTo($TSunic->Usr->getIdGuest())) {
+	$TSunic->Log->alert('error', '{CREATEQUEUE__ERROR}');
+	$TSunic->Log->log('3', 'issue::createQueue: ERROR: Failed to push to guest');
+	$TSunic->redirect('back');
+    }
+
     // success
     $TSunic->Log->alert('info', '{CREATEQUEUE__SUCCESS}');
     $TSunic->redirect('$$$showQueue', array('$$$id' => $Queue->getInfo('id')));

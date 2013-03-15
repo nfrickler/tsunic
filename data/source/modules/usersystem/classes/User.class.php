@@ -42,6 +42,7 @@ class $$$User extends $system$Object {
      */
     public function __construct ($id = false) {
 	global $TSunic;
+	$emptyid = (empty($id)) ? true : false;
 	if ($id == 'root') $id = $this->id_root;
 	if ($id == 'guest') $id = $this->id_guest;
 	if (empty($id) and isset($_SESSION['$$$id__account']))
@@ -55,8 +56,8 @@ class $$$User extends $system$Object {
 	parent::__construct($id);
 
 	// load Encryption
-	$this->Encryption = $TSunic->get('$$$Encryption', $this->id);
-	if (isset($_SESSION['$$$passphrase'])) {
+	$this->Encryption = $TSunic->get('$$$Encryption', $this->id, true);
+	if ($emptyid and isset($_SESSION['$$$passphrase'])) {
 	    $this->Encryption->setPassphrase($_SESSION['$$$passphrase']);
 	    $this->Encryption->setKeys(
 		$this->getInfo('symkey'),
