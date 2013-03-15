@@ -1,6 +1,6 @@
-<!-- | FUNCTION show index -->
+<!-- | FUNCTION show profiles -->
 <?php
-function $$$showIndex () {
+function $$$showProfiles () {
     global $TSunic;
 
     // permission?
@@ -14,9 +14,11 @@ function $$$showIndex () {
     $profiles = $Helper->getObjects('$$$Profile');
 
     // activate template
-    $data = array('profiles' => $profiles);
-    $TSunic->Tmpl->activate('$$$showIndex', '$system$content', $data);
-    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWINDEX__TITLE}'));
+    $data = array(
+	'profiles' => $profiles,
+    );
+    $TSunic->Tmpl->activate('$$$showProfiles', '$system$content', $data);
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWPROFILES__TITLE}'));
 
     return true;
 }

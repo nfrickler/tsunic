@@ -1,4 +1,5 @@
 <!-- | access -->
 <all>
     <access default="1">useProfiles</access>
+    <access default="1">showMyProfiles</access>
 </all>

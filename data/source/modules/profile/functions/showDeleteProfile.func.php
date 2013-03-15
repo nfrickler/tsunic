@@ -13,6 +13,12 @@ function $$$showDeleteProfile () {
     $id = $TSunic->Temp->getParameter('$$$id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
+    // editable?
+    if (!$Profile->editable()) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // activate template
     $data = array('Profile' => $Profile);
     $TSunic->Tmpl->activate('$$$showDeleteProfile', '$system$content', $data);

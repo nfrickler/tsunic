@@ -16,19 +16,19 @@ switch ($Tag->getType()->getInfo('name')) {
 	break;
     default:
 	$this->set($Bit->get2show());
-	break;	
+	break;
 }
 
 if (substr($typename,0,3) == 'mod') {
 $value = $Bit->getInfo('value');
 ?>
-	<a href="<?php $this->setUrl('$$$showChooseObject', array('$$$fk_bit' => $Bit->getInfo('id'), '$$$backlink' => $backlink)); ?>">
-	    <?php $this->set('{SHOWBIT__TOEDITOBJECT}'); ?></a>
-	<?php if (!empty($value)) { ?>
-	<a href="<?php $this->setUrl('$$$showDeleteObject', array('$$$id' => $value, '$$$backlink' => $backlink)); ?>">
-	    <?php $this->set('{SHOWBIT__TODELETEOBJECT}'); ?></a>
-	<?php } ?>
-	<a href="<?php $this->setUrl('$$$unlinkTag', array('$$$id' => $Bit->getInfo('id'), '$$$backlink' => $backlink)); ?>">
-	    <?php $this->set('{SHOWBIT__TOUNLINKTAG}'); ?></a>
-<?php } ?>
-    </td>
+    <a href="<?php $this->setUrl('$$$showChooseObject', array('$$$fk_bit' => $Bit->getInfo('id'), '$$$backlink' => $backlink)); ?>">
+	<?php $this->set('{SHOWBIT__TOEDITOBJECT}'); ?></a>
+    <?php if (!empty($value)) { ?>
+    <a href="<?php $this->setUrl('$$$showDeleteObject', array('$$$id' => $value, '$$$backlink' => $backlink)); ?>">
+	<?php $this->set('{SHOWBIT__TODELETEOBJECT}'); ?></a>
+    <?php } ?>
+    <a href="<?php $this->setUrl('$$$unlinkTag', array('$$$id' => $Bit->getInfo('id'), '$$$backlink' => $backlink)); ?>">
+	<?php $this->set('{SHOWBIT__TOUNLINKTAG}'); ?></a>
+    <?php } ?>
+</td>

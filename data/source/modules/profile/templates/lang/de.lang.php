@@ -42,15 +42,17 @@ $lang = array(
     'ACCESS__USEPROFILES' => 'Profile anlegen',
     'ACCESS__USEPROFILES_DESCRIPTION' => 'Benutzer kann Profile über beliebige Personen anlegen und verwalten.',
 
-    // showIndex
-    'SHOWINDEX__TITLE' => 'Profile',
-    'SHOWINDEX__H1' => 'Profile',
-    'SHOWINDEX__INFOTEXT' => 'Hier eine Liste von allen Profilen, die du angelegt hast.',
-    'SHOWINDEX__NAME' => 'Name',
-    'SHOWINDEX__DATEOFBIRTH' => 'Geburtsdatum',
-    'SHOWINDEX__TOCREATEPROFILE' => 'Neues Profil erstellen',
-    'SHOWINDEX__UNKNOWNNAME' => 'Unbekannt',
-    'SHOWINDEX__NOPROFILES' => 'Keine Profile vorhanden.',
+    // showProfiles
+    'SHOWPROFILES__TITLE' => 'Profile',
+    'SHOWPROFILES__H1' => 'Profile',
+    'SHOWPROFILES__INFOTEXT' => 'Hier eine Liste von allen Profilen, die du angelegt hast.',
+    'SHOWPROFILES__NAME' => 'Name',
+    'SHOWPROFILES__DATEOFBIRTH' => 'Geburtsdatum',
+    'SHOWPROFILES__TOCREATEPROFILE' => 'Neues Profil erstellen',
+    'SHOWPROFILES__UNKNOWNNAME' => 'Unbekannt',
+
+    // showListProfiles
+    'SHOWLISTPROFILES__NOPROFILES' => 'Keine Profile vorhanden.',
 
     // showProfile
     'SHOWPROFILE__TITLE' => 'Profil',
@@ -65,6 +67,15 @@ $lang = array(
     'SHOWMYPROFILE__TITLE' => 'Dein Profil',
     'SHOWMYPROFILE__H1' => 'Dein Profil',
     'SHOWMYPROFILE__INFOTEXT' => 'Das hier ist dein Profil. Alle diese Angaben sind für alle Benutzer dieses Systems sichtbar.',
+
+    // showMyProfiles
+    'SHOWMYPROFILES__TITLE' => 'Profile',
+    'SHOWMYPROFILES__H1' => 'Profile',
+    'SHOWMYPROFILES__INFOTEXT' => 'Hier eine Liste von den Profilen aller Nutzer auf diesem System.',
+    'SHOWMYPROFILES__NAME' => 'Name',
+    'SHOWMYPROFILES__DATEOFBIRTH' => 'Geburtsdatum',
+    'SHOWMYPROFILES__UNKNOWNNAME' => 'Unbekannt',
+    'SHOWMYPROFILES__NOPROFILES' => 'Keine Profile vorhanden.',
 
     // showCreateProfile
     'SHOWCREATEPROFILE__TITLE' => 'Profil erstellen',
@@ -118,9 +129,10 @@ $lang = array(
     'DELETEPROFILE__ERROR' => 'Profil konnte nicht gelöscht werden!',
 
     // navigation
-    '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Übersicht',
+    '_SYSTEM_NAVIGATION__TOSHOWPROFILES' => 'Deine Profile',
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tags verwalten',
     '_SYSTEM_NAVIGATION__TOSHOWMYPROFILE' => 'Dein Profil',
+    '_SYSTEM_NAVIGATION__TOSHOWMYPROFILES' => 'Andere Nutzer',
     '_HEADER_NAVIGATION__SHOWMYPROFILE' => 'Dein Profil',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profile'
 );

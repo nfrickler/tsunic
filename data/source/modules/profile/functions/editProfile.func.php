@@ -7,6 +7,12 @@ function $$$editProfile () {
     $id = $TSunic->Temp->getPost('$$$formProfile__id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
+    // editable?
+    if (!$Profile->editable()) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // get values from form
     $Helper = $TSunic->get('$bp$Helper');
     $form = $Helper->getFormValues();

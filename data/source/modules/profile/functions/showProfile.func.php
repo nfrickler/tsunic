@@ -6,15 +6,11 @@ function $$$showProfile () {
     // get Profile object
     $id = $TSunic->Temp->getParameter('$$$id');
     $Profile = $TSunic->get('$$$Profile', $id);
-    $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth'));
 
     // is MyProfile?
-    if ($Profile->getInfo('class') == '$$$MyProfile') {
-	// redirect to showMyProfile
-	$TSunic->redirect('$$$showMyProfile',
-	    array('$$$id' => $Profile->getInfo('id'))
-	);
-    }
+    $is_MyProfile = ($Profile->getInfo('class') == '$$$MyProfile')
+	? true : false;
+    if ($is_MyProfile) $Profile = $TSunic->get('$$$MyProfile', $id);
 
     // permission?
     if (!$TSunic->Usr->access('$$$useProfiles')) {
@@ -25,8 +21,7 @@ function $$$showProfile () {
     // activate template
     $data = array(
 	'Profile' => $Profile,
-	'Date' => $Date,
-	'showDelete' => true,
+	'showDelete' => ((!$is_MyProfile and $Profile->editable()) ? true : false),
 	'h1' => '{SHOWPROFILE__H1}',
 	'infotext' => '',
     );

@@ -11,6 +11,12 @@ function $$$showEditProfile () {
     $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth'));
     $preset_dateofbirth = ($Date) ? $Date->getInfo('start') : 0;
 
+    // editable?
+    if (!$Profile->editable()) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // activate template
     $data = array(
 	'Profile' => $Profile,

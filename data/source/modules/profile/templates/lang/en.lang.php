@@ -42,15 +42,17 @@ $lang = array(
     'ACCESS__USEPROFILES' => 'Create profiles',
     'ACCESS__USEPROFILES_DESCRIPTION' => 'Users can create and administrate profiles of multiple persons.',
 
-    // showIndex
-    'SHOWINDEX__TITLE' => 'Profiles',
-    'SHOWINDEX__H1' => 'Profiles',
-    'SHOWINDEX__INFOTEXT' => 'A list of all profiles you have created.',
-    'SHOWINDEX__NAME' => 'Name',
-    'SHOWINDEX__DATEOFBIRTH' => 'Date of birth',
-    'SHOWINDEX__TOCREATEPROFILE' => 'Create new profile',
-    'SHOWINDEX__UNKNOWNNAME' => 'Unknown',
-    'SHOWINDEX__NOPROFILES' => 'No profiles.',
+    // showProfiles
+    'SHOWPROFILES__TITLE' => 'Profiles',
+    'SHOWPROFILES__H1' => 'Profiles',
+    'SHOWPROFILES__INFOTEXT' => 'A list of all profiles you have created.',
+    'SHOWPROFILES__NAME' => 'Name',
+    'SHOWPROFILES__DATEOFBIRTH' => 'Date of birth',
+    'SHOWPROFILES__TOCREATEPROFILE' => 'Create new profile',
+    'SHOWPROFILES__UNKNOWNNAME' => 'Unknown',
+
+    // showListProfiles
+    'SHOWLISTPROFILES__NOPROFILES' => 'No profiles.',
 
     // showProfile
     'SHOWPROFILE__TITLE' => 'Profile',
@@ -66,19 +68,20 @@ $lang = array(
     'SHOWMYPROFILE__H1' => 'Your profile',
     'SHOWMYPROFILE__INFOTEXT' => 'This is your own profile. This profile is visible to all users of this system.',
 
+    // showMyProfiles
+    'SHOWMYPROFILES__TITLE' => 'Profiles',
+    'SHOWMYPROFILES__H1' => 'Profiles',
+    'SHOWMYPROFILES__INFOTEXT' => 'A list of the profiles of all users on this system.',
+    'SHOWMYPROFILES__NAME' => 'Name',
+    'SHOWMYPROFILES__DATEOFBIRTH' => 'Date of birth',
+    'SHOWMYPROFILES__UNKNOWNNAME' => 'Unknown',
+    'SHOWMYPROFILES__NOPROFILES' => 'No profiles.',
+
     // selections
     'SELECTIONS__PROFILE__GENDER_F' => 'female',
     'SELECTIONS__PROFILE__GENDER_F__DESCRIPTION' => 'female',
     'SELECTIONS__PROFILE__GENDER_M' => 'male',
     'SELECTIONS__PROFILE__GENDER_M__DESCRIPTION' => 'male',
-
-    // showIndex
-    'SHOWINDEX__TITLE' => 'Profiles',
-    'SHOWINDEX__H1' => 'Profiles',
-    'SHOWINDEX__INFOTEXT' => 'A list of all profiles you have created.',
-    'SHOWINDEX__NAME' => 'Name',
-    'SHOWINDEX__DATEOFBIRTH' => 'Date of birth',
-    'SHOWINDEX__TOCREATEPROFILE' => 'Create new profile',
 
     // showProfile
     'SHOWPROFILE__TITLE' => 'Profile',
@@ -140,9 +143,10 @@ $lang = array(
     'DELETEPROFILE__ERROR' => 'Profile could not be deleted!',
 
     // navigation
-    '_SYSTEM_NAVIGATION__TOSHOWINDEX' => 'Index',
+    '_SYSTEM_NAVIGATION__TOSHOWPROFILES' => 'Your profiles',
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Administrate tags',
     '_SYSTEM_NAVIGATION__TOSHOWMYPROFILE' => 'Your profile',
+    '_SYSTEM_NAVIGATION__TOSHOWMYPROFILES' => 'Other users',
     '_HEADER_NAVIGATION__SHOWMYPROFILE' => 'Your Profile',
     '_HEADER_NAVIGATION__SHOWPROFILE' => 'Profiles'
 );

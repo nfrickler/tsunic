@@ -11,19 +11,19 @@ $num = 0;
 	    <legend><?php $this->set('{FORMPROFILE__LEGEND_ID}'); ?></legend>
 	    <?php
 	    $this->display('$bp$formBit', array(
-		'Bit' => $Profile->getBit('PROFILE__FIRSTNAME'),
+		'Bit' => $Profile->getBit('PROFILE__FIRSTNAME', true),
 		'num' => $num++,
 	    ));
 	    $this->display('$bp$formBit', array(
-		'Bit' => $Profile->getBit('PROFILE__LASTNAME'),
+		'Bit' => $Profile->getBit('PROFILE__LASTNAME', true),
 		'num' => $num++,
 	    ));
 	    $this->display('$bp$formBit', array(
-		'Bit' => $Profile->getBit('PROFILE__GENDER'),
+		'Bit' => $Profile->getBit('PROFILE__GENDER', true),
 		'num' => $num++,
 	    ));
 	    $this->display('$bp$formBit', array(
-		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH'),
+		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH', true),
 		'num' => $num++,
 	    ));
 	    ?>

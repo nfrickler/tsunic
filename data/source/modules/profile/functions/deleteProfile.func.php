@@ -13,6 +13,12 @@ function $$$deleteProfile () {
     $id = $TSunic->Temp->getParameter('$$$id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
+    // editable?
+    if (!$Profile->editable()) {
+	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
+	$TSunic->redirect('back');
+    }
+
     // delete profile
     if (!$Profile->delete()) {
 	$TSunic->Log->alert('error', '{DELETEPROFILE__ERROR}');

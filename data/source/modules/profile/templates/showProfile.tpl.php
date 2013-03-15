@@ -3,11 +3,13 @@
 <div id="$$$div__showProfile">
     <h1><?php $this->set($this->getVar('h1')); ?></h1>
     <p class="ts_suplinkbox">
+	<?php if ($Profile->editable()) { ?>
 	<a id="$$$showProfile__editlink" href="<?php $this->setUrl('$$$showEditProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWPROFILE__TOEDITPROFILE}'); ?></a>
 	<?php if ($this->getVar('showDelete')) { ?>
 	<a id="$$$showProfile__deletelink" href="<?php $this->setUrl('$$$showDeleteProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWPROFILE__TODELETEPROFILE}'); ?></a>
+	<?php } ?>
 	<?php } ?>
     </p>
     <?php if ($this->getVar('infotext')) { ?>
@@ -43,6 +45,7 @@
 	    </td>
 	</tr>
 	<?php } ?>
+	<?php if ($Profile->getInfo('dateofbirth')) { ?>
 	<tr>
 	    <th style="min-width:100px;">
 		<?php $this->set('{TAG__PROFILE__DATEOFBIRTH}'); ?></th>
@@ -55,7 +58,9 @@
 	    ));
 	    ?>
 	</tr>
+	<?php } ?>
 
+	<?php if ($Profile->getInfo('mainimage')) { ?>
 	<tr>
 	    <th><?php $this->set('{TAG__PROFILE__MAINIMAGE}'); ?></th>
 	    <?php
@@ -66,6 +71,7 @@
 	    ));
 	    ?>
 	<tr>
+	<?php } ?>
     </table>
 
     <table cellspacing="2" cellpadding="0" border="0">

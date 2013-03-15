@@ -582,5 +582,13 @@ class $$$Object {
 	$Obj = $TSunic->get(get_class(), $copyid);
 	return $Obj->pushTo($fk_account);
     }
+
+    /* is object editable by user?
+     *
+     * @return object
+     */
+    public function editable () {
+	return ($this->_getKey()->getInfo('can_write')) ? true : false;
+    }
 }
 ?>

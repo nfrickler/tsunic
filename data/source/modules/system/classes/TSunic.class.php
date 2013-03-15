@@ -466,6 +466,7 @@ class TSunic {
 	    echo '<redirect>'.$link.'</redirect>';
 	} else {
 	    // redirect and exit
+	    $this->Log->log(6, "TSunic::redirect: redirecting to $link");
 	    header('Location:'.$link);
 	}
 	exit;
