@@ -17,11 +17,6 @@ class $$$Object {
      */
     protected $_keys = array();
 
-    /* Key object (if set, overwrites _keys)
-     * object
-     */
-    protected $_Key;
-
     /* temporary cache for keytypes in database (0: - 1: encrypted)
      * array
      */
@@ -87,17 +82,19 @@ class $$$Object {
 	return NULL;
     }
 
-    /* set key for this object
-     * @param object: Key object
+    /* preset keys for this object
+     * @param array: array of Key objects
      *
      * @return bool
      */
-    public function setKey ($Key) {
+    public function setKeys ($keys) {
 
 	// set table and id
-	$Key->edit(0, 1, $this->table, $this->id, false);
+	foreach ($keys as $index => $Value) {
+	    $Value->edit(0, 1, $this->table, $this->id, false);
+	}
 
-	$this->_Key = $Key;
+	$this->_keys = $keys;
 	return true;
     }
 
@@ -106,6 +103,7 @@ class $$$Object {
      * @return array
      */
     public function getKeys () {
+	if ($this->_keys) return $this->_keys;
 	global $TSunic;
 
 	// query database
@@ -127,6 +125,25 @@ class $$$Object {
 	return $this->_keys;
     }
 
+    /* get sharedWith information of this object
+     *
+     * @return array
+     */
+    public function getSharedWith () {
+
+	// get all Key objects
+	$keys = $this->getKeys();
+
+	// get sharedWith information
+	$shared = array();
+	foreach ($keys as $index => $Value) {
+	    $shared[$Value->getInfo('fk_account')] =
+		$Value->getInfo('can_write');
+	}
+
+	return $shared;
+    }
+
     /* load Key
      * +@param int: fk_account of key to return
      *
@@ -136,9 +153,6 @@ class $$$Object {
 	global $TSunic;
 	$empty_fk_account = ($fk_account) ? false : true;
 	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
-
-	// if _Key is set, use this one!
-	if ($this->_Key) return $this->_Key;
 
 	// load keys
 	if (empty($this->_keys)) $this->getKeys();
@@ -171,6 +185,11 @@ class $$$Object {
 		    break;
 		}
 	    }
+	}
+
+	// if still nothing to return, create new empty key
+	if (!isset($this->_keys[$fk_account])) {
+	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
 	}
 
 	return (isset($this->_keys[$fk_account]))
@@ -301,7 +320,9 @@ class $$$Object {
 
 	// update object infos
 	$this->_loadInfo();
-	$this->_saveKey($TSunic->Usr->getInfo('id'));
+	foreach ($this->getKeys() as $index => $Value) {
+	    $Value->save($this->id);
+	}
 
 	return ($this->id) ? $this->id : false;
     }
@@ -373,7 +394,9 @@ class $$$Object {
 	// invalidate object
 	$this->id = 0;
 	$this->_loadInfo();
-	$this->_deleteKey();
+	foreach ($this->getKeys() as $index => $Value) {
+	    $Value->delete();
+	}
 
 	return true;
     }

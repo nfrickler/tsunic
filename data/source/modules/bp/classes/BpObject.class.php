@@ -177,7 +177,7 @@ class $$$BpObject extends $system$Object {
     protected function _getNewBit () {
 	global $TSunic;
 	$Bit = $TSunic->get('$$$Bit', false, true);
-	//$Bit->pushTo($this->_getKey()->getInfo('fk_account'));
+	$Bit->shareWith($this->getSharedWith());
 	return $Bit;
     }
 
