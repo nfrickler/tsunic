@@ -46,6 +46,11 @@ function $$$editProfile () {
 	}
     }
 
+    // if MyProfile, share with public
+    if ($Profile->getInfo('class') == '$$$MyProfile') {
+	$Profile->shareWith_all();
+    }
+
     // success
     $TSunic->Log->alert('info', '{EDITPROFILE__SUCCESS}');
     $TSunic->redirect('$$$showProfile', array('$$$id' => $Profile->getInfo('id')));

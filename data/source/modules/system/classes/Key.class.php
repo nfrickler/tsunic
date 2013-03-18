@@ -2,37 +2,28 @@
 <?php
 class $$$Key {
 
-    /* fk_table
-     * string
-     */
-    protected $fk_table;
-
-    /* id of entry
-     * int
-     */
-    protected $fk_id;
-
-    /* id of account
-     * int
-     */
-    protected $fk_account;
-
     /* information about key
      * array
      */
-    protected $info;
+    protected $info = array();
+
+    /* temporary information about key
+     * array
+     */
+    protected $info_tmp = array();
 
     /* constructor
      * @param string: name of table
      * @param int: id of entry
+     * @param int: fk_account
      */
     public function __construct ($fk_table, $fk_id, $fk_account = 0) {
 	global $TSunic;
 
 	// save
-	$this->fk_table = $fk_table;
-	$this->fk_id = $fk_id;
-	$this->fk_account = ($fk_account)
+	$this->info_tmp['fk_table'] = $fk_table;
+	$this->info_tmp['fk_id'] = $fk_id;
+	$this->info_tmp['fk_account'] = ($fk_account)
 	    ? $fk_account : $TSunic->Usr->getInfo('id');
     }
 
@@ -46,10 +37,12 @@ class $$$Key {
 
 	// onload data
 	if (empty($this->info)) $this->_loadInfo();
-	if (empty($this->info)) return false;
 
 	// return requested info
-	if (isset($this->info[$name])) return $this->info[$name];
+	if ($this->info and isset($this->info[$name]))
+	    return $this->info[$name];
+	if ($this->info_tmp and isset($this->info_tmp[$name]))
+	    return $this->info_tmp[$name];
 
 	return NULL;
     }
@@ -59,16 +52,19 @@ class $$$Key {
      * @return bool
      */
     protected function _loadInfo () {
-	if (!$this->fk_table or !$this->fk_id or !$this->fk_account)
-	    return false;
+	if (!isset($this->info_tmp['fk_table'], $this->info_tmp['fk_id'],
+	    $this->info_tmp['fk_account']) or
+	    !$this->info_tmp['fk_table'] or !$this->info_tmp['fk_id'] or
+	    !$this->info_tmp['fk_account']
+	) return false;
 	global $TSunic;
 
 	// get data from database
 	$sql = "SELECT *
 	    FROM #__$system$keys
-	    WHERE fk_table = '$this->fk_table'
-		AND fk_id = '$this->fk_id'
-		AND fk_account = '$this->fk_account'
+	    WHERE fk_table = '".$this->info_tmp['fk_table']."'
+		AND fk_id = '".$this->info_tmp['fk_id']."'
+		AND fk_account = '".$this->info_tmp['fk_account']."'
 	;";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result) return false;
@@ -78,6 +74,7 @@ class $$$Key {
 	$this->info['key'] = $TSunic->Usr->decrypt($this->info['_key_']);
 	unset($this->info['_key_']);
 
+	$this->info_tmp = $this->info;
 	return true;
     }
 
@@ -138,14 +135,9 @@ class $$$Key {
 	global $TSunic;
 
 	// create tmp info
-	$this->info = array(
-	    'fk_table' => $this->fk_table,
-	    'fk_id' => $this->fk_id,
-	    'fk_account' => $this->fk_account,
-	    'fk_account_origin' => $TSunic->Usr->getInfo('id'),
-	    'can_write' => 1,
-	    'key' => $this->gen_key()
-	);
+	$this->info_tmp['fk_account_origin'] = $TSunic->Usr->getInfo('id');
+	$this->info_tmp['can_write'] = 1;
+	$this->info_tmp['key'] = $this->gen_key();
 
 	return true;
     }
@@ -156,13 +148,13 @@ class $$$Key {
      * @return bool
      */
     public function save ($fk_id = false) {
-	if ($fk_id) {
-	    $this->fk_id = $fk_id;
-	    $this->info['fk_id'] = $fk_id;
-	}
-	if (!$this->fk_table or !$this->fk_id or !$this->fk_account)
-	    return false;
 	global $TSunic;
+	if ($fk_id) $this->info_tmp['fk_id'] = $fk_id;
+	if (!isset($this->info_tmp['fk_table'], $this->info_tmp['fk_id'],
+	    $this->info_tmp['fk_account']) or
+	    !$this->info_tmp['fk_table'] or !$this->info_tmp['fk_id'] or
+	    !$this->info_tmp['fk_account']
+	) return false;
 
 	// create new key, if not exists
 	if (!$this->isValid()) {
@@ -170,25 +162,42 @@ class $$$Key {
 	}
 
 	// get User object to save for
-	$User = ($this->fk_account == $TSunic->Usr->getInfo('id'))
+	$User = ($this->info_tmp['fk_account'] == $TSunic->Usr->getInfo('id'))
 	    ? $TSunic->Usr
-	    : $TSunic->get('$usersystem$User', $this->fk_account, true);
+	    : $TSunic->get('$usersystem$User', $this->info_tmp['fk_account'], true);
 	if (!$User) return false;
 
+	$this->getInfo('key');
+	if (isset($this->info) and count($this->info) == 6 and
+	    $this->info_tmp['fk_account'] == $this->info['fk_account'] and
+	    $this->info_tmp['fk_table'] == $this->info['fk_table'] and
+	    $this->info_tmp['fk_id'] == $this->info['fk_id'] and
+	    $this->info_tmp['fk_account_origin'] == $this->info['fk_account_origin'] and
+	    $this->info_tmp['can_write'] == $this->info['can_write'] and
+	    $this->info_tmp['key'] == $this->info['key']
+	) {
+	    return true;
+	}
+
 	// update database
-	$enckey = $User->encrypt($this->getInfo('key'));
+	$enckey = $User->encrypt($this->info_tmp['key']);
 	$sql_set = "
-	    fk_account = '".$this->fk_account."',
-	    fk_account_origin = '".$this->getInfo('fk_account_origin')."',
-	    can_write = '".$this->getInfo('can_write')."',
+	    fk_table = '".$this->info_tmp['fk_table']."',
+	    fk_id = '".$this->info_tmp['fk_id']."',
+	    fk_account = '".$this->info_tmp['fk_account']."',
+	    fk_account_origin = '".$this->info_tmp['fk_account_origin']."',
+	    can_write = '".$this->info_tmp['can_write']."',
 	    _key_ = '".$enckey."'
 	";
 	$sql = "INSERT INTO #__$system$keys
-	    SET fk_id = '".$this->fk_id."',
-		fk_table = '".$this->fk_table."',
-		".$sql_set."
+	    SET ".$sql_set."
 	    ON DUPLICATE KEY UPDATE ".$sql_set.";";
-	return $TSunic->Db->doInsert($sql);
+	$return = $TSunic->Db->doInsert($sql);
+
+	// update info
+	$this->info = $this->info_tmp;
+
+	return $return;
     }
 
     /* edit data of key
@@ -202,44 +211,38 @@ class $$$Key {
      */
     public function edit ($new_account, $can_write, $new_table = 0, $new_id = 0, $deleteOld = true) {
 	global $TSunic;
+
+	// backup old data
 	$this->getInfo('key');
-	if (empty($new_account)) $new_account = $this->fk_account;
-	if (empty($new_table)) $new_table = $this->fk_table;
-	if (empty($new_id)) $new_id = $this->fk_id;
+	$old_info = $this->info;
 
-	// save old values
-	$old_table = $this->fk_table;
-	$old_id = $this->fk_id;
-	$old_account = $this->fk_account;
+	// set new data
+	if ($new_account) $this->info_tmp['fk_account'] = $new_account;
+	if ($new_table) $this->info_tmp['fk_table'] = $new_table;
+	if ($new_id) $this->info_tmp['fk_id'] = $new_id;
+	$this->info_tmp['can_write'] = $can_write;
 
-	$this->fk_table = $new_table;
-	$this->fk_id = $new_id;
-	$this->fk_account = $new_account;
-	$this->info['can_write'] = $can_write;
-
-	// save new key
+	// save new data
 	$this->save();
 
-	// delete old one
-	if ($deleteOld) {
+	// delete old data?
+	if ($deleteOld and (
+	    $this->info_tmp['fk_account'] != $old_info['fk_account'] or
+	    $this->info_tmp['fk_table'] != $old_info['fk_table'] or
+	    $this->info_tmp['fk_id'] != $old_info['fk_id']
+	)) {
+	    // backup new data
+	    $new_info = $this->info_tmp;
 
-	    // save old values (required to save values with asym for other user 
-	    // as we cannot reload values from database
-	    $new_info = $this->info;
+	    // reset old data
+	    $this->info_tmp = $old_info;
+	    $this->info = $old_info;
 
-	    // reset old values
-	    $this->fk_table = $old_table;
-	    $this->fk_id = $old_id;
-	    $this->fk_account = $old_account;
-	    $this->info = array();
-
-	    // delete
+	    // delete old key
 	    $this->delete();
 
-	    // set new values again
-	    $this->fk_table = $new_table;
-	    $this->fk_id = $new_id;
-	    $this->fk_account = $new_account;
+	    // reset new data
+	    $this->info_tmp = $new_info;
 	    $this->info = $new_info;
 	}
 
@@ -251,14 +254,25 @@ class $$$Key {
      * @return bool
      */
     public function delete () {
+	if (!isset($this->info_tmp['fk_table'], $this->info_tmp['fk_id'],
+	    $this->info_tmp['fk_account']) or
+	    !$this->info_tmp['fk_table'] or !$this->info_tmp['fk_id'] or
+	    !$this->info_tmp['fk_account']
+	) return false;
 	global $TSunic;
 
 	// delete in database
 	$sql = "DELETE FROM #__$system$keys
-	    WHERE fk_table = '".$this->fk_table."'
-		AND fk_id = '".$this->fk_id."'
-		AND fk_account = '".$this->fk_account."';";
-	return $TSunic->Db->doDelete($sql);
+	    WHERE fk_table = '".$this->info_tmp['fk_table']."'
+		AND fk_id = '".$this->info_tmp['fk_id']."'
+		AND fk_account = '".$this->info_tmp['fk_account']."';";
+	$return = $TSunic->Db->doDelete($sql);
+
+	// delete info
+	$this->info = array();
+	$this->info_tmp = array();
+
+	return $return;
     }
 
     /* is valid decrypted key?
@@ -283,7 +297,9 @@ class $$$Key {
 
 	// clone object (not in database!)
 	return $TSunic->get('$$$Key', array(
-	    $this->fk_table, $this->fk_id, $this->fk_account
+	    $this->info_tmp['fk_table'],
+	    $this->info_tmp['fk_id'],
+	    $this->info_tmp['fk_account']
 	), true);
     }
 }

@@ -1,4 +1,4 @@
-<!-- | TEMPLATE show list of all myprofiles -->
+<!-- | TEMPLATE show list of all MyProfile objects -->
 <div id="$$$div__showListProfiles">
     <?php if ($this->getVar('profiles')) { ?>
     <table cellspacing="2" cellpadding="0" border="0">
@@ -12,10 +12,11 @@
 		<a href="<?php $this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 		    <?php $this->set($Profile->getName()); ?></a>
 	    </td>
-	    <td>
-		<?php $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth')); ?>
-		<?php $this->set(date('d.m.Y', $Date->getInfo('start'))); ?>
-	    </td>
+	    <?php $this->display('$bp$showBit', array(
+		'Bit' => $Profile->getBit('PROFILE__DATEOFBIRTH', true),
+		'fk_obj' => $Profile->getInfo('id'),
+		'backlink' => base64_encode($this->setUrl('$$$showProfile', array('$$$id' => $Profile->getInfo('id')), false, false))
+	    )); ?>
 	</tr>
 	<?php } ?>
     </table>

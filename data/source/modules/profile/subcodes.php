@@ -5,9 +5,9 @@ $TSunic->Tmpl->activate('$$$_navigation_header', '$system$navigation_header', fa
 $MyProfile = $TSunic->get('$profile$MyProfile');
 $MyProfile->create();
 $MyProfile->saveByTag('PROFILE__ACCOUNT', $this->id);
-$MyProfile->shareWith(array($this->getIdGuest() => 0));
+$MyProfile->shareWith_all(array($this->getIdGuest() => 0));
 [sub:classes/$usersystem$User.class.php:202]
 $MyProfile = $TSunic->get('$profile$MyProfile');
 $MyProfile->create();
 $MyProfile->saveByTag('PROFILE__ACCOUNT', $this->id);
-$MyProfile->shareWith(array($this->getIdGuest() => 0));
+$MyProfile->shareWith_all(array($this->getIdGuest() => 0));

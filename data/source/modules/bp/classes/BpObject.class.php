@@ -388,14 +388,15 @@ class $$$BpObject extends $system$Object {
      *
      * @return bool
      */
-    public function shareWith ($access) {
+    public function shareWith_all ($access = false) {
 	global $TSunic;
+	if (empty($access)) $access = $this->getSharedWith();
 
 	// share all bits with other users
 	$bits = $this->getBits(true);
 	foreach ($bits as $index => $Value) {
 	    if (!$Value->shareWith($access)) {
-		$TSunic->Log->log(3, "BpObject::pushTo: Failed to push Bit!");
+		$TSunic->Log->log(3, "BpObject::pushTo: Failed to share Bit!");
 		return false;
 	    }
 	}

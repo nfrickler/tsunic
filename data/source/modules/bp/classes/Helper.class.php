@@ -147,8 +147,6 @@ class $$$Helper {
 	    // sum multiline
 	    if (is_array($value_value)) {
 
-		var_dump($value_value);
-
 		switch ($Tag->getType()->getInfo('name')) {
 		    case 'date':
 			if (!isset($value_value['d'], $value_value['m'],

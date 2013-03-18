@@ -42,7 +42,9 @@ class $$$Object {
 	$this->id = ($this->_validate($id, 'int')) ? $id : 0;
 
 	// log
-	$TSunic->Log->log(7, get_class($this).'::__construct: id='.$this->id);
+	$TSunic->Log->log(7,
+	    get_class($this).'::__construct: id='.$this->id
+	);
 
 	return;
     }
@@ -104,6 +106,7 @@ class $$$Object {
      */
     public function getKeys () {
 	if ($this->_keys) return $this->_keys;
+	if (!$this->id) return array();
 	global $TSunic;
 
 	// query database
@@ -151,26 +154,30 @@ class $$$Object {
      */
     protected function _getKey ($fk_account = 0) {
 	global $TSunic;
-	$empty_fk_account = ($fk_account) ? false : true;
+	$fk_account_parameter = $fk_account;
 	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
 
 	// load keys
 	if (empty($this->_keys)) $this->getKeys();
 
+	// if still empty, create new empty key
+	if (empty($this->_keys)) {
+	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
+	}
+
+	// if key exists, return
+	if (isset($this->_keys[$fk_account]))
+	    return $this->_keys[$fk_account];
+
 	// if no valid key found and no $fk_account parameter, try to find
 	// guest-key
 	if ((!isset($this->_keys[$fk_account]) or
 	    !$this->_keys[$fk_account]->isValid()) and
-	    $empty_fk_account and
+	    !$fk_account_parameter and
 	    $fk_account == $TSunic->Usr->getInfo('id') and
 	    isset($this->_keys[$TSunic->Usr->getIdGuest()])
 	) {
 	    return $this->_keys[$TSunic->Usr->getIdGuest()];
-	}
-
-	// if still empty, create new empty key
-	if (empty($this->_keys)) {
-	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
 	}
 
 	// if no valid key, but another key is valid, return copy of this key
@@ -178,18 +185,19 @@ class $$$Object {
 
 	    // is any valid key?
 	    foreach ($this->_keys as $index => $Value) {
-		$Copy = $Value->getCopy();
-		if ($Copy) {
-		    $Copy->edit($fk_account, $Value->getInfo('can_write'), 0, 0, false);
-		    $this->_keys[$fk_account] = $Copy;
-		    break;
+		if ($Value->isValid()) {
+		    return $Value;
 		}
 	    }
 	}
 
 	// if still nothing to return, create new empty key
 	if (!isset($this->_keys[$fk_account])) {
-	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
+	    $this->_keys[$fk_account] = $TSunic->get(
+		'$$$Key', array($this->table, $this->id, $fk_account)
+	    );
+	    $this->_keys[$fk_account]->create();
+	    $this->_keys[$fk_account]->save();
 	}
 
 	return (isset($this->_keys[$fk_account]))
@@ -211,7 +219,26 @@ class $$$Object {
      * @return bool
      */
     protected function _deleteKey ($fk_account = 0) {
-	return $this->_getKey($fk_account)->delete();
+	
+	// get key
+	$Key = $this->_getKey($fk_account);
+
+	// delete key
+	if (!$fk_account or $Key->getInfo('fk_account') == $fk_account) {
+
+	    // delete key from _keys-array
+	    $new_keys = array();
+	    foreach ($this->_keys as $index => $Value) {
+		if ($index != $Key->getInfo('fk_account'))
+		    $new_keys[$index] = $Value;
+	    }
+	    $this->_keys = $new_keys;
+
+	    // delete Key object itself
+	    return $Key->delete();
+	}
+
+	return true;
     }
 
     /* load information about object
@@ -301,6 +328,7 @@ class $$$Object {
      * @return bool
      */
     protected function _create ($data) {
+	if (!$this->editable()) return false;
 	if (!is_array($data)) return false;
 	global $TSunic;
 
@@ -323,6 +351,14 @@ class $$$Object {
 	foreach ($this->getKeys() as $index => $Value) {
 	    $Value->save($this->id);
 	}
+
+	// update keys
+	foreach ($this->getKeys() as $index => $Value) {
+	    $Value->save($this->id);
+	}
+
+	// udpate shareWith information
+	$this->shareWith();
 
 	return ($this->id) ? $this->id : false;
     }
@@ -374,7 +410,12 @@ class $$$Object {
 
 	// update infos
 	$this->_loadInfo();
-	$this->_saveKey($TSunic->Usr->getInfo('id'));
+	foreach ($this->getKeys() as $index => $Value) {
+	    $Value->save($this->id);
+	}
+
+	// udpate shareWith information
+	$this->shareWith();
 
 	return true;
     }
@@ -517,15 +558,22 @@ class $$$Object {
     /* *********************** shared objects ********************* */
 
     /* give someone access to this object
-     * @param array/int: list of users with access (array('id' => 'writable?'))
+     * +@param array/int: list of users with access (array('id' => 'writable?'))
      *
      * @return bool
      */
-    public function shareWith ($access) {
+    public function shareWith ($access = false) {
 	global $TSunic;
-
-	// add myself to access list
-	$access[$TSunic->Usr->getInfo('id')] = 1;
+	if (!$this->editable()) return false;
+	if (empty($access)) {
+	    $access = $this->getSharedWith();
+	} else {
+	    // add myself to access list
+	    $access[$TSunic->Usr->getInfo('id')] = 1;
+	}
+	if (empty($access)) return true;
+	$TSunic->Log->log(6, "Object::shareWith: sharing $this->table ".
+	    "($this->id) ".count($access));
 
 	// remove all keys without access
 	foreach ($this->getKeys() as $index => $Value) {
@@ -549,9 +597,17 @@ class $$$Object {
 
 	    // get Key object
 	    $Key = $this->_getKey($index);
+	    $Key->getInfo('key');
+
+	    // copy this key
+	    if ($Key->getInfo('fk_account') != $index) {
+		$Key = $Key->getCopy();
+		if ($Key) $this->_keys[$index] = $Key;
+	    }
 
 	    // set writable
-	    $Key->edit($index, $value, 0, 0, false);
+	    if ($Key)
+		$Key->edit($index, $value, $this->table, $this->id, false);
 	}
 
 	return true;
@@ -563,29 +619,30 @@ class $$$Object {
      * @return bool
      */
     public function pushTo ($fk_account) {
+	if (!$this->editable()) return false;
 	global $TSunic;
+	$TSunic->Log->log(6, "Object::pushTo: pushing $this->table ".
+	    "($this->id) to $fk_account");
 
 	// get User object
 	$User = $TSunic->get('$usersystem$User', $fk_account);
 	if (!$User->isValid()) return false;
 
-	// get current key
-	$key = $this->_getKey();
+	// share with other user
+	$this->shareWith(array($fk_account => 1));
 
-	// load all data
-	$this->getInfo();
+	// delete my own key
+	$this->_deleteKey();
 
-	// update key
-	$key->edit($User->getInfo('id'), 1);
-
-	// create new key
-	$key->create();
-	$key->save();
+	// change key
+	$Key = $this->_getKey($fk_account);
+	$Key->create();
+	$Key->save();
 
 	// update fk_account
 	$this->info['fk_account'] = $User->getInfo('id');
 
-	// resave data with new key
+	// resave data
 	$this->resave();
 
 	return true;
@@ -597,6 +654,7 @@ class $$$Object {
      * @return bool
      */
     public function copyTo ($fk_account) {
+	if (!$this->editable()) return false;
 
 	// make copy
 	$copyid = $this->copy();
@@ -611,7 +669,9 @@ class $$$Object {
      * @return object
      */
     public function editable () {
-	return ($this->_getKey()->getInfo('can_write')) ? true : false;
+	return (!$this->_getKey()->isValid() or
+	    $this->_getKey()->getInfo('can_write')
+	) ? true : false;
     }
 }
 ?>
