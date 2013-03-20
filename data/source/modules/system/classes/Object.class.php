@@ -22,10 +22,15 @@ class $$$Object {
      */
     protected $keytypes;
 
-    /* information about object
+    /* information about object (from database)
      * array
      */
     protected $info;
+
+    /* temporary information about object
+     * array
+     */
+    protected $info_tmp;
 
     /* is $this->info really loaded from database (may be preset otherwise)
      * bool
@@ -57,7 +62,7 @@ class $$$Object {
      */
     public function presetInfo ($preset) {
 	if (!$this->info_isloaded and is_array($preset)) {
-	    $this->info = $preset;
+	    $this->info_tmp = $preset;
 	    return true;
 	}
 	return false;
@@ -71,174 +76,22 @@ class $$$Object {
      */
     public function getInfo ($name = true, $update = false) {
 
+	// is in info_tmp?
+	if ($this->info_tmp and isset($this->info_tmp[$name]))
+	    return $this->info_tmp[$name];
+
 	// onload data
 	if ($update or empty($this->info)) $this->_loadInfo();
 
-	// return requested info
+	// is in info?
 	if ($name === true) return $this->info;
-	if (isset($this->info[$name])) return $this->info[$name];
+	if ($this->info and isset($this->info[$name]))
+	    return $this->info[$name];
 
 	// nothing found (load if not loaded yet)
 	if (!$this->info_isloaded) return $this->getInfo($name, true);
 
 	return NULL;
-    }
-
-    /* preset keys for this object
-     * @param array: array of Key objects
-     *
-     * @return bool
-     */
-    public function setKeys ($keys) {
-
-	// set table and id
-	foreach ($keys as $index => $Value) {
-	    $Value->edit(0, 1, $this->table, $this->id, false);
-	}
-
-	$this->_keys = $keys;
-	return true;
-    }
-
-    /* get all Key objects for this object
-     *
-     * @return array
-     */
-    public function getKeys () {
-	if ($this->_keys) return $this->_keys;
-	if (!$this->id) return array();
-	global $TSunic;
-
-	// query database
-	$sql = "SELECT fk_account
-	    FROM #__$system$keys
-	    WHERE fk_table = '$this->table'
-		AND fk_id = '$this->id'
-	";
-	$result = $TSunic->Db->doSelect($sql);
-
-	// get Key objects
-	$this->_keys = array();
-	foreach ($result as $index => $values) {
-	    $this->_keys[$values['fk_account']] = $TSunic->get('$$$Key', array(
-		$this->table, $this->id, $values['fk_account'])
-	    );
-	}
-
-	return $this->_keys;
-    }
-
-    /* get sharedWith information of this object
-     *
-     * @return array
-     */
-    public function getSharedWith () {
-
-	// get all Key objects
-	$keys = $this->getKeys();
-
-	// get sharedWith information
-	$shared = array();
-	foreach ($keys as $index => $Value) {
-	    $shared[$Value->getInfo('fk_account')] =
-		$Value->getInfo('can_write');
-	}
-
-	return $shared;
-    }
-
-    /* load Key
-     * +@param int: fk_account of key to return
-     *
-     * @return Object
-     */
-    protected function _getKey ($fk_account = 0) {
-	global $TSunic;
-	$fk_account_parameter = $fk_account;
-	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
-
-	// load keys
-	if (empty($this->_keys)) $this->getKeys();
-
-	// if still empty, create new empty key
-	if (empty($this->_keys)) {
-	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
-	}
-
-	// if key exists, return
-	if (isset($this->_keys[$fk_account]))
-	    return $this->_keys[$fk_account];
-
-	// if no valid key found and no $fk_account parameter, try to find
-	// guest-key
-	if ((!isset($this->_keys[$fk_account]) or
-	    !$this->_keys[$fk_account]->isValid()) and
-	    !$fk_account_parameter and
-	    $fk_account == $TSunic->Usr->getInfo('id') and
-	    isset($this->_keys[$TSunic->Usr->getIdGuest()])
-	) {
-	    return $this->_keys[$TSunic->Usr->getIdGuest()];
-	}
-
-	// if no valid key, but another key is valid, return copy of this key
-	if (!isset($this->_keys[$fk_account])) {
-
-	    // is any valid key?
-	    foreach ($this->_keys as $index => $Value) {
-		if ($Value->isValid()) {
-		    return $Value;
-		}
-	    }
-	}
-
-	// if still nothing to return, create new empty key
-	if (!isset($this->_keys[$fk_account])) {
-	    $this->_keys[$fk_account] = $TSunic->get(
-		'$$$Key', array($this->table, $this->id, $fk_account)
-	    );
-	    $this->_keys[$fk_account]->create();
-	    $this->_keys[$fk_account]->save();
-	}
-
-	return (isset($this->_keys[$fk_account]))
-	    ? $this->_keys[$fk_account] : NULL;
-    }
-
-    /* save Key
-     * +@param int: fk_account of key
-     *
-     * @return bool
-     */
-    protected function _saveKey ($fk_account = 0) {
-	return $this->_getKey($fk_account)->save($this->id);
-    }
-
-    /* delete Key
-     * +@param int: fk_account of key
-     *
-     * @return bool
-     */
-    protected function _deleteKey ($fk_account = 0) {
-	
-	// get key
-	$Key = $this->_getKey($fk_account);
-
-	// delete key
-	if (!$fk_account or $Key->getInfo('fk_account') == $fk_account) {
-
-	    // delete key from _keys-array
-	    $new_keys = array();
-	    foreach ($this->_keys as $index => $Value) {
-		if ($index != $Key->getInfo('fk_account'))
-		    $new_keys[$index] = $Value;
-	    }
-	    $this->_keys = $new_keys;
-
-	    // delete Key object itself
-	    return $Key->delete();
-	}
-
-	return true;
     }
 
     /* load information about object
@@ -272,6 +125,9 @@ class $$$Object {
 		$this->info[$index] = $value;
 	    }
 	}
+
+	// update info_tmp
+	$this->info_tmp = $this->info;
 
 	return true;
     }
@@ -328,39 +184,38 @@ class $$$Object {
      * @return bool
      */
     protected function _create ($data) {
-	if (!$this->editable()) return false;
+
+	// set date of creation
+	$data['dateOfCreation'] = 'NOW()';
+
+	$this->setMulti($data, true);
+	return $this->id;
+    }
+
+    /* set values for this object
+     * @param string: name of value
+     * @param mix: new value
+     * +@param bool: save all new data in database?
+     *
+     * @return bool
+     */
+    public function set ($name, $value, $save = false) {
+	$this->info_tmp[$name] = $value;
+	return ($save) ? $this->save() : true;
+    }
+
+    /* set multiple values for this object
+     * @param array: new values
+     * +@param bool: save all new data in database?
+     *
+     * @return bool
+     */
+    public function setMulti ($data, $save = false) {
 	if (!is_array($data)) return false;
-	global $TSunic;
-
-	// encrypt
-	$data = $this->_data2db($data);
-
-	// save in database
 	foreach ($data as $index => $value) {
-	    if ($value and $value == 'NOW()') {
-		$data[$index] = "$index = NOW()";
-		continue;
-	    }
-	    $data[$index] = "$index = '$value'";
+	    $this->set($index, $value);
 	}
-	$sql = "INSERT INTO $this->table SET ".implode(",",$data).";";
-	$this->id = $TSunic->Db->doInsert($sql);
-
-	// update object infos
-	$this->_loadInfo();
-	foreach ($this->getKeys() as $index => $Value) {
-	    $Value->save($this->id);
-	}
-
-	// update keys
-	foreach ($this->getKeys() as $index => $Value) {
-	    $Value->save($this->id);
-	}
-
-	// udpate shareWith information
-	$this->shareWith();
-
-	return ($this->id) ? $this->id : false;
+	return ($save) ? $this->save() : true;
     }
 
     /* resave all data (e.g. with new key)
@@ -368,7 +223,7 @@ class $$$Object {
      * @return bool
      */
     public function resave () {
-	return $this->_edit($this->getInfo(true), true);
+	return $this->save(true);
     }
 
     /* edit object
@@ -378,34 +233,86 @@ class $$$Object {
      * @return bool
      */
     protected function _edit ($data, $save_empty = false) {
-	if (!$this->table) return false;
-	if (!$data) return true;
+
+	// skip empty values?
+	if (!$save_empty) {
+	    $new = array();
+	    foreach ($data as $index => $value) {
+		if (!empty($value)) $new[$index] = $value;
+	    }
+	    $data = $new;
+	}
+
+	return $this->setMulti($data, true);
+    }
+
+    /* save temporary data in database
+     * +@param bool: force resave of all values?
+     *
+     * @return bool
+     */
+    public function save ($force = false) {
+	if (!$this->table or !$this->editable()) return false;
 	global $TSunic;
+
+	// get data to update
+	$data = array();
+	if ($force) $data = $this->getInfo(true);
+	foreach ($this->info_tmp as $index => $value) {
+
+	    // no change?
+	    if (!$force and isset($this->info[$index]) and
+		$this->info[$index] === $value
+	    ) continue;
+
+	    $data[$index] = $value;
+	}
+
+	// any data to update?
+	if (empty($data)) return true;
 
 	// encrypt
 	$data = $this->_data2db($data);
 	if (!$data) return false;
 
-	// update database
+	// create SET statements for sql query
 	foreach ($data as $index => $value) {
-	    if (!$save_empty and !$value or
-		($index == "password" and $value == "**********")
-	    ) {
+
+	    // save empty?
+	    if (empty($value) and !$save_empty) continue;
+
+	    // if password is ********, do not update it
+	    if ($index == "password" and $value == "**********") {
 		unset($data[$index]);
 		continue;
 	    }
 
+	    // save NOW as operation not as string
 	    if ($value == 'NOW()') {
 		$data[$index] = "$index = NOW()";
 		continue;
 	    }
+
 	    $data[$index] = "$index = '$value'";
 	}
-	if ($data) {
+
+	// return if no data to update
+	if (empty($data)) return true;
+
+	// update database
+	if ($this->id) {
+
+	    // update
 	    $sql = "UPDATE $this->table
 		SET ".implode(",",$data)."
 		WHERE id = '$this->id';";
 	    if (!$TSunic->Db->doUpdate($sql)) return false;
+
+	} else {
+
+	    // insert
+	    $sql = "INSERT INTO $this->table SET ".implode(",",$data).";";
+	    $this->id = $TSunic->Db->doInsert($sql);
 	}
 
 	// update infos
@@ -450,7 +357,7 @@ class $$$Object {
 
 	// object is considered valid, if it has an ID and at least
 	// one more information in $this->info
-	if ($this->getInfo() and count($this->getInfo() > 1))
+	if ($this->getInfo() and count($this->getInfo()) > 1)
 	    return true;
 
 	return false;
@@ -555,7 +462,166 @@ class $$$Object {
 	return $copyid;
     }
 
+    /* *********************** key handling *********************** */
+
+    /* preset keys for this object
+     * @param array: array of Key objects
+     *
+     * @return bool
+     */
+    public function setKeys ($keys) {
+
+	// set table and id
+	foreach ($keys as $index => $Value) {
+	    $Value->edit(0, 1, $this->table, $this->id, false);
+	}
+
+	$this->_keys = $keys;
+	return true;
+    }
+
+    /* get all Key objects for this object
+     *
+     * @return array
+     */
+    public function getKeys () {
+	if ($this->_keys) return $this->_keys;
+	if (!$this->id) return array();
+	global $TSunic;
+
+	// query database
+	$sql = "SELECT fk_account
+	    FROM #__$system$keys
+	    WHERE fk_table = '$this->table'
+		AND fk_id = '$this->id'
+	";
+	$result = $TSunic->Db->doSelect($sql);
+
+	// get Key objects
+	$this->_keys = array();
+	foreach ($result as $index => $values) {
+	    $this->_keys[$values['fk_account']] = $TSunic->get('$$$Key', array(
+		$this->table, $this->id, $values['fk_account'])
+	    );
+	}
+
+	return $this->_keys;
+    }
+
+    /* load Key
+     * +@param int: fk_account of key to return
+     *
+     * @return Object
+     */
+    protected function _getKey ($fk_account = 0) {
+	global $TSunic;
+	$fk_account_parameter = $fk_account;
+	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
+
+	// load keys
+	if (empty($this->_keys)) $this->getKeys();
+
+	// if still empty, create new empty key
+	if (empty($this->_keys)) {
+	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
+	}
+
+	// if key exists, return
+	if (isset($this->_keys[$fk_account]))
+	    return $this->_keys[$fk_account];
+
+	// if no valid key found and no $fk_account parameter, try to find
+	// guest-key
+	if ((!isset($this->_keys[$fk_account]) or
+	    !$this->_keys[$fk_account]->isValid()) and
+	    !$fk_account_parameter and
+	    $fk_account == $TSunic->Usr->getInfo('id') and
+	    isset($this->_keys[$TSunic->Usr->getIdGuest()])
+	) {
+	    return $this->_keys[$TSunic->Usr->getIdGuest()];
+	}
+
+	// if no valid key, but another key is valid, return copy of this key
+	if (!isset($this->_keys[$fk_account])) {
+
+	    // is any valid key?
+	    foreach ($this->_keys as $index => $Value) {
+		if ($Value->isValid()) {
+		    return $Value;
+		}
+	    }
+	}
+
+	// if still nothing to return, create new empty key
+	if (!isset($this->_keys[$fk_account])) {
+	    $this->_keys[$fk_account] = $TSunic->get(
+		'$$$Key', array($this->table, $this->id, $fk_account)
+	    );
+	    $this->_keys[$fk_account]->create();
+	    $this->_keys[$fk_account]->save();
+	}
+
+	return (isset($this->_keys[$fk_account]))
+	    ? $this->_keys[$fk_account] : NULL;
+    }
+
+    /* save Key
+     * +@param int: fk_account of key
+     *
+     * @return bool
+     */
+    protected function _saveKey ($fk_account = 0) {
+	return $this->_getKey($fk_account)->save($this->id);
+    }
+
+    /* delete Key
+     * +@param int: fk_account of key
+     *
+     * @return bool
+     */
+    protected function _deleteKey ($fk_account = 0) {
+	
+	// get key
+	$Key = $this->_getKey($fk_account);
+
+	// delete key
+	if (!$fk_account or $Key->getInfo('fk_account') == $fk_account) {
+
+	    // delete key from _keys-array
+	    $new_keys = array();
+	    foreach ($this->_keys as $index => $Value) {
+		if ($index != $Key->getInfo('fk_account'))
+		    $new_keys[$index] = $Value;
+	    }
+	    $this->_keys = $new_keys;
+
+	    // delete Key object itself
+	    return $Key->delete();
+	}
+
+	return true;
+    }
+
     /* *********************** shared objects ********************* */
+
+    /* get sharedWith information of this object
+     *
+     * @return array
+     */
+    public function getSharedWith () {
+
+	// get all Key objects
+	$keys = $this->getKeys();
+
+	// get sharedWith information
+	$shared = array();
+	foreach ($keys as $index => $Value) {
+	    $shared[$Value->getInfo('fk_account')] =
+		$Value->getInfo('can_write');
+	}
+
+	return $shared;
+    }
 
     /* give someone access to this object
      * +@param array/int: list of users with access (array('id' => 'writable?'))
@@ -640,7 +706,7 @@ class $$$Object {
 	$Key->save();
 
 	// update fk_account
-	$this->info['fk_account'] = $User->getInfo('id');
+	$this->set('fk_account', $User->getInfo('id'));
 
 	// resave data
 	$this->resave();

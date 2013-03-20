@@ -81,7 +81,6 @@ class $$$BpObject extends $system$Object {
 	$data = array(
 	    "class" => $this->getClass(),
 	    "fk_account" => $TSunic->Usr->getInfo('id'),
-	    "dateOfCreation" => "NOW()"
 	);
 	return $this->_create($data);
     }
@@ -113,15 +112,16 @@ class $$$BpObject extends $system$Object {
 	// create new Bit object
 	$Bit = $this->_getNewBit();
 
-	// convert fk_tag to id if neccesary
-	$fk_tag = $this->tag2id($fk_tag);
-
-	// create new Bit
-	if (!$Bit->create($this->id, $value, $fk_tag))
-	    return false;
+	// edit Bit
+	$data = array(
+	    'fk_object' => $this->id,
+	    'fk_tag' => $this->tag2id($fk_tag),
+	    'value' => $value,
+	);
+	if (!$Bit->setMulti($data, true)) return false;
 
 	// update dateOfChange
-	$this->_edit(array('dateOfUpdate' => 'NOW()'));
+	$this->set('dateOfUpdate', 'NOW()', true);
 
 	// empty cache
 	$this->bits = array();
@@ -139,14 +139,14 @@ class $$$BpObject extends $system$Object {
     public function addeditBit ($fk_tag, $fk_bit, $value) {
 
 	// update dateOfChange
-	$this->_edit(array('dateOfUpdate' => 'NOW()'));
+	$this->set('dateOfUpdate', 'NOW()', true);
 
 	// exists already?
 	if ($fk_bit) {
 	    // edit
 	    global $TSunic;
 	    $Bit = $TSunic->get('$bp$Bit', $fk_bit);
-	    return $Bit->edit($value);
+	    return $Bit->set('value', $value, true);
 	} else {
 	    // add
 	    return $this->addBit($value, $fk_tag);
@@ -167,7 +167,7 @@ class $$$BpObject extends $system$Object {
 	$Bit = $this->getBit($fk_tag, true);
 
 	// save value and return
-	return ($Bit and $Bit->edit($value)) ? true : false;
+	return ($Bit and $Bit->set('value', $value, true)) ? true : false;
     }
 
     /* get new empty Bit object
@@ -204,10 +204,10 @@ class $$$BpObject extends $system$Object {
 	if (empty($Bit)) {
 	    global $TSunic;
 	    if ($add) {
-		$Bit = $this->addBit(0, $tag);
+		$Bit = $this->addBit('', $tag);
 	    } else {
 		$Bit = $this->_getNewBit();
-		$Bit->presetInfo(array('fk_tag' => $tag, 'fk_obj' => $this->id));
+		$Bit->setMulti(array('fk_tag' => $tag, 'fk_obj' => $this->id));
 	    }
 	}
 
@@ -238,7 +238,7 @@ class $$$BpObject extends $system$Object {
 	    $this->bits = array();
 	    foreach ($result as $index => $values) {
 		$Bit = $TSunic->get('$$$Bit', $values['id']);
-		$Bit->presetInfo($values);
+		$Bit->setMulti($values);
 		$this->bits[] = $Bit;
 	    }
 	}
@@ -285,12 +285,12 @@ class $$$BpObject extends $system$Object {
 		}
 	    }
 
-	    // create dummy Bit
+	    // create new empty Bit
 	    if (!$exists) {
 		$Bit = $this->_getNewBit();
 		$fk_tag = $this->tag2id($value);
 		if ($fk_tag) {
-		    $Bit->setDummy($fk_tag);
+		    $Bit->set('fk_tag', $fk_tag);
 		    $out[] = $Bit;
 		}
 	    }

@@ -6,15 +6,16 @@ $Tag = (isset($Bit)) ? $Bit->getTag() : $this->getVar('Tag');
 $typename = $Tag->getType()->getInfo('name');
 $backlink = $this->getVar('backlink');
 $noTd = $this->getVar('noTd');
+$value = $Bit->getInfo('value');
 
 if (!$noTd) echo "<td>";
 
-switch ($Tag->getType()->getInfo('name')) {
+switch ($typename) {
     case 'timestamp':
-	echo date('d.m.Y H:i:s', $Bit->getInfo('value'));
+	if (is_numeric($value)) echo date('d.m.Y H:i:s', $value);
 	break;
     case 'date':
-	echo date('d.m.Y', $Bit->getInfo('value'));
+	if (is_numeric($value)) echo date('d.m.Y', $value);
 	break;
     default:
 	$this->set($Bit->get2show());
@@ -22,7 +23,6 @@ switch ($Tag->getType()->getInfo('name')) {
 }
 
 if (substr($typename,0,3) == 'mod') {
-$value = $Bit->getInfo('value');
 ?>
     <a href="<?php $this->setUrl('$$$showChooseObject', array('$$$fk_bit' => $Bit->getInfo('id'), '$$$backlink' => $backlink)); ?>">
 	<?php $this->set('{SHOWBIT__TOEDITOBJECT}'); ?></a>

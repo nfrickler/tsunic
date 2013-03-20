@@ -12,27 +12,6 @@ class $$$Bit extends $system$Object {
      */
     protected $bits;
 
-    /* get information about object (enabling setDummy)
-     * +@param string/bool: name of info (true will return $this->info)
-     * +@param bool: force update of object infos?
-     *
-     * @return mix
-     */
-    public function getInfo ($name = true, $update = false) {
-
-	// onload data
-	if ($update or empty($this->info)) $this->_loadInfo();
-
-	// return requested info
-	if ($name === true) return $this->info;
-	if (isset($this->info[$name])) return $this->info[$name];
-
-	// nothing found (load if not loaded yet)
-	if (!$this->info_isloaded) return $this->getInfo($name, true);
-
-	return NULL;
-    }
-
     /* load information about object
      *
      * @return bool
@@ -84,80 +63,45 @@ class $$$Bit extends $system$Object {
 	return $Obj->getObject();
     }
 
-    /* set dummy values
-     * @param int: fk_tag
-     *
-     * @return bool
-     */
-    public function setDummy ($fk_tag) {
-	$this->info = array('fk_tag' => $fk_tag);
-	return true;
-    }
-
-    /* create new bit
-     * @param int: fk_object
-     * @param string: value
-     * +@param int: fk_tag
-     *
-     * @return bool
-     */
-    public function create ($fk_object, $value, $fk_tag = 0) {
-
-	// validate input
-	if (!$this->isValidFkTag($fk_tag)
-	    or !$this->isValidFkObject($fk_object)
-	) return false;
-	$this->presetInfo(array('fk_tag' => $fk_tag));
-
-	// valid value?
-	if ($value === true) {
-	    $value = "";
-	} else {
-	    $value = $this->value2save($value);
-	    if (!$this->isValidValue($value)) return false;
-	}
-
-	// update database
-	global $TSunic;
-	$data = array(
-	    "fk_object" => $fk_object,
-	    "value" => $value,
-	    "fk_tag" => $fk_tag,
-	    'dateOfCreation' => 'NOW()'
-	);
-	if (!$this->_create($data)) return false;
-
-	return $this->id;
-    }
-
-    /* edit bit (if value === "" or == 0 for selection/radio, Bit will be deleted)
+    /* edit bit (empty values will be deleted)
      * @param string: value
      *
      * @return bool
      */
     public function edit ($value) {
-	if (!$this->isValid()) return false;
-	global $TSunic;
+	return $this->set('value', $value, true);
+    }
 
-	// delete?
-	if ($value === NULL or $value === ""
-	    or (in_array($this->getTag()->getType()->getInfo('name'), array('selection', 'radio')) and empty($value))
-	) {
-	    return $this->delete();
+    /* update data of this bit (create/edit/delete)
+     * @param string: value
+     * +@param int: fk_object
+     * +@param int: fk_tag
+     *
+     * @return bool
+     */
+    public function set ($name, $value, $save = false) {
+
+	// is valid fk_tag?
+	switch ($name) {
+	    case 'fk_tag':
+		if (!$this->isValidFkTag($value)) return false;
+		break;
+	    case 'fk_object':
+		if (!$this->isValidFkObject($value)) return false;
+		break;
+	    case 'value':
+		$value = $this->value2save($value);
+		if (!$this->isValidValue($value)) return false;
+
+		// do not save empty values
+		$Type = $this->getType();
+		if ($Type and $Type->isEmpty($value)) return true;
+
+		break;
+	    default:
 	}
 
-	// validate input
-	$value = $this->value2save($value);
-	if (!$this->isValidValue($value)) return false;
-
-	// update database
-	global $TSunic;
-	$data = array(
-	    "value" => $value
-	);
-	if (!$this->_edit($data)) return false;
-
-	return true;
+	return parent::set($name, $value, $save);
     }
 
     /* convert value in value to be saved
@@ -241,6 +185,16 @@ class $$$Bit extends $system$Object {
     public function getTag () {
 	global $TSunic;
 	return $TSunic->get('$$$Tag', $this->getInfo('fk_tag'));
+    }
+
+    /* get Type object
+     *
+     * @return object
+     */
+    public function getType () {
+	$Tag = $this->getTag();
+	if (!$Tag) return NULL;
+	return $Tag->getType();
     }
 }
 ?>

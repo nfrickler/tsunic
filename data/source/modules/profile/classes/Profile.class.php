@@ -52,7 +52,9 @@ class $$$Profile extends $bp$BpObject {
      * @return string
      */
     public function getName () {
-	$out = $this->getInfo('firstname').' '.$this->getInfo('lastname');
+	$out = '';
+	if ($this->getInfo('firstname')) $out .= $this->getInfo('firstname').' ';
+	if ($this->getInfo('lastname')) $out .= $this->getInfo('lastname');
 	$out = trim($out);
 	if (empty($out)) {
 	    global $TSunic;

@@ -53,7 +53,7 @@ class $$$Type extends $system$Object {
 	}
 
 	// check if value matches type conventions
-	switch ($this->getInfo('name')) {
+	switch ($typename) {
 	    case 'int':
 	    case 'date':
 	    case 'timestamp':
@@ -77,6 +77,39 @@ class $$$Type extends $system$Object {
 	    default:
 		global $TSunic;
 		$TSunic->Log->log(3, 'Error: $bp$Type missing name='.$typename.'!');
+		return false;
+	}
+
+	return false;
+    }
+
+    /* is empty value concerning this type?
+     * @param mix: value to check
+     *
+     * @return bool
+     */
+    public function isEmpty ($value) {
+	if ($value === '' or $value === NULL) return true;
+
+	// get typename
+	$typename = $this->getInfo('name');
+
+	// is object?
+	if (substr($typename, 0, 3) == 'mod') {
+	    return (empty($value)) ? true : false;
+	}
+
+	switch ($typename) {
+	    case 'selection':
+	    case 'radio':
+		return (empty($value)) ? true : false;
+	    case 'double':
+	    case 'string':
+	    case 'text':
+	    case 'int':
+	    case 'date':
+	    case 'timestamp':
+	    default:
 		return false;
 	}
 

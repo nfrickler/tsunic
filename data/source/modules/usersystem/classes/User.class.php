@@ -115,6 +115,10 @@ class $$$User extends $system$Object {
 	// generate new keys
 	$newkeys = $this->Encryption->gen_keys();
 
+	// temporarily unset $this->id
+	$old_id = $this->id;
+	$this->id = 0;
+
 	// update database
 	$data = array(
 	    "email" => $email,
@@ -125,7 +129,9 @@ class $$$User extends $system$Object {
 	    "privkey" => $newkeys['privkey'],
 	    "pubkey" => $newkeys['pubkey']
 	);
-	if (!$this->_create($data)) return false;
+	$return = $this->_create($data);
+	$this->id = $old_id;
+	if (!$return) return false;
 
 	return true;
     }
@@ -251,12 +257,14 @@ class $$$User extends $system$Object {
 	if ($this->id == 2) return false;
 
 	// update database
-	$sql = "UPDATE #__$usersystem$accounts
-	    SET dateOfLastLogin = NOW(),
-		dateOfLastLastLogin = '".$this->getInfo('dateOfLastLogin')."'
-	    WHERE id = '".$this->id."';";
-	if ($TSunic->Db->doUpdate($sql) === false) {
-	    $TSunic->Log->log('Login information could not be updated!', 3);
+	$data = array(
+	    'dateOfLastLogin' => 'NOW()',
+	    'dateOfLastLastLogin' => $this->getInfo('dateOfLastLogin'),
+	);
+	if (!$this->setMulti($data, true)) {
+	    $TSunic->Log->log(1,
+		'User::login: Login information could not be updated!'
+	    );
 	}
 
 	// load encryption

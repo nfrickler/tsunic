@@ -80,6 +80,7 @@ class $$$Accessgroup extends $system$Object {
 	$sql = "UPDATE #__$usersystem$accessgroups SET ".
 	    implode(",", $sql_set).
 	    " WHERE id = '$this->id';";
+	//TODO
 	return $this->_edit($sql);
     }
 
@@ -202,10 +203,11 @@ class $$$Accessgroup extends $system$Object {
     /* set access
      * @param string: name of access
      * @param bool/NULL: value
+     * @param mix: TODO
      *
      * @return bool
      */
-    public function set ($name, $value) {
+    public function set ($name, $value, $xxx = 0) {
 	global $TSunic;
 
 	// set to default?
