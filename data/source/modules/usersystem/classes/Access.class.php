@@ -110,7 +110,7 @@ class $$$Access {
      *
      * @return bool
      */
-    public function set ($name, $value) {
+    public function setAccess ($name, $value) {
 	global $TSunic;
 
 	// access?

@@ -25,17 +25,12 @@ class $$$Object {
     /* information about object (from database)
      * array
      */
-    protected $info;
+    protected $info = array();
 
     /* temporary information about object
      * array
      */
-    protected $info_tmp;
-
-    /* is $this->info really loaded from database (may be preset otherwise)
-     * bool
-     */
-    protected $info_isloaded = false;
+    protected $info_tmp = array();
 
     /* constructor
      * +@param int: Object ID
@@ -54,43 +49,49 @@ class $$$Object {
 	return;
     }
 
-    /* preset information array of object (may increase performance); will fail
-     * if already loaded from database
+    /* preset information array of object (DEPRECATED: use setMulti instead)
      * @param array: preset for $this->info
      *
      * @return bool
      */
     public function presetInfo ($preset) {
-	if (!$this->info_isloaded and is_array($preset)) {
-	    $this->info_tmp = $preset;
-	    return true;
-	}
-	return false;
+	return $this->setMulti($preset);
     }
 
     /* get information about object
      * +@param string/bool: name of info (true will return $this->info)
      * +@param bool: force update of object infos?
+     * +@param bool: get info from database only (not from tmp)?
      *
      * @return mix
      */
-    public function getInfo ($name = true, $update = false) {
+    public function getInfo ($name = true, $update = false, $dbonly = false) {
+
+	// update?
+	if ($update) $this->_loadInfo();
 
 	// is in info_tmp?
-	if ($this->info_tmp and isset($this->info_tmp[$name]))
+	if (!$dbonly and $this->info_tmp and isset($this->info_tmp[$name]))
 	    return $this->info_tmp[$name];
 
 	// onload data
-	if ($update or empty($this->info)) $this->_loadInfo();
+	if (empty($this->info)) $this->_loadInfo();
 
 	// is in info?
 	if ($name === true) return $this->info;
 	if ($this->info and isset($this->info[$name]))
 	    return $this->info[$name];
 
-	// nothing found (load if not loaded yet)
-	if (!$this->info_isloaded) return $this->getInfo($name, true);
+	return $this->getDefault($name);
+    }
 
+    /* get default value for specific field
+     * Here you can define default values in child classes
+     * @param string: name of field
+     *
+     * @return mix
+     */
+    public function getDefault ($name) {
 	return NULL;
     }
 
@@ -99,7 +100,6 @@ class $$$Object {
      * @return bool
      */
     protected function _loadInfo () {
-	$this->info_isloaded = true;
 	if (!$this->id or !$this->table) return false;
 	global $TSunic;
 
@@ -125,9 +125,6 @@ class $$$Object {
 		$this->info[$index] = $value;
 	    }
 	}
-
-	// update info_tmp
-	$this->info_tmp = $this->info;
 
 	return true;
     }
@@ -187,8 +184,8 @@ class $$$Object {
 
 	// set date of creation
 	$data['dateOfCreation'] = 'NOW()';
-
 	$this->setMulti($data, true);
+
 	return $this->id;
     }
 
@@ -212,9 +209,11 @@ class $$$Object {
      */
     public function setMulti ($data, $save = false) {
 	if (!is_array($data)) return false;
+
 	foreach ($data as $index => $value) {
 	    $this->set($index, $value);
 	}
+
 	return ($save) ? $this->save() : true;
     }
 
@@ -315,8 +314,11 @@ class $$$Object {
 	    $this->id = $TSunic->Db->doInsert($sql);
 	}
 
-	// update infos
+	// update info
+	$this->info_tmp = array();
 	$this->_loadInfo();
+
+	// update keys
 	foreach ($this->getKeys() as $index => $Value) {
 	    $Value->save($this->id);
 	}
@@ -349,16 +351,17 @@ class $$$Object {
 	return true;
     }
 
-    /* check, if this object is valid
+    /* check, if this object is valid (=exists in database)
      *
      * @return bool
      */
     public function isValid () {
 
-	// object is considered valid, if it has an ID and at least
-	// one more information in $this->info
-	if ($this->getInfo() and count($this->getInfo()) > 1)
-	    return true;
+	// try to get some information from database
+	$info = $this->getInfo(true, false, true);
+
+	// if anything in database found, it is valid
+	if (is_array($info) and count($info) > 0) return true;
 
 	return false;
     }

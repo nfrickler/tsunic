@@ -4,32 +4,31 @@ function $$$createAccessgroup () {
     global $TSunic;
 
     // get input
-    $name = $TSunic->Temp->getPost('$$$formAccessgroup__name');
-    $fk_parent = $TSunic->Temp->getPost('$$$formAccessgroup__parent');
+    $data = array(
+	'name' => $TSunic->Temp->getPost('$$$formAccessgroup__name'),
+	'fk_parent' => $TSunic->Temp->getPost('$$$formAccessgroup__parent')
+    );
 
     // create accessgroup object
-    $Accessgroup = $TSunic->get('$$$Accessgroup', 0);
+    $Accessgroup = $TSunic->get('$$$Accessgroup');
 
     // validate input
-    if (!$Accessgroup->isValidName($name)) {
+    if (!$Accessgroup->isValidName($data['name'])) {
 	// invalid name
 	$TSunic->Log->alert('error', '{CREATEACCESSGROUP__INVALIDNAME}');
 	$TSunic->redirect('back');
     }
-    if (!$Accessgroup->isValidParent($fk_parent)) {
+    if (!$Accessgroup->isValidParent($data['fk_parent'])) {
 	// invalid fk_parent
 	$TSunic->Log->alert('error', '{CREATEACCESSGROUP__INVALIDPARENT}');
 	$TSunic->redirect('back');
     }
 
-    // edit accessgroup
-    $return = $Accessgroup->create($name, $fk_parent);
-
-    // check, if create successful
-    if ($return) {
+    // set values
+    if ($Accessgroup->setMulti($data, true)) {
 	// success
 	$TSunic->Log->alert('info', '{CREATEACCESSGROUP__SUCCESS}');
-	$TSunic->redirect('$$$showAccessgroup', array('$$$id' => $Accessgroup->getInfo('id')));
+	$TSunic->redirect('$$$showAccessgroups');
 	return true;
     }
 

@@ -17,71 +17,41 @@ class $$$Accessgroup extends $system$Object {
      */
     protected $childs;
 
-    /* get information about object
-     * +@param string/bool: name of info (true will return $this->info)
-     * +@param bool: force update of object infos?
+    /* get default value for specific field
+     * @param string: name of field
      *
      * @return mix
      */
-    public function getInfo ($name = true, $update = false) {
-	$return = parent::getInfo($name, $update);
-
-	if (!$return and $name == 'fk_parent') return 1;
-	return $return;
+    public function getDefault ($name) {
+	switch ($name) {
+	    case 'fk_parent':
+		return 1;
+	    default:
+	}
+	return NULL;
     }
 
-    /* create new accessgroup
-     * @param string: name
-     * +@param int: fk of parent
+    /* update data of this object (create/edit/delete)
+     * @param string: name of value
+     * @param mix: value
+     * +@param bool: save all new infos?
      *
      * @return bool
      */
-    public function create ($name, $fk_parent = 0) {
+    public function set ($name, $value, $save = false) {
 
-	// validate
-	if (!$this->isValidName($name)
-	    or !$this->isValidParent($fk_parent)) {
-	    return false;
+	// is valid fk_tag?
+	switch ($name) {
+	    case 'name':
+		if (!$this->isValidName($value)) return false;
+		break;
+	    case 'fk_parent':
+		if (!$this->isValidParent($value)) return false;
+		break;
+	    default:
 	}
 
-	// update database
-	$data = array(
-	    'name' => $name,
-	    'fk_parent' => $fk_parent
-	);
-	return $this->_create($data);
-    }
-
-    /* edit accessgroup
-     * @param string: new name
-     * +@param int: fk of parent
-     *
-     * @return bool
-     */
-    public function edit ($name, $fk_parent) {
-
-	// validate
-	if (!$this->isValidName($name)
-	    or !$this->isValidParent($fk_parent)) {
-	    return false;
-	}
-
-	// anything changed?
-	$sql_set = array();
-	if ($name != $this->getInfo('name')) {
-	    $sql_set[] = "name = '$name'";
-	}
-	if ($fk_parent != $this->getInfo('fk_parent')) {
-	    $sql_set[] = "fk_parent = '$fk_parent'";
-	}
-	if (empty($sql_set)) return true;
-
-	// update database
-	$sql = "UPDATE #__$usersystem$accessgroups SET ".
-	    implode(",", $sql_set).
-	    " WHERE id = '$this->id';";
-	//TODO
-	return $this->_edit($sql);
+	return parent::set($name, $value, $save);
     }
 
     /* delete accessgroup
@@ -203,11 +173,10 @@ class $$$Accessgroup extends $system$Object {
     /* set access
      * @param string: name of access
      * @param bool/NULL: value
-     * @param mix: TODO
      *
      * @return bool
      */
-    public function set ($name, $value, $xxx = 0) {
+    public function setAccess ($name, $value) {
 	global $TSunic;
 
 	// set to default?

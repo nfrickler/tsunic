@@ -73,9 +73,9 @@ class $$$Bit extends $system$Object {
     }
 
     /* update data of this bit (create/edit/delete)
-     * @param string: value
-     * +@param int: fk_object
-     * +@param int: fk_tag
+     * @param string: name of value
+     * @param mix: value
+     * +@param bool: save all new infos?
      *
      * @return bool
      */

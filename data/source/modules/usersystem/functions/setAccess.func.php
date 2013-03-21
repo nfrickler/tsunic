@@ -28,7 +28,7 @@ function $$$setAccess () {
 
 	// set access
 	$access = substr($index, 12);
-	if (!$Object->set($access, $value)) {
+	if (!$Object->setAccess($access, $value)) {
 	    $error = 1;
 	    $TSunic->Log->alert('error', '{SETACCESS__ERROR}');
 	}

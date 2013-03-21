@@ -5,8 +5,10 @@ function $$$editAccessgroup () {
 
     // get input
     $id = $TSunic->Temp->getParameter('$$$formAccessgroup__id');
-    $name = $TSunic->Temp->getPost('$$$formAccessgroup__name');
-    $fk_parent = $TSunic->Temp->getPost('$$$formAccessgroup__parent');
+    $data = array(
+	'name' => $TSunic->Temp->getPost('$$$formAccessgroup__name'),
+	'fk_parent' => $TSunic->Temp->getPost('$$$formAccessgroup__parent')
+    );
 
     // create accessgroup object
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
@@ -16,26 +18,26 @@ function $$$editAccessgroup () {
     }
 
     // validate input
-    if (!$Accessgroup->isValidName($name)) {
+    if (!$Accessgroup->isValidName($data['name'])) {
 	// invalid name
 	$TSunic->Log->alert('error', '{EDITACCESSGROUP__INVALIDNAME}');
 	$TSunic->redirect('back');
     }
-    if (!$Accessgroup->isValidParent($fk_parent)) {
+    if (!$Accessgroup->isValidParent($data['fk_parent'])) {
 	// invalid fk_parent
 	$TSunic->Log->alert('error', '{EDITACCESSGROUP__INVALIDPARENT}');
 	$TSunic->redirect('back');
     }
 
     // edit accessgroup
-    if ($Accessgroup->edit($name, $fk_parent)) {
+    if ($Accessgroup->setMulti($data, true)) {
 	// success
 	$TSunic->Log->alert('info', '{EDITACCESSGROUP__SUCCESS}');
-	$TSunic->redirect('$$$showAccessgroup', array('$$$id' => $id));
+	$TSunic->redirect('$$$showAccessgroups');
 	return true;
     }
 
-    // add error-message and redirect back
+    // add error message and redirect back
     $TSunic->Log->alert('error', '{EDITACCESSGROUP__ERROR}');
     $TSunic->redirect('back');
     return true;
