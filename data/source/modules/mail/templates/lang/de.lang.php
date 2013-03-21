@@ -376,9 +376,6 @@ $lang = array(
 
     // formSmtp
     'FORMSMTP__LEGEND_SMTPMAILACCOUNT' => 'SMTP-Daten',
-    'FORMSMTP__MAILACCOUNT' => 'Mailaccount',
-    'FORMSMTP__MAILACCOUNT_NOMAILACCOUNT' => 'Mit keinem Mailaccount verbunden',
-    'FORMSMTP__HELP_MAILACCOUNT' => 'Wähle einen Mailaccount, mit dem dieser SMTP-Server verbunden sein soll. Du kannst diesen SMTP-Server auch ohne eine solche Verbindung verwenden.',
     'FORMSMTP__EMAIL' => 'E-Mail',
     'FORMSMTP__PRESET_EMAIL' => 'E-Mail-Adresse',
     'FORMSMTP__HELP_EMAIL' => 'Deine E-Mail-Adresse.',

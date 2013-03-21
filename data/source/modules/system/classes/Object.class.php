@@ -277,9 +277,6 @@ class $$$Object {
 	// create SET statements for sql query
 	foreach ($data as $index => $value) {
 
-	    // save empty?
-	    if (empty($value) and !$save_empty) continue;
-
 	    // if password is ********, do not update it
 	    if ($index == "password" and $value == "**********") {
 		unset($data[$index]);

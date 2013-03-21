@@ -2,30 +2,20 @@
 <?php
 class $$$Inbox extends $$$Mailbox {
 
-    /* get information about mailbox
-     * +@param string/bool: name of info (true will return $this->info)
+    /* get default value for specific field
+     * @param string: name of field
      *
-     * @return string/int/array
+     * @return mix
      */
-    public function getInfo ($name = true, $update = false) {
-	global $TSunic;
-
-	// set info
-	if (empty($this->info)) {
-
-	    // set
-	    $this->info = array(
-		'name' => '{INBOX__NAME}',
-		'description' => '{INBOX__DESCRIPTION}',
-		'dateOfCreation' => 0,
-		'id' => 0
-	    );
+    public function getDefault ($name) {
+	switch ($name) {
+	    case 'name':
+		return '{INBOX__NAME}';
+	    case 'description':
+		return '{INBOX__DESCRIPTION}';
+	    default:
 	}
-
-	// return requested info
-	if ($name === true) return $this->info;
-	if (isset($this->info[$name])) return $this->info[$name];
-	return false;
+	return NULL;
     }
 
     /* get object of mails in box

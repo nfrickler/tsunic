@@ -71,7 +71,7 @@ $attachments = $Mail->getAttachments();
     deleteLink.onclick = function() {
 
 	// create optionbox
-	var allobjects = $system$showOptionbox('<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_HEADER_JS}'); ?>}',
+	var allobjects = $system$showOptionbox('<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_HEADER_JS}'); ?>',
 	    '<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_CONTENT}'); ?>',
 	    '<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_YES}'); ?>',
 	    '<?php $this->set('{SHOWDELETEMAIL__POPUP_DELETE_NO}'); ?>');

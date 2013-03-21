@@ -2,27 +2,21 @@
 <?php
 class $$$SmtpLocal extends $$$Smtp {
 
-    /* get all data of smtp-server
-     * +@param bool/string: name of data (true will return all data)
-     * +@param bool: force update of object infos?
+    /* get default value for specific field
+     * @param string: name of field
      *
-     * @return array/false
+     * @return mix
      */
-    public function getInfo ($name = true, $update = true) {
+    public function getDefault ($name) {
 	global $TSunic;
-
-	if (empty($this->info)) {
-
-	    // set data
-	    $this->info['emailname'] = $TSunic->Usr->getInfo('name');
-	    $this->info['email'] = $TSunic->Config->getConfig('system_email');
-	    $this->info['id'] = 0;
+	switch ($name) {
+	    case 'emailname':
+		return $TSunic->Usr->getInfo('name');
+	    case 'email':
+		return $TSunic->Config->getConfig('system_email');
+	    default:
 	}
-
-	// return requested data
-	if ($name === true) return $this->info;
-	if (isset($this->info[$name])) return $this->info[$name];
-	return false;
+	return NULL;
     }
 
     /* get name of this object
@@ -118,6 +112,9 @@ class $$$SmtpLocal extends $$$Smtp {
 
 	// found account?
 	if (empty($fk_user)) return false;
+
+	// do not send to guest!
+	if ($fk_user == $TSunic->Usr->getIdGuest()) return false;
 
 	// send mail to this user
 	if (!$Mail->pushTo($fk_user)) return false;

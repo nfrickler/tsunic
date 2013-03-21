@@ -261,15 +261,6 @@ class $$$Smtp extends $system$Object {
 	return $this->_delete();
     }
 
-    /* check, if fk_mailaccount is valid
-     * @param int: fk of mail account
-     *
-     * @return bool
-     */
-    public function isValidFkmailaccount ($fk) {
-	return $this->_isObject('#__$mail$mailaccounts', $fk);
-    }
-
     /* check, if host is valid
      * @param string: host of server-connection
      *

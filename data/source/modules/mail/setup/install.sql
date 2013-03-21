@@ -157,7 +157,6 @@ CREATE TABLE IF NOT EXISTS `#__$mail$serverboxes` (
 
 CREATE TABLE IF NOT EXISTS `#__$mail$smtps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_mailaccount` int(11) NOT NULL,
   `fk_account` int(11) NOT NULL,
   `_name_` varchar(500) NOT NULL,
   `_host_` varchar(500) NOT NULL,

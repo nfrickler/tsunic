@@ -376,9 +376,6 @@ $lang = array(
 
     // formSmtp
     'FORMSMTP__LEGEND_SMTPMAILACCOUNT' => 'SMTP-data',
-    'FORMSMTP__MAILACCOUNT' => 'Mailaccount',
-    'FORMSMTP__MAILACCOUNT_NOMAILACCOUNT' => 'Added to no account',
-    'FORMSMTP__HELP_MAILACCOUNT' => 'Choose a mailaccount, this SMTP-server belongs to. You can also add a standalone SMTP-server.',
     'FORMSMTP__EMAIL' => 'E-Mail',
     'FORMSMTP__PRESET_EMAIL' => 'E-Mail-address',
     'FORMSMTP__HELP_EMAIL' => 'Your e-mail-address.',
