@@ -27,15 +27,14 @@ class ts_Style extends ts_Packet {
     }
 
     /* convert name to id
-     * @param string: name of module
      *
      * @return OBJECT
      */
-    protected function _findId ($name) {
+    protected function _findId () {
 	global $Database, $Config;
 
 	// empty name?
-	if (empty($name) OR !$this->getInfofile('name')) return false;
+	if (!$this->getInfofile('name')) return false;
 
 	// get data from database to compare
 	$sql_0 = "SELECT name as name,

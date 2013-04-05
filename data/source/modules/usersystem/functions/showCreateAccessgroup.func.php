@@ -19,7 +19,7 @@ function $$$showCreateAccessgroup () {
 	'accessgroups' => $accessgroups,
     );
     $TSunic->Tmpl->activate('$$$showCreateAccessgroup', '$system$content', $data);
-    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWCREATEACCESSGROUP_TITLE}'));
+    $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWCREATEACCESSGROUP__TITLE}'));
 
     return true;
 }

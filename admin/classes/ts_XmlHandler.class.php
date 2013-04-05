@@ -8,7 +8,7 @@ class ts_XmlHandler {
      *
      * @return array
      */
-    public function readAll ($path) {
+    public static function readAll ($path) {
 	$output = array();
 
 	// load content of XML file
@@ -23,7 +23,7 @@ class ts_XmlHandler {
      *
      * @return array
      */
-    public function xml2array ($Xml) {
+    public static function xml2array ($Xml) {
 	$out = array();
 	foreach ($Xml as $element) {
 

@@ -13,7 +13,7 @@ function $$$showProfile () {
     if ($is_MyProfile) $Profile = $TSunic->get('$$$MyProfile', $id);
 
     // permission?
-    if (!$TSunic->Usr->access('$$$useProfiles')) {
+    if (!$is_MyProfile and !$TSunic->Usr->access('$$$useProfiles')) {
 	$TSunic->Log->alert('error', '{$SYSTEM$PERMISSION_DENIED}');
 	$TSunic->redirect('back');
     }

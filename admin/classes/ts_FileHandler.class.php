@@ -8,7 +8,7 @@ class ts_FileHandler {
      *
      * @return array
      */
-    public function getSubfolders ($path) {
+    public static function getSubfolders ($path) {
 	$subfolders = array();
 
 	// validate input
@@ -30,7 +30,7 @@ class ts_FileHandler {
      *
      * @return array
      */
-    public function getSubfiles ($path) {
+    public static function getSubfiles ($path) {
 	$subfiles = array();
 
 	// validate input
@@ -53,7 +53,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function copyFolder ($source, $destination, $files_only = false, $prefix = false) {
+    public static function copyFolder ($source, $destination, $files_only = false, $prefix = false) {
 
 	// check source and destination-folders
 	if (!is_dir($source)) return true;
@@ -84,7 +84,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function moveFile ($source, $destination) {
+    public static function moveFile ($source, $destination) {
 	if (!file_exists($source)) return false;
 	return copy($source, $destination);
     }
@@ -94,7 +94,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function deleteFolder ($path) {
+    public static function deleteFolder ($path) {
 
 	// does source exist?
 	if (!is_dir($path)) return true;
@@ -113,7 +113,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function emptyFolder ($path) {
+    public static function emptyFolder ($path) {
 
 	// does source exist?
 	if (!is_dir($path) OR !is_dir($path)) return true;
@@ -138,7 +138,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function createFolder ($path) {
+    public static function createFolder ($path) {
 
 	// is folder?
 	if (is_dir($path)) return true;
@@ -182,7 +182,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function writeFile ($path, $content, $mode = 0) {
+    public static function writeFile ($path, $content, $mode = 0) {
 
 	// overwrite?
 	if (file_exists($path) AND !$mode) return false;
@@ -210,7 +210,7 @@ class ts_FileHandler {
      *
      * @return bool
      */
-    public function readFile ($path, $as_array = false) {
+    public static function readFile ($path, $as_array = false) {
 
 	// overwrite?
 	if (!file_exists($path)) return ($as_array) ? array() : '';

@@ -66,7 +66,7 @@ class ts_Packet {
      *
      * @return bool
      */
-    protected function _findId ($name) {
+    protected function _findId () {
 	return false;
     }
 

@@ -8,8 +8,8 @@ function $$$showEditProfile () {
     $Profile = $TSunic->get('$$$Profile', $id);
 
     // get preset
-    $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth'));
-    $preset_dateofbirth = ($Date) ? $Date->getInfo('start') : 0;
+//    $Date = $TSunic->get('$calendar$Date', $Profile->getInfo('dateofbirth'));
+//    $preset_dateofbirth = ($Date) ? $Date->getInfo('start') : 0;
 
     // editable?
     if (!$Profile->editable()) {
@@ -20,7 +20,7 @@ function $$$showEditProfile () {
     // activate template
     $data = array(
 	'Profile' => $Profile,
-	'preset_dateofbirth' => $preset_dateofbirth
+//	'preset_dateofbirth' => $preset_dateofbirth
     );
     $TSunic->Tmpl->activate('$$$showEditProfile', '$system$content', $data);
     $TSunic->Tmpl->activate('$system$html', false, array('title' => '{SHOWEDITPROFILE__TITLE}'));
