@@ -1,6 +1,5 @@
 <!-- | access -->
 <all>
-    <access default="1">listAllUsers</access>
     <access default="0">seeAllData</access>
     <access default="0">seeAllAccess</access>
     <access default="0">seeOwnAccess</access>

@@ -41,6 +41,8 @@ $lang = array(
     // access
     'ACCESS__USEPROFILES' => 'Create profiles',
     'ACCESS__USEPROFILES_DESCRIPTION' => 'Users can create and administrate profiles of multiple persons.',
+    'ACCESS__SHOWMYPROFILES' => 'Show profiles of all users',
+    'ACCESS__SHOWMYPROFILES_DESCRIPTION' => 'All user to show profiles of all users of this system.',
 
     // showProfiles
     'SHOWPROFILES__TITLE' => 'Profiles',

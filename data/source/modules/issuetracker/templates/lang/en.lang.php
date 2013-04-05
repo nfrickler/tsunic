@@ -10,6 +10,16 @@ $lang = array(
     'TYPE__ISSUE' => 'Issue',
     'TYPE__QUEUE' => 'Queue',
 
+    // access
+    'ACCESS__ADMINQUEUES' => 'Administrate queues',
+    'ACCESS__ADMINQUEUES_DESCRIPTION' => 'Allows to administrate the issuetracker queues.',
+    'ACCESS__HANDLEISSUES' => 'Handle issues',
+    'ACCESS__HANDLEISSUES_DESCRIPTION' => 'Is user allowed to handle issues?',
+    'ACCESS__OPENISSUES' => 'Open new issues',
+    'ACCESS__OPENISSUES_DESCRIPTION' => 'Allows to open new issues',
+    'ACCESS__REMOVEISSUES' => 'Remove issues',
+    'ACCESS__REMOVEISSUES_DESCRIPTION' => 'Remove existing issues',
+
     // tags
     'TAG__ISSUE__NAME' => 'Name',
     'TAG__ISSUE__AUTHOR' => 'Author',

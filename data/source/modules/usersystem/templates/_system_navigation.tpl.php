@@ -9,10 +9,6 @@
 	<a href="<?php $this->setUrl('$$$showAccess'); ?>">
 	    <?php $this->set('{_SYSTEM_NAVIGATION__TOSHOWACCESS}'); ?></a>
 	<?php } ?>
-	<?php if ($TSunic->Usr->access('$$$listAllUsers')) { ?>
-	<a href="<?php $this->setUrl('$$$showUserlist'); ?>">
-	    <?php $this->set('{_SYSTEM_NAVIGATION__TOSHOWUSERLIST}'); ?></a>
-	<?php } ?>
     <?php } else { ?>
 	<a href="<?php $this->setUrl('$$$showIndex'); ?>">
 	    <?php $this->set('{_SYSTEM_NAVIGATION__TOSHOWINDEX}'); ?>

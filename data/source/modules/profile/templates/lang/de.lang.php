@@ -41,6 +41,8 @@ $lang = array(
     // access
     'ACCESS__USEPROFILES' => 'Profile anlegen',
     'ACCESS__USEPROFILES_DESCRIPTION' => 'Benutzer kann Profile über beliebige Personen anlegen und verwalten.',
+    'ACCESS__SHOWMYPROFILES' => 'Profile aller Nutzer anzeigen',
+    'ACCESS__SHOWMYPROFILES_DESCRIPTION' => 'Erlaubt es, die eigenen Profile aller Nutzer dieses Systems zu sehen.',
 
     // showProfiles
     'SHOWPROFILES__TITLE' => 'Profile',

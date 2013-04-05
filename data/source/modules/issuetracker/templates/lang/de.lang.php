@@ -10,6 +10,16 @@ $lang = array(
     'TYPE__ISSUE' => 'Anfrage',
     'TYPE__QUEUE' => 'Queue',
 
+    // access
+    'ACCESS__ADMINQUEUES' => 'Queues administrieren',
+    'ACCESS__ADMINQUEUES_DESCRIPTION' => 'IssueTracker Queues dürfen verwaltet werden.',
+    'ACCESS__HANDLEISSUES' => 'Anfragen bearbeiten',
+    'ACCESS__HANDLEISSUES_DESCRIPTION' => 'Anfragen dürfen bearbeitet werden.',
+    'ACCESS__OPENISSUES' => 'Neue Anfragen stellen',
+    'ACCESS__OPENISSUES_DESCRIPTION' => 'Nutzer darf neue Anfragen stellen.',
+    'ACCESS__REMOVEISSUES' => 'Anfragen löschen',
+    'ACCESS__REMOVEISSUES_DESCRIPTION' => 'Nutzer darf Anfragen löschen.',
+
     // tags
     'TAG__ISSUE__NAME' => 'Name',
     'TAG__ISSUE__AUTHOR' => 'Autor',
