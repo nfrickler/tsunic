@@ -67,29 +67,16 @@ class $$$Mailaccount extends $system$Object {
     }
 
     /* get all serverboxes of this server
-     * @param bool: sync with Server?
+     * @param bool: allow update of serverboxes?
      *
      * @return array
      */
-    public function getServerboxes ($sync = true) {
-
-	// already computed OR invalid account?
+    public function getServerboxes ($allowSync = true) {
 	if (!$this->isValid()) return array();
 	if (!empty($this->serverboxes)) return $this->serverboxes;
-
-	// get timestamp from mysql-datetime (TODO: exclude in time-class)
-	list($date, $time) = explode(' ', $this->getInfo('lastServerboxUpdate'));
-	list($year, $month, $day) = explode('-', $date);
-	list($hour, $minute, $second) = explode(':', $time);
-	$timestamp = mktime($hour, $minute, $second, $month, $day, $year);
-
-	// update serverboxes?
-	$timesince = time() - $timestamp;
-	if ($sync and $timesince >= $this->frequenceServerboxUpdate)
-	    $this->updateServerboxes();
+	global $TSunic;
 
 	// get serverboxes from database
-	global $TSunic;
 	$sql = "SELECT id
 		FROM #__$mail$serverboxes
 		WHERE fk_mailaccount = '".$this->id."';";
@@ -99,6 +86,12 @@ class $$$Mailaccount extends $system$Object {
 	$this->serverboxes = array();
 	foreach ($result as $index => $values) {
 	    $this->serverboxes[] = $TSunic->get('$$$Serverbox', $values['id']);
+	}
+
+	// if no serverboxes found, try to update serverboxes
+	if ($allowSync and empty($this->serverboxes)) {
+	    $this->updateServerboxes();
+	    return $this->getServerboxes(false);
 	}
 
 	return $this->serverboxes;

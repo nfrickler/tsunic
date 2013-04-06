@@ -9,6 +9,8 @@ class $$$Inbox extends $$$Mailbox {
      */
     public function getDefault ($name) {
 	switch ($name) {
+	    case 'id':
+		return 0;
 	    case 'name':
 		return '{INBOX__NAME}';
 	    case 'description':

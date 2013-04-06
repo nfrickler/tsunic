@@ -18,8 +18,8 @@ $Mailaccount = $this->getVar('Mailaccount');
     <table cellspacing="2" cellpadding="0" border="0">
 	<?php if ($name = $Mailaccount->getInfo('name') AND !empty($name)) { ?>
 	<tr>
-	    <th style="min-width:200px;"><?php $this->set('{SHOWMAILACCOUNT__NAME}'); ?></th>
-	    <td style="min-width:200px;" id="$$$showMailaccount__name"><?php $this->set($Mailaccount->getInfo('name')); ?></td>
+	    <th style="width:20%;"><?php $this->set('{SHOWMAILACCOUNT__NAME}'); ?></th>
+	    <td id="$$$showMailaccount__name"><?php $this->set($Mailaccount->getInfo('name')); ?></td>
 	</tr>
 	<?php } ?>
 	<?php if ($description = $Mailaccount->getInfo('description') AND !empty($description)) { ?>

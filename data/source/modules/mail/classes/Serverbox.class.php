@@ -22,25 +22,25 @@ class $$$Serverbox extends $system$Object {
      */
     protected $cache;
 
-    /* get corresponding mailbox object
+    /* get corresponding Mailbox object
      *
-     * @return OBJECT/bool
+     * @return OBJECT
      */
     public function getMailbox () {
 	if ($this->Mailbox) return $this->Mailbox;
+	global $TSunic;
 
 	// get fk_maibox
 	$fk_mailbox = $this->getInfo('fk_mailbox');
-	if ($fk_mailbox === NULL) return false;
 
-	// get object
-	global $TSunic;
-	$Mailbox = (is_numeric($fk_mailbox) and !empty($fk_mailbox))
-	    ? $TSunic->get('$$$Mailbox', $fk_mailbox) : $TSunic->get('$$$Inbox');
-	if (!$Mailbox or !$Mailbox->isValid()) return false;
+	// get Mailbox object
+	$this->Mailbox = $TSunic->get('$$$Mailbox', $fk_mailbox);
 
-	// save in obj-var and return
-	$this->Mailbox = $Mailbox;
+	// return Inbox if Mailbox not valid
+	if (!$this->Mailbox or !$this->Mailbox->isValid()) {
+	    $this->Mailbox = $TSunic->get('$$$Inbox');
+	}
+
 	return $this->Mailbox;
     }
 
@@ -109,7 +109,7 @@ class $$$Serverbox extends $system$Object {
      * +@param int: local mailbox, where new mails are placed in
      * +@param bool: delete mails on server after saving them locally
      *
-     * @return bool
+     * @return int
      */
     public function create ($fk_mailaccount, $name, $fk_mailbox = false, $deleteOnUpdate = false) {
 
@@ -155,7 +155,7 @@ class $$$Serverbox extends $system$Object {
 	    "fk_mailbox" => $fk_mailbox,
 	    "deleteOnUpdate" => $deleteOnUpdate
 	);
-	return $this->_edit($data);
+	return $this->_edit($data, true);
     }
 
     /* delete serverbox

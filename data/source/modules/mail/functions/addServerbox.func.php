@@ -1,4 +1,4 @@
-<!-- | FUNCTION create new serverbox -->
+<!-- | FUNCTION create new Serverbox -->
 <?php
 function $$$addServerbox () {
     global $TSunic;
@@ -16,7 +16,7 @@ function $$$addServerbox () {
     $newMailbox = $TSunic->Temp->getPost('$$$formServerbox__newMailbox');
 
     // get mailbox-object
-    if ($fk_mailbox === "0" or $fk_mailbox === 0) {
+    if (empty($fk_mailbox)) {
 	// inbox selected
 	$Mailbox = $TSunic->get('$$$Inbox');
 
@@ -54,7 +54,7 @@ function $$$addServerbox () {
 	$TSunic->redirect('back');
     }
 
-    // get serverbox-object
+    // get Serverbox object
     $Serverbox = $TSunic->get('$$$Serverbox');
 
     // validate input
@@ -73,7 +73,10 @@ function $$$addServerbox () {
 
     // success
     $TSunic->Log->alert('info', '{ADDSERVERBOX__SUCCESS}');
-    $TSunic->redirect('$$$showMailservers');
+    $TSunic->redirect(
+	'$$$showMailaccount',
+	array('$$$id' => $Serverbox->getInfo('fk_mailaccount'))
+    );
 
     return true;
 }

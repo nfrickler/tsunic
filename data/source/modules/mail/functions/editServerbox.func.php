@@ -1,4 +1,4 @@
-<!-- | FUNCTION edit serverbox -->
+<!-- | FUNCTION edit Serverbox -->
 <?php
 function $$$editServerbox () {
     global $TSunic;
@@ -12,15 +12,16 @@ function $$$editServerbox () {
     // get input
     $id = $TSunic->Temp->getPost('$$$formServerbox__id');
     $name = $TSunic->Temp->getPost('$$$formServerbox__name');
-    $selectMailbox = $TSunic->Temp->getPost('$$$formServerbox__fk_mailbox');
+    $fk_mailbox =
+	$TSunic->Temp->getPost('$$$formServerbox__fk_mailbox');
     $newMailbox = $TSunic->Temp->getPost('$$$formServerbox__newMailbox');
 
     // get mailbox-object
-    if ($selectMailbox === "0" or $selectMailbox === 0) {
+    if (empty($fk_mailbox)) {
 	// inbox selected
 	$Mailbox = $TSunic->get('$$$Inbox');
 
-    } elseif ($selectMailbox == 'new') {
+    } elseif ($fk_mailbox == 'new') {
 	// create new mailbox
 
 	// create mailbox-object
@@ -38,9 +39,9 @@ function $$$editServerbox () {
 	    $TSunic->redirect('back');
 	}
 
-    } elseif (is_numeric($selectMailbox)) {
+    } elseif (is_numeric($fk_mailbox)) {
 	// mailbox selected
-	$Mailbox = $TSunic->get('$$$Mailbox', $selectMailbox);
+	$Mailbox = $TSunic->get('$$$Mailbox', $fk_mailbox);
 
 	// check, if valid mailbox
 	if (!$Mailbox->isValid()) {
@@ -54,7 +55,7 @@ function $$$editServerbox () {
 	$TSunic->redirect('back');
     }
 
-    // get serverbox-object
+    // get Serverbox object
     $Serverbox = $TSunic->get('$$$Serverbox', $id);
 
     // validate input
@@ -64,8 +65,8 @@ function $$$editServerbox () {
     }
 
     // edit serverbox
-    if (!$Serverbox->edit($name, $Mailbox->getInfo('id'), 0)) {
-	$TSunic->Log->alert('error', '{EDITSERVERBOX__INVALIDINPUT}');
+    if (!$Serverbox->edit($name, $Mailbox->getInfo('id'), false)) {
+	$TSunic->Log->alert('error', '{EDITSERVERBOX__ERROR}');
 	$TSunic->redirect('back');
     }
 

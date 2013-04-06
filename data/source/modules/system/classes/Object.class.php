@@ -284,7 +284,8 @@ class $$$Object {
 	    }
 
 	    // save NOW as operation not as string
-	    if ($value == 'NOW()') {
+	    // NOTE: === required, since == would return true when $value === 0
+	    if ($value === 'NOW()') {
 		$data[$index] = "$index = NOW()";
 		continue;
 	    }

@@ -184,7 +184,7 @@ $lang = array(
     'SHOWMAILACCOUNT__SERVERBOXES_INFO' => 'This is a list of serverboxes of this mailaccount. Activate those, from whom you want to recieve e-mails on this system. New mails will be transfered in the given local mailbox.',
     'SHOWMAILACCOUNT__SERVERBOXES_ADD' => 'Add another serverbox manually',
     'SHOWMAILACCOUNT__SERVERBOXES_SUBMIT' => 'De-/Activate serverboxes',
-    'SHOWMAILACCOUNT__SERVERBOXES_REFRESH' => 'Refresh serverbox-list',
+    'SHOWMAILACCOUNT__SERVERBOXES_REFRESH' => 'Synchronize serverbox list',
 
     // refresh serverboxes
     'REFRESHSERVERBOXES__SUCCESS' => 'The list of serverboxes has been updated.',
