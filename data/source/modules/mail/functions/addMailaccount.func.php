@@ -41,7 +41,7 @@ function $$$addMailaccount () {
     }
 
     // try to set connection
-    if (!$Mailaccount->setConnection($host, $port, $user, $protocol, $auth, $connsecurity)) {
+    if (!$Mailaccount->setAutoConnection($host, $port, $user, $protocol, $auth, $connsecurity)) {
 	$TSunic->Log->alert('error', '{ADDMAILACCOUNT__CONNERROR}');
 	$TSunic->redirect('$$$showEditMailaccount', array('$$$id' => $Mailaccount->getInfo('id')));
     }

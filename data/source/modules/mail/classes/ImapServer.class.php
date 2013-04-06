@@ -2,20 +2,15 @@
 <?php
 class $$$ImapServer {
 
-    /* connection details
+    /* information about this object
      * array
      */
-    protected $conn;
+    protected $info;
 
     /* streams to mailboxes
      * array
      */
     protected $streams;
-
-    /* timeout
-     * int
-     */
-    protected $timeout;
 
     /* cache
      * array
@@ -35,23 +30,35 @@ class $$$ImapServer {
      * @param int: protocol
      * @param int: auth
      * @param int: connsecurity
+     * +@param int: imap timeout
      */
-    public function __construct ($host, $port, $user, $password, $protocol, $auth, $connsecurity) {
+    public function __construct ($host, $port, $user, $password, $protocol, $auth, $connsecurity, $timeout = 3) {
 
 	// save connection details
-	$this->conn = array(
+	$this->info = array(
 	    "host" => $host,
 	    "port" => $port,
 	    "user" => $user,
 	    "password" => $password,
 	    "protocol" => $protocol,
 	    "auth" => $auth,
-	    "connsecurity" => $connsecurity
+	    "connsecurity" => $connsecurity,
+	    "timeout" => $timeout
 	);
 
 	// set timeout for opening and reading a connection
-	imap_timeout(IMAP_OPENTIMEOUT, $this->timeout);
-	imap_timeout(IMAP_READTIMEOUT, $this->timeout);
+	imap_timeout(IMAP_OPENTIMEOUT, $this->info['timeout']);
+	imap_timeout(IMAP_READTIMEOUT, $this->info['timeout']);
+    }
+
+    /* get information about ImapServer
+     * @param string: name of info
+     *
+     * @return mix
+     */
+    public function getInfo ($name) {
+	if (isset($this->info[$name])) return $this->info[$name];
+	return NULL;
     }
 
     /* get mboxstr
@@ -62,13 +69,13 @@ class $$$ImapServer {
     protected function getMboxstr ($mailbox = '') {
 
 	// get connection details
-	$host = $this->conn{'host'};
-	$port = $this->conn{'port'};
-	$user = $this->conn{'user'};
-	$password = $this->conn{'password'};
-	$protocol = $this->conn{'protocol'};
-	$auth = $this->conn{'auth'};
-	$connsecurity = $this->conn{'connsecurity'};
+	$host = $this->info['host'];
+	$port = $this->info['port'];
+	$user = $this->info['user'];
+	$password = $this->info['password'];
+	$protocol = $this->info['protocol'];
+	$auth = $this->info['auth'];
+	$connsecurity = $this->info['connsecurity'];
 
 	// convert
 	if (!empty($protocol)) $protocol = "/".$protocol;
@@ -98,38 +105,44 @@ class $$$ImapServer {
 	if (isset($this->streams[$mailbox])) return $this->streams[$mailbox];
 	global $TSunic;
 
-	// check, if imap-functions exist
-	if (!function_exists('imap_timeout')) {
-	    die('IMAP functions are not supported by this server!');
-	    return false;
-	}
+	try {
 
-	// get string to open stream
-	$mboxstr= $this->getMboxstr($mailbox);
-	if (!$mboxstr) return NULL;
+	    // check, if imap-functions availalbe
+	    if (!function_exists('imap_timeout')) {
+		die('IMAP functions are not supported by this server!');
+	    }
 
-	// open stream
-	$TSunic->Log->log(8, "Mailaccount->getStream: imap_open to $mboxstr with ".$this->conn{'user'}." and ".$this->conn{'password'});
-	$stream = imap_open($mboxstr, $this->conn{'user'}, $this->conn{'password'});
+	    // get string to open stream
+	    $mboxstr= $this->getMboxstr($mailbox);
+	    if (!$mboxstr) return NULL;
 
-	// success?
-	if ($stream) {
-	    $this->streams[$mailbox] = $stream;
-	    return $stream;
+	    // open stream
+	    $TSunic->Log->log(6, "Mailaccount->getStream: imap_open to $mboxstr with ".$this->info['user']." and ".$this->info['password']);
+	    $stream = @imap_open($mboxstr, $this->info['user'], $this->info['password']);
+
+	    // success?
+	    if ($stream) {
+		$this->streams[$mailbox] = $stream;
+		return $stream;
+	    }
+
+	} catch (Exception $e) {
+	    $TSunic->Log->log(5,
+		"ImapServer: Caught exception: ".$e->getMessage());
 	}
 
 	// error
 	$imap_errors = imap_errors();
 	if ($error and $imap_errors) {
 	    $TSunic->Log->log(
-		8, "Mailaccount->getStream: ".implode(",", $imap_errors)
+		6, "Mailaccount->getStream: ".implode(",", $imap_errors)
 	    );
 	}
 
 	// check, if imap-stream exist
 	if ($error) {
 	    $error = '{CLASS__MAILACCOUNT__NOCONNECTION}'.
-		' (server: '.$this->conn{'host'}.', user: '.$this->conn{'user'}.
+		' (server: '.$this->info['host'].', user: '.$this->info['user'].
 		', mailbox: '.$mailbox.
 		')';
 

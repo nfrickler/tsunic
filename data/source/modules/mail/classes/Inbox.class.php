@@ -67,5 +67,13 @@ class $$$Inbox extends $$$Mailbox {
     public function delete () {
 	return false;
     }
+
+    /* always valid
+     *
+     * @return bool
+     */
+    public function isValid () {
+	return true;
+    }
 }
 ?>

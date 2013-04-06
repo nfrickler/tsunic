@@ -1,4 +1,4 @@
-<!-- | Template: show list of serverboxes -->
+<!-- | TEMPLATE show list of serverboxes -->
 <?php
 // activate javascript-functions
 $TSunic->Tmpl->addJSfunction('$system$showOptionbox');

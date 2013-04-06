@@ -7,20 +7,10 @@ class $$$Mailaccount extends $system$Object {
      */
     protected $table = "#__$mail$mailaccounts";
 
-    /* SMPT objects
-     * array
-     */
-    protected $smtps;
-
     /* serverbox objects
      * array
      */
     protected $serverboxes;
-
-    /* password of mailaccount
-     * string
-     */
-    private $password;
 
     /* time in seconds after local serverbox information has to be updated
      * int
@@ -60,7 +50,7 @@ class $$$Mailaccount extends $system$Object {
 	4 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_SSLTLSNOVAL}', 'ssl/novalidate-cert')
     );
 
-    /* imap-timeout (in seconds)
+    /* imap timeout (in seconds)
      * int
      */
     protected $timeout = 3;
@@ -74,20 +64,6 @@ class $$$Mailaccount extends $system$Object {
 	$this->frequenceServerboxUpdate = 60 * 60 * 24 * 7;
 
 	return parent::__construct($id);
-    }
-
-    /* load information about object
-     */
-    protected function _loadInfo () {
-	$return = parent::_loadInfo();
-
-	// handle password
-	if (isset($this->info['password'])) {
-	    $this->password = $this->info['password'];
-	    unset($this->info['password']);
-	}
-
-	return $return;
     }
 
     /* get all serverboxes of this server
@@ -128,7 +104,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->serverboxes;
     }
 
-    /* get all available connection-security-options
+    /* get all available connection security options
      *
      * @return array
      */
@@ -136,7 +112,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->connsecurities;
     }
 
-    /* get all available password-authentication-options
+    /* get all available password authentication options
      *
      * @return array
      */
@@ -144,7 +120,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->auths;
     }
 
-    /* get all available protocol-options
+    /* get all available protocol options
      *
      * @return array
      */
@@ -153,29 +129,18 @@ class $$$Mailaccount extends $system$Object {
     }
 
     /* set connection for mailaccount
-     * @param string: host to connect to mail-account
-     * @param string: user to connect to mail-account
-     * @param int: port to connect to mail-account
+     * @param string: host to connect to mailaccount
+     * @param string: user to connect to mailaccount
+     * @param int: port to connect to mailaccount
      * @param int/string: protocol
-     * @param int/string: connection-security
-     * @param int/string: password-authentification
+     * @param int/string: password authentification
+     * @param int/string: connection security
      *
      * @return bool
      */
-    public function setConnection ($host, $port, $user, $protocol, $connsecurity, $auth) {
-
-	// invalid connection?
-	if (!$this->validateConnection(
-	    $host, $port, $user, $protocol, $connsecurity, $auth
-	)) return false;
-
-	// update connection-data
-	$host = $this->info['host'];
-	$port = $this->info['port'];
-	$user = $this->info['user'];
-	$protocol = $this->info['protocol'];
-	$connsecurity = $this->info['connsecurity'];
-	$auth = $this->info['auth'];
+    public function setConnection (
+	$host, $port, $user, $protocol, $auth, $connsecurity
+    ) {
 
 	// validate input
 	if (!$this->isValidHost($host)
@@ -189,15 +154,42 @@ class $$$Mailaccount extends $system$Object {
 	    "user" => $user,
 	    "port" => $port,
 	    "protocol" => $this->getProtocol($protocol, true),
+	    "auth" => $this->getAuth($auth, true),
 	    "connsecurity" => $this->getConnsecurity($connsecurity, true),
-	    "auth" => $this->getAuth($auth, true)
 	);
-	$result = $this->_edit($data);
+	return $this->_edit($data);
+    }
 
-	// update $this->info
-	$this->getInfo(true, true);
+    /* try to detect right connection data and save them
+     * +@param string: host
+     * +@param int: port
+     * +@param string: user
+     * +@param int/bool: protocol
+     * +@param int/bool: password authentification
+     * +@param int/bool: connection security
+     *
+     * @return bool
+     */
+    public function setAutoConnection (
+	$host = false, $port = false, $user = false, $protocol = false,
+	$auth = false, $connsecurity = false
+    ) {
 
-	return ($result) ? true : false;
+	// detect connection
+	$Server = $this->detectConnection(
+	    $host, $port, $user, $protocol, $auth, $connsecurity
+	);
+	if (!$Server) return false;
+
+	// save detected connection
+	return $this->setConnection(
+	    $Server->getInfo('host'),
+	    $Server->getInfo('port'),
+	    $Server->getInfo('user'),
+	    $Server->getInfo('protocol'),
+	    $Server->getInfo('auth'),
+	    $Server->getInfo('connsecurity')
+	);
     }
 
     /* create a new mailaccount
@@ -320,7 +312,8 @@ class $$$Mailaccount extends $system$Object {
 	$this->getInfo();
 
 	// is password already set?
-	if (!empty($this->password)) return true;
+	$old_password = $this->getInfo('password');
+	if (!empty($old_password)) return true;
 
 	// check, if empty password
 	if (empty($password) OR $password == '********') return false;
@@ -367,7 +360,7 @@ class $$$Mailaccount extends $system$Object {
     public function getAuth ($auth, $getNumber = false) {
 
 	// get auth
-	if (empty($auth)) $auth = $this->getInfo('auth');
+	if ($auth === false) $auth = $this->getInfo('auth');
 
 	// convert and return
 	return $this->convertNumberName($this->auths, $auth, $getNumber);
@@ -382,7 +375,8 @@ class $$$Mailaccount extends $system$Object {
     public function getConnsecurity ($connsecurity, $getNumber = false) {
 
 	// get auth
-	if (empty($connsecurity)) $connsecurity = $this->getInfo('connsecurity');
+	if ($connsecurity === false)
+	    $connsecurity = $this->getInfo('connsecurity');
 
 	// convert and return
 	return $this->convertNumberName($this->connsecurities, $connsecurity, $getNumber);
@@ -397,7 +391,7 @@ class $$$Mailaccount extends $system$Object {
     public function getProtocol ($protocol, $getNumber = false) {
 
 	// get auth
-	if (empty($protocol)) $protocol = $this->getInfo('protocol');
+	if ($protocol === false) $protocol = $this->getInfo('protocol');
 
 	// convert and return
 	return $this->convertNumberName($this->protocols, $protocol, $getNumber);
@@ -412,7 +406,7 @@ class $$$Mailaccount extends $system$Object {
      */
     public function convertNumberName ($array, $input, $getNumber = false) {
 
-	if (is_numeric($input)) {
+	if (!empty($input) and is_numeric($input)) {
 	    // is number
 
 	    // return number, if forced
@@ -437,11 +431,12 @@ class $$$Mailaccount extends $system$Object {
 
 	    // try to get name
 	    foreach ($array as $index => $value) {
-		if ($value[0] == $input) {
+
+		if ($value[1] == $input) {
 		    // match!
 
 		    // return number or phrase?
-		    if ($getNumber == 'phrase') return $value[1];
+		    if ($getNumber === 'phrase') return $value[0];
 		    return $index;
 		}
 	    }
@@ -465,7 +460,7 @@ class $$$Mailaccount extends $system$Object {
 	    $this->getInfo('host'),
 	    $this->getInfo('port'),
 	    $this->getInfo('user'),
-	    $this->password,
+	    $this->getInfo('password'),
 	    $this->getProtocol($this->getInfo('protocol'), 'phrase'),
 	    $this->getAuth($this->getInfo('auth'), 'phrase'),
 	    $this->getConnsecurity($this->getInfo('connsecurity'), 'phrase')
@@ -518,17 +513,20 @@ class $$$Mailaccount extends $system$Object {
 	return true;
     }
 
-    /* try to get or validate connection-data automatically
+    /* try to get or validate connection data automatically
      * +@param string: host
      * +@param int: port
      * +@param string: user
      * +@param int/bool: protocol
-     * +@param int/bool: password-authentification
-     * +@param int/bool: connection-security
+     * +@param int/bool: password authentification
+     * +@param int/bool: connection security
      *
-     * @return bool
+     * @return object
      */
-    public function validateConnection ($host = false, $port = false, $user = false, $protocol = false, $auth = false, $connsecurity = false) {
+    public function detectConnection (
+	$host = false, $port = false, $user = false, $protocol = false,
+	$auth = false, $connsecurity = false
+    ) {
 	global $TSunic;
 
 	// get input
@@ -536,14 +534,14 @@ class $$$Mailaccount extends $system$Object {
 	$auth = (empty($auth)) ? false : $this->getAuth($auth, true);
 	$connsecurity = (empty($connsecurity)) ? false : $this->getConnsecurity($connsecurity, true);
 
-	// get assumed host-postfix and user
+	// get assumed host postfix and user
 	$cache = explode('@', $this->getInfo('email'));
-	if (count($cache) < 2) return false;
+	if (count($cache) < 2) return NULL;
 	$emailuser = trim($cache[0]);
 	$suffix = trim($cache[1]);
 	$host_lookup = ($this->isValidHost($host)) ? "OR host = '$host'" : '';
 
-	// get matching entries from connection table
+	// get matching entries from connection table in database
 	$sql_protocol = ($protocol === false) ? '' : "protocol = '".$protocol."' AND ";
 	$sql_auth = ($auth === false) ? '' : "auth = '".$auth."' AND ";
 	$sql_connsecurity = ($connsecurity === false) ? '' : "connsecurity = '".$connsecurity."' AND ";
@@ -558,7 +556,7 @@ class $$$Mailaccount extends $system$Object {
 		WHERE ".$sql_protocol.$sql_auth.$sql_connsecurity."
 		    suffix = '$suffix'
 		    OR suffix = ''
-		    ".$host_lookup."
+		    $host_lookup
 		ORDER BY suffix DESC, protocol ASC;";
 	$result = $TSunic->Db->doSelect($sql);
 
@@ -572,39 +570,49 @@ class $$$Mailaccount extends $system$Object {
 	    if ($time_try >= (59 - $this->timeout)) break;
 
 	    // set connection data
-	    $this->info['host'] = (empty($host)) ? str_replace('#suffix#', $suffix, $values['host']) : $host;
-	    $this->info['port'] = (empty($port)) ? $values['port'] : $port;
-	    $this->info['auth'] = (empty($auth)) ? $values['auth'] : $auth;
-	    $this->info['protocol'] = (empty($protocol)) ? $values['protocol'] : $protocol;
-	    $this->info['connsecurity'] = (empty($connsecurity)) ? $values['connsecurity'] : $connsecurity;
-	    $this->info['user'] = (($values['user'] == 2)) ? $this->getInfo('email') : $emailuser;
-	    if (!empty($user)) $this->info['user'] = $user;
+	    $con_data = array();
+	    $con_data['host'] = (empty($host))
+		? str_replace('#suffix#', $suffix, $values['host'])
+		: $host;
+	    $con_data['port'] = (empty($port)) ? $values['port'] : $port;
+	    $con_data['auth'] = (empty($auth)) ? $values['auth'] : $auth;
+	    $con_data['protocol'] = (empty($protocol))
+		? $values['protocol'] : $protocol;
+	    $con_data['connsecurity'] = (empty($connsecurity))
+		? $values['connsecurity'] : $connsecurity;
+	    $con_data['user'] = (($values['user'] == 2))
+		? $this->getInfo('email') : $emailuser;
+	    if (!empty($user)) $con_data['user'] = $user;
 
 	    // already checked these settings?
 	    foreach ($checked_versions as $in => $val) {
-		if ($val == $this->info) continue 2;
+		if ($val == $con_data) continue 2;
 	    }
 
 	    // try to connect
 	    $Server = $TSunic->get('$$$ImapServer', array(
-		$this->getInfo('host'),
-		$this->getInfo('port'),
-		$this->getInfo('user'),
-		$this->password,
-		$this->getProtocol($this->getInfo('protocol'), 'phrase'),
-		$this->getAuth($this->getInfo('auth'), 'phrase'),
-		$this->getConnsecurity($this->getInfo('connsecurity'), 'phrase')
+		$con_data['host'],
+		$con_data['port'],
+		$con_data['user'],
+		$this->getInfo('password'),
+		$this->getProtocol($con_data['protocol'], 'phrase'),
+		$this->getAuth($con_data['auth'], 'phrase'),
+		$this->getConnsecurity(
+		    $con_data['connsecurity'], 'phrase'
+		),
+		$this->timeout,
 	    ));
 	    if ($Server->isValid()) {
-		return true;
+		return $Server;
 	    }
 
 	    // add settings to $checked_versions
-	    $checked_versions[] = $this->info;
+	    $checked_versions[] = $con_data;
 	}
 
 	// no connection found
-	return false;
+	return NULL;
     }
+
 }
 ?>

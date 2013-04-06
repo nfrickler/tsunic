@@ -306,7 +306,9 @@ class $$$Smtp extends $system$Object {
 	return (isset($this->connsecurities[$connsecurity])) ? true : false;
     }
 
-    /* get possible auths ($auth = true) OR name of one auth ($auth = int) OR authname of this object ($auth = false)
+    /* get possible auths ($auth = true) OR
+     * name of one auth ($auth = int) OR
+     * authname of this object ($auth = false)
      * +@param int/bool: security
      *
      * @return int/array
@@ -403,7 +405,8 @@ class $$$Smtp extends $system$Object {
 
 	// get input
 	$auth = (empty($auth)) ? false : $this->getAuth($auth, true);
-	$connsecurity = (empty($connsecurity)) ? false : $this->getConnsecurity($connsecurity, true);
+	$connsecurity = (empty($connsecurity))
+	    ? false : $this->getConnsecurity($connsecurity, true);
 
 	// get assumed host-postfix and user
 	$email = $this->getInfo('email');
@@ -411,11 +414,13 @@ class $$$Smtp extends $system$Object {
 	if (count($cache) < 2) return false;
 	$emailuser = trim($cache[0]);
 	$suffix = trim($cache[1]);
-	$host_lookup = (!empty($host)) ? "OR host = '".mysql_real_escape_string($host)."'" : '';
+	$host_lookup = (!empty($host))
+	    ? "OR host = '".mysql_real_escape_string($host)."'" : '';
 
 	// get matching entries from connection table
 	$sql_auth = ($auth === false) ? '' : "auth = '".$auth."' AND ";
-	$sql_connsecurity = ($connsecurity === false) ? '' : "connsecurity = '".$connsecurity."' AND ";
+	$sql_connsecurity = ($connsecurity === false)
+	    ? '' : "connsecurity = '".$connsecurity."' AND ";
 	$sql = "SELECT suffix as suffix,
 		    host as host,
 		    port as port,
@@ -435,16 +440,22 @@ class $$$Smtp extends $system$Object {
 	$time_start = time();
 	$checked_versions = array();
 	foreach ($result as $index => $values) {
+	    $TSunic->Log->log(6,
+		"Smtp: Validate connection ".$values['host']." : ".
+		$values['port']." ..."
+	    );
 
 	    // check for try-timeout (assumed php-timeout of 60s)
 	    $time_try = time() - $time_start;
 	    if ($time_try >= (59 - $this->timeout)) break;
 
 	    // set connection data
-	    $this->info['host'] = (empty($host)) ? str_replace('#suffix#', $suffix, $values['host']) : $host;
+	    $this->info['host'] = (empty($host))
+		? str_replace('#suffix#', $suffix, $values['host']) : $host;
 	    $this->info['port'] = (empty($port)) ? $values['port'] : $port;
 	    $this->info['auth'] = (empty($auth)) ? $values['auth'] : $auth;
-	    $this->info['connsecurity'] = (empty($connsecurity)) ? $values['connsecurity'] : $connsecurity;
+	    $this->info['connsecurity'] = (empty($connsecurity))
+		? $values['connsecurity'] : $connsecurity;
 	    $this->info['user'] = ($values['user'] == 2) ? $email : $emailuser;
 	    if (!empty($user)) $this->info['user'] = $user;
 
@@ -515,7 +526,8 @@ class $$$Smtp extends $system$Object {
 	// get headers
 	$headers = '';
 	$headers['SUBJECT'] = $Mail->getInfo('subject');
-	$headers['FROM'] = $this->getInfo('emailname').' <'.$this->getInfo('email').'>';
+	$headers['FROM'] = $this->getInfo('emailname').
+	    ' <'.$this->getInfo('email').'>';
 	$headers['TO'] = '<'.$addressee.'>';
 	$headers['DATE'] = date('r');
 	$headers['CONTENT-TYPE'] = 'text/plain; charset:UTF-8';
@@ -539,7 +551,8 @@ class $$$Smtp extends $system$Object {
 	$message = wordwrap($message, 70);
 
 	// Windows-fix
-	if(substr(PHP_OS, 0, 3) == 'WIN') $message = str_replace("\n.", "\n..", $message);
+	if(substr(PHP_OS, 0, 3) == 'WIN')
+	    $message = str_replace("\n.", "\n..", $message);
 
 	// send message
 	$this->sendData($message."\r\n.\r\n");
@@ -554,13 +567,14 @@ class $$$Smtp extends $system$Object {
 	return true;
     }
 
-    /* *********************** connection-handling ************************/
+    /* *********************** connection handling ************************/
 
     /* get connection to server
      *
      * @return bool/stream
      */
     public function getConnection () {
+	global $TSunic;
 
 	// check, if valid SMTP server
 	if (!$this->isValid()) return false;
@@ -575,7 +589,12 @@ class $$$Smtp extends $system$Object {
 	}
 
 	// try to connect
-	$this->conn = fsockopen($host, $this->getInfo('port'), $errno, $errstr, $this->timeout);
+	$TSunic->Log->log(6,
+	    "Smtp: Connect to ".$host." : ".$this->getInfo('port')
+	);
+	$this->conn = fsockopen(
+	    $host, $this->getInfo('port'), $errno, $errstr, $this->timeout
+	);
 	if (!$this->conn OR $this->getStatus() != 220) {
 	    // service not ready
 	    $this->conn = NULL;
@@ -622,7 +641,9 @@ class $$$Smtp extends $system$Object {
 		// success
 
 		// turn on encryption
-		$return = @stream_socket_enable_crypto($this->conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+		$return = @stream_socket_enable_crypto(
+		    $this->conn, true, STREAM_CRYPTO_METHOD_TLS_CLIENT
+		);
 
 	    } else {
 		// fail
@@ -640,7 +661,11 @@ class $$$Smtp extends $system$Object {
 	    return false;
 	}
 
-	// return
+	// success
+	$TSunic->Log->log(6,
+	    "Smtp: Successfully connected to ".$host." : ".
+	    $this->getInfo('port')
+	);
 	return $this->conn;
     }
 
