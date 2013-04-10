@@ -51,41 +51,86 @@ class ts_ModuleHandler {
 	ksort($this->modules);
 
 	// sort modules by dependencies
-	// Serveral times required... Fix?
 	usort($this->modules, array($this, 'cb_sortByDependencies'));
-	usort($this->modules, array($this, 'cb_sortByDependencies'));
-
-	// reverse order
 	$this->modules = array_reverse($this->modules);
 
 	return $this->modules;
     }
 
-    /* validate source-code
-     * @param bool: force to get new list from database (not a cached one from obj-var)
+    /* get module by name
+     * @param string: name of module
+     *
+     * @return object
+     */
+    public function getModule ($name) {
+	foreach ($this->modules as $index => $Value) {
+	    if ($Value->getInfo('name') == $name) return $Value;
+	}
+	return NULL;
+    }
+
+    /* get order of module A and module B concerning dependencies
+     * @param object: module A
+     * @param object: module B
      *
      * @return int
      */
     public function cb_sortByDependencies ($modA, $modB) {
-	if ($modA->getInfo('name') == $modB->getInfo('name')) return 0;
+	$nameA = $modA->getInfo('name');
+	$nameB = $modB->getInfo('name');
+	//var_dump("Compare: $nameA <=> $nameB");
 
 	// Does modA depend on modB?
-	$deps = $modA->getInfo('dependencies');
-	if ($deps and is_array($deps)) {
-	    foreach ($deps as $index => $values) {
-		if ($values['value'] == $modB->getInfo('name')) return -1;
-	    }
+	if ($this->dependOn($modA, $modB)) {
+	    return -1;
 	}
 
 	// Does modB depend on modA?
-	$deps = $modB->getInfo('dependencies');
-	if ($deps and is_array($deps)) {
-	    foreach ($deps as $index => $values) {
-		if ($values['value'] == $modA->getInfo('name')) return 1;
+	if ($this->dependOn($modB, $modA)) {
+	    return 1;
+	}
+
+	return 0;
+    }
+
+    /* does A depend on B?
+     * @param object: module A
+     * @param object: module B
+     * +@param int: loop prevention (stop after 30 dependencies)
+     *
+     * @return bool
+     */
+    public function dependOn ($modA, $modB, $loop = 0) {
+	$loop++;
+	if ($loop >= 30) die(
+	    "ModuleHandler: Dependency loop detected! Check dependencies!"
+	);
+	if (!$modA or !$modB) return false;
+
+	// get name of B
+	$nameB = $modB->getInfo('name');
+
+	// get dependencies of A
+	$deps = $modA->getInfo('dependencies');
+
+	// A has no deps?
+	if (empty($deps)) return false;
+
+	// Check if B is within deps
+	foreach ($deps as $index => $values) {
+	    if ($values['value'] == $nameB) {
+		return true;
 	    }
 	}
 
-	return 1;
+	// Check reverse if B is within deps of deps
+	foreach ($deps as $index => $values) {
+	    if ($this->dependOn($this->getModule($values['value']), $modB)) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 }
 ?>

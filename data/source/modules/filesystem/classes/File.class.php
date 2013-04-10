@@ -27,18 +27,11 @@ class $$$File extends $bp$BpObject {
 	// validate
 	if (!$this->isValidFile($FH)) return false;
 
-	// get name of file
-	$name = $FH['name'];
-	$counter = 1;
-	while (!$this->isValidName($name)) {
-	    $name = 'unknown_file_'.$counter;
-	    $counter++;
-	}
-
 	// create object
 	if (!$this->create()) return false;
 
 	// set name
+	$name = $this->getValidName($FH['name']);
 	if (!$this->addBit($name, 'FILE__NAME')) return false;
 
 	// upload file
@@ -50,6 +43,31 @@ class $$$File extends $bp$BpObject {
 
 	// encrypt content of file
 	$this->setContent($this->getContent());
+
+	return true;
+    }
+
+    /* create new file with certain values
+     * @param string: name of file
+     * @param string: content of file
+     *
+     * @return bool
+     */
+    public function createByValues ($parent, $name, $content) {
+	global $TSunic;
+
+	// create object
+	if (!$this->create()) return false;
+
+	// get valid name
+	$name = $this->getValidName($name);
+
+	// set name
+	if (!$this->addBit($name, 'FILE__NAME')) return false;
+	if (!$this->addBit($parent, 'FILE__PARENT')) return false;
+
+	// create file
+	if (!$this->setContent($content)) return false;
 
 	return true;
     }
@@ -70,6 +88,22 @@ class $$$File extends $bp$BpObject {
 	if ($Parent and $Parent->getSubByName($name)) return false;
 
 	return true;
+    }
+
+    /* get valid name
+     * @param string: original name
+     *
+     * @return string
+     */
+    public function getValidName ($name) {
+	if (!$this->isValidName($name)) {
+	    $counter = 0;
+	    while (!$this->isValidName($name.'_'.$counter)) {
+		$counter++;
+	    }
+	    $name.= '_'.$counter;
+	}
+	return $name;
     }
 
     /* get name to show
@@ -98,7 +132,6 @@ class $$$File extends $bp$BpObject {
     protected function getParent () {
 	global $TSunic;
 	$fk_dir = $this->getInfo('parent');
-	if (!$fk_dir) return NULL;
 	return $TSunic->get('$$$Directory', $fk_dir);
     }
 
@@ -236,14 +269,18 @@ class $$$File extends $bp$BpObject {
     }
 
     /* get directory object to certain path
+     * @param string: path to directory
      *
      * @return Directory
      */
     public function path2dir ($path) {
 	global $TSunic;
-	$Dir = $TSunic->get('$$$Directory');
 
+	// get root directory
+	$Dir = $TSunic->get('$$$Directory');
 	if (empty($path)) return $Dir;
+
+	// normalize and split path
 	if (substr($path,0,1) == "/") $path = substr($path, 1);
 	$names = explode("/",$path);
 

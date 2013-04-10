@@ -117,7 +117,7 @@ class $$$ImapServer {
 	    if (!$mboxstr) return NULL;
 
 	    // open stream
-	    $TSunic->Log->log(6, "Mailaccount->getStream: imap_open to $mboxstr with ".$this->info['user']." and ".$this->info['password']);
+	    $TSunic->Log->log(6, "Mailaccount->getStream: imap_open to $mboxstr with ".$this->info['user']);
 	    $stream = @imap_open($mboxstr, $this->info['user'], $this->info['password']);
 
 	    // success?
@@ -233,13 +233,21 @@ class $$$ImapServer {
 	    }
 	}
 	if ($msg_num === false) return false;
+	$msg_num++;
 
 	// delete mail
 	$stream = $this->connect($mailbox);
 	if ($stream and imap_delete($stream, $msg_num)) {
 	    // delete mails marked for deletion.
 	    // ATTENTION: This will change msg_nums of all other mails!
-	    if (!$cleanup or imap_expunge($stream)) return true;
+
+	    // cleanup on server?
+	    if ($cleanup) {
+		$this->mails = array();
+		if (!imap_expunge($stream)) return false;
+	    }
+
+	    return true;
 	}
 
 	return false;
@@ -313,7 +321,7 @@ class $$$ImapServer {
      * @return bool
      */
     public function isValid () {
-	return ($this->connect()) ? true : false;
+	return ($this->connect('', false)) ? true : false;
     }
 
     /* get parts of mail (plainbody, htmlbody, attatchments etc)

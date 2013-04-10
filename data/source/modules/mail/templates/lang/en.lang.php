@@ -88,6 +88,7 @@ $lang = array(
     'SHOWMAILBOX__NUMBEROFMAILS' => 'Number of mails:',
     'SHOWMAILBOX__FROMADDRESS' => 'From',
     'SHOWMAILBOX__SUBJECT' => 'Subject',
+    'SHOWMAILBOX__TIMESTAMP' => 'Date',
     'SHOWMAILBOX__NOMAILINBOX' => 'There are no mails in this mailbox.',
     'SHOWMAILBOX__TOSHOWMAILBOXES' => 'Back to all mailboxes',
     'SHOWMAILBOX__TOSHOWWRITEMAIL' => 'Write mail',

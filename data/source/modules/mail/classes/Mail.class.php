@@ -8,6 +8,7 @@ class $$$Mail extends $bp$BpObject {
     protected $tags = array(
 	'MAIL__SUBJECT',
 	'MAIL__SENDER',
+	'MAIL__TIMESTAMP',
 	'MAIL__ADDRESSEE',
 	'MAIL__ATTACHMENT',
 	'MAIL__HTMLCONTENT',
@@ -52,51 +53,6 @@ class $$$Mail extends $bp$BpObject {
      */
     public function getHtmlContent () {
 	return $this->getContent('html');
-    }
-
-    /* create from IMAP source
-     * @param int: fk serverbox
-     * @param int: fk mailbox
-     * @param string: sender
-     * @param string: addressee
-     * @param string: date
-     * @param string: plain content
-     * @param string: html content
-     * @param int: uid
-     * @param bool: is mail unseen?
-     * @param string: charset
-     *
-     * @return bool
-     */
-    public function createFromImap (
-	$fk_serverbox, $fk_mailbox, $sender, $addressee, $date,
-	$subject, $plaincontent, $htmlcontent, $uid, $unseen, $charset
-    ) {
-	global $TSunic;
-	$Parser = $TSunic->get('$system$Parser');
-
-	// save in database
-	$data = array(
-	    "fk_account" => $TSunic->Usr->getInfo('id'),
-	    "fk_serverbox" => $fk_serverbox,
-	    "fk_mailbox" => $fk_mailbox,
-	    "subject" => $Parser->text2db($subject),
-	    "sender" => $Parser->text2db($sender),
-	    "dateOfCreation" => "NOW()",
-	    "status" => 1,
-	    "unseen" => ($unseen ? 1 : 0),
-	    "dateOfMail" => $Parser->text2db($date),
-	    "uid" => $Parser->text2int($uid),
-	    "plaincontent" => $Parser->text2plain2db($plaincontent),
-	    "htmlcontent" => $Parser->text2db($htmlcontent),
-	    "charset" => $Parser->text2db($charset)
-	);
-	if (!$this->_create($data)) return false;
-
-	// set addressee
-	if (!$this->setAddressee($addressee)) return false;
-
-	return $this->id;
     }
 
     /* send mail
@@ -222,7 +178,7 @@ class $$$Mail extends $bp$BpObject {
 	global $TSunic;
 
 	// get object
-	$Serverbox = $TSunic->get('$$$Serverbox', $this->getInfo('fk_serverbox'));
+	$Serverbox = $TSunic->get('$$$Serverbox', $this->getInfo('serverbox'));
 	if (!$Serverbox->isValid()) return NULL;
 
 	return $Serverbox;
@@ -235,7 +191,6 @@ class $$$Mail extends $bp$BpObject {
      * @return bool
      */
     public function delete ($delonserver = true, $cleanup = true) {
-	global $TSunic;
 
 	// delete on server
 	$Serverbox = $this->getServerbox();
@@ -248,7 +203,7 @@ class $$$Mail extends $bp$BpObject {
 	}
 
 	// delete mail locally
-	return $this->_delete();
+	return parent::delete();
     }
 
     // ####################### attachments ##################################
@@ -258,94 +213,48 @@ class $$$Mail extends $bp$BpObject {
      * @return array
      */
     public function getAttachments () {
-
-	// already fetched?
-	if (isset($this->attachments) AND !empty($this->attachments))
-	    return $this->attachments;
-
-	// get attachments from database
+	if (!empty($this->attachments)) return $this->attachments;
 	global $TSunic;
-	$sql = "SELECT fk_fsfile
-		FROM #__$mail$attachments as attachments
-		WHERE attachments.fk_mail = '".$this->id."'
-		ORDER BY fk_fsfile ASC;";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return array();
 
-	// get FsFile objects
+	// get all attachments
+	$bits = $this->getByTag('MAIL__ATTACHMENT');
+
+	// get objects
 	$this->attachments = array();
-	foreach ($result as $index => $values) {
-	    $FsFile = $TSunic->get('$filesystem$FsFile', $values['fk_fsfile']);
-
-	    // delete attachments with no more fsfile existing
-	    if (!$FsFile->isValid()) {
-		$this->rmAttachment($values['fk_fsfile']);
+	foreach ($bits as $index => $Value) {
+	    $File = $TSunic->get(
+		'$filesystem$File', $Value->getInfo('value')
+	    );
+	    if (!$File->isValid()) {
+		$Value->delete();
 		continue;
 	    }
-
-	    $this->attachments[] = $FsFile;
+	    $this->attachments[] = $File;
 	}
 
 	return $this->attachments;
     }
 
-    /* add attachment to mail
-     * @param int: fk of fsfile
+    /* add new attachment
+     * @param string: name of file
+     * @param string: content of file
      *
      * @return bool
      */
-    public function addAttachment ($fk_fsfile) {
+    public function addAttachment ($name, $content) {
 	global $TSunic;
 
-	// validate fsfile
-	$FsFile = $TSunic->get('$filesystem$FsFile', $fk_fsfile);
-	if (!$FsFile->isValid()) return false;
+	// get File object
+	$File = $TSunic->get('$filesystem$File', false, true);
 
-	// delete cached attachments
-	$this->attachments = array();
+	// get ".mail" directory
+	$Dir = $File->path2dir('.mail');
 
-	// update database
-	$sql = "INSERT INTO #__$mail$attachments
-		SET fk_fsfile = '$fk_fsfile',
-		    fk_mail = '".$this->id."'
-		ON DUPLICATE KEY UPDATE dateOfUpdate = NOW();";
-	return $TSunic->Db->doInsert($sql);
-    }
+	// create new file
+	if (!$File or !$File->createByValues($Dir->getInfo('id'), $name, $content))
+	    return false;
 
-    /* remove attachment from mail
-     * @param int: fk of fsfile
-     *
-     * @return bool
-     */
-    public function rmAttachment ($fk_fsfile) {
-	global $TSunic;
-	// TODO: remove files as well?
-
-	// delete cached attachments
-	$this->attachments = array();
-
-	// update database
-	$sql = "DELETE FROM #__$mail$attachments
-		WHERE fk_fsfile = '$fk_fsfile'
-		    AND fk_mail = '".$this->id."';";
-	return $TSunic->Db->doDelete($sql);
-    }
-
-    /* remove all attachments from mail
-     *
-     * @return bool
-     */
-    public function rmAllAttachments () {
-	global $TSunic;
-	// TODO: remove files as well?
-
-	// delete cached attachments
-	$this->attachments = array();
-
-	// update database
-	$sql = "DELETE FROM #__$mail$attachments
-		WHERE fk_mail = '".$this->id."';";
-	return $TSunic->Db->doDelete($sql);
+	return $this->addBit($File->getInfo('id'), 'MAIL__ATTACHMENT');
     }
 }
 ?>

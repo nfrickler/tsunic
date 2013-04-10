@@ -22,5 +22,6 @@
 	<module version="1.4" nameid="tsuniccoremodule">system</module>
 	<module version="2.2" nameid="tsuniccoremodule">usersystem</module>
 	<module version="1.4" nameid="tsuniccoremodule">filesystem</module>
+	<module version="1.4" nameid="tsuniccoremodule">profile</module>
     </dependencies>
 </all>

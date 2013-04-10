@@ -119,7 +119,8 @@ class $$$Bit extends $system$Object {
      * @return bool
      */
     public function isValidFkObject ($fk_object) {
-	return ($this->_validate($fk_object, 'int')
+	return (!empty($fk_object)
+	    and $this->_validate($fk_object, 'int')
 	    and $this->_isObject('#__$bp$objects', $fk_object)
 	) ? true : false;
     }
@@ -130,7 +131,8 @@ class $$$Bit extends $system$Object {
      * @return bool
      */
     public function isValidFkTag ($fk_tag) {
-	return (!$fk_tag or $this->_validate($fk_tag, 'int')
+	return (!empty($fk_tag)
+	    and !$fk_tag or $this->_validate($fk_tag, 'int')
 	    and $this->_isObject('#__$bp$tags', $fk_tag)
 	) ? true : false;
     }

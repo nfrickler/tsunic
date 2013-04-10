@@ -92,7 +92,7 @@ class $$$BpObject extends $system$Object {
     public function delete () {
 
 	// delete all bits linking to this object
-	$pieces = $this->getBits();
+	$pieces = $this->getBits(true);
 	foreach ($pieces as $index => $Value) {
 	    if (!$Value->delete()) return false;
 	}

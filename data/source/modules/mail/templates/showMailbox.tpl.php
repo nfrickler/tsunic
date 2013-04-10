@@ -24,6 +24,7 @@ $mails = $Mailbox->getMails();
 		<th style="min-width:10px;">&nbsp;</th>
 		<th style="min-width:10px;">&nbsp;</th>
 		<th style="min-width:300px;"><?php $this->set('{SHOWMAILBOX__SUBJECT}'); ?></th>
+		<th style="min-width:30px;"><?php $this->set('{SHOWMAILBOX__TIMESTAMP}'); ?></th>
 		<th style="width:120px;"><?php $this->set('{SHOWMAILBOX__FROMADDRESS}'); ?></th>
 	    </tr>
 	    <?php foreach ($mails as $index => $mail) { ?>
@@ -41,8 +42,10 @@ $mails = $Mailbox->getMails();
 		</td>
 		<td>
 		    <a href="<?php $this->setUrl('$$$showMail', array('$$$id' => $mail->getInfo('id'))); ?>">
-			<?php $this->set($mail->getInfo('subject')); ?>
-		    </a>
+			<?php $this->set($mail->getInfo('subject')); ?></a>
+		</td>
+		<td>
+		    <?php echo date('d.m.Y H:i', $mail->getInfo('timestamp')); ?>
 		</td>
 		<td>
 		    <?php $this->set($mail->getInfo('sender')); ?>
@@ -53,11 +56,9 @@ $mails = $Mailbox->getMails();
 
 	<p id="$$$showMailbox__selectMails_container" style="display:none;">
 	    <a href="javascript:$$$showMailbox__selectAll();">
-		<?php $this->set('{SHOWMAILBOX__SELECTALL}'); ?>
-	    </a>
+		<?php $this->set('{SHOWMAILBOX__SELECTALL}'); ?></a>
 	    <a href="javascript:$$$showMailbox__unselectAll();">
-		<?php $this->set('{SHOWMAILBOX__DESELECTALL}'); ?>
-	    </a>
+		<?php $this->set('{SHOWMAILBOX__DESELECTALL}'); ?></a>
 	</p>
 
 	<p>

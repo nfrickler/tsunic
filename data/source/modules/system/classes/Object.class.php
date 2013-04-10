@@ -639,7 +639,7 @@ class $$$Object {
 	    $access[$TSunic->Usr->getInfo('id')] = 1;
 	}
 	if (empty($access)) return true;
-	$TSunic->Log->log(6, "Object::shareWith: sharing $this->table ".
+	$TSunic->Log->log(7, "Object::shareWith: sharing $this->table ".
 	    "($this->id) ".count($access));
 
 	// remove all keys without access

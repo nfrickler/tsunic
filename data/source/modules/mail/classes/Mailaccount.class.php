@@ -175,14 +175,16 @@ class $$$Mailaccount extends $system$Object {
 	if (!$Server) return false;
 
 	// save detected connection
-	return $this->setConnection(
+	if (!$this->setConnection(
 	    $Server->getInfo('host'),
 	    $Server->getInfo('port'),
 	    $Server->getInfo('user'),
 	    $Server->getInfo('protocol'),
 	    $Server->getInfo('auth'),
 	    $Server->getInfo('connsecurity')
-	);
+	)) return false;
+
+	return true;
     }
 
     /* create a new mailaccount

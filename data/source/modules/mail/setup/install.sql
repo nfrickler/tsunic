@@ -23,10 +23,10 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$MAIL$TAG__MAIL__PLAINCONTENT__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
-	'MAIL__DATE',
-	'{$MAIL$TAG__MAIL__DATE}',
-	'{$MAIL$TAG__MAIL__DATE__DESCRIPTION}',
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = '$filesystem$File'),
+	'MAIL__ATTACHMENT',
+	'{$MAIL$TAG__MAIL__ATTACHMENT}',
+	'{$MAIL$TAG__MAIL__ATTACHMENT__DESCRIPTION}',
 	1
     ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
@@ -35,7 +35,7 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$MAIL$TAG__MAIL__SUBJECT__DESCRIPTION}',
 	1
     ),
-    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'string'),
 	'MAIL__SENDER',
 	'{$MAIL$TAG__MAIL__SENDER}',
 	'{$MAIL$TAG__MAIL__SENDER__DESCRIPTION}',
@@ -53,7 +53,24 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	'{$MAIL$TAG__MAIL__FKADDRESSEE__DESCRIPTION}',
 	1
     ),
-
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'MAIL__MAILBOX',
+	'{$MAIL$TAG__MAIL__MAILBOX}',
+	'{$MAIL$TAG__MAIL__MAILBOX__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
+	'MAIL__SERVERBOX',
+	'{$MAIL$TAG__MAIL__SERVERBOX}',
+	'{$MAIL$TAG__MAIL__SERVERBOX__DESCRIPTION}',
+	1
+    ),
+    ((SELECT id FROM #__$bp$types as types WHERE types.name = 'timestamp'),
+	'MAIL__TIMESTAMP',
+	'{$MAIL$TAG__MAIL__TIMESTAMP}',
+	'{$MAIL$TAG__MAIL__TIMESTAMP__DESCRIPTION}',
+	1
+    ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
 	'MAIL__UNSEEN',
 	'{$MAIL$TAG__MAIL__UNSEEN}',

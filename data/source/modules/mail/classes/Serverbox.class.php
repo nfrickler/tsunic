@@ -258,20 +258,15 @@ class $$$Serverbox extends $system$Object {
      * @return array with ids of new mails
      */
     public function checkMails ($force = false) {
+	if (!$this->isValid()) return false;
 	global $TSunic;
 	$out = array();
-
-	// check, if serverbox exist
-	if (!$this->isValid()) return false;
 
 	// time to check?
 	if (!$force AND !$this->isTimeToCheck()) return true;
 
 	// update dateOfCheck
-	$sql = "UPDATE #__$mail$serverboxes
-		SET dateOfCheck = NOW()
-		WHERE id = '".$this->id."'";
-	$result = $TSunic->Db->doUpdate($sql);
+	$this->setMulti(array('dateOfCheck' => 'NOW()'), true);
 
 	// get remote mails
 	$Server = $this->getMailaccount()->getServer();
@@ -313,8 +308,6 @@ class $$$Serverbox extends $system$Object {
 	    $exists = 0;
 	    foreach ($lmails as $in => $Val) {
 		if ($values->uid == $Val->getInfo('uid')) {
-
-
 		    $exists = 1;
 		}
 	    }
@@ -324,27 +317,51 @@ class $$$Serverbox extends $system$Object {
 	    $new_mail = $Server->getMail($this->getInfo('name'), $index);
 
 	    // create new Mail
-	    $Mail = $TSunic->get('$$$Mail');
-	    $Mail->createFromImap(
-		$this->id,
-		$this->getInfo('fk_mailbox'),
-		$new_mail['sender'],
-		$new_mail['to'],
-		$new_mail['date'],
-		$new_mail['subject'],
-		$new_mail['plaincontent'],
-		$new_mail['htmlcontent'],
-		$new_mail['uid'],
-		!$new_mail['seen'],
-		$new_mail['charset']
+	    $Mail = $TSunic->get('$$$Mail', false, true);
+	    if (!$Mail->create()) {
+		$TSunic->Log->log(3,
+		    "Serverbox: Failed to create new mail!"
+		);
+		continue;
+	    }
+
+	    // get Parser object
+	    $Parser = $TSunic->get('$system$Parser');
+
+	    // add bits
+	    $Mail->addBit(!$new_mail['seen'], 'MAIL__UNSEEN');
+	    $Mail->addBit(
+		$Parser->text2int($new_mail['uid']),
+		'MAIL__UID'
 	    );
+	    $Mail->addBit(
+		$Parser->text2db($new_mail['sender']),
+		'MAIL__SENDER'
+	    );
+	    $Mail->addBit(
+		$Parser->text2db($new_mail['subject']),
+		'MAIL__SUBJECT'
+	    );
+	    $Mail->addBit(
+		$Parser->text2db($new_mail['htmlcontent']),
+		'MAIL__HTMLCONTENT'
+	    );
+	    $Mail->addBit(
+		$Parser->text2plain2db($new_mail['plaincontent']),
+		'MAIL__PLAINCONTENT'
+	    );
+	    $Mail->addBit($new_mail['charset'], 'MAIL__CHARSET');
+	    $Mail->addBit($this->id, 'MAIL__SERVERBOX');
+	    $Mail->addBit($this->getInfo('fk_mailbox'), 'MAIL__MAILBOX');
+	    $Mail->addBit(strtotime($new_mail['date']), 'MAIL__TIMESTAMP');
+	    $Mail->addBit($new_mail['to'], 'MAIL__ADDRESSEE');
+
+	    // add to output
 	    $out[] = $new_mail['uid'];
 
 	    // add attachments
-	    foreach ($new_mail['attachments'] as $index => $value) {
-		$Attachment = $TSunic->get('$filesystem$FsFile');
-		$Attachment->create(0, $index, $value);
-		$Mail->addAttachment($Attachment);
+	    foreach ($new_mail['attachments'] as $index => $values) {
+		$Mail->addAttachment($values['name'], $values['content']);
 	    }
 	}
 
@@ -359,16 +376,14 @@ class $$$Serverbox extends $system$Object {
 	global $TSunic;
 
 	// get all mails from this mailbox
-	$sql = "SELECT id
-	    FROM #__$mail$mails
-	    WHERE fk_serverbox = '".$this->id."';";
-	$ids = $TSunic->Db->doSelect($sql);
-	if (!$ids) return $ids;
+	$Helper = $TSunic->get('$bp$Helper');
+	$allmails = $Helper->getObjects('$mail$Mail');
 
-	// get objects
+	// filter mails for this serverbox
 	$mails = array();
-	foreach ($ids as $index => $values) {
-	    $mails[] = $TSunic->get('$$$Mail', $values['id']);
+	foreach ($allmails as $index => $Value) {
+	    if ($Value->getInfo('serverbox') == $this->id)
+		$mails[] = $Value;
 	}
 
 	return $mails;
