@@ -275,43 +275,8 @@ class $$$File extends $bp$BpObject {
      */
     public function path2dir ($path) {
 	global $TSunic;
-
-	// get root directory
-	$Dir = $TSunic->get('$$$Directory');
-	if (empty($path)) return $Dir;
-
-	// normalize and split path
-	if (substr($path,0,1) == "/") $path = substr($path, 1);
-	$names = explode("/",$path);
-
-	// follow path
-	$Next = false;
-	while ($names and $current = array_shift($names)) {
-	    $Next = 0;
-
-	    // subdirs
-	    $subdirs = $Dir->getSubdirectories();
-	    foreach ($subdirs as $index => $Value) {
-		if ($Value->getInfo('name') == $current) {
-		    $Next = $Value;
-		    break;
-		}
-	    }
-
-	    // not exists?
-	    if (!$Next) {
-		// create new Directory
-		$Next = $TSunic->get('$$$Directory', array(), true);
-		if (!$Next->create()) return NULL;
-		if (!$Next->saveByTag('DIRECTORY__NAME', $current) or
-		    !$Next->saveByTag('DIRECTORY__PARENT', $Dir->getInfo('id'))
-		) return NULL;
-	    }
-
-	    $Dir = $Next;
-	}
-
-	return $Dir;
+	$Filesystem = $TSunic->get('$$$Filesystem');
+	return $Filesystem->path2dir($path);
     }
 
     /* split path of file to dir and file path

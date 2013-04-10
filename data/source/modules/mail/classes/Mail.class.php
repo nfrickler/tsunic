@@ -192,6 +192,16 @@ class $$$Mail extends $bp$BpObject {
      */
     public function delete ($delonserver = true, $cleanup = true) {
 
+	// delete attachments of this mail in .mail directory
+	$Dir = $this->getAttachmentDir();
+	$attachments = $this->getAttachments();
+	foreach ($attachments as $index => $Value) {
+	    if ($Value->getInfo('parent') == $Dir->getInfo('id')) {
+		// delete File
+		if (!$Value->delete()) return false;
+	    }
+	}
+
 	// delete on server
 	$Serverbox = $this->getServerbox();
 	if ($delonserver and $Serverbox) {
@@ -204,6 +214,16 @@ class $$$Mail extends $bp$BpObject {
 
 	// delete mail locally
 	return parent::delete();
+    }
+
+    /* get attachment directory
+     *
+     * @return Directory
+     */
+    public function getAttachmentDir () {
+	global $TSunic;
+	$Filesystem = $TSunic->get('$filesystem$Filesystem');
+	return $Filesystem->path2dir('.mail');
     }
 
     // ####################### attachments ##################################
@@ -248,7 +268,7 @@ class $$$Mail extends $bp$BpObject {
 	$File = $TSunic->get('$filesystem$File', false, true);
 
 	// get ".mail" directory
-	$Dir = $File->path2dir('.mail');
+	$Dir = $this->getAttachmentDir();
 
 	// create new file
 	if (!$File or !$File->createByValues($Dir->getInfo('id'), $name, $content))
