@@ -150,7 +150,7 @@ class $$$Mailaccount extends $system$Object {
 	    "auth" => $this->getAuth($auth, true),
 	    "connsecurity" => $this->getConnsecurity($connsecurity, true),
 	);
-	return $this->_edit($data);
+	return $this->setMulti($data, true);
     }
 
     /* try to detect right connection data and save them
@@ -187,6 +187,47 @@ class $$$Mailaccount extends $system$Object {
 	return true;
     }
 
+    /* checks wether a value of this object is valid
+     * @param string: name of value
+     * @param string: value
+     *
+     * @return bool
+     */
+    public function isValidInfo ($name, $value) {
+
+	switch ($name) {
+	    case 'host':
+		if (!$this->isValidHost($value)) return false;
+		break;
+	    case 'port':
+		if (!$this->isValidPort($value)) return false;
+		break;
+	    case 'user':
+		if (!$this->isValidUser($value)) return false;
+		break;
+	    case 'auth':
+		if (!$this->isValidAuth($value)) return false;
+		break;
+	    case 'connsecurity':
+		if (!$this->isValidConnsecurity($value)) return false;
+		break;
+	    case 'name':
+		if (!$this->isValidName($value)) return false;
+		break;
+	    case 'description':
+		if (!$this->isValidDescription($value)) return false;
+		break;
+	    case 'email':
+		if (!$this->isValidEmail($value)) return false;
+		break;
+	    case 'password':
+		if (!$this->isValidPassword($value)) return false;
+		break;
+	}
+
+	return parent::isValidValue($name, $value);;
+    }
+
     /* create a new mailaccount
      * @param string: email of mailaccount
      * @param string: password of mailaccount
@@ -196,13 +237,6 @@ class $$$Mailaccount extends $system$Object {
      * @return bool
      */
     public function create ($email, $password, $name = '', $description = '') {
-
-	// validate input
-	if (!$this->isValidName($name)
-	    or !$this->isValidDescription($description)
-	    or !$this->isValidEmail($email)
-	    or !$this->isValidPassword($password)
-	) return false;
 
 	// name defaults to email
 	if (empty($name)) $name = $email;
@@ -230,13 +264,6 @@ class $$$Mailaccount extends $system$Object {
      */
     public function edit ($email, $password, $name = '', $description = '') {
 
-	// validate input
-	if (!$this->isValidName($name)
-	    OR !$this->isValidDescription($description)
-	    OR !$this->isValidEmail($email)
-	    OR !$this->isValidPassword($password)
-	) return false;
-
 	// name defaults to email
 	if (empty($name)) $name = $email;
 
@@ -247,7 +274,7 @@ class $$$Mailaccount extends $system$Object {
 	    "password" => $password,
 	    "description" => $description
 	);
-	return $this->_edit($data);
+	return $this->setMulti($data);
     }
 
     /* delete mail account
@@ -608,6 +635,5 @@ class $$$Mailaccount extends $system$Object {
 	// no connection found
 	return NULL;
     }
-
 }
 ?>

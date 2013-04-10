@@ -197,8 +197,20 @@ class $$$Object {
      * @return bool
      */
     public function set ($name, $value, $save = false) {
+	if (!$this->isValidInfo($name, $value)) return false;
 	$this->info_tmp[$name] = $value;
 	return ($save) ? $this->save() : true;
+    }
+
+    /* checks wether a value of this object is valid
+     * @param string: name of value
+     * @param string: value
+     *
+     * @return bool
+     */
+    public function isValidInfo ($name, $value) {
+	// allow all by default
+	return true;
     }
 
     /* set multiple values for this object

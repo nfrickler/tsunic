@@ -51,7 +51,7 @@ function $$$editSmtp () {
     }
 
     // try to set connection
-    if (!$Smtp->setConnection($host, $port, $user, $auth, $connsecurity)) {
+    if (!$Smtp->setAutoConnection($host, $port, $user, $auth, $connsecurity)) {
 	$TSunic->Log->alert('error', '{EDITSMTP__CONNERROR}');
 	$TSunic->redirect('back');
     }

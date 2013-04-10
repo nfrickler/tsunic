@@ -50,7 +50,7 @@ function $$$addSmtp () {
     }
 
     // try to set connection
-    if (!$Smtp->setConnection($host, $port, $user, $auth, $connsecurity)) {
+    if (!$Smtp->setAutoConnection($host, $port, $user, $auth, $connsecurity)) {
 	$TSunic->Log->alert('error', '{ADDSMTP__CONNERROR}');
 	$TSunic->redirect('$$$showEditSmtp', array('$$$id' => $Smtp->getInfo('id')));
     }

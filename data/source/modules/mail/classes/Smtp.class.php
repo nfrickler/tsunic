@@ -17,7 +17,7 @@ class $$$Smtp extends $system$Object {
      */
     protected $timeout = 5;
 
-    /* password-authentifications
+    /* password authentifications
      * array
      */
     protected $auths = array(
@@ -57,7 +57,7 @@ class $$$Smtp extends $system$Object {
      */
     public function getName () {
 	$name = $this->getInfo('emailname');
-	if ($this->getInfo('email')) $name .= "&lt;".$this->getInfo('email')."&gt;";
+	if ($this->getInfo('email')) $name .= "<".$this->getInfo('email').">";
 	return $name;
     }
 
@@ -165,13 +165,6 @@ class $$$Smtp extends $system$Object {
      */
     public function create ($email, $password, $description = false, $emailname = false) {
 
-	// validate input
-	if (!$this->isValidEMail($email)
-	    OR !$this->isValidPassword($password)
-	    OR !$this->isValidDescription($description)
-	    OR !$this->isValidEMailname($emailname)
-	) return false;
-
 	// create new server in database
 	global $TSunic;
 	$data = array(
@@ -185,7 +178,7 @@ class $$$Smtp extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* set connection for smtp-server
+    /* set connection for SMTP server
      * @param string: host to connect to smtp server
      * @param string: user to connect to smtp server
      * @param int: port to connect to smtp server
@@ -194,23 +187,45 @@ class $$$Smtp extends $system$Object {
      *
      * @return bool
      */
-    public function setConnection ($host, $port, $user, $connsecurity, $auth) {
-	global $TSunic;
+    public function setAutoConnection (
+	$host = false, $port = false, $user = false,
+	$connsecurity = false, $auth = false
+    ) {
 
-	// validate input
-	if (!$this->isValidHost($host)) $host = false;
-	if (!$this->isValidPort($port)) $port = false;
-	if (!$this->isValidAuth($auth)) $auth = false;
-	if (!$this->isValidUser($user)) $user = false;
-	if (!$this->isValidConnsecurity($connsecurity)) $connsecurity = false;
-
-	// is valid connection?
-	if (!$this->validateConnection($host, $port, $user, $connsecurity, $auth)) {
-	    // invalid connection data
+	// detect connection
+	if (!$this->detectConnection(
+	    $host, $port, $user, $connsecurity, $auth
+	)) {
 	    return false;
 	}
 
-	// save in db
+	// save detected connection
+	if ($this->setConnection(
+	    $this->getInfo('host'),
+	    $this->getInfo('port'),
+	    $this->getInfo('user'),
+	    $this->getInfo('connsecurity'),
+	    $this->getInfo('auth')
+	)) return true;
+
+	return false;
+    }
+
+    /* set connection for SMTP server
+     * @param string: host to connect to smtp server
+     * @param string: user to connect to smtp server
+     * @param int: port to connect to smtp server
+     * @param int/string: connection-security
+     * @param int/string: password-authentification
+     *
+     * @return bool
+     */
+    public function setConnection (
+	$host, $port, $user, $connsecurity, $auth
+    ) {
+	global $TSunic;
+
+	// update database
 	$data = array(
 	    "host" => $this->getInfo('host'),
 	    "user" => $this->getInfo('user'),
@@ -218,12 +233,48 @@ class $$$Smtp extends $system$Object {
 	    "connsecurity" => $this->getConnsecurity($this->getInfo('connsecurity'), true),
 	    "auth" => $this->getAuth($this->getInfo('auth'), true)
 	);
-	$result = $this->_edit($data);
+	return $this->setMulti($data, true);
+    }
 
-	// update object
-	$this->_loadInfo();
+    /* checks wether a value of this object is valid
+     * @param string: name of value
+     * @param string: value
+     *
+     * @return bool
+     */
+    public function isValidInfo ($name, $value) {
 
-	return ($result) ? true : false;
+	switch ($name) {
+	    case 'host':
+		if (!$this->isValidHost($value)) return false;
+		break;
+	    case 'port':
+		if (!$this->isValidPort($value)) return false;
+		break;
+	    case 'user':
+		if (!$this->isValidUser($value)) return false;
+		break;
+	    case 'auth':
+		if (!$this->isValidAuth($value)) return false;
+		break;
+	    case 'connsecurity':
+		if (!$this->isValidConnsecurity($value)) return false;
+		break;
+	    case 'email':
+		if (!$this->isValidEMail($value)) return false;
+		break;
+	    case 'password':
+		if (!$this->isValidPassword($value)) return false;
+		break;
+	    case 'description':
+		if (!$this->isValidDescription($value)) return false;
+		break;
+	    case 'emailname':
+		if (!$this->isValidEMailname($value)) return false;
+		break;
+	}
+
+	return parent::isValidValue($name, $value);;
     }
 
     /* edit Smtp object
@@ -235,22 +286,13 @@ class $$$Smtp extends $system$Object {
      * @return bool
      */
     public function edit ($email, $password, $description = '', $emailname = '') {
-
-	// validate input
-	if (!$this->isValidEMail($email)
-	    OR !$this->isValidPassword($password)
-	    OR !$this->isValidDescription($description)
-	    OR !$this->isValidEMailname($emailname)
-	) return false;
-
-	// update database
 	$data = array(
 	    "email" => $email,
 	    "password" => $password,
 	    "description" => $description,
 	    "emailname" => $emailname
 	);
-	return $this->_edit($data);
+	return $this->setMulti($data);
     }
 
     /* delete Smtp object
@@ -391,7 +433,7 @@ class $$$Smtp extends $system$Object {
     /* *********************** server-interaction *************************/
     /* ********************************************************************/
 
-    /* try to get connection-data automatically
+    /* try to get or validate connection data automatically
      * @param string: host
      * @param int: port
      * @param string: user
@@ -400,7 +442,10 @@ class $$$Smtp extends $system$Object {
      *
      * @return bool
      */
-    protected function validateConnection ($host = false, $port = false, $user = false, $auth = false, $connsecurity = false) {
+    protected function detectConnection (
+	$host = false, $port = false, $user = false, $auth = false,
+	$connsecurity = false
+    ) {
 	global $TSunic;
 
 	// get input
@@ -450,20 +495,30 @@ class $$$Smtp extends $system$Object {
 	    if ($time_try >= (59 - $this->timeout)) break;
 
 	    // set connection data
-	    $this->info['host'] = (empty($host))
-		? str_replace('#suffix#', $suffix, $values['host']) : $host;
-	    $this->info['port'] = (empty($port)) ? $values['port'] : $port;
-	    $this->info['auth'] = (empty($auth)) ? $values['auth'] : $auth;
-	    $this->info['connsecurity'] = (empty($connsecurity))
+	    $con_data = array();
+	    $con_data['host'] = (empty($host))
+		? str_replace('#suffix#', $suffix, $values['host'])
+		: $host;
+	    $con_data['port'] = (empty($port)) ? $values['port'] : $port;
+	    $con_data['auth'] = (empty($auth)) ? $values['auth'] : $auth;
+	    $con_data['connsecurity'] = (empty($connsecurity))
 		? $values['connsecurity'] : $connsecurity;
-	    $this->info['user'] = ($values['user'] == 2) ? $email : $emailuser;
-	    if (!empty($user)) $this->info['user'] = $user;
+	    $con_data['user'] = ($values['user'] == 2)
+		? $email : $emailuser;
+	    if (!empty($user)) $con_data['user'] = $user;
 
 	    // already checked these settings?
 	    foreach ($checked_versions as $in => $val) {
-		if ($val == $this->info) {
+		if ($val == $con_data) {
 		    continue 2;
 		}
+	    }
+
+	    // set connection data temporarily
+	    if (!$this->setMulti($con_data, false)) {
+		$TSunic->Log->log(6,
+		    "Smtp::detectConnection: Failed to set data!"
+		);
 	    }
 
 	    // try to connect...
@@ -477,7 +532,7 @@ class $$$Smtp extends $system$Object {
 	    }
 
 	    // add settings to $checked_versions
-	    $checked_versions[] = $this->info;
+	    $checked_versions[] = $con_data;
 	}
 
 	// no connection found
@@ -496,6 +551,7 @@ class $$$Smtp extends $system$Object {
 	if (!$this->isValid()) return false;
 	if (!$Mail->isValid()) return false;
 	if (!$this->isValidEMail($addressee)) return false;
+	global $TSunic;
 
 	// initialize connection
 	if (!$this->getConnection()) {
@@ -746,7 +802,6 @@ class $$$Smtp extends $system$Object {
 	    if (substr($line, 3, 1) == ' ') break;
 	}
 
-	// return
 	return $data;
     }
 
