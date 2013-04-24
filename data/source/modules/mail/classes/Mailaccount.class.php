@@ -206,10 +206,10 @@ class $$$Mailaccount extends $system$Object {
 		if (!$this->isValidUser($value)) return false;
 		break;
 	    case 'auth':
-		if (!$this->isValidAuth($value)) return false;
+		if (!$this->_validate($value, 'int')) return false;
 		break;
 	    case 'connsecurity':
-		if (!$this->isValidConnsecurity($value)) return false;
+		if (!$this->_validate($value, 'int')) return false;
 		break;
 	    case 'name':
 		if (!$this->isValidName($value)) return false;
@@ -225,7 +225,7 @@ class $$$Mailaccount extends $system$Object {
 		break;
 	}
 
-	return parent::isValidValue($name, $value);;
+	return parent::isValidInfo($name, $value);;
     }
 
     /* create a new mailaccount

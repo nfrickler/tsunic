@@ -37,20 +37,6 @@ class $$$Smtp extends $system$Object {
 	3 => array('{CLASS__SMTP__CONNSECURITIES_SSLTLS}', 'tls')
     );
 
-    /* load information about object
-     */
-    protected function _loadInfo () {
-	$return = parent::_loadInfo();
-
-	// handle password
-	if (isset($this->info['password'])) {
-	    $this->password = $this->info['password'];
-	    unset($this->info['password']);
-	}
-
-	return $return;
-    }
-
     /* get name of this object
      *
      * @return string
@@ -69,7 +55,7 @@ class $$$Smtp extends $system$Object {
 	return $this->connsecurities;
     }
 
-    /* get all available password-authentication-options
+    /* get all available password authentication-options
      *
      * @return array
      */
@@ -77,7 +63,7 @@ class $$$Smtp extends $system$Object {
 	return $this->auths;
     }
 
-    /* get number or name of password-authentification
+    /* get number or name of password authentification
      * +@param string/int/bool: authentification-number or -name (false will use auth of this object)
      * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
      *
@@ -183,7 +169,7 @@ class $$$Smtp extends $system$Object {
      * @param string: user to connect to smtp server
      * @param int: port to connect to smtp server
      * @param int/string: connection-security
-     * @param int/string: password-authentification
+     * @param int/string: password authentification
      *
      * @return bool
      */
@@ -216,7 +202,7 @@ class $$$Smtp extends $system$Object {
      * @param string: user to connect to smtp server
      * @param int: port to connect to smtp server
      * @param int/string: connection-security
-     * @param int/string: password-authentification
+     * @param int/string: password authentification
      *
      * @return bool
      */
@@ -255,10 +241,10 @@ class $$$Smtp extends $system$Object {
 		if (!$this->isValidUser($value)) return false;
 		break;
 	    case 'auth':
-		if (!$this->isValidAuth($value)) return false;
+		if (!$this->_validate($value, 'int')) return false;
 		break;
 	    case 'connsecurity':
-		if (!$this->isValidConnsecurity($value)) return false;
+		if (!$this->_validate($value, 'int')) return false;
 		break;
 	    case 'email':
 		if (!$this->isValidEMail($value)) return false;
@@ -274,7 +260,7 @@ class $$$Smtp extends $system$Object {
 		break;
 	}
 
-	return parent::isValidValue($name, $value);;
+	return parent::isValidInfo($name, $value);
     }
 
     /* edit Smtp object
@@ -384,16 +370,11 @@ class $$$Smtp extends $system$Object {
      * @return bool
      */
     public function isValidPassword ($password) {
+	$old_pass = $this->getInfo('password');
 
-	// make sure, infos are loaded
-	$this->getInfo('dateOfCreation');
-
-	if (empty($password) and empty($this->password)) return false;
-
-	// check, if no password set
-	if ($password == '**********'
-	    AND (!isset($this->password)
-	    OR empty($this->password))
+	// no password set?
+	if ((empty($password) or $password == '**********') and
+	    empty($old_pass)
 	) return false;
 
 	return true;
