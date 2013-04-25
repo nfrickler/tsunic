@@ -571,7 +571,7 @@ class $$$Smtp extends $system$Object {
 	$headers['MIME-VERSION'] = '1.0';
 	$headers['PRIORITY'] = 'normal';
 	$headers['X-MAILER'] = 'PHP/'. phpversion(). ' via TSunic '.
-	    $TSunic->Config->getConfig('version');
+	    $TSunic->Config->get('version');
 
 	// sum headers
 	$cache = array();

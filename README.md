@@ -1,11 +1,10 @@
-# ############## TSunic 4 ##################### #
+\mainpage TSunic 4
 
 TSunic 4 is a websystem offering its users a lot of functions to make life
 easier. Administrate your life - the easy way...
-Its modular structure
-As TSunic is modular, the available functions can vary between systems.
+As TSunic is modular, the available features can vary between systems.
 
-Modules included in the standard:
+The following modules are included:
  - system
     * general system files
  - usersystem:
@@ -43,4 +42,4 @@ Modules included in the standard:
 
 TSunic is freely available using the GNU AGPL license
 
-More information on tsunic.de
+More information on <a href="http://tsunic.de" target="_blank">tsunic.de</a>

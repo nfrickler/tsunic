@@ -13,7 +13,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	    case 'emailname':
 		return $TSunic->Usr->getInfo('name');
 	    case 'email':
-		return $TSunic->Config->getConfig('system_email');
+		return $TSunic->Config->get('system_email');
 	    default:
 	}
 	return NULL;
@@ -136,7 +136,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	global $TSunic;
 
 	// is enabled?
-	if (!$TSunic->Config->getConfig('email_enabled')) return false;
+	if (!$TSunic->Config->get('email_enabled')) return false;
 
 	// valid addressee?
 	if (!$this->isValidEMail($addressee)) return false;

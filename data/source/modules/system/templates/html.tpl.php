@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta http-equiv="cache-control" content="no-cache" />
-    <title><?php $this->set('#title#'); ?> | TSunic <?php echo $TSunic->Config->getConfig('version'); ?></title>
+    <title><?php $this->set('#title#'); ?> | TSunic <?php echo $TSunic->Config->get('version'); ?></title>
     <link rel="stylesheet" type="text/css" href="<?php $this->set('#path_format#'); ?>" />
     <script type="text/javascript" src="javascript/$$$jQuery.js"></script>
 </head>

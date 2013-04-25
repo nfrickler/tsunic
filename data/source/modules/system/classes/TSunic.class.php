@@ -1,53 +1,60 @@
 <!-- | CLASS TSunic -->
 <?php
+/** TSunic is the base class of this project
+ *
+ * Instantiate an object of this class to get access to all functions of TSunic
+ */
 class TSunic {
 
-    /* reference to factory-object
-     * object
+    /** Reference of Factory object
+     * @var Factory $Factory
      */
     protected $Factory;
 
-    /* reference to database-object
-     * object
+    /** Reference of Database object
+     * @var Database $Db
      */
     public $Db;
 
-    /* reference to templateEngine-object
-     * object
+    /** Reference of TemplateEngine object
+     * @var TemplateEngine $Tmpl
      */
     public $Tmpl = NULL;
 
-    /* reference to temp-object
-     * object
+    /** Reference of Temp object
+     * @var Temp $Temp
      */
     public $Temp;
 
-    /* reference to stats-object
-     * object
+    /** Reference of Stats object
+     * @var Stats $Stats
      */
     public $Stats;
 
-    /* reference to User object
-     * object
+    /** Reference of User object
+     * @var User $Usr
      */
     public $Usr;
 
-    /* reference to config-object
-     * object
+    /** Reference of Config object
+     * @var Config $Config
      */
     public $Config;
 
-    /* reference to Log object
-     * object
+    /** Reference of Log object
+     * @var Log $Log
      */
     public $Log = NULL;
 
-    /* is currently running internal
-     * bool
+    /** Is current run called internally?
+     *
+     * @var bool $internal_run
      */
     protected $internal_run;
 
-    /* constructor
+    /** Constructor
+     *
+     * This method will create the environment for TSunic
      */
     public function __construct () {
 
@@ -75,7 +82,7 @@ class TSunic {
 	$this->Temp = $this->get('$$$Temp');
 
 	// create Log object
-	$this->Log = $this->get('$$$Log', $this->Config->getConfig('loglevel'));
+	$this->Log = $this->get('$$$Log', $this->Config->get('loglevel'));
 
 	// start template engine
 	$this->Tmpl = $this->get('$$$TemplateEngine');
@@ -86,11 +93,18 @@ class TSunic {
 	return;
     }
 
-    /* run TSunic-Function
-     * +@param string: event (internal-run only!)
-     * +@param array/string: parameters for event-function (internal-run only!)
+    /** Handle some event
      *
-     * @return bool/mix
+     * Call this function to make TSunic do some job. This method will search
+     * for the requested module and function and run it providing the given
+     * parameters
+     *
+     * @param string $event
+     *	If running internally, enter the event here
+     * @param array|string $parameters
+     *	Parameters for event function (internal-run only!)
+     *
+     * @return bool|mix
      */
     public function run ($event = NULL, $parameters = NULL) {
 	$this->internal_run = false;
@@ -172,19 +186,32 @@ class TSunic {
 	return $return;
     }
 
-    /* get instance of class
-     * @param string: name of class
-     * +@param array: values of object in constructor
-     * +@param bool: force object to be a new one
+    /** Get instance of some class.
      *
-     * @return OBJECT
+     * This method is will call the Factory object to get a new object of
+     * some class. You can specify, if you want to force the creation of a new
+     * object or if it is ok for you, to reuse an existing one (default)
+     *
+     * @param string $class
+     *	Class of requested object
+     * @param array $values
+     *	Parameters to hand to the objects constructor
+     * @param bool $forceNew
+     *	Force object to be a new one
+     *
+     * @return object
      */
     public function get ($class, $values = array(), $forceNew = false) {
 	return $this->Factory->get($class, $values, $forceNew);
     }
 
-    /* display output
-     * +@param string: main-template to display
+    /** Display output of TSunic
+     *
+     * Call this function to display the output of TSunic.
+     * If you call this function from an ajax request, it will return xml output
+     *
+     * @param string $template
+     *	Request output of certain template only
      *
      * @return bool
      */
@@ -208,7 +235,11 @@ class TSunic {
 	return true;
     }
 
-    /* verify user-login
+    /** Verify login of user
+     *
+     * This function verifies that the user is logged in. If this check fails
+     * and the user requests an event that is not permitted it redirects to the
+     * login page
      *
      * @return bool
      */
@@ -248,8 +279,15 @@ class TSunic {
 
 	return true;
     }
-    /* check, if JavaScript is enabled
-     * @param bool: true - only true, if set by user; false - also true, if auto-set
+
+    /** Check, if JavaScript is enabled
+     *
+     * Is JavaScript enabled for this user? This method will give you the
+     * answer.
+     *
+     * @param bool $getDistinguishable
+     *	Return true, only if JavaScript has been disabled by the user
+     *	explicitely (false, if this has been detected automatically)
      *
      * @return bool
      */
@@ -267,17 +305,16 @@ class TSunic {
 	}
     }
 
-    /* get type of running file
+    /** Get name of file, who started TSunic request
      *
-     * @return string (index|ajax|javascript|file)
+     * Possible values: index|ajax|javascript|file
+     *
+     * @return string
      */
     public function getRunningMode () {
 
-	// get filename of current-file
-	$basename = basename($_SERVER['PHP_SELF']);
-
 	// get mode
-	switch ($basename) {
+	switch (basename($_SERVER['PHP_SELF'])) {
 	    case 'ajax.php':
 		$output = 'ajax';
 		break;
@@ -292,14 +329,12 @@ class TSunic {
 	}
 
 	// change, if isset $_GET['tmpl']
-	if (isset($_GET['tmpl'])) {
-	    $output = 'template';
-	}
+	if (isset($_GET['tmpl'])) $output = 'template';
 
 	return $output;
     }
 
-    /* check, if TSunic is booted from ajax-file
+    /** Is TSunic accessed via ajax?
      *
      * @return bool
      */
@@ -307,7 +342,7 @@ class TSunic {
 	return ($this->getRunningMode() == 'ajax') ? true : false;
     }
 
-    /* check, if TSunic is booted from index-file
+    /** Is TSunic accessed via index?
      *
      * @return bool
      */
@@ -315,7 +350,7 @@ class TSunic {
 	return ($this->getRunningMode() == 'index') ? true : false;
     }
 
-    /* check, if TSunic is booted as template-file
+    /** Is TSunic accessed via template?
      *
      * @return bool
      */
@@ -323,9 +358,11 @@ class TSunic {
 	return ($this->getRunningMode() == 'template') ? true : false;
     }
 
-    /* get all installed modules
+    /** Get all installed modules
      *
-     * @return array/bool
+     * Get a list of all installed modules
+     *
+     * @return array|bool
      */
     public function getModules () {
 	if (!$this->Db) return array();
@@ -337,17 +374,19 @@ class TSunic {
 	    description,
 	    version_installed,
 	    link
-	    FROM ".$this->Config->getConfig('prefix')."modules
+	    FROM ".$this->Config->get('prefix')."modules
 	    WHERE is_activated = 1
 	    AND is_parsed = 1
 	    ORDER BY name ASC;";
 	return $this->Db->doSelect($sql);
     }
 
-    /* return fatal error-message and end script
-     * @param string: error-message
+    /** Display fatal error message and exit
      *
-     * @return - EXIT SCRIPT
+     * Use this function to throw an fatale exception and exit the the script
+     *
+     * @param string $message
+     *  The error message to be thrown
      */
     public function throwError ($message = 0) {
 
@@ -360,7 +399,7 @@ class TSunic {
 	$this->Log->log(1, "Fatal error: $message");
 
 	// display error
-	$output = '<h1>TSunic '.$this->Config->getConfig('version').' - Fatal error!</h1>';
+	$output = '<h1>TSunic '.$this->Config->get('version').' - Fatal error!</h1>';
 	$output.= '<p><strong>Error message:</strong><br />';
 	$output.= $message;
 	$output.= '</p><p>For more information please contact the webmaster of this page.</p>';
@@ -382,13 +421,17 @@ class TSunic {
 	}
     }
 
-    /* redirect user
-     * @param string: name of event to redirect to
-     *    OR back, this, default
-     * +@param bool/array/int: GET-parameters
-     *    OR int: time-hops to go back
+    /** Redirect user
      *
-     * @return EXIT
+     * Redirect user to another page (or event)
+     *
+     * @param string $event
+     *	Name of event to redirect to (use 'back' to redirect one event back, 
+     *	'this' to redirect to the current event and 'default' to redirect to 
+     *	default start page)
+     * @param bool|array|int $gets
+     *	GET parameters for redirect or number of events to go back
+     *
      */
     public function redirect ($event, $gets = false) {
 

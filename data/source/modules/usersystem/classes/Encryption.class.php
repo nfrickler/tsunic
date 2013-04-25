@@ -57,10 +57,10 @@ class $$$Encryption {
 
 	// try to load encryption object of chosen encryption
 	$this->MyEnc = $TSunic->get(
-	   '$$$Encryption_'.$TSunic->Config->getConfig('encryption_class'),
+	   '$$$Encryption_'.$TSunic->Config->get('encryption_class'),
 	    array(
-		$TSunic->Config->getConfig('encryption_algorithm'),
-		$TSunic->Config->getConfig('encryption_mode')
+		$TSunic->Config->get('encryption_algorithm'),
+		$TSunic->Config->get('encryption_mode')
 	    )
 	);
 	if (!$this->MyEnc) {

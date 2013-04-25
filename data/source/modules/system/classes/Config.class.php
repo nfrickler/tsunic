@@ -1,31 +1,32 @@
-<!-- | Configuration class -->
+<!-- | CLASS Config -->
 <?php
+/** This class provides access to the values in the configuration file
+ *
+ * One object of this class is available at TSunic::Config
+ */
 class $$$Config {
 
-    /* configuration
-     * array
+    /** Internal cache for configuration settings
+     * @var array $config
      */
     private $config;
 
-    /* path of config-file
-     * string
+    /** Path to configuration file
+     * @var string $path_config
      */
     private $path_config = 'config.php';
 
-    /* constructor
-     */
-    public function __construct () {
-	return;
-    }
-
-    /* load configuration
+    /** Load configuration from file
      *
-     * @return bool OR REDIRECT
+     * If this method failes to read the configuration from the specified
+     * file, it will throw a fatale error
+     *
+     * @return bool
      */
     protected function loadConfig () {
 	global $TSunic;
 
-	// load settings from config.php
+	// load settings from config file
 	if (file_exists($this->path_config)) {
 
 	    // include config.php
@@ -45,46 +46,22 @@ class $$$Config {
 	return true;
     }
 
-    /* get config-data (deprecated, use get instead)
-     * @param string/bool: name of config-data (true will return all config-data)
+    /** Get configuration value
+     * @param string $name
+     *	Name of configuration
      *
-     * @return OBJECT
-     */
-    public function getConfig ($name) {
-	return $this->get($name);
-    }
-
-    /* get config-data
-     * @param string/bool: name of config-data (true will return all config-data)
-     *
-     * @return OBJECT
+     * @return mix
      */
     public function get ($name) {
 	global $TSunic;
+
 	// load config
 	if (!isset($this->config) OR empty($this->config)) $this->loadConfig();
+
 	// return config
 	if (isset($this->config[$name])) return $this->config[$name];
-	return false;
-    }
 
-    /* get root-path
-     * +@param bool: get data-rootpath instead of "normal" root
-     *
-     * @return string
-     */
-    public function getRoot ($data_root = false) {
-
-	// get root-path
-	$root = $this->getConfig('root_folder');
-	if (!$root) return '';
-	if (!$data_root) return $root;
-
-	// get data-root
-	$root = $root.'/'.$this->getConfig('data_folder');
-	if ($root) return $root;
-
-	return '';
+	return NULL;
     }
 }
 ?>

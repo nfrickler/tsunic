@@ -44,7 +44,7 @@ class $$$TemplateEngine {
 	global $TSunic;
 
 	// get style
-	$this->style = ($style) ? $style : $TSunic->Config->getConfig('default_style');
+	$this->style = ($style) ? $style : $TSunic->Config->get('default_style');
 
 	// init data
 	if ($TSunic->isIndex() AND $this->getData('meta', 'printed') == true) {
@@ -284,7 +284,7 @@ class $$$TemplateEngine {
 
 	// get languages
 	$chosen_lang = $TSunic->Usr->config('$$$language');
-	$default_lang = $TSunic->Config->getConfig('default_language');
+	$default_lang = $TSunic->Config->get('default_language');
 
 	// get module of input
 	$cache = explode('__', $input);

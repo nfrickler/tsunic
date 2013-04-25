@@ -13,7 +13,7 @@ $TSunic->Stats->stopTimer('system');
 	PHP: <?php echo round((($TSunic->Stats->getTimer('system') - $TSunic->Stats->getTimer('mysql')) * 1000), 1); ?>ms
 	| MySQL: <?php echo round(($TSunic->Stats->getTimer('mysql')*1000),1); ?>ms
 	| Encryption: <?php echo round(($TSunic->Stats->getTimer('encryption')*1000),1); ?>ms
-	<br /><br />Powered by <a href="http://tsunic.de" target="_blank">TSunic <?php echo $TSunic->Config->getConfig('version'); ?></a> 
+	<br /><br />Powered by <a href="http://tsunic.de" target="_blank">TSunic <?php echo $TSunic->Config->get('version'); ?></a> 
 	<br />Copyright &copy;2011-2013 Nicolas Frinker
 	<?php $this->displaySub('system__footer'); ?>
     </div>

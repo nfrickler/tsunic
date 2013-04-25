@@ -13,11 +13,11 @@ class $$$Database {
 	global $TSunic;
 
 	// get connection-data
-	$db_class = $TSunic->Config->getConfig('db_class');
-	$host = $TSunic->Config->getConfig('db_host');
-	$user = $TSunic->Config->getConfig('db_user');
-	$pass = $TSunic->Config->getConfig('db_pass');
-	$database = $TSunic->Config->getConfig('db_database');
+	$db_class = $TSunic->Config->get('db_class');
+	$host = $TSunic->Config->get('db_host');
+	$user = $TSunic->Config->get('db_user');
+	$pass = $TSunic->Config->get('db_pass');
+	$database = $TSunic->Config->get('db_database');
 
 	// get object for chosen type of database
 	$this->Db_obj = $TSunic->get('$$$Database_'.$db_class, array($host, $user, $pass, $database));
