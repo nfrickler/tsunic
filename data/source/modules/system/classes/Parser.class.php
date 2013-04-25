@@ -1,9 +1,16 @@
-<!-- s | CLASS parsing datatypes -->
+<!-- s | CLASS Parser -->
 <?php
+/** Static class to parse strings
+ *
+ * Parse strings for database, plain text or html
+ *
+ */
 class $$$Parser {
 
-    /* escape string to save in db
-     * @param string: string to escape
+    /** Prepare string to be saved in database
+     *
+     * @param string $string
+     *	Input string
      *
      * @return string
      */
@@ -13,8 +20,10 @@ class $$$Parser {
 	return str_replace($search, $replace, $string);
     }
 
-    /* parse string to plain text
-     * @param string: string to escape
+    /** Parse string to be plain text
+     *
+     * @param string $string
+     *	Input string
      *
      * @return string
      */
@@ -24,8 +33,10 @@ class $$$Parser {
 	return str_replace($search, $replace, $string);
     }
 
-    /* parse and escape string to plain text
-     * @param string: string to parse and escape
+    /** Parse string to be plain text and prepare for saving in database
+     *
+     * @param string $string
+     *	Input string
      *
      * @return string
      */
@@ -33,8 +44,10 @@ class $$$Parser {
 	return $this->text2db($this->text2plain($string));
     }
 
-    /* parse txt to int
-     * @param string: string
+    /** Convert string to int
+     *
+     * @param string $string
+     *	Input string
      *
      * @return int
      */
@@ -42,8 +55,10 @@ class $$$Parser {
 	return (int) $string;
     }
 
-    /* parse string to show as normal text
-     * @param string: string to parse
+    /** Prepare string to be displayed as normal text
+     *
+     * @param string $string
+     *	Input string
      *
      * @return string
      */
@@ -58,8 +73,10 @@ class $$$Parser {
 	return str_replace($search, $replace, $string);
     }
 
-    /* parse string to show as html-text
-     * @param string: string to parse
+    /** Prepare string to be displayed as HTML
+     *
+     * @param string $string
+     *	Input string
      *
      * @return string
      */

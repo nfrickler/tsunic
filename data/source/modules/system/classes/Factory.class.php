@@ -1,18 +1,32 @@
-<!-- | CLASS factory handling all objects -->
+<!-- | CLASS Factory -->
 <?php
+/** Object factory
+ *
+ * This is a factory class.
+ * It will cache references to all objects created and will reuse them if
+ * possible
+ */
 class $$$Factory {
 
-    /* array with all existing objects
-     * array [Class_md5values => reference]
+    /** Cache of existing objects
+     * @var array $objects
      */
     private $objects;
 
-    /* get instance of class
-     * @param string: name of class
-     * +@param array: values of object in constructor
-     * +@param bool: force object to be a new one
+    /** Get object of specified class
      *
-     * @return OBJECT
+     * This method will try to get object of specified class. If an object of
+     * the same class and with the same parameters has been created before, this
+     * object will be returned, if not enforced different.
+     *
+     * @param string $class
+     *	Name of class
+     * @param array $values
+     *	Parameters for constructor call
+     * @param bool $forceNew
+     *	Force object not to be cached
+     *
+     * @return object
      */
     public function get ($class, $values = array(), $forceNew = false) {
 	global $TSunic;

@@ -1,15 +1,25 @@
-<!-- | CLASS logging and alert messages -->
+<!-- | CLASS Log -->
 <?php
+/** Log messages and alerts
+ *
+ * Create log messages and print alerts to the user using this class.
+ * An object of this class is available at TSunic::Log
+ */
 class $$$Log {
 
-    /* array with alert messages
-     * array
+    /** Alert messages
+     * @var array $messages
      */
     protected $messages;
 
-    /* logging level of current system
-     * messages with a level above this level will be discarded silently
-     * levels:
+    /** Log level of the current system (change this in your config file)
+     *
+     * Log messages are tagged with a level from 1 to 9. The smaller the number
+     * the more important the message.
+     * If the log level of the message is higher than the one specified here, it 
+     * will be skipped.
+     *
+     * Available levels:
      *    0: very important
      *    1: critical/fatale
      *    2: important
@@ -20,12 +30,15 @@ class $$$Log {
      *    7: normal debugging messages
      *    8: debugging
      *    9: debugging
-     * int
+     *
+     * @var int $level
      */
     protected $level;
 
-    /* constructor
-     * +@param int: set level for logging
+    /** Constructor
+     *
+     * @param int $level
+     *	Log level
      */
     public function __construct ($level = false) {
 
@@ -45,11 +58,16 @@ class $$$Log {
 	register_shutdown_function( array( '$$$Log', 'captureShutdown' ) );
     }
 
-    /* handle php errors
-     * @param int: error number
-     * @param string: error message
-     * @param string: path of file
-     * @param int: line in file
+    /** Handle PHP errors
+     *
+     * @param int $number
+     *	Error number
+     * @param string $msg
+     *	Error message
+     * @param string $file
+     *	Path of file where the error occurred
+     * @param int $line
+     *	Line in the file where the error occurred
      */
     public static function captureNormal ($number, $msg, $file, $line) {
 
@@ -69,8 +87,9 @@ class $$$Log {
 	echo "<pre>ERROR: A PHP error occurred!</pre>";
     }
 
-    /* handle php errors
-     * @param string: exception
+    /** Handle PHP errors
+     * @param string $exception
+     *	Exception
      */
     public static function captureException ($exception) {
 
@@ -82,7 +101,7 @@ class $$$Log {
 	echo "<pre>ERROR: A PHP exception occurred!</pre>";
     }
 
-    /* handle php errors
+    /** Handle PHP shutdowns
      */
     public static function captureShutdown () {
 	$error = error_get_last();
@@ -103,9 +122,15 @@ class $$$Log {
 	}
     }
 
-    /* add alert
-     * @param string: type of alert (error, info)
-     * @param string: message
+    /** Create some alert message
+     *
+     * Add one alert message to be shown to the user. You can choose between
+     * error and info messages.
+     *
+     * @param string $type
+     *	Type of alert (error, info)
+     * @param string $msg
+     *	Message
      *
      * @return bool
      */
@@ -128,9 +153,15 @@ class $$$Log {
 	return true;
     }
 
-    /* add log
-     * @param int: level of log message
-     * @param string: message
+    /** Add log message
+     *
+     * Log some message. This will be skipped, if the log level is higher than
+     * the one specified in the config file
+     *
+     * @param int $level
+     *	Log level of message
+     * @param string $msg
+     *	Log message
      *
      * @return bool
      */
@@ -156,9 +187,12 @@ class $$$Log {
 	return true;
     }
 
-    /* get alert messages
-     * @param string: type of messages
-     * +@param bool: delete messages afterwards?
+    /** Get all alert messages
+     *
+     * @param string $type
+     *	Type of messages to fetch
+     * @param bool $delete
+     *	Delete messages after returning?
      *
      * @return array
      */
@@ -171,11 +205,14 @@ class $$$Log {
 	return $return;
     }
 
-    /* delete all messages
+    /** Delete all alert messages
+     *
+     * @param string $type
+     *	Type of messages to delete
      *
      * @return bool
      */
-    public function flush ($type = false) {
+    public function flush ($type = '') {
 
 	// all or one type?
 	if ($type and in_array($type, array('error', 'info'))) {
@@ -189,7 +226,7 @@ class $$$Log {
 	return true;
     }
 
-    /* store current messages
+    /** Store current messages in SESSION
      *
      * @return bool
      */
