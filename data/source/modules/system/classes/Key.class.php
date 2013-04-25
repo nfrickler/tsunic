@@ -1,21 +1,32 @@
-<!-- | CLASS key -->
+<!-- | CLASS Key -->
 <?php
+/** Handling Encryption keys for Objects in database
+ *
+ * This class is responsible for the key managemant for all objects.
+ * It holds the key for a certain object and creates/manages/stores the key in
+ * the database
+ *
+ */
 class $$$Key {
 
-    /* information about key
-     * array
+    /** Information about key
+     * @var array $info
      */
     protected $info = array();
 
-    /* temporary information about key
-     * array
+    /** Temporary information about key
+     * @var array $info_tmp
      */
     protected $info_tmp = array();
 
-    /* constructor
-     * @param string: name of table
-     * @param int: id of entry
-     * @param int: fk_account
+    /* Constructor
+     *
+     * @param string $fk_table
+     *	Name of table
+     * @param int $fk_id
+     *	Id of object
+     * @param int $fk_account
+     *	fk_account
      */
     public function __construct ($fk_table, $fk_id, $fk_account = 0) {
 	global $TSunic;
@@ -27,8 +38,10 @@ class $$$Key {
 	    ? $fk_account : $TSunic->Usr->getInfo('id');
     }
 
-    /* get information about key
-     * @param string: name of info
+    /** Get information about key
+     *
+     * @param string $name
+     *	Name of info
      *
      * @return mix
      */
@@ -47,7 +60,7 @@ class $$$Key {
 	return NULL;
     }
 
-    /* load information about object
+    /** Load information about object
      *
      * @return bool
      */
@@ -78,8 +91,10 @@ class $$$Key {
 	return true;
     }
 
-    /* encrypt data using this key
-     * @param string: data
+    /** Encrypt data using this key
+     *
+     * @param string $data
+     *	Data to be encrypted
      */
     public function encrypt ($data) {
 	global $TSunic;
@@ -98,8 +113,10 @@ class $$$Key {
 	return $data;
     }
 
-    /* decrypt data using this key
-     * @param string: data
+    /** Decrypt data using this key
+     *
+     * @param string $data
+     *	Data to be decrypted
      */
     public function decrypt ($data) {
 	global $TSunic;
@@ -114,7 +131,7 @@ class $$$Key {
 	return $data;
     }
 
-    /* get new random key phrase
+    /** Get new random key phrase
      *
      * @return string
      */
@@ -127,7 +144,7 @@ class $$$Key {
 	return $string;
     }
 
-    /* get key
+    /** Create new key
      *
      * @return string
      */
@@ -142,8 +159,10 @@ class $$$Key {
 	return true;
     }
 
-    /* save new key in database
-     * +@param int: fk_id
+    /** Save new key in database
+     *
+     * @param int $fk_id
+     *	Id of object this key belongs to
      *
      * @return bool
      */
@@ -200,12 +219,18 @@ class $$$Key {
 	return $return;
     }
 
-    /* edit data of key
-     * @param int: new fk_account
-     * @param bool: can write?
-     * +@param string: new fk_table
-     * +@param int: new fk_id
-     * +@param bool: delete old key?
+    /** Edit data of key
+     *
+     * @param int $new_account
+     *	New fk_account
+     * @param bool $can_write
+     *	Can write?
+     * @param string $new_table
+     *	New fk_table
+     * @param int $new_id
+     *	New fk_id
+     * @param bool $deleteOld
+     *	Delete old key?
      *
      * @return bool
      */
@@ -249,7 +274,7 @@ class $$$Key {
 	return true;
     }
 
-    /* delete key
+    /** Delete this key
      *
      * @return bool
      */
@@ -275,7 +300,7 @@ class $$$Key {
 	return $return;
     }
 
-    /* is valid decrypted key?
+    /** Is valid decrypted key?
      *
      * @return bool
      */
@@ -287,7 +312,7 @@ class $$$Key {
 	return (empty($key) or substr($key, 0, 1) == '#') ? false : true;
     }
 
-    /* get copy of this key
+    /** Get copy of this key
      *
      * @return bool
      */

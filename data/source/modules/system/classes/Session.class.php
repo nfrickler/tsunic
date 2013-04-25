@@ -1,27 +1,37 @@
 <!-- | CLASS Session -->
 <?php
+/** Session handling
+ *
+ * This class manages the SESSION and saves it in databaes
+ *
+ */
 class $$$Session {
 
-    /* life time of session (seconds)
-     * int
+    /** Lifetime of session (seconds)
+     * @var int $lifetime
      */
     protected $lifetime = 1800;
 
-    /* readonly session
-     * bool
+    /** Is session readonly?
+     * @var bool $readonly
      */
     protected $readonly;
 
-    /* database-object (has to be referenced here, because
-     * session will be closed after global $TSunic object
-     * has beeen destroyed!)
-     * object
+    /** Reference to Database object
+     *
+     * As the session will be stored after the TSunic object has been destroyed, 
+     * we need to save a reference to the Database object here separately
+     *
+     * @var Database $Db
      */
     protected $Db;
 
-    /* constructor
-     * @param object: database-object
-     * +@param bool: is session readonly?
+    /* Constructor
+     *
+     * @param Database $Db
+     *  Reference to Database object
+     * @param bool $readonly
+     *	Is session readonly?
      */
     public function __construct (&$Db, $readonly = false) {
 
@@ -52,18 +62,23 @@ class $$$Session {
 	return;
     }
 
-    /* open
-     * @param string: session path from php.ini
-     * @param string: name of session
+    /** Open session
      *
-     * @return OBJECT
+     * @param string $save_path
+     *	Session path from php.ini
+     * @param string $session_name
+     *	Name of session
+     *
+     * @return bool
      */
     public function open ($save_path, $session_name) {
 	return true;
     }
 
-    /* read
-     * @param int: SESSION_ID
+    /** Read session
+     *
+     * @param int $id
+     *	SESSION_ID
      *
      * @return string
      */
@@ -81,11 +96,14 @@ class $$$Session {
 	return ($data) ? base64_decode($data[0]['data']) : '';
     }
 
-    /* write
-     * @param int: SESSION_ID
-     * @param array: session-data
+    /** Write session
      *
-     * @return bool: true
+     * @param int $id
+     *	SESSION_ID
+     * @param array $data
+     *	Session data
+     *
+     * @return bool
      */
     public function write ($id, $data) {
 	$id = base64_encode($id);
@@ -106,8 +124,10 @@ class $$$Session {
 	return $this->Db->doUpdate($sql);
     }
 
-    /* destroy
-     * @param int: SESSION_ID
+    /** Destroy session
+     *
+     * @param int $id
+     *	SESSION_ID
      *
      * @return bool
      */
@@ -123,8 +143,10 @@ class $$$Session {
 	return $this->Db->doDelete($sql);
     }
 
-    /* garbage collection
-     * @param int: lifetime of session
+    /** Garbage collector
+     *
+     * @param int $life
+     *	Lifetime of session
      *
      * @return bool
      */
@@ -140,7 +162,7 @@ class $$$Session {
 	return $this->Db->doDelete($sql);
     }
 
-    /* close
+    /** Close session
      *
      * @return bool
      */

@@ -1,13 +1,17 @@
-<!-- | class to handle statistics -->
+<!-- | CLASS Stats -->
 <?php
+/** Handle statistics
+ *
+ * This class collects statistical information like runtime
+ */
 class $$$Stats {
 
-    /* array with statistical data
-     * array
+    /** Statistical data
+     * @var array $stats
      */
     protected $stats = array();
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 
@@ -17,9 +21,12 @@ class $$$Stats {
 	return;
     }
 
-    /* start timer
-     * @param string: name of timer
-     * @param bool: reset timer first?
+    /** Start timer
+     *
+     * @param string $timer
+     *	Name of timer
+     * @param bool $doReset
+     *	Reset timer first?
      *
      * @return bool
      */
@@ -36,8 +43,10 @@ class $$$Stats {
 	return true;
     }
 
-    /* stop timer
-     * @param string: name of timer
+    /** Stop timer
+     *
+     * @param string $timer
+     *	Name of timer
      *
      * @return bool
      */
@@ -60,8 +69,10 @@ class $$$Stats {
 	return true;
     }
 
-    /* get sum of timer
-     * @param string: name of timer
+    /** Get current sum of timer
+     *
+     * @param string $timer
+     *	Name of timer
      *
      * @return bool
      */
