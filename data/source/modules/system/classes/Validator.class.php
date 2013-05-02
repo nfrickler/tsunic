@@ -1,24 +1,29 @@
-<!-- | Class to validate data -->
+<!-- | CLASS Validator -->
 <?php
+/**
+ * Static class for validation of strings
+ *
+ */
 class $$$Validator {
 
-    /* chars allowed in string
-     * string
+    /** Chars allowed in normal string
+     * @var string $chars1
      */
     private static $chars1 = "-a-zA-ZäöüÄÖÜß0-9_";
 
-    /* chars additionally allowed in extString
-     * string
+    /** Chars additionally allowed in extended string
+     * @var string $chars2
      */
     private static $chars2 = "\\\/\s\t@\.!\?;:,|#\$'\"\+\(\)\[\]&=\<\>\{\}";
 
-    /* chars additionally allowed in text
-     * string
+    /** Chars additionally allowed in text
+     * @var string $chars3
      */
     private static $chars3 = "\r\n";
 
-    /* is string (harmless chars only)
-     * @param string: input value
+    /** Is input a string (harmless chars only)?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -27,8 +32,9 @@ class $$$Validator {
 	    ? false : true;
     }
 
-    /* is string (extended, but harmless chars only)
-     * @param string: input value
+    /** Is string (more chars allowed than in isString)?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -37,8 +43,9 @@ class $$$Validator {
 	    ? false : true;
     }
 
-    /* is text (extended, with newlines)
-     * @param string: input value
+    /** Is text (extString including newlines)?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -46,8 +53,9 @@ class $$$Validator {
 	return (self::_isMatch('%[^'.self::$chars1.self::$chars2.self::$chars3.']%s', $input)) ? false : true;
     }
 
-    /* is html text
-     * @param string: input value
+    /** Is HTML text?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -55,8 +63,9 @@ class $$$Validator {
 	return (self::_isMatch('%[^\\\/\wäöüß\d-_@\.!\?;,\s\n\r<>]%si', $input)) ? false : true;
     }
 
-    /* is filename
-     * @param string: input value
+    /* Is valid filename?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -65,8 +74,9 @@ class $$$Validator {
 	return (self::_isMatch("%[^-_a-z0-9äöüß\.\ ]%i", $input)) ? false : true;
     }
 
-    /* is int
-     * @param string: input value
+    /** Is integer?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -74,8 +84,9 @@ class $$$Validator {
 	return (is_numeric($input) or $input === 0) ? true : false;
     }
 
-    /* is double?
-     * @param string: input value
+    /** Is double?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -92,8 +103,9 @@ class $$$Validator {
     }
 
 
-    /* is uri
-     * @param string: input value
+    /** Is URI?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -102,8 +114,9 @@ class $$$Validator {
 	return (self::_isMatch("%^([a-z0-9]+://)?(?:[-a-z0-9äöü]+\.)+[a-z]{2,4}%i", $input)) ? true : false;
     }
 
-    /* is url
-     * @param string: input value
+    /** Is URL?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -111,8 +124,9 @@ class $$$Validator {
 	return (self::_isMatch("%^([a-z]+://)?(?:[-a-z0-9äöü]+\.)+[a-z]{2,4}/?$%i", $input)) ? true : false;
     }
 
-    /* is e-mail address?
-     * @param string: input value
+    /** Is e-mail address?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -125,8 +139,9 @@ class $$$Validator {
 	    ? true : false;
     }
 
-    /* is acceptable password?
-     * @param string: input string
+    /** Is acceptable password?
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */
@@ -134,9 +149,11 @@ class $$$Validator {
 	return (strlen($input) >= 7) ? true : false;
     }
 
-    /* does regex match string?
-     * @param string: regex
-     * @param string: input string
+    /** Does regex match string?
+     * @param string $regex
+     *	Regular expression to be checked against
+     * @param string $input
+     *	Input string
      *
      * @return bool
      */

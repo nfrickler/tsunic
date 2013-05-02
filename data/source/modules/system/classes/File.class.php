@@ -1,41 +1,40 @@
 <!-- | CLASS File -->
 <?php
+/**
+ * This class handles files (read/write/move/delete)
+ */
 class $$$File {
 
-    /* path of file
-     * string
+    /** Path of file
+     * @var string $path
      */
     protected $path;
 
-    /* create no log-messages?
-     * bool
-     */
-    protected $silent_mode;
-
-    /* mime_type of file
-     * string
+    /** MIME type of file
+     * @var string $mime_type
      */
     protected $mime_type;
 
-    /* allowed letters in filename
-     * regex-string
+    /** Regex to validate filenames
+     * @var string $allowed_letters
      */
     protected $allowed_letters = 'A-Za-z0-9_-.';
 
-    /* constructor
-     * +@param bool/string: path of file
+    /** Constructor
+     * @param bool|string $path
+     *	Path of file
      */
-    public function __construct ($path = false, $silent_mode = false) {
+    public function __construct ($path = false) {
 
 	// save input
 	$this->setPath($path);
-	$this->silent_mode = $silent_mode;
 
 	return;
     }
 
-    /* set path
-     * @param string: path of file
+    /** Set path
+     * @param string $path
+     *	Path of file
      *
      * @return bool
      */
@@ -61,7 +60,7 @@ class $$$File {
 
     /* ######################### get info about file #################### */
 
-    /* get filesize
+    /** Get filesize
      *
      * @return int
      */
@@ -69,7 +68,7 @@ class $$$File {
 	return ($this->isFile()) ? filesize($this->getPath()) : 0;
     }
 
-    /* check, if valid file
+    /** Check, if valid file
      *
      * @return bool
      */
@@ -77,7 +76,7 @@ class $$$File {
 	return $this->isFile();
     }
 
-    /* get mime-type of file
+    /** Get MIME type of file
      *
      * @return string
      */
@@ -134,7 +133,7 @@ class $$$File {
 	return $type;
     }
 
-    /* check, if file exist
+    /** Check, if file exist
      *
      * @return bool
      */
@@ -142,10 +141,11 @@ class $$$File {
 	return file_exists($this->getPath());
     }
 
-    /* get path
-     * +@param bool: get folder-path only
+    /** Get path of file
+     * @param bool $folder_onley
+     *	Get path of folder only
      *
-     * @return string/bool
+     * @return string|bool
      */
     public function getPath ($folder_only = false) {
 
@@ -154,7 +154,6 @@ class $$$File {
 
 	// folder-path only?
 	if ($folder_only) {
-
 	    $cache = explode('/', $this->path);
 
 	    // is already a folder?
@@ -169,7 +168,7 @@ class $$$File {
 	return $this->path;
     }
 
-    /* get filename
+    /** Get filename
      *
      * @return string
      */
@@ -179,9 +178,11 @@ class $$$File {
 
     /* ##################### delete/move/rename ######################### */
 
-    /* upload file
-     * @param $__FILES
-     * @param string: path, where file is going to be moved to
+    /** Upload file
+     * @param array $FH
+     *	Content of $__FILES
+     * @param string $new_path
+     *	Path, where file is going to be moved to
      *
      * @return bool
      */
@@ -189,13 +190,13 @@ class $$$File {
 
 	// make sure, directory exists
 	$this->mkFolder(dirname($new_path));
-    
+
 	// upload file
 	return (move_uploaded_file($FH['tmp_name'], $new_path))
 	    ? true : false;
     }
 
-    /* delete file
+    /** Delete file
      *
      * @return bool
      */
@@ -204,8 +205,9 @@ class $$$File {
 	    OR unlink($this->getPath())) ? true : false;
     }
 
-    /* rename file
-     * @param string: new name of file
+    /** Rename file
+     * @param string $new_name
+     *	New name of file
      *
      * @return bool
      */
@@ -230,8 +232,9 @@ class $$$File {
 	return false;
     }
 
-    /* move file
-     * @param string: path, where file is going to be moved to
+    /** Move file
+     * @param string $new_path
+     *	Path, where file shall to be moved to
      *
      * @return bool
      */
@@ -252,8 +255,9 @@ class $$$File {
 	return true;
     }
 
-    /* include file
-     * @param bool: include once only
+    /** Include file
+     * @param bool $once
+     *	Include once only
      *
      * @return bool
      */
@@ -275,8 +279,9 @@ class $$$File {
 
     /* ######################### read from file ######################### */
 
-    /* get content of file as string
-     * +@param bool: true - return as string; false - return as array
+    /** Get content of file as string
+     * @param bool $as_string
+     *	Return content as string (as array otherwise)
      *
      * @return string
      */
@@ -303,8 +308,9 @@ class $$$File {
 
     /* ######################### write to file ########################## */
 
-    /* write content in file
-     * @param string: content to write in file
+    /** Write content in file
+     * @param string $content
+     *	Content to write in file
      *
      * @return bool
      */
@@ -332,8 +338,9 @@ class $$$File {
 	return false;
     }
 
-    /* append $to_add to end of file
-     * @param sting: content to add to file
+    /** Append to end of file
+     * @param sting $to_add
+     *	Content to add to file
      *
      * @return bool
      */
@@ -352,8 +359,9 @@ class $$$File {
 
     /* ######################### folder operations ###################### */
 
-    /* create folder, if not exists (recursively)
-     * @param string: path to folder
+    /** Create folder, if not exists (recursively)
+     * @param string $path
+     *	Path of folder
      *
      * @return bool
      */
@@ -370,7 +378,7 @@ class $$$File {
 	return ($return && is_writable($prev_path)) ? mkdir($path) : false;
     }
 
-    /* get subfolders
+    /** Get subfolders
      *
      * @return array
      */
@@ -391,8 +399,7 @@ class $$$File {
 	return $subfolders;
     }
 
-    /* get files within folder
-     * @param string: path to basis-folder
+    /** Get files within folder
      *
      * @return array
      */

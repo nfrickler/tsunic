@@ -1,39 +1,46 @@
-<!-- | CLASS object (meta class) -->
+<!-- | CLASS object -->
 <?php
+/** Abstract base object class
+ *
+ * This is the base class for a lot of child objects. It offers a kind of a
+ * object oriented database and synchronizes data with database.
+ */
 class $$$Object {
 
-    /* tablename in database
-     * string
+    /** Name of table, where objects of this class are saved
+     * @var string $table
      */
     protected $table;
 
-    /* object ID
-     * int
+    /** object ID
+     * @var int $id
      */
     protected $id;
 
-    /* array of Key objects of this object
-     * array
+    /** Array of Key objects of this object
+     * @var array $_keys
      */
     protected $_keys = array();
 
-    /* temporary cache for keytypes in database (0: - 1: encrypted)
-     * array
+    /** Temporary cache for keytypes in database (is value encrypted or not)
+     * @var array $keytypes
      */
     protected $keytypes;
 
-    /* information about object (from database)
-     * array
+    /** Information about object
+     * @var array $info
      */
     protected $info = array();
 
-    /* temporary information about object
-     * array
+    /** Temporary information about object
+     * @var array $info_tmp
      */
     protected $info_tmp = array();
 
-    /* constructor
-     * +@param int: Object ID
+    /** Constructor
+     *
+     * @param int $id
+     *	Object ID
      */
     public function __construct ($id = 0) {
 	global $TSunic;
@@ -49,19 +56,14 @@ class $$$Object {
 	return;
     }
 
-    /* preset information array of object (DEPRECATED: use setMulti instead)
-     * @param array: preset for $this->info
+    /** Get information about object
      *
-     * @return bool
-     */
-    public function presetInfo ($preset) {
-	return $this->setMulti($preset);
-    }
-
-    /* get information about object
-     * +@param string/bool: name of info (true will return $this->info)
-     * +@param bool: force update of object infos?
-     * +@param bool: get info from database only (not from tmp)?
+     * @param string|bool $name
+     *	Name of info (true will return all information)
+     * @param bool $update
+     *	Force update of object infos?
+     * @param bool $dbonly
+     *	Get info from database only (not temporary)?
      *
      * @return mix
      */
@@ -85,9 +87,12 @@ class $$$Object {
 	return $this->getDefault($name);
     }
 
-    /* get default value for specific field
-     * Here you can define default values in child classes
-     * @param string: name of field
+    /** Get default value for specific field
+     *
+     * Here you can define default values of child classes
+     *
+     * @param string $name
+     *	Name of information
      *
      * @return mix
      */
@@ -95,7 +100,7 @@ class $$$Object {
 	return NULL;
     }
 
-    /* load information about object
+    /** Load information about object from database
      *
      * @return bool
      */
@@ -129,8 +134,13 @@ class $$$Object {
 	return true;
     }
 
-    /* encrypt data to save in database
-     * @param array: new data
+    /** Encrypt data to save in database
+     *
+     * Only those values will be encrypted, where the row in database starts and
+     * ends with and underline
+     *
+     * @param array $data
+     *	Data to be encrypted
      *
      * @return data to save
      */
@@ -175,8 +185,10 @@ class $$$Object {
 	return $data;
     }
 
-    /* create new object
-     * @param array: new data
+    /** Create new object
+     *
+     * @param array $data
+     *	Data of new object
      *
      * @return bool
      */
@@ -189,10 +201,14 @@ class $$$Object {
 	return $this->id;
     }
 
-    /* set values for this object
-     * @param string: name of value
-     * @param mix: new value
-     * +@param bool: save all new data in database?
+    /** Set value for this object
+     *
+     * @param string $name
+     *	Name of value
+     * @param mix $value
+     *	New value
+     * @param bool $save
+     *	Save all new data in database?
      *
      * @return bool
      */
@@ -202,9 +218,12 @@ class $$$Object {
 	return ($save) ? $this->save() : true;
     }
 
-    /* checks wether a value of this object is valid
-     * @param string: name of value
-     * @param string: value
+    /** Checks wether a value of this object is valid
+     *
+     * @param string $name
+     *	Name of value
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -213,9 +232,12 @@ class $$$Object {
 	return true;
     }
 
-    /* set multiple values for this object
-     * @param array: new values
-     * +@param bool: save all new data in database?
+    /** Set multiple values for this object
+     *
+     * @param array $data
+     *	New values
+     * +@param bool $save
+     *	Save all new data in database?
      *
      * @return bool
      */
@@ -229,7 +251,7 @@ class $$$Object {
 	return ($save) ? $this->save() : true;
     }
 
-    /* resave all data (e.g. with new key)
+    /** Resave all data (e.g. with new key)
      *
      * @return bool
      */
@@ -237,9 +259,12 @@ class $$$Object {
 	return $this->save(true);
     }
 
-    /* edit object
-     * @param array: new data
-     * @param bool: save empty strings
+    /** Edit object
+     *
+     * @param array $data
+     *	New data
+     * @param bool $save_empty
+     *	Save empty strings
      *
      * @return bool
      */
@@ -257,8 +282,10 @@ class $$$Object {
 	return $this->setMulti($data, true);
     }
 
-    /* save temporary data in database
-     * +@param bool: force resave of all values?
+    /** Save temporary data in database
+     *
+     * @param bool $force
+     *	Force resave of all values?
      *
      * @return bool
      */
@@ -339,7 +366,7 @@ class $$$Object {
 	return true;
     }
 
-    /* delete object
+    /** Delete object
      *
      * @return bool
      */
@@ -361,7 +388,7 @@ class $$$Object {
 	return true;
     }
 
-    /* check, if this object is valid (=exists in database)
+    /** Check, if this object is valid (=exists in database)
      *
      * @return bool
      */
@@ -376,9 +403,12 @@ class $$$Object {
 	return false;
     }
 
-    /* check, if value has correct type
-     * @param mix: value
-     * @param string: requested type of value
+    /** Check, if value has correct type
+     *
+     * @param mix $value
+     *	Value
+     * @param string $type
+     *	Requested type of value
      *
      * @return bool
      */
@@ -413,10 +443,14 @@ class $$$Object {
 	return false;
     }
 
-    /* is unique value? (either not in table or belongs to this object)
-     * @param string: name of table
-     * @param string: column in table
-     * @param string: value
+    /** Is unique value? (either not in table or belongs to this object)
+     *
+     * @param string $table
+     *	Name of table
+     * @param string $column
+     *	Column in table
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -432,9 +466,12 @@ class $$$Object {
 	return ($result) ? false : true;
     }
 
-    /* does other object with ID exist?
-     * @param string: name of table
-     * @param int: ID of object
+    /** Does other object with given id exist?
+     *
+     * @param string $table
+     *	Name of table
+     * @param int $id
+     *	ID of object
      *
      * @return bool
      */
@@ -449,9 +486,9 @@ class $$$Object {
 	return ($result) ? true : false;
     }
 
-    /* make copy of this object
+    /** Make copy of this object
      *
-     * @return int (id of copy)
+     * @return int
      */
     public function copy () {
 	if (!$this->id) return 0;
@@ -477,8 +514,10 @@ class $$$Object {
 
     /* *********************** key handling *********************** */
 
-    /* preset keys for this object
-     * @param array: array of Key objects
+    /** Preset keys for this object
+     *
+     * @param array $keys
+     *	Array of Key objects
      *
      * @return bool
      */
@@ -493,7 +532,7 @@ class $$$Object {
 	return true;
     }
 
-    /* get all Key objects for this object
+    /** Get all Key objects for this object
      *
      * @return array
      */
@@ -521,10 +560,12 @@ class $$$Object {
 	return $this->_keys;
     }
 
-    /* load Key
-     * +@param int: fk_account of key to return
+    /** Load Key
      *
-     * @return Object
+     * @param int $fk_account
+     *	fk_account of key to return
+     *
+     * @return Key
      */
     protected function _getKey ($fk_account = 0) {
 	global $TSunic;
@@ -578,8 +619,9 @@ class $$$Object {
 	    ? $this->_keys[$fk_account] : NULL;
     }
 
-    /* save Key
-     * +@param int: fk_account of key
+    /** Save Key
+     * @param int $fk_account
+     *	fk_account of Key
      *
      * @return bool
      */
@@ -587,13 +629,15 @@ class $$$Object {
 	return $this->_getKey($fk_account)->save($this->id);
     }
 
-    /* delete Key
-     * +@param int: fk_account of key
+    /** Delete Key
+     *
+     * @param int $fk_account
+     *	fk_account of Key
      *
      * @return bool
      */
     protected function _deleteKey ($fk_account = 0) {
-	
+
 	// get key
 	$Key = $this->_getKey($fk_account);
 
@@ -617,7 +661,7 @@ class $$$Object {
 
     /* *********************** shared objects ********************* */
 
-    /* get sharedWith information of this object
+    /** Get sharedWith information of this object
      *
      * @return array
      */
@@ -636,8 +680,10 @@ class $$$Object {
 	return $shared;
     }
 
-    /* give someone access to this object
-     * +@param array/int: list of users with access (array('id' => 'writable?'))
+    /** Give someone access to this object
+     *
+     * @param array|int $access
+     *	List of users with access (array('id' => 'writable?'))
      *
      * @return bool
      */
@@ -692,8 +738,10 @@ class $$$Object {
 	return true;
     }
 
-    /* push this object to other user
-     * @param int: id of other user
+    /** Push this object to other user
+     *
+     * @param int $fk_account
+     *	Id of other user
      *
      * @return bool
      */
@@ -727,8 +775,10 @@ class $$$Object {
 	return true;
     }
 
-    /* push copy of this object to other user
-     * @param int: id of other user
+    /** Push copy of this object to other user
+     *
+     * @param int $fk_account
+     *	Id of other user
      *
      * @return bool
      */
@@ -743,14 +793,14 @@ class $$$Object {
 	return $Obj->pushTo($fk_account);
     }
 
-    /* is object editable by user?
+    /** Is object editable by user?
      *
      * @return object
      */
     public function editable () {
 	return (!$this->_getKey()->isValid() or
 	    $this->_getKey()->getInfo('can_write')
-	) ? true : false;
+	) ? true : false*;
     }
 }
 ?>

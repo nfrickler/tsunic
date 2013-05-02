@@ -32,7 +32,7 @@ class $$$Helper {
 	    $this->tags = array();
 	    foreach ($result as $index => $values) {
 		$Value = $TSunic->get('$$$Tag', $values['id']);
-		$Value->presetInfo($values);
+		$Value->setMulti($values);
 		$this->tags[$values['name']] = $Value;
 	    }
 	}
@@ -89,7 +89,7 @@ class $$$Helper {
 	$out = array();
 	foreach ($result as $index => $values) {
 	    $Obj = $TSunic->get($class, $values['id']);
-	    $Obj->presetInfo($values);
+	    $Obj->setMulti($values);
 	    $out[$values['id']] = $Obj;
 	}
 

@@ -1,37 +1,46 @@
-<!-- | MySQL database class -->
+<!-- | CLASS Database_mysql -->
 <?php
+/** MySQL database class
+ *
+ * This class handles the access to a MySQL database and will be used from 
+ * Database object
+ */
 class $$$Database_mysql {
 
-    /* mysql-login: host
-     * string
+    /** MySQL host
+     * @var string $host
      */
     private $host;
 
-    /* mysql-login: user
-     * string
+    /** MySQL user
+     * @var string $user
      */
     private $user;
 
-    /* mysql-login: password
-     * string
+    /** MySQL password
+     * @var string $password
      */
     private $password;
 
-    /* mysql-login: name of database
-     * string
+    /** MySQL database
+     * @var string $database
      */
     private $database;
 
-    /* current connection
-     *
+    /** Current connection
      */
     private $con;
 
-    /* constructor
-     * @param string: mysql-login: host
-     * @param string: mysql-login: user
-     * @param string: mysql-login: password
-     * @param string: mysql-login: database
+    /** Constructor
+     *
+     * @param string $host
+     *	MySQL host
+     * @param string $user
+     *	MySQL user
+     * @param string $password
+     *	MySQL password
+     * @param string $database
+     *	MySQL database
      */
     public function __construct ($host, $user, $password, $database) {
 
@@ -47,7 +56,7 @@ class $$$Database_mysql {
 	return;
     }
 
-    /* check, if connection exists OR connect to database
+    /** Make sure, we have a connection to the database
      *
      * @return bool
      */
@@ -66,10 +75,12 @@ class $$$Database_mysql {
 	return true;
     }
 
-    /* send query to database
-     * @param string: sql-query
+    /** Send query to database
      *
-     * @return mysql-result
+     * @param string $sql
+     *	SQL query
+     *
+     * @return MySQL result
      */
     private function _sendQuery ($sql) {
 
@@ -82,10 +93,12 @@ class $$$Database_mysql {
 	return $result;
     }
 
-    /* fetch data from database
-     * @param string: sql-query
+    /** Fetch data from database
      *
-     * @return array/bool
+     * @param string $sql
+     *	SQL query
+     *
+     * @return array|bool
      */
     public function doSelect ($sql) {
 
@@ -100,8 +113,10 @@ class $$$Database_mysql {
 	return $output;
     }
 
-    /* update database
-     * @param string: sql-query
+    /** Update database
+     *
+     * @param string $sql
+     *	SQL query
      *
      * @return bool
      */
@@ -109,8 +124,10 @@ class $$$Database_mysql {
 	return ($this->_sendQuery($sql)) ? true : false;
     }
 
-    /* insert a new row/several new rows
-     * @param string: sql-query
+    /** Insert a new row/several new rows
+     *
+     * @param string $sql
+     *	SQL query
      *
      * @return bool
      */
@@ -118,7 +135,7 @@ class $$$Database_mysql {
 	return ($this->_sendQuery($sql)) ? true : false;
     }
 
-    /* get id of last inserted row
+    /** Get id of last inserted row
      *
      * @return int
      */
@@ -126,8 +143,10 @@ class $$$Database_mysql {
 	return mysql_insert_id();
     }
 
-    /* delete rows in database
-     * @param string: sql-query
+    /** Delete rows in database
+     *
+     * @param string $sql
+     *	SQL query
      *
      * @return bool
      */
@@ -135,8 +154,10 @@ class $$$Database_mysql {
 	return ($this->_sendQuery($sql)) ? true : false;
     }
 
-    /* just send query as is and return result
-     * @param string: sql-query
+    /** Just send query as is and return result
+     *
+     * @param string $sql
+     *	SQL query
      *
      * @return bool
      */
@@ -144,10 +165,12 @@ class $$$Database_mysql {
 	return $this->_sendQuery($sql);
     }
 
-    /* get names of columns of a table
-     * @param string: name of table to get columns from
+    /** Get names of columns of a table
      *
-     * @return array/bool
+     * @param string $table
+     *	Name of table to get columns from
+     *
+     * @return array|bool
      */
     public function getColumns ($table) {
 
@@ -163,8 +186,10 @@ class $$$Database_mysql {
 	return $columns;
     }
 
-    /* create a new table
-     * @param string: sql-query
+    /** Create a new table
+     *
+     * @param string $sql
+     *	SQL query
      *
      * @return bool
      */
@@ -172,8 +197,10 @@ class $$$Database_mysql {
 	return ($this->_sendQuery($sql)) ? true : false;
     }
 
-    /* check, if table exists
-     * @param string: name of table
+    /** Check, if table exists
+     *
+     * @param string $table
+     *	Name of table
      *
      * @return bool
      */
@@ -192,7 +219,7 @@ class $$$Database_mysql {
 	    return false;
     }
 
-    /* check, if database-object is operating correctly
+    /** Check, if database object is operating correctly
      *
      * @return bool
      */
@@ -201,9 +228,9 @@ class $$$Database_mysql {
 	return false;
     }
 
-    /* get mysql-error
+    /** Get MySQL errors
      *
-     * @return bool/array
+     * @return bool|array
      */
     public function getError () {
 

@@ -1,13 +1,18 @@
 <!-- | CLASS Database -->
 <?php
+/** Handle database access
+ *
+ * This object handles the access to the chosen database. One instance of this
+ * class is available at TSunic::Db
+ */
 class $$$Database {
 
-    /* database object of chosen type
-     * object
+    /** Database object of chosen type
+     * @var object @Db_obj
      */
     private $Db_obj;
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 	global $TSunic;
@@ -35,41 +40,89 @@ class $$$Database {
 
     /* ######################### queries ################################ */
 
-    /* functions to send queries to database
-     * @param string: query
-     * +@param bool: false will skip encryption
+    /** Method to send SELECT query to database
+     *
+     * @param string $query
+     *	SQL query
      *
      * @return mix
      */
-    public function doSelect ($query, $is_enc = true) {
-	// call database
+    public function doSelect ($query) {
 	return $this->_callDatabase('select', $query);
     }
+
+    /** Method to send INSERT query to database
+     *
+     * @param string $query
+     *	SQL query
+     *
+     * @return mix
+     */
     public function doInsert ($query) {
 	if (!$this->_callDatabase('insert', $query)) return false;
 	$lastId = $this->_callDatabase('lastId');
 	return ($lastId) ? $lastId : true;
     }
+
+    /** Method to send UPDATE query to database
+     *
+     * @param string $query
+     *	SQL query
+     *
+     * @return mix
+     */
     public function doUpdate ($query) {
 	return $this->_callDatabase('update', $query);
     }
+
+    /** Method to send DELETE query to database
+     *
+     * @param string $query
+     *	SQL query
+     *
+     * @return mix
+     */
     public function doDelete ($query) {
 	return $this->_callDatabase('delete', $query);
     }
+
+    /** Method to send CREATE TABLE query to database
+     *
+     * @param string $query
+     *	SQL query
+     *
+     * @return mix
+     */
     public function createTable ($query) {
 	return $this->_callDatabase('createTable', $query);
     }
-    // @param string $table: name of the table to get columns from
+
+    /** Method to get columns of table
+     *
+     * @param string $table
+     *	Name of table
+     *
+     * @return array
+     */
     public function getColumns ($table) {
 	return $this->_callDatabase('getColumns', $table);
     }
-    // @param string $table: name of the table to check
+
+    /** Method to check, if table of certain name exists
+     *
+     * @param string $table
+     *	Name of table
+     *
+     * @return bool
+     */
     public function isTable ($table) {
 	return $this->_callDatabase('isTable', $table);
     }
 
-    /* "execute" a sql-file
-     * @param string: path to sql-file
+    /** "execute" a sql-file
+     *
+     * @param string $path
+     *	Path of SQL file
      *
      * @return bool
      */
@@ -98,11 +151,14 @@ class $$$Database {
 	return true;
     }
 
-    /* parse sql-query for database
-     * @param string: type of query
-     * @param string: sql-query (exeptions see above)
+    /** Parse SQL query for database
      *
-     * @return mix or REDIRECT
+     * @param string $type
+     *	Type of query
+     * @param string $query
+     *	SQL query
+     *
+     * @return mix
      */
     private function _callDatabase ($type, $query = '') {
 	global $TSunic;
