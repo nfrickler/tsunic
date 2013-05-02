@@ -1,33 +1,33 @@
-<!-- | class to handle temporare data -->
+<!-- | CLASS Temp -->
 <?php
+/**
+ * This class handles POST and GET parameters and offers a way to access these
+ * values (also from requests in the past)
+ */
 class $$$Temp {
 
-    /* history of user
-     * array (module => $module, event => $event)
+    /** History of user
+     * @var array $history
+     *	Saved request history
      */
     private $history;
 
-    /* write- and readable cache
-     * array
-     */
-    private $cache;
-
-    /* number of requests, which are saved completely (default: 5)
-     * int
+    /** Number of requests, which are saved completely (default: 5)
+     * @var int $history_complete
      */
     private $history_complete = 5;
 
-    /* number of requests, which are saved (default: 30)
-     * int
+    /** Number of requests, which are saved (default: 30)
+     * @var int $history_amount
      */
     private $history_amount = 5;
 
-    /* session-key
-     * string
+    /** Session key
+     * @var string $session_key
      */
     private $session_key = '$$$temp__history';
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 	global $TSunic;
@@ -43,10 +43,11 @@ class $$$Temp {
 	return;
     }
 
-    /* optimizes, updates, stores history
-     * +@param array/bool: history to clean (false will refresh $this->history)
+    /** Optimizes, updates, stores history
+     * @param array|bool $history
+     *	History to clean (false will refresh $this->history)
      *
-     * @return OBJECT
+     * @return array
      */
     protected function refreshHistory ($history = false) {
 	global $TSunic;
@@ -82,7 +83,7 @@ class $$$Temp {
 	return $this->history;
     }
 
-    /* reset temp
+    /** Reset history
      *
      * @return bool
      */
@@ -93,7 +94,7 @@ class $$$Temp {
 	return true;
     }
 
-    /* update temp
+    /** Update temp
      *
      * @return bool
      */
@@ -189,10 +190,12 @@ class $$$Temp {
 	return true;
     }
 
-    /* try to prevent code-injections
-     * @param array: array to parse
+    /** Try to prevent code injections by parsing array and removing
+     * critical letters
+     * @param array $array
+     *	Array to be parsed
      *
-     * @return string/bool
+     * @return string|bool
      */
     protected function _getSaferArray ($array) {
 
@@ -217,31 +220,9 @@ class $$$Temp {
 	return $array;
     }
 
-    /* store data in cache
-     * @param string: unique name of information
-     * @param string: value
-     *
-     * @return bool
-     */
-    public function setCache ($name, $value) {
-	// save in cache
-	$this->cache[$name] = $value;
-	return true;
-    }
-
-    /* get data from cache
-     * @param string: unique name of information
-     *
-     * @return bool
-     */
-    public function getCache ($name) {
-	// get and return
-	if (isset($this->cache[$name])) return $this->cache[$name];
-	return false;
-    }
-
-    /* skip command parameters
-     * @param array: get-parameters
+    /** Remove command parameters (e.g. hid, loop) from GET array
+     * @param array $get
+     *	Array with GET parameters
      *
      * @return bool
      */
@@ -261,10 +242,11 @@ class $$$Temp {
 
     # ########################## get ##################################### #
 
-    /* get current module
-     * +@param int: module in history (0 = current; 1 = last; ...)
+    /** Get current module
+     * @param int $time
+     *	Module in history (0 = current; 1 = last; ...)
      *
-     * @return string/bool
+     * @return string|bool
      */
     public function getModule ($time = 0) {
 
@@ -277,10 +259,11 @@ class $$$Temp {
 	return $cache[0];
     }
 
-    /* get current event
-     * +@param int: event in history (0 = current; 1 = last; ...)
+    /** Get current event
+     * @param int $time
+     *	Event in history (0 = current; 1 = last; ...)
      *
-     * @return string/bool
+     * @return string|bool
      */
     public function getEvent ($time = 0) {
 
@@ -290,9 +273,11 @@ class $$$Temp {
 	return $get;
     }
 
-    /* get post-data
-     * @param string/bool: name of parameter (true will return all)
-     * +@param int: module in history (0 = current; 1 = last; ...)
+    /** Get post data
+     * @param string|bool $name
+     *	Name of parameter (true will return all)
+     * @param int $time
+     *	Module in history (0 = current; 1 = last; ...)
      *
      * @return mix
      */
@@ -335,9 +320,11 @@ class $$$Temp {
 	return $post[$name];
     }
 
-    /* get GET-parameters
-     * @param string/bool: name of parameter (true will return all, false will return all without event and module)
-     * +@param int: module in history (0 = current; 1 = last; ...)
+    /** Get GET parameters
+     * @param string|bool $name
+     *	Name of parameter (true will return all, false will return all without event and module)
+     * @param int $time
+     *	Module in history (0 = current; 1 = last; ...)
      *
      * @return mix
      */
@@ -388,11 +375,13 @@ class $$$Temp {
 	return $get[$name];
     }
 
-    /* get POST OR GET-parameters
-     * @param string/bool: name of parameter (true will return all)
-     * +@param int: module in history (0 = current; 1 = last; ...)
+    /** Get POST OR GET parameter (post is preferred)
+     * @param string|bool $name
+     *	Name of parameter (true will return all)
+     * @param int $time
+     *	Module in history (0 = current; 1 = last; ...)
      *
-     * @return string/array/bool
+     * @return mix
      */
     public function getParameter ($name, $time = 0) {
 
@@ -408,9 +397,11 @@ class $$$Temp {
 	return false;
     }
 
-    /* get post-parameters with a certain prefix
-     * @param string: prefix of post-name
-     * +@param int: module in history (0 = current; 1 = last; ...)
+    /** Get POST parameters with a certain prefix
+     * @param string $prefix
+     *	Prefix of post-name
+     * @param int $time
+     *	Module in history (0 = current; 1 = last; ...)
      *
      * @return bool
      */
@@ -432,10 +423,11 @@ class $$$Temp {
 	return $output;
     }
 
-    /* get cookie-data
-     * @param string: name of cookie
+    /** Get cookie data
+     * @param string $name
+     *	Name of cookie
      *
-     * @return string/bool/int
+     * @return mix
      */
     public function getCookie ($name) {
 	// try to get cookie-value
@@ -445,8 +437,9 @@ class $$$Temp {
 
     # ############################ handle history ######################### #
 
-    /* get key of history-entry
-     * +@param int: back-time
+    /** Get key of history entry
+     * @param int $time
+     *	Hops to go back
      *
      * @return int
      */
@@ -490,10 +483,13 @@ class $$$Temp {
 	return $req_key;
     }
 
-    /* add data to history
-     * @param string: unique name of information
-     * @param mix: value
-     * +@param int: back-time
+    /** Add data to history
+     * @param string $name
+     *	Unique name of information
+     * @param mix $value
+     *	Value
+     * @param int $time
+     *	Hops to go back in history
      *
      * @return bool
      */
@@ -509,9 +505,11 @@ class $$$Temp {
 	return true;
     }
 
-    /* get data from history
-     * @param string: unique name of information
-     * +@param int: back-time
+    /** Get data from history
+     * @param string $name
+     *	Unique name of information
+     * @param int $time
+     *	Hops to go back in time
      *
      * @return mix
      */
@@ -527,8 +525,9 @@ class $$$Temp {
 	return $this->history[$key]['other'][$name];
     }
 
-    /* is history
-     * +@param int: back-time
+    /** Is history
+     * @param int $time
+     *	Hops to go back in time
      *
      * @return bool
      */
@@ -541,7 +540,7 @@ class $$$Temp {
 	return false;
     }
 
-    /* get current history id
+    /** Get current history id
      *
      * @return int
      */

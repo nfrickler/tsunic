@@ -1,19 +1,24 @@
 <!-- | CLASS Template -->
 <?php
+/** Template class for one template file
+ *
+ * This class handles one template file
+ */
 class $$$Template {
 
-    /* name of template
-     * string
+    /** Name of template
+     * @var string $template
      */
     protected $template;
 
-    /* data of template
-     * array
+    /** Data of template
+     * @var array $data
      */
     protected $data;
 
-    /* constructor
-     * +@param string: name of template
+    /** Constructor
+     * @param string $template
+     *	Name of template
      */
     public function __construct ($template = false) {
 
@@ -23,7 +28,7 @@ class $$$Template {
 	return;
     }
 
-    /* get current style
+    /** Get current style
      *
      * @return string
      */
@@ -32,7 +37,7 @@ class $$$Template {
 	return $TSunic->Tmpl->getInfo('style');
     }
 
-    /* get data of this template
+    /** Get data of this template
      *
      * @return mix
      */
@@ -50,10 +55,11 @@ class $$$Template {
 	return NULL;
     }
 
-    /* set data for this template
-     * @param string/array: string - name of value
-     *     array - data-array
-     * +@param mix: value for data with name $name
+    /** Set data for this template
+     * @param string|array $name
+     *	String: name of value; array: data array
+     * @param mix $value
+     *	Value for data with name $name
      *
      * @return bool
      */
@@ -78,13 +84,13 @@ class $$$Template {
 
     /* ****************** display and include ******************** */
 
-    /* display template
-     * +@param bool/string: false - display this template
-     *     string - display template $template
-     * +@param bool/array: false - no data
-     *     array - data for new template
+    /** Display template
+     * @param bool|string $template
+     *	False: display this template; string: display template $template
+     * @param bool|array $data
+     *	False: no data; array: data for new template
      *
-     * @return true OR exit
+     * @return bool
      */
     public function display ($template = false, $data = false) {
 	global $TSunic;
@@ -136,8 +142,9 @@ class $$$Template {
 	exit;
     }
 
-    /* include template
-     * @param object: File object
+    /** Include template
+     * @param object $File
+     *	File object of template file
      *
      * @return bool
      */
@@ -163,8 +170,9 @@ class $$$Template {
 	return true;
     }
 
-    /* save javascript in session
-     * @param array: jsvascript-code from callback-function
+    /** Save JavaScript in session
+     * @param array $code
+     *	jsvascript-code from callback function
      *
      * @return ''
      */
@@ -183,8 +191,9 @@ class $$$Template {
 	return '';
     }
 
-    /* include and display sub-templates
-     * @param string: position in template
+    /** Include and display sub-templates
+     * @param string $position
+     *	Position in template
      *
      * @return bool
      */
@@ -211,10 +220,13 @@ class $$$Template {
 
     /* *************************** set **************************** */
 
-    /* parse for output
-     * @param string: text to parse
-     * @param array: variables to replace in lang-string
-     * +@param bool: echo?
+    /** Parse for output
+     * @param string $text
+     *	Text to parse
+     * @param array $data
+     *	Variables to replace in lang-string
+     * @param bool $doEcho
+     *	echo?
      *
      * @return string
      */
@@ -248,8 +260,9 @@ class $$$Template {
 	return $text;
     }
 
-    /* replace vars (callback)
-     * @param string: variable replacement
+    /** Replace vars (callback)
+     * @param string $input
+     *	Variable replacement
      *
      * @return string
      */
@@ -262,12 +275,17 @@ class $$$Template {
 	return '#'.$input.'#';
     }
 
-    /* parse Link for output
-     * @param string: name of event
-     * +@param bool/array: false - no GET-parameter; array - GET-parameters
-     * +@param bool: is link placed in html-code (set false for javascript etc.)
-     * +@param bool: print link (false returns link)
-     * +@param bool: add questionmark in the beginning?
+    /** Parse Link for output
+     * @param string $event
+     *	Name of event
+     * @param bool|array $data
+     *	False: no GET parameter; array: GET-parameters
+     * @param bool $is_html
+     *	Is link placed in html-code (set false for javascript etc.)
+     * @param bool $doEcho
+     *	Print link (false returns link)
+     * @param bool $add_qstmrk
+     *	Add questionmark in the beginning?
      *
      * @return bool
      */
@@ -317,9 +335,13 @@ class $$$Template {
 	}
     }
 
-    /* get/set old post-variable
-     * @param string: name of post
-     * +@param bool: print it? (or return it)
+    /** Return/set old post variable
+     * @param string $name
+     *	Name of post
+     * @param string $default
+     *	Default value to use instead, if no old post variable found
+     * @param bool $default
+     *	Print it? (or return it)
      *
      * @return bool
      */
@@ -342,15 +364,21 @@ class $$$Template {
 	return $this->set($output);
     }
 
-    /* get link to image
-     * @param string: type of file
-     * @param string: name of image
-     * +@param bool: print link (false returns link)
-     * +@param bool: is download-link?
+    /** Get link to image
+     * @param string $type
+     *	Type of file
+     * @param string $image_name
+     *	Name of image
+     * @param bool $doEcho
+     *	Print link? (return otherwise)
+     * @param bool $isDownload
+     *	Is download link?
      *
-     * @return bool/string
+     * @return bool|string
      */
-    public function setImg ($type, $image_name, $doEcho = true, $isDownload = false) {
+    public function setImg (
+	$type, $image_name, $doEcho = true, $isDownload = false
+    ) {
 	global $TSunic;
 
 	// validate input
@@ -393,11 +421,15 @@ class $$$Template {
 
     # ############################ set (js) ############################## #
 
-    /* parse for javascript-output (language- and bbcode-replacements)
-     * @param string: text to parse
-     * @param 0/array: variables to replace in lang-string
-     * +@param bool: true - display $text; false - do not display
-     * +@param bool: true - escape singe and double quotes
+    /** Parse for JavaScript output (language- and bbcode-replacements)
+     * @param string $text
+     *	Text to parse
+     * @param 0/array $vars
+     *	Variables to replace in lang-string
+     * @param bool $doEchoe
+     *	Print text? (return otherwise)
+     * @param bool $doEscape
+     *	Escape single and double quotes?
      *
      * @return bool
      */
@@ -423,7 +455,7 @@ class $$$Template {
 	}
     }
 
-    /* activate javascript-function
+    /** Activate JavaScript function
      *
      * @return bool
      */

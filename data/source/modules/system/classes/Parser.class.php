@@ -3,7 +3,6 @@
 /** Static class to parse strings
  *
  * Parse strings for database, plain text or html
- *
  */
 class $$$Parser {
 

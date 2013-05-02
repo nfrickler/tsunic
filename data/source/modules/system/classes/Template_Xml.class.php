@@ -1,12 +1,15 @@
-<!-- | CLASS XML Templates for Ajax requests -->
+<!-- | CLASS Template_Xml -->
 <?php
+/** Template class for XML templates used by ajax requests
+ *
+ */
 class $$$Template_Xml extends $$$Template {
 
-    /* constructor
-     * @param string: name of template
-     * +@param string: name of design (not used in this content)
+    /** Constructor
+     * @param string $template
+     *	Name of template
      */
-    public function __construct ($template, $design = 0) {
+    public function __construct ($template) {
 	global $TSunic;
 
 	// get input
@@ -21,7 +24,11 @@ class $$$Template_Xml extends $$$Template {
 	return;
     }
 
-    /* display template
+    /** Display template
+     * @param bool|string $template
+     *	False: display this template; string: display template $template
+     * @param bool|array $data
+     *	False: no data; array: data for new template
      *
      * @return bool
      */
@@ -57,8 +64,9 @@ class $$$Template_Xml extends $$$Template {
 	return false;
     }
 
-    /* include and display sub-templates
-     * @param string: position in template
+    /** Include and display sub-templates
+     * @param string $position
+     *	Position in template
      *
      * @return bool
      */
@@ -66,8 +74,9 @@ class $$$Template_Xml extends $$$Template {
 	return true;
     }
 
-    /* include template
-     * @param object: File object
+    /** Include template
+     * @param object $File
+     *	File object of template file
      *
      * @return bool
      */

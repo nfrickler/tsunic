@@ -1,44 +1,49 @@
 <!-- | CLASS TemplateEngine -->
 <?php
+/**
+ * A class offering the core of TSunic's template engine. This class manages
+ * language replacement, template combination and template data.
+ */
 class $$$TemplateEngine {
 
-    /* path to template-file
-     * string
+    /** Cache for language replacements
+     * @var string $lang
      */
     private $lang = array();
 
-    /* session key-name
-     * string
+    /** Session key name
+     * @var string $session_key
      */
     private $session_key = '$$$templateEngine';
 
-    /* array with all javascript-code (post)
-     * array
-     */
-    private $javascript_post;
-
-    /* chosen style
-     * string
+    /** Chosen style
+     * @var string string
      */
     private $style;
 
-    /* activated templates
-     * array
+    /** Activated templates
+     * @var array $activatedTemplates
      */
     public $activatedTemplates = array();
 
-    /* activated templates
-     * array
+    /** Activated JavaScript
+     * @var array $activatedJavascript
      */
     public $activatedJavascript = array();
 
-    /* extracted javascript
-     * array
+    /** Extracted JavaScript
+     * @var array $extractedJavascript
      */
     public $extractedJavascript = array();
 
-    /* constructor
-     * +@param string: name of design
+    /** Cache
+     * @var array $cache
+     */
+    protected $cache = array();
+
+    /** Constructor
+     * @param string $style
+     *	Name of style
      */
     public function __construct ($style = 0) {
 	global $TSunic;
@@ -59,8 +64,9 @@ class $$$TemplateEngine {
 	return;
     }
 
-    /* get data from this object
-     * @param string: name of data to get
+    /** Get data from this object
+     * @param string $name
+     *	Name of data to get
      *
      * @return mix
      */
@@ -74,11 +80,15 @@ class $$$TemplateEngine {
 	return NULL;
     }
 
-    /* activate template for output
-     * @param string: name of template
-     * @param string/bool: if supTemplate exists -> name ELSE 0 or false
-     * @param bool/array: data for template
-     * @param bool/string: position to include template within sup-template
+    /** Activate template for output
+     * @param string $template
+     *	Name of template
+     * @param string|bool $supTemplate
+     *	If supTemplate exists -> name ELSE 0 or false
+     * @param bool|array $data
+     *	Data for template
+     * @param bool|string $position
+     *	Position to include template within sup-template
      *
      * @return bool
      */
@@ -117,13 +127,13 @@ class $$$TemplateEngine {
 	return true;
     }
 
-    /* save data for template
-     * @param string/bool: template, data are for
-     *    false - reset all data
-     *    true - get all data from session
-     * +@param string/array: string - name of value
-     *    array - data-array
-     * +@param mix: value for data with name $name
+    /** Save data for template
+     * @param string|bool $template
+     *	Template, data are for; false: reset all data; true: get all data
+     * @param string|array $data
+     *	String: name of value; array: data array
+     * @param mix $value
+     *	Value for data with name $name
      *
      * @return bool
      */
@@ -155,10 +165,13 @@ class $$$TemplateEngine {
 	return true;
     }
 
-    /* save data
-     * @param string: template to fetch data for
-     * +@param string/bool: name of data (true - return all data of template)
-     * +@param bool: unset data afterwards
+    /** Save data
+     * @param string $template
+     *	Template to fetch data for
+     * @param string|bool $name
+     *	Name of data (true - return all data of template)
+     * @param bool $unset
+     *	Unset data afterwards
      *
      * @return mix
      */
@@ -193,10 +206,13 @@ class $$$TemplateEngine {
 	return NULL;
     }
 
-    /* skip language-placeholders
-     * @param string: text to be parsed
-     * +@param bool: true - escape singe and double quotes
-     * +@param int: if this value is > 5, the function will not check recursively
+    /** Skip language placeholders
+     * @param string $text
+     *	Text to be parsed
+     * @param bool $doEscape
+     *	True - escape singe and double quotes
+     * @param int $nested
+     *	If this value is > 5, the function will not check recursively
      *
      * @return string
      */
@@ -207,7 +223,7 @@ class $$$TemplateEngine {
 	$regex = '#\{([A-Z_ÄÖÜ][A-Z_ÄÖÜ0-9]+)\}#Us';
 
 	// save $doEcho in cache
-	$TSunic->Temp->setCache('ts_TemplateEngine_class_replaceLang_doEscape', $doEscape);
+	$this->cache['doEscape'] = $doEscape;
 
 	// skip, if no matches
 	if (!strstr($text, '{')) {
@@ -236,8 +252,9 @@ class $$$TemplateEngine {
 	return $this->replaceLang($text, $doEscape, $nested);
     }
 
-    /* get language-replacements
-     * @param string: language-placeholder
+    /** Get language replacement
+     * @param string $index
+     *	Language placeholder
      *
      * @return string
      */
@@ -246,7 +263,7 @@ class $$$TemplateEngine {
 	$index = substr($index[0], 1 ,(strlen($index[0])-2));
 
 	// get doEscape from cache
-	$doEscape = $TSunic->Temp->getCache('ts_TemplateEngine_class_replaceLang_doEscape');
+	$doEscape = $this->cache['doEscape'];
 
 	// check, if replacement already loaded
 	if (!isset($this->lang, $this->lang[$index])) {
@@ -272,10 +289,13 @@ class $$$TemplateEngine {
 	return $text;
     }
 
-    /* get language-replacements
-     * @param string: language-placeholder or module
-     * +@param bool/string: set language to include
-     * +@param bool: return, if include fails
+    /** Load language replacements
+     * @param string $input
+     *	Language placeholder or module
+     * @param bool|string $lang
+     *	Set language to include
+     * @param bool $returnOnFail
+     *	Return, if include fails
      *
      * @return bool
      */
@@ -337,8 +357,9 @@ class $$$TemplateEngine {
 	return false;
     }
 
-    /* display output
-     * @param bool/string: name of first template
+    /** Display output
+     * @param bool|string $tempalte
+     *	Name of root template
      *
      * @return bool
      */
@@ -371,7 +392,7 @@ class $$$TemplateEngine {
 	return true;
     }
 
-    /* return ajax-response (XML)
+    /** Return ajax response (XML template)
      *
      * @return bool
      */
@@ -387,8 +408,9 @@ class $$$TemplateEngine {
 	return true;
     }
 
-    /* add javascript-class or -function for output
-     * @param string: name
+    /** Add JavaScript class or function for output
+     * @param string $name
+     *	Name of class or function
      *
      * @return bool
      */
@@ -400,7 +422,11 @@ class $$$TemplateEngine {
 	return true;
     }
 
-    /* add JavaScript code to cache
+    /** Add JavaScript code to cache
+     * @var string $template
+     *	Name of template the code belongs to
+     * @var string $input
+     *	JavaScript code
      *
      * @return bool
      */
@@ -416,8 +442,9 @@ class $$$TemplateEngine {
 	return true;
     }
 
-    /* returns all JavaScript code from cache
-     * +@param bool: return and flush?
+    /** Returns all JavaScript code from cache
+     * @param bool $delete
+     *	Return and flush?
      *
      * @return bool
      */
@@ -433,7 +460,7 @@ class $$$TemplateEngine {
 	return $code;
     }
 
-    /* get javascript-code (pre)
+    /** Get activated JavaScript
      *
      * @return array
      */
@@ -441,7 +468,7 @@ class $$$TemplateEngine {
 	return $this->activatedJavascript;
     }
 
-    /* get activated templates
+    /** Get activated templates
      *
      * @return array
      */
@@ -449,7 +476,7 @@ class $$$TemplateEngine {
 	return $this->activatedTemplates;
     }
 
-    /* clear all activated templates and javascript-classes und -functions
+    /** Clear all activated templates and JavaScript classes and functions
      *
      * @return bool
      */
