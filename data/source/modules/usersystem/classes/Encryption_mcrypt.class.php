@@ -1,30 +1,36 @@
-<!-- | Class for mcrypt encryption -->
+<!-- | CLASS Encryption_mcrypt -->
 <?php
+/** Encryption class using mcrypt
+ *
+ * This is a TSunic wrapper for mcrypt
+ */
 class $$$Encryption_mcrypt {
 
-    /* encryption key
-     * string
+    /** Encryption key
+     * @var string $key
      */
     private $key;
 
-    /* algorithm (e.g. blowfish)
-     * string
+    /** Algorithm (e.g. blowfish)
+     * @var string $algorithm
      */
     private $algorithm;
 
-    /* mode (e.g. ecb)
-     * string
+    /** Mode (e.g. ecb)
+     * @var string $mode
      */
     private $mode;
 
-    /* cypher-object
-     * object
+    /** Cypher object
+     * @var object $cipher_obj
      */
     private $cipher_obj;
 
-    /* constructor
-     * @param string: algorithm
-     * @param string: encryption mode
+    /** Constructor
+     * @param string $algorithm
+     *	Algorithm
+     * @param string $mode
+     *	Encryption mode
      */
     public function __construct ($algorithm, $mode) {
 
@@ -38,8 +44,9 @@ class $$$Encryption_mcrypt {
 	return;
     }
 
-    /* set key for en-/decryption
-     * @param string: encryption key
+    /** Set key for en-/decryption
+     * @param string $key
+     *	Encryption key
      *
      * @return bool
      */
@@ -48,9 +55,11 @@ class $$$Encryption_mcrypt {
 	return true;
     }
 
-    /* encrypt string
-     * @param string: input
-     * +@param string: encryption key
+    /** Encrypt string
+     * @param string $input
+     *	String to be encrypted
+     * @param string $key
+     *	Encryption key
      *
      * @return string
      */
@@ -70,9 +79,11 @@ class $$$Encryption_mcrypt {
     //    return base64_encode($output);
     }
 
-    /* decrypt string
-     * @param string: input
-     * +@param string: encryption key
+    /** Decrypt string
+     * @param string $input
+     *	String to be decrypted
+     * @param string $key
+     *	Decryption key
      *
      * @return string
      */

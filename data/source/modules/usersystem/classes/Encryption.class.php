@@ -1,52 +1,66 @@
-<!-- | CLASS handle encryption -->
+<!-- | CLASS Encryption -->
 <?php
+/** Handle encryption
+ *
+ * This class handles the encryption of all data of a user.
+ */
 class $$$Encryption {
 
-    /* encryptionClass-object
-     * object
+    /** EncryptionClass object
+     * @var object $MyEnc
      */
     private $MyEnc;
 
-    /* fk_account
-     * int
+    /** Fk_account
+     * @var int $fk_account
      */
     private $fk_account;
 
-    /* passphrase the keys are encrypted with
-     * string
+    /** Passphrase the keys are encrypted with
+     * @var string $passphrase
      */
     private $passphrase;
 
-    /* encryption infix
-     * string
+    /** Encryption infix
+     * @var string $infix
      */
     private $infix = '#infix#';
 
-    /* symmetric encryption prefix
-     * string
+    /** Symmetric encryption prefix
+     * @var string $prefix_sym
      */
     private $prefix_sym = '#prefix_sym#';
 
-    /* asymmetric encryption prefix
-     * string
+    /** Asymmetric encryption prefix
+     * @var string $prefix_asym
      */
     private $prefix_asym = '#prefix_asym#';
 
-    /* keys of user
-     * strings
+    /** Symmetric key of user
+     * @var strings $symkey
      */
     private $symkey;
+
+    /** Private key of user
+     * @var strings $privkey
+     */
     private $privkey;
+
+    /** Public key of user
+     * @var strings $pubkey
+     */
     private $pubkey;
 
-    /* ready for encryption?
-     * bool
+    /** Ready for encryption?
+     * @var bool $ready
      */
     private $ready = false;
 
-    /* constructor
-     * @param int: fk_account
-     * +@param string: passphrase the keys are encrypted with symmetrically
+    /** Constructor
+     * @param int $fk_account
+     *	fk_account
+     * @param string $passphrase
+     *	Passphrase the keys are encrypted with symmetrically
      */
     public function __construct ($fk_account, $passphrase = false) {
 	global $TSunic;
@@ -71,8 +85,9 @@ class $$$Encryption {
 	return;
     }
 
-    /* set passphrase
-     * @param string: new passphrase
+    /** Set passphrase
+     * @param string $passphrase
+     *	New passphrase
      *
      * @return bool
      */
@@ -81,7 +96,7 @@ class $$$Encryption {
 	return true;
     }
 
-    /* generate new keys
+    /** Generate new keys
      *
      * @return array
      */
@@ -118,7 +133,7 @@ class $$$Encryption {
 	return $this->getKeys();
     }
 
-    /* get keys (encrypted)
+    /** Get keys (encrypted)
      *
      * @return array
      */
@@ -130,10 +145,13 @@ class $$$Encryption {
 	);
     }
 
-    /* set keys
-     * @param string: symmetric key
-     * @param string: private key
-     * @param string: public key
+    /** Set keys
+     * @param string $symkey
+     *	Symmetric key
+     * @param string $privkey
+     *	Private key
+     * @param string $pubkey
+     *	Public key
      *
      * @return bool
      */
@@ -145,11 +163,13 @@ class $$$Encryption {
 	return true;
     }
 
-    /* encrypt
-     * @param string: text to encrypt
-     * +@param string: key to be used
-     * +@param bool: use asymmetric encryption (if key exists, this is
-     * forced)?
+    /** Encrypt data
+     * @param string $text
+     *	Text to encrypt
+     * @param string $key
+     *	Key to be used
+     * @param bool $asym
+     *	Use asymmetric encryption (if key exists, this is forced)?
      *
      * @return string
      */
@@ -199,9 +219,11 @@ class $$$Encryption {
 	return $text;
     }
 
-    /* decrypt
-     * @param string: text to decrypt
-     * +@param string: key to be used
+    /** Decrypt data
+     * @param string $text
+     *	Text to decrypt
+     * @param string $key
+     *	Key to be used
      *
      * @return string
      */
@@ -253,8 +275,7 @@ class $$$Encryption {
 	return $text;
     }
 
-    /* throw encryption error
-     *
+    /** Throw encryption error
      */
     protected function throwEncError () {
 	$TSunic->Log->log(1, 'Encryption called, but not ready yet!');

@@ -1,44 +1,44 @@
 <!-- | CLASS User -->
 <?php
+/** User management
+ *
+ * This class handles the user management.
+ */
 class $$$User extends $system$Object {
 
-    /* table
-     * string
+    /** Table
+     * @var string $table
      */
     protected $table = "#__$usersystem$accounts";
 
-    /* Access
-     * OBJECT
+    /** Access object
+     * @var Access $Access
      */
     protected $Access;
 
-    /* Userconfig
-     * OBJECT
+    /* UserConfig object
+     * @var UserObject $Config
      */
     protected $Config;
 
-    /* Profile
-     * OBJECT
-     */
-    protected $Profile;
-
-    /* Encryption
-     * OBJECT
+    /** Encryption object
+     * @var Encryption $Encryption
      */
     protected $Encryption = NULL;
 
-    /* define id of root
-     * int
+    /** Define id of root
+     * @var int $id_root
      */
     protected $id_root = 1;
 
-    /* define id of guest
-     * int
+    /** Define id of guest
+     * @var int $id_guest
      */
     protected $id_guest = 2;
 
-    /* constructor
-     * @param int/string: account ID (or "guest", "root")
+    /** Constructor
+     * @param int|string $id
+     *	Account ID (or "guest", "root")
      */
     public function __construct ($id = false) {
 	global $TSunic;
@@ -75,7 +75,7 @@ class $$$User extends $system$Object {
 	return;
     }
 
-    /* get username of this user
+    /** Get username of this user
      *
      * @return string
      */
@@ -83,10 +83,13 @@ class $$$User extends $system$Object {
 	return $this->getInfo('name');
     }
 
-    /* create new user
-     * @param string: email
-     * @param string: name
-     * @param string: password
+    /** Create new user
+     * @param string $email
+     *	Email
+     * @param string $name
+     *	Name
+     * @param string $password
+     *	Password
      *
      * @return bool
      */
@@ -136,10 +139,13 @@ class $$$User extends $system$Object {
 	return true;
     }
 
-    /* edit account
-     * @param string: new e-mail
-     * @param string: new name
-     * @param string: new password
+    /** Edit account
+     * @param string $email
+     *	New e-mail
+     * @param string $name
+     *	New name
+     * @param string $password
+     *	New password
      *
      * @return bool
      */
@@ -192,7 +198,7 @@ class $$$User extends $system$Object {
 	return $return;
     }
 
-    /* delete account
+    /** Delete account
      *
      * @return bool
      */
@@ -211,8 +217,9 @@ class $$$User extends $system$Object {
 	return $this->_delete();
     }
 
-    /* get email to name
-     * @param string: name
+    /** Get e-mail to name
+     * @param string $name
+     *	Name
      *
      * @return string
      */
@@ -231,9 +238,11 @@ class $$$User extends $system$Object {
 	return $result[0]['email'];
     }
 
-    /* log user in
-     * @param string: name or email of user
-     * @param string: password of user
+    /** Log user in
+     * @param string $email
+     *	Name or email of user
+     * @param string $password
+     *	Password of user
      *
      * @return bool
      */
@@ -281,7 +290,7 @@ class $$$User extends $system$Object {
 	return true;
     }
 
-    /* is correct password?
+    /** Is correct password?
      *
      * @return bool
      */
@@ -300,7 +309,7 @@ class $$$User extends $system$Object {
 	return ($result[0]['id'] == $this->id) ? true : false;
     }
 
-    /* log user out
+    /** Log user out
      *
      * @return bool
      */
@@ -311,9 +320,11 @@ class $$$User extends $system$Object {
 	return true;
     }
 
-    /* convert password to hash
-     * @param string: password of user
-     * +@param string: email of user
+    /** Convert password to hash
+     * @param string $password
+     *	Password of user
+     * @param string $email
+     *	E-mail of user
      *
      * @return bool
      */
@@ -323,9 +334,11 @@ class $$$User extends $system$Object {
 	return sha1(sha1(trim($email).trim($password)));
     }
 
-    /* get passphrase of user
-     * @param string: password of user
-     * +@param string: email of user
+    /** Get passphrase of user
+     * @param string $password
+     *	Password of user
+     * @param string $email
+     *	E-mail of user
      *
      * @return string
      */
@@ -334,7 +347,7 @@ class $$$User extends $system$Object {
 	return sha1($email.$password);
     }
 
-    /* is user logged in?
+    /** Is user logged in?
      *
      * @return bool
      */
@@ -345,7 +358,7 @@ class $$$User extends $system$Object {
 	) ? true : false;
     }
 
-    /* is registered user?
+    /** Is registered user?
      *
      * @return bool
      */
@@ -356,7 +369,7 @@ class $$$User extends $system$Object {
 	    ? true : false;
     }
 
-    /* is user root?
+    /** Is user root?
      *
      * @return bool
      */
@@ -364,7 +377,7 @@ class $$$User extends $system$Object {
 	return ($this->id == $this->id_root) ? true : false;
     }
 
-    /* is user guest?
+    /** Is user guest?
      *
      * @return bool
      */
@@ -372,7 +385,7 @@ class $$$User extends $system$Object {
 	return ($this->id == $this->id_guest) ? true : false;
     }
 
-    /* get id of guest
+    /** Get id of guest
      *
      * @return int
      */
@@ -380,8 +393,9 @@ class $$$User extends $system$Object {
 	return $this->id_guest;
     }
 
-    /* is valid e-mail?
-     * @param string: e-mail address
+    /** Is valid e-mail?
+     * @param string $email
+     *	E-mail address
      *
      * @return bool
      */
@@ -398,8 +412,9 @@ class $$$User extends $system$Object {
 	return true;
     }
 
-    /* is valid name?
-     * @param string: name
+    /** Is valid name?
+     * @param string $name
+     *	Name
      *
      * @return bool
      */
@@ -417,8 +432,9 @@ class $$$User extends $system$Object {
 	return true;
     }
 
-    /* is valid password?
-     * @param string: password
+    /** Is valid password?
+     * @param string $password
+     *	Password
      *
      * @return bool
      */
@@ -426,9 +442,13 @@ class $$$User extends $system$Object {
 	return $this->_validate($password, 'password');
     }
 
-    /* encrypt input
-     * @param string: input
-     * +@param string: encryption key
+    /** Encrypt data
+     * @param string $input
+     *	String to be encrypted
+     * @param string $key
+     *	Encryption key
+     * @param bool $asym
+     *	Use asymmetric encryption?
      *
      * @return string
      */
@@ -436,9 +456,11 @@ class $$$User extends $system$Object {
 	return $this->Encryption->encrypt($input, $key, $asym);
     }
 
-    /* decrypt input
-     * @param string: input
-     * +@param string: decryption key
+    /** Decrypt input
+     * @param string $input
+     *	String to be decrypted
+     * @param string $key
+     *	Decryption key
      *
      * @return string
      */
@@ -446,8 +468,9 @@ class $$$User extends $system$Object {
 	return $this->Encryption->decrypt($input, $key);
     }
 
-    /* has user access?
-     * @param string: name of access
+    /** Has user access?
+     * @param string $name
+     *	Name of access
      *
      * @return bool
      */
@@ -455,7 +478,7 @@ class $$$User extends $system$Object {
 	return $this->getAccess()->check($name);
     }
 
-    /* get access object of user
+    /** Get access object of user
      *
      * @return bool
      */
@@ -467,9 +490,11 @@ class $$$User extends $system$Object {
 	return $this->Access;
     }
 
-    /* get config value of user
-     * @param string: name of config
-     * +@param bool: return default, if no userconfig?
+    /** Get config value of user
+     * @param string $name
+     *	Name of config
+     * @param bool $returnDefault
+     *	Return default, if no userconfig?
      *
      * @return mix
      */
@@ -477,9 +502,11 @@ class $$$User extends $system$Object {
 	return $this->getConfig()->get($name, $returnDefault);
     }
 
-    /* set config value of user
-     * @param string: name of config
-     * @param mix: value
+    /** Set config value of user
+     * @param string $name
+     *	Name of config
+     * @param mix $value
+     *	Value
      *
      * @return bool
      */
@@ -487,9 +514,9 @@ class $$$User extends $system$Object {
 	return $this->getConfig()->set($name, $value);
     }
 
-    /* get userconfig object
+    /** Get UserConfig object
      *
-     * @return OBJECT
+     * @return UserConfig
      */
     public function getConfig () {
 	if (!$this->Config) {
@@ -499,7 +526,7 @@ class $$$User extends $system$Object {
 	return $this->Config;
     }
 
-    /* get all users
+    /** Get all users
      *
      * @return array
      */

@@ -1,27 +1,34 @@
-<!-- | Access class -->
+<!-- | CLASS Access -->
 <?php
+/** Regulation of access of users
+ *
+ * This class provides an interface for user access management
+ */
 class $$$Access {
 
-    /* access groups of user
-     * array of OBJECTS
+    /** Access groups of user
+     * @var array $groups
      */
     protected $groups;
 
-    /* account ID
-     * int
+    /** Account ID
+     * @var int $fk_account
      */
     protected $fk_account;
 
-    /* constructor
-     * @param int: account ID
+    /** Constructor
+     * @param int $fk_account
+     *	Account ID
      */
     public function __construct ($fk_account) {
 	$this->fk_account = $fk_account;
     }
 
-    /* has user access?
-     * @param string: name of access
-     * +@param bool: if nothing set, check groups?
+    /** User has access permission?
+     * @param string $name
+     *	Name of access
+     * @param bool $goOn
+     *	Check groups for permission additionally?
      *
      * @return bool
      */
@@ -46,8 +53,9 @@ class $$$Access {
 	return $this->checkGroups($name);
     }
 
-    /* has user access by group?
-     * @param string: name of access
+    /** Has user access permission by group?
+     * @param string $name
+     *	Name of access
      *
      * @return bool
      */
@@ -58,7 +66,7 @@ class $$$Access {
 	return false;
     }
 
-    /* get accessgroups the user is in
+    /** Get accessgroups the user is in
      *
      * @return bool
      */
@@ -82,7 +90,7 @@ class $$$Access {
 	return $this->groups;
     }
 
-    /* get all accessgroups
+    /** Get all accessgroups
      *
      * @return array
      */
@@ -104,9 +112,11 @@ class $$$Access {
 	return $output;
     }
 
-    /* set access
-     * @param string: name of access
-     * @param bool/NULL: value
+    /** Set access
+     * @param string $name
+     *	Vame of access
+     * @param bool|NULL $value
+     *	Value (NULL will delete access information)
      *
      * @return bool
      */
@@ -135,8 +145,9 @@ class $$$Access {
 	return $TSunic->Db->doInsert($sql);
     }
 
-    /* add user to accessgroup
-     * @param int: ID of accessgroup
+    /** Add user to accessgroup
+     * @param int $fk_accessgroup
+     *	ID of accessgroup
      *
      * @return bool
      */
@@ -146,8 +157,9 @@ class $$$Access {
 	return $Group->addMember($this->id);
     }
 
-    /* remove user from accessgroup
-     * @param int: ID of accessgroup
+    /** Remove user from accessgroup
+     * @param int $fk_accessgroup
+     *	ID of accessgroup
      *
      * @return bool
      */
@@ -157,9 +169,9 @@ class $$$Access {
 	return $Group->rmMember($this->id);
     }
 
-    /* get all available accessnames
+    /** Get all available accessnames
      *
-     * @return array/false
+     * @return array|false
      */
     public function getAccessnames () {
 	global $TSunic;

@@ -1,24 +1,30 @@
 <!-- | CLASS Accessgroup -->
 <?php
+/** Manage access groups
+ *
+ * This class provides accessgroups, where access can be given rights to
+ * several users at once. Groups can be nested
+ */
 class $$$Accessgroup extends $system$Object {
 
-    /* table
-     * string
+    /** Table
+     * @var string $table
      */
     protected $table = "#__$usersystem$accessgroups";
 
-    /* parent
-     * OBJECT
+    /** Parent accessgroup
+     * @var Accessgroup $Parent
      */
     protected $Parent;
 
-    /* childs
-     * array of OBJECTS
+    /** Child accessgroups
+     * @var array $childs
      */
     protected $childs;
 
-    /* get default value for specific field
-     * @param string: name of field
+    /** Get default value for specific field
+     * @param string $name
+     *	Name of field
      *
      * @return mix
      */
@@ -31,10 +37,13 @@ class $$$Accessgroup extends $system$Object {
 	return NULL;
     }
 
-    /* update data of this object (create/edit/delete)
-     * @param string: name of value
-     * @param mix: value
-     * +@param bool: save all new infos?
+    /** Update data of this object (create/edit/delete)
+     * @param string $name
+     *	Name of value
+     * @param mix $value
+     *	Value
+     * @param bool $save
+     *	Save all new infos?
      *
      * @return bool
      */
@@ -54,7 +63,7 @@ class $$$Accessgroup extends $system$Object {
 	return parent::set($name, $value, $save);
     }
 
-    /* delete accessgroup
+    /** Delete accessgroup
      *
      * @return bool
      */
@@ -67,9 +76,9 @@ class $$$Accessgroup extends $system$Object {
 	return $this->_delete();
     }
 
-    /* get list of members
+    /** Get list of members
      *
-     * @return array/false
+     * @return array
      */
     public function getMembers () {
 	global $TSunic;
@@ -90,8 +99,9 @@ class $$$Accessgroup extends $system$Object {
 	return $output;
     }
 
-    /* is user/group member of this group?
-     * @param int: account ID
+    /** Is user/group member of this group?
+     * @param int $fk_account
+     *	Account ID
      *
      * @return bool
      */
@@ -104,8 +114,9 @@ class $$$Accessgroup extends $system$Object {
 	return ($TSunic->Db->doSelect($sql)) ? true : false;
     }
 
-    /* add member to group
-     * @param int: account ID
+    /** Add member to group
+     * @param int $fk_account
+     *	Account ID
      *
      * @return bool
      */
@@ -119,8 +130,9 @@ class $$$Accessgroup extends $system$Object {
 	return $TSunic->Db->doInsert($sql);
     }
 
-    /* remove member from group
-     * @param int: account ID
+    /** Remove member from group
+     * @param int $fk_account
+     *	Account ID
      *
      * @return bool
      */
@@ -132,9 +144,11 @@ class $$$Accessgroup extends $system$Object {
 	return $TSunic->Db->doDelete($sql);
     }
 
-    /* does group has access?
-     * @param string: name of access
-     * +@param bool: if nothing set, check parent?
+    /** Does group has access?
+     * @param string $name
+     *	Name of access
+     * @param bool $goOn
+     *	Try to get access from parent?
      *
      * @return bool
      */
@@ -159,8 +173,9 @@ class $$$Accessgroup extends $system$Object {
 	return $this->checkParent($name);
     }
 
-    /* check access of parent group
-     * @param string: name of access
+    /** Check access of parent group
+     * @param string $name
+     *	Name of access
      *
      * @return bool
      */
@@ -170,9 +185,11 @@ class $$$Accessgroup extends $system$Object {
 	    : false;
     }
 
-    /* set access
-     * @param string: name of access
-     * @param bool/NULL: value
+    /** Set access
+     * @param string $name
+     *	Name of access
+     * @param bool $value
+     *	Value
      *
      * @return bool
      */
@@ -198,8 +215,9 @@ class $$$Accessgroup extends $system$Object {
 	return $TSunic->Db->doInsert($sql);
     }
 
-    /* is valid name for accessgroup?
-     * @param string: name
+    /** Is valid name for accessgroup?
+     * @param string $name
+     *	Name
      *
      * @return bool
      */
@@ -209,8 +227,9 @@ class $$$Accessgroup extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid fk_parent for accessgroup?
-     * @param int: ID of an accessgroup
+    /** Is valid fk_parent for accessgroup?
+     * @param int $fk_parent
+     *	ID of an accessgroup
      *
      * @return bool
      */
@@ -221,8 +240,9 @@ class $$$Accessgroup extends $system$Object {
 	) ? true : false;
     }
 
-    /* is accessgroup within childrens of this group?
-     * @param int: ID of an accessgroup
+    /** Is accessgroup within childrens of this group?
+     * @param int $id
+     *	ID of an accessgroup
      *
      * @return bool
      */
@@ -242,9 +262,9 @@ class $$$Accessgroup extends $system$Object {
 	return false;
     }
 
-    /* get parent object
+    /** Get parent object
      *
-     * @return OBJECT
+     * @return Accessgroup
      */
     public function getParent () {
 	if (!empty($this->Parent)) return $this->Parent;
@@ -254,7 +274,7 @@ class $$$Accessgroup extends $system$Object {
 	return ($this->Parent->isValid()) ? $this->Parent : NULL;
     }
 
-    /* get array of child objects
+    /** Get array of child objects
      *
      * @return array
      */

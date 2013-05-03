@@ -1,24 +1,29 @@
-<!-- | UserConfig class -->
+<!-- | CLASS UserConfig -->
 <?php
+/** Manage user configuration
+ *
+ * This class handles the user configuration
+ */
 class $$$UserConfig {
 
-    /* account ID
-     * int
+    /** Account ID
+     * @var int $fk_account
      */
     protected $fk_account;
 
-    /* runtime config
-     * array
+    /** Runtime config
+     * @var array $runtime
      */
     protected $runtime;
 
-    /* userconfig cache
-     * array
+    /** Userconfig cache
+     * @var array $configcache
      */
     protected $configcache = array();
 
-    /* constructor
-     * @param int: fk account
+    /** Constructor
+     * @param int $fk_account
+     *	fk account
      */
     public function __construct ($fk_account) {
 	global $TSunic;
@@ -37,9 +42,11 @@ class $$$UserConfig {
 	}
     }
 
-    /* get config of user
-     * @param string: name of config
-     * +@param bool: return default, if no userconfig?
+    /** Get config of user
+     * @param string $name
+     *	Name of config
+     * @param bool $returnDefault
+     *	Return default, if no userconfig?
      *
      * @return mix
      */
@@ -67,8 +74,9 @@ class $$$UserConfig {
 	return ($returnDefault) ? $this->getDefault($name) : NULL;
     }
 
-    /* get runtime config
-     * @param string: name of config
+    /** Get runtime config
+     * @param string $name
+     *	Name of config
      *
      * @return mix
      */
@@ -77,9 +85,11 @@ class $$$UserConfig {
 	    ? $this->runtime[$name] : NULL;
     }
 
-    /* set runtime config
-     * @param string: name of config
-     * @param mix: value of config
+    /** Set runtime config
+     * @param string $name
+     *	Name of config
+     * @param mix $value
+     *	Value of config
      *
      * @return bool
      */
@@ -89,8 +99,9 @@ class $$$UserConfig {
 	return true;
     }
 
-    /* get default config
-     * @param string: name of config
+    /** Get default config
+     * @param string $name
+     *	Name of config
      *
      * @return mix
      */
@@ -111,10 +122,13 @@ class $$$UserConfig {
 	return NULL;
     }
 
-    /* set default config
-     * @param string: name of config
-     * @param string: value of config
-     * +@param bool: is system config?
+    /** Set default config
+     * @param string $name
+     *	Name of config
+     * @param string $value
+     *	Value of config
+     * @param bool $isSystem
+     *	Is system configuration?
      *
      * @return bool
      */
@@ -139,8 +153,9 @@ class $$$UserConfig {
 	return true;
     }
 
-    /* does config name exist?
-     * @param string: name of config
+    /** Does config name exist?
+     * @param string $name
+     *	Name of config
      *
      * @return bool
      */
@@ -148,9 +163,11 @@ class $$$UserConfig {
 	return ($this->getDefault($name) != NULL) ? true : false;
     }
 
-    /* set value
-     * @param string: name of config
-     * @param mix: value to set (NULL means default value)
+    /** Set value
+     * @param string $name
+     *	Name of config
+     * @param mix $value
+     *	Value to set (NULL means default value)
      *
      * @return bool
      */
@@ -187,8 +204,9 @@ class $$$UserConfig {
 	return $TSunic->Db->doInsert($sql);
     }
 
-    /* delete userconfig
-     * @param string: name of config
+    /** Delete userconfig
+     * @param string $name
+     *	Name of config
      *
      * @return bool
      */
@@ -209,7 +227,7 @@ class $$$UserConfig {
 	return $TSunic->Db->doDelete($sql);
     }
 
-    /* get all real config names and values (no system config)
+    /** Get all real config names and values (no system config)
      *
      * @return array
      */
@@ -245,8 +263,9 @@ class $$$UserConfig {
 	return $output;
     }
 
-    /* get configtype
-     * @param string: name of config
+    /** Get configtype
+     * @param string $name
+     *	Name of config
      *
      * @return mix
      */
