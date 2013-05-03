@@ -1,14 +1,19 @@
-<!-- | CLASS Mapping webdav files to filesystem -->
+<!-- | CLASS DavFile -->
 <?php
+/** Mapping TSunic files to webdav files
+ *
+ * This class maps TSunic files to webdav files
+ */
 class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 
-    /* FsFile object
-     * object
+    /** File object
+     * @var File $File
      */
     protected $File;
 
-    /* constructor
-     * +@param object: FsFile
+    /** Constructor
+     * @param File $File
+     *	File object
      */
     public function __construct ($File = NULL) {
 	global $TSunic;
@@ -18,7 +23,7 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 	$this->File = $File;
     }
 
-    /* get name of file
+    /** Get name of file
      *
      * @return string
      */
@@ -26,8 +31,9 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 	return ($this->File) ? $this->File->getInfo('name') : "Unknown";
     }
 
-    /* update content of file
-     * @param string: new content
+    /** Update content of file
+     * @param string $data
+     *	New content
      *
      * @return void
      */
@@ -45,23 +51,22 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 
 	if ($this->File and $this->File->setContent($data))
 	    return;
-        throw new Sabre_DAV_Exception_Forbidden('Permission denied to change data');
+	throw new Sabre_DAV_Exception_Forbidden('Permission denied to change data');
     }
 
-    /* get content of file
+    /** Get content of file
      *
-     * @return mixed
+     * @return mix
      */
     public function get() {
 	global $TSunic;
 	$TSunic->Log->log(9, "filesystem::DavFile::get");
 
 	if ($this->File) return $this->File->getContent();
-        throw new Sabre_DAV_Exception_Forbidden('Permission denied to read this file');
-
+	throw new Sabre_DAV_Exception_Forbidden('Permission denied to read this file');
     }
 
-    /* get size of file
+    /** Get size of file
      *
      * @return int
      */
@@ -69,8 +74,7 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 	return ($this->File) ? $this->File->getInfo('bytes') : 0;
     }
 
-    /**
-     * Returns the ETag for a file
+    /** Returns the ETag for a file
      *
      * An ETag is a unique identifier representing the current version of the file. If the file changes, the ETag MUST change.
      * The ETag is an arbitrary string, but MUST be surrounded by double-quotes.
@@ -80,10 +84,10 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
      * @return string|null
      */
     public function getETag() {
-        return null;
+	return null;
     }
 
-    /* get mime type (otherwise assumed: application/octet-stream
+    /** Get mime type (otherwise assumed: application/octet-stream
      *
      * @return string|null
      */
@@ -91,7 +95,7 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 	return ($this->File) ? $this->File->getMimeType() : NULL;
     }
 
-    /* delete file
+    /** Delete file
      *
      * @return void
      */
@@ -104,8 +108,9 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 	}
     }
 
-    /* rename file
-     * @param string: new name
+    /** Rename file
+     * @param string $name
+     *	New name
      *
      * @return void
      */
@@ -118,3 +123,4 @@ class $$$DavFile extends Sabre_DAV_File implements Sabre_DAV_IFile {
 	}
     }
 }
+?>

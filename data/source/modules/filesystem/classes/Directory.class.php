@@ -1,21 +1,25 @@
 <!-- | CLASS Directory -->
 <?php
+/** Directory in TSunic filesystem
+ *
+ * This class represents a directory object in TSunics filesystem
+ */
 class $$$Directory extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'DIRECTORY__NAME',
 	'DIRECTORY__PARENT'
     );
 
-    /* sub directories
-     * array
+    /** Sub directories
+     * @var array $subdirectories
      */
     protected $subdirectories;
 
-    /* delete directory
+    /** Delete directory
      *
      * @return bool
      */
@@ -30,7 +34,7 @@ class $$$Directory extends $bp$BpObject {
 	return parent::delete();
     }
 
-    /* get name to be shown
+    /** Get name to be shown
      *
      * @return string
      */
@@ -38,8 +42,9 @@ class $$$Directory extends $bp$BpObject {
 	return ($this->id) ? $this->getAbsPath() : '{CLASS__DIRECTORY__ROOTDIR}';
     }
 
-    /* is directory within childrens of this directory?
-     * @param int: ID of an accessgroup
+    /** Is directory within childrens of this directory?
+     * @param int $id
+     *	ID of an accessgroup
      *
      * @return bool
      */
@@ -59,9 +64,9 @@ class $$$Directory extends $bp$BpObject {
 	return false;
     }
 
-    /* get parent object
+    /** Get parent object
      *
-     * @return OBJECT
+     * @return Directory
      */
     public function getParent () {
 	if ($this->id == 0) return NULL;
@@ -72,10 +77,11 @@ class $$$Directory extends $bp$BpObject {
 	return $this->Parent;
     }
 
-    /* get subdir/file by name
-     * @param string: name of subdir/file
+    /** Get subdir/file by name
+     * @param string $name
+     *	Name of subdir/file
      *
-     * @return object
+     * @return File|Directory
      */
     public function getSubByName ($name) {
 
@@ -94,7 +100,7 @@ class $$$Directory extends $bp$BpObject {
 	return NULL;
     }
 
-    /* get array of subdirectories
+    /** Get array of subdirectories
      *
      * @return array
      */
@@ -116,7 +122,7 @@ class $$$Directory extends $bp$BpObject {
 	return $this->subdirectories;
     }
 
-    /* get array of files in directory
+    /** Get array of files in directory
      *
      * @return array
      */
@@ -140,7 +146,7 @@ class $$$Directory extends $bp$BpObject {
 	return $this->subfiles;
     }
 
-    /* get all available directories
+    /** Get all available directories
      *
      * @return array
      */
@@ -152,7 +158,7 @@ class $$$Directory extends $bp$BpObject {
 	return $Filesystem->getDirectories();
     }
 
-    /* get absolute path to this folder in filesystem
+    /** Get absolute path to this folder in filesystem
      *
      * @return string
      */
@@ -162,7 +168,7 @@ class $$$Directory extends $bp$BpObject {
 	return ($this->getParent() and $this->getParent()->getInfo('id')) ? $this->getParent()->getAbsPath()."/$name" : "$name";
     }
 
-    /* get consumed webspace (bytes)
+    /** Get consumed webspace (bytes)
      *
      * @return int
      */

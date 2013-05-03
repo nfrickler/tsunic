@@ -1,14 +1,19 @@
 <!-- | CLASS Image -->
 <?php
+/** Image file in TSunics filesystem
+ *
+ * This class represents an image file in TSunics filesystem
+ */
 class $$$Image extends $$$File {
 
-    /* image extensions
-     * array
+    /** Image extensions
+     * @var array $image_ext
      */
     protected $image_ext = array('jpg', 'jpeg', 'gif', 'png');
 
-    /* is file-extension of name an image?
-     * @param string: filename
+    /** Is file extension of name an image?
+     * @param string $name
+     *	Filename
      *
      * @return bool
      */
@@ -17,3 +22,4 @@ class $$$Image extends $$$File {
 	return in_array($name, $this->image_ext);
     }
 }
+?>

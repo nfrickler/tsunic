@@ -1,14 +1,18 @@
-<!-- | CLASS Mapping own filesystem to webdav -->
+<!-- | CLASS DavCollection -->
 <?php
+/** Mapping TSunic folder to webdav folder
+ *
+ * This class maps a TSunic folder to a webdav folder
+ */
 class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollection {
 
-    /* Directory object
-     * object
+    /** Directory object
+     * @var Directory $Dir
      */
     protected $Dir;
 
-    /* constructor
-     * +@param object: FsDirectory
+    /** Constructor
+     * @param Directory $Dir
      */
     public function __construct ($Dir = NULL) {
 	global $TSunic;
@@ -20,8 +24,9 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	$TSunic->Log->log(9, "filesystem::DavCollection::__construct('".$Dir->getInfo('name')."')");
     }
 
-    /* get subdir/file by name
-     * @param string: name of dir/file
+    /** Get subdir/file by name
+     * @param string $name
+     *	Name of dir/file
      * @throws Sabre_DAV_Exception_NotFound
      * @return Sabre_DAV_INode
      */
@@ -35,8 +40,9 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	throw new Sabre_DAV_Exception_NotFound('File not found: ' . $name);
     }
 
-    /* check, if child-node exists
-     * @param string: name
+    /** Check, if child-node exists
+     * @param string $name
+     *	Name
      * @return bool
      */
     public function childExists($name) {
@@ -51,10 +57,11 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	}
     }
 
-    /* create new file
-     *
-     * @param string: Name of the file
-     * @param resource|string: Initial payload
+    /** Create new file
+     * @param string $name
+     *	Name of the file
+     * @param resource|string $data
+     *	Initial payload
      * @return null|string
      */
     public function createFile($name, $data = null) {
@@ -75,9 +82,9 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	}
     }
 
-    /* Create new subdirectory
-     *
-     * @param string: $name
+    /** Create new subdirectory
+     * @param string $name
+     *	Name of new directory
      * @throws Sabre_DAV_Exception_Forbidden
      * @return void
      */
@@ -91,7 +98,7 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	}
     }
 
-    /* get name of directory
+    /** Get name of directory
      *
      * @return string
      */
@@ -102,7 +109,7 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	return $this->Dir->getInfo('name');
     }
 
-    /* get all childs
+    /** Get all childs
      *
      * @return array
      */
@@ -126,7 +133,7 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	return $out;
     }
 
-    /* delete directory
+    /** Delete directory
      *
      * @return void
      */
@@ -139,8 +146,9 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	}
     }
 
-    /* rename directory
-     * @param string: new name
+    /** Rename directory
+     * @param string $name
+     *	New name
      *
      * @return void
      */
@@ -153,3 +161,4 @@ class $$$DavCollection extends Sabre_DAV_Collection implements Sabre_DAV_ICollec
 	}
     }
 }
+?>

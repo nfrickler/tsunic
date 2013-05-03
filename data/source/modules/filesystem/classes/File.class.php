@@ -1,9 +1,13 @@
 <!-- | CLASS File -->
 <?php
+/** File object in TSunic filesystem
+ *
+ * This object represents a file in TSunics filesystem
+ */
 class $$$File extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'FILE__NAME',
@@ -11,14 +15,14 @@ class $$$File extends $bp$BpObject {
 	'FILE__SIZE',
     );
 
-    /* parent directory
-     * object
+    /** Parent directory
+     * @var Directory $Directory
      */
     protected $Directory;
 
-    /* create new file
-     * @param file-handler: file handler of uploaded file
-     * +@param int: fk of directory
+    /** Create new file
+     * @param file-handler $FH
+     *	File handler of uploaded file
      *
      * @return bool
      */
@@ -47,9 +51,13 @@ class $$$File extends $bp$BpObject {
 	return true;
     }
 
-    /* create new file with certain values
-     * @param string: name of file
-     * @param string: content of file
+    /** Create new file with certain values
+     * @param Directory $parent
+     *	Parent directory
+     * @param string $name
+     *	Name of file
+     * @param string $content
+     *	Content of file
      *
      * @return bool
      */
@@ -72,8 +80,9 @@ class $$$File extends $bp$BpObject {
 	return true;
     }
 
-    /* is valid filename?
-     * @param string: name
+    /** Is valid filename?
+     * @param string $name
+     *	Name
      *
      * @return bool
      */
@@ -90,8 +99,9 @@ class $$$File extends $bp$BpObject {
 	return true;
     }
 
-    /* get valid name
-     * @param string: original name
+    /** Get valid name
+     * @param string $name
+     *	Original name
      *
      * @return string
      */
@@ -106,7 +116,7 @@ class $$$File extends $bp$BpObject {
 	return $name;
     }
 
-    /* get name to show
+    /** Get name to show
      *
      * @return string
      */
@@ -114,9 +124,9 @@ class $$$File extends $bp$BpObject {
 	return $this->getAbsPath();
     }
 
-    /* get corresponding file-object
+    /** Get corresponding File object
      *
-     * @return File object
+     * @return File
      */
     public function getFileObject () {
 	if (!$this->getInfo('id')) return NULL;
@@ -125,9 +135,9 @@ class $$$File extends $bp$BpObject {
 	return ($File) ? $File : NULL;
     }
 
-    /* get parent Directory object
+    /** Get parent Directory object
      *
-     * @return Directory object
+     * @return Directory
      */
     protected function getParent () {
 	global $TSunic;
@@ -135,7 +145,7 @@ class $$$File extends $bp$BpObject {
 	return $TSunic->get('$$$Directory', $fk_dir);
     }
 
-    /* get path of this file
+    /** Get path of this file
      *
      * @return string
      */
@@ -144,7 +154,7 @@ class $$$File extends $bp$BpObject {
 	return ($File) ? $File->getPath() : '';
     }
 
-    /* delete file
+    /** Delete file
      *
      * @return bool
      */
@@ -161,8 +171,9 @@ class $$$File extends $bp$BpObject {
 	return parent::delete();
     }
 
-    /* is valid file to upload
-     * @param file-handle: file handle of file to upload
+    /** Is valid file to upload
+     * @param file-handle $FH
+     *	File handle of file to upload
      *
      * @return bool
      */
@@ -171,8 +182,9 @@ class $$$File extends $bp$BpObject {
 	    $this->isValidQuota($FH['size'])) ? true : false;
     }
 
-    /* is within allowed filesize
-     * @param int: bytes of new file
+    /** Is within allowed filesize
+     * @param int $filesize
+     *	Bytes of new file
      *
      * @return bool
      */
@@ -181,8 +193,9 @@ class $$$File extends $bp$BpObject {
 	return ($filesize <= $TSunic->Usr->config('$$$maxfilesize')) ? true : false;
     }
 
-    /* is within allowed filesystem size
-     * @param int: bytes of new file
+    /** Is within allowed filesystem size
+     * @param int $filesize
+     *	Bytes of new file
      *
      * @return bool
      */
@@ -193,9 +206,9 @@ class $$$File extends $bp$BpObject {
 	    $TSunic->Usr->config('$$$quota')) ? true : false;
     }
 
-    /* get directory, that contains this file
+    /** Get directory, that contains this file
      *
-     * @return OBJECT
+     * @return Directory
      */
     public function getDirectory () {
 	if (!empty($this->Directory)) return $this->Directory;
@@ -204,7 +217,7 @@ class $$$File extends $bp$BpObject {
 	return $this->Directory;
     }
 
-    /* get mime-type of file
+    /** Get mime-type of file
      *
      * @return string
      */
@@ -213,7 +226,7 @@ class $$$File extends $bp$BpObject {
 	return ($File) ? $File->getMimeType() : '';
     }
 
-    /* get content of file
+    /** Get content of file
      *
      * @return string
      */
@@ -226,8 +239,9 @@ class $$$File extends $bp$BpObject {
 	return $TSunic->Usr->decrypt($content);
     }
 
-    /* set content of file
-     * @param string: new content of file
+    /** Set content of file
+     * @param string $content
+     *	New content of file
      *
      * @return string
      */
@@ -247,7 +261,7 @@ class $$$File extends $bp$BpObject {
 	return true;
     }
 
-    /* is valid object?
+    /** Is valid object?
      *
      * @return string
      */
@@ -259,7 +273,7 @@ class $$$File extends $bp$BpObject {
 	return $File->isValid();
     }
 
-    /* get absolute path to this file in filesystem
+    /** Get absolute path to this file in filesystem
      *
      * @return string
      */
@@ -268,8 +282,9 @@ class $$$File extends $bp$BpObject {
 	return ($this->getInfo('parent')) ? $this->getDirectory()->getAbsPath()."/$name" : "$name";
     }
 
-    /* get directory object to certain path
-     * @param string: path to directory
+    /** Get directory object to certain path
+     * @param string $path
+     *	Path to directory
      *
      * @return Directory
      */
@@ -279,7 +294,7 @@ class $$$File extends $bp$BpObject {
 	return $Filesystem->path2dir($path);
     }
 
-    /* split path of file to dir and file path
+    /** Split path of file to dir and file path
      *
      * @return Directory
      */

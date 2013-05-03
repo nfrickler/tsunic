@@ -1,23 +1,27 @@
-<!-- | Filesystem class -->
+<!-- | CLASS Filesystem -->
 <?php
+/** TSunic filesystem
+ *
+ * This offers the root of TSunics filesystem
+ */
 class $$$Filesystem {
 
-    /* all available Directory objects
-     * array
+    /** All available Directory objects
+     * @var array $directories
      */
     protected $directories = array();
 
-    /* all available File objects
-     * array
+    /** All available File objects
+     * @var array $files
      */
     protected $files = array();
 
-    /* all available Image objects
-     * array
+    /** All available Image objects
+     * @var array $images
      */
     protected $images = array();
 
-    /* get all available directories
+    /** Get all available directories
      *
      * @return array
      */
@@ -33,7 +37,7 @@ class $$$Filesystem {
 	return $this->directories;
     }
 
-    /* get all available files
+    /** Get all available files
      *
      * @return array
      */
@@ -50,8 +54,9 @@ class $$$Filesystem {
 	return array_merge($this->images, $this->files);
     }
 
-    /* get directory object to certain path (create if not exists)
-     * @param string: path to directory
+    /** Get directory object to certain path (create if not exists)
+     * @param string $path
+     *	Path to directory
      *
      * @return Directory
      */
