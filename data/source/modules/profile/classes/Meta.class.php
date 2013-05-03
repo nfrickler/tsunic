@@ -1,9 +1,14 @@
 <!-- | CLASS Meta -->
 <?php
+/** Meta class for profile module
+ *
+ * This class offers helper methods
+ */
 class $$$Meta {
 
-    /* get MyProfile to certain fk_account
-     * @param int: fk_account of MyProfile
+    /** Get MyProfile for certain fk_account
+     * @param int $fk_account
+     *	Fk_account of MyProfile
      *
      * @return bool
      */

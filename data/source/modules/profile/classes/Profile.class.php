@@ -1,9 +1,13 @@
 <!-- | CLASS Profile -->
 <?php
+/** Profile management
+ *
+ * This class represents a profile of a certain person
+ */
 class $$$Profile extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'PROFILE__FIRSTNAME',
@@ -14,9 +18,11 @@ class $$$Profile extends $bp$BpObject {
 	'PROFILE__ACCOUNT',
     );
 
-    /* save dateofbirth
-     * @param int: timestamp of date of birth
-     * +@param string: title of date
+    /** Create new date for date of birth
+     * @param int $start
+     *	Timestamp of date of birth
+     * @param string $title
+     *	Title of date
      *
      * @return bool
      */
@@ -47,7 +53,7 @@ class $$$Profile extends $bp$BpObject {
 	return false;
     }
 
-    /* get name of this object (this will be the one shown to user)
+    /** Get name of this object (this will be the one shown to user)
      *
      * @return string
      */
@@ -65,9 +71,9 @@ class $$$Profile extends $bp$BpObject {
 	return $out;
     }
 
-    /* get account object connected with this profile
+    /** Get account object connected with this profile
      *
-     * @return object
+     * @return User
      */
     public function getAccount () {
 	global $TSunic;
@@ -76,7 +82,7 @@ class $$$Profile extends $bp$BpObject {
 	    : NULL;
     }
 
-    /* delete
+    /** Delete profile
      *
      * @return bool
      */

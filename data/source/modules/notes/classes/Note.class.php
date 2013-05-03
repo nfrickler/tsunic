@@ -1,10 +1,16 @@
 <!-- | CLASS Note -->
 <?php
+/** Class to access text files
+ *
+ * A wrapper for File object offering some additional methods for text files
+ */
 class $$$Note extends $filesystem$File {
 
-    /* save note
-     * @param string: path
-     * @param string: content
+    /** Save note
+     * @param string $path
+     *	Path
+     * @param string $content
+     *	Content
      *
      * @return bool
      */
@@ -38,7 +44,7 @@ class $$$Note extends $filesystem$File {
 	return true;
     }
 
-    /* get class of this object
+    /** Get class of this object
      *
      * @return string
      */

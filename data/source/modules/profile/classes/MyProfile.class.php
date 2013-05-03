@@ -1,8 +1,12 @@
 <!-- | CLASS MyProfile -->
 <?php
+/** Main profile of user
+ *
+ * This object represents the main public Profile object of a user
+ */
 class $$$MyProfile extends $profile$Profile {
 
-    /* delete
+    /** MyProfiles cannot be deleted
      *
      * @return bool
      */
