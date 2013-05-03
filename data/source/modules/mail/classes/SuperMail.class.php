@@ -1,23 +1,27 @@
-<!-- | CLASS handling general mail things -->
+<!-- | CLASS SuperMail -->
 <?php
+/** Meta class of mail module
+ *
+ * This meta class offers some helper methods
+ */
 class $$$SuperMail {
 
-    /* mailbox objects
-     * array
+    /** Mailbox objects
+     * @var array $mailboxes
      */
     protected $mailboxes;
 
-    /* smtp objects
-     * array
+    /** Smtp objects
+     * @var array $smtps
      */
     protected $smtps;
 
-    /* mailaccount objects
-     * array
+    /** Mailaccount objects
+     * @var array $mailaccounts
      */
     protected $mailaccounts;
 
-    /* get all mailaccount-objects of user-account
+    /** Get all mailaccount objects of user account
      *
      * @return array
      */
@@ -44,7 +48,7 @@ class $$$SuperMail {
 	return $this->mailaccounts;
     }
 
-    /* get all mailbox-objects of account
+    /** Get all mailbox objects of account
      *
      * @return array
      */
@@ -80,10 +84,11 @@ class $$$SuperMail {
 	return $this->mailboxes;
     }
 
-    /* get Smtp with specified id (including 0 for SmtpLocal)
-     * @param int: id of Smtp object
+    /** Get Smtp with specified id (including 0 for SmtpLocal)
+     * @param int $id
+     *	Id of Smtp object
      *
-     * @return object
+     * @return Smtp
      */
     public function getSmtp ($id) {
 	$smtps = $this->getSmtps(true);
@@ -93,8 +98,9 @@ class $$$SuperMail {
 	return NULL;
     }
 
-    /* get all smtp-objects of user-account
-     * +@param bool: include local sender (if enabled)?
+    /** Get all Smtp objects of user account
+     * @param bool $includeLocal
+     *	Include local sender (if enabled)?
      *
      * @return array
      */

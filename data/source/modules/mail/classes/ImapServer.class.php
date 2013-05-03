@@ -1,36 +1,48 @@
 <!-- | CLASS ImapServer -->
 <?php
+/** Handle connection to IMAP servers
+ *
+ * This class offers an interface to handle connection to IMAP servers
+ */
 class $$$ImapServer {
 
-    /* information about this object
-     * array
+    /** Information about this object
+     * @var array $info
      */
     protected $info;
 
-    /* streams to mailboxes
-     * array
+    /** Streams to mailboxes
+     * @var array $streams
      */
     protected $streams;
 
-    /* cache
-     * array
+    /** Cache
+     * @var array $cache
      */
     protected $cache;
 
-    /* cached mails in mailbox
-     * array
+    /** Cached mails in mailbox
+     * @var array $mails
      */
     protected $mails;
 
-    /* constructor
-     * @param string: host
-     * @param int: port
-     * @param string: user
-     * @param string: password
-     * @param int: protocol
-     * @param int: auth
-     * @param int: connsecurity
-     * +@param int: imap timeout
+    /** Constructor
+     * @param string $host
+     *	Host
+     * @param int $port
+     *	Port
+     * @param string $user
+     *	User
+     * @param string $password
+     *	Password
+     * @param int $protocol
+     *	Protocol
+     * @param int $auth
+     *	Auth
+     * @param int $connsecurity
+     *	Connsecurity
+     * @param int $timeout
+     *	IMAP timeout
      */
     public function __construct ($host, $port, $user, $password, $protocol, $auth, $connsecurity, $timeout = 3) {
 
@@ -51,8 +63,9 @@ class $$$ImapServer {
 	imap_timeout(IMAP_READTIMEOUT, $this->info['timeout']);
     }
 
-    /* get information about ImapServer
-     * @param string: name of info
+    /** Get information about ImapServer
+     * @param string $name
+     *	Name of info
      *
      * @return mix
      */
@@ -61,8 +74,9 @@ class $$$ImapServer {
 	return NULL;
     }
 
-    /* get mboxstr
-     * +@param string: name of mailbox
+    /** Get mboxstr
+     * @param string $mailbox
+     *	Name of mailbox
      *
      * @return string
      */
@@ -95,9 +109,11 @@ class $$$ImapServer {
 	return $mboxstr;
     }
 
-    /* connect to server
-     * +@param string: name of mailbox
-     * +@param bool: log errors?
+    /** Connect to server
+     * @param string $mailbox
+     *	Name of mailbox
+     * @param bool $error
+     *	Log errors?
      *
      * @return stream-object
      */
@@ -154,7 +170,9 @@ class $$$ImapServer {
 	return NULL;
     }
 
-    /* disconnect all streams
+    /** Disconnect all streams
+     *
+     * @return void
      */
     public function disconnect () {
 	foreach ($this->streams as $index => $value) {
@@ -162,9 +180,9 @@ class $$$ImapServer {
 	}
     }
 
-    /* get all mailboxes on server
+    /** Get all mailboxes on server
      *
-     * @return bool/array
+     * @return bool|array
      */
     public function getServerboxes () {
 
@@ -190,10 +208,11 @@ class $$$ImapServer {
 	return $mailboxes;
     }
 
-    /* get all mails in mailbox on server
-     * @param string: mailbox
+    /** Get all mails in mailbox on server
+     * @param string $mailbox
+     *	Mailbox
      *
-     * @return array/bool
+     * @return array|bool
      */
     public function getMails ($mailbox) {
 	if ($this->mails[$mailbox]) return $this->mails[$mailbox];
@@ -213,10 +232,13 @@ class $$$ImapServer {
 	return $this->mails[$mailbox];
     }
 
-    /* delete mail on server
-     * @param string: mailbox
-     * @param int: uid of mail
-     * +@param bool: expunge?
+    /** Delete mail on server
+     * @param string $mailbox
+     *	Mailbox
+     * @param int $uid
+     *	Uid of mail
+     * @param bool $cleanup
+     *	Expunge?
      *
      * @return bool
      */
@@ -253,9 +275,11 @@ class $$$ImapServer {
 	return false;
     }
 
-    /* load all data of mail
-     * @param string: mailbox
-     * @param int: number of mail
+    /** Load all data of mail
+     * @param string $mailbox
+     *	Mailbox
+     * @param int $msg_num
+     *	Number of mail
      *
      * @return array
      */
@@ -316,7 +340,7 @@ class $$$ImapServer {
 	return $out;
     }
 
-    /* check, if connection can be established
+    /** Check, if connection can be established
      *
      * @return bool
      */
@@ -324,11 +348,15 @@ class $$$ImapServer {
 	return ($this->connect('', false)) ? true : false;
     }
 
-    /* get parts of mail (plainbody, htmlbody, attatchments etc)
-     * @param stream: stream to fetch mails from
-     * @param int: mail-id
-     * @param object: part of mail
-     * @param int: part-number
+    /** Get parts of mail (plainbody, htmlbody, attatchments etc)
+     * @param stream $stream
+     *	Stream to fetch mails from
+     * @param int $mail_id
+     *	Mail-id
+     * @param object $part
+     *	Part of mail
+     * @param int $partnumber
+     *	Part number
      *
      * @return bool
      */
@@ -454,8 +482,9 @@ class $$$ImapServer {
 	return true;
     }
 
-    /* decode value
-     * @param string: subject to decode
+    /** Decode value
+     * @param string $value
+     *	Subject to decode
      *
      * @return string
      */
@@ -463,7 +492,7 @@ class $$$ImapServer {
 	return $this->decodeMimeString($value);
     }
 
-    /* return supported encodings in lowercase
+    /** Return supported encodings in lowercase
      * @source: http://php.net/imap_mime_header_decode (comments)
      *
      * @return array
@@ -477,11 +506,16 @@ class $$$ImapServer {
 	return $r;
     }
 
-    /* decode a mail-header string to a specified charset
+    /** Decode a mail-header string to a specified charset
      * @source: http://php.net/imap_mime_header_decode (comments)
-     * @param string: mime-string
-     * +@param string: input-charset
-     * +@param string: target-charset
+     * @param string $mimeStr
+     *	Mime string
+     * @param string $inputCharset
+     *	Input charset
+     * @param string $targetCharset
+     *	Target charset
+     * @param string $fallbackCharset
+     *	Fallback charset
      *
      * @return string
      */

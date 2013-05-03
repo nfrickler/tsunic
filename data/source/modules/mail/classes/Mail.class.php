@@ -1,9 +1,14 @@
 <!-- | CLASS Mail -->
 <?php
+/** Mail class
+ *
+ * This class offeres Mails. These mails can either be created locally or
+ * synchronized with a Serverbox.
+ */
 class $$$Mail extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'MAIL__SUBJECT',
@@ -21,8 +26,9 @@ class $$$Mail extends $bp$BpObject {
 	'MAIL__UNSEEN',
     );
 
-    /* get content of mail (prefer html)
-     * +@param string: type of content (plain or html)
+    /** Get content of mail (prefer html)
+     * @param string $type
+     *	Type of content (plain or html)
      *
      * @return string
      */
@@ -39,7 +45,7 @@ class $$$Mail extends $bp$BpObject {
 	}
     }
 
-    /* get plain content of mail
+    /** Get plain content of mail
      *
      * @return string
      */
@@ -47,7 +53,7 @@ class $$$Mail extends $bp$BpObject {
 	return $this->getContent('plain');
     }
 
-    /* get html content of mail
+    /** Get html content of mail
      *
      * @return string
      */
@@ -55,7 +61,7 @@ class $$$Mail extends $bp$BpObject {
 	return $this->getContent('html');
     }
 
-    /* send mail
+    /** Send mail
      *
      * @return bool
      */
@@ -82,8 +88,9 @@ class $$$Mail extends $bp$BpObject {
 	return ($errors) ? false : true;
     }
 
-    /* move mail to mailbox
-     * @param int: $fk_mailbox
+    /** Move mail to mailbox
+     * @param int $fk_mailbox
+     *	Fk_mailbox
      *
      * @return bool
      */
@@ -98,8 +105,9 @@ class $$$Mail extends $bp$BpObject {
 	return $this->saveByTag('MAIL__BOX', $fk_mailbox);
     }
 
-    /* check, if sender is valid
-     * @param int: sender of a mail
+    /** Check, if sender is valid
+     * @param int $sender
+     *	Sender of a mail
      *
      * @return bool
      */
@@ -107,8 +115,9 @@ class $$$Mail extends $bp$BpObject {
 	return ($this->getSmtp($sender)) ? true : false;
     }
 
-    /* check, if content is valid
-     * @param string: content of mail
+    /** Check, if content is valid
+     * @param string $content
+     *	Content of mail
      *
      * @return bool
      */
@@ -116,8 +125,9 @@ class $$$Mail extends $bp$BpObject {
 	return (empty($content)) ? false : true;
     }
 
-    /* check, if addressee is valid
-     * @param string: addressee
+    /** Check, if addressee is valid
+     * @param string $addressee
+     *	Addressee
      *
      * @return bool
      */
@@ -125,7 +135,7 @@ class $$$Mail extends $bp$BpObject {
 	return ($this->_validate($addressee, 'email')) ? true : false;
     }
 
-    /* check, if mail is unseen
+    /** Check, if mail is unseen
      *
      * @return bool
      */
@@ -133,7 +143,7 @@ class $$$Mail extends $bp$BpObject {
 	return ($this->getInfo('unseen')) ? true : false;
     }
 
-    /* unset unseen flag
+    /** Unset unseen flag
      *
      * @return bool
      */
@@ -141,9 +151,9 @@ class $$$Mail extends $bp$BpObject {
 	return $this->saveByTag('MAIL__SEEN', 0);
     }
 
-    /* get Smtp object of this Mail
+    /** Get Smtp object of this Mail
      *
-     * @return object
+     * @return Smtp
      */
     public function getSmtp () {
 	global $TSunic;
@@ -151,9 +161,9 @@ class $$$Mail extends $bp$BpObject {
 	return $Meta->getSmtp($this->getInfo('sender'));
     }
 
-    /* get Mailbox object
+    /** Get Mailbox object
      *
-     * @return bool
+     * @return Mailbox
      */
     public function getMailbox () {
 	if (!$this->isValid()) return NULL;
@@ -169,9 +179,9 @@ class $$$Mail extends $bp$BpObject {
 	return $Mailbox;
     }
 
-    /* get Serverbox object
+    /** Get Serverbox object
      *
-     * @return bool
+     * @return Serverbox
      */
     public function getServerbox () {
 	if (!$this->isValid()) return NULL;
@@ -184,9 +194,11 @@ class $$$Mail extends $bp$BpObject {
 	return $Serverbox;
     }
 
-    /* delete mail
-     * +@param bool: delete mail on server?
-     * +@param bool: remove from server completely (not only mark as deleted)?
+    /** Delete mail
+     * @param bool $delonserver
+     *	Delete mail on server?
+     * @param bool $cleanup
+     *	Remove from server completely (not only mark as deleted)?
      *
      * @return bool
      */
@@ -216,7 +228,7 @@ class $$$Mail extends $bp$BpObject {
 	return parent::delete();
     }
 
-    /* get attachment directory
+    /** Get attachment directory
      *
      * @return Directory
      */
@@ -228,7 +240,7 @@ class $$$Mail extends $bp$BpObject {
 
     // ####################### attachments ##################################
 
-    /* get attachments of mail (as objects)
+    /** Get attachments of mail (as objects)
      *
      * @return array
      */
@@ -255,9 +267,11 @@ class $$$Mail extends $bp$BpObject {
 	return $this->attachments;
     }
 
-    /* add new attachment
-     * @param string: name of file
-     * @param string: content of file
+    /** Add new attachment
+     * @param string $name
+     *	Name of file
+     * @param string $content
+     *	Content of file
      *
      * @return bool
      */

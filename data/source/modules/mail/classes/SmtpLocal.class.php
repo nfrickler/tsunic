@@ -1,9 +1,14 @@
 <!-- | CLASS Local mail sender -->
 <?php
+/** Pseudo Smtp object to handle local sends
+ *
+ * Via this Smtp object mails can be send locally
+ */
 class $$$SmtpLocal extends $$$Smtp {
 
-    /* get default value for specific field
-     * @param string: name of field
+    /** Get default value for specific field
+     * @param string $name
+     *	Name of field
      *
      * @return mix
      */
@@ -19,7 +24,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	return NULL;
     }
 
-    /* get name of this object
+    /** Get name of this object
      *
      * @return string
      */
@@ -29,13 +34,15 @@ class $$$SmtpLocal extends $$$Smtp {
 	return $name;
     }
 
-    /* create new smtp-server
-     * @param string: host
-     * @param int: port
-     * @param string: user
-     * @param string: password
-     * @param string: email-address
-     * @param string: email-name
+    /** Create new Smtp server
+     * @param string $email
+     *	E-mail address
+     * @param string $password
+     *	Password
+     * @param string $description
+     *	Description
+     * @param string $emailname
+     *	E-mail-name
      *
      * @return bool
      */
@@ -43,13 +50,15 @@ class $$$SmtpLocal extends $$$Smtp {
 	return false;
     }
 
-    /* edit smtp-server
-     * @param string: host
-     * @param int: port
-     * @param string: user
-     * @param string: password
-     * @param string: email-address
-     * @param string: email-name
+    /** Edit Smtp server
+     * @param string $email
+     *	E-mail-address
+     * @param string $password
+     *	Password
+     * @param string $description
+     *	Description
+     * @param string $emailname
+     *	E-mail-name
      *
      * @return bool
      */
@@ -57,7 +66,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	return false;
     }
 
-    /* delete smtp-server
+    /** Disable deletion
      *
      * @return bool
      */
@@ -65,7 +74,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	return false;
     }
 
-    /* check, if smtp-server exists
+    /** This object is always valid
      *
      * @return bool
      */
@@ -73,7 +82,7 @@ class $$$SmtpLocal extends $$$Smtp {
 	return true;
     }
 
-    /* send mail (either intern or extern)
+    /** Send mail (either intern or extern)
      * @param object: Mail object to be send
      * @param string: addressee
      *
@@ -90,9 +99,11 @@ class $$$SmtpLocal extends $$$Smtp {
 	}
     }
 
-    /* send mail internally to other user
-     * @param object: Mail object to be send
-     * @param string: addressee
+    /** Send mail internally to other user
+     * @param object $Mail
+     *	Mail object to be send
+     * @param string $addressee
+     *	Addressee
      *
      * @return bool
      */
@@ -125,9 +136,11 @@ class $$$SmtpLocal extends $$$Smtp {
 	return true;
     }
 
-    /* send mail via PHP mail function to specified e-mail address
-     * @param object: Mail object to be send
-     * @param string: addressee
+    /** Send mail via PHP mail function to specified e-mail address
+     * @param Mail $Mail
+     *	Mail object to be send
+     * @param string $addressee
+     *	Addressee
      *
      * @return bool
      */

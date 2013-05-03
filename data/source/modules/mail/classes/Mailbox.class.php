@@ -1,18 +1,22 @@
 <!-- | CLASS Mailbox -->
 <?php
+/** Mailbox class
+ *
+ * A mailbox to collect Mails
+ */
 class $$$Mailbox extends $system$Object {
 
-    /* tablename in database
-     * string
+    /** Tablename in database
+     * @var string $table
      */
     protected $table = "#__$mail$mailboxes";
 
-    /* Mail objects of mails in box
-     * array
+    /** Mail objects of mails in box
+     * @var array $mails
      */
     protected $mails;
 
-    /* get object of mails in box
+    /** Get object of mails in box
      *
      * @return array
      */
@@ -35,7 +39,7 @@ class $$$Mailbox extends $system$Object {
 	return $this->mails;
     }
 
-    /* get number of mails in box
+    /** Get number of mails in box
      *
      * @return int
      */
@@ -48,9 +52,11 @@ class $$$Mailbox extends $system$Object {
 	return ($mails) ? count($mails) : 0;
     }
 
-    /* create a new mailbox
-     * @param string: name of mailbox
-     * +@param string: description of box
+    /** Create a new mailbox
+     * @param string $name
+     *	Name of mailbox
+     * @param string $description
+     *	Description of box
      *
      * @return bool
      */
@@ -72,9 +78,11 @@ class $$$Mailbox extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* edit data of box
-     * @param string: name of mailbox
-     * +@param string: description of box
+    /** Edit data of box
+     * @param string $name
+     *	Name of mailbox
+     * @param string $description
+     *	Description of box
      *
      * @return bool
      */
@@ -93,7 +101,7 @@ class $$$Mailbox extends $system$Object {
 	return $this->_edit($data);
     }
 
-    /* delete mailbox
+    /** Delete mailbox
      *
      * @return bool
      */
@@ -109,8 +117,9 @@ class $$$Mailbox extends $system$Object {
 	return $this->_delete();
     }
 
-    /* check, if name of box is valid
-     * @param string: name of mailbox
+    /** Check, if name of box is valid
+     * @param string $name
+     *	Name of mailbox
      *
      * @return bool
      */
@@ -118,8 +127,9 @@ class $$$Mailbox extends $system$Object {
 	return ($this->_validate($name, 'string')) ? true : false;
     }
 
-    /* check, if description of box is valid
-     * @param string: description of mailbox
+    /** Check, if description of box is valid
+     * @param string $description
+     *	Description of mailbox
      *
      * @return bool
      */
@@ -129,7 +139,7 @@ class $$$Mailbox extends $system$Object {
 	) ? true : false;
     }
 
-    /* get all serverboxes transfering mails into this box
+    /** Get all serverboxes transfering mails into this box
      *
      * @return array
      */
@@ -158,7 +168,7 @@ class $$$Mailbox extends $system$Object {
 	return $all_objects;
     }
 
-    /* get seconds until checking for new mails for this mailbox
+    /** Get seconds until checking for new mails for this mailbox
      *
      * @return int
      */
@@ -176,8 +186,9 @@ class $$$Mailbox extends $system$Object {
 	return $next;
     }
 
-    /* check for new emails for this mailbox and store them in the database
-     * +@param bool $force: force check?
+    /** Check for new emails for this mailbox and store them in the database
+     * @param bool $force
+     *	Force check?
      *
      * @return array
      */

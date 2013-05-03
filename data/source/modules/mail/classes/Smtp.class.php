@@ -1,24 +1,28 @@
 <!-- | CLASS Smtp -->
 <?php
+/** Smtp class
+ *
+ * Handling connection to SMTP server
+ */
 class $$$Smtp extends $system$Object {
 
-    /* tablename in database
-     * string
+    /** Tablename in database
+     * @var string $table
      */
     protected $table = "#__$mail$smtps";
 
-    /* password for smtp-server
-     * string
+    /** Password for SMTP server
+     * @var string $password
      */
     private $password;
 
-    /* timeout for SMTP connection in seconds
-     * int
+    /** Timeout for SMTP connection in seconds
+     * @var int $timeout
      */
     protected $timeout = 5;
 
-    /* password authentifications
-     * array
+    /** Password authentifications
+     * @var array $auths
      */
     protected $auths = array(
 	1 => array('{CLASS__SMTP__AUTHS_NORMAL}', ''),
@@ -28,8 +32,8 @@ class $$$Smtp extends $system$Object {
 	5 => array('{CLASS__SMTP__AUTHS_NOAUTH}', '')
     );
 
-    /* connections securities
-     * array
+    /** Connections securities
+     * @var array $connsecurities
      */
     protected $connsecurities = array(
 	1 => array('{CLASS__SMTP__CONNSECURITIES_NONE}', ''),
@@ -37,7 +41,7 @@ class $$$Smtp extends $system$Object {
 	3 => array('{CLASS__SMTP__CONNSECURITIES_SSLTLS}', 'tls')
     );
 
-    /* get name of this object
+    /** Get name of this object
      *
      * @return string
      */
@@ -47,7 +51,7 @@ class $$$Smtp extends $system$Object {
 	return $name;
     }
 
-    /* get all available connection-security-options
+    /** Get all available connectio security options
      *
      * @return array
      */
@@ -55,7 +59,7 @@ class $$$Smtp extends $system$Object {
 	return $this->connsecurities;
     }
 
-    /* get all available password authentication-options
+    /** Get all available password authentication options
      *
      * @return array
      */
@@ -63,9 +67,11 @@ class $$$Smtp extends $system$Object {
 	return $this->auths;
     }
 
-    /* get number or name of password authentification
-     * +@param string/int/bool: authentification-number or -name (false will use auth of this object)
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Get number or name of password authentification
+     * @param string|int|bool $auth
+     *	Authentification-number or -name (false will use auth of this object)
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
      * @return int/string
      */
@@ -78,9 +84,11 @@ class $$$Smtp extends $system$Object {
 	return $this->convertNumberName($this->auths, $auth, $getNumber);
     }
 
-    /* get number or name of connection-security
-     * +@param string/int/bool: connsecurity-number or -name (false will use consecurity of this object)
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Get number or name of connection-security
+     * @param string|int|bool $connsecurity
+     *	Connsecurity-number or -name (false will use consecurity of this object)
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
      * @return int/string
      */
@@ -93,12 +101,15 @@ class $$$Smtp extends $system$Object {
 	return $this->convertNumberName($this->connsecurities, $connsecurity, $getNumber);
     }
 
-    /* convert from number to name or vice versa
-     * @param array: converter-array
-     * @param string/int: input-number or -name
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Convert from number to name or vice versa
+     * @param array $array
+     *	Converter array
+     * @param string|int $input
+     *	Input number or -name
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
-     * @return int/string
+     * @return int|string
      */
     public function convertNumberName ($array, $input, $getNumber = false) {
 
@@ -141,11 +152,15 @@ class $$$Smtp extends $system$Object {
 	}
     }
 
-    /* create new Smtp object
-     * @param string: email address
-     * @param string: password
-     * +@param string: description
-     * +@param string: email name
+    /** Create new Smtp object
+     * @param string $email
+     *	E-mail address
+     * @param string $password
+     *	Password
+     * @param string $description
+     *	Description
+     * @param string $emailname
+     *	Email name
      *
      * @return bool
      */
@@ -164,12 +179,17 @@ class $$$Smtp extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* set connection for SMTP server
-     * @param string: host to connect to smtp server
-     * @param string: user to connect to smtp server
-     * @param int: port to connect to smtp server
-     * @param int/string: connection-security
-     * @param int/string: password authentification
+    /** Set connection for SMTP server
+     * @param string $host
+     *	Host to connect to smtp server
+     * @param string $user
+     *	User to connect to smtp server
+     * @param int $port
+     *	Port to connect to smtp server
+     * @param int|string $connsecurity
+     *	Connection security
+     * @param int|string $auth
+     *	Password authentification
      *
      * @return bool
      */
@@ -197,12 +217,17 @@ class $$$Smtp extends $system$Object {
 	return false;
     }
 
-    /* set connection for SMTP server
-     * @param string: host to connect to smtp server
-     * @param string: user to connect to smtp server
-     * @param int: port to connect to smtp server
-     * @param int/string: connection-security
-     * @param int/string: password authentification
+    /** Set connection for SMTP server
+     * @param string $host
+     *	Host to connect to smtp server
+     * @param string $user
+     *	User to connect to smtp server
+     * @param int $port
+     *	Port to connect to smtp server
+     * @param int|string $connsecurity
+     *	Connection security
+     * @param int|string $auth
+     *	Password authentification
      *
      * @return bool
      */
@@ -222,9 +247,11 @@ class $$$Smtp extends $system$Object {
 	return $this->setMulti($data, true);
     }
 
-    /* checks wether a value of this object is valid
-     * @param string: name of value
-     * @param string: value
+    /** Checks whether a value of this object is valid
+     * @param string $name
+     *	Name of value
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -263,11 +290,15 @@ class $$$Smtp extends $system$Object {
 	return parent::isValidInfo($name, $value);
     }
 
-    /* edit Smtp object
-     * @param string: email-address
-     * @param string: password
-     * +@param string: description
-     * +@param string: email-name
+    /** Edit Smtp object
+     * @param string $email
+     *	E-mail-address
+     * @param string $password
+     *	Password
+     * @param string $description
+     *	Description
+     * @param string $emailname
+     *	E-mail-name
      *
      * @return bool
      */
@@ -281,7 +312,7 @@ class $$$Smtp extends $system$Object {
 	return $this->setMulti($data);
     }
 
-    /* delete Smtp object
+    /** Delete Smtp object
      *
      * @return bool
      */
@@ -289,8 +320,9 @@ class $$$Smtp extends $system$Object {
 	return $this->_delete();
     }
 
-    /* check, if host is valid
-     * @param string: host of server-connection
+    /** Check, if host is valid
+     * @param string $host
+     *	Host of server connection
      *
      * @return bool
      */
@@ -298,8 +330,9 @@ class $$$Smtp extends $system$Object {
 	return $this->_validate($host, 'url');
     }
 
-    /* check, if description is valid
-     * @param string: description
+    /** Check, if description is valid
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -307,8 +340,9 @@ class $$$Smtp extends $system$Object {
 	return (empty($description) or $this->_validate($description, 'string'));
     }
 
-    /* check, if port is valid
-     * @param string: port of server-connection
+    /** Check, if port is valid
+     * @param string $port
+     *	Port of server connection
      *
      * @return bool
      */
@@ -316,8 +350,9 @@ class $$$Smtp extends $system$Object {
 	return (empty($port) or $this->_validate($port, 'int'));
     }
 
-    /* check, if auth is valid
-     * @param int: security
+    /** Check, if auth is valid
+     * @param int $auth
+     *	Password security
      *
      * @return bool
      */
@@ -325,8 +360,9 @@ class $$$Smtp extends $system$Object {
 	return isset($this->auths[$auth]);
     }
 
-    /* check, if connsecurity is valid
-     * @param int: connsecurity
+    /** Check, if connsecurity is valid
+     * @param int $connsecurity
+     *	Connsecurity
      *
      * @return bool
      */
@@ -334,12 +370,13 @@ class $$$Smtp extends $system$Object {
 	return (isset($this->connsecurities[$connsecurity])) ? true : false;
     }
 
-    /* get possible auths ($auth = true) OR
+    /** Get possible auths ($auth = true) OR
      * name of one auth ($auth = int) OR
      * authname of this object ($auth = false)
-     * +@param int/bool: security
+     * @param int|bool $auth
+     *	Password security
      *
-     * @return int/array
+     * @return int|array
      */
     public function getAuthname ($auth = false) {
 
@@ -355,8 +392,9 @@ class $$$Smtp extends $system$Object {
 	return false;
     }
 
-    /* check, if user is valid
-     * @param string: user of server-connection
+    /** Check, if user is valid
+     * @param string $user
+     *	User of server connection
      *
      * @return bool
      */
@@ -364,8 +402,9 @@ class $$$Smtp extends $system$Object {
 	return $this->_validate($user, 'extString');
     }
 
-    /* check, if password is valid
-     * @param string: password of server-connection
+    /** Check, if password is valid
+     * @param string $password
+     *	Password of server connection
      *
      * @return bool
      */
@@ -380,8 +419,9 @@ class $$$Smtp extends $system$Object {
 	return true;
     }
 
-    /* check, if e-mail is valid
-     * @param string: boxname of server-connection
+    /** Check, if e-mail is valid
+     * @param string $email
+     *	E-mail address
      *
      * @return bool
      */
@@ -389,8 +429,9 @@ class $$$Smtp extends $system$Object {
 	return $this->_validate($email, 'email');
     }
 
-    /* check, if emailname is valid
-     * @param string: emailname of server
+    /** Check, if emailname is valid
+     * @param string $emailname
+     *	E-mailname of server
      *
      * @return bool
      */
@@ -398,8 +439,9 @@ class $$$Smtp extends $system$Object {
 	return $this->_validate($emailname, 'string');
     }
 
-    /* save connection-errors
-     * @param string: error-message
+    /** Save connection-errors
+     * @param string $error_msg
+     *	Error message
      *
      * @return string
      */
@@ -414,12 +456,17 @@ class $$$Smtp extends $system$Object {
     /* *********************** server-interaction *************************/
     /* ********************************************************************/
 
-    /* try to get or validate connection data automatically
-     * @param string: host
-     * @param int: port
-     * @param string: user
-     * +@param int/bool: password-authentification
-     * +@param int/bool: connection-security
+    /** Try to get or validate connection data automatically
+     * @param string $host
+     *	Host
+     * @param int $port
+     *	Port
+     * @param string $user
+     *	User
+     * @param int|bool $auth
+     *	Password authentification
+     * @param int|bool $connsecurity
+     *	Connection security
      *
      * @return bool
      */
@@ -522,9 +569,11 @@ class $$$Smtp extends $system$Object {
 
     /* ************************** send mail *******************************/
 
-    /* send Mail
-     * @param object: Mail object to be send
-     * @param string: e-mail of addressee
+    /** Send Mail
+     * @param Mail $Mail
+     *	Mail object to be send
+     * @param string $addressee
+     *	E-mail of addressee
      *
      * @return bool
      */
@@ -606,9 +655,9 @@ class $$$Smtp extends $system$Object {
 
     /* *********************** connection handling ************************/
 
-    /* get connection to server
+    /** Get connection to server
      *
-     * @return bool/stream
+     * @return bool|stream
      */
     public function getConnection () {
 	global $TSunic;
@@ -706,7 +755,7 @@ class $$$Smtp extends $system$Object {
 	return $this->conn;
     }
 
-    /* authenticate to server
+    /** Authenticate to server
      *
      * @return bool
      */
@@ -727,7 +776,7 @@ class $$$Smtp extends $system$Object {
 	return true;
     }
 
-    /* close connection
+    /** Close connection
      *
      * @return bool
      */
@@ -747,7 +796,9 @@ class $$$Smtp extends $system$Object {
 
     /* *********************** general actions ****************************/
 
-    /* send data to server
+    /** Send data to server
+     * @param string $data
+     *	Data to be send
      *
      * @return bool
      */
@@ -764,9 +815,9 @@ class $$$Smtp extends $system$Object {
 	return true;
     }
 
-    /* recieve data from server
+    /** Recieve data from server
      *
-     * @return bool
+     * @return string
      */
     protected function getData () {
 
@@ -786,9 +837,9 @@ class $$$Smtp extends $system$Object {
 	return $data;
     }
 
-    /* get status of answer
+    /** Get status of answer
      *
-     * @return bool/int
+     * @return bool|int
      */
     protected function getStatus () {
 	// get first 3 characters of answer

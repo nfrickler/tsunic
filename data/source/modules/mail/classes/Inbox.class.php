@@ -1,9 +1,14 @@
 <!-- | CLASS Inbox -->
 <?php
+/** Mailbox for incoming mails
+ *
+ * This mailbox collects all mails not belonging to another Mailbox
+ */
 class $$$Inbox extends $$$Mailbox {
 
-    /* get default value for specific field
-     * @param string: name of field
+    /** Get default value for specific field
+     * @param string $name
+     *	Name of field
      *
      * @return mix
      */
@@ -20,7 +25,7 @@ class $$$Inbox extends $$$Mailbox {
 	return NULL;
     }
 
-    /* get object of mails in box
+    /** Get object of mails in box
      *
      * @return array
      */
@@ -42,9 +47,11 @@ class $$$Inbox extends $$$Mailbox {
 	return $this->mails;
     }
 
-    /* create a new mailbox
-     * @param string: name of mailbox
-     * +@param string: description of box
+    /** Create a new mailbox
+     * @param string $name
+     *	Name of mailbox
+     * @param string $description
+     *	Description of box
      *
      * @return bool
      */
@@ -52,9 +59,11 @@ class $$$Inbox extends $$$Mailbox {
 	return false;
     }
 
-    /* edit data of box
-     * @param string: name of mailbox
-     * @param string: description of box
+    /** Edit data of box
+     * @param string $name
+     *	Name of mailbox
+     * @param string $description
+     *	Description of box
      *
      * @return bool
      */
@@ -62,7 +71,7 @@ class $$$Inbox extends $$$Mailbox {
 	return false;
     }
 
-    /* delete mailbox
+    /** Delete mailbox
      *
      * @return bool
      */
@@ -70,7 +79,7 @@ class $$$Inbox extends $$$Mailbox {
 	return false;
     }
 
-    /* always valid
+    /** Always valid
      *
      * @return bool
      */

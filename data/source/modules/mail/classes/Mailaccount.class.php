@@ -1,29 +1,33 @@
 <!-- | CLASS Mailaccount -->
 <?php
+/** Mailaccount object
+ *
+ * This object maps an extern mailaccount to TSunic
+ */
 class $$$Mailaccount extends $system$Object {
 
-    /* tablename in database
-     * string
+    /** Tablename in database
+     * @var string $table
      */
     protected $table = "#__$mail$mailaccounts";
 
-    /* serverbox objects
-     * array
+    /** Serverbox objects
+     * @var array $serverboxes
      */
     protected $serverboxes;
 
-    /* time in seconds after local serverbox information has to be updated
-     * int
+    /** Time in seconds after local serverbox information has to be updated
+     * @var int $frequenceServerboxUpdate
      */
     protected $frequenceServerboxUpdate;
 
-    /* ImapServer object
-     * object
+    /** ImapServer object
+     * @var ImapServer $ImapServer
      */
     protected $ImapServer;
 
-    /* password authentifications
-     * array
+    /** Password authentifications
+     * @var array $auths
      */
     protected $auths = array(
 	1 => array('{CLASS__MAILACCOUNT__AUTHS_NORMAL}', ''),
@@ -32,16 +36,16 @@ class $$$Mailaccount extends $system$Object {
 	//   4 => array('{CLASS__MAILACCOUNT__AUTHS_KERBEROS_GSSAPI}', '') // not supported
     );
 
-    /* protocols
-     * array
+    /** Protocols
+     * @var array $protocols
      */
     protected $protocols = array(
 	1 => array('{CLASS__MAILACCOUNT__PROTOCOLS_IMAP}', 'imap'),
 	2 => array('{CLASS__MAILACCOUNT__PROTOCOLS_POP3}', 'pop3')
     );
 
-    /* connections-securities
-     * array
+    /** Connections securities
+     * @var array $connsecurities
      */
     protected $connsecurities = array(
 	1 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_NONE}', 'novalidate-cert'),
@@ -50,13 +54,14 @@ class $$$Mailaccount extends $system$Object {
 	4 => array('{CLASS__MAILACCOUNT__CONNSECURITIES_SSLTLSNOVAL}', 'ssl/novalidate-cert')
     );
 
-    /* imap timeout (in seconds)
-     * int
+    /** IMAP timeout (in seconds)
+     * @var int $timeout
      */
     protected $timeout = 3;
 
-    /* constructor
-     * +@params int: ID
+    /** Constructor
+     * @params int $id
+     *	ID
      */
     public function __construct ($id = 0) {
 
@@ -66,8 +71,9 @@ class $$$Mailaccount extends $system$Object {
 	return parent::__construct($id);
     }
 
-    /* get all serverboxes of this server
-     * @param bool: allow update of serverboxes?
+    /** Get all serverboxes of this server
+     * @param bool $allowSync
+     *	Allow update of serverboxes?
      *
      * @return array
      */
@@ -97,7 +103,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->serverboxes;
     }
 
-    /* get all available connection security options
+    /** Get all available connection security options
      *
      * @return array
      */
@@ -105,7 +111,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->connsecurities;
     }
 
-    /* get all available password authentication options
+    /** Get all available password authentication options
      *
      * @return array
      */
@@ -113,7 +119,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->auths;
     }
 
-    /* get all available protocol options
+    /** Get all available protocol options
      *
      * @return array
      */
@@ -121,13 +127,19 @@ class $$$Mailaccount extends $system$Object {
 	return $this->protocols;
     }
 
-    /* set connection for mailaccount
-     * @param string: host to connect to mailaccount
-     * @param string: user to connect to mailaccount
-     * @param int: port to connect to mailaccount
-     * @param int/string: protocol
-     * @param int/string: password authentification
-     * @param int/string: connection security
+    /** Set connection for mailaccount
+     * @param string $host
+     *	Host to connect to mailaccount
+     * @param string $user
+     *	User to connect to mailaccount
+     * @param int $port
+     *	Port to connect to mailaccount
+     * @param int|string $protocol
+     *	Protocol
+     * @param int|string $auth
+     *	Password authentification
+     * @param int|string $connsecurity
+     *	Connection security
      *
      * @return bool
      */
@@ -153,13 +165,19 @@ class $$$Mailaccount extends $system$Object {
 	return $this->setMulti($data, true);
     }
 
-    /* try to detect right connection data and save them
-     * +@param string: host
-     * +@param int: port
-     * +@param string: user
-     * +@param int/bool: protocol
-     * +@param int/bool: password authentification
-     * +@param int/bool: connection security
+    /** Try to detect right connection data and save them
+     * @param string $host
+     *	Host
+     * @param int $port
+     *	Port
+     * @param string $user
+     *	User
+     * @param int|bool $protocol
+     *	Protocol
+     * @param int|bool $auth
+     *	Password authentification
+     * @param int|bool $connsecurity
+     *	Connection security
      *
      * @return bool
      */
@@ -187,9 +205,11 @@ class $$$Mailaccount extends $system$Object {
 	return true;
     }
 
-    /* checks wether a value of this object is valid
-     * @param string: name of value
-     * @param string: value
+    /** Checks wether a value of this object is valid
+     * @param string $name
+     *	Name of value
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -228,11 +248,15 @@ class $$$Mailaccount extends $system$Object {
 	return parent::isValidInfo($name, $value);;
     }
 
-    /* create a new mailaccount
-     * @param string: email of mailaccount
-     * @param string: password of mailaccount
-     * +@param string: name of mailaccount
-     * +@param string: description of mailaccount
+    /** Create a new mailaccount
+     * @param string $email
+     *	E-mail of mailaccount
+     * @param string $password
+     *	Password of mailaccount
+     * @param string $name
+     *	Name of mailaccount
+     * @param string $description
+     *	Description of mailaccount
      *
      * @return bool
      */
@@ -254,11 +278,15 @@ class $$$Mailaccount extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* edit a mailaccount
-     * @param string: email of mailaccount
-     * @param string: password of mailaccount
-     * +@param string: name of mailaccount
-     * +@param string: description of mailaccount
+    /** Edit a mailaccount
+     * @param string $email
+     *	E-mail of mailaccount
+     * @param string $password
+     *	Password of mailaccount
+     * @param string $name
+     *	Name of mailaccount
+     * @param string $description
+     *	Description of mailaccount
      *
      * @return bool
      */
@@ -277,7 +305,7 @@ class $$$Mailaccount extends $system$Object {
 	return $this->setMulti($data);
     }
 
-    /* delete mail account
+    /** Delete mailaccount
      *
      * @return bool
      */
@@ -293,8 +321,9 @@ class $$$Mailaccount extends $system$Object {
 	return $this->_delete();
     }
 
-    /* check, if description of mail account is valid
-     * @param string: description of mail-account
+    /** Check, if description of mail account is valid
+     * @param string $description
+     *	Description of mail-account
      *
      * @return bool
      */
@@ -303,8 +332,9 @@ class $$$Mailaccount extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if name of mail account is valid
-     * @param string: name of mail-account
+    /** Check, if name of mail account is valid
+     * @param string $name
+     *	Name of mail-account
      *
      * @return bool
      */
@@ -313,8 +343,9 @@ class $$$Mailaccount extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if email address of mail account is valid
-     * @param string: email of mail-account
+    /** Check, if email address of mailaccount is valid
+     * @param string $email
+     *	E-mail of mailaccount
      *
      * @return bool
      */
@@ -323,8 +354,9 @@ class $$$Mailaccount extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if password of mail-account is valid
-     * @param string: password of mail-account
+    /** Check, if password of mailaccount is valid
+     * @param string $password
+     *	Password of mailaccount
      *
      * @return bool
      */
@@ -343,8 +375,9 @@ class $$$Mailaccount extends $system$Object {
 	return true;
     }
 
-    /* check, if host is valid
-     * @param string: host of server-connection
+    /** Check, if host is valid
+     * @param string $host
+     *	Host of server connection
      *
      * @return bool
      */
@@ -353,8 +386,9 @@ class $$$Mailaccount extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if port is valid
-     * @param string: port of server-connection
+    /** Check, if port is valid
+     * @param string $port
+     *	Port of server connection
      *
      * @return bool
      */
@@ -363,8 +397,9 @@ class $$$Mailaccount extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if user is valid
-     * @param string: user of server-connection
+    /** Check, if user is valid
+     * @param string $user
+     *	User of server connection
      *
      * @return bool
      */
@@ -373,11 +408,13 @@ class $$$Mailaccount extends $system$Object {
 	) ? true : false;
     }
 
-    /* get number or name of password-authentification
-     * @param string/int/bool: authentification-number or -name (false will use auth of this account)
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Get number or name of password-authentification
+     * @param string|int|bool $auth
+     *	Authentification-number or -name (false will use auth of this account)
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
-     * @return int/string
+     * @return int|string
      */
     public function getAuth ($auth, $getNumber = false) {
 
@@ -388,11 +425,13 @@ class $$$Mailaccount extends $system$Object {
 	return $this->convertNumberName($this->auths, $auth, $getNumber);
     }
 
-    /* get number or name of connection-security
-     * @param string/int/bool: connsecurity-number or -name (false will use connsecurity of this account)
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Get number or name of connection-security
+     * @param string|int|bool $connsecurity
+     *	Connsecurity-number or -name (false will use connsecurity of this account)
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
-     * @return int/string
+     * @return int|string
      */
     public function getConnsecurity ($connsecurity, $getNumber = false) {
 
@@ -404,11 +443,13 @@ class $$$Mailaccount extends $system$Object {
 	return $this->convertNumberName($this->connsecurities, $connsecurity, $getNumber);
     }
 
-    /* get number or name of protocol
-     * @param string/int/bool: protocol-number or -name (false will use protocol of this account)
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Get number or name of protocol
+     * @param string|int|bool $protocol
+     *	Protocol number or -name (false will use protocol of this account)
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
-     * @return int/string
+     * @return int|string
      */
     public function getProtocol ($protocol, $getNumber = false) {
 
@@ -419,12 +460,15 @@ class $$$Mailaccount extends $system$Object {
 	return $this->convertNumberName($this->protocols, $protocol, $getNumber);
     }
 
-    /* convert from number to name or vice versa
-     * @param array: converter-array
-     * @param string/int: input-number or -name
-     * +@param bool/string: force output to be number (true) or name (false) or phrase ('phrase')
+    /** Convert from number to name or vice versa
+     * @param array $array
+     *	Converter array
+     * @param string|int $input
+     *	Input number or -name
+     * @param bool|string $getNumber
+     *	Force output to be number (true) or name (false) or phrase ('phrase')
      *
-     * @return int/string
+     * @return int|string
      */
     public function convertNumberName ($array, $input, $getNumber = false) {
 
@@ -470,9 +514,9 @@ class $$$Mailaccount extends $system$Object {
 
     /* ********************** interaction with server ******************* */
 
-    /* get ImapServer object
+    /** Get ImapServer object
      *
-     * @return object
+     * @return ImapServer
      */
     public function getServer () {
 	if ($this->ImapServer) return $this->ImapServer;
@@ -491,10 +535,9 @@ class $$$Mailaccount extends $system$Object {
 	return $this->ImapServer;
     }
 
-
-    /* update local serverbox list in database
+    /** Update local serverbox list in database
      *
-     * @return array/false
+     * @return array|false
      */
     public function updateServerboxes () {
 	global $TSunic;
@@ -535,13 +578,19 @@ class $$$Mailaccount extends $system$Object {
 	return true;
     }
 
-    /* try to get or validate connection data automatically
-     * +@param string: host
-     * +@param int: port
-     * +@param string: user
-     * +@param int/bool: protocol
-     * +@param int/bool: password authentification
-     * +@param int/bool: connection security
+    /** Try to get or validate connection data automatically
+     * @param string $host
+     *	Host
+     * @param int $port
+     *	Port
+     * @param string $user
+     *	User
+     * @param int|bool $protocol
+     *	Protocol
+     * @param int|bool $auth
+     *	Password authentification
+     * @param int|bool $connsecurity
+     *	Connection security
      *
      * @return object
      */

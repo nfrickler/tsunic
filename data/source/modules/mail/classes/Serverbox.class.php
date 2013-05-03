@@ -1,30 +1,35 @@
 <!-- | CLASS Serverbox -->
 <?php
+/** Mapping of external Serverbox to TSunic Mailbox
+ *
+ * This class connects a mailbox of an external mailaccount to TSunics
+ * object system
+ */
 class $$$Serverbox extends $system$Object {
 
-    /* tablename in database
-     * string
+    /** Tablename in database
+     * @var string $table
      */
     protected $table = "#__$mail$serverboxes";
 
-    /* Mailaccount object
-     * object
+    /** Mailaccount object
+     * @var Mailaccount $Mailaccount
      */
     protected $Mailaccount;
 
-    /* Mailbox object
-     * object
+    /** Mailbox object
+     * @var Mailbox $Mailbox
      */
     protected $Mailbox;
 
-    /* temporary cache
-     * array
+    /** Temporary cache
+     * @var array $cache
      */
     protected $cache;
 
-    /* get corresponding Mailbox object
+    /** Get corresponding Mailbox object
      *
-     * @return OBJECT
+     * @return Mailbox
      */
     public function getMailbox () {
 	if ($this->Mailbox) return $this->Mailbox;
@@ -44,10 +49,11 @@ class $$$Serverbox extends $system$Object {
 	return $this->Mailbox;
     }
 
-    /* get Mailaccount object, the serverbox belongs to
-     * +@param bool: get id instead of object
+    /** Get Mailaccount object, the serverbox belongs to
+     * @param bool $get_id
+     *	Get id instead of object
      *
-     * @return OBJECT/bool
+     * @return Mailaccount
      */
     public function getMailaccount ($get_id = false) {
 	global $TSunic;
@@ -69,8 +75,9 @@ class $$$Serverbox extends $system$Object {
 	return ($get_id) ? $this->Mailaccount->getInfo('id') : $this->Mailaccount;
     }
 
-    /* set mailaccount
-     * @param object: mailaccount-object
+    /** Set mailaccount
+     * @param Mailaccount $Mailaccount
+     *	Mailaccount object
      *
      * @return bool
      */
@@ -103,11 +110,15 @@ class $$$Serverbox extends $system$Object {
 	return $TSunic->Db->doUpdate($sql);
     }
 
-    /* add new serverbox
-     * @param int: fk_mailaccount
-     * @param string: name of mailbox on server
-     * +@param int: local mailbox, where new mails are placed in
-     * +@param bool: delete mails on server after saving them locally
+    /** Add new serverbox
+     * @param int $fk_mailaccount
+     *	fk_mailaccount
+     * @param string $name
+     *	Name of mailbox on server
+     * @param int $fk_mailbox
+     *	Local mailbox, where new mails are placed in
+     * @param bool $deleteOnUpdate
+     *	Delete mails on server after saving them locally
      *
      * @return int
      */
@@ -132,10 +143,13 @@ class $$$Serverbox extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* edit serverbox
-     * @param string: name of box on server
-     * @param int: local mailbox, where new mails are placed in
-     * @param bool: delete mails on server after saving them locally
+    /** Edit serverbox
+     * @param string $name
+     *	Name of box on server
+     * @param int $fk_mailbox
+     *	Local mailbox, where new mails are placed in
+     * @param bool $deleteOnUpdate
+     *	Delete mails on server after saving them locally
      *
      * @return bool
      */
@@ -158,7 +172,7 @@ class $$$Serverbox extends $system$Object {
 	return $this->_edit($data, true);
     }
 
-    /* delete serverbox
+    /** Delete serverbox
      *
      * @return bool
      */
@@ -166,8 +180,9 @@ class $$$Serverbox extends $system$Object {
 	return $this->_delete();
     }
 
-    /* de-/activate serverbox
-     * @param bool: activate Serverbox?
+    /** De-/activate serverbox
+     * @param bool $isActive
+     *	Activate Serverbox?
      *
      * @return bool
      */
@@ -179,8 +194,9 @@ class $$$Serverbox extends $system$Object {
 	return $this->_edit(array("isActive" => $isActive));
     }
 
-    /* check, if name is valid
-     * @param string: name of serverbox
+    /** Check, if name is valid
+     * @param string $name
+     *	Name of serverbox
      *
      * @return bool
      */
@@ -188,8 +204,9 @@ class $$$Serverbox extends $system$Object {
 	return $this->_validate($name, 'string');
     }
 
-    /* check, if fk_mailaccount is valid
-     * @param int: fk_mailaccount
+    /** Check, if fk_mailaccount is valid
+     * @param int $frk_mailaccount
+     *	fk_mailaccount
      *
      * @return bool
      */
@@ -204,8 +221,9 @@ class $$$Serverbox extends $system$Object {
 	return false;
     }
 
-    /* check, if fk_mailbox is valid
-     * @param int: fk_mailbox
+    /** Check, if fk_mailbox is valid
+     * @param int $fk_mailbox
+     *	fk_mailbox
      *
      * @return bool
      */
@@ -227,7 +245,7 @@ class $$$Serverbox extends $system$Object {
 	return false;
     }
 
-    /* check, if serverbox should be checked for new mails
+    /** Check, if serverbox should be checked for new mails
      *
      * @return bool
      */
@@ -235,7 +253,7 @@ class $$$Serverbox extends $system$Object {
 	return ($this->timeToCheck() <= 0) ? true : false;
     }
 
-    /* get seconds until checking for new mails
+    /** Get seconds until checking for new mails
      *
      * @return int
      */
@@ -252,10 +270,11 @@ class $$$Serverbox extends $system$Object {
 	return $next;
     }
 
-    /* check for new emails in this serverbox and store them in db
-     * +@param bool: force check?
+    /** Check for new emails in this serverbox and store them in db
+     * @param bool $force
+     *	Force check?
      *
-     * @return array with ids of new mails
+     * @return array
      */
     public function checkMails ($force = false) {
 	if (!$this->isValid()) return false;
@@ -368,7 +387,7 @@ class $$$Serverbox extends $system$Object {
 	return $out;
     }
 
-    /* get all mails from this serverbox
+    /** Get all mails from this serverbox
      *
      * @return array
      */
