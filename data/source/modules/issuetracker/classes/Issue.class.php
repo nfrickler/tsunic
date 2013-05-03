@@ -1,9 +1,13 @@
 <!-- | CLASS Issue -->
 <?php
+/** Issue object
+ *
+ * This class handles a single issue
+ */
 class $$$Issue extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'ISSUE__AUTHOR',
@@ -14,7 +18,7 @@ class $$$Issue extends $bp$BpObject {
 	'ISSUE__STATUS',
     );
 
-    /* get name of this object (this will be the one shown to user)
+    /** Get name of this object (this will be the one shown to user)
      *
      * @return string
      */
@@ -22,9 +26,9 @@ class $$$Issue extends $bp$BpObject {
 	return $this->getInfo('name').' ('.$this->getInfo('author').')';
     }
 
-    /* get Queue object
+    /** Get Queue object
      *
-     * @return object
+     * @return Queue
      */
     public function getQueue () {
 	global $TSunic;

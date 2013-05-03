@@ -1,16 +1,20 @@
 <!-- | CLASS Queue -->
 <?php
+/** Queue object
+ *
+ * This objects handles queues, where issues can be put in
+ */
 class $$$Queue extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'QUEUE__NAME',
 	'QUEUE__DESCRIPTION',
     );
 
-    /* get name of this object (this will be the one shown to user)
+    /** Get name of this object (this will be the one shown to user)
      *
      * @return string
      */
@@ -18,10 +22,11 @@ class $$$Queue extends $bp$BpObject {
 	return ($this->id) ? $this->getInfo('name') : '{CLASS__QUEUE__NAMEALL}';
     }
 
-    /* load Key (save for guest user only)
-     * +@param int: fk_account of key to return
+    /** Load Key (save for guest user only)
+     * @param int $fk_account
+     *	fk_account of key to return
      *
-     * @return Object
+     * @return Key
      */
     /*
     protected function _getKey ($fk_account = 0) {
@@ -31,9 +36,10 @@ class $$$Queue extends $bp$BpObject {
 	return parent::_getKey($TSunic->Usr->getIdGuest());
     }
      */
-    /* get new empty Bit object
+
+    /** Get new empty Bit object
      *
-     * @return object
+     * @return Bit
      */
     /*
     protected function _getNewBit () {
@@ -50,7 +56,8 @@ class $$$Queue extends $bp$BpObject {
 	return $Bit;
     }
      */
-    /* get all issues in this queue
+
+    /** Get all issues in this queue
      *
      * @return array
      */

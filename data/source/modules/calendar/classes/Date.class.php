@@ -1,9 +1,13 @@
 <!-- | CLASS Date -->
 <?php
+/** Date class
+ *
+ * This class offers dates to be used in the Calendar
+ */
 class $$$Date extends $bp$BpObject {
 
-    /* tags to be connected with this object
-     * array
+    /** Tags to be connected with this object
+     * @var array $tags
      */
     protected $tags = array(
 	'DATE__START',
@@ -16,8 +20,9 @@ class $$$Date extends $bp$BpObject {
 	'DATE__REPEATSTOP',
     );
 
-    /* is valid title for date?
-     * @param string: title
+    /** Is valid title for date?
+     * @param string $title
+     *	Title
      *
      * @return bool
      */
@@ -26,8 +31,9 @@ class $$$Date extends $bp$BpObject {
 	    ? true : false;
     }
 
-    /* get corresponding end to start
-     * +@param int: start
+    /** Get corresponding end to start
+     * @param int $start
+     *	Start
      *
      * @return int
      */
@@ -37,9 +43,13 @@ class $$$Date extends $bp$BpObject {
 	return $start + $period;
     }
 
-    /* get next start time of repetition of date
-     * @param int: timestamp of start
-     * +@param bool: count up? (down otherwise)
+    /** Get next start time of repetition of date
+     * @param int $start
+     *	Timestamp of start
+     * @param string $repeattype
+     *	Type of repitition
+     * @param bool $up
+     *	Count up? (down otherwise)
      *
      * @return int
      */
@@ -75,16 +85,23 @@ class $$$Date extends $bp$BpObject {
 	return $start+1;
     }
 
-    /* move start in front of $from
-     * @param int: timestamp to forward
-     * @param int: timestamp to forward to
-     * @param int: repeatcount
-     * @param int: repeatstop
-     * @param string: repeattype
+    /** Move start in front of $from
+     * @param int $start
+     *	Timestamp to forward
+     * @param int $from
+     *	Timestamp to forward to
+     * @param int $repeatcount
+     *	Repeatcount
+     * @param int $repeatstop
+     *	Repeatstop
+     * @param string $repeattype
+     *	Repeattype
      *
      * @return int
      */
-    public function fastForward ($start, $from, $repeatcount, $repeatstop, $repeattype) {
+    public function fastForward (
+	$start, $from, $repeatcount, $repeatstop, $repeattype
+    ) {
 
 	// get period or return
 	switch ($repeattype) {
@@ -120,9 +137,11 @@ class $$$Date extends $bp$BpObject {
 	return array($start, $repeatcount);
     }
 
-    /* get start of date within a certain time space?
-     * @param int: from
-     * @param int: to
+    /** Get start of date within a certain time space?
+     * @param int $from
+     *	Timestamp from
+     * @param int $to
+     *	Timestamp to
      *
      * @return array
      */
@@ -172,7 +191,7 @@ class $$$Date extends $bp$BpObject {
 	return $out;
     }
 
-    /* get name of this object (this will be the one shown to user)
+    /** Get name of this object (this will be the one shown to user)
      *
      * @return string
      */

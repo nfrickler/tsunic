@@ -1,15 +1,21 @@
 <!-- | CLASS Calendar -->
 <?php
+/** Calendar class
+ *
+ * Calendar holding all Date objects.
+ */
 class $$$Calendar {
 
-    /* all dates
-     * array
+    /** All dates
+     * @var array $dates
      */
     protected $dates;
 
-    /* get all dates
-     * +@param int: minimal timestamp for start
-     * +@param int: maximal timestamp for stop
+    /** Get all dates
+     * @param int $from
+     *	Minimal timestamp for start
+     * @param int $to
+     *	Maximal timestamp for stop
      *
      * @return array
      */
@@ -30,7 +36,7 @@ class $$$Calendar {
 	return $dates;
     }
 
-    /* load all dates
+    /** Load all dates
      *
      * @return array
      */
@@ -59,8 +65,9 @@ class $$$Calendar {
 	return $this->dates;
     }
 
-    /* sort dates by DATE__START
-     * @param array: array with dates
+    /** Sort dates by DATE__START
+     * @param array $dates
+     *	Array with dates
      *
      * @return array
      */
@@ -69,8 +76,11 @@ class $$$Calendar {
 	return $dates;
     }
 
-    /* sort dates by time, Date->name (callback)
-     * @param array: array with dates
+    /** Sort dates by time, Date->name (callback)
+     * @param array $Date1
+     *	First date
+     * @param array $Date2
+     *	Second date
      *
      * @return int
      */
