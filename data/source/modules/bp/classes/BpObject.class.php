@@ -1,23 +1,28 @@
 <!-- | CLASS BpObject -->
 <?php
+/** Meta class handling flexible objects
+ *
+ * This meta class offers flexible objects, where the user can add and delete
+ * Bits as he likes. Data will be saved encrypted.
+ */
 class $$$BpObject extends $system$Object {
 
-    /* table of objects
-     * string
+    /** Table of objects
+     * @var string $table
      */
     protected $table = '#__$bp$objects';
 
-    /* bits
-     * array
+    /** Bits
+     * @var array $bits
      */
     protected $bits;
 
-    /* prior tags
-     * array
+    /** Prior tags
+     * @var array $tags
      */
     protected $tags = array();
 
-    /* load information about object
+    /** Load information about object
      *
      * @return bool
      */
@@ -38,7 +43,7 @@ class $$$BpObject extends $system$Object {
 	return true;
     }
 
-    /* get name of this object (this will be the one shown to user)
+    /** Get name of this object (this will be the one shown to user)
      *
      * @return string
      */
@@ -46,8 +51,9 @@ class $$$BpObject extends $system$Object {
 	return 'Unknown';
     }
 
-    /* get value to be showed
-     * @param string/int: id or name of tag
+    /** Get value to be showed
+     * @param string|int $fk_tag
+     *	Id or name of tag
      *
      * @return mix
      */
@@ -56,7 +62,7 @@ class $$$BpObject extends $system$Object {
 	return $Bit->get2show();
     }
 
-    /* get object with specified class
+    /** Get object with specified class
      *
      * @return object
      */
@@ -70,7 +76,7 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* create new object
+    /** Create new object
      *
      * @return bool
      */
@@ -85,7 +91,7 @@ class $$$BpObject extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* delete this object
+    /** Delete this object
      *
      * @return bool
      */
@@ -100,11 +106,13 @@ class $$$BpObject extends $system$Object {
 	return $this->_delete();
     }
 
-    /* add bit to this object
-     * @param string: value of new bit
-     * +@param int/string: tagname or fk_tag of new bit
+    /** Add bit to this object
+     * @param string $value
+     *	Value of new bit
+     * @param int|string $fk_tag
+     *	Tagname or fk_tag of new bit
      *
-     * @return false/Bit object
+     * @return false|Bit
      */
     public function addBit ($value, $fk_tag = 0) {
 	global $TSunic;
@@ -129,10 +137,13 @@ class $$$BpObject extends $system$Object {
 	return $Bit;
     }
 
-    /* add new bit or edit existing one
-     * @param int: fk_tag
-     * @param int: fk_bit
-     * @param mix: new value
+    /** Add new bit or edit existing one
+     * @param int $fk_tag
+     *	fk_tag
+     * @param int $fk_bit
+     *	fk_bit
+     * @param mix $value
+     *	New value
      *
      * @return bool
      */
@@ -155,9 +166,11 @@ class $$$BpObject extends $system$Object {
 	return false;
     }
 
-    /* add new bit or edit existing one (unique Tag per object)
-     * @param int: fk_tag
-     * @param mix: new value
+    /** Add new bit or edit existing one (unique Tag per object)
+     * @param int $fk_tag
+     *	fk_tag
+     * @param mix $value
+     *	New value
      *
      * @return bool
      */
@@ -170,7 +183,7 @@ class $$$BpObject extends $system$Object {
 	return ($Bit and $Bit->set('value', $value, true)) ? true : false;
     }
 
-    /* get new empty Bit object
+    /** Get new empty Bit object
      *
      * @return object
      */
@@ -181,9 +194,11 @@ class $$$BpObject extends $system$Object {
 	return $Bit;
     }
 
-    /* get first bit with specified tag
-     * @param string/int: id or name of tag
-     * +@param bool: add Bit if not exists?
+    /** Get first bit with specified tag
+     * @param string|int $tag
+     *	Id or name of tag
+     * @param bool $add
+     *	Add Bit if not exists?
      *
      * @return Bit
      */
@@ -214,8 +229,9 @@ class $$$BpObject extends $system$Object {
 	return $Bit;
     }
 
-    /* get all bits belonging to this object
-     * +@param bool: get all bits (including default bits?)
+    /** Get all bits belonging to this object
+     * @param bool $incId
+     *	Get all bits (including default bits?)
      *
      * @return array
      */
@@ -264,7 +280,7 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* get all default bits of object
+    /** Get all default bits of object
      *
      * @return array
      */
@@ -299,7 +315,7 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* get all default tags of this object
+    /** Get all default tags of this object
      *
      * @return int
      */
@@ -317,8 +333,9 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* get Bits of this object with a certain tag
-     * @param int: tag to search for
+    /** Get Bits of this object with a certain tag
+     * @param int $fk_tag
+     *	Tag to search for
      *
      * @return array
      */
@@ -336,8 +353,9 @@ class $$$BpObject extends $system$Object {
 	return $out;
     }
 
-    /* get first Bit of this object with a certain tag
-     * @param int: tag to search for
+    /** Get first Bit of this object with a certain tag
+     * @param int $fk_tag
+     *	Tag to search for
      *
      * @return object
      */
@@ -346,17 +364,18 @@ class $$$BpObject extends $system$Object {
 	return array_shift($all);
     }
 
-    /* get Helper object
+    /** Get Helper object
      *
-     * @return Helper object
+     * @return Helper
      */
     public function getHelper () {
 	global $TSunic;
 	return $TSunic->get('$$$Helper');
     }
 
-    /* convert tag-name to id
-     * @param string: name of tag
+    /** Convert tagname to id
+     * @param string $name
+     *	Name of tag
      *
      * @return int
      */
@@ -364,8 +383,9 @@ class $$$BpObject extends $system$Object {
 	return $this->getHelper()->tag2id($name);
     }
 
-    /* check, if fk_tag is valid
-     * @param int: fk_tag
+    /** Check, if fk_tag is valid
+     * @param int $fk_tag
+     *	fk_tag
      *
      * @return bool
      */
@@ -375,7 +395,7 @@ class $$$BpObject extends $system$Object {
 	) ? true : false;
     }
 
-    /* get class name of this object
+    /** Get class name of this object
      *
      * @return string
      */
@@ -383,8 +403,9 @@ class $$$BpObject extends $system$Object {
 	return get_class($this);
     }
 
-    /* give someone access to this object (share bits!)
-     * @param array/int: list of users with access (array('id' => 'writable?'))
+    /** Give someone access to this object (share bits!)
+     * @param array|int $access
+     *	List of users with access (array('id' => 'writable?'))
      *
      * @return bool
      */
@@ -404,8 +425,9 @@ class $$$BpObject extends $system$Object {
 	return parent::shareWith($access);
     }
 
-    /* push this object to other user (move bits!)
-     * @param int: id of other user
+    /** Push this object to other user (move bits!)
+     * @param int $fk_account
+     *	Id of other user
      *
      * @return bool
      */

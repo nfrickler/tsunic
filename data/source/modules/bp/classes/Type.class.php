@@ -1,13 +1,17 @@
 <!-- | CLASS Type -->
 <?php
+/** Type class
+ *
+ * Every Tag has a Type that defines the kind of value, it holds.
+ */
 class $$$Type extends $system$Object {
 
-    /* table
-     * string
+    /** Table
+     * @var string $table
      */
     protected $table = "#__$bp$types";
 
-    /* create
+    /** Create
      *
      * @return bool
      */
@@ -15,7 +19,7 @@ class $$$Type extends $system$Object {
 	return false;
     }
 
-    /* edit
+    /** Edit
      *
      * @return bool
      */
@@ -23,7 +27,7 @@ class $$$Type extends $system$Object {
 	return false;
     }
 
-    /* delete
+    /** Delete
      *
      * @return bool
      */
@@ -31,8 +35,9 @@ class $$$Type extends $system$Object {
 	return false;
     }
 
-    /* is valid value for this type?
-     * @param string: value
+    /** Is valid value for this type?
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -83,8 +88,9 @@ class $$$Type extends $system$Object {
 	return false;
     }
 
-    /* is empty value concerning this type?
-     * @param mix: value to check
+    /** Is empty value concerning this type?
+     * @param mix $value
+     *	Value to check
      *
      * @return bool
      */

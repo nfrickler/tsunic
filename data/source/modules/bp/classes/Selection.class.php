@@ -1,16 +1,24 @@
 <!-- | CLASS Selection -->
 <?php
+/** Selection objects
+ *
+ * Bits of Type "selection" will be handled by this object.
+ * Every selection has some options to choose from.
+ */
 class $$$Selection extends $system$Object {
 
-    /* table
-     * string
+    /** Table
+     * @var string $table
      */
     protected $table = "#__$bp$selections";
 
-    /* create new selection
-     * @param int: fk_tag
-     * @param string: name
-     * @param string: description
+    /** Create new selection
+     * @param int $fk_tag
+     *	fk_tag
+     * @param string $name
+     *	Name
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -33,9 +41,11 @@ class $$$Selection extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* edit type
-     * @param string: name
-     * @param string: description
+    /** Edit type
+     * @param string $name
+     *	Name
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -58,7 +68,7 @@ class $$$Selection extends $system$Object {
 	return $this->_edit($data);
     }
 
-    /* delete tag
+    /** Delete Tag
      *
      * @return bool
      */
@@ -66,8 +76,9 @@ class $$$Selection extends $system$Object {
 	return $this->_delete();
     }
 
-    /* is valid name?
-     * @param string: name
+    /** Is valid name?
+     * @param string $name
+     *	Name
      *
      * @return bool
      */
@@ -76,8 +87,9 @@ class $$$Selection extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid description?
-     * @param string: description
+    /** Is valid description?
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -86,8 +98,9 @@ class $$$Selection extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid fk_tag?
-     * @param int: fk_tag
+    /** Is valid fk_tag?
+     * @param int $fk_tag
+     *	fk_tag
      *
      * @return bool
      */

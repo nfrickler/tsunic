@@ -1,18 +1,22 @@
 <!-- | CLASS Bit -->
 <?php
+/** Bit objects storing values of BpObjects
+ *
+ * Bit objects belong to a BpObject and save their values
+ */
 class $$$Bit extends $system$Object {
 
-    /* tablename in database
-     * string
+    /** Tablename in database
+     * @var string $table
      */
     protected $table = '#__$bp$bits';
 
-    /* sub bits
-     * array
+    /** Sub bits
+     * @var array $bits
      */
     protected $bits;
 
-    /* load information about object
+    /** Load information about object
      *
      * @return bool
      */
@@ -28,7 +32,7 @@ class $$$Bit extends $system$Object {
 	return true;
     }
 
-    /* get value to be showed
+    /** Get value to be showed
      *
      * @return mix
      */
@@ -51,7 +55,7 @@ class $$$Bit extends $system$Object {
 	return $this->getInfo('value');
     }
 
-    /* get object, if typename == mod...
+    /** Get object, if typename == mod...
      *
      * @return object
      */
@@ -63,8 +67,9 @@ class $$$Bit extends $system$Object {
 	return $Obj->getObject();
     }
 
-    /* edit bit (empty values will be deleted)
-     * @param string: value
+    /** Edit bit (empty values will be deleted)
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -72,10 +77,13 @@ class $$$Bit extends $system$Object {
 	return $this->set('value', $value, true);
     }
 
-    /* update data of this bit (create/edit/delete)
-     * @param string: name of value
-     * @param mix: value
-     * +@param bool: save all new infos?
+    /** Update data of this bit (create/edit/delete)
+     * @param string $name
+     *	Name of value
+     * @param mix $value
+     *	Value
+     * @param bool $save
+     *	Save all new infos?
      *
      * @return bool
      */
@@ -104,8 +112,9 @@ class $$$Bit extends $system$Object {
 	return parent::set($name, $value, $save);
     }
 
-    /* convert value in value to be saved
-     * @param mix: value
+    /** Convert value in value to be saved
+     * @param mix $value
+     *	Value
      *
      * @return mix
      */
@@ -113,8 +122,9 @@ class $$$Bit extends $system$Object {
 	return $this->getTag()->toid($value);
     }
 
-    /* check, if fk_object is valid
-     * @param int: fk_object
+    /** Check, if fk_object is valid
+     * @param int $fk_object
+     *	fk_object
      *
      * @return bool
      */
@@ -125,8 +135,9 @@ class $$$Bit extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if fk_tag is valid
-     * @param int: fk_tag
+    /** Check, if fk_tag is valid
+     * @param int $fk_tag
+     *	fk_tag
      *
      * @return bool
      */
@@ -137,8 +148,9 @@ class $$$Bit extends $system$Object {
 	) ? true : false;
     }
 
-    /* check, if value is valid
-     * @param mix: value
+    /** Check, if value is valid
+     * @param mix $value
+     *	Value
      *
      * @return bool
      */
@@ -147,7 +159,7 @@ class $$$Bit extends $system$Object {
 	return $Type->isValidValue($value);
     }
 
-    /* delete bit
+    /** Delete bit
      *
      * @return bool
      */
@@ -155,7 +167,7 @@ class $$$Bit extends $system$Object {
 	return $this->_delete();
     }
 
-    /* get all sub bits
+    /** Get all sub bits
      *
      * @return array
      */
@@ -180,18 +192,18 @@ class $$$Bit extends $system$Object {
 	return $this->bits;
     }
 
-    /* get Tag object
+    /** Get Tag object
      *
-     * @return object
+     * @return Tag
      */
     public function getTag () {
 	global $TSunic;
 	return $TSunic->get('$$$Tag', $this->getInfo('fk_tag'));
     }
 
-    /* get Type object
+    /** Get Type object
      *
-     * @return object
+     * @return Type
      */
     public function getType () {
 	$Tag = $this->getTag();

@@ -1,22 +1,30 @@
 <!-- | CLASS Tag -->
 <?php
+/** Tag objects
+ *
+ * Tags define the kind of value, a Bit holds.
+ */
 class $$$Tag extends $system$Object {
 
-    /* table
-     * string
+    /** Table
+     * @var string $table
      */
     protected $table = "#__$bp$tags";
 
-    /* Type object
-     * object
+    /** Type object
+     * @var Type $Type
      */
     protected $Type;
 
-    /* create new type
-     * @param int: fk_type
-     * @param string: name
-     * @param string: title
-     * @param string: description
+    /** Create new type
+     * @param int $fk_type
+     *	fk_type
+     * @param string $name
+     *	Name
+     * @param string $title
+     *	Title
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -42,11 +50,15 @@ class $$$Tag extends $system$Object {
 	return $this->_create($data);
     }
 
-    /* edit type
-     * @param int: fk_type
-     * @param string: name
-     * @param string: title
-     * @param string: description
+    /** Edit type
+     * @param int $fk_type
+     *	fk_type
+     * @param string $name
+     *	Name
+     * @param string $title
+     *	Title
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -72,7 +84,7 @@ class $$$Tag extends $system$Object {
 	return $this->_edit($data);
     }
 
-    /* delete tag
+    /** Delete Tag
      *
      * @return bool
      */
@@ -80,10 +92,11 @@ class $$$Tag extends $system$Object {
 	return $this->_delete();
     }
 
-    /* convert idname to id (selections and radios only)
-     * @param int/string: id or idname
+    /** Convert idname to id (selections and radios only)
+     * @param int|string $input
+     *	Id or idname
      *
-     * @return int/mix
+     * @return int|mix
      */
     public function toid ($input) {
 	$type = $this->getType()->getInfo('name');
@@ -101,7 +114,7 @@ class $$$Tag extends $system$Object {
 	return $out;
     }
 
-    /* get selections (only if type=selection/radio)
+    /** Get selections (only if type=selection/radio)
      *
      * @return array
      */
@@ -127,9 +140,9 @@ class $$$Tag extends $system$Object {
 	return $out;
     }
 
-    /* get Type object
+    /** Get Type object
      *
-     * @return object
+     * @return Type
      */
     public function getType () {
 	global $TSunic;
@@ -139,8 +152,9 @@ class $$$Tag extends $system$Object {
 	return $this->Type;
     }
 
-    /* is valid name?
-     * @param string: name
+    /** Is valid name?
+     * @param string $name
+     *	Name
      *
      * @return bool
      */
@@ -149,8 +163,9 @@ class $$$Tag extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid title?
-     * @param string: title
+    /** Is valid title?
+     * @param string $title
+     *	Title
      *
      * @return bool
      */
@@ -159,8 +174,9 @@ class $$$Tag extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid description?
-     * @param string: description
+    /** Is valid description?
+     * @param string $description
+     *	Description
      *
      * @return bool
      */
@@ -169,8 +185,9 @@ class $$$Tag extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid fk_type?
-     * @param int: fk_type
+    /** Is valid fk_type?
+     * @param int $fk_type
+     *	fk_type
      *
      * @return bool
      */
@@ -180,8 +197,9 @@ class $$$Tag extends $system$Object {
 	) ? true : false;
     }
 
-    /* is valid value for this tag?
-     * @param string: value
+    /** Is valid value for this tag?
+     * @param string $value
+     *	Value
      *
      * @return bool
      */
@@ -189,7 +207,7 @@ class $$$Tag extends $system$Object {
 	return $this->getType()->isValidValue($value);
     }
 
-    /* get all available types
+    /** Get all available types
      *
      * @return array
      */

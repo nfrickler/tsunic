@@ -1,14 +1,19 @@
-<!-- | Improve perfomance of bp module -->
+<!-- | CLASS Helper -->
 <?php
+/** Helper class
+ *
+ * This class offers some helper methods
+ */
 class $$$Helper {
 
-    /* all available Tag objects
-     * array
+    /** All available Tag objects
+     * @var array $tags
      */
     protected $tags = array();
 
-    /* get all available tags
-     * +@param bool: include Id-Tags?
+    /** Get all available tags
+     * @param bool $incId
+     *	Include Id-Tags?
      *
      * @return int
      */
@@ -49,8 +54,9 @@ class $$$Helper {
 	return $out;
     }
 
-    /* convert tag-name to id
-     * @param string: name of tag
+    /** Convert tagname to id
+     * @param string $name
+     *	Name of tag
      *
      * @return int
      */
@@ -60,9 +66,11 @@ class $$$Helper {
 	return (isset($tags[$name])) ? $tags[$name]->getInfo('id') : 0;
     }
 
-    /* get all objects of certain class (class can be omitted)
-     * @param string: name class
-     * @param string: sql-where statements
+    /** Get all objects of certain class (class can be omitted)
+     * @param string $class
+     *	Name class
+     * @param string $sql_where
+     *	sql-where statements
      *
      * @return array
      */
@@ -96,7 +104,7 @@ class $$$Helper {
 	return $out;
     }
 
-    /* get all values from Bit form
+    /** Get all values from Bit form
      *
      * @return array
      */
@@ -200,8 +208,9 @@ class $$$Helper {
 	return $out;
     }
 
-    /* are valid form values?
-     * @param array: form values
+    /** Are valid form values?
+     * @param array $form
+     *	Form values
      *
      * @return array
      */
