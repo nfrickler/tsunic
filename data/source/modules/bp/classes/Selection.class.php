@@ -42,6 +42,8 @@ class $$$Selection extends $system$Object {
     }
 
     /** Edit type
+     * @param int $fk_tag
+     *	fk_tag
      * @param string $name
      *	Name
      * @param string $description

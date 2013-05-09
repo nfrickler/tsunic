@@ -152,7 +152,7 @@ class $$$Validator {
     /** Does regex match string?
      * @param string $regex
      *	Regular expression to be checked against
-     * @param string $input
+     * @param string $string
      *	Input string
      *
      * @return bool

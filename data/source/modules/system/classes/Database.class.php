@@ -8,7 +8,7 @@
 class $$$Database {
 
     /** Database object of chosen type
-     * @var object @Db_obj
+     * @var object $Db_obj
      */
     private $Db_obj;
 

@@ -17,7 +17,7 @@ class $$$TemplateEngine {
     private $session_key = '$$$templateEngine';
 
     /** Chosen style
-     * @var string string
+     * @var string $style
      */
     private $style;
 
@@ -358,7 +358,7 @@ class $$$TemplateEngine {
     }
 
     /** Display output
-     * @param bool|string $tempalte
+     * @param bool|string $template
      *	Name of root template
      *
      * @return bool
@@ -423,9 +423,9 @@ class $$$TemplateEngine {
     }
 
     /** Add JavaScript code to cache
-     * @var string $template
+     * @param string $template
      *	Name of template the code belongs to
-     * @var string $input
+     * @param string $input
      *	JavaScript code
      *
      * @return bool

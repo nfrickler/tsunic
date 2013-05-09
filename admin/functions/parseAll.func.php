@@ -91,7 +91,7 @@ function parseAll () {
 	    }
 	}
 	foreach ($rc_files as $index => $value) {
-	    unlink($value);
+	    if (file_exists($value)) unlink($value);
 	}
 
     } elseif ($call_num > 0 AND $call_num <= count($modules_all)) {

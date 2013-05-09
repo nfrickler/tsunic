@@ -83,8 +83,10 @@ class $$$SmtpLocal extends $$$Smtp {
     }
 
     /** Send mail (either intern or extern)
-     * @param object: Mail object to be send
-     * @param string: addressee
+     * @param Mail $Mail
+     *	Mail object to be send
+     * @param string $addressee
+     *	Addressee
      *
      * @return bool
      */
@@ -100,7 +102,7 @@ class $$$SmtpLocal extends $$$Smtp {
     }
 
     /** Send mail internally to other user
-     * @param object $Mail
+     * @param Mail $Mail
      *	Mail object to be send
      * @param string $addressee
      *	Addressee

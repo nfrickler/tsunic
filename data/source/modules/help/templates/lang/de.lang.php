@@ -11,7 +11,7 @@ $lang = array(
     'SHOWMAIN__H_LINKS' => 'Links zu weiteren Informationen',
     'SHOWMAIN__LINKS_TSUNIC' => 'tsunic.de',
     'SHOWMAIN__LINKS_TSUNIC_INFO' => 'Die offizielle Seite des TSunic-Projekts',
-    'SHOWMAIN__LINKS_DOCUMENTATION' => 'TSunic-Dokumentation',
+    'SHOWMAIN__LINKS_DOCUMENTATION' => 'TSunic Dokumentation',
     'SHOWMAIN__LINKS_DOCUMENTATION_INFO' => 'Hier findest du die Entwickler-Dokumentation von TSunic',
 
     // showHelp

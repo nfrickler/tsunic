@@ -493,7 +493,7 @@ class $$$ImapServer {
     }
 
     /** Return supported encodings in lowercase
-     * @source: http://php.net/imap_mime_header_decode (comments)
+     * source: http://php.net/imap_mime_header_decode (comments)
      *
      * @return array
      */
@@ -507,7 +507,7 @@ class $$$ImapServer {
     }
 
     /** Decode a mail-header string to a specified charset
-     * @source: http://php.net/imap_mime_header_decode (comments)
+     * source: http://php.net/imap_mime_header_decode (comments)
      * @param string $mimeStr
      *	Mime string
      * @param string $inputCharset

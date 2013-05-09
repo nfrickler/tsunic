@@ -205,7 +205,7 @@ class $$$Serverbox extends $system$Object {
     }
 
     /** Check, if fk_mailaccount is valid
-     * @param int $frk_mailaccount
+     * @param int $fk_mailaccount
      *	fk_mailaccount
      *
      * @return bool

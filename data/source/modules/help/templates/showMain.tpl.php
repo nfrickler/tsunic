@@ -24,7 +24,7 @@
 	<dd><?php $this->set('{SHOWMAIN__LINKS_TSUNIC_INFO}'); ?></dd>
 
 	<dt style="margin-top:20px;">
-	    <a href="http://dokumentation.tsunic.de" target="_blank">
+	    <a href="http://doc.tsunic.de" target="_blank">
 		<?php $this->set('{SHOWMAIN__LINKS_DOCUMENTATION}'); ?></a>
 	</dt>
 	<dd><?php $this->set('{SHOWMAIN__LINKS_DOCUMENTATION_INFO}'); ?></dd>

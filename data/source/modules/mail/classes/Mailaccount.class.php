@@ -60,7 +60,7 @@ class $$$Mailaccount extends $system$Object {
     protected $timeout = 3;
 
     /** Constructor
-     * @params int $id
+     * @param int $id
      *	ID
      */
     public function __construct ($id = 0) {
@@ -322,8 +322,8 @@ class $$$Mailaccount extends $system$Object {
     }
 
     /** Check, if description of mail account is valid
-     * @param string $description
-     *	Description of mail-account
+     * @param string $desc
+     *	Description of mailaccount
      *
      * @return bool
      */
@@ -334,7 +334,7 @@ class $$$Mailaccount extends $system$Object {
 
     /** Check, if name of mail account is valid
      * @param string $name
-     *	Name of mail-account
+     *	Name of mailaccount
      *
      * @return bool
      */

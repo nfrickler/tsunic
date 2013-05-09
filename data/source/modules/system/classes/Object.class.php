@@ -800,7 +800,7 @@ class $$$Object {
     public function editable () {
 	return (!$this->_getKey()->isValid() or
 	    $this->_getKey()->getInfo('can_write')
-	) ? true : false*;
+	) ? true : false;
     }
 }
 ?>

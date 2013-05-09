@@ -142,7 +142,7 @@ class $$$File {
     }
 
     /** Get path of file
-     * @param bool $folder_onley
+     * @param bool $folder_only
      *	Get path of folder only
      *
      * @return string|bool

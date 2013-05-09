@@ -22,41 +22,6 @@ class $$$Queue extends $bp$BpObject {
 	return ($this->id) ? $this->getInfo('name') : '{CLASS__QUEUE__NAMEALL}';
     }
 
-    /** Load Key (save for guest user only)
-     * @param int $fk_account
-     *	fk_account of key to return
-     *
-     * @return Key
-     */
-    /*
-    protected function _getKey ($fk_account = 0) {
-	global $TSunic;
-
-	// save for guest only!
-	return parent::_getKey($TSunic->Usr->getIdGuest());
-    }
-     */
-
-    /** Get new empty Bit object
-     *
-     * @return Bit
-     */
-    /*
-    protected function _getNewBit () {
-	global $TSunic;
-	$Bit = $TSunic->get('$bp$Bit', false, true);
-
-	// clone my Key
-	$Key = $TSunic->get(
-	    '$system$Key',
-	    array($this->table, $this->id, $TSunic->Usr->getIdGuest()),
-	    true
-	);
-	$Bit->setKey($Key);
-	return $Bit;
-    }
-     */
-
     /** Get all issues in this queue
      *
      * @return array

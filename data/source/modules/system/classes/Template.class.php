@@ -340,7 +340,7 @@ class $$$Template {
      *	Name of post
      * @param string $default
      *	Default value to use instead, if no old post variable found
-     * @param bool $default
+     * @param bool $doEcho
      *	Print it? (or return it)
      *
      * @return bool
@@ -424,9 +424,9 @@ class $$$Template {
     /** Parse for JavaScript output (language- and bbcode-replacements)
      * @param string $text
      *	Text to parse
-     * @param 0/array $vars
+     * @param 0|array $vars
      *	Variables to replace in lang-string
-     * @param bool $doEchoe
+     * @param bool $doEcho
      *	Print text? (return otherwise)
      * @param bool $doEscape
      *	Escape single and double quotes?
