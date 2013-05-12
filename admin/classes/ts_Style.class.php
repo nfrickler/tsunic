@@ -138,13 +138,14 @@ class ts_Style extends ts_Packet {
 	}
 
 	// load data from database
-	$sql_0 = "SELECT *
-		FROM #__styles
-		WHERE id__style = '".$this->id."';";
-	$result_0 = $Database->doSelect($sql_0);
+	$sql = "SELECT *
+	    FROM #__styles
+	    WHERE id__style = '".$this->id."';";
+	$result = $Database->doSelect($sql);
 
 	// save data
-	if (!empty($result_0)) $this->info = $result_0[0];
+	if (!empty($result)) $this->info = $result[0];
+	$this->info['id'] = $this->id;
 
 	// try again to return data
 	if (isset($this->info, $this->info[$name]) AND !empty($this->info[$name])) return $this->info[$name];

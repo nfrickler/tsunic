@@ -141,11 +141,23 @@ function parseAll () {
 	// render all activated styles
 	$StyleHandler = new ts_StyleHandler();
 	$styles_all = $StyleHandler->getStyles(true);
+	$selected_default_style = $Config->get('default_style');
+	$is_default_style = false;
+
 	foreach ($styles_all as $index => $Value) {
+	    if ($selected_default_style and
+		$Value->getInfo('id') == $selected_default_style
+	    ) $is_default_style = true;
 	    if (!$Value->parse()) {
 		$_SESSION['admin_error'] = 'ERROR__RENDER (style: '.$Value->getInfo('name').')';
 		return false;
 	    }
+	}
+
+	// set default style, if missing
+	if (!$is_default_style) {
+	    $first_style = array_shift($styles_all);
+	    $Config->set('default_style', $first_style->getInfo('id'));
 	}
 
 	// make sure, a default-style is chosen

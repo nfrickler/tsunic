@@ -27,7 +27,7 @@ function setStyles () {
 	if (!$Value->activate($new_status)) return false;
     }
 
-    // update installation-progress
+    // update installation progress
     if ($Config->get('installation') < 100) {
 	$Config->setArray('installation_progress', 'setStyles', true);
     }

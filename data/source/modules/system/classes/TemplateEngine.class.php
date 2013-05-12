@@ -373,8 +373,8 @@ class $$$TemplateEngine {
 	$templatedata = array('Log' => $TSunic->Log);
 	$TSunic->Tmpl->activate('$$$showLog', false, $templatedata);
 
-	// load format-path
-	$path = 'runtime/css/style'.$this->style.'__format.css';
+	// load format path
+	$path = 'css/style'.$this->style.'__format.css';
 	if (!file_exists($path)) $path = 'css/format.css';
 	$this->activate('$$$html', false, array('path_format' => $path));
 
