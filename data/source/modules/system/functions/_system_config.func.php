@@ -8,6 +8,9 @@ function $$$loadLanguages () {
 }
 
 function $$$loadStyles () {
-    return array('sunrise' => 'sunrise');
+    return array(
+	'sunrise' => 'sunrise',
+	'ocean' => 'ocean'
+    );
 }
 ?>

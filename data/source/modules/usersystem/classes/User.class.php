@@ -133,8 +133,10 @@ class $$$User extends $system$Object {
 	    "pubkey" => $newkeys['pubkey']
 	);
 	$return = $this->_create($data);
-	$this->id = $old_id;
-	if (!$return) return false;
+	if (!$return) {
+	    $this->id = $old_id;
+	    return false;
+	}
 
 	return true;
     }

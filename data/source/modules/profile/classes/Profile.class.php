@@ -63,9 +63,8 @@ class $$$Profile extends $bp$BpObject {
 	if ($this->getInfo('lastname')) $out .= $this->getInfo('lastname');
 	$out = trim($out);
 	if (empty($out)) {
-	    global $TSunic;
-	    $User = $TSunic->get('$usersystem$User', $this->getInfo('account'));
-	    $out = $User->getInfo('name');
+	    $Account = $this->getAccount();
+	    if ($Account) $out = $Account->getInfo('name');
 	}
 	if (empty($out)) $out = '???';
 	return $out;

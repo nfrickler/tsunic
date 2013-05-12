@@ -110,14 +110,10 @@ $lang = array(
     'FORMPROFILE__DATEOFBIRTH_PRESET' => 'Geburtsdatum',
 
     // createProfile
-    'CREATEPROFILE__SUCCESS' => 'Neues Profil wurde angelegt.',
-    'CREATEPROFILE__ERROR' => 'Ein Fehler ist aufgetreten!', 
-    'CREATEPROFILE__INVALIDVALUE' => 'Ungültige Eingabe!',
-
-    // editProfile
-    'EDITPROFILE__SUCCESS' => 'Änderungen gespeichert.',
-    'EDITPROFILE__ERROR' => 'Ein Fehler ist aufgetreten!', 
-    'EDITPROFILE__INVALIDVALUE' => 'Ungültige Eingabe (Tag: "#field#", Wert: "#value#")!',
+    'UPDATEPROFILE__CREATE_SUCCESS' => 'Neues Profil wurde angelegt.',
+    'UPDATEPROFILE__EDIT_SUCCESS' => 'Änderungen wurden gespeichert.',
+    'UPDATEPROFILE__ERROR' => 'Ein Fehler ist aufgetreten!', 
+    'UPDATEPROFILE__INVALIDVALUE' => 'Ungültige Eingabe!',
 
     // showDeleteProfile
     'SHOWDELETEPROFILE__TITLE' => 'Profil wirklich löschen?',

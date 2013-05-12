@@ -28,7 +28,7 @@ function $$$deleteProfile () {
 
     // success
     $TSunic->Log->alert('info', '{DELETEPROFILE__SUCCESS}');
-    $TSunic->redirect('$$$showIndex');
+    $TSunic->redirect('$$$showProfiles');
 
     return true;
 }

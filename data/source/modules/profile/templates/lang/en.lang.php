@@ -124,14 +124,10 @@ $lang = array(
     'FORMPROFILE__DATEOFBIRTH_PRESET' => 'Date of birth',
 
     // createProfile
-    'CREATEPROFILE__SUCCESS' => 'New profile has been created.',
-    'CREATEPROFILE__ERROR' => 'An error occurred!',
-    'CREATEPROFILE__INVALIDVALUE' => 'Invalid input!',
-
-    // editProfile
-    'EDITPROFILE__SUCCESS' => 'Changes saved.',
-    'EDITPROFILE__ERROR' => 'An error occurred!',
-    'EDITPROFILE__INVALIDVALUE' => 'Invalid input (tag: "#field#", value: "#value#")!',
+    'UPDATEPROFILE__CREATE_SUCCESS' => 'New profile has been created.',
+    'UPDATEPROFILE__EDIT_SUCCESS' => 'Changes saved.',
+    'UPDATEPROFILE__ERROR' => 'An error occurred!',
+    'UPDATEPROFILE__INVALIDVALUE' => 'Invalid input!',
 
     // showDeleteProfile
     'SHOWDELETEPROFILE__TITLE' => 'Delete profile?',
@@ -141,7 +137,7 @@ $lang = array(
     'SHOWDELETEPROFILE__POPUP_DELETE_NO' => 'No, abbort',
 
     // deleteProfile
-    'DELETEPROFILE__SUCCESS' => 'Profile delted.',
+    'DELETEPROFILE__SUCCESS' => 'Profile deleted.',
     'DELETEPROFILE__ERROR' => 'Profile could not be deleted!',
 
     // navigation

@@ -126,6 +126,7 @@ class $$$BpObject extends $system$Object {
 	    'fk_tag' => $this->tag2id($fk_tag),
 	    'value' => $value,
 	);
+
 	if (!$Bit->setMulti($data, true)) return false;
 
 	// update dateOfChange
