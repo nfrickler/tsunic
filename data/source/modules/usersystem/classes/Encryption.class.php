@@ -188,6 +188,9 @@ class $$$Encryption {
 	// add infix
 	$text = $this->infix.$text;
 
+	// start timer
+	$TSunic->Stats->startTimer('encryption');
+
 	// encrypt for other user?
 	if (($key and !$asym) or $TSunic->Usr->getInfo('id') == $this->fk_account) {
 	    // encrypt symmetric
@@ -216,6 +219,9 @@ class $$$Encryption {
 	    $text = $this->prefix_asym.$text;
 	}
 
+	// stop timer
+	$TSunic->Stats->stopTimer('encryption');
+
 	return $text;
     }
 
@@ -243,8 +249,14 @@ class $$$Encryption {
 	    // remove prefix
 	    $text = substr($text, (strlen($this->prefix_sym)));
 
+	    // start timer
+	    $TSunic->Stats->startTimer('encryption');
+
 	    // decrypt symmetric
 	    $text = $this->MyEnc->decrypt(base64_decode($text), $key);
+
+	    // stop timer
+	    $TSunic->Stats->stopTimer('encryption');
 
 	} elseif (substr($text, 0, strlen($this->prefix_asym)) == $this->prefix_asym) {
 
@@ -258,10 +270,16 @@ class $$$Encryption {
 	    // remove prefix
 	    $text = substr($text, (strlen($this->prefix_asym)));
 
+	    // start timer
+	    $TSunic->Stats->startTimer('encryption');
+
 	    // decrypt asymmetric
 	    $crypttext = base64_decode($text);
 	    $key = openssl_pkey_get_private($key);
 	    openssl_private_decrypt($crypttext, $text, $key);
+
+	    // stop timer
+	    $TSunic->Stats->stopTimer('encryption');
 	}
 
 	// check infix

@@ -16,7 +16,7 @@ $lang = array(
     'TAG__MAIL__HTMLCONTENT' => 'HTML content',
 
     // classes
-    'CLASS__SENDERLOCAL__NAME' => '(Local)',
+    'CLASS__SMTPLOCAL__NAME' => '(Local)',
 
     'CLASS__SERVERBOX__ADDATTACHMENTERROR' => 'Attachment couldn\'t be downloaded!',
     'CLASS__SERVERBOX__CREATEMAILERROR' => 'One mail cound not be saved locally!',
