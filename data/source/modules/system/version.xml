@@ -1,6 +1,6 @@
 <all>
     <name>system</name>
-    <version>1.4</version>
+    <version>1.5</version>
     <nameid>tsuniccoremodule</nameid>
     <core>true</core>
     <description>This modul contains the heart of TSunic. Without this modul, TSunic will not work!</description>

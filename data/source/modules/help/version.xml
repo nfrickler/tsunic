@@ -1,6 +1,6 @@
 <all>
     <name>help</name>
-    <version>2.2</version>
+    <version>2.3</version>
     <nameid>tsuniccoremodulsystem</nameid>
     <description>Official help-module of TSunic</description>
     <author>Nicolas Frinker &lt;authornicolas@tsunic.de&gt;</author>
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</licence>
     <dependencies>
-	<module version="1.4" nameid="tsuniccoremodule">system</module>
-	<module version="2.2" nameid="tsuniccoremodule">usersystem</module>
+	<module version="1.5" nameid="tsuniccoremodule">system</module>
+	<module version="2.3" nameid="tsuniccoremodule">usersystem</module>
     </dependencies>
 </all>

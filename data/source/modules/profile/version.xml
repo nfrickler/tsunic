@@ -1,6 +1,6 @@
 <all>
     <name>profile</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <nameid>tsuniccoremodule</nameid>
     <core>false</core>
     <description>This module based on bp provides a profile system.</description>
@@ -20,10 +20,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</licence>
     <dependencies>
-	<module version="1.4" nameid="tsuniccoremodule">system</module>
-	<module version="2.2" nameid="tsuniccoremodule">usersystem</module>
-	<module version="1.0" nameid="tsuniccoremodule">bp</module>
-	<module version="1.1" nameid="tsuniccoremodule">filesystem</module>
-	<module version="1.0" nameid="tsuniccoremodule">calendar</module>
+	<module version="1.5" nameid="tsuniccoremodule">system</module>
+	<module version="2.3" nameid="tsuniccoremodule">usersystem</module>
+	<module version="1.1" nameid="tsuniccoremodule">bp</module>
+	<module version="1.2" nameid="tsuniccoremodule">filesystem</module>
+	<module version="1.1" nameid="tsuniccoremodule">calendar</module>
     </dependencies>
 </all>

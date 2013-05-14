@@ -1,6 +1,6 @@
 <all>
     <name>navigation</name>
-    <version>1.4</version>
+    <version>1.5</version>
     <nameid>tsuniccoremodule</nameid>
     <core>true</core>
     <description>This module contains the navigation of TSunic. You should better compile it, if you want to navigate...</description>
@@ -20,7 +20,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</licence>
     <dependencies>
-	<module version="1.4" nameid="tsuniccoremodule">system</module>
-	<module version="2.2" nameid="tsuniccoremodule">usersystem</module>
+	<module version="1.5" nameid="tsuniccoremodule">system</module>
+	<module version="2.3" nameid="tsuniccoremodule">usersystem</module>
     </dependencies>
 </all>

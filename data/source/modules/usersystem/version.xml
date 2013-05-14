@@ -1,6 +1,6 @@
 <all>
     <name>usersystem</name>
-    <version>2.2</version>
+    <version>2.3</version>
     <nameid>tsuniccoremodule</nameid>
     <core>true</core>
     <description>This module handles the usersystem. This is a core module!</description>
@@ -20,6 +20,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</licence>
     <dependencies>
-	<module version="1.4" nameid="tsuniccoremodule">system</module>
+	<module version="1.5" nameid="tsuniccoremodule">system</module>
     </dependencies>
 </all>
