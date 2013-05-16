@@ -278,10 +278,10 @@ class ts_Module extends ts_Packet {
 
 	    // update database
 	    if ($this->getInfo('is_parsed')) {
-		$sql_0 = "UPDATE #__modules
+		$sql = "UPDATE #__modules
 			SET is_parsed = 0
 			WHERE id__module = '".mysql_real_escape_string($this->id)."';";
-		if ($Database->doUpdate($sql_0) === false) return false;
+		if ($Database->doUpdate($sql) === false) return false;
 	    }
 
 	    return true;
@@ -788,16 +788,17 @@ class ts_Module extends ts_Packet {
 	global $Database, $Parser;
 
 	// get versions
-	$sql_0 = "SELECT version_installed,
-		     version
-		FROM #__modules
-		WHERE id__module = '".mysql_real_escape_string($this->id)."';";
-	$result_0 = $Database->doSelect($sql_0);
-	if (empty($result_0)) return false;
-	$result_0 = $result_0[0];
+	$sql = "SELECT version_installed,
+		version
+	    FROM #__modules
+	    WHERE id__module = '".mysql_real_escape_string($this->id)."'
+	;";
+	$result = $Database->doSelect($sql);
+	if (empty($result)) return false;
+	$result = $result[0];
 
 	// skip update, if version is older
-	if ($result_0['version'] <= $result_0['installed_version']) return false;
+	if ($result['version'] <= $result['version_installed']) return false;
 
 	// get all available updaters
 	$files = ts_FileHandler::getSubfiles($this->path.'/setup');
@@ -816,46 +817,51 @@ class ts_Module extends ts_Packet {
 	// try to find best way to update to new version
 	$best_way = $this->_findWay(
 	    $files_update,
-	    $result_0['version_installed'],
-	    $result_0['version']
+	    $result['version_installed'],
+	    $result['version']
 	);
-	if (empty($best_way)) return false;
 
 	// follow best way and update
-	$version_installed = $result_0['version_installed'];
-	foreach ($best_way as $index => $value) {
+	// if there is no way, just use new files without updating database
+	$version_installed = $result['version'];
+	if ($best_way) {
+	    $version_installed = $result['version_installed'];
+	    foreach ($best_way as $index => $value) {
 
-	    // search for update-files and run them
-	    if (file_exists($this->path.'/setup/update_'.$index.'_to_'.$value.'.sql')) {
-		// run sql-file
+		// search for update-files and run them
+		if (file_exists($this->path.'/setup/update_'.$index.'_to_'.$value.'.sql')) {
+		    // run sql-file
 
-		// read sql-file
-		$content = ts_FileHandler::readFile($this->path.'/setup/uninstall.sql');
+		    // read sql-file
+		    $content = ts_FileHandler::readFile($this->path.'/setup/uninstall.sql');
 
-		// parse module replacements
-		$content = $Parser->replaceModule($content, $this->id, $Database->getPreffix());
+		    // parse module replacements
+		    $content = $Parser->replaceModule($content, $this->id, $Database->getPreffix());
 
-		// run sql statements
-		if (($Database->runString($content)) === false) break;
+		    // run sql statements
+		    if (($Database->runString($content)) === false) break;
+		}
+		if (file_exists($this->path.'/setup/update_'.$index.'_to_'.$value.'.php')) {
+		    // run php-file
+		    $break = false;
+		    include $this->path.'/setup/update_'.$index.'_to_'.$value.'.php';
+		    if ($break) break;
+		}
+
+		$version_installed = $value;
 	    }
-	    if (file_exists($this->path.'/setup/update_'.$index.'_to_'.$value.'.php')) {
-		// run php-file
-		$break = false;
-		include $this->path.'/setup/update_'.$index.'_to_'.$value.'.php';
-		if ($break) break;
-	    }
-
-	    $version_installed = $value;
 	}
 
-	// successful update (set update-time and version_installed in database)
-	$sql_0 = "UPDATE #__modules
-		SET dateOfUpdate = NOW(),
-		    version_installed = '".mysql_real_escape_string($version_installed)."'
-		WHERE id__module = '".mysql_real_escape_string($this->id)."';";
-	if (!$Database->doUpdate($sql_0)) return false;
+	// set update time and new version in database
+	$sql = "UPDATE #__modules
+	    SET dateOfUpdate = NOW(),
+		version_installed =
+		    '".mysql_real_escape_string($version_installed)."'
+	    WHERE id__module = '".mysql_real_escape_string($this->id)."'
+	;";
+	if (!$Database->doUpdate($sql)) return false;
 
-	if ($version_installed != $result_0['version']) return false;
+	if ($version_installed != $result['version']) return false;
 	return true;
     }
 

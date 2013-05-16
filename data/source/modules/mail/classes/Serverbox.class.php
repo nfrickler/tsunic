@@ -369,9 +369,9 @@ class $$$Serverbox extends $system$Object {
 		$Parser->text2plain2db($new_mail['plaincontent']),
 		'MAIL__PLAINCONTENT'
 	    );
-	    $Mail->addBit($new_mail['charset'], 'MAIL__CHARSET');
+	    //$Mail->addBit($new_mail['charset'], 'MAIL__CHARSET');
 	    $Mail->addBit($this->id, 'MAIL__SERVERBOX');
-	    $Mail->addBit($this->getInfo('fk_mailbox'), 'MAIL__MAILBOX');
+	    $Mail->addBit($this->getInfo('fk_mailbox'), 'MAIL__BOX');
 	    $Mail->addBit(strtotime($new_mail['date']), 'MAIL__TIMESTAMP');
 	    $Mail->addBit($new_mail['to'], 'MAIL__ADDRESSEE');
 

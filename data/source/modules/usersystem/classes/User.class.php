@@ -535,9 +535,6 @@ class $$$User extends $system$Object {
     public function allUsers () {
 	global $TSunic;
 
-	// access?
-	if (!$TSunic->Usr->access('$$$listAllUsers')) return array();
-
 	// get all users from database
 	$sql = "SELECT id, name
 	    FROM #__$usersystem$accounts;";

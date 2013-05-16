@@ -6,6 +6,10 @@ function $$$showEditMail () {
     // get all Smtp objects
     $SuperMail = $TSunic->get('$$$SuperMail');
     $sender = $SuperMail->getSmtps(true);
+    if (empty($sender)) {
+	$TSunic->Log->alert('error', '{SHOWCREATEMAIL__ADDSMTPFIRST}');
+	$TSunic->redirect('$$$showAddSmtp');
+    }
 
     // get Mail object
     $id = $TSunic->Temp->getParameter('$$$id');

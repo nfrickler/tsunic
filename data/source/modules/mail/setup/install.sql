@@ -54,9 +54,9 @@ INSERT IGNORE INTO `#__$bp$tags` (`fk_type`, `name`, `title`, `description`, `is
 	1
     ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),
-	'MAIL__MAILBOX',
-	'{$MAIL$TAG__MAIL__MAILBOX}',
-	'{$MAIL$TAG__MAIL__MAILBOX__DESCRIPTION}',
+	'MAIL__BOX',
+	'{$MAIL$TAG__MAIL__BOX}',
+	'{$MAIL$TAG__MAIL__BOX__DESCRIPTION}',
 	1
     ),
     ((SELECT id FROM #__$bp$types as types WHERE types.name = 'int'),

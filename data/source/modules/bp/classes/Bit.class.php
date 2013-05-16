@@ -77,19 +77,17 @@ class $$$Bit extends $system$Object {
 	return $this->set('value', $value, true);
     }
 
-    /** Update data of this bit (create/edit/delete)
+    /** Checks wether a value of this object is valid
+     *
      * @param string $name
      *	Name of value
-     * @param mix $value
+     * @param string $value
      *	Value
-     * @param bool $save
-     *	Save all new infos?
      *
      * @return bool
      */
-    public function set ($name, $value, $save = false) {
+    public function isValidInfo ($name, $value) {
 
-	// is valid fk_tag?
 	switch ($name) {
 	    case 'fk_tag':
 		if (!$this->isValidFkTag($value)) return false;
@@ -106,10 +104,10 @@ class $$$Bit extends $system$Object {
 		if ($Type and $Type->isEmpty($value)) return true;
 
 		break;
-	    default:
 	}
 
-	return parent::set($name, $value, $save);
+	// allow all by default
+	return true;
     }
 
     /** Convert value in value to be saved

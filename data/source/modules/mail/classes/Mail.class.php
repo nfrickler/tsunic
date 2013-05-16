@@ -20,8 +20,7 @@ class $$$Mail extends $bp$BpObject {
 	'MAIL__PLAINCONTENT',
 	'MAIL__SERVERBOX',
 	'MAIL__BOX',
-	'MAIL__MAILBOX',
-	'MAIL__CHARSET',
+	'MAIL__BOX',
 	'MAIL__UID',
 	'MAIL__UNSEEN',
     );
@@ -70,7 +69,7 @@ class $$$Mail extends $bp$BpObject {
 	global $TSunic;
 
 	// update date
-	$this->saveByTag('MAIL__DATE', date('Y-m-d H:i:s'));
+//	$this->saveByTag('MAIL__TIMESTAMP', time());
 
 	// get Smtp object
 	$Smtp = $this->getSmtp();
@@ -148,7 +147,7 @@ class $$$Mail extends $bp$BpObject {
      * @return bool
      */
     public function setSeen () {
-	return $this->saveByTag('MAIL__SEEN', 0);
+	return $this->saveByTag('MAIL__UNSEEN', 1);
     }
 
     /** Get Smtp object of this Mail

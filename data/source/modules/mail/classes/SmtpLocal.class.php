@@ -15,6 +15,8 @@ class $$$SmtpLocal extends $$$Smtp {
     public function getDefault ($name) {
 	global $TSunic;
 	switch ($name) {
+	    case 'id':
+		return 0;
 	    case 'emailname':
 		return $TSunic->Usr->getInfo('name');
 	    case 'email':
@@ -112,6 +114,10 @@ class $$$SmtpLocal extends $$$Smtp {
     public function sendIntern ($Mail, $addressee) {
 	if (!$Mail->isValid()) return false;
 	global $TSunic;
+
+	// set sender
+	$Mail->saveByTag('MAIL__SENDER', $TSunic->Usr->getInfo('name'));
+	$Mail->saveByTag('MAIL__TIMESTAMP', time());
 
 	// get account id of addressee
 	$users = $TSunic->Usr->allUsers();

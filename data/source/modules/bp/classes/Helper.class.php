@@ -63,7 +63,15 @@ class $$$Helper {
     public function tag2id ($name) {
 	if (is_numeric($name)) return $name;
 	$tags = $this->getTags(true);
-	return (isset($tags[$name])) ? $tags[$name]->getInfo('id') : 0;
+	if (isset($tags[$name])) {
+	    return $tags[$name]->getInfo('id');
+	} else {
+	    global $TSunic;
+	    $TSunic->Log->log(
+		3, "bp::Helper::tag2id: ERROR No tag '$name' found!"
+	    );
+	    return 0;
+	}
     }
 
     /** Get all objects of certain class (class can be omitted)

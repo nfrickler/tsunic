@@ -758,8 +758,8 @@ class $$$Object {
 	// share with other user
 	$this->shareWith(array($fk_account => 1));
 
-	// delete my own key
-	$this->_deleteKey();
+	// delete my own key (if not pushing to myself)
+	if ($TSunic->Usr->getInfo('id') != $fk_account) $this->_deleteKey();
 
 	// change key
 	$Key = $this->_getKey($fk_account);
