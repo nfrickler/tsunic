@@ -68,8 +68,13 @@ class $$$Factory {
 	if (empty($param_string)) {
 	    $object = new $class();
 	} else {
-	    $to_eval = '$object = new '.$class.'('.$param_string.');';
-	    eval($to_eval);
+	    try {
+		$to_eval = '$object = new '.$class.'('.$param_string.');';
+		eval($to_eval);
+	    } catch (Exception $e) {
+		$TSunic->Log->log('3', "system:Factory: ERROR Eval failed: '$to_eval'!");
+		$TSunic->throwError('Critical TSunic error!');
+	    }
 	}
 
 	// save object in array

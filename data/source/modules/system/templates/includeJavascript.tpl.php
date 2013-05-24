@@ -18,7 +18,7 @@ $js_functions = $TSunic->Tmpl->getActivatedJavascript();
 
 foreach ($js_functions as $index => $value) {
     $path = 'javascript/'.$value.'.js';
-    echo '<script type="text/javascript" src="'.$path.'"></script>';
+    echo '<script type="text/javascript" charset="utf-8" src="'.$path.'"></script>';
 }
 ?>
 <script type="text/javascript">

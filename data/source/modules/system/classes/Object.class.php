@@ -577,7 +577,7 @@ class $$$Object {
 
 	// if still empty, create new empty key
 	if (empty($this->_keys)) {
-	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account));
+	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account), true);
 	}
 
 	// if key exists, return
@@ -609,7 +609,7 @@ class $$$Object {
 	// if still nothing to return, create new empty key
 	if (!isset($this->_keys[$fk_account])) {
 	    $this->_keys[$fk_account] = $TSunic->get(
-		'$$$Key', array($this->table, $this->id, $fk_account)
+		'$$$Key', array($this->table, $this->id, $fk_account), true
 	    );
 	    $this->_keys[$fk_account]->create();
 	    $this->_keys[$fk_account]->save();

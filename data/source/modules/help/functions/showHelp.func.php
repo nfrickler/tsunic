@@ -6,13 +6,20 @@ function $$$showHelp () {
 
     // get page to show
     $page_arr = explode('__', $TSunic->Temp->getGet('$$$page'));
+    if (!$lang or !$page_arr or count($page_arr) != 2) {
+	$TSunic->Log->alert('error', '{SHOWHELP__ERROR}');
+	$TSunic->redirect('back');
+    }
     $Helpfile = $TSunic->get('$system$File', "#runtime#help/".$page_arr[0]."__".$lang."__".$page_arr[1].".help.php");
+    if (!$Helpfile) {
+	$TSunic->Log->log(3, "help:showHelp: ERROR Invalid helpfile!");
+	$TSunic->redirect('$$$showMain');
+    }
     if (!$Helpfile->isValid()) {
 	$Helpfile->setPath("#runtime#help/$$$".$lang."__nopagefound.help.php");
 	if (!$Helpfile->isValid()) {
 	    $TSunic->Log->log(3, "Could not find index help page '".$Helpfile->getPath()."'!");
 	    $TSunic->redirect('$$$showMain');
-	    exit;
 	}
     }
 

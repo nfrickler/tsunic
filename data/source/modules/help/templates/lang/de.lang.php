@@ -19,6 +19,7 @@ $lang = array(
     'SHOWHELP__H' => 'Hilfe',
     'SHOWHELP__TOINDEX' => 'Zur Modul-Übersicht',
     'SHOWHELP__TOMAIN' => 'Zur Übersicht',
+    'SHOWHELP__ERROR' => 'Seite konnte nicht geladen werden.',
 
     // system_navigation
     '_SYSTEM_NAVIGATION__SHOWMAIN' => 'Hilfe-Übersicht',

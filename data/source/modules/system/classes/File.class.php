@@ -39,6 +39,7 @@ class $$$File {
      * @return bool
      */
     public function setPath ($path) {
+	if (empty($path)) return false;
 	global $TSunic;
 
 	// get phrases to replace

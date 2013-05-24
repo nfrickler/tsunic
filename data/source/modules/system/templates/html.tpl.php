@@ -7,7 +7,7 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <title><?php $this->set('#title#'); ?> | TSunic <?php echo $TSunic->Config->get('version'); ?></title>
     <link rel="stylesheet" type="text/css" href="<?php $this->set('#path_format#'); ?>" />
-    <script type="text/javascript" src="javascript/$$$jQuery.js"></script>
+    <script type="text/javascript" src="javascript/$$$jQuery.js" charset="utf-8"></script>
 </head>
 <body>
     <div id="div_tsunic">
