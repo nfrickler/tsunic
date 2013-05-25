@@ -1,9 +1,10 @@
--- Changes until version 4.5 (release ???)
-    * add new module issuetracker
-    * refactoring of encryption system, pushing, enabling shared objects
-    * add public profiles
-    * sending PMs
-    * improve code documentation
+-- Changes until version 4.5 (release 2013-05-25)
+    * Add new module issuetracker
+    * Refactoring of encryption system, pushing, enabling shared objects
+    * Add public profiles
+    * Sending PMs
+    * Improve code documentation
+    * General fixes
 -- Changes until version 4.4 (release 2013-02-25)
     * add new modules bp, profile, calendar
     * refactoring of filesystem module

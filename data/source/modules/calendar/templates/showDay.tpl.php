@@ -22,7 +22,7 @@
     <table cellspacing="0" cellpadding="0" border="0">
 	<tr>
 	    <th style="width:15%;"><?php $this->set('{SHOWDAY__TIME}'); ?></th>
-	    <th><?php $this->set('{SHOWDAY__TITLE}'); ?></th>
+	    <th><?php $this->set('{SHOWDAY__TITLENAME}'); ?></th>
 	</tr>
 	<?php foreach ($this->getVar('dates') as $index => $values) { ?>
 	<tr>

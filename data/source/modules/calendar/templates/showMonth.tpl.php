@@ -25,7 +25,7 @@ $time = $this->getVar('time');
 	<tr>
 	    <th style="width:5%;"><?php $this->set('{SHOWMONTH__DAY}'); ?></th>
 	    <th style="width:15%;"><?php $this->set('{SHOWMONTH__TIME}'); ?></th>
-	    <th><?php $this->set('{SHOWMONTH__TITLE}'); ?></th>
+	    <th><?php $this->set('{SHOWMONTH__TITLENAME}'); ?></th>
 	</tr>
 
 	<?php $day_dates = array(); ?>

@@ -36,7 +36,7 @@ $lang = array(
     'SHOWDAY__TOEDITDAY' => 'Bearbeiten',
     'SHOWDAY__TODELETEDAY' => 'Termin löschen',
     'SHOWDAY__TIME' => 'Zeit',
-    'SHOWDAY__TITLE' => 'Termin',
+    'SHOWDAY__TITLENAME' => 'Termin',
     'SHOWDAY__NODATES' => 'An diesem Tag gibt es noch keine Termine.',
 
     // showMonth
@@ -46,7 +46,7 @@ $lang = array(
     'SHOWMONTH__TOCREATEDATE' => 'Neuer Termin',
     'SHOWMONTH__DAY' => 'Tag',
     'SHOWMONTH__TIME' => 'Zeit',
-    'SHOWMONTH__TITLE' => 'Termin',
+    'SHOWMONTH__TITLENAME' => 'Termin',
     'SHOWMONTH__NODATES' => 'In diesem Monat sind noch keine Termine vorhanden.',
 
     // showCreateDate

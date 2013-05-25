@@ -36,7 +36,7 @@ $lang = array(
     'SHOWDAY__TOEDITDAY' => 'Edit date',
     'SHOWDAY__TODELETEDAY' => 'Delete date',
     'SHOWDAY__TIME' => 'Time',
-    'SHOWDAY__TITLE' => 'Title',
+    'SHOWDAY__TITLENAME' => 'Title',
     'SHOWDAY__NODATES' => 'No dates on this day.',
 
     // showMonth
@@ -46,7 +46,7 @@ $lang = array(
     'SHOWMONTH__TOCREATEDATE' => 'Create new date',
     'SHOWMONTH__DAY' => 'Day',
     'SHOWMONTH__TIME' => 'Time',
-    'SHOWMONTH__TITLE' => 'Title',
+    'SHOWMONTH__TITLENAME' => 'Title',
     'SHOWMONTH__NODATES' => 'No dates this month.',
 
     // showCreateDate
