@@ -1,4 +1,4 @@
-<!-- | CLASS object -->
+<!-- | CLASS Object -->
 <?php
 /** Abstract base object class
  *
@@ -514,24 +514,6 @@ class $$$Object {
 
     /* *********************** key handling *********************** */
 
-    /** Preset keys for this object
-     *
-     * @param array $keys
-     *	Array of Key objects
-     *
-     * @return bool
-     */
-    public function setKeys ($keys) {
-
-	// set table and id
-	foreach ($keys as $index => $Value) {
-	    $Value->edit(0, 1, $this->table, $this->id, false);
-	}
-
-	$this->_keys = $keys;
-	return true;
-    }
-
     /** Get all Key objects for this object
      *
      * @return array
@@ -564,59 +546,55 @@ class $$$Object {
      *
      * @param int $fk_account
      *	fk_account of key to return
+     * @param bool $copy
+     *	Return copy of valid key (or the valid key itself)?
      *
      * @return Key
      */
-    protected function _getKey ($fk_account = 0) {
+    protected function _getKey ($fk_account = 0, $copy = true) {
 	global $TSunic;
 	$fk_account_parameter = $fk_account;
 	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
+	$TSunic->Log->log(8, " - Get key for $fk_account ($this->table $this->id)");
 
 	// load keys
-	if (empty($this->_keys)) $this->getKeys();
-
-	// if still empty, create new empty key
-	if (empty($this->_keys)) {
-	    $this->_keys[$fk_account] = $TSunic->get('$$$Key', array($this->table, $this->id, $fk_account), true);
-	}
+	$this->getKeys();
 
 	// if key exists, return
-	if (isset($this->_keys[$fk_account]))
+	if (isset($this->_keys[$fk_account])) {
+	    $TSunic->Log->log(8, " - key exists");
 	    return $this->_keys[$fk_account];
+	}
 
 	// if no valid key found and no $fk_account parameter, try to find
 	// guest-key
-	if ((!isset($this->_keys[$fk_account]) or
-	    !$this->_keys[$fk_account]->isValid()) and
-	    !$fk_account_parameter and
+	if (!$fk_account_parameter and
 	    $fk_account == $TSunic->Usr->getInfo('id') and
 	    isset($this->_keys[$TSunic->Usr->getIdGuest()])
 	) {
+	    $TSunic->Log->log(8, " - return guest key");
 	    return $this->_keys[$TSunic->Usr->getIdGuest()];
 	}
 
-	// if no valid key, but another key is valid, return copy of this key
-	if (!isset($this->_keys[$fk_account])) {
-
-	    // is any valid key?
-	    foreach ($this->_keys as $index => $Value) {
-		if ($Value->isValid()) {
-		    return $Value;
-		}
+	// if another key is valid, return copy of this key
+	foreach ($this->_keys as $index => $Value) {
+	    if ($Value->isValid()) {
+		if (!$copy) return $Value;
+		$this->_keys[$fk_account] = $Value->getCopy();
+		$this->_keys[$fk_account]->set('fk_account', $fk_account);
+		$TSunic->Log->log(8, " - return copied key");
+		return $this->_keys[$fk_account];
 	    }
 	}
 
 	// if still nothing to return, create new empty key
-	if (!isset($this->_keys[$fk_account])) {
-	    $this->_keys[$fk_account] = $TSunic->get(
-		'$$$Key', array($this->table, $this->id, $fk_account), true
-	    );
-	    $this->_keys[$fk_account]->create();
-	    $this->_keys[$fk_account]->save();
-	}
-
-	return (isset($this->_keys[$fk_account]))
-	    ? $this->_keys[$fk_account] : NULL;
+	$this->_keys[$fk_account] = $TSunic->get(
+	    '$$$Key', array($this->table, $this->id, $fk_account), true
+	);
+	$this->_keys[$fk_account]->create();
+	$this->_keys[$fk_account]->save();
+	$TSunic->Log->log(8, " - return new key");
+	return $this->_keys[$fk_account];
     }
 
     /** Save Key
@@ -637,24 +615,27 @@ class $$$Object {
      * @return bool
      */
     protected function _deleteKey ($fk_account = 0) {
-
-	// get key
-	$Key = $this->_getKey($fk_account);
-
-	// delete key
-	if (!$fk_account or $Key->getInfo('fk_account') == $fk_account) {
+	global $TSunic;
+	if (!$fk_account) $fk_account = $TSunic->Usr->getInfo('id');
 
 	    // delete key from _keys-array
 	    $new_keys = array();
 	    foreach ($this->_keys as $index => $Value) {
-		if ($index != $Key->getInfo('fk_account'))
+		if ($Value->getInfo('fk_account') == $fk_account) {
+		    // delete key
+		    $TSunic->Log->log(8, " - Delete key for $fk_account");
+		    if (!$Value->delete()) {
+			global $TSunic;
+			$TSunic->Log->log(3,
+			    "system:Object: Failed to delete key!");
+			return false;
+		    }
+		} else {
+		    // keep key
 		    $new_keys[$index] = $Value;
+		}
 	    }
 	    $this->_keys = $new_keys;
-
-	    // delete Key object itself
-	    return $Key->delete();
-	}
 
 	return true;
     }
@@ -723,16 +704,13 @@ class $$$Object {
 	    // get Key object
 	    $Key = $this->_getKey($index);
 	    $Key->getInfo('key');
-
-	    // copy this key
-	    if ($Key->getInfo('fk_account') != $index) {
-		$Key = $Key->getCopy();
-		if ($Key) $this->_keys[$index] = $Key;
+	    if (!$Key) {
+		$TSunic->Log->log(3, "system:Object: Fatale encryption error!");
+		$TSunic->throwError("Fatale encryption error!");
 	    }
 
 	    // set writable
-	    if ($Key)
-		$Key->edit($index, $value, $this->table, $this->id, false);
+	    $Key->edit($index, $value, $this->table, $this->id, false);
 	}
 
 	return true;
@@ -758,19 +736,11 @@ class $$$Object {
 	// share with other user
 	$this->shareWith(array($fk_account => 1));
 
+	// update fk_account
+	$this->set('fk_account', $User->getInfo('id'), true);
+
 	// delete my own key (if not pushing to myself)
 	if ($TSunic->Usr->getInfo('id') != $fk_account) $this->_deleteKey();
-
-	// change key
-	$Key = $this->_getKey($fk_account);
-	$Key->create();
-	$Key->save();
-
-	// update fk_account
-	$this->set('fk_account', $User->getInfo('id'));
-
-	// resave data
-	$this->resave();
 
 	return true;
     }

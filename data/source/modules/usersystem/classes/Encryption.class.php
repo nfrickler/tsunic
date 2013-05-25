@@ -177,13 +177,17 @@ class $$$Encryption {
 	global $TSunic;
 
 	// do not encrypt for guest user
-	if ($this->fk_account == $TSunic->Usr->getIdGuest()) return $text;
+	if ($this->fk_account == $TSunic->Usr->getIdGuest()) {
+	    return $text;
+	}
 
 	// is ready for encryption?
 	if (!$key and !$this->ready) $this->throwEncError();
 
 	// do not encrypt empty text
-	if ($text === '' or $text === false) return $text;
+	if ($text === '' or $text === false) {
+	    return $text;
+	}
 
 	// add infix
 	$text = $this->infix.$text;
@@ -296,7 +300,7 @@ class $$$Encryption {
     /** Throw encryption error
      */
     protected function throwEncError () {
-	$TSunic->Log->log(1, 'Encryption called, but not ready yet!');
+	$TSunic->Log->log(1, 'usersystem:Encryption: Encryption called, but not ready yet!');
 	$TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
     }
 }

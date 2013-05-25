@@ -7,7 +7,12 @@ $MyProfile->create();
 $MyProfile->saveByTag('PROFILE__ACCOUNT', $this->id);
 $MyProfile->shareWith_all(array($this->getIdGuest() => 0));
 [sub:classes/$usersystem$User.class.php:216]
-$MyProfile = $TSunic->get('$profile$MyProfile');
-$MyProfile->create();
-$MyProfile->saveByTag('PROFILE__ACCOUNT', $this->id);
-$MyProfile->shareWith_all(array($this->getIdGuest() => 0));
+if ($this->isRoot()) {
+    $Meta = $TSunic->get('$profile$Meta');
+    if (!$Meta->getMyProfile($this->id)) {
+	$MyProfile = $TSunic->get('$profile$MyProfile');
+	$MyProfile->create();
+	$MyProfile->saveByTag('PROFILE__ACCOUNT', $this->id);
+	$MyProfile->shareWith_all(array($this->getIdGuest() => 0));
+    }
+}

@@ -91,6 +91,20 @@ class $$$Key {
 	return true;
     }
 
+    /** Set value for this object
+     *
+     * @param string $name
+     *	Name of value
+     * @param mix $value
+     *	New value
+     *
+     * @return bool
+     */
+    public function set ($name, $value) {
+	$this->info_tmp[$name] = $value;
+	return true;
+    }
+
     /** Encrypt data using this key
      *
      * @param string $data
@@ -199,6 +213,7 @@ class $$$Key {
 	}
 
 	// update database
+	$TSunic->Log->log(7, "+++SAVE KEY ".$this->info_tmp['fk_table']."(".$this->info_tmp['fk_id'].") for ".$this->info_tmp['fk_account'].": ".$this->info_tmp['key']);
 	$enckey = $User->encrypt($this->info_tmp['key']);
 	$sql_set = "
 	    fk_table = '".$this->info_tmp['fk_table']."',
@@ -321,11 +336,18 @@ class $$$Key {
 	global $TSunic;
 
 	// clone object (not in database!)
-	return $TSunic->get('$$$Key', array(
+	$Copy = $TSunic->get('$$$Key', array(
 	    $this->info_tmp['fk_table'],
 	    $this->info_tmp['fk_id'],
 	    $this->info_tmp['fk_account']
 	), true);
+
+	// Copy temporary values
+	$Copy->set('key', $this->info_tmp['key']);
+	$Copy->set('fk_account_origin', $this->info_tmp['fk_account_origin']);
+	$Copy->set('can_write', $this->info_tmp['can_write']);
+
+	return $Copy;
     }
 }
 ?>
