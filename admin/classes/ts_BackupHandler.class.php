@@ -1,11 +1,17 @@
-<!-- | Class to handle backup of modules and styles -->
+<!-- | CLASS ts_BackupHandler -->
 <?php
 // static
+/** Static backup handler
+ *
+ * Currently not in use!
+ */
 class ts_BackupHandler {
 
-    /* backup module
-     * @param string: path to module to backup
-     * +@param string: name to attach to the end of destination-folder
+    /** Backup module
+     * @var string $path
+     *	Path to module to backup
+     * @var string $name
+     *	Name to attach to the end of destination-folder
      *
      * @return array
      */
@@ -22,10 +28,11 @@ class ts_BackupHandler {
 	return false;
     }
 
-
-    /* backup style
-     * @param string: path to style to backup
-     * +@param string: name to attach to the end of destination-folder
+    /** Backup style
+     * @var string $path
+     *	Path to style to backup
+     * @var string $name
+     *	Name to attach to the end of destination-folder
      *
      * @return array
      */
@@ -42,8 +49,9 @@ class ts_BackupHandler {
 	return false;
     }
 
-    /* backup runtime-folder
-     * @param bool: also backup database
+    /** Backup runtime folder
+     * @var bool $includeDatabase
+     *	Backup database, too?
      *
      * @return array
      */
@@ -87,8 +95,9 @@ class ts_BackupHandler {
 
     /* ######################### database backup ######################## */
 
-    /* backup database
-     * @param string: path to sql backup-file
+    /** Backup database
+     * @var string $path
+     *	Path to sql backup file
      *
      * @return bool
      */
@@ -110,3 +119,4 @@ class ts_BackupHandler {
 	return true;
     }
 }
+?>

@@ -1,18 +1,22 @@
-<!-- | Class to handle configuration -->
+<!-- | CLASS ts_ConfigurationHandler -->
 <?php
+/**
+ * This class offers an interface for global TSunic configuration saved in
+ * the configuration file in /data/
+ */
 class ts_ConfigurationHandler {
 
-    /* content of config-file
-     * array
+    /** Content of config file
+     * @var array $content
      */
     private $content;
 
-    /* current version of TSunic
-     * string
+    /** Current version of TSunic
+     * @var string $current_version
      */
     private $current_version = '4.5';
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 
@@ -22,8 +26,9 @@ class ts_ConfigurationHandler {
 	return;
     }
 
-    /* get configuration from file
-     * +@param bool: force refresh of data
+    /** Cet configuration from file
+     * @var bool $refresh
+     *	Force refresh of data
      *
      * @return bool
      */
@@ -42,7 +47,11 @@ class ts_ConfigurationHandler {
 	return true;
     }
 
-    /* get configuration from file
+    /** Get configuration from file. This function also offers the default
+     * values for configuration values
+     *
+     * @var string $name
+     *	Name of configuration to fetch
      *
      * @return bool
      */
@@ -99,16 +108,17 @@ class ts_ConfigurationHandler {
 	return NULL;
     }
 
-    /* get path of config file
+    /** Get path of config file
      *
-     * @return bool
+     * @return string
      */
     public function getPath () {
 	return $this->get('dir_data').'/config.php';
     }
 
-    /* delete configuration
-     * @param string: name of setting to delete
+    /** Delete configuration
+     * @var string $name
+     *	Name of setting to delete
      *
      * @return bool
      */
@@ -123,9 +133,11 @@ class ts_ConfigurationHandler {
 	return true;
     }
 
-    /* set configuration values
-     * @param string: name of value
-     * @param string: value to be set
+    /** Set configuration values
+     * @var string $name
+     *	Name of configuration value
+     * @var string $value
+     *	Value to be set
      *
      * @return bool
      */
@@ -143,10 +155,13 @@ class ts_ConfigurationHandler {
 	return true;
     }
 
-    /* set single array-element
-     * @param string: name of value
-     * @param string: key of array-element
-     * @param string: value to be set
+    /** Set single array-element
+     * @var string $name
+     *	Name of value
+     * @var string $key
+     *	Key of array-element
+     * @var string $value
+     *	Value to be set
      *
      * @return bool
      */
@@ -165,7 +180,7 @@ class ts_ConfigurationHandler {
 	return true;
     }
 
-    /* set configuration in file
+    /** Save current configuration to file
      *
      * @return bool
      */

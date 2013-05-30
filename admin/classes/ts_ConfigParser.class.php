@@ -1,21 +1,27 @@
-<!-- | Class to parse config-files -->
+<!-- | CLASS ts_ConfigParser -->
 <?php
+/**
+ * Class to parse config xml file and add configuration possibilities to
+ * TSunic
+ */
 class ts_ConfigParser {
 
-    /* array containing all data from config-files
-     * array
+    /** Array containing all data from config-files
+     * @var array $data
      */
     protected $data;
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 	$this->data = array();
     }
 
-    /* read content from config file
-     * @param string: path of config file
-     * @param string: prefix to add to each configname
+    /** Read content from config file
+     * @var string $path
+     *	Path of config file
+     * @var string $prefix
+     *	Prefix to add to each configname
      *
      * @return bool
      */
@@ -46,8 +52,9 @@ class ts_ConfigParser {
 	return true;
     }
 
-    /* update confignames in database
-     * @param string: name of table to insert config into
+    /** Update confignames in database
+     * @var string $table
+     *	Name of table to insert config into
      *
      * @return bool
      */

@@ -1,21 +1,28 @@
-<!-- | Class to parse access-files -->
+<!-- | Class ts_AccessParser -->
 <?php
+/** Parse access xml file of each module
+ *
+ * This object parses the access xml files of modules and add those
+ * access to TSunic
+ */
 class ts_AccessParser {
 
-    /* array containing all data from access-files
-     * array
+    /** Array containing all data from access files
+     * @var array $data
      */
     protected $data;
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 	$this->data = array();
     }
 
-    /* read content from access file
-     * @param string: path of access file
-     * @param string: prefix to add to each accessname
+    /** Read content from access file
+     * @var string $path
+     *	Path of access file
+     * @var string $prefix
+     *	Prefix to add to each accessname
      *
      * @return bool
      */
@@ -40,8 +47,9 @@ class ts_AccessParser {
 	return true;
     }
 
-    /* update accessnames in database
-     * @param string: prefix of usersystem tables
+    /** Update accessnames in database
+     * @var string $prefix
+     *	Prefix of usersystem tables
      *
      * @return bool
      */

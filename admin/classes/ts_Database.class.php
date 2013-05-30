@@ -1,18 +1,21 @@
-<!-- | Class to handle database -->
+<!-- | CLASS ts_Database -->
 <?php
+/**
+ * Class to handle database management
+ */
 class ts_Database {
 
-    /* database object of chosen type
-     * object
+    /** Database object of chosen type
+     * @var Object $Db_obj
      */
     private $Db_obj;
 
-    /* prefix of all TSunic-tables
-     * string
+    /** Prefix of all TSunic tables
+     * @var string $table_pref
      */
     private $table_pref;
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 	global $Config;
@@ -49,7 +52,7 @@ class ts_Database {
 	return;
     }
 
-    /* get table prefix
+    /** Get table prefix
      *
      * @return string
      */
@@ -57,12 +60,12 @@ class ts_Database {
 	return $this->table_pref;
     }
 
-    /* parse query
-     * @param string: sql-query
+    /** Parse query
+     * @var string $sql
+     *	Sql-query
      *
-     * @return sql-query
-     *     (OR @return bool: false - error)
-      */
+     * @return sql-query|false
+     */
     protected function _parseQuery ($sql) {
 
 	// replace prefix
@@ -71,21 +74,22 @@ class ts_Database {
 	return $sql;
     }
 
-    /* return mysql-error (return false, if no error occurred)
+    /** Return mysql error (return false, if no error occurred)
      *
-     * @return bool/string
+     * @return bool|string
      */
     public function getError () {
 	return $this->Db_obj->getError();
     }
 
-    /* get Data from database
-     * @param string: sql-query
-     * @param bool(optional): throw exception?
+    /** Get data from database
+     * @var string $sql
+     *	Sql-query
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return array: result of query
-     *     (or REDIRECT)
-      */
+     * @return array
+     */
     public function doSelect ($sql, $error = true) {
 
 	// is running database?
@@ -98,13 +102,15 @@ class ts_Database {
 	return $this->getReturn($return, $error);
     }
 
-    /* update database
-     * @param string: sql-query
-     * +@param bool: throw exception?
+    /** Update database
+     * @var string $sql
+     *	Sql-query
+     * @var bool $error
+     *	Throw exception?
      *
      * @return bool: true - success
      *     (or REDIRECT)
-      */
+     */
     public function doUpdate ($sql, $error = true) {
 
 	// is running database?
@@ -117,13 +123,14 @@ class ts_Database {
 	return $this->getReturn($return, $error);
     }
 
-    /* insert rows in database
-     * @param string: sql-query
-     * +@param bool: throw exception?
+    /** Insert rows in database
+     * @var string $sql
+     *	Sql-query
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     public function doInsert ($sql, $error = true) {
 
 	// is running database?
@@ -136,13 +143,14 @@ class ts_Database {
 	return $this->getReturn($return, $error);
     }
 
-    /* delete rows in database
-     * @param string: sql-query
-     * +@param bool: throw exception?
+    /** Delete rows in database
+     * @var string $sql
+     *	Sql-query
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     public function doDelete ($sql, $error = true) {
 
 	// is running database?
@@ -154,13 +162,14 @@ class ts_Database {
 	return $this->getReturn($return, $error);
     }
 
-    /* just query database
-     * @param string: sql-query
-     * +@param bool: throw exception?
+    /** Just query database
+     * @var string $sql
+     *	Sql-query
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     public function doQuery ($sql, $error = true) {
 
 	// is running database?
@@ -173,13 +182,14 @@ class ts_Database {
 	return $this->getReturn($return, $error);
     }
 
-    /* check, if table exists
-     * @param string: name of table
-     * +@param bool: throw exception?
+    /** Check, if table exists
+     * @var string $table
+     *	Name of table
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return array: result of query
-     *     (or REDIRECT)
-      */
+     * @return array
+     */
     public function isTable ($table, $error = false) {
 
 	// is running database?
@@ -188,11 +198,13 @@ class ts_Database {
 	return $this->getReturn($this->Db_obj->isTable($this->_parseQuery($table)), $error);
     }
 
-    /* get all tables of database
-     * +@param bool: get only tables of tsunic
-     * +@param bool: throw exception?
+    /** Get all tables of database
+     * @var bool $tsunic_only
+     *	Get only tables of tsunic
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return array or REDIRECT
+     * @return array
       */
     public function getTables ($tsunic_only = true, $error = true) {
 
@@ -217,13 +229,14 @@ class ts_Database {
 	return $tables;
     }
 
-    /* get number of columns from database
-     * @param string: table of which columns shall be returned
-     * +@param bool: throw exception?
+    /** Get number of columns from database
+     * @var string $table
+     *	Table of which columns shall be returned
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return array: column-names
-     *     (or REDIRECT)
-      */
+     * @return array
+     */
     public function getColumns ($table, $error = true) {
 
 	// is running database?
@@ -232,13 +245,14 @@ class ts_Database {
 	return $this->getReturn($this->Db_obj->getColumns($table), $error);
     }
 
-    /* create a new table
-     * @param string: sql-query
-     * +@param bool: throw exception?
+    /** Create a new table
+     * @var string $sql
+     *	Sql-query
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     public function createTable ($sql, $error = true) {
 
 	// is running database?
@@ -247,12 +261,12 @@ class ts_Database {
 	return $this->getReturn($this->Db_obj->createTable($sql), $error);
     }
 
-    /* "execute" a sql-file
-     * @param string: path to sql-file
+    /** "execute" a sql-file
+     * @var string $path
+     *	Path to sql-file
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     public function runFile ($path) {
 
 	// is database sub-object?
@@ -268,12 +282,12 @@ class ts_Database {
 	return $this->runString($content);
     }
 
-    /* "execute" a sql-string (e.g. from a file)
-     * @param string: string with sql statements
+    /** "execute" a sql-string (e.g. from a file)
+     * @var string $content
+     *	String with sql statements
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     public function runString ($content) {
 
 	// is database sub-object?
@@ -302,13 +316,14 @@ class ts_Database {
 	return $this->getReturn($return);
     }
 
-    /* get return-value or redirect
-     * @param mix: returned value of functions above (insert/delete etc.)
-     * +@param bool: throw exception?
+    /** Get return-value or redirect
+     * @var mix $return
+     *	Returned value of functions above (insert/delete etc.)
+     * @var bool $error
+     *	Throw exception?
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
-      */
+     * @return bool
+     */
     private function getReturn ($return, $error = false) {
 
 	if ($error === true AND $return === false) {
@@ -319,11 +334,11 @@ class ts_Database {
 	return $return;
     }
 
-    /* export tables of database (or all tables)
-     * @param array/bool: tables to be exported (true will export all)
+    /** Export tables of database (or all tables)
+     * @param array|bool $tables
+     *	Tables to be exported (true will export all)
      *
-     * @return bool: true - success
-     *     (or REDIRECT)
+     * @return bool
       */
     public function export ($tables) {
 	$output = '';
