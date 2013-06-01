@@ -1,12 +1,17 @@
-<!-- | Module class -->
+<!-- | CLASS ts_Module -->
 <?php
+/**
+ * Class handling modules
+ */
 class ts_Module extends ts_Packet {
 
-    /* get/update path to module
-     * @param string: name of packet
-     * +@param bool: true - save path in obj-var; false - return path only
+    /** Get/update path to module
+     * @var string $name
+     *	Name of packet
+     * @var bool $save
+     *	Save path to obj-var (or return)?
      *
-     * @return string/bool
+     * @return string|bool
      */
     protected function _getPath ($name, $save = true) {
 	global $Config;
@@ -25,7 +30,7 @@ class ts_Module extends ts_Packet {
 	return $path;
     }
 
-    /* find id of module and preparse it
+    /** Convert name to id (add Style to database if not exists)
      *
      * @return bool
      */
@@ -33,31 +38,31 @@ class ts_Module extends ts_Packet {
 	global $Database, $Config, $Log;
 
 	// get data from database to compare
-	$sql_0 = "SELECT name as name,
-		    nameid as nameid,
-		    id__module as id__module
-		FROM #__modules
-		WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
-		    AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
-	$result_0 = $Database->doSelect($sql_0);
-	if ($result_0 === false OR count($result_0) > 1) return false;
+	$sql = "SELECT name as name,
+		nameid as nameid,
+		id__module as id__module
+	    FROM #__modules
+	    WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
+		AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
+	$result = $Database->doSelect($sql);
+	if ($result === false OR count($result) > 1) return false;
 
 	// new module?
-	if (count($result_0) == 0) {
+	if (count($result) == 0) {
 	    $Log->doLog(3, "Module: Found new module '".
 		$this->getInfofile('name')."'");
 
 	    // add module to database
-	    $sql_0 = "INSERT INTO #__modules
-		    SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
-			nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
-			version = '".mysql_real_escape_string($this->getInfofile('version'))."',
-			author = '".mysql_real_escape_string($this->getInfofile('author'))."',
-			link = '".mysql_real_escape_string($this->getInfofile('link'))."',
-			description = '".mysql_real_escape_string($this->getInfofile('description'))."'
+	    $sql = "INSERT INTO #__modules
+		SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
+		    nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
+		    version = '".mysql_real_escape_string($this->getInfofile('version'))."',
+		    author = '".mysql_real_escape_string($this->getInfofile('author'))."',
+		    link = '".mysql_real_escape_string($this->getInfofile('link'))."',
+		    description = '".mysql_real_escape_string($this->getInfofile('description'))."'
 	    ;";
-	    $result_0 = $Database->doInsert($sql_0);
-	    if (!$result_0) return false;
+	    $result = $Database->doInsert($sql);
+	    if (!$result) return false;
 
 	    // save id
 	    $this->id = mysql_insert_id();
@@ -69,7 +74,7 @@ class ts_Module extends ts_Packet {
 	}
 
 	// save id
-	$this->id = $result_0[0]['id__module'];
+	$this->id = $result[0]['id__module'];
 
 	// update found! -> replace old version
 	if ($this->getInfofile('version') > $this->getInfo('version')) {
@@ -77,15 +82,15 @@ class ts_Module extends ts_Packet {
 		$this->getInfofile('name')."' found.");
 
 	    // update database
-	    $sql_1 = "UPDATE #__modules
-		    SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
-			author = '".mysql_real_escape_string($this->getInfofile('author'))."',
-			link = '".mysql_real_escape_string($this->getInfofile('link'))."',
-			description = '".mysql_real_escape_string($this->getInfofile('description'))."',
-			nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."'
-		    WHERE id__module = '".$this->id."'
+	    $sql = "UPDATE #__modules
+		SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
+		    author = '".mysql_real_escape_string($this->getInfofile('author'))."',
+		    link = '".mysql_real_escape_string($this->getInfofile('link'))."',
+		    description = '".mysql_real_escape_string($this->getInfofile('description'))."',
+		    nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."'
+		WHERE id__module = '".$this->id."'
 	    ;";
-	    $result_1 = $Database->doUpdate($sql_1);
+	    $result_1 = $Database->doUpdate($sql);
 	    if (!$result_1) return false;
 
 	    // backup old version
@@ -128,11 +133,13 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* ######################### handle module ########################## */
+    /* ####################### handle module ########################## */
 
-    /* get info about module
-     * @param string: name of information to gather
-     * +@param bool: reload all data?
+    /** Get info about module
+     * @var string $name
+     *	Name of information to gather
+     * @var bool $refresh
+     *	Reload all data?
      *
      * @return mix
      */
@@ -150,8 +157,8 @@ class ts_Module extends ts_Packet {
 
 	// load data from database
 	$sql = "SELECT *
-		FROM #__modules
-		WHERE id__module = '".$this->id."';";
+	    FROM #__modules
+	    WHERE id__module = '".$this->id."';";
 	$result = $Database->doSelect($sql);
 
 	// save data
@@ -167,10 +174,11 @@ class ts_Module extends ts_Packet {
 	return $this->getInfofile($name, $refresh);
     }
 
-    /* get status of module
-     * +@param bool: get string as output (else: int)
+    /** Get status of module
+     * @var bool $verbal
+     *	Get string as readable string (or as int)?
      *
-     * @return int/string
+     * @return int|string
      */
     public function getStatus ($verbal = false) {
 
@@ -210,8 +218,9 @@ class ts_Module extends ts_Packet {
 	return ($verbal) ? 'MODULE__CLASS__STATUS_PREPARSINGERROR': 0;
     }
 
-    /* activate module for next parsing
-     * +@param bool: true - activate; false: deactivate
+    /** Activate module for next parsing
+     * @var bool $is_activated
+     *	Activate module (or deactivate)?
      *
      * @return bool
      */
@@ -223,10 +232,10 @@ class ts_Module extends ts_Packet {
 	if ($this->getInfo('is_activated') == $sql_is_activated) return true;
 
 	// set new status in database
-	$sql_0 = "UPDATE #__modules
-		    SET is_activated = ".$sql_is_activated."
-		    WHERE id__module = '".mysql_real_escape_string($this->id)."';";
-	if (!$Database->doUpdate($sql_0)) return false;
+	$sql = "UPDATE #__modules
+	    SET is_activated = ".$sql_is_activated."
+	    WHERE id__module = '".mysql_real_escape_string($this->id)."';";
+	if (!$Database->doUpdate($sql)) return false;
 
 	// update info-data
 	$this->getInfo('', true);
@@ -235,7 +244,7 @@ class ts_Module extends ts_Packet {
 
     /* ############################# preparse ########################### */
 
-    /* preparse and move all files and subfolders within path
+    /** Preparse and move all files and subfolders within path
      *
      * @return bool
      */
@@ -266,7 +275,7 @@ class ts_Module extends ts_Packet {
 
     /* ############################# parse ############################## */
 
-    /* parse source-code for frontend
+    /** Parse source code for frontend
      *
      * @return bool
      */
@@ -279,8 +288,9 @@ class ts_Module extends ts_Packet {
 	    // update database
 	    if ($this->getInfo('is_parsed')) {
 		$sql = "UPDATE #__modules
-			SET is_parsed = 0
-			WHERE id__module = '".mysql_real_escape_string($this->id)."';";
+		    SET is_parsed = 0
+		    WHERE id__module = '".mysql_real_escape_string(
+			$this->id)."';";
 		if ($Database->doUpdate($sql) === false) return false;
 	    }
 
@@ -325,12 +335,16 @@ class ts_Module extends ts_Packet {
 	    }
 
 	    // update database
-	    $sql_0 = "UPDATE #__modules
-		    SET ".$sql_additional."
-			is_parsed = 1,
-			version_installed = '".mysql_real_escape_string($this->getInfofile('version'))."'
-		    WHERE id__module = '".mysql_real_escape_string($this->id)."';";
-	    if ($Database->doUpdate($sql_0) === false) return false;
+	    $sql = "UPDATE #__modules
+		SET ".$sql_additional."
+		    is_parsed = 1,
+		    version_installed = '".mysql_real_escape_string(
+			$this->getInfofile('version')
+		    )."'
+		    WHERE id__module = '".mysql_real_escape_string(
+			$this->id)."
+		    ';";
+	    if ($Database->doUpdate($sql) === false) return false;
 
 	    return true;
 	}
@@ -340,7 +354,7 @@ class ts_Module extends ts_Packet {
 	return false;
     }
 
-    /* parse images and other files of this module
+    /** Parse images and other files of this module
      *
      * @return bool
      */
@@ -361,7 +375,7 @@ class ts_Module extends ts_Packet {
 	return false;
     }
 
-    /* parse static
+    /** Parse static
      *
      * @return bool
      */
@@ -403,7 +417,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse javascript-files of this module
+    /** Parse javascript files of this module
      *
      * @return bool
      */
@@ -438,7 +452,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse xmlResponses-files of this module
+    /** Parse xmlResponses files of this module
      *
      * @return bool
      */
@@ -471,7 +485,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse function-files of this module
+    /** Parse function files of this module
      *
      * @return bool
      */
@@ -509,7 +523,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse class-files of this module
+    /** Parse class files of this module
      *
      * @return bool
      */
@@ -557,7 +571,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse template-files of this module
+    /** Parse template files of this module
      *
      * @return bool
      */
@@ -595,7 +609,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse help pages of this module
+    /** Parse help pages of this module
      *
      * @return bool
      */
@@ -628,7 +642,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse language-files of this module
+    /** Parse language files of this module
      *
      * @return bool
      */
@@ -657,7 +671,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse format.css-file of this module
+    /** Parse format.css file of this module
      *
      * @return bool
      */
@@ -680,7 +694,7 @@ class ts_Module extends ts_Packet {
 	return false;
     }
 
-    /* parse subcodes-file of this module
+    /** Parse subcodes file of this module
      *
      * @return bool
      */
@@ -704,7 +718,7 @@ class ts_Module extends ts_Packet {
 	return false;
     }
 
-    /* parse access-file of this module
+    /** Parse access file of this module
      *
      * @return bool
      */
@@ -723,7 +737,7 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* parse config-file of this module
+    /** Parse config file of this module
      *
      * @return bool
      */
@@ -744,7 +758,7 @@ class ts_Module extends ts_Packet {
 
     /* ###################### install/update/uninstall ################## */
 
-    /* install module
+    /** Install module
      *
      * @return bool
      */
@@ -772,15 +786,15 @@ class ts_Module extends ts_Packet {
 
 	// successful installation (set install-time in database)
 	$sql = "UPDATE #__modules
-		SET dateOfInstall = NOW(),
-		    dateOfUninstall = NULL
-		WHERE id__module = '".$this->id."';";
+	    SET dateOfInstall = NOW(),
+		dateOfUninstall = NULL
+	    WHERE id__module = '".$this->id."';";
 	if (!$Database->doUpdate($sql)) return false;
 
 	return true;
     }
 
-    /* update module
+    /** Update module
      *
      * @return bool
      */
@@ -788,8 +802,7 @@ class ts_Module extends ts_Packet {
 	global $Database, $Parser;
 
 	// get versions
-	$sql = "SELECT version_installed,
-		version
+	$sql = "SELECT version_installed, version
 	    FROM #__modules
 	    WHERE id__module = '".mysql_real_escape_string($this->id)."'
 	;";
@@ -865,12 +878,15 @@ class ts_Module extends ts_Packet {
 	return true;
     }
 
-    /* find best (shortest) way from $from to $to
-     * @param array: all paths
-     * @param string: starting point
-     * @param string: goal
+    /** Find best (shortest) way from $from to $to
+     * @var array $all
+     *	All available update paths
+     * @var string $from
+     *	Start version
+     * @var string $to
+     *	Goal version
      *
-     * @return array/bool
+     * @return array|bool
      */
     protected function _findWay ($all, $from, $to) {
 	$best_way = false;
@@ -907,7 +923,7 @@ class ts_Module extends ts_Packet {
 	return $best_way;
     }
 
-    /* uninstall module
+    /** Uninstall module
      *
      * @return bool
      */
@@ -932,15 +948,15 @@ class ts_Module extends ts_Packet {
 	}
 
 	// successful deinstallation (set uninstall-time in database)
-	$sql_0 = "UPDATE #__modules
-		SET dateOfUninstall = NOW()
-		WHERE id__module = '".$this->id."';";
-	if (!$Database->doUpdate($sql_0)) return false;
+	$sql = "UPDATE #__modules
+	    SET dateOfUninstall = NOW()
+	    WHERE id__module = '".$this->id."';";
+	if (!$Database->doUpdate($sql)) return false;
 
 	return true;
     }
 
-    /* delete module
+    /** Delete module
      *
      * @return bool
      */
@@ -955,9 +971,9 @@ class ts_Module extends ts_Packet {
 	if (!ts_FileHandler::deleteFolder($this->path)) return false;
 
 	// delete entry in database
-	$sql_0 = "DELETE FROM #__modules
-		WHERE id__module = '".$this->id."';";
-	if (!$Database->doDelete($sql_0)) return false;
+	$sql = "DELETE FROM #__modules
+	    WHERE id__module = '".$this->id."';";
+	if (!$Database->doDelete($sql)) return false;
 
 	return true;
     }

@@ -1,14 +1,18 @@
-<!-- | class to handle modules -->
+<!-- | CLASS ts_ModuleHandler -->
 <?php
+/**
+ * Class to load all modules
+ */
 class ts_ModuleHandler {
 
-    /* module-objects of all existing modules
-     * array
+    /** Module objects of all existing modules
+     * @var array $modules
      */
     private $modules;
 
-    /* validate source-code
-     * @param bool: force to get new list from database (not a cached one from obj-var)
+    /** Validate source code
+     * @var bool $force_update
+     *	Force to get new list from database (not a cached one from obj-var)
      *
      * @return array
      */
@@ -57,8 +61,9 @@ class ts_ModuleHandler {
 	return $this->modules;
     }
 
-    /* get module by name
-     * @param string: name of module
+    /** Get module by name
+     * @var string $name
+     *	Name of module
      *
      * @return object
      */
@@ -69,9 +74,11 @@ class ts_ModuleHandler {
 	return NULL;
     }
 
-    /* get order of module A and module B concerning dependencies
-     * @param object: module A
-     * @param object: module B
+    /** Get order of module A and module B concerning dependencies
+     * @param Module $modA
+     *	Module A
+     * @param Module $modB
+     *	Module B
      *
      * @return int
      */
@@ -93,10 +100,13 @@ class ts_ModuleHandler {
 	return 0;
     }
 
-    /* does A depend on B?
-     * @param object: module A
-     * @param object: module B
-     * +@param int: loop prevention (stop after 30 dependencies)
+    /** Does A depend on B?
+     * @var Module $modA
+     *	Module A
+     * @var Module $modB
+     *	Module B
+     * @var int $loop
+     *	Loop prevention (stop after 30 dependencies)
      *
      * @return bool
      */

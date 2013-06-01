@@ -1,38 +1,42 @@
-<!-- | Packet module -->
+<!-- | CLASS ts_Packet -->
 <?php
+/**
+ * Abstract packet module
+ */
 class ts_Packet {
 
-    /* id
-     * int
+    /** id of packet
+     * @var int $id
      */
     protected $id;
 
-    /* path to packet
-     * string
+    /** Path to packet
+     * @var string $path
      */
     protected $path;
 
-    /* is valid packet-object?
-     * bool
+    /** Is valid packet-object?
+     * @var bool $is_valid
      */
     protected $is_valid = false;
 
-    /* array holding information about this packet
-     * array
+    /** Array holding information about this packet
+     * @var array $info
      */
     protected $info = array();
 
-    /* array holding information about this packet from version.xml
-     * array
+    /** Array holding information about this packet from version.xml
+     * @var array $infofile
      */
     protected $infofile = array();
 
-    /* constructor
-     * +@param int: id of packet
-     * +@param string: name of packet
+    /** Constructor
+     * @var int $id
+     *	Id of packet
+     * @var string $name
+     *	Name of packet
      */
     public function __construct ($id = false, $name = false) {
-	global $Config;
 
 	// is id?
 	$this->id = (!empty($id) AND is_numeric($id)) ? $id : false;
@@ -43,7 +47,7 @@ class ts_Packet {
 	// is id given?
 	if (empty($id) OR !is_numeric($id)) {
 	    // try to get id from name
-	    if (!$this->_findId($name)) return;
+	    if (!$this->_findId()) return;
 	}
 
 	// everything fine -> valid module
@@ -51,42 +55,41 @@ class ts_Packet {
 	return;
     }
 
-    /* get/update path to packet
-     * @param string: name of packet
-     * +@param bool: true - save path in obj-var; false - return path only
+    /** Get/update path to packet
+     * @var string $name
+     *	Name of packet
+     * @var bool $save
+     *	Save path in obj-var (or return path)?
      *
-     * @return string/bool
+     * @return string|bool
      */
-    protected function _getPath ($name, $save = true) {
-	return false;
-    }
+    abstract protected function _getPath ($name, $save);
 
-    /* convert name to id
-     * @param string: name of packet
+    /** Convert name to id (add Style to database if not exists)
      *
      * @return bool
      */
-    protected function _findId () {
-	return false;
-    }
+    abstract protected function _findId ();
 
     /* ######################### handle packet ########################## */
 
-    /* get info about packet
-     * @param string: name of information to gather
-     * +@param bool: true - delete all current infos
+    /** Get info about packet
+     * @var string $name
+     *	Name of information to gather
+     * @var bool $refresh
+     *	Refresh cached infos?
      *
      * @return mix
      */
-    public function getInfo ($name, $refresh = false) {
-	return NULL;
-    }
+    abstract public function getInfo ($name, $refresh);
 
-    /* get info from version.xml
-     * @param string: name of information to gather
-     * +@param bool: true - delete all current infos
+    /** Get info from version.xml
+     * @var string $name
+     *	Name of information to gather
+     * @var bool $refresh
+     *	Refresh cached infos?
      *
-     * @return OBJECT
+     * @return mix
      */
     public function getInfofile ($name, $refresh = false) {
 
@@ -114,7 +117,7 @@ class ts_Packet {
 	return NULL;
     }
 
-    /* is valid packet-object?
+    /** Is valid packet object?
      *
      * @return bool
      */
@@ -125,7 +128,7 @@ class ts_Packet {
 
     /* ############################# pre-parse ########################## */
 
-    /* preparse and move all files and subfolders within path
+    /** Preparse and move all files and subfolders within path
      *
      * @return bool
      */

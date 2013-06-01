@@ -1,12 +1,17 @@
-<!-- | Style class -->
+<!-- | CLASS ts_Style -->
 <?php
+/**
+ * Class handling Style
+ */
 class ts_Style extends ts_Packet {
 
-    /* get/update path to style
-     * @param string: name of packet
-     * +@param bool: true - save path in obj-var; false - return path only
+    /** Get/update path to style
+     * @var string $name
+     *	Name of packet
+     * @var bool $save
+     *	Save path in obj-var (or return path)?
      *
-     * @return string/bool
+     * @return string|bool
      */
     protected function _getPath ($name, $save = true) {
 	global $Config;
@@ -26,9 +31,9 @@ class ts_Style extends ts_Packet {
 	return $path;
     }
 
-    /* convert name to id
+    /** Convert name to id (add Style to database if not exists)
      *
-     * @return OBJECT
+     * @return bool
      */
     protected function _findId () {
 	global $Database, $Config;
@@ -37,29 +42,29 @@ class ts_Style extends ts_Packet {
 	if (!$this->getInfofile('name')) return false;
 
 	// get data from database to compare
-	$sql_0 = "SELECT name as name,
-		 nameid as nameid,
-		 id__style as id__style
-		FROM #__styles
-		WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
-		    AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
-	$result_0 = $Database->doSelect($sql_0);
-	if ($result_0 === false OR count($result_0) > 1) return false;
+	$sql = "SELECT name as name,
+		nameid as nameid,
+		id__style as id__style
+	    FROM #__styles
+	    WHERE name = '".mysql_real_escape_string($this->getInfofile('name'))."'
+		AND nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."';";
+	$result = $Database->doSelect($sql);
+	if ($result === false OR count($result) > 1) return false;
 
 	// is new style?
-	if (count($result_0) == 0) {
+	if (count($result) == 0) {
 	    // add style
 
 	    // add style to database
-	    $sql_0 = "INSERT INTO #__styles
-		    SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
-			nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
-			dateOfPreParsing = NOW(),
-			version = '".mysql_real_escape_string($this->getInfofile('version'))."',
-			author = '".mysql_real_escape_string($this->getInfofile('author'))."',
-			description = '".mysql_real_escape_string($this->getInfofile('description'))."';";
-	    $result_0 = $Database->doInsert($sql_0);
-	    if (!$result_0) return false;
+	    $sql = "INSERT INTO #__styles
+		SET name = '".mysql_real_escape_string($this->getInfofile('name'))."',
+		    nameid = '".mysql_real_escape_string($this->getInfofile('nameid'))."',
+		    dateOfPreParsing = NOW(),
+		    version = '".mysql_real_escape_string($this->getInfofile('version'))."',
+		    author = '".mysql_real_escape_string($this->getInfofile('author'))."',
+		    description = '".mysql_real_escape_string($this->getInfofile('description'))."';";
+	    $result = $Database->doInsert($sql);
+	    if (!$result) return false;
 
 	    // save id
 	    $this->id = mysql_insert_id();
@@ -71,19 +76,19 @@ class ts_Style extends ts_Packet {
 	}
 
 	// set id
-	$this->id = $result_0[0]['id__style'];
+	$this->id = $result[0]['id__style'];
 
 	// check version
 	if ($this->getInfofile('version') > $this->getInfo('version')) {
 	    // update found! -> replace old version
 
 	    // update database
-	    $sql_1 = "UPDATE #__styles
-		    SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
-			author = '".mysql_real_escape_string($this->getInfofile('author'))."',
-			description = '".mysql_real_escape_string($this->getInfofile('description'))."'
-		    WHERE id__style = '".$this->id__style."';";
-	    $result_1 = $Database->doUpdate($sql_1);
+	    $sql = "UPDATE #__styles
+		SET version = '".mysql_real_escape_string($this->getInfofile('version'))."',
+		    author = '".mysql_real_escape_string($this->getInfofile('author'))."',
+		    description = '".mysql_real_escape_string($this->getInfofile('description'))."'
+		WHERE id__style = '".$this->id__style."';";
+	    $result = $Database->doUpdate($sql);
 
 	    // backup old version
 	    ts_BackupHandler::backupStyle($Config->get('dir_data').'/source/styles/_style'.$this->id, $this->getInfofile('name').'_'.$this->getInfofile('nameid').'__version__'.$this->getInfofile('version'));
@@ -119,11 +124,13 @@ class ts_Style extends ts_Packet {
 
     /* ######################### handle style ########################### */
 
-    /* get info about module
-     * @param string: name of information to gather
-     * +@param bool: true - delete all current infos
+    /** Get info about module
+     * @var string $name
+     *	Name of information to gather
+     * @param bool $refresh
+     *	Refresh cached infos?
      *
-     * @return OBJECT
+     * @return mix
      */
     public function getInfo ($name, $refresh = false) {
 	global $Database;
@@ -154,10 +161,11 @@ class ts_Style extends ts_Packet {
 	return $this->getInfofile($name, $refresh);
     }
 
-    /* get status of style
-     * +@param bool: get string as output (else: int)
+    /** Get status of style
+     * @var bool $verbal
+     *	Get string as output (else: int)
      *
-     * @return int/string
+     * @return int|string
      */
     public function getStatus ($verbal = false) {
 
@@ -187,8 +195,9 @@ class ts_Style extends ts_Packet {
 	return ($verbal) ? 'STYLE__CLASS__STATUS_PREPARSINGERROR': 0;
     }
 
-    /* activate style for next parsing
-     * +@param bool: true - activate; false: deactivate
+    /** Activate style for next parsing
+     * @var bool $is_activated
+     *	Activate (or deactivate)?
      *
      * @return bool
      */
@@ -204,11 +213,11 @@ class ts_Style extends ts_Packet {
 	}
 
 	// set new status in database
-	$sql_0 = "UPDATE #__styles
-		SET is_activated = ".$sql_is_activated."
-		    ".$sql_is_default."
-		WHERE id__style = ".mysql_real_escape_string($this->id).";";
-	if (!$Database->doUpdate($sql_0)) return false;
+	$sql = "UPDATE #__styles
+	    SET is_activated = ".$sql_is_activated."
+		".$sql_is_default."
+	    WHERE id__style = ".mysql_real_escape_string($this->id).";";
+	if (!$Database->doUpdate($sql)) return false;
 
 	// update info-data
 	$this->getInfo('', true);
@@ -217,7 +226,7 @@ class ts_Style extends ts_Packet {
 
     /* ############################# pre-parse ########################## */
 
-    /* preparse and move all files and subfolders within path
+    /** Preparse and move all files and subfolders within path
      *
      * @return bool
      */
@@ -246,10 +255,10 @@ class ts_Style extends ts_Packet {
 
 	    // update database
 	    if ($this->getInfo('is_parsed')) {
-		$sql_0 = "UPDATE #__styles
-			SET is_parsed = 0
-			WHERE id__style = '".mysql_real_escape_string($this->id)."';";
-		if ($Database->doUpdate($sql_0) === false) return false;
+		$sql = "UPDATE #__styles
+		    SET is_parsed = 0
+		    WHERE id__style = '".mysql_real_escape_string($this->id)."';";
+		if ($Database->doUpdate($sql) === false) return false;
 	    }
 
 	    return true;
@@ -264,10 +273,10 @@ class ts_Style extends ts_Packet {
 	    // success
 
 	    // update database
-	    $sql_0 = "UPDATE #__styles
-		    SET is_parsed = 1
-		    WHERE id__style = '".mysql_real_escape_string($this->id)."';";
-	    if ($Database->doUpdate($sql_0) === false) return false;
+	    $sql = "UPDATE #__styles
+		SET is_parsed = 1
+		WHERE id__style = '".mysql_real_escape_string($this->id)."';";
+	    if ($Database->doUpdate($sql) === false) return false;
 
 	    return true;
 	}
@@ -276,7 +285,7 @@ class ts_Style extends ts_Packet {
 	return false;
     }
 
-    /* parse images and other files of this style
+    /** Parse images and other files of this style
      *
      * @return bool
      */
@@ -307,7 +316,7 @@ class ts_Style extends ts_Packet {
 	return true;
     }
 
-    /* parse template-files of this module
+    /** Parse template files of this module
      *
      * @return bool
      */
@@ -356,7 +365,7 @@ class ts_Style extends ts_Packet {
 	return true;
     }
 
-    /* parse template-files of this module
+    /** Parse template files of this module
      *
      * @return bool
      */
@@ -380,7 +389,7 @@ class ts_Style extends ts_Packet {
 	return true;
     }
 
-    /* parse format.css-file of this module
+    /** Parse format.css file of this module
      *
      * @return bool
      */
@@ -404,7 +413,7 @@ class ts_Style extends ts_Packet {
 
     /* ###################### delete #################################### */
 
-    /* delete style
+    /** Delete style
      *
      * @return bool
      */
@@ -419,14 +428,14 @@ class ts_Style extends ts_Packet {
 	if (!ts_FileHandler::deleteFolder($this->path)) return false;
 
 	// delete entry in database
-	$sql_0 = "DELETE FROM #__styles
-		WHERE id__style = '".$this->id."';";
-	if (!$Database->doDelete($sql_0)) return false;
+	$sql = "DELETE FROM #__styles
+	    WHERE id__style = '".$this->id."';";
+	if (!$Database->doDelete($sql)) return false;
 
 	return true;
     }
 
-    /* set style as default-style
+    /** Set style as default style
      *
      * @return bool
      */
@@ -440,16 +449,16 @@ class ts_Style extends ts_Packet {
 	}
 
 	// remove all other defaults
-	$sql_0 = "UPDATE #__styles
-		SET is_default = 0
-		WHERE NOT id__style = ".mysql_real_escape_string($this->id).";";
-	$result_0 = $Database->doUpdate($sql_0);
+	$sql = "UPDATE #__styles
+	    SET is_default = 0
+	    WHERE NOT id__style = ".mysql_real_escape_string($this->id).";";
+	$result = $Database->doUpdate($sql);
 
 	// set as default
-	$sql_1 = "UPDATE #__styles
-		SET is_default = 1
-		WHERE id__style = ".mysql_real_escape_string($this->id).";";
-	$result_1 = $Database->doUpdate($sql_1);
+	$sql = "UPDATE #__styles
+	    SET is_default = 1
+	    WHERE id__style = ".mysql_real_escape_string($this->id).";";
+	$result = $Database->doUpdate($sql);
 
 	// update config
 	$Config->set('default_style', $this->id);

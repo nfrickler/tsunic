@@ -1,20 +1,16 @@
-<!-- | class to handle styles -->
+<!-- | CLASS ts_StyleHandler -->
 <?php
+/**
+ * Class to handle Style objects in general
+ */
 class ts_StyleHandler {
 
-    /* style-objects of all existing styles
-     * array
+    /** Style objects of all existing styles
+     * @var array $styles
      */
     private $styles;
 
-    /* constructor
-     */
-    public function __construct () {
-
-	return;
-    }
-
-    /* make sure that a default-style has been set
+    /** Make sure that a default style has been set
      *
      * @return bool
      */
@@ -42,8 +38,9 @@ class ts_StyleHandler {
 	return true;
     }
 
-    /* get all styles
-     * @param bool: force to get new list from database (not a cached one from obj-var)
+    /** Get all styles
+     * @var bool $force_update
+     *	Force to get new list from database (not a cached one from obj-var)?
      *
      * @return array
      */
@@ -54,17 +51,17 @@ class ts_StyleHandler {
 	if (!$force_update AND isset($this->styles) AND !empty($this->styles)) return $this->styles;
 
 	// get module-ids from database
-	$sql_0 = "SELECT id__style as id__style
-		FROM #__styles
-		ORDER BY name ASC;";
-	$result_0 = $Database->doSelect($sql_0);
-	if ($result_0 === false) return false;
+	$sql = "SELECT id__style as id__style
+	    FROM #__styles
+	    ORDER BY name ASC;";
+	$result = $Database->doSelect($sql);
+	if ($result === false) return false;
 
 	// get available sources
 	$subfolders = ts_FileHandler::getSubfolders($Config->get('dir_data').'/source/styles');
 	if (!is_array($subfolders)) return false;
 
-	// get style-objects and save them in obj-var
+	// get style objects and save them in obj-var
 	$style_files = array();
 	foreach ($subfolders as $index => $value) {
 	    $style_files[] = new ts_Style(false, $value);
@@ -75,7 +72,7 @@ class ts_StyleHandler {
 	foreach ($style_files as $index => $Value) {
 	    $this->styles[$Value->getInfo('name').'__'.$Value->getInfo('nameid')] = $Value;
 	}
-	foreach ($result_0 as $index => $values) {
+	foreach ($result as $index => $values) {
 	    $Style = new ts_Style($values['id__style']);
 	    if (!isset($this->styles[$Style->getInfo('name').'__'.$Style->getInfo('nameid')])) {
 		$this->styles[$Style->getInfo('name').'__'.$Style->getInfo('nameid')] = $Style;
@@ -88,3 +85,4 @@ class ts_StyleHandler {
 	return $this->styles;
     }
 }
+?>
