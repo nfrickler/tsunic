@@ -61,7 +61,7 @@ class ts_Database {
     }
 
     /** Parse query
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
      *
      * @return sql-query|false
@@ -83,9 +83,9 @@ class ts_Database {
     }
 
     /** Get data from database
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return array
@@ -103,9 +103,9 @@ class ts_Database {
     }
 
     /** Update database
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return bool: true - success
@@ -124,9 +124,9 @@ class ts_Database {
     }
 
     /** Insert rows in database
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return bool
@@ -144,9 +144,9 @@ class ts_Database {
     }
 
     /** Delete rows in database
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return bool
@@ -163,9 +163,9 @@ class ts_Database {
     }
 
     /** Just query database
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return bool
@@ -183,9 +183,9 @@ class ts_Database {
     }
 
     /** Check, if table exists
-     * @var string $table
+     * @param string $table
      *	Name of table
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return array
@@ -199,9 +199,9 @@ class ts_Database {
     }
 
     /** Get all tables of database
-     * @var bool $tsunic_only
+     * @param bool $tsunic_only
      *	Get only tables of tsunic
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return array
@@ -230,9 +230,9 @@ class ts_Database {
     }
 
     /** Get number of columns from database
-     * @var string $table
+     * @param string $table
      *	Table of which columns shall be returned
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return array
@@ -246,9 +246,9 @@ class ts_Database {
     }
 
     /** Create a new table
-     * @var string $sql
+     * @param string $sql
      *	Sql-query
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return bool
@@ -262,7 +262,7 @@ class ts_Database {
     }
 
     /** "execute" a sql-file
-     * @var string $path
+     * @param string $path
      *	Path to sql-file
      *
      * @return bool
@@ -283,7 +283,7 @@ class ts_Database {
     }
 
     /** "execute" a sql-string (e.g. from a file)
-     * @var string $content
+     * @param string $content
      *	String with sql statements
      *
      * @return bool
@@ -317,9 +317,9 @@ class ts_Database {
     }
 
     /** Get return-value or redirect
-     * @var mix $return
+     * @param mix $return
      *	Returned value of functions above (insert/delete etc.)
-     * @var bool $error
+     * @param bool $error
      *	Throw exception?
      *
      * @return bool

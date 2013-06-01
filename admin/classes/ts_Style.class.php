@@ -6,9 +6,9 @@
 class ts_Style extends ts_Packet {
 
     /** Get/update path to style
-     * @var string $name
+     * @param string $name
      *	Name of packet
-     * @var bool $save
+     * @param bool $save
      *	Save path in obj-var (or return path)?
      *
      * @return string|bool
@@ -125,7 +125,7 @@ class ts_Style extends ts_Packet {
     /* ######################### handle style ########################### */
 
     /** Get info about module
-     * @var string $name
+     * @param string $name
      *	Name of information to gather
      * @param bool $refresh
      *	Refresh cached infos?
@@ -162,7 +162,7 @@ class ts_Style extends ts_Packet {
     }
 
     /** Get status of style
-     * @var bool $verbal
+     * @param bool $verbal
      *	Get string as output (else: int)
      *
      * @return int|string
@@ -196,7 +196,7 @@ class ts_Style extends ts_Packet {
     }
 
     /** Activate style for next parsing
-     * @var bool $is_activated
+     * @param bool $is_activated
      *	Activate (or deactivate)?
      *
      * @return bool

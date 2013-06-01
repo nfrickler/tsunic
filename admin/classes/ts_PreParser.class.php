@@ -16,7 +16,7 @@ class ts_PreParser {
     private $parse_ext = array('php', 'html', 'htm', 'css', 'xml', 'js');
 
     /** Constructor
-     * @var object $Packet
+     * @param object $Packet
      *	Packet object which is going to be parsed next
      */
     public function __construct ($Packet = NULL) {
@@ -25,13 +25,13 @@ class ts_PreParser {
     }
 
     /** Preparse
-     * @var string $path
+     * @param string $path
      *	Source path
-     * @var string $path_new
+     * @param string $path_new
      *	Destination path
-     * @var string|bool $path_to_cut
+     * @param string|bool $path_to_cut
      *	Common path of module/style (internal use)
-     * @var bool $rm_flags
+     * @param bool $rm_flags
      *	Remove flag comments?
      *
      * @return string
@@ -76,13 +76,13 @@ class ts_PreParser {
     }
 
     /** Preparse file
-     * @var string $source
+     * @param string $source
      *	Source file
-     * @var string $destination
+     * @param string $destination
      *	Destination file
-     * @var string $path_to_cut
+     * @param string $path_to_cut
      *	Path to root
-     * @var bool $rm_flags
+     * @param bool $rm_flags
      *	Remove flag comments?
      *
      * @return bool
@@ -221,7 +221,7 @@ class ts_PreParser {
      *   p - ignore file at preparsing
      *   h - do not add header
      *
-     * @var string $content
+     * @param string $content
      *	Content of file
      *
      * @return array

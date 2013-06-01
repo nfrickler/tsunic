@@ -21,7 +21,7 @@ class ts_TemplateEngine {
     private $dTemplate;
 
     /** Constructor
-     * @var string $design
+     * @param string $design
      *	Name of design
      */
     public function __construct ($design = 0) {
@@ -38,9 +38,9 @@ class ts_TemplateEngine {
     }
 
     /** Activate template for output
-     * @var string $template
+     * @param string $template
      *	Name of template
-     * @var bool|array $data
+     * @param bool|array $data
      *	Data for template
      *
      * @return bool
@@ -63,9 +63,9 @@ class ts_TemplateEngine {
     }
 
     /** Save data
-     * @var string|bool $template
+     * @param string|bool $template
      *	Template, data are for (false: reset all data; true: get all data from session)
-     * @var string $data
+     * @param string $data
      *	Data to save
      *
      * @return string
@@ -101,9 +101,9 @@ class ts_TemplateEngine {
     }
 
     /** Save data
-     * @var string $template
+     * @param string $template
      *	Template to fetch data for
-     * @var string $name
+     * @param string $name
      *	Name of data
      *
      * @return string
@@ -124,9 +124,9 @@ class ts_TemplateEngine {
     }
 
     /** Parse output text
-     * @var string $text
+     * @param string $text
      *	Text to be parsed
-     * @var bool $doEscape
+     * @param bool $doEscape
      *	Escape single and double quotes?
      *
      * @return string
@@ -140,11 +140,11 @@ class ts_TemplateEngine {
     }
 
     /** Skip language placeholders
-     * @var string $text
+     * @param string $text
      *	Text to be parsed
-     * @var bool $doEscape
+     * @param bool $doEscape
      *	Escape single and double quotes?
-     * @var int $nested
+     * @param int $nested
      *	Maximal number of recursive calls for nested language replacements
      *
      * @return string
@@ -185,7 +185,7 @@ class ts_TemplateEngine {
     }
 
     /** Get language replacements
-     * @var string $index
+     * @param string $index
      *	Language placeholder
      *
      * @return string
@@ -215,11 +215,11 @@ class ts_TemplateEngine {
     }
 
     /** Get language replacements
-     * @var string $input
+     * @param string $input
      *	Language placeholder or module
-     * @var bool|string $lang
+     * @param bool|string $lang
      *	Set language to include
-     * @var bool $returnOnFail
+     * @param bool $returnOnFail
      *	Return, if include fails?
      *
      * @return bool
@@ -254,7 +254,7 @@ class ts_TemplateEngine {
     }
 
     /** Display output
-     * @var bool|string $template
+     * @param bool|string $template
      *	Name of first template
      *
      * @return bool

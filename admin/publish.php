@@ -43,15 +43,19 @@ if ($PreParser->parse($path, $path, $Config->get('dir_runtime'), true)) {
 
 echo "Done...\n";
 
+/**
+ * Dummy packet to get access to PreParsing object
+ */
 class ts_DummyPacket {
 
-    /* array to cache version.xml
-     * array
+    /** Array to cache version.xml
+     * @var array $infofile
      */
     private $infofile = array();
 
-    /* get info from version.xml file
-     * @param string: name of info
+    /** Get info from version.xml file
+     * @param string $name
+     *	Name of info
      *
      * @return mix
      */

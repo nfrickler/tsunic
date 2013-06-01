@@ -39,7 +39,7 @@ class ts_StyleHandler {
     }
 
     /** Get all styles
-     * @var bool $force_update
+     * @param bool $force_update
      *	Force to get new list from database (not a cached one from obj-var)?
      *
      * @return array

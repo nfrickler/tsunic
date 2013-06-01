@@ -19,9 +19,9 @@ class ts_AccessParser {
     }
 
     /** Read content from access file
-     * @var string $path
+     * @param string $path
      *	Path of access file
-     * @var string $prefix
+     * @param string $prefix
      *	Prefix to add to each accessname
      *
      * @return bool
@@ -48,7 +48,7 @@ class ts_AccessParser {
     }
 
     /** Update accessnames in database
-     * @var string $prefix
+     * @param string $prefix
      *	Prefix of usersystem tables
      *
      * @return bool

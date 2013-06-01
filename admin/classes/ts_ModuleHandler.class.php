@@ -11,7 +11,7 @@ class ts_ModuleHandler {
     private $modules;
 
     /** Validate source code
-     * @var bool $force_update
+     * @param bool $force_update
      *	Force to get new list from database (not a cached one from obj-var)
      *
      * @return array
@@ -62,7 +62,7 @@ class ts_ModuleHandler {
     }
 
     /** Get module by name
-     * @var string $name
+     * @param string $name
      *	Name of module
      *
      * @return object
@@ -101,11 +101,11 @@ class ts_ModuleHandler {
     }
 
     /** Does A depend on B?
-     * @var Module $modA
+     * @param Module $modA
      *	Module A
-     * @var Module $modB
+     * @param Module $modB
      *	Module B
-     * @var int $loop
+     * @param int $loop
      *	Loop prevention (stop after 30 dependencies)
      *
      * @return bool

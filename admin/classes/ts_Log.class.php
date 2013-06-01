@@ -11,7 +11,7 @@ class ts_Log {
     protected $level = 3;
 
     /** Constructor
-     * @var int $loglevel
+     * @param int $loglevel
      *	Loglevel
      */
     public function __construct ($loglevel = 3) {
@@ -19,9 +19,9 @@ class ts_Log {
     }
 
     /** Write sth. to log
-     * @var int $level
+     * @param int $level
      *	Loglevel of message
-     * @var string $msg
+     * @param string $msg
      *	Log message
      */
     public function doLog ($level, $msg) {

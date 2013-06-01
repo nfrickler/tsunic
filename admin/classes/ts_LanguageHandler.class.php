@@ -16,13 +16,13 @@ class ts_LanguageHandler {
     private $lang_style = array();
 
     /** Add language-replacements
-     * @var string $type
+     * @param string $type
      *	Module or style
-     * @var int $id
+     * @param int $id
      *	Module- or style-id
-     * @var string $language
+     * @param string $language
      *	Language, replacements belong to
-     * @var array|string $input
+     * @param array|string $input
      *	Array with language-replacements OR path to language-file
      *
      * @return bool

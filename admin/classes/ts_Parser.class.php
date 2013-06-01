@@ -31,11 +31,11 @@ class ts_Parser {
     private $current_module;
 
     /** Constructor
-     * @var string $prefix
+     * @param string $prefix
      *	Prefix
-     * @var array $modules_all
+     * @param array $modules_all
      *	Array with all module objects
-     * @var bool $debug_mode
+     * @param bool $debug_mode
      *	Do not replace language?
      */
     public function __construct ($prefix, $modules_all, $debug_mode = false) {
@@ -55,7 +55,7 @@ class ts_Parser {
     }
 
     /** Set current module
-     * @var int $id__module
+     * @param int $id__module
      *	id__module of current module, the content belongs to
      *
      * @return string
@@ -72,7 +72,7 @@ class ts_Parser {
     }
 
     /** Read flags from content of file
-     * @var string $content
+     * @param string $content
      *	Content of file
      *
      * @return array
@@ -104,11 +104,11 @@ class ts_Parser {
     }
 
     /** Parse file
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
-     * @var bool $trim_flags
+     * @param bool $trim_flags
      *	Remove flags?
-     * @var bool $is_javascript
+     * @param bool $is_javascript
      *	Is javascript content?
      *
      * @return string
@@ -149,9 +149,9 @@ class ts_Parser {
     }
 
     /** Set line markers
-     * @var string|array $content
+     * @param string|array $content
      *	Content of file to parse
-     * @var bool $get_string
+     * @param bool $get_string
      *	Return string?
      *
      * @return string
@@ -207,7 +207,7 @@ class ts_Parser {
     }
 
     /** Replace language
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
      *
      * @return string
@@ -221,7 +221,7 @@ class ts_Parser {
     }
 
     /** Replace language replacements (callback function)
-     * @var array $input
+     * @param array $input
      *	Input from callback
      *
      * @return string
@@ -244,9 +244,9 @@ class ts_Parser {
     }
 
     /** Replace language
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
-     * @var int $id__module
+     * @param int $id__module
      *	id__module of current module, the content belongs to
      *
      * @return string
@@ -267,7 +267,7 @@ class ts_Parser {
     }
 
     /** Replace module (callback function)
-     * @var array $input
+     * @param array $input
      *	Input from callback
      *
      * @return string
@@ -314,9 +314,9 @@ class ts_Parser {
     }
 
     /** Replace database prefix
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
-     * @var int $id__module
+     * @param int $id__module
      *	id__module of current module, the content belongs to
      *
      * @return string
@@ -331,7 +331,7 @@ class ts_Parser {
     }
 
     /** Remove BOM
-     * @var string $input
+     * @param string $input
      *	Input string
      *
      * @return string
@@ -348,11 +348,11 @@ class ts_Parser {
     }
 
     /** Trim code
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
-     * @var bool $is_sensitive
+     * @param bool $is_sensitive
      *	Skip problematic things?
-     * @var bool $force
+     * @param bool $force
      *	Force trimming
      *
      * @return string
@@ -379,7 +379,7 @@ class ts_Parser {
     }
 
     /** Remove flags from output
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
      *
      * @return string
@@ -398,11 +398,11 @@ class ts_Parser {
     }
 
     /** Trim code
-     * @var string $content
+     * @param string $content
      *	Content of file to parse
-     * @var bool $is_sensitive
+     * @param bool $is_sensitive
      *	Skip problematic things?
-     * @var bool $is_javascript
+     * @param bool $is_javascript
      *	Is javascript content?
      *
      * @return string
@@ -462,7 +462,7 @@ class ts_Parser {
     }
 
     /** Skip all one-line comments in javascript (callback)
-     * @var string $content
+     * @param string $content
      *	Content to parse
      *
      * @return string
@@ -477,9 +477,9 @@ class ts_Parser {
     }
 
     /** Skip all one-line comments
-     * @var string $content
+     * @param string $content
      *	Content to parse
-     * @var bool $is_php
+     * @param bool $is_php
      *	Is php code (or we will not search for php-tags)?
      *
      * @return string

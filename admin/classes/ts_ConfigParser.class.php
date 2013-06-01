@@ -18,9 +18,9 @@ class ts_ConfigParser {
     }
 
     /** Read content from config file
-     * @var string $path
+     * @param string $path
      *	Path of config file
-     * @var string $prefix
+     * @param string $prefix
      *	Prefix to add to each configname
      *
      * @return bool
@@ -53,7 +53,7 @@ class ts_ConfigParser {
     }
 
     /** Update confignames in database
-     * @var string $table
+     * @param string $table
      *	Name of table to insert config into
      *
      * @return bool

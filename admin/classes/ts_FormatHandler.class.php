@@ -21,9 +21,9 @@ class ts_FormatHandler {
     private $cache;
 
     /** Add CSS code
-     * @var string $input
+     * @param string $input
      *	CSS code to add
-     * @var string $id__style
+     * @param string $id__style
      *	Style-id; false - no style but a module
      *
      * @return bool

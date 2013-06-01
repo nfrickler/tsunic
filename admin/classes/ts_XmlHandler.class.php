@@ -6,7 +6,7 @@
 class ts_XmlHandler {
 
     /** Get content of xml file as array
-     * @var string $path
+     * @param string $path
      *	Path to xml file
      *
      * @return array
@@ -22,7 +22,7 @@ class ts_XmlHandler {
     }
 
     /** Convert Xml Object to array
-     * @var object $Xml
+     * @param object $Xml
      *	Xml object
      *
      * @return array

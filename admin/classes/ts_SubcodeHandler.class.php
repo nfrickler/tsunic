@@ -24,7 +24,7 @@ class ts_SubcodeHandler {
     }
 
     /** Add subcodes
-     * @var string $input
+     * @param string $input
      *	Subcodes to add (xml content of subcode file)
      *
      * @return bool
@@ -63,7 +63,7 @@ class ts_SubcodeHandler {
     }
 
     /** Add subcodes (callback function)
-     * @var array $input
+     * @param array $input
      *	Input from callback
      *
      * @return bool
@@ -90,7 +90,7 @@ class ts_SubcodeHandler {
     }
 
     /** Inject all subcodes and complete file-rendering
-     * @var string|bool $path
+     * @param string|bool $path
      *	Path to folder in which all files will be
      *
      * @return bool

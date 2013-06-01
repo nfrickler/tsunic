@@ -6,7 +6,7 @@
 class ts_FileHandler {
 
     /** Get subfolders
-     * @var string $path
+     * @param string $path
      *	Path to base folder
      *
      * @return array
@@ -29,7 +29,7 @@ class ts_FileHandler {
     }
 
     /** Get files within folder
-     * @var string $path
+     * @param string $path
      *	Path to base folder
      *
      * @return array
@@ -52,10 +52,14 @@ class ts_FileHandler {
     }
 
     /** Move folder including all it subfolders and -files
-     * @var string $source
+     * @param string $source
      *	Path of source folder
-     * @var string $destination
+     * @param string $destination
      *	Path of destination folder (will be created, if nonexistent)
+     * @param bool $files_only
+     *	Move subfiles only (no subdirectories will be copied)?
+     * @param bool|string $prefix
+     *	Prefix for all files being moved
      *
      * @return bool
      */
@@ -85,9 +89,9 @@ class ts_FileHandler {
     }
 
     /** Move file to other destination
-     * @var string $source
+     * @param string $source
      *	Path of source file
-     * @var string $destination
+     * @param string $destination
      *	Path of destination file
      *
      * @return bool
@@ -98,7 +102,7 @@ class ts_FileHandler {
     }
 
     /** Delete folder and all it's subfolders and -files
-     * @var string $path
+     * @param string $path
      *	Path of folder to delete
      *
      * @return bool
@@ -118,7 +122,7 @@ class ts_FileHandler {
     }
 
     /** Empty folder and delete all it's subfolders and -files
-     * @var string $path
+     * @param string $path
      *	Path of folder to empty
      *
      * @return bool
@@ -144,7 +148,7 @@ class ts_FileHandler {
     }
 
     /** Create folder, if not exists
-     * @var string $path
+     * @param string $path
      *	Absolute path of folder
      *
      * @return bool
@@ -185,11 +189,11 @@ class ts_FileHandler {
     }
 
     /** Write content to file
-     * @var string $path
+     * @param string $path
      *	Path of file
-     * @var string $content
+     * @param string $content
      *	Content to write to file
-     * @var int $overwrite
+     * @param int $overwrite
      *	Overwrite file, if already exists?
      *
      * @return bool
@@ -217,9 +221,9 @@ class ts_FileHandler {
     }
 
     /** Read content of file
-     * @var string $path
+     * @param string $path
      *	Path of file
-     * @var bool $as_array
+     * @param bool $as_array
      *	Return content as array of lines?
      *
      * @return bool

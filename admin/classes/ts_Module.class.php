@@ -6,9 +6,9 @@
 class ts_Module extends ts_Packet {
 
     /** Get/update path to module
-     * @var string $name
+     * @param string $name
      *	Name of packet
-     * @var bool $save
+     * @param bool $save
      *	Save path to obj-var (or return)?
      *
      * @return string|bool
@@ -136,9 +136,9 @@ class ts_Module extends ts_Packet {
     /* ####################### handle module ########################## */
 
     /** Get info about module
-     * @var string $name
+     * @param string $name
      *	Name of information to gather
-     * @var bool $refresh
+     * @param bool $refresh
      *	Reload all data?
      *
      * @return mix
@@ -175,7 +175,7 @@ class ts_Module extends ts_Packet {
     }
 
     /** Get status of module
-     * @var bool $verbal
+     * @param bool $verbal
      *	Get string as readable string (or as int)?
      *
      * @return int|string
@@ -219,7 +219,7 @@ class ts_Module extends ts_Packet {
     }
 
     /** Activate module for next parsing
-     * @var bool $is_activated
+     * @param bool $is_activated
      *	Activate module (or deactivate)?
      *
      * @return bool
@@ -879,11 +879,11 @@ class ts_Module extends ts_Packet {
     }
 
     /** Find best (shortest) way from $from to $to
-     * @var array $all
+     * @param array $all
      *	All available update paths
-     * @var string $from
+     * @param string $from
      *	Start version
-     * @var string $to
+     * @param string $to
      *	Goal version
      *
      * @return array|bool

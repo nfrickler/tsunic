@@ -36,13 +36,13 @@ class ts_Database_mysql {
     private $con;
 
     /** Constructor
-     * @var string $host
+     * @param string $host
      *  Host of MySQL database
-     * @var string $user
+     * @param string $user
      *  User of MySQL database
-     * @var string $password
+     * @param string $password
      *  Password of MySQL database
-     * @var string $database
+     * @param string $database
      *  Database name of MySQL database
      */
     public function __construct ($host, $user, $password, $database) {
@@ -94,7 +94,7 @@ class ts_Database_mysql {
     }
 
     /** Send query to database
-     * @var string $sql
+     * @param string $sql
      *	Sql query
      *
      * @return mysql-result|false
@@ -116,7 +116,7 @@ class ts_Database_mysql {
     }
 
     /** Fetch data from database
-     * @var string $sql
+     * @param string $sql
      *	Sql query
      *
      * @return array|false
@@ -136,7 +136,7 @@ class ts_Database_mysql {
     }
 
     /** Update database
-     * @var string $sql
+     * @param string $sql
      *	Sql query
      *
      * @return bool
@@ -148,7 +148,7 @@ class ts_Database_mysql {
     }
 
     /** Insert a new row/several new rows
-     * @var string $sql
+     * @param string $sql
      *	Sql query
      *
      * @return bool
@@ -163,7 +163,7 @@ class ts_Database_mysql {
     }
 
     /** Delete rows in database
-     * @var string $sql
+     * @param string $sql
      *	Sql query
      *
      * @return bool
@@ -174,7 +174,7 @@ class ts_Database_mysql {
     }
 
     /** Get names of columns of a table
-     * @var string $table
+     * @param string $table
      *	Name of table
      *
      * @return array|false
@@ -195,7 +195,7 @@ class ts_Database_mysql {
     }
 
     /** Create a new table
-     * @var string $sql
+     * @param string $sql
      *	Sql query
      *
      * @return bool
@@ -208,7 +208,7 @@ class ts_Database_mysql {
     }
 
     /** Check, if table exists
-     * @var string $table
+     * @param string $table
      *	Name of table
      *
      * @return bool
@@ -248,7 +248,7 @@ class ts_Database_mysql {
     }
 
     /** Run sql file
-     * @var string $path
+     * @param string $path
      *	Path to sql file
      *
      * @return bool

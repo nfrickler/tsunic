@@ -26,9 +26,9 @@ class ts_Template {
     protected $cache;
 
     /** Constructor
-     * @var string $template
+     * @param string $template
      *	Name of template
-     * @var string $design
+     * @param string $design
      *	Name of design
      */
     public function __construct ($template = false, $design = 0) {
@@ -71,9 +71,9 @@ class ts_Template {
     }
 
     /** Display other template
-     * @var string $template
+     * @param string $template
      *	Name of template
-     * @var bool|array $data
+     * @param bool|array $data
      *	Data for template
      *
      * @return bool
@@ -97,7 +97,7 @@ class ts_Template {
     }
 
     /** Print value from $this->data
-     * @var string $name
+     * @param string $name
      *	Name of data (true will return all data)
      *
      * @return bool
@@ -110,7 +110,7 @@ class ts_Template {
     }
 
     /** Get value from $this->data
-     * @var string $name
+     * @param string $name
      *	Name of data (true will return all data)
      *
      * @return bool
@@ -128,13 +128,13 @@ class ts_Template {
     }
 
     /** Parse for output (language- and bbcode-replacements)
-     * @var string $text
+     * @param string $text
      *	Text to parse
-     * @var 0|array $vars
+     * @param 0|array $vars
      *	Variables to replace in lang-string
-     * @var bool $doEcho
+     * @param bool $doEcho
      *	Display text (return otherwise)?
-     * @var bool $doEscape
+     * @param bool $doEscape
      *	Escape single and double quotes?
      *
      * @return bool
@@ -171,7 +171,7 @@ class ts_Template {
     }
 
     /** Get lang-var (callback function)
-     * @var array $in
+     * @param array $in
      *	[1] -> number (+1) of lang-var
      *
      * @return string

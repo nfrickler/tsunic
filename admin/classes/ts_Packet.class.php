@@ -3,7 +3,7 @@
 /**
  * Abstract packet module
  */
-class ts_Packet {
+abstract class ts_Packet {
 
     /** id of packet
      * @var int $id
@@ -31,9 +31,9 @@ class ts_Packet {
     protected $infofile = array();
 
     /** Constructor
-     * @var int $id
+     * @param int $id
      *	Id of packet
-     * @var string $name
+     * @param string $name
      *	Name of packet
      */
     public function __construct ($id = false, $name = false) {
@@ -56,9 +56,9 @@ class ts_Packet {
     }
 
     /** Get/update path to packet
-     * @var string $name
+     * @param string $name
      *	Name of packet
-     * @var bool $save
+     * @param bool $save
      *	Save path in obj-var (or return path)?
      *
      * @return string|bool
@@ -74,9 +74,9 @@ class ts_Packet {
     /* ######################### handle packet ########################## */
 
     /** Get info about packet
-     * @var string $name
+     * @param string $name
      *	Name of information to gather
-     * @var bool $refresh
+     * @param bool $refresh
      *	Refresh cached infos?
      *
      * @return mix
@@ -84,9 +84,9 @@ class ts_Packet {
     abstract public function getInfo ($name, $refresh);
 
     /** Get info from version.xml
-     * @var string $name
+     * @param string $name
      *	Name of information to gather
-     * @var bool $refresh
+     * @param bool $refresh
      *	Refresh cached infos?
      *
      * @return mix

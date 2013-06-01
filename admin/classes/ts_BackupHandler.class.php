@@ -7,9 +7,9 @@
 class ts_BackupHandler {
 
     /** Backup module
-     * @var string $path
+     * @param string $path
      *	Path to module to backup
-     * @var string $name
+     * @param string $name
      *	Name to attach to the end of destination-folder
      *
      * @return array
@@ -28,9 +28,9 @@ class ts_BackupHandler {
     }
 
     /** Backup style
-     * @var string $path
+     * @param string $path
      *	Path to style to backup
-     * @var string $name
+     * @param string $name
      *	Name to attach to the end of destination-folder
      *
      * @return array
@@ -49,7 +49,7 @@ class ts_BackupHandler {
     }
 
     /** Backup runtime folder
-     * @var bool $includeDatabase
+     * @param bool $includeDatabase
      *	Backup database, too?
      *
      * @return array
@@ -95,7 +95,7 @@ class ts_BackupHandler {
     /* ######################### database backup ######################## */
 
     /** Backup database
-     * @var string $path
+     * @param string $path
      *	Path to sql backup file
      *
      * @return bool

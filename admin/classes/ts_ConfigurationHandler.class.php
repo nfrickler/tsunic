@@ -20,14 +20,12 @@ class ts_ConfigurationHandler {
      */
     public function __construct () {
 
-	// read configuration-file
+	// read configuration file
 	$this->readConfig();
-
-	return;
     }
 
     /** Cet configuration from file
-     * @var bool $refresh
+     * @param bool $refresh
      *	Force refresh of data
      *
      * @return bool
@@ -50,7 +48,7 @@ class ts_ConfigurationHandler {
     /** Get configuration from file. This function also offers the default
      * values for configuration values
      *
-     * @var string $name
+     * @param string $name
      *	Name of configuration to fetch
      *
      * @return bool
@@ -117,7 +115,7 @@ class ts_ConfigurationHandler {
     }
 
     /** Delete configuration
-     * @var string $name
+     * @param string $name
      *	Name of setting to delete
      *
      * @return bool
@@ -134,9 +132,9 @@ class ts_ConfigurationHandler {
     }
 
     /** Set configuration values
-     * @var string $name
+     * @param string $name
      *	Name of configuration value
-     * @var string $value
+     * @param string $value
      *	Value to be set
      *
      * @return bool
@@ -156,11 +154,11 @@ class ts_ConfigurationHandler {
     }
 
     /** Set single array-element
-     * @var string $name
+     * @param string $name
      *	Name of value
-     * @var string $key
+     * @param string $key
      *	Key of array-element
-     * @var string $value
+     * @param string $value
      *	Value to be set
      *
      * @return bool
