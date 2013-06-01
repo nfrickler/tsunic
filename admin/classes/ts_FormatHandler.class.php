@@ -1,31 +1,30 @@
-<!-- | handle format/css files -->
+<!-- | CLASS ts_FormatHandler -->
 <?php
+/**
+ * Class to parse CSS format files of all modules
+ */
 class ts_FormatHandler {
 
-    /* array containing all css-styles
-     * array
+    /** Array containing all CSS styles
+     * @var array $format
      */
     private $format = array();
 
-    /* array containing all css-styles added by styles
-     * array
+    /** Array containing all CSS styles added by styles
+     * @var array $format_styles
      */
     private $format_styles;
 
-    /* cache-array
-     * array
+    /** cache array
+     * @var array $cache
      */
     private $cache;
 
-    /* constructor
-     */
-    public function __construct () {
-	return;
-    }
-
-    /* add css
-     * @param string: css-code to add
-     * +@param string: style-id; false - no style but a module
+    /** Add CSS code
+     * @var string $input
+     *	CSS code to add
+     * @var string $id__style
+     *	Style-id; false - no style but a module
      *
      * @return bool
      */
@@ -55,8 +54,9 @@ class ts_FormatHandler {
 	return true;
     }
 
-    /* handle css-code from callback-function
-     * @param string: css-code to add
+    /** Handle CSS code from callback function
+     * @param string $input
+     *	CSS code to add
      *
      * @return bool
      */
@@ -81,7 +81,7 @@ class ts_FormatHandler {
 	return '{}';
     }
 
-    /* write css-files
+    /** Write CSS files
      *
      * @return bool
      */
@@ -149,3 +149,4 @@ class ts_FormatHandler {
 	return true;
     }
 }
+?>

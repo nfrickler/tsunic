@@ -1,22 +1,28 @@
-<!-- | Backend Logging Class -->
+<!-- | CLASS ts_Log -->
 <?php
+/**
+ * Logging for backend
+ */
 class ts_Log {
 
-    /* current loglevel
-     * int
+    /** Current loglevel (default=3)
+     * @var int $level
      */
     protected $level = 3;
 
-    /* constructor
-     * +@param int: loglevel
+    /** Constructor
+     * @var int $loglevel
+     *	Loglevel
      */
     public function __construct ($loglevel = 3) {
 	$this->level = $loglevel;
     }
 
-    /* write sth. to log
-     * @param int: loglevel of message
-     * @param string: message
+    /** Write sth. to log
+     * @var int $level
+     *	Loglevel of message
+     * @var string $msg
+     *	Log message
      */
     public function doLog ($level, $msg) {
 	global $Config;

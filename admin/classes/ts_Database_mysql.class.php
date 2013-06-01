@@ -1,43 +1,49 @@
-<!-- | Class handling MySQL-Database -->
+<!-- | CLASS ts_Database_mysql -->
 <?php
+/**
+ * Database class for MySQL database
+ */
 class ts_Database_mysql {
 
-    /* mysql-login: host
-     * string
+    /** Host of MySQL database
+     * @var string $host
      */
     private $host;
 
-    /* error message
-     * string
+    /** MySQL error message
+     * @var string $error
      */
     private $error;
 
-    /* mysql-login: user
-     * string
+    /** User of MySQL database
+     * @var string $user
      */
     private $user;
 
-    /* mysql-login: password
-     * string
+    /** Password of MySQL database
+     * @var string $password
      */
     private $password;
 
-    /* mysql-login: name of database
-     * string
+    /** Database name of MySQL database
+     * @var string $database
      */
     private $database;
 
-    /* db-identifier (cache)
-     *
+    /** Connection cache
+     * @var array $con
      */
     private $con;
 
-    /* constructor
-     * @param string: mysql-login: host
-     * @param string: mysql-login: user
-     * @param string: mysql-login: password
-     * @param string: mysql-login: database
-     * @param string: prefix of all TSunic-tables
+    /** Constructor
+     * @var string $host
+     *  Host of MySQL database
+     * @var string $user
+     *  User of MySQL database
+     * @var string $password
+     *  Password of MySQL database
+     * @var string $database
+     *  Database name of MySQL database
      */
     public function __construct ($host, $user, $password, $database) {
 
@@ -49,24 +55,21 @@ class ts_Database_mysql {
 
 	// connect to database
 	$this->doConnect();
-
-	return;
     }
 
-    /* return mysql-error (return false, if no error occurred)
+    /** Return MySQL error (return false, if no error occurred)
      *
-     * @return bool/string
+     * @return bool
      */
     public function getError () {
 
 	// is error?
-	if (empty($this->error)) return false;
+	if (empty($this->error)) return '';
 
-	// return error
 	return $this->error;
     }
 
-    /* check, if connection exists AND connect to database
+    /** Check, if connection exists AND connect to database
      *
      * @return bool
      */
@@ -90,10 +93,11 @@ class ts_Database_mysql {
 	return true;
     }
 
-    /* send query to database
-     * @param string: sql-query
+    /** Send query to database
+     * @var string $sql
+     *	Sql query
      *
-     * @return mysql-result/false
+     * @return mysql-result|false
      */
     public function sendQuery ($sql) {
 	global $TSunic;
@@ -111,10 +115,11 @@ class ts_Database_mysql {
 	die('Error: '.mysql_error());
     }
 
-    /* fetch data from database
-     * @param string: sql-query
+    /** Fetch data from database
+     * @var string $sql
+     *	Sql query
      *
-     * @return array/false: data of query
+     * @return array|false
      */
     public function doSelect ($sql) {
 
@@ -130,8 +135,9 @@ class ts_Database_mysql {
 	return $data;
     }
 
-    /* update database
-     * @param string: sql-query
+    /** Update database
+     * @var string $sql
+     *	Sql query
      *
      * @return bool
      */
@@ -141,8 +147,9 @@ class ts_Database_mysql {
 	return ($this->sendQuery($sql)) ? true : false;
     }
 
-    /* insert a new row/several new rows
-     * @param string: sql-query
+    /** Insert a new row/several new rows
+     * @var string $sql
+     *	Sql query
      *
      * @return bool
      */
@@ -155,8 +162,9 @@ class ts_Database_mysql {
 	return false;
     }
 
-    /* delete rows in database
-     * @param string: sql-query
+    /** Delete rows in database
+     * @var string $sql
+     *	Sql query
      *
      * @return bool
      */
@@ -165,10 +173,11 @@ class ts_Database_mysql {
 	return ($this->sendQuery($sql)) ? true : false;
     }
 
-    /* get names of columns of a table
-     * @param string: name of table
+    /** Get names of columns of a table
+     * @var string $table
+     *	Name of table
      *
-     * @return array/false: names of columns
+     * @return array|false
      */
     public function getColumns ($table) {
 
@@ -185,8 +194,9 @@ class ts_Database_mysql {
 	return $columns;
     }
 
-    /* create a new table
-     * @param string: sql-query
+    /** Create a new table
+     * @var string $sql
+     *	Sql query
      *
      * @return bool
      */
@@ -197,8 +207,9 @@ class ts_Database_mysql {
 	return true;
     }
 
-    /* check, if table exists
-     * @param string: name of table
+    /** Check, if table exists
+     * @var string $table
+     *	Name of table
      *
      * @return bool
      */
@@ -217,7 +228,7 @@ class ts_Database_mysql {
 	    return false;
     }
 
-    /* get all tables in database
+    /** Get all tables in database
      *
      * @return bool
      */
@@ -236,8 +247,9 @@ class ts_Database_mysql {
 	return $tables;
     }
 
-    /* run sql-file
-     * @param string: path to sql-file
+    /** Run sql file
+     * @var string $path
+     *	Path to sql file
      *
      * @return bool
      */

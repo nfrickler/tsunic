@@ -1,10 +1,13 @@
-<!-- | class to handle files and folders -->
+<!-- | CLASS ts_FileHandler -->
 <?php
-// static
+/**
+ * Static class to handle files and folders
+ */
 class ts_FileHandler {
 
-    /* get subfolders
-     * @param string: path to basis-folder
+    /** Get subfolders
+     * @var string $path
+     *	Path to base folder
      *
      * @return array
      */
@@ -25,8 +28,9 @@ class ts_FileHandler {
 	return $subfolders;
     }
 
-    /* get files within folder
-     * @param string: path to basis-folder
+    /** Get files within folder
+     * @var string $path
+     *	Path to base folder
      *
      * @return array
      */
@@ -47,9 +51,11 @@ class ts_FileHandler {
 	return $subfiles;
     }
 
-    /* move folder including all it subfolders and -files
-     * @param string: path of source-folder
-     * @param string: path of destination-folder (will be created, if nonexistent)
+    /** Move folder including all it subfolders and -files
+     * @var string $source
+     *	Path of source folder
+     * @var string $destination
+     *	Path of destination folder (will be created, if nonexistent)
      *
      * @return bool
      */
@@ -78,9 +84,11 @@ class ts_FileHandler {
 	return true;
     }
 
-    /* move file to other destination
-     * @param string: path of source file
-     * @param string: path of destination file
+    /** Move file to other destination
+     * @var string $source
+     *	Path of source file
+     * @var string $destination
+     *	Path of destination file
      *
      * @return bool
      */
@@ -89,8 +97,9 @@ class ts_FileHandler {
 	return copy($source, $destination);
     }
 
-    /* delete folder and all it's subfolders and -files
-     * @param string: path of folder to delete
+    /** Delete folder and all it's subfolders and -files
+     * @var string $path
+     *	Path of folder to delete
      *
      * @return bool
      */
@@ -108,8 +117,9 @@ class ts_FileHandler {
 	return true;
     }
 
-    /* empty folder and delete all it's subfolders and -files
-     * @param string: path of folder to empty
+    /** Empty folder and delete all it's subfolders and -files
+     * @var string $path
+     *	Path of folder to empty
      *
      * @return bool
      */
@@ -133,8 +143,9 @@ class ts_FileHandler {
 	return true;
     }
 
-    /* create folder, if not exists
-     * @param string: absolute path of folder
+    /** Create folder, if not exists
+     * @var string $path
+     *	Absolute path of folder
      *
      * @return bool
      */
@@ -173,26 +184,27 @@ class ts_FileHandler {
 	return true;
     }
 
-    /* write content to file
-     * @param string: path of file
-     * @param string: content to write to file
-     * +@param int: new file without overwriting
-     *	      new file or overwriting
-     *	      append to file
+    /** Write content to file
+     * @var string $path
+     *	Path of file
+     * @var string $content
+     *	Content to write to file
+     * @var int $overwrite
+     *	Overwrite file, if already exists?
      *
      * @return bool
      */
-    public static function writeFile ($path, $content, $mode = 0) {
+    public static function writeFile ($path, $content, $overwrite = 0) {
 
 	// overwrite?
-	if (file_exists($path) AND !$mode) return false;
+	if (file_exists($path) AND !$overwrite) return false;
 
 	// create folder
 	$path_folder = substr($path, 0, (strlen($path) - strlen(basename($path)) - 1));
 	self::createFolder($path_folder);
 
 	// open file
-	$filemode = ($mode == 1 or !file_exists($path)) ? "w" : "a";
+	$filemode = ($overwrite or !file_exists($path)) ? "w" : "a";
 	$file = fopen($path, $filemode);
 
 	// write content to file
@@ -204,9 +216,11 @@ class ts_FileHandler {
 	return true;
     }
 
-    /* read content of file
-     * @param string: path of file
-     * +@param bool: return content as array of lines?
+    /** Read content of file
+     * @var string $path
+     *	Path of file
+     * @var bool $as_array
+     *	Return content as array of lines?
      *
      * @return bool
      */
@@ -222,3 +236,4 @@ class ts_FileHandler {
 	return ($as_array) ? $content : trim(implode('', $content));
     }
 }
+?>

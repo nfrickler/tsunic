@@ -1,30 +1,29 @@
-<!-- | Class to handle language files -->
+<!-- | CLASS ts_LanguageHandler -->
 <?php
+/**
+ * Class to parse language files of modules
+ */
 class ts_LanguageHandler {
 
-    /* array containing all language-replacements
-     * array
+    /** Array containing all language replacements
+     * @var array $lang
      */
     private $lang = array();
 
-    /* array containing all language-replacements added by styles
-     * array
+    /** Array containing all language replacements added by styles
+     * @var array $lang_style
      */
     private $lang_style = array();
 
-    /* constructor
-     */
-    public function __construct () {
-
-	return;
-    }
-
-    /* add language-replacements
-     * @param string: module or style
-     * @param int: module- or style-id
-     * @param string: language, replacements belong to
-     * @param array/string: array with language-replacements
-     *     OR path to language-file
+    /** Add language-replacements
+     * @var string $type
+     *	Module or style
+     * @var int $id
+     *	Module- or style-id
+     * @var string $language
+     *	Language, replacements belong to
+     * @var array|string $input
+     *	Array with language-replacements OR path to language-file
      *
      * @return bool
      */
@@ -109,7 +108,7 @@ class ts_LanguageHandler {
 	return true;
     }
 
-    /* write language-files
+    /** Write language-files
      *
      * @return string
      */
@@ -166,3 +165,4 @@ class ts_LanguageHandler {
 	return true;
     }
 }
+?>
