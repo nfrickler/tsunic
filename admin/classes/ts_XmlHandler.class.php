@@ -1,10 +1,13 @@
-<!-- | CLASS to handle XML files -->
+<!-- | CLASS ts_XmlHandler -->
 <?php
-// static
+/**
+ * Static class to handle xml files
+ */
 class ts_XmlHandler {
 
-    /* get content of xml-file as array (1D)
-     * @param string: path to xml-file
+    /** Get content of xml file as array
+     * @var string $path
+     *	Path to xml file
      *
      * @return array
      */
@@ -18,8 +21,9 @@ class ts_XmlHandler {
 	return ($Xml) ? self::xml2array($Xml) : array();
     }
 
-    /* convert Xml-Object to array
-     * @param object: Xml object
+    /** Convert Xml Object to array
+     * @var object $Xml
+     *	Xml object
      *
      * @return array
      */
@@ -36,7 +40,7 @@ class ts_XmlHandler {
 	    foreach ($element->attributes() as $index => $value) {
 		$arr['attrs'][$index] = "$value";
 	    }
-	    
+
 	    // get value
 	    if ($element->count()) {
 		$arr['value'] = self::xml2array($element);
@@ -48,3 +52,4 @@ class ts_XmlHandler {
 	return $out;
     }
 }
+?>

@@ -1,29 +1,31 @@
-<!-- | Class to handle subcodes -->
+<!-- | CLASS ts_SubcodeHandler -->
 <?php
+/**
+ * Class to handle subcodes of modules
+ */
 class ts_SubcodeHandler {
 
-    /* array containing all subfunctions
-     * array
+    /** Array containing all subfunctions
+     * @var array $subcodes
      */
     private $subcodes;
 
-    /* cache-array
-     * array
+    /** Cache array
+     * @var array $cache
      */
     private $cache;
 
-    /* constructor
+    /** Constructor
      */
     public function __construct () {
 
 	// init
 	$this->subcodes = array();
-
-	return;
     }
 
-    /* add subcodes
-     * @param string: subcodes to add (xml-content of subcode-file)
+    /** Add subcodes
+     * @var string $input
+     *	Subcodes to add (xml content of subcode file)
      *
      * @return bool
      */
@@ -60,8 +62,9 @@ class ts_SubcodeHandler {
 	return true;
     }
 
-    /* add subcodes (callback)
-     * @param array: input from callback-function
+    /** Add subcodes (callback function)
+     * @var array $input
+     *	Input from callback
      *
      * @return bool
      */
@@ -86,9 +89,9 @@ class ts_SubcodeHandler {
 	return '[sub]';
     }
 
-    /* inject all subcodes and complete file-rendering
-     * +@param string/bool: path to folder in which all files will be
-     * parsed recursively; false will parse all needed folders
+    /** Inject all subcodes and complete file-rendering
+     * @var string|bool $path
+     *	Path to folder in which all files will be
      *
      * @return bool
      */

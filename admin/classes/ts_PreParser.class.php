@@ -1,30 +1,38 @@
-<!-- | PreParser class -->
+<!-- | CLASS ts_PreParser -->
 <?php
+/**
+ * PreParser class to handle preparsing of modules and styles
+ */
 class ts_PreParser {
 
-    /* current packet
-     * object
+    /** Current packet
+     * @var Packet $Packet
      */
     private $Packet;
 
-    /* all file-extensions that shall be parsed
-     * array
+    /** All file extensions that shall be parsed
+     * @var array $parse_ext
      */
     private $parse_ext = array('php', 'html', 'htm', 'css', 'xml', 'js');
 
-    /* constructor
-     * +@param object: packet-object which is going to be parsed next
+    /** Constructor
+     * @var object $Packet
+     *	Packet object which is going to be parsed next
      */
     public function __construct ($Packet = NULL) {
 	$this->Packet = $Packet;
 	return;
     }
 
-    /* preparse
-     * @param string: source-path
-     * @param string: destination_path
-     * +@param string/bool: common path of module/style (internal use)
-     * +@param bool: remove flag comments?
+    /** Preparse
+     * @var string $path
+     *	Source path
+     * @var string $path_new
+     *	Destination path
+     * @var string|bool $path_to_cut
+     *	Common path of module/style (internal use)
+     * @var bool $rm_flags
+     *	Remove flag comments?
      *
      * @return string
      */
@@ -67,11 +75,15 @@ class ts_PreParser {
 	return true;
     }
 
-    /* preparse file
-     * @param string: source file
-     * @param string: destination file
-     * +@param string: path to root
-     * +@param bool: remove flag comments?
+    /** Preparse file
+     * @var string $source
+     *	Source file
+     * @var string $destination
+     *	Destination file
+     * @var string $path_to_cut
+     *	Path to root
+     * @var bool $rm_flags
+     *	Remove flag comments?
      *
      * @return bool
      */
@@ -202,15 +214,17 @@ class ts_PreParser {
 	return true;
     }
 
-    /* read flags from content of file
-     * @param string: content of file
+    /** Read flags of file
      *
-     * @return array with flags
      * Available flags:
      *   i - ignore file at parsing
      *   p - ignore file at preparsing
      *   h - do not add header
      *
+     * @var string $content
+     *	Content of file
+     *
+     * @return array
      */
     public function getFlags ($content) {
 	$flags = array();

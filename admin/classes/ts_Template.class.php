@@ -1,30 +1,35 @@
-<!-- | Template class -->
+<!-- | CLASS ts_Template -->
 <?php
+/**
+ * Template class for backend
+ */
 class ts_Template {
 
-    /* path to template-file
-     * string
+    /** Path to template file
+     * @var string $path
      */
     protected $path;
 
-    /* name of template
-     * string
+    /** Name of template
+     * @var string $template
      */
     protected $template;
 
-    /* data for template
-     * array
+    /** Data for template
+     * @var array $data
      */
     protected $data;
 
-    /* cache
-     * array
+    /** Cache
+     * @var array $cache
      */
     protected $cache;
 
-    /* constructor
-     * +@param string: name of template
-     * +@param string: name of design
+    /** Constructor
+     * @var string $template
+     *	Name of template
+     * @var string $design
+     *	Name of design
      */
     public function __construct ($template = false, $design = 0) {
 	global $TemplateEngine;
@@ -39,13 +44,13 @@ class ts_Template {
 	} else {
 	    $this->data = array();
 	}
-
-	return;
     }
 
-    /* display template
-     * +@param string: path of template-file
-     * +@param bool: return error? (OR return false)
+    /** Display template
+     * @param string $path
+     *	Path of template file
+     * @param bool $return_error
+     *	Return error? (OR return false)
      *
      * @return bool
      */
@@ -65,9 +70,11 @@ class ts_Template {
 	return true;
     }
 
-    /* display other template
-     * @param string: name of template
-     * +@param bool/array: data for template
+    /** Display other template
+     * @var string $template
+     *	Name of template
+     * @var bool|array $data
+     *	Data for template
      *
      * @return bool
      */
@@ -89,8 +96,9 @@ class ts_Template {
 	return true;
     }
 
-    /* print value from $this->data
-     * @param string: name of data | $name = true => all data
+    /** Print value from $this->data
+     * @var string $name
+     *	Name of data (true will return all data)
      *
      * @return bool
      */
@@ -101,8 +109,9 @@ class ts_Template {
 	return;
     }
 
-    /* get value from $this->data
-     * @param string: name of data | $name = true => all data
+    /** Get value from $this->data
+     * @var string $name
+     *	Name of data (true will return all data)
      *
      * @return bool
      */
@@ -118,11 +127,15 @@ class ts_Template {
 	return false;
     }
 
-    /* parse for output (language- and bbcode-replacements)
-     * @param string: text to parse
-     * @param 0/array: variables to replace in lang-string
-     * +@param bool: true - display $text; false - do not display
-     * +@param bool: true - escape singe and double quotes
+    /** Parse for output (language- and bbcode-replacements)
+     * @var string $text
+     *	Text to parse
+     * @var 0|array $vars
+     *	Variables to replace in lang-string
+     * @var bool $doEcho
+     *	Display text (return otherwise)?
+     * @var bool $doEscape
+     *	Escape single and double quotes?
      *
      * @return bool
      */
@@ -157,10 +170,11 @@ class ts_Template {
 	}
     }
 
-    /* get lang-var (needed for $this->set())
-     * @param array: [1] -> number (+1) of lang-var
+    /** Get lang-var (callback function)
+     * @var array $in
+     *	[1] -> number (+1) of lang-var
      *
-     * @return string: text-output of lang-var
+     * @return string
       */
     private function replaceVar ($in) {
 

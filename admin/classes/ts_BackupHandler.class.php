@@ -1,8 +1,7 @@
 <!-- | CLASS ts_BackupHandler -->
 <?php
-// static
-/** Static backup handler
- *
+/**
+ * Static backup handler
  * Currently not in use!
  */
 class ts_BackupHandler {

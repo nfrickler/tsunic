@@ -1,24 +1,28 @@
-<!-- | Template engine class -->
+<!-- | CLASS ts_TemplateEngine -->
 <?php
+/**
+ * Template engine class for backend
+ */
 class ts_TemplateEngine {
 
-    /* path to template-file
-     * string
+    /** Path to template file
+     * @var string $lang
      */
     private $lang = array();
 
-    /* activated templates
-     * array
+    /** Activated templates
+     * @var array $activatedTemplates
      */
     public $activatedTemplates = array();
 
-    /* default object for special operations
-     * object
+    /** Default object for special operations
+     * @var object $dTemplate
      */
     private $dTemplate;
 
-    /* constructor
-     * +@param string $design: name of design
+    /** Constructor
+     * @var string $design
+     *	Name of design
      */
     public function __construct ($design = 0) {
 	global $Config;
@@ -31,14 +35,13 @@ class ts_TemplateEngine {
 	    $_SESSION['lang'] = $Config->get('default_language');
 	    if (empty($_SESSION['lang'])) $_SESSION['lang']  = 'en';
 	}
-
-	return;
     }
 
-    /* activate template for output
-     * @param string: name of template
-     * @param string/bool: if supTemplate exists -> name ELSE 0 or false
-     * @param bool/array: data for template
+    /** Activate template for output
+     * @var string $template
+     *	Name of template
+     * @var bool|array $data
+     *	Data for template
      *
      * @return bool
      */
@@ -59,9 +62,11 @@ class ts_TemplateEngine {
 	return true;
     }
 
-    /* save data
-     * @param string/bool: template, data are for (false: reset all data; true: get all data from session)
-     * +@param string: data to save
+    /** Save data
+     * @var string|bool $template
+     *	Template, data are for (false: reset all data; true: get all data from session)
+     * @var string $data
+     *	Data to save
      *
      * @return string
      */
@@ -95,9 +100,11 @@ class ts_TemplateEngine {
 	return true;
     }
 
-    /* save data
-     * @param string: template to fetch data for
-     * +@param string: name of data
+    /** Save data
+     * @var string $template
+     *	Template to fetch data for
+     * @var string $name
+     *	Name of data
      *
      * @return string
      */
@@ -116,9 +123,11 @@ class ts_TemplateEngine {
 	return false;
     }
 
-    /* parse output-text
-     * @param string: text to be parsed
-     * +@param bool: true - escape singe and double quotes
+    /** Parse output text
+     * @var string $text
+     *	Text to be parsed
+     * @var bool $doEscape
+     *	Escape single and double quotes?
      *
      * @return string
      */
@@ -130,10 +139,13 @@ class ts_TemplateEngine {
 	return $text;
     }
 
-    /* skip language-placeholders
-     * @param string: text to be parsed
-     * +@param bool: true - escape singe and double quotes
-     * +@param int: if this value is > 5, the function will not check recursively
+    /** Skip language placeholders
+     * @var string $text
+     *	Text to be parsed
+     * @var bool $doEscape
+     *	Escape single and double quotes?
+     * @var int $nested
+     *	Maximal number of recursive calls for nested language replacements
      *
      * @return string
      */
@@ -172,8 +184,9 @@ class ts_TemplateEngine {
 	return $this->replaceLang($text, $doEscape, $nested);
     }
 
-    /* get language-replacements
-     * @param string: language-placeholder
+    /** Get language replacements
+     * @var string $index
+     *	Language placeholder
      *
      * @return string
      */
@@ -201,10 +214,13 @@ class ts_TemplateEngine {
 	return $text;
     }
 
-    /* get language-replacements
-     * @param string: language-placeholder or module
-     * +@param bool/string: set language to include
-     * +@param bool: return, if include fails
+    /** Get language replacements
+     * @var string $input
+     *	Language placeholder or module
+     * @var bool|string $lang
+     *	Set language to include
+     * @var bool $returnOnFail
+     *	Return, if include fails?
      *
      * @return bool
      */
@@ -237,8 +253,9 @@ class ts_TemplateEngine {
 	return false;
     }
 
-    /* display output
-     * @param bool/string: name of first template
+    /** Display output
+     * @var bool|string $template
+     *	Name of first template
      *
      * @return bool
      */
@@ -256,7 +273,7 @@ class ts_TemplateEngine {
 	return true;
     }
 
-    /* get activated templates
+    /** Get activated templates
      *
      * @return array
      */
@@ -266,7 +283,7 @@ class ts_TemplateEngine {
 	return $this->activatedTemplates;
     }
 
-    /* clear all activated templates
+    /** Clear all activated templates
      *
      * @return bool
      */

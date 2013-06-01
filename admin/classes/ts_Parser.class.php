@@ -1,36 +1,42 @@
-<!-- | Parser class -->
+<!-- | CLASS ts_Parser -->
 <?php
+/**
+ * Parser class offering methods for parsing modules and styles
+ */
 class ts_Parser {
 
-    /* prefix
-     * string
+    /** Prefix
+     * @var string $prefix
      */
     private $prefix;
 
-    /* debug mode on or off
-     * bool
+    /** Debug mode on or off
+     * @var bool $debug_mode
      */
     private $debug_mode;
 
-    /* available modules
-     * array
+    /** Available modules
+     * @var array $modules
      */
     private $modules;
 
-    /* flags of current file
-     * array
+    /** Flags of current file
+     * @var array $flags
      */
     private $flags;
 
-    /* id__module of current module
-     * int
+    /** id__module of current module
+     * @var int $current_module
      */
     private $current_module;
 
-    /* constructor
-     * @param string: prefix
-     * @param array: array with all module-objects
-     * +@param bool: in debug_mode language will not be replaced
+    /** Constructor
+     * @var string $prefix
+     *	Prefix
+     * @var array $modules_all
+     *	Array with all module objects
+     * @var bool $debug_mode
+     *	Do not replace language?
      */
     public function __construct ($prefix, $modules_all, $debug_mode = false) {
 
@@ -46,12 +52,11 @@ class ts_Parser {
 		'nameid' => $Value->getInfo('nameid')
 	    );
 	}
-
-	return;
     }
 
-    /* set current module
-     * @param int: id__module of current module, the content belongs to
+    /** Set current module
+     * @var int $id__module
+     *	id__module of current module, the content belongs to
      *
      * @return string
      */
@@ -66,8 +71,9 @@ class ts_Parser {
 	return true;
     }
 
-    /* read flags from content of file
-     * @param string: content of file
+    /** Read flags from content of file
+     * @var string $content
+     *	Content of file
      *
      * @return array
      */
@@ -97,10 +103,13 @@ class ts_Parser {
 	return $this->flags;
     }
 
-    /* parse file
-     * @param string $content: content of file to parse
-     * +@param bool: true - remove flags
-     * +@param bool: true - content is javascript
+    /** Parse file
+     * @var string $content
+     *	Content of file to parse
+     * @var bool $trim_flags
+     *	Remove flags?
+     * @var bool $is_javascript
+     *	Is javascript content?
      *
      * @return string
      */
@@ -139,9 +148,11 @@ class ts_Parser {
 	return $content;
     }
 
-    /* set line markers
-     * @param string/array: content of file to parse
-     * +@param bool: true - force string as return
+    /** Set line markers
+     * @var string|array $content
+     *	Content of file to parse
+     * @var bool $get_string
+     *	Return string?
      *
      * @return string
      */
@@ -169,8 +180,9 @@ class ts_Parser {
 	return $content;
     }
 
-    /* strip line-markers
-     * @param string/array: content of file to parse
+    /** Strip line markers
+     * @param string|array $content
+     *	Content of file to parse
      *
      * @return string
      */
@@ -194,26 +206,23 @@ class ts_Parser {
 	return $content;
     }
 
-    /* replace language
-     * @param string: content of file to parse
-     * +@param bool: true - use different regex to match lang-replacements
+    /** Replace language
+     * @var string $content
+     *	Content of file to parse
      *
      * @return string
      */
-    public function replaceLang ($content, $is_langfile = false) {
-
-	// parse
-	if ($is_langfile) {
-	    $content = preg_replace_callback('#(\'[A-Z_][A-Z0-9_]*\')#U', array($this, '_replaceLangCb'), $content);
-	} else {
-	    $content = preg_replace_callback('#(\{(\$[\$a-z_0-9]*\$|)[A-Z_][A-Z0-9_]*\})#U', array($this, '_replaceLangCb'), $content);
-	}
-
-	return $content;
+    public function replaceLang ($content) {
+	return preg_replace_callback(
+	    '#(\{(\$[\$a-z_0-9]*\$|)[A-Z_][A-Z0-9_]*\})#U',
+	    array($this, '_replaceLangCb'),
+	    $content
+	);
     }
 
-    /* replace language-replacements (in callback function)
-     * @param array: input from callback
+    /** Replace language replacements (callback function)
+     * @var array $input
+     *	Input from callback
      *
      * @return string
      */
@@ -234,9 +243,11 @@ class ts_Parser {
 	return $input_delimiter_1.$input.$input_delimiter_2;
     }
 
-    /* replace language
-     * @param string: content of file to parse
-     * +@param int: id__module of current module, the content belongs to
+    /** Replace language
+     * @var string $content
+     *	Content of file to parse
+     * @var int $id__module
+     *	id__module of current module, the content belongs to
      *
      * @return string
      */
@@ -255,8 +266,9 @@ class ts_Parser {
 	return $content;
     }
 
-    /* replace module (in callback function)
-     * @param array: input from callback
+    /** Replace module (callback function)
+     * @var array $input
+     *	Input from callback
      *
      * @return string
      */
@@ -301,9 +313,11 @@ class ts_Parser {
 	return $input;
     }
 
-    /* replace database-prefix
-     * @param string $content: content of file to parse
-     * +@param int: id__module of current module, the content belongs to
+    /** Replace database prefix
+     * @var string $content
+     *	Content of file to parse
+     * @var int $id__module
+     *	id__module of current module, the content belongs to
      *
      * @return string
      */
@@ -316,8 +330,9 @@ class ts_Parser {
 	return str_replace('#__', $this->prefix, $content);
     }
 
-    /* remove BOM
-     * @param string: input string
+    /** Remove BOM
+     * @var string $input
+     *	Input string
      *
      * @return string
      */
@@ -332,10 +347,13 @@ class ts_Parser {
 	return trim($input);
     }
 
-    /* trim code
-     * @param string $content: content of file to parse
-     * +@param bool: true - will skip problematic things
-     * +@param bool: force trimming
+    /** Trim code
+     * @var string $content
+     *	Content of file to parse
+     * @var bool $is_sensitive
+     *	Skip problematic things?
+     * @var bool $force
+     *	Force trimming
      *
      * @return string
      */
@@ -360,8 +378,9 @@ class ts_Parser {
 	return $content;
     }
 
-    /* remove flags from output
-     * @param string: content of file to parse
+    /** Remove flags from output
+     * @var string $content
+     *	Content of file to parse
      *
      * @return string
      */
@@ -378,10 +397,13 @@ class ts_Parser {
 	return trim($content);
     }
 
-    /* trim code
-     * @param string $content: content of file to parse
-     * +@param bool: true - will skip problematic things
-     * +@param bool: true - content is javascript
+    /** Trim code
+     * @var string $content
+     *	Content of file to parse
+     * @var bool $is_sensitive
+     *	Skip problematic things?
+     * @var bool $is_javascript
+     *	Is javascript content?
      *
      * @return string
      */
@@ -439,8 +461,9 @@ class ts_Parser {
 	return trim($content);
     }
 
-    /* skip all one-line comments in javascript (callback)
-     * @param string: content to parse
+    /** Skip all one-line comments in javascript (callback)
+     * @var string $content
+     *	Content to parse
      *
      * @return string
      */
@@ -453,9 +476,11 @@ class ts_Parser {
 	return trim($content);
     }
 
-    /* skip all one-line comments
-     * @param string $content: content to parse
-     * +@param bool: content is php-code (otherwise: no search for php-tags) 
+    /** Skip all one-line comments
+     * @var string $content
+     *	Content to parse
+     * @var bool $is_php
+     *	Is php code (or we will not search for php-tags)?
      *
      * @return string
      */
@@ -502,7 +527,7 @@ class ts_Parser {
 			AND $in_double_quotes == false) {
 		    $in_php = false;
 		}
-    
+
 		// skip, if not in php-tags
 		if ($in_php === false) continue;
 	    }
