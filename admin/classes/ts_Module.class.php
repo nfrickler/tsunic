@@ -326,7 +326,7 @@ class ts_Module extends ts_Packet {
 	    AND $this->_parseLanguages()
 	) {
 	    // success
-	    $Log->doLog(4, "Module: Parsed module '".$this->getInfo('name')."'");
+	    $Log->doLog(4, "Module: Parsed module ".$this->getName());
 
 	    // get id of usersystem
 	    if ($this->getInfo('name') == "usersystem") {
@@ -350,7 +350,7 @@ class ts_Module extends ts_Packet {
 	}
 
 	// error during parseing
-	$Log->doLog(3, "Module: Failed to parse module '".$this->getInfo('name')."'");
+	$Log->doLog(3, "Module: Failed to parse module ".$this->getName());
 	return false;
     }
 
@@ -708,7 +708,7 @@ class ts_Module extends ts_Packet {
 	$subcodes = ts_FileHandler::readFile($path_source);
 	if ($subcodes === false) {
 	    $Log->doLog(3, "Module: Failed to read subcode file ".
-		"('$path_source') of module '".$this->getInfo('module')."'");
+		"('$path_source') of module ".$this->getName());
 	    return false;
 	}
 	if (empty($subcodes)) return true;
@@ -730,7 +730,7 @@ class ts_Module extends ts_Packet {
 	$prefix = 'mod'.$this->id.'__';
 	if (!$AccessParser->add($path, $prefix)) {
 	    $Log->doLog(3, "Module: Failed to parse access-File of module".
-		"'".$this->getInfo('module')."'");
+		$this->getName());
 	    return false;
 	}
 
@@ -749,7 +749,7 @@ class ts_Module extends ts_Packet {
 	$prefix = 'mod'.$this->id.'__';
 	if (!$ConfigParser->add($path, $prefix)) {
 	    $Log->doLog(3, "Module: Failed to parse config-File of module".
-		"'".$this->getInfo('module')."'");
+		$this->getName());
 	    return false;
 	}
 
@@ -763,7 +763,8 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     public function installModule () {
-	global $Database, $Parser;
+	global $Database, $Parser, $Log;
+	$Log->doLog(3, "Install module ".$this->getName());
 
 	// search for install-scripts in 'setup'-dir
 	if (file_exists($this->path.'/setup/install.sql')) {
@@ -799,7 +800,8 @@ class ts_Module extends ts_Packet {
      * @return bool
      */
     public function updateModule () {
-	global $Database, $Parser;
+	global $Database, $Parser, $Log;
+	$Log->doLog(3, "Update module ".$this->getName());
 
 	// get versions
 	$sql = "SELECT version_installed, version

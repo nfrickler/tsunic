@@ -94,7 +94,7 @@ class ts_PreParser {
 	if (empty($this->Packet)) return false;
 
 	// read
-	$Log->doLog(5, "PreParser: Read file '$source'");
+	$Log->doLog(8, "PreParser: Read file '$source'");
 	$content = ts_FileHandler::readFile($source);
 	if ($content === false) {
 	    $Log->doLog(3, "PreParser: Unable to read file '$source'");
@@ -205,7 +205,7 @@ class ts_PreParser {
 	$content = str_replace('?>'.chr(10).'<?php', '', $content);
 
 	// write
-	$Log->doLog(5, "PreParser: Write file '$source'");
+	$Log->doLog(8, "PreParser: Write file '$source'");
 	if (!ts_FileHandler::writeFile($destination, $content, 1)) {
 	    $Log->doLog(3, "PreParser: Unable to write file ($destination)");
 	    return false;

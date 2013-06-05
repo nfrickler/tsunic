@@ -55,6 +55,14 @@ abstract class ts_Packet {
 	return;
     }
 
+    /** Get printable name of this object
+     *
+     * @return string
+     */
+    public function getName () {
+	return $this->getInfo('name')." (".$this->id.")";
+    }
+
     /** Get/update path to packet
      * @param string $name
      *	Name of packet

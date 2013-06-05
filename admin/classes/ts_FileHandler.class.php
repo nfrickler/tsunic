@@ -193,15 +193,12 @@ class ts_FileHandler {
      *	Path of file
      * @param string $content
      *	Content to write to file
-     * @param int $overwrite
+     * @param bool $overwrite
      *	Overwrite file, if already exists?
      *
      * @return bool
      */
-    public static function writeFile ($path, $content, $overwrite = 0) {
-
-	// overwrite?
-	if (file_exists($path) AND !$overwrite) return false;
+    public static function writeFile ($path, $content, $overwrite = false) {
 
 	// create folder
 	$path_folder = substr($path, 0, (strlen($path) - strlen(basename($path)) - 1));

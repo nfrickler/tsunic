@@ -32,7 +32,7 @@ class ts_Log {
 	$msg = date("Y-m-d H:i:s")."|$level|$msg\n";
 
 	// write log
-	ts_FileHandler::writeFile($Config->get('dir_data').'/log/backend.log', $msg, 2)
+	ts_FileHandler::writeFile($Config->get('dir_data').'/log/backend.log', $msg)
 	    or die("ts_Log::doLog: Unable to log message: $msg");
     }
 }
