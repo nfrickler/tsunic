@@ -198,6 +198,8 @@ $lang = array(
     'SHOWCONFIG__EMAIL_ENABLED_INFO' => 'With this setting disabled TSunic will not send e-mails via php\'s mail-function.',
 
     'SHOWCONFIG__LEGEND_PATHS' => 'Directories',
+    'SHOWCONFIG__DOMAIN' => 'Domain',
+    'SHOWCONFIG__DOMAIN_INFO' => 'The domain of your webserver.',
     'SHOWCONFIG__DIR_ADMIN' => 'admin directory',
     'SHOWCONFIG__DIR_ADMIN_INFO' => 'Absolute path to admin directory of TSunic. Only administrator needs web access to this directory.',
     'SHOWCONFIG__DIR_DATA' => 'data directory',

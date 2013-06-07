@@ -108,6 +108,14 @@ global $Config;
     </fieldset>
     <fieldset>
 	<legend><?php $this->set('SHOWCONFIG__LEGEND_PATHS'); ?></legend>
+	<label for="set__domain"><?php $this->set('SHOWCONFIG__DOMAIN'); ?></label>
+	<input type="text" name="set__domain" id="set__domain" value="<?php echo $Config->get('domain'); ?>" />
+	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="domain_info_img" onclick="javascript:toggleInfo('domain_info');" />
+	<div class="form_infobox" id="domain_info" onclick="javascript:toggleInfo('domain_info');">
+	    <img src="templates/images/arrow_top2downright.gif" class="form_infoimg_in" />
+	    <?php $this->set('SHOWCONFIG__DOMAIN_INFO'); ?>
+	</div>
+	<div style="clear:both;"></div>
 	<label for="set__dir_admin"><?php $this->set('SHOWCONFIG__DIR_ADMIN'); ?></label>
 	<input type="text" name="set__dir_admin" id="set__dir_admin" value="<?php echo $Config->get('dir_admin'); ?>" />
 	<img src="templates/images/info.gif" alt="Info" class="form_infoimg" id="dir_admin_info_img" onclick="javascript:toggleInfo('dir_admin_info');" />
@@ -229,6 +237,7 @@ global $Config;
     inputs[15] = 'dir_runtime_info';
     inputs[16] = 'system_online_info';
     inputs[17] = 'allow_registration_info';
+    inputs[18] = 'domain_info';
 
 //    inputs[16] = 'debug_mode_info';
 

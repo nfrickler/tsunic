@@ -66,6 +66,8 @@ class ts_ConfigurationHandler {
 	switch ($name) {
 	    case 'version':
 		return $this->current_version;
+	    case 'domain':
+		return $_SERVER['SERVER_NAME'];
 	    case 'dir_admin':
 		return $root.'/admin';
 	    case 'dir_data':

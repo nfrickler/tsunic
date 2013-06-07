@@ -26,7 +26,11 @@ class $$$Session {
      */
     protected $Db;
 
-    /* Constructor
+    /** Constructor
+     * We will enfoce HTTPS by for TSunic by settings the 'secure' attribute
+     * in the session parameters to 'true'. To change this, you can set
+     * this attribute to 'false', but it is highly recommended to use HTTPS
+     * only!
      *
      * @param Database $Db
      *  Reference to Database object
@@ -39,13 +43,6 @@ class $$$Session {
 	$this->Db = $Db;
 	$this->readonly = $readonly;
 
-	// set lifetime
-	#ini_set('session.gc_maxlifetime', $this->lifetime);
-
-	// set probability of garbage collection (1%)
-	#ini_set('session.gc_probability', 1);
-	#ini_set('session.gc_divisor', 100);
-
 	// overwrite session handling
 	session_set_save_handler(
 	    array(&$this, 'open'),
@@ -56,10 +53,21 @@ class $$$Session {
 	    array(&$this, 'gc')
 	);
 
+	// Restrict session
+	$lifetime = 1200;
+	$path = '/';
+	$domain = "";
+	$secure = true;
+	$httponly = true;
+	session_set_cookie_params(
+	    $lifetime, $path, $domain, $secure, $httponly
+	);
+
+	// Set neutral name for session id
+	session_name('id');
+
 	// start session
 	session_start();
-
-	return;
     }
 
     /** Open session

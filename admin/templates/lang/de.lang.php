@@ -198,6 +198,8 @@ $lang = array(
     'SHOWCONFIG__EMAIL_ENABLED_INFO' => 'Ist diese Einstellung deaktivert, so wird das System keine E-Mails versenden. Die IMAP-/POP3-Funktionen sind davon nicht betroffen.',
 
     'SHOWCONFIG__LEGEND_PATHS' => 'Verzeichnisse',
+    'SHOWCONFIG__DOMAIN' => 'Domain',
+    'SHOWCONFIG__DOMAIN_INFO' => 'Der Domainname deines Webservers.',
     'SHOWCONFIG__DIR_ADMIN' => 'admin Verzeichnis',
     'SHOWCONFIG__DIR_ADMIN_INFO' => 'Absoluter Pfad zum admin Verzeichnis von TSunic. Nur der Administrator braucht Webzugriff auf dieses Verzeichnis.',
     'SHOWCONFIG__DIR_DATA' => 'data Verzeichnis',

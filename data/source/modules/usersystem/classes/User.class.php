@@ -187,7 +187,8 @@ class $$$User extends $system$Object {
 	    "pubkey" => $newkeys['pubkey'],
 	);
 
-	// update session
+	// Update session
+	session_regenerate_id();
 	$_SESSION['$$$passphrase'] = $passphrase;
 
 	# if root password is set, note in config
@@ -282,7 +283,8 @@ class $$$User extends $system$Object {
 	$passphrase = $this->_getPassphrase($password, $email);
 	$this->Encryption = $TSunic->get('$$$Encryption', array($this->id, $passphrase));
 
-	// get session
+	// Update session
+	session_regenerate_id();
 	$_SESSION['$$$id__account'] = $this->id;
 	$_SESSION['$$$passphrase'] = $passphrase;
 
@@ -316,6 +318,7 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function logout () {
+	session_regenerate_id();
 	$_SESSION['$$$id__account'] = 0;
 	$_SESSION['$$$passphrase'] = 0;
 	$this->Encryption = NULL;
