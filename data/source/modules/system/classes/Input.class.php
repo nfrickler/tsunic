@@ -130,13 +130,7 @@ class $$$Input {
      * @return mix
      */
     public function getRaw ($name, $hid = 0) {
-	$hid = $this->getHid($hid);
-	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['get'])
-	) return NULL;
-	return ($name === true)
-	    ? $this->history[$hid]['get']
-	    : $this->history[$hid]['get'][$name];
+	return $this->_abstractRaw('get', $name, $hid);
     }
 
     /** Get safe value of $_POST
@@ -160,13 +154,7 @@ class $$$Input {
      * @return mix
      */
     public function postRaw ($name, $hid = 0) {
-	$hid = $this->getHid($hid);
-	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['post'])
-	) return NULL;
-	return ($name === true)
-	    ? $this->history[$hid]['post']
-	    : $this->history[$hid]['post'][$name];
+	return $this->_abstractRaw('post', $name, $hid);
     }
 
     /** Get safe value of $_COOKIE
@@ -190,13 +178,7 @@ class $$$Input {
      * @return mix
      */
     public function cookieRaw ($name, $hid = 0) {
-	$hid = $this->getHid($hid);
-	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['cookie'])
-	) return NULL;
-	return ($name === true)
-	    ? $this->history[$hid]['cookie']
-	    : $this->history[$hid]['cookie'][$name];
+	return $this->_abstractRaw('cookie', $name, $hid);
     }
 
     /** Get safe value of $_FILES
@@ -220,13 +202,27 @@ class $$$Input {
      * @return mix
      */
     public function filesRaw ($name, $hid = 0) {
+	return $this->_abstractRaw('files', $name, $hid);
+    }
+
+    /** Get raw (=insecure!) value of specified type
+     * @param string $type
+     *	Type of value to return (get, post, files, cookie)
+     * @param string $name
+     *	Name of get parameter to return
+     * @param int $hid
+     *	History id of data to return
+     *
+     * @return mix
+     */
+    private function _abstractRaw ($type, $name, $hid = 0) {
 	$hid = $this->getHid($hid);
 	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['files'])
+	    !isset($this->history[$hid][$type])
 	) return NULL;
-	return ($name === true)
-	    ? $this->history[$hid]['files']
-	    : $this->history[$hid]['files'][$name];
+	if ($name === true) return $this->history[$hid][$type];
+	return (isset($this->history[$hid][$type][$name]))
+	    ? $this->history[$hid][$type][$name] : NULL;
     }
 
     /** Make parameter a little bit safer

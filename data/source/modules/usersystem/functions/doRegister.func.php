@@ -4,10 +4,11 @@ function $$$doRegister () {
     global $TSunic;
 
     // get input
-    $name = $TSunic->Temp->getPost('$$$formAccount__name');
-    $email = $TSunic->Temp->getPost('$$$formAccount__email');
-    $password = $TSunic->Temp->getPost('$$$formAccount__password');
-    $passwordrepeat = $TSunic->Temp->getPost('$$$formAccount__passwordrepeat');
+    $name = $TSunic->Input->post('$$$formAccount__name');
+    $email = $TSunic->Input->post('$$$formAccount__email');
+    $password = $TSunic->Input->postRaw('$$$formAccount__password');
+    $passwordrepeat =
+	$TSunic->Input->postRaw('$$$formAccount__passwordrepeat');
 
     // validate input
     if ($password != $passwordrepeat) {
@@ -50,7 +51,7 @@ function $$$doRegister () {
     if ($return) {
 
 	// delete registration-data in Temp
-	$TSunic->Temp->reset();
+	$TSunic->Input->reset();
 
 	// set preset for login-form
 	$expire = time() + 60 * 60 * 24 * 365;

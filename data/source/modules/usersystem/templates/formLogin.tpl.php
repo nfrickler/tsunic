@@ -4,7 +4,7 @@
 	<fieldset>
 	    <legend><?php $this->set('{FORMLOGIN__LEGEND}'); ?></legend>
 	    <label for="$$$formLogin__emailname"><?php $this->set('{FORMLOGIN__EMAIL}'); ?></label>
-	    <input type="text" class="ts_required" name="$$$formLogin__emailname" id="$$$formLogin__emailname" value="<?php $this->setPreset('$$$formLogin_emailname', $TSunic->Temp->getCookie('$$$formLogin__emailname')); ?>" />
+	    <input type="text" class="ts_required" name="$$$formLogin__emailname" id="$$$formLogin__emailname" value="<?php $this->setPreset('$$$formLogin_emailname', $TSunic->Input->cookie('$$$formLogin__emailname')); ?>" />
 	    <div style="clear:both;"></div>
 	    <label for="$$$formLogin__password"><?php $this->set('{FORMLOGIN__PASSWORD}'); ?></label>
 	    <input type="password" class="ts_required" name="$$$formLogin__password" id="$$$formLogin__password" />

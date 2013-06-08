@@ -4,12 +4,12 @@ function $$$setConfig () {
     global $TSunic;
 
     // get UserConfig
-    $id = $TSunic->Temp->getParameter('$$$showConfig__id');
+    $id = $TSunic->Input->uint('$$$showConfig__id');
     $User = ($id) ? $TSunic->get('$$$User', $id) : $TSunic->Usr;
     $UserConfig = $User->getConfig();
 
     // get input
-    $all_posts = $TSunic->Temp->getPost(true);
+    $all_posts = $TSunic->Input->post(true);
     $error = 0;
     foreach ($all_posts as $index => $value) {
 	$index = substr($index, strlen('$$$'));

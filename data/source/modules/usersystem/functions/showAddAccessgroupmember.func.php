@@ -4,7 +4,7 @@ function $$$showAddAccessgroupmember () {
     global $TSunic;
 
     // get empty accessgroup
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
 
     // get all users not in group

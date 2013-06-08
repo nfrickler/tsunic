@@ -22,7 +22,7 @@
 	    <td>
 		<form action="?" method="get">
 		    <input type="hidden" name="event" value="$$$showAccess"/>
-		    <input type="hidden" name="hid" value="<?php echo ($TSunic->Temp->getCurrentHistoryId() + 1); ?>"/>
+		    <input type="hidden" name="hid" value="<?php echo ($TSunic->Input->getHid() + 1); ?>"/>
 		    <select name="$$$user" id="$$$user">
 			<option value=""><?php $this->set('{SHOWACCESS__CHOOSE_USER}'); ?></option>
 			<?php foreach ($this->getVar('users') as $index => $value) { ?>
@@ -35,7 +35,7 @@
 	    <td>
 		<form action="?" method="get">
 		    <input type="hidden" name="event" value="$$$showAccess"/>
-		    <input type="hidden" name="hid" value="<?php echo ($TSunic->Temp->getCurrentHistoryId() + 1); ?>"/>
+		    <input type="hidden" name="hid" value="<?php echo ($TSunic->Input->getHid() + 1); ?>"/>
 		    <select name="$$$group" id="$$$group">
 			<option value=""><?php $this->set('{SHOWACCESS__CHOOSE_GROUP}'); ?></option>
 			<?php foreach ($this->getVar('groups') as $index => $value) { ?>

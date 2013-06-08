@@ -4,7 +4,7 @@ function $$$deleteAccount () {
     global $TSunic;
 
     // get password
-    $password = $TSunic->Temp->getParameter('$$$showDeleteAccount__password');
+    $password = $TSunic->Input->postRaw('$$$showDeleteAccount__password');
 
     // validate password
     if (!$TSunic->Usr->isCorrectPassword($password)) {

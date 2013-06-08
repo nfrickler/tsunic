@@ -4,8 +4,8 @@ function $$$setAccess () {
     global $TSunic;
 
     // get object to set access for
-    $id = $TSunic->Temp->getParameter('$$$id');
-    $isuser = $TSunic->Temp->getParameter('$$$isuser');
+    $id = $TSunic->Input->uint('$$$id');
+    $isuser = $TSunic->Input->param('$$$isuser');
     if (!$id) {
 	$TSunic->Log->alert('error', '{SETACCESS__ERROR}');
 	$TSunic->redirect('back');
@@ -17,7 +17,7 @@ function $$$setAccess () {
 	: $TSunic->get('$$$Accessgroup', $id);
 
     // get input
-    $all_posts = $TSunic->Temp->getPost(true);
+    $all_posts = $TSunic->Input->post(true);
     $error = 0;
     foreach ($all_posts as $index => $value) {
 	$index = substr($index, strlen('$$$'));

@@ -4,7 +4,7 @@ function $$$deleteAccessgroup () {
     global $TSunic;
 
     // get accessgroup
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
 
     // delete accessgroup

@@ -4,7 +4,7 @@ function $$$showDeleteAccessgroup () {
     global $TSunic;
 
     // get Accessgroup
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
 
     // activate template

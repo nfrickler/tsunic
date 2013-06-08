@@ -4,7 +4,7 @@ function $$$showAccessgroup () {
     global $TSunic;
 
     // get accessgroup
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
 
     // get all accessgroups

@@ -4,7 +4,7 @@ function $$$showDeleteUser () {
     global $TSunic;
 
     // get User
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $User = $TSunic->get('$$$User', $id);
 
     // activate template

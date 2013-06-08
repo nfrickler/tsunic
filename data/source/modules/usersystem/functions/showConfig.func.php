@@ -4,7 +4,7 @@ function $$$showConfig () {
     global $TSunic;
 
     // get fk_account
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $User = ($id) ? $TSunic->get('$$$User', $id) : $TSunic->Usr;
 
     // get config

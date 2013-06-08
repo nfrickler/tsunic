@@ -14,8 +14,8 @@ function $$$showAccess () {
     }
 
     # get account-id
-    $user = $TSunic->Temp->getParameter('$$$user');
-    $group = $TSunic->Temp->getParameter('$$$group');
+    $user = $TSunic->Input->param('$$$user');
+    $group = $TSunic->Input->param('$$$group');
 
     // get user object
     if ($user == $TSunic->Usr->getInfo('id') or (empty($user) and empty($group))) {

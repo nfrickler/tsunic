@@ -4,8 +4,8 @@ function $$$addAccessgroupmember () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getPost('$$$showAddAccessgroupmember__id');
-    $fk_account = $TSunic->Temp->getPost('$$$showAddAccessgroupmember__user');
+    $id = $TSunic->Input->uint('$$$showAddAccessgroupmember__id');
+    $fk_account = $TSunic->Input->uint('$$$showAddAccessgroupmember__user');
 
     // create accessgroup object
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);

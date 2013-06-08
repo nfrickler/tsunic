@@ -5,8 +5,8 @@ function $$$createAccessgroup () {
 
     // get input
     $data = array(
-	'name' => $TSunic->Temp->getPost('$$$formAccessgroup__name'),
-	'fk_parent' => $TSunic->Temp->getPost('$$$formAccessgroup__parent')
+	'name' => $TSunic->Input->post('$$$formAccessgroup__name'),
+	'fk_parent' => $TSunic->Input->uint('$$$formAccessgroup__parent')
     );
 
     // create accessgroup object

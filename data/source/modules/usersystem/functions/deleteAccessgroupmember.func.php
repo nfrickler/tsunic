@@ -4,9 +4,9 @@ function $$$deleteAccessgroupmember () {
     global $TSunic;
 
     // get accessgroup
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Accessgroup = $TSunic->get('$$$Accessgroup', $id);
-    $userid = $TSunic->Temp->getParameter('$$$userid');
+    $userid = $TSunic->Input->uint('$$$userid');
 
     // delete accessgroup
     if (!$Accessgroup->rmMember($userid)) {

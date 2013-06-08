@@ -4,10 +4,10 @@ function $$$editAccessgroup () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$formAccessgroup__id');
+    $id = $TSunic->Input->uint('$$$formAccessgroup__id');
     $data = array(
-	'name' => $TSunic->Temp->getPost('$$$formAccessgroup__name'),
-	'fk_parent' => $TSunic->Temp->getPost('$$$formAccessgroup__parent')
+	'name' => $TSunic->Input->post('$$$formAccessgroup__name'),
+	'fk_parent' => $TSunic->Input->uint('$$$formAccessgroup__parent')
     );
 
     // create accessgroup object

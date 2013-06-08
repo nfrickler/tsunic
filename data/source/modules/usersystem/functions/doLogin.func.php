@@ -5,12 +5,13 @@ function $$$doLogin () {
 
     // set preset for login-form
     $expire = time() + 60 * 60 * 24 * 365;
-    setCookie('$$$formLogin__emailname', $TSunic->Temp->getPost('$$$formLogin__emailname'), $expire);
+    setCookie('$$$formLogin__emailname',
+	$TSunic->Input->post('$$$formLogin__emailname'), $expire);
 
     // do login
     $return = $TSunic->Usr->login(
-	$TSunic->Temp->getPost('$$$formLogin__emailname'),
-	$TSunic->Temp->getPost('$$$formLogin__password')
+	$TSunic->Input->post('$$$formLogin__emailname'),
+	$TSunic->Input->postRaw('$$$formLogin__password')
     );
 
     // check, if login was successfull

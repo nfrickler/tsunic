@@ -16,7 +16,7 @@
 	    <td>
 		<form action="?" method="get">
 		    <input type="hidden" name="event" value="$$$showConfig"/>
-		    <input type="hidden" name="hid" value="<?php echo ($TSunic->Temp->getCurrentHistoryId() + 1); ?>"/>
+		    <input type="hidden" name="hid" value="<?php echo ($TSunic->Input->getHid() + 1); ?>"/>
 		    <select name="$$$id" id="$$$id">
 			<option value=""><?php $this->set('{SHOWCONFIG__CHOOSE_USER}'); ?></option>
 			<?php foreach ($TSunic->Usr->allUsers() as $index => $value) { ?>

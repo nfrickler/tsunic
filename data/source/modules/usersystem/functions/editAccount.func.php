@@ -4,10 +4,11 @@ function $$$editAccount () {
     global $TSunic;
 
     // get input
-    $name = $TSunic->Temp->getPost('$$$formAccount__name');
-    $email = $TSunic->Temp->getPost('$$$formAccount__email');
-    $password = $TSunic->Temp->getPost('$$$formAccount__password');
-    $passwordrepeat = $TSunic->Temp->getPost('$$$formAccount__passwordrepeat');
+    $name = $TSunic->Input->post('$$$formAccount__name');
+    $email = $TSunic->Input->post('$$$formAccount__email');
+    $password = $TSunic->Input->postRaw('$$$formAccount__password');
+    $passwordrepeat =
+	$TSunic->Input->postRaw('$$$formAccount__passwordrepeat');
 
     // check, if password-repeat correct
     if ($password != $passwordrepeat) {
