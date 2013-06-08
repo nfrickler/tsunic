@@ -4,7 +4,7 @@ function $$$showDeleteSelection () {
     global $TSunic;
 
     // get Selection object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Selection = $TSunic->get('$$$Selection', $id);
 
     // activate template

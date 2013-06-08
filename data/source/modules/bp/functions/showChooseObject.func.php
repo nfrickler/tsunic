@@ -4,10 +4,10 @@ function $$$showChooseObject () {
     global $TSunic;
 
     // get input
-    $fk_bit = $TSunic->Temp->getParameter('$$$fk_bit');
-    $backlink = $TSunic->Temp->getParameter('backlink');
-    $headline = $TSunic->Temp->getParameter('$$$headline');
-    $infotext = $TSunic->Temp->getParameter('$$$infotext');
+    $fk_bit = $TSunic->Input->uint('$$$fk_bit');
+    $backlink = $TSunic->Input->param('backlink');
+    $headline = $TSunic->Input->param('$$$headline');
+    $infotext = $TSunic->Input->param('$$$infotext');
     if (empty($headline)) $headline = '{SHOWCHOOSEOBJECT__H1}';
     if (empty($infotext)) $infotext ='{SHOWCHOOSEOBJECT__INFOTEXT}';
 

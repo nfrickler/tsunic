@@ -4,9 +4,10 @@ function $$$chooseObject () {
     global $TSunic;
 
     // get input
-    $fk_bit = $TSunic->Temp->getPost('$$$formChooseObject__fk_bit');
-    $fk_obj = $TSunic->Temp->getPost('$$$formChooseObject__fk');
-    $backlink = base64_decode($TSunic->Temp->getPost('$$$formChooseObject__backlink'));
+    $fk_bit = $TSunic->Input->uint('$$$formChooseObject__fk_bit');
+    $fk_obj = $TSunic->Input->uint('$$$formChooseObject__fk');
+    $backlink = base64_decode(
+	$TSunic->Input->post('$$$formChooseObject__backlink'));
     if (!$backlink) $backlink = '?back=2';
 
     // get Bit object

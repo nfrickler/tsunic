@@ -4,7 +4,7 @@ function $$$showEditSelection () {
     global $TSunic;
 
     // get Selection object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Selection = $TSunic->get('$$$Selection', $id);
 
     // get all selection-/radio- tags

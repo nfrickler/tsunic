@@ -4,7 +4,7 @@ function $$$showEditTag () {
     global $TSunic;
 
     // get Tag object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Tag = $TSunic->get('$$$Tag', $id);
 
     // activate template

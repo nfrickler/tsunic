@@ -4,10 +4,10 @@ function $$$createTag () {
     global $TSunic;
 
     // get input
-    $fk_type = $TSunic->Temp->getPost('$$$formTag__fk_type');
-    $name = $TSunic->Temp->getPost('$$$formTag__name');
-    $title = $TSunic->Temp->getPost('$$$formTag__title');
-    $description = $TSunic->Temp->getPost('$$$formTag__description');
+    $fk_type = $TSunic->Input->uint('$$$formTag__fk_type');
+    $name = $TSunic->Input->post('$$$formTag__name');
+    $title = $TSunic->Input->post('$$$formTag__title');
+    $description = $TSunic->Input->post('$$$formTag__description');
 
     // create selection object
     $Tag = $TSunic->get('$$$Tag');

@@ -4,8 +4,8 @@ function $$$showDeleteObject () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$id');
-    $backlink = $TSunic->Temp->getParameter('$$$backlink');
+    $id = $TSunic->Input->uint('$$$id');
+    $backlink = $TSunic->Input->param('$$$backlink');
 
     // get Object
     $Object = $TSunic->get('$bp$BpObject', $id);

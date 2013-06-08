@@ -4,10 +4,10 @@ function $$$editSelection () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getPost('$$$formSelection__id');
-    $fk_tag = $TSunic->Temp->getPost('$$$formSelection__fk_tag');
-    $name = $TSunic->Temp->getPost('$$$formSelection__name');
-    $description = $TSunic->Temp->getPost('$$$formSelection__description');
+    $id = $TSunic->Input->uint('$$$formSelection__id');
+    $fk_tag = $TSunic->Input->uint('$$$formSelection__fk_tag');
+    $name = $TSunic->Input->post('$$$formSelection__name');
+    $description = $TSunic->Input->post('$$$formSelection__description');
 
     // get Selection object
     $Selection = $TSunic->get('$$$Selection', $id);

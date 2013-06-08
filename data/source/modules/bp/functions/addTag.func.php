@@ -4,9 +4,9 @@ function $$$addTag () {
     global $TSunic;
 
     // get input
-    $fk_obj = $TSunic->Temp->getPost('$$$formAddTag__fk_obj');
-    $fk_tag = $TSunic->Temp->getPost('$$$formAddTag__fk_tag');
-    $backlink = base64_decode($TSunic->Temp->getPost('$$$formAddTag__backlink'));
+    $fk_obj = $TSunic->Input->uint('$$$formAddTag__fk_obj');
+    $fk_tag = $TSunic->Input->uint('$$$formAddTag__fk_tag');
+    $backlink = base64_decode($TSunic->Input->post('$$$formAddTag__backlink'));
     if (!$backlink) $backlink = '?back=2';
 
     // add tag to profile

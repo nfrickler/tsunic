@@ -4,10 +4,10 @@ function $$$unlinkTag () {
     global $TSunic;
 
     // get backlink
-    $backlink = base64_decode($TSunic->Temp->getParameter('$$$backlink'));
+    $backlink = base64_decode($TSunic->Input->param('$$$backlink'));
 
     // get Bit object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Bit = $TSunic->get('$$$Bit', $id);
 
     // delete Bit

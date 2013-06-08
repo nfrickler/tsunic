@@ -4,7 +4,7 @@ function $$$setLanguage () {
     global $TSunic;
 
     // get language
-    $lang = $TSunic->Temp->getParameter('lang');
+    $lang = $TSunic->Input->param('lang');
 
     // set language in config
     $TSunic->Usr->setConfig('$$$language', $lang);

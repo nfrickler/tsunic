@@ -4,8 +4,8 @@ function $$$showAddTag () {
     global $TSunic;
 
     // get input
-    $fk_obj = $TSunic->Temp->getParameter('fk_obj');
-    $backlink = $TSunic->Temp->getParameter('backlink');
+    $fk_obj = $TSunic->Input->uint('fk_obj');
+    $backlink = $TSunic->Input->param('backlink');
 
     // get Object
     $Obj = $TSunic->get('$$$BpObject', $fk_obj);

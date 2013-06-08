@@ -4,9 +4,9 @@ function $$$deleteObject () {
     global $TSunic;
 
     // get Object object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Object = $TSunic->get('$$$BpObject', $id);
-    $backlink = base64_decode($TSunic->Temp->getParameter('$$$backlink'));
+    $backlink = base64_decode($TSunic->Input->param('$$$backlink'));
 
     // delete tag
     if (!$Object->delete()) {

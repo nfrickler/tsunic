@@ -120,7 +120,7 @@ class $$$Helper {
 	global $TSunic;
 
 	// get all posts
-	$posts = $TSunic->Temp->getPost(true);
+	$posts = $TSunic->Input->post(true);
 
 	// get all fk_tags, fk_bits and values
 	$fk_tags = array();

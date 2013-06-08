@@ -4,7 +4,7 @@ function $$$showCreateSelection () {
     global $TSunic;
 
     // create empty object
-    $fk_tag = $TSunic->Temp->getParameter('fk_tag');
+    $fk_tag = $TSunic->Input->uint('fk_tag');
     $Selection = $TSunic->get('$$$Selection');
 
     // get all selection-/radio- tags

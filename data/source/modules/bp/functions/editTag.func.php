@@ -4,11 +4,11 @@ function $$$editTag () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getPost('$$$formTag__id');
-    $fk_type = $TSunic->Temp->getPost('$$$formTag__fk_type');
-    $name = $TSunic->Temp->getPost('$$$formTag__name');
-    $title = $TSunic->Temp->getPost('$$$formTag__title');
-    $description = $TSunic->Temp->getPost('$$$formTag__description');
+    $id = $TSunic->Input->uint('$$$formTag__id');
+    $fk_type = $TSunic->Input->uint('$$$formTag__fk_type');
+    $name = $TSunic->Input->post('$$$formTag__name');
+    $title = $TSunic->Input->post('$$$formTag__title');
+    $description = $TSunic->Input->post('$$$formTag__description');
 
     // get Tag object
     $Tag = $TSunic->get('$$$Tag', $id);
