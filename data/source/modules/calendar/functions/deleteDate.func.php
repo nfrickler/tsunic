@@ -4,7 +4,7 @@ function $$$deleteDate () {
     global $TSunic;
 
     // get Date object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Date = $TSunic->get('$$$Date', $id);
     $start = $Date->getInfo('start');
 

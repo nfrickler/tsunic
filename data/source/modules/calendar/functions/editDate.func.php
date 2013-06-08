@@ -4,7 +4,7 @@ function $$$editDate () {
     global $TSunic;
 
     // get Date object
-    $id = $TSunic->Temp->getPost('$$$formDate__id');
+    $id = $TSunic->Input->uint('$$$formDate__id');
     $Date = $TSunic->get('$$$Date', $id);
     if (!$Date->isValid()) {
 	$TSunic->Log->alert('error', '{EDITDATE__ERROR}');
@@ -13,9 +13,9 @@ function $$$editDate () {
     }
 
     // get input
-    $repeat = $TSunic->Temp->getPost('$$$formDate__repeat');
-    $repeattype = $TSunic->Temp->getPost('$$$formDate__repeattype');
-    $repeat_radio = $TSunic->Temp->getPost('$$$formDate__repeat_radio');
+    $repeat = $TSunic->Input->post('$$$formDate__repeat');
+    $repeattype = $TSunic->Input->post('$$$formDate__repeattype');
+    $repeat_radio = $TSunic->Input->post('$$$formDate__repeat_radio');
 
     // get values from form
     $Helper = $TSunic->get('$bp$Helper');

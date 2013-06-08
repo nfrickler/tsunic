@@ -4,7 +4,7 @@ function $$$showEditProfile () {
     global $TSunic;
 
     // get Profile object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
     // get preset

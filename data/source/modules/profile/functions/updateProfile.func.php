@@ -11,7 +11,7 @@ function $$$updateProfile () {
     }
 
     // get profile object
-    $id = $TSunic->Temp->getPost('$$$formProfile__id');
+    $id = $TSunic->Input->uint('$$$formProfile__id');
     $Profile = $TSunic->get('$$$Profile', ($id ? $id : 0));
 
     // get values from form

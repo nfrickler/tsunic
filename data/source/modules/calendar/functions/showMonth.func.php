@@ -3,7 +3,7 @@
 function $$$showMonth () {
     global $TSunic;
 
-    $time = $TSunic->Temp->getParameter('$$$time');
+    $time = $TSunic->Input->param('$$$time');
     if (empty($time)) $time = time();
 
     // get all dates of month

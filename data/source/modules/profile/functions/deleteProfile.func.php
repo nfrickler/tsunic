@@ -10,7 +10,7 @@ function $$$deleteProfile () {
     }
 
     // get Profile object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Profile = $TSunic->get('$$$Profile', $id);
 
     // editable?
