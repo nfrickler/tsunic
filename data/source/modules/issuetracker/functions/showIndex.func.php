@@ -4,7 +4,7 @@ function $$$showIndex () {
     global $TSunic;
 
     // get selected queue
-    $queue = $TSunic->Temp->getParameter('$$$queue');
+    $queue = $TSunic->Input->uint('$$$queue');
     $Queue = $TSunic->get('$$$Queue', $queue);
 
     // get all queues and issues in selected queue

@@ -4,7 +4,7 @@ function $$$editQueue () {
     global $TSunic;
 
     // get profile object
-    $id = $TSunic->Temp->getPost('$$$formQueue__id');
+    $id = $TSunic->Input->uint('$$$formQueue__id');
     $Queue = $TSunic->get('$$$Queue', $id);
 
     // get values from form

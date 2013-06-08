@@ -4,7 +4,7 @@ function $$$deleteIssue () {
     global $TSunic;
 
     // get Issue object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Issue = $TSunic->get('$$$Issue', $id);
 
     // delete issue

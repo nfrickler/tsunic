@@ -4,7 +4,7 @@ function $$$editIssue () {
     global $TSunic;
 
     // get profile object
-    $id = $TSunic->Temp->getPost('$$$formIssue__id');
+    $id = $TSunic->Input->uint('$$$formIssue__id');
     $Issue = $TSunic->get('$$$Issue', $id);
 
     // get values from form

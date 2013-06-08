@@ -4,7 +4,7 @@ function $$$deleteQueue () {
     global $TSunic;
 
     // get Queue object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Queue = $TSunic->get('$$$Queue', $id);
 
     // delete queue
