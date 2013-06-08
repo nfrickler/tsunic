@@ -4,7 +4,7 @@ function $$$showNote () {
     global $TSunic;
 
     // get param
-    $id_file = $TSunic->Temp->getParameter('$$$id');
+    $id_file = $TSunic->Input->uint('$$$id');
 
     // get File object
     $File = $TSunic->get('$filesystem$File', $id_file);

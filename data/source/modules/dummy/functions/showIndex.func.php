@@ -4,7 +4,7 @@ function $$$showIndex () {
     global $TSunic;
 
     // get some parameter
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
 
     // activate template
     $data = array('mydata' => 'Here you can push some data to your template');

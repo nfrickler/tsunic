@@ -5,7 +5,7 @@ function $$$showHelp () {
     $lang = $TSunic->Usr->config('$system$language');
 
     // get page to show
-    $page_arr = explode('__', $TSunic->Temp->getGet('$$$page'));
+    $page_arr = explode('__', $TSunic->Input->param('$$$page'));
     if (!$lang or !$page_arr or count($page_arr) != 2) {
 	$TSunic->Log->alert('error', '{SHOWHELP__ERROR}');
 	$TSunic->redirect('back');

@@ -4,9 +4,9 @@ function $$$saveNote () {
     global $TSunic;
 
     // get params
-    $id = $TSunic->Temp->getPost('$$$showNote__id');
-    $path = $TSunic->Temp->getPost('$$$showNote__filename');
-    $content = $TSunic->Temp->getPost('$$$showNote__content');
+    $id = $TSunic->Input->uint('$$$showNote__id');
+    $path = $TSunic->Input->postRaw('$$$showNote__filename');
+    $content = $TSunic->Input->postRaw('$$$showNote__content');
 
     // get Note object
     $Note = $TSunic->get('$$$Note', $id);
