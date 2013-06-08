@@ -4,7 +4,7 @@ function $$$showEditDirectory () {
     global $TSunic;
 
     // get id
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
 
     // create empty object
     $Directory = $TSunic->get('$$$Directory', $id);

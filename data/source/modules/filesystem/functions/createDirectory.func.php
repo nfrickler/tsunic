@@ -4,7 +4,7 @@ function $$$createDirectory () {
     global $TSunic;
 
     // get input
-    $preset_parent = $TSunic->Temp->getPost('$$$formDirectory__parent_preset');
+    $preset_parent = $TSunic->Input->uint('$$$formDirectory__parent_preset');
 
     // get values from form
     $Helper = $TSunic->get('$bp$Helper');

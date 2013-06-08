@@ -4,7 +4,7 @@ function $$$showEditFile () {
     global $TSunic;
 
     // get id
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
 
     // create File object
     $File = $TSunic->get('$$$File', $id);

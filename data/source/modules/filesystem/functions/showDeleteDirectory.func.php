@@ -4,7 +4,7 @@ function $$$showDeleteDirectory () {
     global $TSunic;
 
     // get Directory
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Directory = $TSunic->get('$$$Directory', $id);
 
     // is empty directory?

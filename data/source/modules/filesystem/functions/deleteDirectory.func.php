@@ -4,7 +4,7 @@ function $$$deleteDirectory () {
     global $TSunic;
 
     // get directory
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Directory = $TSunic->get('$$$Directory', $id);
     $parent = $Directory->getInfo('parent');
 

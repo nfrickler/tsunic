@@ -4,7 +4,7 @@ function $$$deleteFile () {
     global $TSunic;
 
     // get file
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $File = $TSunic->get('$$$File', $id);
     $parent = $File->getInfo('parent');
 

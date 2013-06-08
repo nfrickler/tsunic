@@ -4,7 +4,7 @@ function $$$showDeleteFile () {
     global $TSunic;
 
     // get File
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $File = $TSunic->get('$$$File', $id);
 
     // activate template

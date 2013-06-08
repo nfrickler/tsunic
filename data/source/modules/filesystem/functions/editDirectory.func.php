@@ -4,7 +4,7 @@ function $$$editDirectory () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$formDirectory__id');
+    $id = $TSunic->Input->uint('$$$formDirectory__id');
 
     // get values from form
     $Helper = $TSunic->get('$bp$Helper');

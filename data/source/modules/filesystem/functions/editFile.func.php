@@ -4,7 +4,7 @@ function $$$editFile () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$formFile__id');
+    $id = $TSunic->Input->uint('$$$formFile__id');
 
     // edit file object
     $File = $TSunic->get('$$$File', $id);

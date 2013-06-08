@@ -4,8 +4,9 @@ function $$$createFile () {
     global $TSunic;
 
     // get input
-    $parent_preset = $TSunic->Temp->getPost('$$$formFile__parent_preset');
-    $FH = $_FILES['$$$formFile__file'];
+    $parent_preset = $TSunic->Input->uint('$$$formFile__parent_preset');
+    #$FH = $_FILES['$$$formFile__file'];
+    $FH = $TSunic->Input->files('$$$formFile__file');
 
     // is file Image?
     $File = $TSunic->get('$$$Image', 0);

@@ -4,7 +4,7 @@ function $$$showCreateFile () {
     global $TSunic;
 
     // get directory
-    $fk_directory = $TSunic->Temp->getParameter('fk_directory');
+    $fk_directory = $TSunic->Input->uint('fk_directory');
 
     // create empty object
     $File = $TSunic->get('$$$File');

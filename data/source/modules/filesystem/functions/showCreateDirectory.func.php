@@ -4,7 +4,7 @@ function $$$showCreateDirectory () {
     global $TSunic;
 
     // get parent
-    $parent_preset = $TSunic->Temp->getParameter('fk_parent');
+    $parent_preset = $TSunic->Input->uint('fk_parent');
 
     // create empty object
     $Directory = $TSunic->get('$$$Directory');
