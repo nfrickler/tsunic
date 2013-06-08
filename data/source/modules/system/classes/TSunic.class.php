@@ -26,11 +26,6 @@ class TSunic {
      */
     public $Input;
 
-    /** Reference of Temp object
-     * @var Temp $Temp
-     */
-    public $Temp;
-
     /** Reference of Stats object
      * @var Stats $Stats
      */
@@ -82,9 +77,6 @@ class TSunic {
 	// create session object (this starts session)
 	$readonlysession = ($this->getRunningMode() == 'index') ? false : true;
 	$this->Session = $this->get('$$$Session', array($this->Db, $readonlysession));
-
-	// create Temp object
-	$this->Temp = $this->get('$$$Temp');
 
 	// create Input object
 	$this->Input = $this->get('$$$Input');
@@ -147,7 +139,7 @@ class TSunic {
 	    if ($this->isIndex() AND isset($_GET['back'])) $this->redirect('this');
 
 	    // get event
-	    $event = $this->Temp->getEvent();
+	    $event = $this->Input->get('event');
 	    if (empty($event)) {
 		if ($this->isAjax()) return false;
 		$this->redirect('default');
@@ -185,7 +177,7 @@ class TSunic {
 		// invalid function
 		$this->throwError(
 		    'Fatale error: Requested function is invalid! ('.
-		    $this->Temp->getEvent().')'
+		    $this->Input->get('event').')'
 		);
 	    }
 	}
@@ -227,7 +219,7 @@ class TSunic {
 
 	// validate template
 	if (empty($template)) {
-	    $template = $this->Temp->getGet('tmpl');
+	    $template = $this->Input->get('tmpl');
 
 	    // is tmpl?
 	    if (empty($template)) $template = '$$$html';
@@ -278,7 +270,7 @@ class TSunic {
 	if (
 	    $this->isIndex() and
 	    !$this->Usr->isLoggedIn() and
-	    !in_array($this->Temp->getEvent(), $allowed_pages)
+	    !in_array($this->Input->get('event'), $allowed_pages)
 	) {
 	    $this->Log->alert('error', '{CLASS__TSUNIC__LOGINFIRST}');
 	    $this->redirect('$usersystem$showLogin');
@@ -446,7 +438,7 @@ class TSunic {
 	// TODO: Prevent internal runs from redirecting
 
 	// get loop
-	$loop = $this->Temp->getGet('loop');
+	$loop = $this->Input->get('loop');
 
 	// get module and event
 	if ($event === 'back') {
@@ -464,12 +456,13 @@ class TSunic {
 	    // redirect to current page
 
 	    // get parameters
-	    $gets = $this->Temp->getGet(true, 0);
-	    if (isset($gets['loop'])) unset($gets['loop']);
+	    $gets = $this->Input->getRaw(true);
 
 	    // sum up GET-parameters
 	    $url_gets = '';
+	    $to_skip = array('loop', '$$$hid', 'back');
 	    foreach ($gets as $index => $value) {
+		if (in_array($to_skip, $index)) continue;
 		$url_gets.= '&'.$index.'='.$value;
 	    }
 

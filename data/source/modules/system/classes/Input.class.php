@@ -44,13 +44,31 @@ class $$$Input {
 	// save current history id
 	$this->current = (isset($_GET['$$$hid']) and
 	    is_numeric($_GET['$$$hid'])
-	) ? $this->current : 0;
+	) ? $_GET['$$$hid'] : 0;
+
+	// no current hid?
+	if (!$this->current) {
+	    ksort($this->history);
+	    end($this->history);
+	    $this->current = key($this->history);
+	}
+	if (!$this->current) $this->current = 1;
+
+	// is backlink?
+	$back = (isset($_GET['back']) and is_numeric($_GET['back']))
+	    ? $_GET['back'] : 0;
+	if ($back) {
+	    $this->current -= $_GET['back'];
+	}
 
 	// remove old entries in history
 	$this->cleanupHistory();
 
 	// update history
-	$this->update();
+	if (!$back) $this->update();
+
+	// save
+	$this->save();
     }
 
     /** Cleans history from old entries
@@ -85,6 +103,14 @@ class $$$Input {
 	$this->history = $new_history;
     }
 
+    /** Save current history
+     *
+     * @return void
+     */
+    private function save () {
+	$_SESSION[$this->session_key] = $this->history;
+    }
+
     /** Reset history
      *
      * @return void
@@ -104,9 +130,6 @@ class $$$Input {
 	    'cookie'=> $_COOKIE,
 	    'files' => $_FILES
 	);
-
-	// update session
-	$_SESSION[$this->session_key] = $this->history;
     }
 
     /** Get safe value of $_GET
@@ -316,6 +339,16 @@ class $$$Input {
 	if ($offset == 0) return $this->current;
 	if ($offset < 0) return $this->current + $offset;
 	return $hid;
+    }
+
+    /** Get module of current event
+     * @param int $hid
+     *	History id of data to return
+     *
+     * @return string
+     */
+    public function module ($hid = 0) {
+	return strtok($this->param('event', $hid), '__');
     }
 }
 ?>

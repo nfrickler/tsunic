@@ -309,7 +309,7 @@ class $$$Template {
 
 	    // add current history-id
 	    if (!is_array($data)) $data = array();
-	    $data['hid'] = $TSunic->Temp->getCurrentHistoryId();
+	    $data['$$$hid'] = $TSunic->Input->getHid() + 1;
 
 	    // create GET-parameters
 	    $gets = '';
@@ -349,7 +349,7 @@ class $$$Template {
 	global $TSunic;
 
 	// get output
-	$output = $TSunic->Temp->getPost($name, 1, true);
+	$output = $TSunic->Input->post($name, -1);
 
 	// check, if is output or default should be set
 	if (empty($output)) $output = $default;

@@ -400,7 +400,8 @@ class $$$TemplateEngine {
 	global $TSunic;
 
 	// get TemplateXml-object
-	$TemplateXml = $TSunic->get('$$$Template_Xml', $TSunic->Temp->getEvent());
+	$TemplateXml = $TSunic->get(
+	    '$$$Template_Xml', $TSunic->Input->get('event'));
 
 	// load xml
 	$TemplateXml->display();
