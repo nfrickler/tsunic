@@ -10,7 +10,7 @@ function $$$showMailaccount () {
     }
 
     // get mailaccount object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
     // activate template

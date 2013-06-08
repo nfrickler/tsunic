@@ -4,7 +4,7 @@ function $$$deleteMailbox () {
     global $TSunic;
 
     // get mailbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mailbox = $TSunic->get('$$$Mailbox', $id);
 
     // edit mailbox

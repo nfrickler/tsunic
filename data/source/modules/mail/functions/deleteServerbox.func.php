@@ -10,7 +10,7 @@ function $$$deleteServerbox () {
     }
 
     // get Serverbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Serverbox = $TSunic->get('$$$Serverbox', $id);
 
     // get id of mailaccount

@@ -10,17 +10,17 @@ function $$$editSmtp () {
     }
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$formSmtp__id');
-    $fk_mail__account = $TSunic->Temp->getParameter('$$$formSmtp__mailaccount');
-    $email = $TSunic->Temp->getParameter('$$$formSmtp__email');
-    $password = $TSunic->Temp->getParameter('$$$formSmtp__password');
-    $emailname = $TSunic->Temp->getParameter('$$$formSmtp__emailname');
-    $description = $TSunic->Temp->getParameter('$$$formSmtp__description');
-    $host = $TSunic->Temp->getParameter('$$$formSmtp__host');
-    $port = $TSunic->Temp->getParameter('$$$formSmtp__port');
-    $auth = $TSunic->Temp->getParameter('$$$formSmtp__auth');
-    $connsecurity = $TSunic->Temp->getParameter('$$$formSmtp__connsecurity');
-    $user = $TSunic->Temp->getParameter('$$$formSmtp__user');
+    $id = $TSunic->Input->uint('$$$formSmtp__id');
+    $fk_mail__account = $TSunic->Input->uint('$$$formSmtp__mailaccount');
+    $email = $TSunic->Input->post('$$$formSmtp__email');
+    $password = $TSunic->Input->post('$$$formSmtp__password');
+    $emailname = $TSunic->Input->post('$$$formSmtp__emailname');
+    $description = $TSunic->Input->post('$$$formSmtp__description');
+    $host = $TSunic->Input->post('$$$formSmtp__host');
+    $port = $TSunic->Input->uint('$$$formSmtp__port');
+    $auth = $TSunic->Input->uint('$$$formSmtp__auth');
+    $connsecurity = $TSunic->Input->uint('$$$formSmtp__connsecurity');
+    $user = $TSunic->Input->post('$$$formSmtp__user');
 
     // get smtp-object
     $Smtp = $TSunic->get('$$$Smtp', $id);

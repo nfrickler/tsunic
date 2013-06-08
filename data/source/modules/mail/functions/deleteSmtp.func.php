@@ -10,7 +10,7 @@ function $$$deleteSmtp () {
     }
 
     // get smtp object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Smtp = $TSunic->get('$$$Smtp', $id);
 
     // delete smtp server

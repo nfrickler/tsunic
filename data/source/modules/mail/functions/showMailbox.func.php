@@ -4,7 +4,7 @@ function $$$showMailbox () {
     global $TSunic;
 
     // get Mailbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     if (!is_numeric($id)) $id = 0;
     $Mailbox = ($id == 0) ? $TSunic->get('$$$Inbox') : $TSunic->get('$$$Mailbox', $id);
 

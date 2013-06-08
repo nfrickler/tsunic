@@ -10,11 +10,10 @@ function $$$editServerbox () {
     }
 
     // get input
-    $id = $TSunic->Temp->getPost('$$$formServerbox__id');
-    $name = $TSunic->Temp->getPost('$$$formServerbox__name');
-    $fk_mailbox =
-	$TSunic->Temp->getPost('$$$formServerbox__fk_mailbox');
-    $newMailbox = $TSunic->Temp->getPost('$$$formServerbox__newMailbox');
+    $id = $TSunic->Input->uint('$$$formServerbox__id');
+    $name = $TSunic->Input->post('$$$formServerbox__name');
+    $fk_mailbox = $TSunic->Input->uint('$$$formServerbox__fk_mailbox');
+    $newMailbox = $TSunic->Input->post('$$$formServerbox__newMailbox');
 
     // get mailbox-object
     if (empty($fk_mailbox)) {

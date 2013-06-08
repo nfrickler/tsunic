@@ -4,14 +4,13 @@ function $$$updateMail () {
     global $TSunic;
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$formMail__id');
-    $sender = $TSunic->Temp->getParameter('$$$formMail__sender');
-    $content = $TSunic->Temp->getParameter('$$$formMail__content');
-    $send = ($TSunic->Temp->getParameter('$$$formMail__send'))
+    $id = $TSunic->Input->uint('$$$formMail__id');
+    $sender = $TSunic->Input->post('$$$formMail__sender');
+    $content = $TSunic->Input->post('$$$formMail__content');
+    $send = ($TSunic->Input->post('$$$formMail__send'))
 	? true : false;
 
-    // create new Mail object
-    // get Mail object
+    // get or create Mail object
     $Mail = $TSunic->get('$$$Mail', $id);
     if (empty($id) and !$Mail->create()) {
 	// an error occurred!

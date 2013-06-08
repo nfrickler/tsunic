@@ -4,7 +4,7 @@ function $$$showMail () {
     global $TSunic;
 
     // get mail object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mail = $TSunic->get('$$$Mail', $id);
 
     // set mail to seen

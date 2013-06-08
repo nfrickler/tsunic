@@ -4,7 +4,7 @@ function $$$showDeleteMail () {
     global $TSunic;
 
     // get Mail object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mail = $TSunic->get('$$$Mail', $id);
 
     // activate template

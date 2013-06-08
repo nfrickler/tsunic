@@ -10,17 +10,18 @@ function $$$editMailaccount () {
     }
 
     // get input
-    $id = $TSunic->Temp->getParameter('$$$formMailaccount__id');
-    $email = $TSunic->Temp->getPost('$$$formMailaccount__email');
-    $password = $TSunic->Temp->getPost('$$$formMailaccount__password');
-    $name = $TSunic->Temp->getPost('$$$formMailaccount__name');
-    $description = $TSunic->Temp->getPost('$$$formMailaccount__description');
-    $host = $TSunic->Temp->getPost('$$$formMailaccount__host');
-    $port = $TSunic->Temp->getPost('$$$formMailaccount__port');
-    $user = $TSunic->Temp->getPost('$$$formMailaccount__user');
-    $protocol = $TSunic->Temp->getPost('$$$formMailaccount__protocol');
-    $auth = $TSunic->Temp->getPost('$$$formMailaccount__auth');
-    $connsecurity = $TSunic->Temp->getPost('$$$formMailaccount__connsecurity');
+    $id = $TSunic->Input->uint('$$$formMailaccount__id');
+    $email = $TSunic->Input->post('$$$formMailaccount__email');
+    $password = $TSunic->Input->postRaw('$$$formMailaccount__password');
+    $name = $TSunic->Input->post('$$$formMailaccount__name');
+    $description = $TSunic->Input->post('$$$formMailaccount__description');
+    $host = $TSunic->Input->post('$$$formMailaccount__host');
+    $port = $TSunic->Input->uint('$$$formMailaccount__port');
+    $user = $TSunic->Input->post('$$$formMailaccount__user');
+    $protocol = $TSunic->Input->uint('$$$formMailaccount__protocol');
+    $auth = $TSunic->Input->uint('$$$formMailaccount__auth');
+    $connsecurity =
+	$TSunic->Input->uint('$$$formMailaccount__connsecurity');
 
     // get new mailaccount object
     $Mailaccount = $TSunic->get('$$$Mailaccount', $id);

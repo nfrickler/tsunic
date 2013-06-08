@@ -10,18 +10,18 @@ function $$$addSmtp () {
     }
 
     // get input
-    $fk_mailaccount = $TSunic->Temp->getParameter('$$$formSmtp__fk_mailaccount');
-    $email = $TSunic->Temp->getParameter('$$$formSmtp__email');
-    $password = $TSunic->Temp->getParameter('$$$formSmtp__password');
-    $emailname = $TSunic->Temp->getParameter('$$$formSmtp__emailname');
-    $description = $TSunic->Temp->getParameter('$$$formSmtp__description');
-    $host = $TSunic->Temp->getParameter('$$$formSmtp__host');
-    $port = $TSunic->Temp->getParameter('$$$formSmtp__port');
-    $auth = $TSunic->Temp->getParameter('$$$formSmtp__auth');
-    $connsecurity = $TSunic->Temp->getParameter('$$$formSmtp__connsecurity');
-    $user = $TSunic->Temp->getParameter('$$$formSmtp__user');
+    $fk_mailaccount = $TSunic->Input->param('$$$formSmtp__fk_mailaccount');
+    $email = $TSunic->Input->param('$$$formSmtp__email');
+    $password = $TSunic->Input->paramRaw('$$$formSmtp__password');
+    $emailname = $TSunic->Input->param('$$$formSmtp__emailname');
+    $description = $TSunic->Input->param('$$$formSmtp__description');
+    $host = $TSunic->Input->param('$$$formSmtp__host');
+    $port = $TSunic->Input->param('$$$formSmtp__port');
+    $auth = $TSunic->Input->param('$$$formSmtp__auth');
+    $connsecurity = $TSunic->Input->param('$$$formSmtp__connsecurity');
+    $user = $TSunic->Input->param('$$$formSmtp__user');
 
-    // get smtp-object
+    // get new Smtp object
     $Smtp = $TSunic->get('$$$Smtp');
 
     // validate input

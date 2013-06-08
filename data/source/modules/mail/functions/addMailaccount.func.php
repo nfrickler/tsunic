@@ -10,16 +10,16 @@ function $$$addMailaccount () {
     }
 
     // get input
-    $email = $TSunic->Temp->getPost('$$$formMailaccount__email');
-    $password = $TSunic->Temp->getPost('$$$formMailaccount__password');
-    $name = $TSunic->Temp->getPost('$$$formMailaccount__name');
-    $description = $TSunic->Temp->getPost('$$$formMailaccount__description');
-    $host = $TSunic->Temp->getPost('$$$formMailaccount__host');
-    $port = $TSunic->Temp->getPost('$$$formMailaccount__port');
-    $user = $TSunic->Temp->getPost('$$$formMailaccount__user');
-    $protocol = $TSunic->Temp->getPost('$$$formMailaccount__protocol');
-    $auth = $TSunic->Temp->getPost('$$$formMailaccount__auth');
-    $connsecurity = $TSunic->Temp->getPost('$$$formMailaccount__connsecurity');
+    $email = $TSunic->Input->post('$$$formMailaccount__email');
+    $password = $TSunic->Input->postRaw('$$$formMailaccount__password');
+    $name = $TSunic->Input->post('$$$formMailaccount__name');
+    $description = $TSunic->Input->post('$$$formMailaccount__description');
+    $host = $TSunic->Input->post('$$$formMailaccount__host');
+    $port = $TSunic->Input->post('$$$formMailaccount__port');
+    $user = $TSunic->Input->post('$$$formMailaccount__user');
+    $protocol = $TSunic->Input->post('$$$formMailaccount__protocol');
+    $auth = $TSunic->Input->post('$$$formMailaccount__auth');
+    $connsecurity = $TSunic->Input->post('$$$formMailaccount__connsecurity');
 
     // get new mailaccount object
     $Mailaccount = $TSunic->get('$$$Mailaccount');

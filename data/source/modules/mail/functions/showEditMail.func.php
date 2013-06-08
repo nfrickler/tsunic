@@ -12,7 +12,7 @@ function $$$showEditMail () {
     }
 
     // get Mail object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mail = $TSunic->get('$$$Mail', $id);
     if (!$Mail->isValid()) {
 	$TSunic->Log->alert('error', '{SHOWEDITMAIL__NOTEXISTING}');

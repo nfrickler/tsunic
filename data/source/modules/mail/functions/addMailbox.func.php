@@ -1,11 +1,11 @@
-<!-- | function to add new mailbox -->
+<!-- | FUNCTION add new mailbox -->
 <?php
 function $$$addMailbox () {
     global $TSunic;
 
     // get input
-    $name = $TSunic->Temp->getParameter('$$$formMailbox__name');
-    $description = $TSunic->Temp->getParameter('$$$formMailbox__description');
+    $name = $TSunic->Input->post('$$$formMailbox__name');
+    $description = $TSunic->Input->post('$$$formMailbox__description');
 
     // get Mailbox object
     $Mailbox = $TSunic->get('$$$Mailbox');

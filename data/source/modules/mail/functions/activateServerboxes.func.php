@@ -10,10 +10,11 @@ function $$$activateServerboxes () {
     }
 
     // get input
-    $activated_serverboxes = $TSunic->Temp->getByPreffix('$$$showMailaccount__serverboxes_');
+    $activated_serverboxes =
+	$TSunic->Input->postByPrefix('$$$showMailaccount__serverboxes_');
 
     // get Mailaccount object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->getParam('$$$id');
     $Mailaccount = $TSunic->get('$$$Mailaccount', $id);
 
     // get all serverboxes

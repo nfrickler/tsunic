@@ -4,7 +4,7 @@ function $$$deleteMail () {
     global $TSunic;
 
     // get Mail object and fk_mailbox
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mail = $TSunic->get('$$$Mail', $id);
     $fk_mailbox = $Mail->getInfo('fk_mailbox');
 

@@ -10,7 +10,7 @@ function $$$refreshServerboxes () {
     }
 
     // get id
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
 
     if (!empty($id) AND is_numeric($id)) {
 

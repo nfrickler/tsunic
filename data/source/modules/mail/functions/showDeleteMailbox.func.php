@@ -1,10 +1,10 @@
-<!-- | function to ask, if mailbox shall be deleted -->
+<!-- | FUNCTION delete mailbox? -->
 <?php
 function $$$showDeleteMailbox () {
     global $TSunic;
 
     // get Mailbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mailbox = $TSunic->get('$$$Mailbox', $id);
 
     // activate template

@@ -1,10 +1,10 @@
-<!-- | function to show content of mail -->
+<!-- | FUNCTION show content of mail -->
 <?php
 function $$$showMailContent () {
     global $TSunic;
 
     // get mail object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mail = $TSunic->get('$$$Mail', $id);
 
     // activate template

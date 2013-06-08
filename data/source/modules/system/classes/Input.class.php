@@ -78,7 +78,7 @@ class $$$Input {
 		$new_history[$index] = array('get' => $gets);
 	    }
 
-	    $coutner++;
+	    $counter++;
 	}
 
 	// update $this->history
@@ -104,6 +104,9 @@ class $$$Input {
 	    'cookie'=> $_COOKIE,
 	    'files' => $_FILES
 	);
+
+	// update session
+	$_SESSION[$this->session_key] = $this->history;
     }
 
     /** Get safe value of $_GET
@@ -129,7 +132,7 @@ class $$$Input {
     public function getRaw ($name, $hid = 0) {
 	$hid = $this->getHid($hid);
 	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['get']
+	    !isset($this->history[$hid]['get'])
 	) return NULL;
 	return ($name === true)
 	    ? $this->history[$hid]['get']
@@ -159,7 +162,7 @@ class $$$Input {
     public function postRaw ($name, $hid = 0) {
 	$hid = $this->getHid($hid);
 	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['post']
+	    !isset($this->history[$hid]['post'])
 	) return NULL;
 	return ($name === true)
 	    ? $this->history[$hid]['post']
@@ -189,7 +192,7 @@ class $$$Input {
     public function cookieRaw ($name, $hid = 0) {
 	$hid = $this->getHid($hid);
 	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['cookie']
+	    !isset($this->history[$hid]['cookie'])
 	) return NULL;
 	return ($name === true)
 	    ? $this->history[$hid]['cookie']
@@ -219,7 +222,7 @@ class $$$Input {
     public function filesRaw ($name, $hid = 0) {
 	$hid = $this->getHid($hid);
 	if (!isset($this->history[$hid]) or
-	    !isset($this->history[$hid]['files']
+	    !isset($this->history[$hid]['files'])
 	) return NULL;
 	return ($name === true)
 	    ? $this->history[$hid]['files']
@@ -239,7 +242,7 @@ class $$$Input {
 	    }
 	    return $input;
 	}
-	return preg_replace('#[!a-zA-Z0-9_-+?äöüÄÖÜ?\.!\?]#g', '_', $input);
+	return preg_replace('#[^-a-zA-Z0-9_+?äöüÄÖÜ?\.,:!\?]@#', '_', $input);
     }
 
     /** Get safe parameter from get or post
@@ -267,6 +270,19 @@ class $$$Input {
 	return ($get === NULL) ? $this->postRaw($name, $hid) : $get;
     }
 
+    /** Get safe unsigned int parameter from get or post
+     * @param string $name
+     *	Name of get parameter to return
+     * @param int $hid
+     *	History id of data to return
+     *
+     * @return mix
+     */
+    public function uint ($name, $hid = 0) {
+	$int = intval($this->param($name, $hid));
+	return ($int > 0) ? $int : 0;
+    }
+
     /** Get raw (=insecure!) post parameters with a certain prefix
      * @param string $prefix
      *	Prefix of post-name
@@ -292,7 +308,6 @@ class $$$Input {
 	return $output;
     }
 
-     *	Offset to be substracted from current hid
     /** Get history id
      * @param int $offset
      *	Positive offsets will return the offset itself, 0 will return the 

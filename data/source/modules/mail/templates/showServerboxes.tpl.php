@@ -1,4 +1,4 @@
-<!-- | Template: show all serverboxes -->
+<!-- | TEMPLATE show all serverboxes -->
 <?php
 $Imap = $this->getVar('Imap');
 $serverboxes = $this->getVar('serverboxes');

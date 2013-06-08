@@ -10,7 +10,7 @@ function $$$showEditSmtp () {
     }
 
     // get Smtp object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Smtp = $TSunic->get('$$$Smtp', $id);
 
     // get SuperMail-object

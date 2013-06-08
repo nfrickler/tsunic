@@ -4,10 +4,10 @@ function $$$updateMailbox () {
     global $TSunic;
 
     // get parameters
-    $force = ($TSunic->Temp->getParameter('force')) ? true : false;
+    $force = ($TSunic->Input->param('force')) ? true : false;
 
     // get Mailbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Mailbox = (empty($id))
 	? $TSunic->get('$$$Inbox')
 	: $TSunic->get('$$$Mailbox', $id);

@@ -10,7 +10,7 @@ function $$$showDeleteServerbox () {
     }
 
     // get Serverbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Serverbox = $TSunic->get('$$$Serverbox', $id);
 
     // serverbox exists?

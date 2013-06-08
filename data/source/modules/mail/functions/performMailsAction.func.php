@@ -4,8 +4,9 @@ function $$$performMailsAction () {
     global $TSunic;
 
     // get input
-    $selectedMails = $TSunic->Temp->getParameter('$$$showMailbox__selectedMails');
-    $fk_mailbox = $TSunic->Temp->getPost('$$$showMailbox__moveto');
+    $selectedMails =
+	$TSunic->Input->param('$$$showMailbox__selectedMails');
+    $fk_mailbox = $TSunic->Input->uint('$$$showMailbox__moveto');
 
     // is any mail selected?
     if (empty($selectedMails)) {
@@ -14,7 +15,7 @@ function $$$performMailsAction () {
     }
 
     // choose action
-    if ($TSunic->Temp->getPost('$$$showMailbox__submit_delete')) {
+    if ($TSunic->Input->post('$$$showMailbox__submit_delete')) {
 	// delete mails
 
 	// get mail-objects and delete mails
@@ -23,13 +24,13 @@ function $$$performMailsAction () {
 	    $Mail->delete();
 	}
 
-    } elseif ($TSunic->Temp->getPost('$$$showMailbox__submit_spam')) {
+    } elseif ($TSunic->Input->post('$$$showMailbox__submit_spam')) {
 	// set as spam
 
 	// TODO
 
-    } elseif ($TSunic->Temp->getPost('$$$showMailbox__submit_move')
-		or $TSunic->Temp->getPost('$$$showMailbox__submittype')) {
+    } elseif ($TSunic->Input->post('$$$showMailbox__submit_move')
+		or $TSunic->Input->post('$$$showMailbox__submittype')) {
 	// move mails
 
 	// get mail-objects and move mails

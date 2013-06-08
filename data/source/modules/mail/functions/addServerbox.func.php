@@ -10,10 +10,10 @@ function $$$addServerbox () {
     }
 
     // get input
-    $fk_mailaccount = $TSunic->Temp->getPost('$$$formServerbox__fk_mailaccount');
-    $name = $TSunic->Temp->getPost('$$$formServerbox__name');
-    $fk_mailbox = $TSunic->Temp->getPost('$$$formServerbox__fk_mailbox');
-    $newMailbox = $TSunic->Temp->getPost('$$$formServerbox__newMailbox');
+    $fk_mailaccount = $TSunic->Input->post('$$$formServerbox__fk_mailaccount');
+    $name = $TSunic->Input->post('$$$formServerbox__name');
+    $fk_mailbox = $TSunic->Input->post('$$$formServerbox__fk_mailbox');
+    $newMailbox = $TSunic->Input->post('$$$formServerbox__newMailbox');
 
     // get mailbox-object
     if (empty($fk_mailbox)) {

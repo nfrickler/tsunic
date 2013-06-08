@@ -10,7 +10,7 @@ function $$$showEditServerbox () {
     }
 
     // get Serverbox object
-    $id = $TSunic->Temp->getParameter('$$$id');
+    $id = $TSunic->Input->uint('$$$id');
     $Serverbox = $TSunic->get('$$$Serverbox', $id);
 
     // create SuperMail-object

@@ -21,6 +21,11 @@ class TSunic {
      */
     public $Tmpl = NULL;
 
+    /** Reference of Input object
+     * @var Input $Input
+     */
+    public $Input;
+
     /** Reference of Temp object
      * @var Temp $Temp
      */
@@ -80,6 +85,9 @@ class TSunic {
 
 	// create Temp object
 	$this->Temp = $this->get('$$$Temp');
+
+	// create Input object
+	$this->Input = $this->get('$$$Input');
 
 	// create Log object
 	$this->Log = $this->get('$$$Log', $this->Config->get('loglevel'));

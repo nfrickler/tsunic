@@ -10,7 +10,7 @@ function $$$showAddSmtp () {
     }
 
     // get input
-    $fk_mailaccount = $TSunic->Temp->getParameter('fk_mailaccount');
+    $fk_mailaccount = $TSunic->Input->uint('fk_mailaccount');
 
     // get empty Smtp object
     $Smtp = $TSunic->get('$$$Smtp');
