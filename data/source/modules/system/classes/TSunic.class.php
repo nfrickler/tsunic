@@ -462,7 +462,7 @@ class TSunic {
 	    $url_gets = '';
 	    $to_skip = array('loop', '$$$hid', 'back');
 	    foreach ($gets as $index => $value) {
-		if (in_array($to_skip, $index)) continue;
+		if (in_array($index, $to_skip)) continue;
 		$url_gets.= '&'.$index.'='.$value;
 	    }
 

@@ -11,6 +11,11 @@ class $$$User extends $system$Object {
      */
     protected $table = "#__$usersystem$accounts";
 
+    /** Login object
+     * @var Login $Login
+     */
+    protected $Login;
+
     /** Access object
      * @var Access $Access
      */
@@ -37,6 +42,8 @@ class $$$User extends $system$Object {
     protected $id_guest = 2;
 
     /** Constructor
+     * If id is empty, this object represents the current user.
+     *
      * @param int|string $id
      *	Account ID (or "guest", "root")
      */
@@ -45,34 +52,43 @@ class $$$User extends $system$Object {
 	$emptyid = (empty($id)) ? true : false;
 	if ($id == 'root') $id = $this->id_root;
 	if ($id == 'guest') $id = $this->id_guest;
-	if (empty($id) and isset($_SESSION['$$$id__account']))
-	    $id = $_SESSION['$$$id__account'];
 
-	// use guest as default
-	if (empty($id) or !$this->_validate($id, 'int'))
-	    $id = $this->id_guest;
+	// check login
+	if ($emptyid) {
+
+	    // get Login object
+	    $this->Login = $TSunic->get('$$$Login');
+
+	    // get id of user
+	    if ($this->Login->isValid())
+		$id = $this->Login->getInfo('fk_user');
+	    else
+		$id = $this->id_guest;
+	}
 
 	// run object constructor
 	parent::__construct($id);
 
-	// load Encryption
-	$this->Encryption = $TSunic->get('$$$Encryption', $this->id, true);
-	if ($emptyid and isset($_SESSION['$$$passphrase'])) {
-	    $this->Encryption->setPassphrase($_SESSION['$$$passphrase']);
+	// get Encryption object
+	$this->Encryption = $TSunic->get('$$$Encryption', NULL, true);
+
+	// init Encryption
+	if ($this->Login) {
+	    $this->Login->authorizeEncryption($this->Encryption);
 	    $this->Encryption->setKeys(
 		$this->getInfo('symkey'),
 		$this->getInfo('privkey'),
 		$this->getInfo('pubkey')
 	    );
 	} else {
+	    $this->Encryption =
+		$TSunic->get('$$$Encryption', NULL, true);
 	    $this->Encryption->setKeys(
 		false,
 		false,
 		$this->getInfo('pubkey')
 	    );
 	}
-
-	return;
     }
 
     /** Get username of this user
@@ -104,16 +120,21 @@ class $$$User extends $system$Object {
 	    return false;
 	}
 
-	// is root password set?
+	// For security reasons the root account has to be protected
+	// with a password before any other user can register
 	if (!$this->getConfig()->getDefault('$$$isRootPassword')) {
 	    global $TSunic;
 	    $TSunic->Log->alert('error', '{ISROOTPASSWORD__FAILED}');
 	    return false;
 	}
 
+	// create Login
+	$this->Login = $TSunic->get('$$$Login');
+
 	// set passphrase
-	$passphrase = $this->_getPassphrase($password, $email);
-	$this->Encryption->setPassphrase($passphrase);
+	$salt = $this->Encryption->getRandom(50);
+	$enckey = $this->plaintext2enc($password, $salt);
+	$this->Encryption->setPassphrase($enckey);
 
 	// generate new keys
 	$newkeys = $this->Encryption->gen_keys();
@@ -126,7 +147,8 @@ class $$$User extends $system$Object {
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
-	    "password" => $this->_password2hash($password, $email),
+	    "salt" => $salt,
+	    "password" => $this->plaintext2login($password, $salt),
 	    "dateOfRegistration" => "NOW()",
 	    "symkey" => $newkeys['symkey'],
 	    "privkey" => $newkeys['privkey'],
@@ -168,8 +190,9 @@ class $$$User extends $system$Object {
 	}
 
 	// update encryption keys
-	$passphrase = $this->_getPassphrase($password, $email);
-	$this->Encryption->setPassphrase($passphrase);
+	$salt = $this->Encryption->getRandom(50);
+	$enckey = $this->plaintext2enc($password, $salt);
+	$this->Encryption->setPassphrase($enckey);
 	$newkeys = $this->Encryption->getKeys();
 
 	// generate new keys, if not generated yet (for root)
@@ -181,24 +204,25 @@ class $$$User extends $system$Object {
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
-	    "password" => $this->_password2hash($password, $email),
+	    "salt" => $salt,
+	    "password" => $this->plaintext2login($password, $salt),
 	    "symkey" => $newkeys['symkey'],
 	    "privkey" => $newkeys['privkey'],
 	    "pubkey" => $newkeys['pubkey'],
 	);
+	if (!$this->_edit($data)) return false;
 
-	// Update session
-	session_regenerate_id();
-	$_SESSION['$$$passphrase'] = $passphrase;
+	// Renew login
+	$this->Login->logout();
+	$this->Login = $TSunic->get('$$$Login');
+	if (!$this->Login->login($email, $password)) return false;
 
 	# if root password is set, note in config
 	if ($this->isRoot()) {
 	    $this->getConfig()->setDefault('$$$isRootPassword', 1);
 	}
 
-	$return = $this->_edit($data);
-
-	return $return;
+	return true;
     }
 
     /** Delete account
@@ -220,27 +244,6 @@ class $$$User extends $system$Object {
 	return $this->_delete();
     }
 
-    /** Get e-mail to name
-     * @param string $name
-     *	Name
-     *
-     * @return string
-     */
-    public function name2email ($name) {
-	global $TSunic;
-	if ($this->_validate($name, 'email')) return $name;
-	if (!$this->_validate($name, 'string')) return false;
-
-	// ask database
-	$sql = "SELECT email as email
-	    FROM #__$usersystem$accounts
-	    WHERE name = '$name';";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return false;
-
-	return $result[0]['email'];
-    }
-
     /** Log user in
      * @param string $email
      *	Name or email of user
@@ -249,49 +252,50 @@ class $$$User extends $system$Object {
      *
      * @return bool
      */
-    public function login ($email, $password) {
+    public function login ($emailname, $password) {
 	global $TSunic;
 
-	// try to get user with matching identity
-	$email = $this->name2email($email);
-	$sql = "SELECT id as id
-	    FROM #__$usersystem$accounts
-	    WHERE email = '$email'
-		AND password = '".$this->_password2hash($password, $email)."'
-	;";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return false;
+	// deny, if not current user
+	if (!$this->Login) return false;
 
-	// save id
-	$this->id = $result[0]['id'];
+	// try to login
+	$id = $this->Login->login($emailname, $password);
+	if (empty($id)) return false;
 
-	// deny login for guest account!
-	if ($this->id == 2) return false;
-
-	// update database
-	$data = array(
-	    'dateOfLastLogin' => 'NOW()',
-	    'dateOfLastLastLogin' => $this->getInfo('dateOfLastLogin'),
-	);
-	if (!$this->setMulti($data, true)) {
-	    $TSunic->Log->log(1,
-		'User::login: Login information could not be updated!'
-	    );
-	}
-
-	// load encryption
-	$passphrase = $this->_getPassphrase($password, $email);
-	$this->Encryption = $TSunic->get('$$$Encryption', array($this->id, $passphrase));
-
-	// Update session
-	session_regenerate_id();
-	$_SESSION['$$$id__account'] = $this->id;
-	$_SESSION['$$$passphrase'] = $passphrase;
-
-	// update account data
+	// update user data
+	$this->id = $id;
 	$this->getInfo(true, true);
 
+	// load encryption
+	$this->Login->authorizeEncryption($this->Encryption);
+
 	return true;
+    }
+
+    /** Convert plaintext password to login hash
+     * @param string $password
+     *  Plaintext password
+     * @param string $salt
+     *	Add optional salt (otherwise the salt of this User is used)
+     *
+     * @return string
+     */
+    public function plaintext2login ($plaintext, $salt = false) {
+	if (!$salt) $salt = $this->getInfo('salt');
+	return $this->Encryption->hash($plaintext.$salt);
+    }
+
+    /** Convert plaintext password to encryption hash
+     * @param string $password
+     *  Plaintext password
+     * @param string $salt
+     *	Add optional salt (otherwise the salt of this User is used)
+     *
+     * @return string
+     */
+    public function plaintext2enc ($plaintext, $salt = false) {
+	if (!$salt) $salt = $this->getInfo('salt');
+	return $this->Encryption->hash($salt.$plaintext);
     }
 
     /** Is correct password?
@@ -299,57 +303,25 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function isCorrectPassword ($password) {
-	global $TSunic;
-
-	// try to get user with matching identity
-	$sql = "SELECT id as id
-	    FROM #__$usersystem$accounts
-	    WHERE id = '$this->id'
-		AND password = '".$this->_password2hash($password)."'
-	;";
-	$result = $TSunic->Db->doSelect($sql);
-	if (!$result) return false;
-
-	return ($result[0]['id'] == $this->id) ? true : false;
+	return ($this->Login and $this->Login->validate(
+	    $this->getInfo('email'), $password
+	)) ? true : false;
     }
 
-    /** Log user out
+    /** Log out user
      *
      * @return bool
      */
     public function logout () {
-	session_regenerate_id();
-	$_SESSION['$$$id__account'] = 0;
-	$_SESSION['$$$passphrase'] = 0;
+
+	// deny, if not current user
+	if (!$this->Login) return true;
+
+	// logout
+	if (!$this->Login->logout()) return false;
 	$this->Encryption = NULL;
+
 	return true;
-    }
-
-    /** Convert password to hash
-     * @param string $password
-     *	Password of user
-     * @param string $email
-     *	E-mail of user
-     *
-     * @return bool
-     */
-    protected function _password2hash ($password, $email = false) {
-	if (empty($password)) return "";
-	if (!$email) $email = $this->getInfo('email');
-	return sha1(sha1(trim($email).trim($password)));
-    }
-
-    /** Get passphrase of user
-     * @param string $password
-     *	Password of user
-     * @param string $email
-     *	E-mail of user
-     *
-     * @return string
-     */
-    protected function _getPassphrase ($password, $email = false) {
-	if (!$email) $email = $this->getInfo('email');
-	return sha1($email.$password);
     }
 
     /** Is user logged in?
@@ -357,10 +329,7 @@ class $$$User extends $system$Object {
      * @return bool
      */
     public function isLoggedIn () {
-	return (
-	    isset($_SESSION['$$$passphrase']) and
-	    !empty($_SESSION['$$$passphrase'])
-	) ? true : false;
+	return ($this->Login and $this->Login->isValid()) ? true : false;
     }
 
     /** Is registered user?
@@ -370,8 +339,8 @@ class $$$User extends $system$Object {
     public function isRegistered () {
 	return (!$this->isRoot() and
 	    !$this->isDefault() and
-	    !$this->isGuest())
-	    ? true : false;
+	    !$this->isGuest()
+	) ? true : false;
     }
 
     /** Is user root?
@@ -458,6 +427,14 @@ class $$$User extends $system$Object {
      * @return string
      */
     public function encrypt ($input, $key = false, $asym = false) {
+	global $TSunic;
+
+	// do not encrypt for guest
+	if ($this->isGuest()) return $input;
+
+	// if not current user, use asym only!
+	if ($TSunic->Usr->getInfo('id') != $this->id) $asym = true;
+
 	return $this->Encryption->encrypt($input, $key, $asym);
     }
 

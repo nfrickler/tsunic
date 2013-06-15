@@ -2,19 +2,10 @@
 <?php
 /** Handle encryption
  *
- * This class handles the encryption of all data of a user.
+ * This class handles the encryption of all data of a user and is based on
+ * openssl
  */
 class $$$Encryption {
-
-    /** EncryptionClass object
-     * @var object $MyEnc
-     */
-    private $MyEnc;
-
-    /** Fk_account
-     * @var int $fk_account
-     */
-    private $fk_account;
 
     /** Passphrase the keys are encrypted with
      * @var string $passphrase
@@ -56,33 +47,25 @@ class $$$Encryption {
      */
     private $ready = false;
 
+    /** Symmetric encryption algorithm
+     * @var string $symmethod
+     */
+    private $symmethod = 'aes-256-cbc';
+
+    /** Hashing algorithm
+     * @var string $hashmethod
+     */
+    private $hashmethod = 'sha512';
+
     /** Constructor
-     * @param int $fk_account
-     *	fk_account
      * @param string $passphrase
      *	Passphrase the keys are encrypted with symmetrically
      */
-    public function __construct ($fk_account, $passphrase = false) {
+    public function __construct ($passphrase = false) {
 	global $TSunic;
 
 	// save
 	$this->passphrase = $passphrase;
-	$this->fk_account = $fk_account;
-
-	// try to load encryption object of chosen encryption
-	$this->MyEnc = $TSunic->get(
-	   '$$$Encryption_'.$TSunic->Config->get('encryption_class'),
-	    array(
-		$TSunic->Config->get('encryption_algorithm'),
-		$TSunic->Config->get('encryption_mode')
-	    )
-	);
-	if (!$this->MyEnc) {
-	    // object could not be created
-	    $TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
-	}
-
-	return;
     }
 
     /** Set passphrase
@@ -121,11 +104,7 @@ class $$$Encryption {
 	$this->pubkey = $details['key'];
 
 	// generate symmetric key
-	$this->symkey = '';
-	$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-	for ($i = 0; $i < 50; $i++) {
-	    $this->symkey.= $characters[mt_rand(0, (strlen($characters)-1))];
-	}
+	$this->symkey = $this->getRandom(50);
 
 	// ready
 	$this->ready = true;
@@ -176,11 +155,6 @@ class $$$Encryption {
     public function encrypt ($text, $key = false, $asym = false) {
 	global $TSunic;
 
-	// do not encrypt for guest user
-	if ($this->fk_account == $TSunic->Usr->getIdGuest()) {
-	    return $text;
-	}
-
 	// is ready for encryption?
 	if (!$key and !$this->ready) $this->throwEncError();
 
@@ -195,18 +169,21 @@ class $$$Encryption {
 	// start timer
 	$TSunic->Stats->startTimer('encryption');
 
-	// encrypt for other user?
-	if (($key and !$asym) or $TSunic->Usr->getInfo('id') == $this->fk_account) {
+	// encrypt
+	if (!$asym) {
 	    // encrypt symmetric
 
 	    // get key
 	    if (empty($key)) $key = $this->symkey;
 
+	    // get initialization vector
+	    $iv = openssl_random_pseudo_bytes(16);
+
 	    // encrypt
-	    $text = base64_encode($this->MyEnc->encrypt($text, $key));
+	    $text = openssl_encrypt($text, $this->symmethod, $key, 0, $iv);
 
 	    // add prefix
-	    $text = $this->prefix_sym.$text;
+	    $text = $this->prefix_sym.base64_encode($iv).'__'.$text;
 
 	} else {
 	    // encrypt asymmetric
@@ -256,13 +233,20 @@ class $$$Encryption {
 	    // start timer
 	    $TSunic->Stats->startTimer('encryption');
 
+	    // get initialization vector
+	    $iv = strtok($text, '__');
+	    $text = substr($text, strlen($iv)+2);
+	    $iv = base64_decode($iv);
+
 	    // decrypt symmetric
-	    $text = $this->MyEnc->decrypt(base64_decode($text), $key);
+	    $text = openssl_decrypt($text, $this->symmethod, $key, 0, $iv);
 
 	    // stop timer
 	    $TSunic->Stats->stopTimer('encryption');
 
-	} elseif (substr($text, 0, strlen($this->prefix_asym)) == $this->prefix_asym) {
+	} elseif (
+	    substr($text, 0, strlen($this->prefix_asym)) == $this->prefix_asym
+	) {
 
 	    // get key
 	    if (empty($key)) $key = $this->privkey;
@@ -302,6 +286,28 @@ class $$$Encryption {
     protected function throwEncError () {
 	$TSunic->Log->log(1, 'usersystem:Encryption: Encryption called, but not ready yet!');
 	$TSunic->throwError('{ERROR_NO_ENCRYPTION_FOUND}');
+    }
+
+    /** Get random string (cryptographically)
+     * @param int $length
+     *	Length of random string
+     *
+     * @return string
+     */
+    public function getRandom ($length) {
+	return substr(base64_encode(
+	    openssl_random_pseudo_bytes($length)
+	), 0, $length);
+    }
+
+    /** Get hash (don't forget to salt it first!)
+     * @param string $input
+     *  Salted input to be hashed
+     *
+     * @return string
+     */
+    public function hash ($input) {
+	return openssl_digest($input, $this->hashmethod);
     }
 }
 ?>

@@ -12,6 +12,11 @@ class $$$Object {
      */
     protected $table;
 
+    /** Encrypt values in database?
+     * @var bool $enableEncryption
+     */
+    protected $enableEncryption = true;
+
     /** object ID
      * @var int $id
      */
@@ -118,7 +123,10 @@ class $$$Object {
 	foreach ($result[0] as $index => $value) {
 
 	    // encrypted
-	    if (substr($index,0,1) == "_" and substr($index,-1) == "_") {
+	    if ($this->enableEncryption and
+		substr($index,0,1) == "_" and
+		substr($index,-1) == "_"
+	    ) {
 		$index = substr($index,1);
 		$index = substr($index,0,(strlen($index)-1));
 		$this->keytypes[$index] = 1;
@@ -175,7 +183,7 @@ class $$$Object {
 	    }
 
 	    // encrypt?
-	    if ($this->keytypes[$index]) {
+	    if ($this->enableEncryption and $this->keytypes[$index]) {
 		unset($data[$index]);
 		$data["_".$index."_"] = $this->_getKey(
 		    $TSunic->Usr->getInfo('id'))->encrypt($value);
@@ -519,6 +527,7 @@ class $$$Object {
      * @return array
      */
     public function getKeys () {
+	if (!$this->enableEncryption) return array();
 	if ($this->_keys) return $this->_keys;
 	if (!$this->id) return array();
 	global $TSunic;
@@ -698,6 +707,9 @@ class $$$Object {
 	    }
 	}
 
+	// no encryption = no keys to update
+	if (!$this->enableEncryption) return true;
+
 	// add new keys and set writable
 	foreach ($access as $index => $value) {
 
@@ -740,7 +752,9 @@ class $$$Object {
 	$this->set('fk_account', $User->getInfo('id'), true);
 
 	// delete my own key (if not pushing to myself)
-	if ($TSunic->Usr->getInfo('id') != $fk_account) $this->_deleteKey();
+	if ($this->enableEncryption and
+	    $TSunic->Usr->getInfo('id') != $fk_account
+	) $this->_deleteKey();
 
 	return true;
     }
@@ -768,7 +782,8 @@ class $$$Object {
      * @return object
      */
     public function editable () {
-	return (!$this->_getKey()->isValid() or
+	if (!$this->enableEncryption) return true;
+	return ($this->_getKey()->isValid() and
 	    $this->_getKey()->getInfo('can_write')
 	) ? true : false;
     }
