@@ -3,11 +3,6 @@
 /** Login management
  *
  * This class handles the login of users.
- * There are several states of the password:
- *  1. plaintext
- *  4. hash in user-table (= hash(plaintext+salt)) )
- *  2. passphrase for encryption (= hash(salt+plaintext) )
- *  3. tmpphrase (= encrypt_with_tmpkey(passphrase) )
  */
 class $$$Login extends $system$Object {
 
@@ -37,11 +32,9 @@ class $$$Login extends $system$Object {
 	if ($id === false) {
 
 	    // get login data from session
-	    if (isset(
-		$_SESSION['$$$login__id'], $_SESSION['$$$login__enchash']
-	    )) {
+	    if (isset($_SESSION['$$$login__id'])) {
 		$id = $_SESSION['$$$login__id'];
-		$this->enchash = $_SESSION['$$$login__enchash'];
+		$this->enchash = $TSunic->Input->cookie('tsunic_enchash');
 	    }
 	}
 
@@ -119,16 +112,16 @@ class $$$Login extends $system$Object {
 	    // get salt of current user (we cannot use $TSunic->Usr as
 	    // this object is still guest!)
 	    $User = $TSunic->get('$$$User', $id);
-	    $salt = $User->getInfo('salt');
+	    $salt = $User->getInfo('salt_enc');
 
 	    // update session
 	    $enchash = $Encryption->encrypt(
-		$TSunic->Usr->plaintext2enc($password, $salt),
+		$Encryption->hash($password, $salt),
 		$tmpkey
 	    );
 	    session_regenerate_id();
 	    $_SESSION['$$$login__id'] = $this->id;
-	    $_SESSION['$$$login__enchash'] = $enchash;
+	    setcookie('tsunic_enchash', $enchash);
 	}
 
 	return $id;
@@ -146,33 +139,33 @@ class $$$Login extends $system$Object {
      */
     public function validate ($emailname, $password) {
 	global $TSunic;
-	$id = 0;
 
 	// try to get salt of user
-	$sql = "SELECT salt
+	$sql = "SELECT id, password
 	    FROM #__$usersystem$accounts
 	    WHERE email = '$emailname' OR name = '$emailname'
 	;";
 	$result = $TSunic->Db->doSelect($sql);
 	if (!$result or count($result) != 1) return 0;
-	$salt = $result[0]['salt'];
 
-	$loginhash = (empty($password))
-	    ? '' : $TSunic->Usr->plaintext2login($password, $salt);
-	$sql = "SELECT id as id
-	    FROM #__$usersystem$accounts
-	    WHERE (email = '$emailname' OR name = '$emailname')
-		AND password = '$loginhash'
-	;";
-	$result = $TSunic->Db->doSelect($sql);
+	// deny login for user guest
+	if ($result[0]['id'] == $TSunic->Usr->getIdGuest())
+	    return 0;
 
-	// get id
-	if ($result and count($result)) $id = $result[0]['id'];
+	// allow login for user root at installation
+	if ($result[0]['id'] == 1 and
+	    $result[0]['password'] == '' and
+	    $password == ''
+	) {
+	    return 1;
+	}
 
-	// deny login for guest
-	if ($id == 2) $id = 0;
+	// verify password
+	$Encryption = $TSunic->get('$$$Encryption');
+	if (!$Encryption->verifyHash($password, $result[0]['password']))
+	    return 0;
 
-	return $id;
+	return $result[0]['id'];
     }
 
     /** Logout user and end this session

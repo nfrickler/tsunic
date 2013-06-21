@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `#__$usersystem$accounts` (
   `email` varchar(300) NOT NULL,
   `name` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `salt` varchar(50) NOT NULL,
+  `salt_enc` varchar(200) NOT NULL,
   `privkey` TEXT NOT NULL,
   `pubkey` TEXT NOT NULL,
   `symkey` TEXT NOT NULL,

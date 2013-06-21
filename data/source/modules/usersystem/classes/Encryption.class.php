@@ -300,14 +300,69 @@ class $$$Encryption {
 	), 0, $length);
     }
 
-    /** Get hash (don't forget to salt it first!)
-     * @param string $input
-     *  Salted input to be hashed
+    /** Get hashed password (bcrypt)
+     * @param string $password
+     *	Password to be hashed
+     * @param string $salt
+     *	Salt to use for hashing. An empty salt will use a newly created
+     *	random one
+     * @param int $iterations
+     *  Number of iterations used by bcrypt
      *
      * @return string
      */
-    public function hash ($input) {
-	return openssl_digest($input, $this->hashmethod);
+    public function hash ($password, $salt = '', $iterations = 8) {
+
+	// pad iterations
+	if ($iterations < 10) $iterations = '0'.$iterations;
+
+	// create new salt
+	if (empty($salt)) $salt = $this->newSalt();
+
+	// hash it with bcrypt
+	return crypt($password, '$2a$'.$iterations.'$'.$salt);
+    }
+
+    /** Verify hashed password (bcrypt)
+     * @param string $password
+     *	Password to be hashed
+     * @param string $hash
+     *	Hash to compare against
+     *
+     * @return bool
+     */
+    public function verifyHash ($password, $hash) {
+
+	// compute hash of password using same salt as in $hash
+	$pwhash = $this->hash($password, $this->extractSalt($hash));
+
+	// compare pwhash with actual hash
+	// TODO: Prevent timing attack!
+	return ($pwhash == $hash) ? true : false;
+    }
+
+    /** Extract salt from bcrypt hash
+     * @param string $hash
+     *	Bcrypt hash
+     *
+     * @return string
+     */
+    public function extractSalt ($hash) {
+	return substr($hash, 7, 22);
+    }
+
+    /** Create a new random salt for bcrypt
+     * @param array $nogos
+     *	List of salts that are not accepted as result (e.g. to prevent doubles)
+     *
+     * @return string
+     */
+    public function newSalt ($nogos = array()) {
+	if (!is_array($nogos)) $nogos = array();
+	$salt = substr(str_replace('+', '.', base64_encode(
+	    openssl_random_pseudo_bytes(16)
+	)), 0, 22);
+	return (in_array($salt, $nogos)) ? $this->newSalt($nogos) : $salt;
     }
 }
 ?>

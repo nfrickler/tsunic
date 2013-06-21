@@ -132,8 +132,11 @@ class $$$User extends $system$Object {
 	$this->Login = $TSunic->get('$$$Login');
 
 	// set passphrase
-	$salt = $this->Encryption->getRandom(50);
-	$enckey = $this->plaintext2enc($password, $salt);
+	$loginhash = $this->Encryption->hash($password);
+	$salt_enc = $this->Encryption->newSalt(array(
+	    $this->Encryption->extractSalt($loginhash)
+	));
+	$enckey = $this->Encryption->hash($password, $salt_enc);
 	$this->Encryption->setPassphrase($enckey);
 
 	// generate new keys
@@ -147,8 +150,8 @@ class $$$User extends $system$Object {
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
-	    "salt" => $salt,
-	    "password" => $this->plaintext2login($password, $salt),
+	    "salt_enc" => $salt_enc,
+	    "password" => $loginhash,
 	    "dateOfRegistration" => "NOW()",
 	    "symkey" => $newkeys['symkey'],
 	    "privkey" => $newkeys['privkey'],
@@ -190,8 +193,11 @@ class $$$User extends $system$Object {
 	}
 
 	// update encryption keys
-	$salt = $this->Encryption->getRandom(50);
-	$enckey = $this->plaintext2enc($password, $salt);
+	$loginhash = $this->Encryption->hash($password);
+	$salt_enc = $this->Encryption->newSalt(array(
+	    $this->Encryption->extractSalt($loginhash)
+	));
+	$enckey = $this->Encryption->hash($password, $salt_enc);
 	$this->Encryption->setPassphrase($enckey);
 	$newkeys = $this->Encryption->getKeys();
 
@@ -204,8 +210,8 @@ class $$$User extends $system$Object {
 	$data = array(
 	    "email" => $email,
 	    "name" => $name,
-	    "salt" => $salt,
-	    "password" => $this->plaintext2login($password, $salt),
+	    "salt_enc" => $salt_enc,
+	    "password" => $loginhash,
 	    "symkey" => $newkeys['symkey'],
 	    "privkey" => $newkeys['privkey'],
 	    "pubkey" => $newkeys['pubkey'],
@@ -270,32 +276,6 @@ class $$$User extends $system$Object {
 	$this->Login->authorizeEncryption($this->Encryption);
 
 	return true;
-    }
-
-    /** Convert plaintext password to login hash
-     * @param string $password
-     *  Plaintext password
-     * @param string $salt
-     *	Add optional salt (otherwise the salt of this User is used)
-     *
-     * @return string
-     */
-    public function plaintext2login ($plaintext, $salt = false) {
-	if (!$salt) $salt = $this->getInfo('salt');
-	return $this->Encryption->hash($plaintext.$salt);
-    }
-
-    /** Convert plaintext password to encryption hash
-     * @param string $password
-     *  Plaintext password
-     * @param string $salt
-     *	Add optional salt (otherwise the salt of this User is used)
-     *
-     * @return string
-     */
-    public function plaintext2enc ($plaintext, $salt = false) {
-	if (!$salt) $salt = $this->getInfo('salt');
-	return $this->Encryption->hash($salt.$plaintext);
     }
 
     /** Is correct password?
