@@ -86,6 +86,14 @@ class $$$Login extends $system$Object {
 	global $TSunic;
 	$Encryption = $TSunic->get('$$$Encryption');
 
+	// is blocked?
+	if ($this->isBlocked($emailname)) {
+	    $TSunic->Log->log(1,
+		"Login::login: Account '$emailname' is blocked for login!"
+	    );
+	    return 0;
+	}
+
 	// validate login
 	$id = $this->validate($emailname, $password);
 
@@ -102,7 +110,7 @@ class $$$Login extends $system$Object {
 	);
 	if (!$this->setMulti($data, true)) {
 	    $TSunic->Log->log(1,
-		'Login::create: Login information could not be saved!'
+		'Login::login: Login information could not be saved!'
 	    );
 	}
 
@@ -166,6 +174,41 @@ class $$$Login extends $system$Object {
 	    return 0;
 
 	return $result[0]['id'];
+    }
+
+    /** Is login blocked for specified user?
+     * @param string $emailname
+     *	Name or email of user
+     *
+     * @return bool
+     */
+    public function isBlocked ($emailname) {
+	global $TSunic;
+
+	// query database for last 5 logins within last 24 hours
+	$sql = "SELECT logins.fk_user
+	    FROM $this->table as logins,
+		#__$usersystem$accounts as users
+	    WHERE (users.name = '$emailname'
+		    OR users.email = '$emailname')
+		AND (logins.emailname = users.name
+		    OR logins.emailname = users.email)
+		AND logins.dateOfLogin >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+	    ORDER BY logins.dateOfLogin DESC
+	    LIMIT 5
+	;";
+	$result = $TSunic->Db->doSelect($sql);
+
+	// count fails
+	$fails = 0;
+	foreach ($result as $index => $values) {
+	    if (empty($values['fk_user'])) {
+		$fails++;
+	    }
+	}
+
+	if ($fails > 4) return true;
+	return false;
     }
 
     /** Logout user and end this session
