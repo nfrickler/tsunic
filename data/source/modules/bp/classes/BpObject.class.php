@@ -378,6 +378,30 @@ class $$$BpObject extends $system$Object {
 	return get_class($this);
     }
 
+    /** Get all links of this object
+     *
+     * @return array
+     */
+    public function getLinks () {
+	global $TSunic;
+
+	// request ids of all Links from database
+	$sql = "SELECT id
+	    FROM #__$bp$links
+	    WHERE fk_obj1 = '$this->id'
+		OR fk_obj2 = '$this->id';
+	";
+	$results = $TSunic->Db->doSelect($sql);
+
+	// convert ids to Link objects
+	$links = array();
+	foreach ($results as $index => $values) {
+	    $links[] = $TSunic->get('$$$Link', $values['id']);
+	}
+
+	return $links;
+    }
+
     /** Give someone access to this object (share bits!)
      * @param array|int $access
      *	List of users with access (array('id' => 'writable?'))

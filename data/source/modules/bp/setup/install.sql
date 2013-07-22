@@ -45,6 +45,17 @@ CREATE TABLE IF NOT EXISTS `#__$bp$tags` (
   UNIQUE(`name`)
 ) ENGINE=MyISAM;
 
+CREATE TABLE IF NOT EXISTS `#__$bp$links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_obj1` int(11) NOT NULL,
+  `fk_obj2` int(11) NOT NULL,
+  `forward` int(1) NOT NULL,
+  `backward` int(1) NOT NULL,
+  `dateOfCreation` datetime NOT NULL,
+  `dateOfUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
 CREATE TABLE IF NOT EXISTS `#__$bp$selections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_tag` int(11) NOT NULL,

@@ -60,10 +60,12 @@ $lang = array(
     'SHOWPROFILE__TITLE' => 'Profile',
     'SHOWPROFILE__TOEDITPROFILE' => 'Edit profile',
     'SHOWPROFILE__TODELETEPROFILE' => 'Delete profile',
+    'SHOWPROFILE__TOLINKOBJECT' => 'Link object',
     'SHOWPROFILE__H1' => 'Profile',
     'SHOWPROFILE__NAME' => 'Name',
     'SHOWPROFILE__GENDER' => 'Gender',
     'SHOWPROFILE__DATEOFBIRTH' => 'Date of birth',
+    'SHOWPROFILE__H1_LINKS' => 'Linked objects',
 
     // showMyProfile
     'SHOWMYPROFILE__TITLE' => 'Your profile',

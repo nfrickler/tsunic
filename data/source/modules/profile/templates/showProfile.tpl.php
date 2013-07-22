@@ -1,11 +1,16 @@
 <!-- | TEMPLATE show profile -->
-<?php $Profile = $this->getVar('Profile'); ?>
+<?php
+$Profile = $this->getVar('Profile');
+$links = $this->getVar('links');
+?>
 <div id="$$$div__showProfile">
     <h1><?php $this->set($this->getVar('h1')); ?></h1>
     <p class="ts_suplinkbox">
 	<?php if ($Profile->editable()) { ?>
 	<a id="$$$showProfile__editlink" href="<?php $this->setUrl('$$$showEditProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWPROFILE__TOEDITPROFILE}'); ?></a>
+	<a id="$$$showProfile__linklink" href="<?php $this->setUrl('$bp$showLinkObject', array('$bp$fk_obj' => $Profile->getInfo('id'))); ?>">
+	    <?php $this->set('{SHOWPROFILE__TOLINKOBJECT}'); ?></a>
 	<?php if ($this->getVar('showDelete')) { ?>
 	<a id="$$$showProfile__deletelink" href="<?php $this->setUrl('$$$showDeleteProfile', array('$$$id' => $Profile->getInfo('id'))); ?>">
 	    <?php $this->set('{SHOWPROFILE__TODELETEPROFILE}'); ?></a>
@@ -90,4 +95,14 @@
 	</tr>
 	<?php } ?>
     </table>
+
+    <?php if (!empty($links)) { ?>
+    <h3><?php $this->set('{SHOWPROFILE__H1_LINKS}'); ?></h3>
+    <?php
+    $this->display('$bp$showListLinks', array(
+	'links' => $this->getVar('links'),
+	'object' => $this->getVar('Profile'),
+    ));
+    ?>
+    <?php } ?>
 </div>

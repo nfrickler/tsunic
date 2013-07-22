@@ -200,6 +200,30 @@ $lang = array(
     'CHOOSEOBJECT__SUCCESS' => 'Auswahl gespeichert.',
     'CHOOSEOBJECT__ERROR' => 'Auswahl konnte nicht gespeichert werden!',
 
+    // showLinkObject
+    'SHOWLINKOBJECT__TITLE' => 'Objekt verknüpfen',
+    'SHOWLINKOBJECT__H1' => 'Objekt verknüpfen',
+    'SHOWLINKOBJECT__INFOTEXT' => 'Bitte wähle das Objekt aus, das du verknüpfen willst.',
+    'SHOWLINKOBJECT__SUBMIT' => 'Auswahl speichern',
+    'SHOWLINKOBJECT__CANCEL' => 'Abbrechen',
+
+    // formLinkObject
+    'FORMLINKOBJECT__LEGEND' => 'Objekt, das verknüpft werden soll',
+    'FORMLINKOBJECT__PLEASECHOOSE' => '---Bitte wählen---',
+
+    // linkObject
+    'LINKOBJECT__SUCCESS' => 'Objekt verknüpft.',
+    'LINKOBJECT__ERROR' => 'Objekt konnte nicht verknüpft werden!',
+
+    // showListLinks
+    'SHOWLISTLINKS__NAME' => 'Objekt',
+    'SHOWLISTLINKS__DESCRIPTION' => 'Beschreibung',
+    'SHOWLISTLINKS__ACTIONS' => '',
+
+    // deleteLink
+    'DELETELINK__SUCCESS' => 'Verknüpfung gelöscht',
+    'DELETELINK__ERROR' => 'Verknüpfung konnte nicht gelöscht werden!',
+
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'Tag-Liste'
 );

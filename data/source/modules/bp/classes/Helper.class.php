@@ -82,8 +82,7 @@ class $$$Helper {
      *
      * @return array
      */
-    public function getObjects ($class, $sql_where = '') {
-	if (!$class and !$sql_where) return array();
+    public function getObjects ($class = '', $sql_where = '') {
 	global $TSunic;
 
 	// query database
@@ -103,8 +102,10 @@ class $$$Helper {
 
 	// get objects
 	$out = array();
+	if (empty($class)) $class = '$$$BpObject';
 	foreach ($result as $index => $values) {
 	    $Obj = $TSunic->get($class, $values['id']);
+	    if (!$Obj) continue;
 	    $Obj->setMulti($values);
 	    $out[$values['id']] = $Obj;
 	}

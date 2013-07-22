@@ -21,6 +21,7 @@ function $$$showProfile () {
     // activate template
     $data = array(
 	'Profile' => $Profile,
+	'links' => $Profile->getLinks(),
 	'showDelete' => ((!$is_MyProfile and $Profile->editable()) ? true : false),
 	'h1' => '{SHOWPROFILE__H1}',
 	'infotext' => '',

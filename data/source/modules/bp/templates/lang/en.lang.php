@@ -200,6 +200,30 @@ $lang = array(
     'CHOOSEOBJECT__SUCCESS' => 'Decision saved.',
     'CHOOSEOBJECT__ERROR' => 'Decision could not be saved!',
 
+    // showLinkObject
+    'SHOWLINKOBJECT__TITLE' => 'Link object',
+    'SHOWLINKOBJECT__H1' => 'Link object',
+    'SHOWLINKOBJECT__INFOTEXT' => 'Please choose an object you want to link.',
+    'SHOWLINKOBJECT__SUBMIT' => 'Save decision',
+    'SHOWLINKOBJECT__CANCEL' => 'Cancel',
+
+    // formLinkObject
+    'FORMLINKOBJECT__LEGEND' => 'Object to be linked',
+    'FORMLINKOBJECT__PLEASECHOOSE' => '---Choose please---',
+
+    // linkObject
+    'LINKOBJECT__SUCCESS' => 'Object linked.',
+    'LINKOBJECT__ERROR' => 'Object cound not be linked!',
+
+    // showListLinks
+    'SHOWLISTLINKS__NAME' => 'Object',
+    'SHOWLISTLINKS__DESCRIPTION' => 'Description',
+    'SHOWLISTLINKS__ACTIONS' => '',
+
+    // deleteLink
+    'DELETELINK__SUCCESS' => 'Delete link',
+    'DELETELINK__ERROR' => 'Link could not be deleted!',
+
     // navigation
     '_SYSTEM_NAVIGATION__TOSHOWTAGS' => 'List tags'
 );

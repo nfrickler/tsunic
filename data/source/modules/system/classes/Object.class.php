@@ -253,9 +253,8 @@ class $$$Object {
 	if (!is_array($data)) return false;
 
 	foreach ($data as $index => $value) {
-	    $this->set($index, $value);
+	    if (!$this->set($index, $value)) return false;
 	}
-
 	return ($save) ? $this->save() : true;
     }
 

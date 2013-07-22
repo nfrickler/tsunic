@@ -60,10 +60,12 @@ $lang = array(
     'SHOWPROFILE__TITLE' => 'Profil',
     'SHOWPROFILE__TOEDITPROFILE' => 'Bearbeiten',
     'SHOWPROFILE__TODELETEPROFILE' => 'Profil löschen',
+    'SHOWPROFILE__TOLINKOBJECT' => 'Objekt verknüpfen',
     'SHOWPROFILE__H1' => 'Profil',
     'SHOWPROFILE__NAME' => 'Name',
     'SHOWPROFILE__GENDER' => 'Geschlecht',
     'SHOWPROFILE__DATEOFBIRTH' => 'Geburtsdatum',
+    'SHOWPROFILE__H1_LINKS' => 'Verknüpfte Objekte',
 
     // showMyProfile
     'SHOWMYPROFILE__TITLE' => 'Dein Profil',
